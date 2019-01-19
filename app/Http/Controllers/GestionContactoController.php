@@ -212,11 +212,11 @@ class GestionContactoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $arrayContacto = DB::select('exec [usp_Contacto_SetContactoCarteraMesTodos] ?, ?, ?, ?',
-                                                            array(  $request->nIdCronograma,
-                                                                    $request->nIdContacto,
-                                                                    $request->cFlagCarteraMes,
-                                                                    Auth::user()->id
-                                                                    ));
+                                                            [   $request->nIdCronograma,
+                                                                $request->nIdContacto,
+                                                                $request->cFlagCarteraMes,
+                                                                Auth::user()->id
+                                                            ]);
 
         return response()->json($arrayContacto);
     }
@@ -225,11 +225,13 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetContactoCarteraMes] ?, ?, ?',
-                                                            array(  $request->nIdCronograma,
-                                                                    $request->nIdContacto,
-                                                                    Auth::user()->id
-                                                                    ));
+        $arrayContacto = DB::select('exec [usp_Contacto_SetContactoCarteraMes] ?, ?, ?, ?, ?',
+                                                            [   $request->nIdAsignacion,
+                                                                $request->nIdCronograma,
+                                                                $request->nIdContacto,
+                                                                $request->cFlagCarteraMes,
+                                                                Auth::user()->id
+                                                            ]);
 
         return response()->json($arrayContacto);
     }
