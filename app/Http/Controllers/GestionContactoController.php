@@ -207,15 +207,31 @@ class GestionContactoController extends Controller
         return ['arrayContacto'=>$arrayContacto];
     }
 
+    public function SetContactoCarteraMesTodos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayContacto = DB::select('exec [usp_Contacto_SetContactoCarteraMesTodos] ?, ?, ?, ?',
+                                                            [   $request->nIdCronograma,
+                                                                $request->nIdContacto,
+                                                                $request->cFlagCarteraMes,
+                                                                Auth::user()->id
+                                                            ]);
+
+        return response()->json($arrayContacto);
+    }
+
     public function SetContactoCarteraMes(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec usp_Contacto_SetContactoCarteraMes ?, ?, ?',
-                                                            array(  $request->nIdCronograma,
-                                                                    $request->nIdContacto,
-                                                                    Auth::user()->id
-                                                                    ));
+        $arrayContacto = DB::select('exec [usp_Contacto_SetContactoCarteraMes] ?, ?, ?, ?, ?',
+                                                            [   $request->nIdAsignacion,
+                                                                $request->nIdCronograma,
+                                                                $request->nIdContacto,
+                                                                $request->cFlagCarteraMes,
+                                                                Auth::user()->id
+                                                            ]);
 
         return response()->json($arrayContacto);
     }

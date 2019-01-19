@@ -444,8 +444,7 @@
                                                                                             <template v-if="r.nNroCotizacionesActivas == 0">
                                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                     <div slot="content">Generar Cotizacion {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
-                                                                                                    <i @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
-                                                                                                                                            r.nIdLinea, r.nIdMarca, r.nIdModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                                    <i @click="asingarReferenciaVehiculo(r)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                                 </el-tooltip>
                                                                                             </template>
                                                                                             <template v-else>
@@ -466,6 +465,31 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaReferencia(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaReferencia(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaReferencia(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </template>
                                                                     <template v-else>
@@ -3086,7 +3110,7 @@
                 $('#TabDetalleCotizacion').removeClass('in active show');
 
                 this.llenarTipoMedio();
-                this.llenarReferenciasVehiculo();
+                this.llenarReferenciasVehiculo(1);
             },
             validaCotizacion(){
                 this.error = 0;
@@ -3170,13 +3194,14 @@
                     }
                 });
             },
-            llenarReferenciasVehiculo(){
+            llenarReferenciasVehiculo(page){
                 var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcontacto' : parseInt(this.fillAsignarContacto.nidcontacto)
+                        'nidcontacto' : parseInt(this.fillAsignarContacto.nidcontacto),
+                        'page' : page
                     }
                 }).then(response => {
                     let info = response.data.arraySegReferenciavehiculo;
@@ -3201,14 +3226,18 @@
                     }
                 });
             },
-            asingarReferenciaVehiculo(nIdAsignacionContactoVendedor, nIdProveedor, cProveedorNombre, nIdLinea, nIdMarca, nIdModelo){
+            cambiarPaginaReferencia(page){
+                this.pagination.current_page=page;
+                this.llenarReferenciasVehiculo(page);
+            },
+            asingarReferenciaVehiculo(r){
                 this.tabDCVehiculo();
-                this.fillAsignarContacto.nidasignarcontacto = nIdAsignacionContactoVendedor;
-                this.fillProveedor.nidproveedor = nIdProveedor;
-                this.fillProveedor.cproveedornombre = cProveedorNombre;
-                this.fillAsignarContacto.nidlinea = nIdLinea;
-                this.fillAsignarContacto.nidmarca = nIdMarca;
-                this.fillAsignarContacto.nidmodelo = nIdModelo;
+                this.fillAsignarContacto.nidasignarcontacto = r.nIdAsignacionContactoVendedor;
+                this.fillProveedor.nidproveedor = r.nIdProveedor;
+                this.fillProveedor.cproveedornombre = r.cProveedorNombre;
+                this.fillAsignarContacto.nidlinea = r.nIdLinea;
+                this.fillAsignarContacto.nidmarca = r.nIdMarca;
+                this.fillAsignarContacto.nidmodelo = r.nIdModelo;
                 this.tabDetalleCotización();
                 this.llenarComboSubLinea();
             },
