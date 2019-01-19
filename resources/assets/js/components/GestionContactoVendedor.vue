@@ -1861,8 +1861,8 @@
                                                                 <td>
                                                                     <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                         <el-tooltip class="item" effect="dark" >
-                                                                            <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                            <i @click="asignarCarteraMes(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                            <div slot="content">Asignar a Cartera Cod. Asignacion {{ r.nIdAsignacionContactoVendedor }}</div>
+                                                                            <i @click="asignarCarteraMesByIdAsignacion(r)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                     </template>
                                                                 </td>
@@ -1953,15 +1953,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
-                                                            <template v-if="r.cFlagCarteraMes=='S'">
+                                                        <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto" :style="{ background : r.cColorEstado}">
+                                                            <template v-if="r.cFlagCarteraMes=='N'">
                                                                 <td>
-                                                                    <!--<template v-if="r.nNroCotizacionesActivas == 0">
-                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                            <div slot="content">Generar Cotizacion {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
-                                                                            <i @click="asingarReferenciaVehiculo(r)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                        </el-tooltip>
-                                                                    </template>-->
+                                                                    <template v-if="r.cAsignacionVehiculoEstado=='A'">
+                                                                        <el-tooltip class="item" effect="dark" >
+                                                                            <div slot="content">Asignar a Cartera Cod. Asignacion {{ r.nIdAsignacionContactoVendedor }}</div>
+                                                                            <i @click="anularCarteraMesByIdAsignacion(r)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                    </template>
                                                                 </td>
                                                                 <td v-text="r.cProveedorNombre"></td>
                                                                 <td v-text="r.cLineaNombre"></td>
@@ -2366,7 +2366,7 @@
                         }
                     })
             },
-            asignarCarteraMes(c){
+            asignarCarteraMesByIdAsignacion(c){
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
@@ -2383,6 +2383,7 @@
                         swal('No se Asignó');
                         this.listarContactoSinCarteraMes(1);
                     }
+                    this.cerrarModal();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2478,6 +2479,34 @@
                         {
                         }
                     })
+            },
+            anularCarteraMesByIdAsignacion(c){
+                var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
+
+                axios.post(url, {
+                    'nIdAsignacion': c.nIdAsignacionContactoVendedor,
+                    'nIdCronograma': 220016,
+                    'nIdContacto': parseInt(c.nIdContacto),
+                    'cFlagCarteraMes': 'N'
+                }).then(response => {
+                    if(response.data[0].nFlagMsje==1){
+                        swal('Se asignó a Cartera de Mes');
+                        this.listarCarteraMesPorVendedor(1);
+                    }
+                    else{
+                        swal('No se Asignó');
+                        this.listarCarteraMesPorVendedor(1);
+                    }
+                    this.cerrarModal();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
