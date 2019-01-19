@@ -82,8 +82,8 @@
                                                         <td v-text="p.cParAbreviatura"></td>
                                                         <td v-text="p.cParNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" :content="'Ver Tipo Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                <i @click="abrirModal('parametro', 'tipoparametro', p)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                            <el-tooltip class="item" :content="'Configurar Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                <i @click="abrirModal('parametro', 'tipoparametro', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <el-tooltip class="item" :content="'Editar ' + p.cParNombre" effect="dark" placement="top-start">
                                                                 <i @click="abrirFormulario('parametro','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
