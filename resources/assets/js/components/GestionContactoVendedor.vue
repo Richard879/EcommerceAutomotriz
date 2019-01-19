@@ -100,6 +100,7 @@
                                                                         <template v-if="fillMisContactos.ntipopersona == 1">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>#Codigo SAP</th>
                                                                                     <th>Apellidos</th>
@@ -109,20 +110,10 @@
                                                                                     <th>Dirección</th>
                                                                                     <th>Email</th>
                                                                                     <th>Vendedor</th>
-                                                                                    <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cPerApellidos"></td>
-                                                                                    <td v-text="c.cNombre"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cDireccion"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Referencias Asignadas {{ c.nIdContacto }}</div>
@@ -137,6 +128,15 @@
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.CardCode"></td>
+                                                                                    <td v-text="c.cPerApellidos"></td>
+                                                                                    <td v-text="c.cNombre"></td>
+                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cDireccion"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td v-text="c.cVendedor"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
@@ -1817,57 +1817,50 @@
             </div>
 
             <!-- Modal Referencias Asignadas -->
-            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">LISTADO</h3>
+                                        <h3 class="h4">LISTADO DE REFERENCIAS</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form @submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" >
-                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <br/>
-                                        <template v-if="arrayProveedor.length">
+                                        <template v-if="arrayAsignacionReferenciavehiculo.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
+                                                            <th>Acción</th>
+                                                            <th>Proovedor</th>
+                                                            <th>Linea</th>
+                                                            <th>Marca</th>
+                                                            <th>Modelo</th>
+                                                            <th>Año Fab</th>
+                                                            <th>Año Modelo</th>
+                                                            <th>Fecha Inicio</th>
+                                                            <th>Fecha Fin</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                        <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
                                                             <td>
-                                                                <el-tooltip class="item" effect="dark" >
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
+                                                                <template v-if="r.nNroCotizacionesActivas == 0">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Generar Cotizacion {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                        <i @click="asingarReferenciaVehiculo(r)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </template>
                                                             </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                            <td v-text="r.cProveedorNombre"></td>
+                                                            <td v-text="r.cLineaNombre"></td>
+                                                            <td v-text="r.cMarcaNombre"></td>
+                                                            <td v-text="r.cModeloNombre"></td>
+                                                            <td v-text="r.nAnioFabricacion"></td>
+                                                            <td v-text="r.nAnioModelo"></td>
+                                                            <td v-text="r.dFechaInicioAsignacionContacto"></td>
+                                                            <td v-text="r.dFechaFinAsignacionContacto"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1878,16 +1871,16 @@
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaReferencia(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -1946,6 +1939,7 @@
                     { value: '2', text: 'JURIDICA'}
                 ],
                 arrayContacto: [],
+                arrayAsignacionReferenciavehiculo: [],
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
                 arrayContactoCarteraMes: [],
@@ -2140,18 +2134,19 @@
             }
         },
         methods:{
-            listarReferenciasVehiculo(){
-                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
+            listarReferenciasVehiculo(data, page){
+                var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcontacto' : parseInt(this.fillAsignarContacto.nidcontacto)
+                        'nidcontacto' : parseInt(data.nIdContacto),
+                        'page': page
                     }
                 }).then(response => {
                     let info = response.data.arraySegReferenciavehiculo;
                     //Data
-                    this.arrayReferenciavehiculo = info.data;
+                    this.arrayAsignacionReferenciavehiculo = info.data;
                     //Pagination
                     this.paginationModal.current_page   =   info.current_page;
                     this.paginationModal.total          =   info.total;
@@ -2159,8 +2154,6 @@
                     this.paginationModal.last_page      =   info.last_page;
                     this.paginationModal.from           =   info.from;
                     this.paginationModal.to             =   info.to;
-                    //Limpiar caja busqueda
-                    this.limpiarfillBusqContacto();
                 }).catch(error => {
                     this.errors = error.response.data
                     if (error.response) {
@@ -3961,9 +3954,9 @@
                         switch(accion){
                             case 'detalle':
                             {
-                                this.accionmodal=2;
+                                this.accionmodal=3;
                                 this.modal = 1;
-                                this.listarReferenciasVehiculo(1);
+                                this.listarReferenciasVehiculo(data, 1);
                                 break;
                             }
                         }
