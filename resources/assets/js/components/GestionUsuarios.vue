@@ -106,14 +106,14 @@
                                                         <td v-text="usuario.usuario"></td>
                                                         <td v-text="usuario.cGrupoParNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Permisos {{ usuario.cParNombre }}</div>
                                                                 <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                             </el-tooltip>&nbsp;
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ usuario.cParNombre }}</div>
                                                                 <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp;
+                                                            </el-tooltip>&nbsp; -->
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -324,6 +324,7 @@
                 //================== REGISTRAR USUARIO =====================
                 flagRegistrarEditar: 1,
                 fillUsuario: {
+                    nIdUsuario: '',
                     nidempresa: '',
                     nidsucursal: '',
                     nIdUsuario: '',
@@ -336,6 +337,7 @@
                 attachment: '',// Archivo a almacenar
                 form: new FormData,// El archivo tendrá que ser enviado como elemento FormData
                 urlImage: '',
+                arrayPermisosbyRol: [],
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -518,6 +520,38 @@
                 this.attachment = selectFile;
                 this.urlImage   = URL.createObjectURL(selectFile);
             },
+            listarRolesPreConfig(){
+                var url = this.ruta + '/usuario/GetListRoles';
+                axios.get(url).then(response => {
+                    this.arrayRoles = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarSucursal2(){
+                var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillUsuario.nidempresa
+                    }
+                }).then(response => {
+                    this.arraySucursal = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             registrarUsuario(){
                 if(this.validarRegistrarUsuario()){
                     this.accionmodal=1;
@@ -542,16 +576,15 @@
                 let url;
                 (this.flagRegistrarEditar == 1) ? (url = this.ruta + '/usuario/SetRegistrarUsuario') : (url = this.ruta + '/usuario/SetEditarUsuario');
                 axios.post(url, this.form, config).then(response => {
-                    console.log(response.data)
-                    if(response.data[0].nIdRpta == 1) {
-                        swal(response.data[0].cMsjRpta);
+                    // console.log(response.data)
+                    if(response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje);
 
                         this.fillUsuario.nIdUsuario = response.data[0].nIdPar
                         this.obtenerPermisosPorRol();
                     } else {
-                        swal(response.data[0].cMsjRpta);
+                        swal(response.data[0].cMensaje);
                     }
-                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -592,38 +625,6 @@
                 }
                 return me.error;
             },
-            listarRolesPreConfig(){
-                var url = this.ruta + '/usuario/GetListRoles';
-                axios.get(url).then(response => {
-                    this.arrayRoles = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            listarSucursal2(){
-                var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': this.fillUsuario.nidempresa
-                    }
-                }).then(response => {
-                    this.arraySucursal = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             obtenerPermisosPorRol(){
                 var url = this.ruta + '/usuario/GetListPermisosByRol';
                 axios.get(url, {
@@ -631,6 +632,7 @@
                         'nrol': this.fillUsuario.nrol
                     }
                 }).then(response => {
+                    // console.log(response.data)
                     this.arrayPermisosbyRol = response.data;
                     this.registrarPermisosByRol();
                 }).catch(error => {
@@ -644,18 +646,21 @@
                 });
             },
             registrarPermisosByRol(){
-                var url = this.ruta + '/puga/SetPermisosByUsuario';
+                var url = this.ruta + '/usuario/SetPermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa'    :   this.fillUsuario.nidempresa,
                     'nIdSucursal'   :   this.fillUsuario.nidsucursal,
                     'nIdUsuario'    :   this.fillUsuario.nIdUsuario,
+                    'nIdPerfil'     :   this.fillUsuario.nrol,
                     'arrayData'     :   this.arrayPermisosbyRol
                 }).then(response => {
-                    this.listarUsuarios(1);
-                    this.limpiarFormulario();
-                    this.mostrarFormulario(1);
-                    this.attachment = '';
-                    this.form = new FormData;
+                    // console.log(response.data);
+                    if(response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje);
+                        this.cambiarVistaFormulario(1);
+                    } else {
+                        swal("Ocurrio un error al generar los permisos del Usuario");
+                    }
                     // Ocultar ProgressBar
                     $("#myBar").hide();
                 }).catch(error => {
@@ -701,6 +706,7 @@
                 this.fillBsqUsuario.cdescripcion = '';
                 this.arrayUsuarios = [];
                 //Registrar
+                this.fillUsuario.nIdUsuario = '';
                 this.fillUsuario.cnombrecompleto = '';
                 this.fillUsuario.cusuario = '';
                 this.fillUsuario.cpassword = '';
@@ -709,6 +715,7 @@
                 this.form = '';//Seteo a vacio
                 this.form = new FormData;//Inicializo el Obj FormData
                 this.urlImage = '';
+                this.arrayPermisosbyRol = []
             },
             cambiarVistaFormulario(op, data = null){
                 if(op == 1) {
@@ -762,7 +769,7 @@
         width:60px;
         height:60px;
         border-radius:150px;
-        border:10px solid #666;
+        border:3px solid #666;
     }
     #preview {
         width: 100%;
@@ -776,6 +783,6 @@
         min-width: 33%;
         max-height: 200px;
         border-radius:120px;
-        border:10px solid #666;
+        border:5px solid #666;
     }
 </style>

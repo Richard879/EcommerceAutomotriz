@@ -77,7 +77,6 @@
                                                         <th>Código</th>
                                                         <th>Apellidos y Nombres</th>
                                                         <th>Perfil</th>
-                                                        <th>Usuario</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -86,7 +85,6 @@
                                                         <td v-text="usuario.nIdUsuario"></td>
                                                         <td v-text="usuario.cNombreUsuario"></td>
                                                         <td v-text="usuario.cGrupoParNombre"></td>
-                                                        <td v-text="usuario.cUsuario"></td>
                                                         <td>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Permisos {{ usuario.cNombreUsuario }}</div>

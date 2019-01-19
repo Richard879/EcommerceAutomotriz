@@ -96,11 +96,57 @@ class GestionUsuariosController extends Controller
 
         $nrol = $request->nrol;
 
-        $arrayPermisosbyRol = DB::select('exec usp_Usuario_GetListPermisosByRol',
+        $arrayPermisosbyRol = DB::select('exec usp_Usuario_GetListPermisosByRol ?',
                                                         [
                                                             $nrol
                                                         ]);
 
         return response()->json($arrayPermisosbyRol);
+    }
+
+    public function SetPermisosByUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $nIdEmpresa     =   $request->nIdEmpresa;
+            $nIdSucursal    =   $request->nIdSucursal;
+            $nIdUsuario     =   $request->nIdUsuario;
+            $nIdPerfil      =   $request->nIdPerfil;
+            $nIdUsuarioAuth =   Auth::user()->id;
+
+            $nIdEmpresa = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
+            $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+
+            //REGISTRAR RELACIÓN
+            DB::select('EXEC usp_Usuario_SetRelacionByUsuario ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdUsuario,
+                                        $nIdUsuarioAuth
+                                    ]);
+
+            $detalles = $request->arrayData;
+            foreach($detalles as $ep=>$det)
+            {
+                //REGISTRAR PERMISOS
+                $data = DB::select('exec usp_Usuario_SetPermisosByUsuario ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdUsuario,
+                                                                $nIdPerfil,
+                                                                $det['nIdMenu'],
+                                                                $nIdUsuarioAuth
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 }
