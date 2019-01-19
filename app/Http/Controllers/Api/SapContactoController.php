@@ -50,30 +50,102 @@ class SapContactoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        // return $request;
+        $tipoPersona = $request->contacto['cFlagTipoPersona'];
 
-        $CardCode       =   "C". $request->contacto['nIdContacto'];
+        $CardCode       =   "C". $request->contacto['cNumeroDocumento'];
         $UserName       =   $request->contacto['cContacto'];
         $FederalTaxID   =   $request->contacto['cNumeroDocumento'];
-        $U_SAI_CAMPO3   =   1;
         $EmailAddress   =   $request->contacto['cEmail'];
         $Address        =   $request->contacto['cDireccion'];
         $Cellular       =   $request->contacto['nTelefonoMovil'];
         $City           =   $request->contacto['cUbigeo'];
 
-        $json = [
-            'json' => [
-                "CardCode"      => $CardCode,
-                "CardType"      => "cCustomer",
-                "CardName"      => $UserName,
-                "FederalTaxID"  => $FederalTaxID,
-                "EmailAddress"  => $EmailAddress,
-                "Address"       => $Address,
-                "Cellular"      => $Cellular,
-                "City"          => $City,
-                "Currency"      =>	"##"
-               ]
-           ];
+        if ($tipoPersona == 'N') {
+            $U_SYP_BPAP =   $request->contacto['cApellidoPaterno'];
+            $U_SYP_BPAM =   $request->contacto['cApellidoMaterno'];
+            $U_SYP_BPNO =   $request->contacto['cNombre'];
+            //explode — Divide un string en varios string separados por un criterio
+            $arrayNombres = explode(" ", $U_SYP_BPNO);
+            //Determina si existe mas de un nombre
+            $arrayNombresLength = sizeof($arrayNombres);
+            if($arrayNombresLength > 1) {
+                $U_SYP_BPN2 =   $arrayNombres[1];
+            } else {
+                $U_SYP_BPN2 =   " ";
+            }
+            $U_SYP_BPTP =   "TPN";
+            $U_SYP_BPTD =   "1";
+
+            $json = [
+                'json' => [
+                    "CardCode"      =>  $CardCode,
+                    "CardType"      =>  "cCustomer",
+                    "CardName"      =>  $UserName,
+                    "FederalTaxID"  =>  $FederalTaxID,
+                    "EmailAddress"  =>  $EmailAddress,
+                    "Cellular"      =>  $Cellular,
+                    // "City"          =>  $City,
+                    "Currency"      =>  "##",
+                    "U_SYP_BPAP"    =>  $U_SYP_BPAP,
+                    "U_SYP_BPAM"    =>  $U_SYP_BPAM,
+                    "U_SYP_BPNO"    =>  $U_SYP_BPNO,
+                    "U_SYP_BPN2"    =>  $U_SYP_BPN2,
+                    "U_SYP_BPTP"    =>  $U_SYP_BPTP,
+                    "U_SYP_BPTD"    =>  $U_SYP_BPTD,
+                    "BPAddresses" => [
+                        [
+                            "AddressName"   =>  "Domicilio Fiscal",
+                            "Street"        =>  $Address,
+                            "Country"       =>  "PE",
+                            "AddressType"   =>  "bo_BillTo",
+                            "BPCode"        =>  $CardCode,
+                        ],
+                        [
+                            "AddressName"   =>  "Domicilio Despacho",
+                            "Street"        =>  $Address,
+                            "Country"       =>  "PE",
+                            "AddressType"   =>  "bo_ShipTo",
+                            "BPCode"        =>  $CardCode
+                        ]
+                    ]
+                ]
+            ];
+        } else {
+            $U_SYP_BPTP = "TPJ";
+            $U_SYP_BPTD = "6";
+
+            $json = [
+                'json' => [
+                    "CardCode"      =>  $CardCode,
+                    "CardType"      =>  "cCustomer",
+                    "CardName"      =>  $UserName,
+                    "FederalTaxID"  =>  $FederalTaxID,
+                    "EmailAddress"  =>  $EmailAddress,
+                    // "Address"       =>  $Address,
+                    "Cellular"      =>  $Cellular,
+                    // "City"          =>  $City,
+                    "Currency"      =>  "##",
+                    "U_SYP_BPTP"    =>  $U_SYP_BPTP,
+                    "U_SYP_BPTD"    =>  $U_SYP_BPTD,
+                    "BPAddresses" => [
+                        [
+                            "AddressName"   =>  "Domicilio Fiscal",
+                            "Street"        =>  $Address,
+                            "Country"       =>  "PE",
+                            "AddressType"   =>  "bo_BillTo",
+                            "BPCode"        =>  $CardCode,
+                        ],
+                        [
+                            "AddressName"   =>  "Domicilio Despacho",
+                            "Street"        =>  $Address,
+                            "Country"       =>  "PE",
+                            "AddressType"   =>  "bo_ShipTo",
+                            "BPCode"        =>  $CardCode
+                        ]
+                    ]
+                ]
+            ];
+        }
 
         $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
@@ -88,7 +160,6 @@ class SapContactoController extends Controller
         $CardCode       =   "C". $request->nIdContacto;
         $UserName       =   $request->CardName;
         $FederalTaxID   =   $request->FederalTaxID;
-        $U_SAI_CAMPO3   =   1;
         $EmailAddress   =   $request->EmailAddress;
         $Address        =   $request->Address;
         $Cellular       =   $request->Cellular;

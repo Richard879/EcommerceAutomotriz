@@ -3424,8 +3424,9 @@
                 axios.post(url, {
                     'contacto': contacto
                 }).then(response => {
-                    // $("#myBar").hide();
+                    $("#myBar").hide();
                     // console.log(response.data);
+
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
                     this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());

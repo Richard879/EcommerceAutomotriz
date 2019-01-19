@@ -121,9 +121,9 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     =   $request->nidempresa;
-        $nIdSucursal    =   $request->nidsucursal;
-        $nIdCabeceraPedido  =  $request->nidcabecerapedido;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
 
         $arrayPedido = DB::select('exec [usp_Pedido_SetAprobarPedido] ?, ?, ?, ?',
                                                     [   $nIdEmpresa,

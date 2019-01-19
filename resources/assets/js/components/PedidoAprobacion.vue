@@ -806,7 +806,7 @@
                 this.listarPedidos(page);
             },
             aprobarPedido(pedido){
-                this.formSap.nidcabecerapedido = pedido.nIdCabeceraPedido;
+                this.formSap.nidcabecerapedido  = pedido.nIdCabeceraPedido;
                 this.formSap.ccardcode          = pedido.cCardCode;
                 swal({
                     title: '¿Esta seguro de APROBAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
@@ -825,14 +825,16 @@
                             'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                             'nidcabecerapedido': parseInt(me.formSap.nidcabecerapedido)
                         }).then(function (response) {
-                            if(response.data[0].nFlagMsje == 1)
-                            {
+                            if(response.data[0].nFlagMsje == 1){
                                 me.mostrarProgressBar();
-                                me.obtenerIgv();
+
+                                if (this.formSap.ccardcode == '' || this.formSap.ccardcode == null) {
+                                    me.generarContacto();
+                                } else {
+                                    me.obtenerIgv();
+                                }
                                 //me.obtenerPedidoById();
-                            }
-                            else
-                            {
+                            }else{
                                 swal(
                                     'ERROR!',
                                     response.data[0].cMensaje
@@ -880,6 +882,9 @@
                         }
                     }
                 });
+            },
+            generarContacto(){
+
             },
             obtenerIgv(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
@@ -933,8 +938,8 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'fDocDate':     moment().format('YYYY-MM-DD'),
+                    'fDocDueDate':  moment().add(30, 'days').format('YYYY-MM-DD'),
                     'Igv': 1 + parseFloat((me.formSap.igv)),
                     'data': me.arraySapPedido
                 }).then(response => {
@@ -996,7 +1001,7 @@
                             'El pedido ha sido APROBADO con éxito.',
                             'success'
                         );
-                    }else{
+                    } else {
                         swal({
                             type: 'error',
                             title: 'Error...',
