@@ -1958,8 +1958,8 @@
                                                                 <td>
                                                                     <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                         <el-tooltip class="item" effect="dark" >
-                                                                            <div slot="content">Asignar a Cartera Cod. Asignacion {{ r.nIdAsignacionContactoVendedor }}</div>
-                                                                            <i @click="anularCarteraMesByIdAsignacion(r)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                            <div slot="content">Anular de Cartera Cod. Asignacion {{ r.nIdAsignacionContactoVendedor }}</div>
+                                                                            <i @click="anularCarteraMesByIdAsignacion(r)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                     </template>
                                                                 </td>
