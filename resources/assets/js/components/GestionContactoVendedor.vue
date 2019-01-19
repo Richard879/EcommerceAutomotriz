@@ -2370,7 +2370,7 @@
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
-                    'nIdAsignacion': c.nIdAsignacionContactoVendedor,
+                    'nIdAsignacion': parseInt(c.nIdAsignacionContactoVendedor),
                     'nIdCronograma': 220016,
                     'nIdContacto': parseInt(c.nIdContacto),
                     'cFlagCarteraMes': 'S'
@@ -2484,7 +2484,7 @@
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
-                    'nIdAsignacion': c.nIdAsignacionContactoVendedor,
+                    'nIdAsignacion': parseInt(c.nIdAsignacionContactoVendedor),
                     'nIdCronograma': 220016,
                     'nIdContacto': parseInt(c.nIdContacto),
                     'cFlagCarteraMes': 'N'
