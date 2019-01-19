@@ -1859,12 +1859,12 @@
                                                         <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto" :style="{ background : r.cColorEstado}">
                                                             <template v-if="r.cFlagCarteraMes=='N'">
                                                                 <td>
-                                                                    <!--<template v-if="r.nNroCotizacionesActivas == 0">
-                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                            <div slot="content">Generar Cotizacion {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
-                                                                            <i @click="asingarReferenciaVehiculo(r)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                        </el-tooltip>
-                                                                    </template>-->
+                                                                    <template v-if="r.cAsignacionVehiculoEstado=='A'">
+                                                                        <el-tooltip class="item" effect="dark" >
+                                                                            <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                            <i @click="asignarCarteraMes(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                    </template>
                                                                 </td>
                                                                 <td v-text="r.cProveedorNombre"></td>
                                                                 <td v-text="r.cLineaNombre"></td>
@@ -2340,9 +2340,9 @@
                         if (result.value) {
                             var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
                             axios.post(url, {
-                                nIdCronograma: 220016,
-                                nIdContacto: parseInt(c.nIdContacto),
-                                cFlagCarteraMes: 'S'
+                                'nIdCronograma': 220016,
+                                'nIdContacto': parseInt(c.nIdContacto),
+                                'cFlagCarteraMes': 'S'
                             }).then(response => {
                                 if(response.data[0].nFlagMsje==1){
                                     swal('Se asignó a Cartera de Mes');
@@ -2366,12 +2366,14 @@
                         }
                     })
             },
-            asignarCarteraMes(nIdContacto){
+            asignarCarteraMes(c){
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
-                    nIdCronograma: 220016,
-                    nIdContacto: parseInt(nIdContacto)
+                    'nIdAsignacion': c.nIdAsignacionContactoVendedor,
+                    'nIdCronograma': 220016,
+                    'nIdContacto': parseInt(c.nIdContacto),
+                    'cFlagCarteraMes': 'S'
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Se asignó a Cartera de Mes');
