@@ -1954,7 +1954,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto" :style="{ background : r.cColorEstado}">
-                                                            <template v-if="r.cFlagCarteraMes=='N'">
+                                                            <template v-if="r.cFlagCarteraMes=='S'">
                                                                 <td>
                                                                     <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                         <el-tooltip class="item" effect="dark" >
