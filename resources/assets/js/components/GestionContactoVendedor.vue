@@ -2153,12 +2153,12 @@
                     //Data
                     this.arrayReferenciavehiculo = info.data;
                     //Pagination
-                    this.pagination.current_page   =   info.current_page;
-                    this.pagination.total          =   info.total;
-                    this.pagination.per_page       =   info.per_page;
-                    this.pagination.last_page      =   info.last_page;
-                    this.pagination.from           =   info.from;
-                    this.pagination.to             =   info.to;
+                    this.paginationModal.current_page   =   info.current_page;
+                    this.paginationModal.total          =   info.total;
+                    this.paginationModal.per_page       =   info.per_page;
+                    this.paginationModal.last_page      =   info.last_page;
+                    this.paginationModal.from           =   info.from;
+                    this.paginationModal.to             =   info.to;
                     //Limpiar caja busqueda
                     this.limpiarfillBusqContacto();
                 }).catch(error => {
@@ -2170,6 +2170,10 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaReferencia(page){
+                this.paginationModal.current_page=page;
+                this.listarReferenciasVehiculo(page);
             },
             // =========================================================
             // =============  TAB MIS CONTACTOS ========================

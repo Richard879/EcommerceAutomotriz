@@ -3228,7 +3228,7 @@
             },
             cambiarPaginaReferencia(page){
                 this.pagination.current_page=page;
-                this.listarMisCotizaciones(page);
+                this.llenarReferenciasVehiculo(page);
             },
             asingarReferenciaVehiculo(r){
                 this.tabDCVehiculo();
