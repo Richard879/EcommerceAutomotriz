@@ -124,10 +124,14 @@
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cVendedor"></td>
                                                                                     <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Ver Referencias Asignadas {{ c.nIdContacto }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'detalle', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
-                                                                                        </el-tooltip>
+                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
@@ -163,7 +167,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
-                                                                                            <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
@@ -308,7 +312,7 @@
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark">
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                            <i @click="anularCarteraMesTodos(c.nIdContacto)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
@@ -347,7 +351,7 @@
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cRazonSocial }}</div>
-                                                                                            <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                            <i @click="anularCarteraMesTodos(c.nIdContacto)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
@@ -1812,6 +1816,108 @@
                 </div>
             </div>
 
+            <!-- Modal Referencias Asignadas -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" >
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" >
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2034,6 +2140,37 @@
             }
         },
         methods:{
+            listarReferenciasVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcontacto' : parseInt(this.fillAsignarContacto.nidcontacto)
+                    }
+                }).then(response => {
+                    let info = response.data.arraySegReferenciavehiculo;
+                    //Data
+                    this.arrayReferenciavehiculo = info.data;
+                    //Pagination
+                    this.pagination.current_page   =   info.current_page;
+                    this.pagination.total          =   info.total;
+                    this.pagination.per_page       =   info.per_page;
+                    this.pagination.last_page      =   info.last_page;
+                    this.pagination.from           =   info.from;
+                    this.pagination.to             =   info.to;
+                    //Limpiar caja busqueda
+                    this.limpiarfillBusqContacto();
+                }).catch(error => {
+                    this.errors = error.response.data
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // =========================================================
             // =============  TAB MIS CONTACTOS ========================
             tabMisContactos(){
@@ -2081,30 +2218,44 @@
                     }
                 });
             },
-            asignarCarteraMesTodos(nIdContacto){
-                var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
-
-                axios.post(url, {
-                    nIdCronograma: 220016,
-                    nIdContacto: parseInt(nIdContacto)
-                }).then(response => {
-                    if(response.data[0].nFlagMsje==1){
-                        swal('Se asignó a Cartera de Mes');
-                        this.listarContactoSinCarteraMes(1);
-                    }
-                    else{
-                        swal('No se Asignó');
-                        this.listarContactoSinCarteraMes(1);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+            asignarCarteraMesTodos(c){
+                swal({
+                    title: 'Estas seguro de asignar a Cartera todas las referencias de este Contacto?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Asignar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
+                            axios.post(url, {
+                                nIdCronograma: 220016,
+                                nIdContacto: parseInt(c.nIdContacto),
+                                cFlagCarteraMes: 'S'
+                            }).then(response => {
+                                if(response.data[0].nFlagMsje==1){
+                                    swal('Se asignó a Cartera de Mes');
+                                    this.listarContactoSinCarteraMes(1);
+                                }
+                                else{
+                                    swal('No se Asignó');
+                                    this.listarContactoSinCarteraMes(1);
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
                         }
-                    }
-                });
+                    })
             },
             asignarCarteraMes(nIdContacto){
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
@@ -2130,6 +2281,45 @@
                         }
                     }
                 });
+            },
+            anularCarteraMesTodos(c){
+                swal({
+                    title: 'Estas seguro de desactivar este vehículo?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
+                            axios.post(url, {
+                                nIdCronograma: 220016,
+                                nIdContacto: parseInt(c.nIdContacto),
+                                cFlagCarteraMes: 'N'
+                            }).then(response => {
+                                if(response.data[0].nFlagMsje==1){
+                                    swal('Se asignó a Cartera de Mes');
+                                    this.listarContactoSinCarteraMes(1);
+                                }
+                                else{
+                                    swal('No se Asignó');
+                                    this.listarContactoSinCarteraMes(1);
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
             },
             // ==========================================================
             // =============  TAB CARTERA DEL MES =======================
@@ -3761,7 +3951,19 @@
                                 break;
                             }
                         }
-                    }
+                    }break;
+                    case 'contacto':
+                    {
+                        switch(accion){
+                            case 'detalle':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarReferenciasVehiculo(1);
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             // ===========================================================
