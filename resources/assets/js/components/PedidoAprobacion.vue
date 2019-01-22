@@ -1091,6 +1091,7 @@
                     }
                 });
             },
+            //REGISTRAR CONTACTO
             listarContactoSinCarteraMes(){
                 var url = this.ruta + '/pedido/GetListContactoBySinCarteraMes';
                 axios.get(url, {
@@ -1706,7 +1707,7 @@
                                     this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
                                     this.aprobarPedido(data);
                                 }
-                                console.log(data);
+                                // console.log(data);
                                 break;
                             }
                         }
