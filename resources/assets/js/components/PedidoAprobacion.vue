@@ -151,9 +151,13 @@
                                             <tbody>
                                                 <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                     <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="aprobarPedido(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                        </el-tooltip>&nbsp;&nbsp; -->
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="abrirModal('contacto', 'direcciones', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
                                                         </el-tooltip>&nbsp;&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
@@ -540,6 +544,125 @@
                 </div>
             </div>
 
+            <!-- MODAL ASIGNACIÓN DIRECCIONES -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ASIGNACIÓN DE DIRECCIONES DEL SOCIO DE NEGOCIO  {{ fillDirecciones.cContacto }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="text-center">
+                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <vs-divider border-style="solid" color="dark">
+                                                Direcciones Fiscales
+                                                &nbsp;&nbsp;
+                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                    <div slot="content">Agregar Dirección Fiscal</div>
+                                                    <i @click="agregarDireccion(1)" :style="'color:#796AEE'" class="fa-md fa fa-plus"></i>
+                                                </el-tooltip>&nbsp;&nbsp;
+                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                    <div slot="content">Asignar Dirección</div>
+                                                    <i @click="asignarDireccion(1)" :style="'color:#796AEE'" class="fa-md fa fa-refresh"></i>
+                                                </el-tooltip>&nbsp;&nbsp;
+                                            </vs-divider>
+                                            <template v-if="arrayDireccionesFiscales.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID Fiscal</th>
+                                                                <th>Nombre Dirección</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(direccion, index) in arrayDireccionesFiscales" :key="index">
+                                                                <td> {{ direccion.AddressName = direccion.AddressID + 0 + (index+1) }} </td>
+                                                                <td><input type="text" class="form-control form-control-sm" v-model="direccion.Street"/></td>
+                                                                <td>
+                                                                    <el-tooltip content="Eliminar Dirección Fiscal" placement="top">
+                                                                        <button type="button" rel="tooltip" class="btn btn-info" @click.prevent="removerDireccion(1, index)">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </template>
+                                            <vs-divider border-style="solid" color="dark">
+                                                Direcciones de Despacho
+                                                &nbsp;&nbsp;
+                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                    <div slot="content">Agregar Dirección de Despacho</div>
+                                                    <i @click="agregarDireccion(2)" :style="'color:#796AEE'" class="fa-md fa fa-plus"></i>
+                                                </el-tooltip>&nbsp;&nbsp;
+                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                    <div slot="content">Asignar Dirección</div>
+                                                    <i @click="asignarDireccion(2)" :style="'color:#796AEE'" class="fa-md fa fa-refresh"></i>
+                                                </el-tooltip>&nbsp;&nbsp;
+                                            </vs-divider>
+                                            <template v-if="arrayDireccionesDespacho.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID Despacho</th>
+                                                                <th>Nombre Dirección</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(direccion, index) in arrayDireccionesDespacho" :key="index">
+                                                                <td> {{ direccion.AddressName = direccion.AddressID + 0 + (index+1) }} </td>
+                                                                <td><input type="text" class="form-control form-control-sm" v-model="direccion.Street"/></td>
+                                                                <td>
+                                                                    <el-tooltip content="Eliminar Dirección Despacho" placement="top">
+                                                                        <button type="button" rel="tooltip" class="btn btn-info" @click.prevent="removerDireccion(2, index)">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </template>
+                                            <template v-if="arrayDireccionesFiscales.length || arrayDireccionesDespacho.length">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-4">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDireccion">
+                                                            <i class="fa fa-save"></i> ASIGNAR DIRECCIONES
+                                                        </button>
+                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDireccion">
+                                                            <i class="fa fa-recycle"></i> LIMPIAR
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalDirecciones()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -596,8 +719,21 @@
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
+                // MODAL ASIGNACIÓN DIRECCIONES
+                cFlagOpcion: '',
+                arrayDireccionesFiscales: [],
+                arrayDireccionesDespacho: [],
+                fillDirecciones: {
+                    nIdCabeceraPedido: '',
+                    nIdContacto: '',
+                    cContacto: '',
+                    cDireccion: '',
+                    cCardCode: '',
+                    cTipoPersona: ''
+                },
+                arrayContacto: [],
                 //===========================================================
-                // =============  VARIABLES SAP ========================
+                // ==================  VARIABLES SAP ========================
                 formSap:{
                     nidcabecerapedido: 0,
                     ccardcode: '',
@@ -805,6 +941,241 @@
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
             },
+            //METODOS ASIGNACIÓN DIRECCIONES
+            agregarDireccion(op){
+                if(this.validarAgregarDireccion(op)){
+                    return;
+                }
+                let me = this;
+                if (op == 1) {
+                    me.arrayDireccionesFiscales.push({
+                        AddressID : 'Dirección Fiscal ',
+                        AddressName : '',
+                        Street: ''
+                    });
+                    toastr.success('Se Agregó una Nueva Dirección Fiscal');
+                }
+                if (op == 2) {
+                    me.arrayDireccionesDespacho.push({
+                        AddressID : 'Dirección Despacho ',
+                        AddressName : '',
+                        Street: ''
+                    });
+                    toastr.success('Se Agregó una Nueva Dirección Despacho');
+                }
+            },
+            validarAgregarDireccion(op){
+                let me = this;
+                let sw = 0;
+                me.mensajeError =[];
+
+                if(op == 1) {
+                    this.arrayDireccionesFiscales.map(function (x, y) {
+                        if(x.AddressName == ''){
+                            me.mensajeError.push('ID Dirección Fiscal, campo obligatorio ' + (y+1));
+                            sw = true;
+                        }
+                        if(x.Street == ''){
+                            me.mensajeError.push('Ingresa la Dirección Fiscal N° ' + (y+1));
+                            sw = true;
+                        }
+                    });
+                }
+                if(op == 2){
+                    this.arrayDireccionesDespacho.map(function (x, y) {
+                        if(x.AddressName == ''){
+                            me.mensajeError.push('ID Dirección Despacho, campo obligatorio ' + (y+1));
+                            sw = true;
+                        }
+                        if(x.Street == ''){
+                            me.mensajeError.push('Ingresa la Dirección Despacho N° ' + (y+1));
+                            sw = true;
+                        }
+                    });
+                }
+                return sw;
+            },
+            removerDireccion(op, index){
+                if (op == 1){
+                    this.$delete(this.arrayDireccionesFiscales, index);
+                    toastr.success('Se Removio la Dirección Fiscal N° ' + (parseInt(index)+1));
+                }
+                if (op == 2) {
+                    this.$delete(this.arrayDireccionesDespacho, index);
+                    toastr.success('Se Removio la Dirección de Despacho N° ' + (parseInt(index)+1));
+                }
+            },
+            asignarDireccion(op){
+                var url = this.ruta + '/pedido/GetDireccionContactoByPedido';
+                axios.get(url, {
+                    params: {
+                        'nIdContacto': this.fillDirecciones.nIdContacto,
+                    }
+                }).then(response => {
+                    this.fillDirecciones.cDireccion = response.data[0].cDireccion;
+                    this.cargarDireccionContacto(op);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarDireccionContacto(op){
+                if (op == 1) {
+                    this.arrayDireccionesFiscales = [];
+                    this.arrayDireccionesFiscales.push({
+                        AddressID : 'Dirección Fiscal ',
+                        AddressName : '',
+                        Street: this.fillDirecciones.cDireccion
+                    });
+                    toastr.success('Se PreCargo la Dirección Fiscal');
+                }
+                if (op == 2) {
+                    this.arrayDireccionesDespacho = [];
+                    this.arrayDireccionesDespacho.push({
+                        AddressID : 'Dirección Despacho ',
+                        AddressName : '',
+                        Street: this.fillDirecciones.cDireccion
+                    });
+                    toastr.success('Se PreCargo la Dirección Despacho');
+                }
+            },
+            registrarDireccion(){
+                if(this.validarDireccion()){
+                    return;
+                }
+
+                // this.mostrarProgressBar();
+                var url = this.ruta + '/pedido/SetRegistrarDireccionContacto';
+                axios.post(url, {
+                    'nIdContacto': this.fillDirecciones.nIdContacto,
+                    'arrayDireccionesFiscales': this.arrayDireccionesFiscales,
+                    'arrayDireccionesDespacho': this.arrayDireccionesDespacho
+                }).then(response => {
+                    console.log(response.data);
+                    this.obtenerTipoPersona();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerTipoPersona(){
+                var url = this.ruta + '/pedido/GetObtenerTipoPersona';
+                axios.get(url, {
+                    params: {
+                        'nIdContacto': this.fillDirecciones.nIdContacto,
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                    this.fillDirecciones.cTipoPersona = response.data[0].cFlagTipoPersona;
+                    this.listarContactoSinCarteraMes();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarContactoSinCarteraMes(){
+                var url = this.ruta + '/pedido/GetListContactoBySinCarteraMes';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' :   220016,
+                        'ntipopersona'  :   (this.fillDirecciones.cTipoPersona == 'N') ? 1 : 2,
+                        'nIdContacto'   :   this.fillDirecciones.nIdContacto
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                    this.arrayContacto = response.data;
+                    this.SapRegistrarNuevoContacto();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            SapRegistrarNuevoContacto(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
+
+                // console.log(contacto);
+                this.mostrarProgressBar();
+                var url = this.ruta + '/gescontacto/SapSetContacto';
+                axios.post(url, {
+                    'contacto': this.arrayContacto[0]
+                }).then(response => {
+                    console.log(response.data);
+
+                    // let data = response.data;
+                    // this.SAPNuevoContactoJson  =  JSON.parse(data);
+                    // this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarDireccion(){
+                let me = this;
+                let sw = 0;
+                me.mensajeError =[];
+
+                if( me.arrayDireccionesFiscales.length == 0) {
+                    me.mensajeError.push('Debe agregar al menos una dirección fiscal, campo obligatorio ' + (y+1));
+                } else {
+                    me.arrayDireccionesFiscales.map(function (x, y) {
+                        if(x.AddressID == '' || x.AddressName == ''){
+                            me.mensajeError.push('ID Dirección Fiscal se encuentra vacío, campo obligatorio ' + (y+1));
+                            sw = true;
+                        }
+                        if(x.Street == ''){
+                            me.mensajeError.push('Debe ingresar una Dirección Fiscal, campo obligatorio ' + (y+1));
+                            sw = true;
+                        }
+                    });
+                }
+
+                me.arrayDireccionesDespacho.map(function (x, y) {
+                    if(x.AddressID == '' || x.AddressName == ''){
+                        me.mensajeError.push('ID Dirección Despacho se encuentra vacío, campo obligatorio ' + (y+1));
+                        sw = true;
+                    }
+                    if(x.Street == ''){
+                        me.mensajeError.push('Debe ingresar una Dirección Despacho, campo obligatorio ' + (y+1));
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
+            limpiarDireccion(){
+                this.arrayDireccionesFiscales = [];
+                this.arrayDireccionesDespacho = [];
+            },
+            //Aprobar Pedido
             aprobarPedido(pedido){
                 this.formSap.nidcabecerapedido  = pedido.nIdCabeceraPedido;
                 this.formSap.ccardcode          = pedido.cCardCode;
@@ -825,16 +1196,11 @@
                             'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                             'nidcabecerapedido': parseInt(me.formSap.nidcabecerapedido)
                         }).then(function (response) {
-                            if(response.data[0].nFlagMsje == 1){
+                            if (response.data[0].nFlagMsje == 1) {
                                 me.mostrarProgressBar();
-
-                                if (this.formSap.ccardcode == '' || this.formSap.ccardcode == null) {
-                                    me.generarContacto();
-                                } else {
-                                    me.obtenerIgv();
-                                }
+                                me.obtenerIgv();
                                 //me.obtenerPedidoById();
-                            }else{
+                            } else {
                                 swal(
                                     'ERROR!',
                                     response.data[0].cMensaje
@@ -882,9 +1248,6 @@
                         }
                     }
                 });
-            },
-            generarContacto(){
-
             },
             obtenerIgv(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
@@ -992,7 +1355,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdPedido
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
+                    if (response.data[0].nFlagMsje == 1) {
                         me.limpiarFormulario();
                         me.listarPedidos(1);
                         $("#myBar").hide();
@@ -1261,7 +1624,32 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
+                    case "contacto":
+                    {
+                        switch(accion){
+                            case 'direcciones':
+                            {
+                                this.fillDirecciones.cCardCode = data.cCardCode;
+                                //SI EL CARDCODE NO ESTA INTEGRADO
+                                if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null) {
+                                    this.cFlagOpcion = 1;//Flag Requiere Integración Contacto/Pedido
+                                    this.accionmodal=4;
+                                    this.modal = 1;
+                                    this.fillDirecciones.nIdCabeceraPedido = data.nIdCabeceraPedido;
+                                    this.fillDirecciones.nIdContacto = data.nIdContacto;
+                                    this.fillDirecciones.cContacto = data.cContacto;
+                                } else {
+                                    //INTEGRAR PEDIDO
+                                    this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
+                                    this.aprobarPedido(data);
+                                }
+                                console.log(data);
+                                break;
+                            }
+                        }
+                    }
                 }
             },
             cerrarModal(){
@@ -1269,6 +1657,17 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+            },
+            cerrarModalDirecciones(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
+                this.arrayDireccionesFiscales = [];
+                this.arrayDireccionesDespacho = [];
+                this.fillDirecciones.nIdContacto = '';
+                this.fillDirecciones.cContacto = '';
+                this.fillDirecciones.cDireccion = '';
             },
             limpiarFormulario(){
                 //Limpiar Variables SAP
