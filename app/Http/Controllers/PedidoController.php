@@ -117,13 +117,106 @@ class PedidoController extends Controller
         return ['arrayPedido'=>$arrayPedido];
     }
 
+    public function GetDireccionContactoByPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto    =   $request->nIdContacto;
+
+        $arrayDireccionContactoByPedido = DB::select('exec [usp_Pedido_GetDireccionContactoByPedido] ?',
+                                                    [   $nIdContacto
+                                                    ]);
+        return response()->json($arrayDireccionContactoByPedido);
+    }
+
+    public function SetRegistrarDireccionContacto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $nIdContacto = $request->nIdContacto;
+
+            $arrayDireccionesFiscalesLength = sizeof($request->arrayDireccionesFiscales);
+            if($arrayDireccionesFiscalesLength > 0) {
+                $arrayDireccionesFiscales = $request->arrayDireccionesFiscales;
+                foreach($arrayDireccionesFiscales as $ep=>$det)
+                {
+                    $data = DB::select('exec [usp_Contacto_SetDirecciones] ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $nIdContacto,
+                                                                    $det['AddressName'],
+                                                                    $det['Street'],
+                                                                    'F',
+                                                                    Auth::user()->id
+                                                                ]);
+                }
+            }
+
+            $arrayDireccionesDespachoLength = sizeof($request->arrayDireccionesDespacho);
+            if($arrayDireccionesDespachoLength > 0) {
+                $arrayDireccionesDespacho = $request->arrayDireccionesDespacho;
+                foreach($arrayDireccionesDespacho as $ep=>$det)
+                {
+                    $data = DB::select('exec [usp_Contacto_SetDirecciones] ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $nIdContacto,
+                                                                    $det['AddressName'],
+                                                                    $det['Street'],
+                                                                    'D',
+                                                                    Auth::user()->id
+                                                                ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function GetObtenerTipoPersona(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto    =   $request->nIdContacto;
+
+        $data = DB::select('exec [usp_Contacto_GetObtenerTipoPersona] ?',
+                                                    [   $nIdContacto
+                                                    ]);
+        return response()->json($data);
+    }
+
+    public function GetListContactoBySinCarteraMes(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $nIdCronograma  = $request->nidcronograma;
+        $nTipoPersona   = $request->ntipopersona;
+        $nIdContacto    = $request->nIdContacto;
+
+        $arrayContacto = DB::select('exec [usp_Pedido_GetListContactoBySinCarteraMes] ?, ?, ?, ?, ?',
+                                                                                [   $nIdEmpresa,
+                                                                                    $nIdSucursal,
+                                                                                    $nIdCronograma,
+                                                                                    $nTipoPersona,
+                                                                                    $nIdContacto
+                                                                                ]);
+
+        return response()->json($arrayContacto);
+    }
+
     public function SetAprobarPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     =   $request->nidempresa;
-        $nIdSucursal    =   $request->nidsucursal;
-        $nIdCabeceraPedido  =  $request->nidcabecerapedido;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
 
         $arrayPedido = DB::select('exec [usp_Pedido_SetAprobarPedido] ?, ?, ?, ?',
                                                     [   $nIdEmpresa,
