@@ -1049,8 +1049,10 @@
                 if(this.validarDireccion()){
                     return;
                 }
+                let me = this;
+                me.loadingProgressBar("SINCRONIZANDO DIRECCIONES CON EL CLIENTE...");
 
-                // this.mostrarProgressBar();
+                this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/SetRegistrarDireccionContacto';
                 axios.post(url, {
                     'nIdContacto': this.fillDirecciones.nIdContacto,
@@ -1117,19 +1119,15 @@
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
-                // console.log(contacto);
-                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/SapSetContacto';
                 axios.post(url, {
                     'contacto': this.arrayContacto[0]
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
                     this.actualizarCardCodeContacto(this.arrayContacto[0].nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
-                    $("#myBar").hide();
-                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1141,6 +1139,7 @@
                 });
             },
             actualizarCardCodeContacto(nIdContacto, dataJSON, logRpta){
+                let me = this;
 
                 this.fillDirecciones.cCardCode = dataJSON.CardCode.toString();
 
@@ -1153,8 +1152,9 @@
                 }).then(response => {
                     // console.log(response);
                     if(response.data[0].nFlagMsje==1){
-                        swal(response.data[0].cMensaje);
-                        // this.aprobarPedido2();
+                        // swal(response.data[0].cMensaje);
+                        me.loadingProgressBar(response.data[0].cMensaje);
+                        this.aprobarPedido2();
                     } else {
                         swal(response.data[0].cMensaje);
                     }
@@ -1316,6 +1316,11 @@
                     this.formSap.igv = response.data[0].fDatoParPorcentual;
                     if(this.formSap.igv > 0){
                         this.obtenerPedidoById();
+                    } else {
+                        swal(
+                            'ERROR!',
+                            'OCURRIÓ UN ERROR AL OBTENER EL IGV'
+                        )
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1356,10 +1361,10 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
-                    'fDocDate':     moment().format('YYYY-MM-DD'),
-                    'fDocDueDate':  moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'Igv': 1 + parseFloat((me.formSap.igv)),
-                    'data': me.arraySapPedido
+                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'Igv'           :   1 + parseFloat((me.formSap.igv)),
+                    'data'          :   me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;
                     me.arraySapRptPedido.map(function(x){
@@ -1369,7 +1374,7 @@
                             console.log("Integración Pedido SAP : OK");
                             console.log(me.jsonPedido.DocEntry);
                             me.arraySapUpdPedido.push({
-                                'nIdCabeceraPedido' :   me.formSap.nidcabecerapedido.toString(),
+                                'nIdCabeceraPedido' :   (me.cFlagOpcion = 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
                                 'nDocEntry'         :   parseInt(me.jsonPedido.DocEntry),
                                 'nDocNum'           :   parseInt(me.jsonPedido.DocNum),
                                 'cDocType'          :   me.jsonPedido.DocType.toString(),
@@ -1381,7 +1386,7 @@
                             setTimeout(function() {
                                 me.registroDocEntryPedido();
                             }, 3800);
-                            me.loading.close();
+
                         }
                     });
                 }).catch(error => {
@@ -1413,12 +1418,13 @@
                     if (response.data[0].nFlagMsje == 1) {
                         me.limpiarFormulario();
                         me.listarPedidos(1);
-                        $("#myBar").hide();
                         swal(
                             'Aprobado!',
                             'El pedido ha sido APROBADO con éxito.',
                             'success'
                         );
+                        $("#myBar").hide();
+                        me.loading.close();
                     } else {
                         swal({
                             type: 'error',
@@ -1744,6 +1750,7 @@
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
                 //Direcciones
+                this.cerrarModal();
                 this.arrayDireccionesFiscales = [];
                 this.arrayDireccionesDespacho = [];
                 this.cFlagOpcion = '';
