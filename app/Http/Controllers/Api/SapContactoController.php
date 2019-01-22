@@ -7,6 +7,7 @@ use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SapContactoController extends Controller
 {
@@ -46,12 +47,16 @@ class SapContactoController extends Controller
 
     public function SapSetContacto(Request $request)
     {
-        return $request;
-
         $client = new Client([
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $arrayContacto = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
+                                            [
+                                                $request->contacto['nIdContacto']
+                                            ]);
+
+        //Obtener Tipo Persona
         $tipoPersona = $request->contacto['cFlagTipoPersona'];
 
         $CardCode       =   "C". $request->contacto['cNumeroDocumento'];
@@ -94,24 +99,47 @@ class SapContactoController extends Controller
                     "U_SYP_BPN2"    =>  $U_SYP_BPN2,
                     "U_SYP_BPTP"    =>  $U_SYP_BPTP,
                     "U_SYP_BPTD"    =>  $U_SYP_BPTD,
-                    "BPAddresses" => [
-                        [
-                            "AddressName"   =>  "Domicilio Fiscal",
-                            "Street"        =>  $Address,
-                            "Country"       =>  "PE",
-                            "AddressType"   =>  "bo_BillTo",
-                            "BPCode"        =>  $CardCode,
-                        ],
-                        [
-                            "AddressName"   =>  "Domicilio Despacho",
-                            "Street"        =>  $Address,
-                            "Country"       =>  "PE",
-                            "AddressType"   =>  "bo_ShipTo",
-                            "BPCode"        =>  $CardCode
-                        ]
-                    ]
+                    "BPAddresses"   =>  array(),
+                    // "BPAddresses"   => [
+                    //     [
+                    //         "AddressName"   =>  "Domicilio Fiscal",
+                    //         "Street"        =>  $Address,
+                    //         "Block"         =>  "Chachapoyas",
+                    //         "ZipCode"       =>  "010101",
+                    //         "City"          =>  "Chachapoyas",
+                    //         "County"        =>  "Amazonas",
+                    //         "Country"       =>  "PE",
+                    //         "AddressType"   =>  "bo_BillTo",
+                    //         "BPCode"        =>  $CardCode,
+                    //     ],
+                    //     [
+                    //         "AddressName"   =>  "Domicilio Despacho",
+                    //         "Street"        =>  $Address,
+                    //         "Block"         =>  "Chachapoyas",
+                    //         "ZipCode"       =>  "010101",
+                    //         "City"          =>  "Chachapoyas",
+                    //         "County"        =>  "Amazonas",
+                    //         "Country"       =>  "PE",
+                    //         "AddressType"   =>  "bo_ShipTo",
+                    //         "BPCode"        =>  $CardCode
+                    //     ]
+                    // ]
                 ]
             ];
+
+            foreach ($arrayContacto as $key => $value) {
+                $json['json']['BPAddresses'][] = [
+                    "AddressName"   =>  $value->AddressName,
+                    "Street"        =>  $value->Street,
+                    "Block"         =>  "Chachapoyas",
+                    "ZipCode"       =>  "010101",
+                    "City"          =>  "Chachapoyas",
+                    "County"        =>  "Amazonas",
+                    "Country"       =>  "PE",
+                    "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
+                    "BPCode"        =>  $CardCode,
+                ];
+            }
         } else {
             $U_SYP_BPTP = "TPJ";
             $U_SYP_BPTD = "6";
@@ -129,25 +157,48 @@ class SapContactoController extends Controller
                     "Currency"      =>  "##",
                     "U_SYP_BPTP"    =>  $U_SYP_BPTP,
                     "U_SYP_BPTD"    =>  $U_SYP_BPTD,
-                    "BPAddresses" => [
-                        [
-                            "AddressName"   =>  "Domicilio Fiscal",
-                            "Street"        =>  $Address,
-                            "Country"       =>  "PE",
-                            "AddressType"   =>  "bo_BillTo",
-                            "BPCode"        =>  $CardCode,
-                        ],
-                        [
-                            "AddressName"   =>  "Domicilio Despacho",
-                            "Street"        =>  $Address,
-                            "Country"       =>  "PE",
-                            "AddressType"   =>  "bo_ShipTo",
-                            "BPCode"        =>  $CardCode
-                        ]
-                    ]
+                    "BPAddresses"   =>  array(),
+                    // "BPAddresses"   => [
+                    //     [
+                    //         "AddressName"   =>  "Domicilio Fiscal",
+                    //         "Street"        =>  $Address,
+                    //         "Block"         =>  "Chachapoyas",
+                    //         "ZipCode"       =>  "010101",
+                    //         "City"          =>  "Chachapoyas",
+                    //         "County"        =>  "Amazonas",
+                    //         "Country"       =>  "PE",
+                    //         "AddressType"   =>  "bo_BillTo",
+                    //         "BPCode"        =>  $CardCode,
+                    //     ],
+                    //     [
+                    //         "AddressName"   =>  "Domicilio Despacho",
+                    //         "Street"        =>  $Address,
+                    //         "Block"         =>  "Chachapoyas",
+                    //         "ZipCode"       =>  "010101",
+                    //         "City"          =>  "Chachapoyas",
+                    //         "County"        =>  "Amazonas",
+                    //         "Country"       =>  "PE",
+                    //         "AddressType"   =>  "bo_ShipTo",
+                    //         "BPCode"        =>  $CardCode
+                    //     ]
+                    // ]
                 ]
             ];
+            foreach ($arrayContacto as $key => $value) {
+                $json['json']['BPAddresses'][] = [
+                    "AddressName"   =>  $value->AddressName,
+                    "Street"        =>  $value->Street,
+                    "Block"         =>  "Chachapoyas",
+                    "ZipCode"       =>  "010101",
+                    "City"          =>  "Chachapoyas",
+                    "County"        =>  "Amazonas",
+                    "Country"       =>  "PE",
+                    "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
+                    "BPCode"        =>  $CardCode,
+                ];
+            }
         }
+        // return $json;
 
         $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();

@@ -732,6 +732,7 @@
                     cTipoPersona: ''
                 },
                 arrayContacto: [],
+                SAPNuevoContactoJson: '',
                 //===========================================================
                 // ==================  VARIABLES SAP ========================
                 formSap:{
@@ -1124,12 +1125,66 @@
                 }).then(response => {
                     console.log(response.data);
 
-                    // let data = response.data;
-                    // this.SAPNuevoContactoJson  =  JSON.parse(data);
-                    // this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
+                    let data = response.data;
+                    this.SAPNuevoContactoJson  =  JSON.parse(data);
+                    this.actualizarCardCodeContacto(this.arrayContacto[0].nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
                     $("#myBar").hide();
                     me.loading.close();
                 }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarCardCodeContacto(nIdContacto, dataJSON, logRpta){
+
+                this.fillDirecciones.cCardCode = dataJSON.CardCode.toString();
+
+                var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
+                axios.post(url, {
+                    'nIdContacto'   : nIdContacto,
+                    'CardCode'      : dataJSON.CardCode.toString(),
+                    'CardType'      : dataJSON.CardType.toString(),
+                    'LogRespuesta'  : logRpta
+                }).then(response => {
+                    // console.log(response);
+                    if(response.data[0].nFlagMsje==1){
+                        swal(response.data[0].cMensaje);
+                        // this.aprobarPedido2();
+                    } else {
+                        swal(response.data[0].cMensaje);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            aprobarPedido2(){
+                let me = this;
+                var url = me.ruta + '/pedido/SetAprobarPedido';
+                axios.put(url,{
+                    'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nidcabecerapedido': parseInt(me.fillDirecciones.nIdCabeceraPedido)
+                }).then(function (response) {
+                    if (response.data[0].nFlagMsje == 1) {
+                        me.obtenerIgv();
+                    } else {
+                        swal(
+                            'ERROR!',
+                            response.data[0].cMensaje
+                        )
+                    }
+                }).catch(function (error) {
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -1278,7 +1333,7 @@
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': this.formSap.nidcabecerapedido
+                        'nidcabecerapedido': (this.cFlagOpcion = 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido//Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
@@ -1314,12 +1369,12 @@
                             console.log("Integración Pedido SAP : OK");
                             console.log(me.jsonPedido.DocEntry);
                             me.arraySapUpdPedido.push({
-                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry': parseInt(me.jsonPedido.DocEntry),
-                                'nDocNum': parseInt(me.jsonPedido.DocNum),
-                                'cDocType': me.jsonPedido.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                                'nIdCabeceraPedido' :   me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry'         :   parseInt(me.jsonPedido.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonPedido.DocNum),
+                                'cDocType'          :   me.jsonPedido.DocType.toString(),
+                                'cLogRespuesta'     :   response.data.toString(),
+                                'cItemCode'         :   me.jsonPedido.DocumentLines[0].ItemCode.toString()
                             });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY PEDIDO ===============
@@ -1665,9 +1720,15 @@
                 this.mensajeError = '';
                 this.arrayDireccionesFiscales = [];
                 this.arrayDireccionesDespacho = [];
+                this.cFlagOpcion = '';
+                this.fillDirecciones.nIdCabeceraPedido = '';
                 this.fillDirecciones.nIdContacto = '';
                 this.fillDirecciones.cContacto = '';
                 this.fillDirecciones.cDireccion = '';
+                this.fillDirecciones.cCardCode = '';
+                this.fillDirecciones.cTipoPersona = '';
+                this.arrayContacto = [],
+                this.SAPNuevoContactoJson = ''
             },
             limpiarFormulario(){
                 //Limpiar Variables SAP
@@ -1681,6 +1742,19 @@
                 this.arraySapUpdFactura= [],
                 this.formSap.nidcabecerapedido= 0,
                 this.formSap.ccardcode= ''
+                this.formSap.igv = '';
+                //Direcciones
+                this.arrayDireccionesFiscales = [];
+                this.arrayDireccionesDespacho = [];
+                this.cFlagOpcion = '';
+                this.fillDirecciones.nIdCabeceraPedido = '';
+                this.fillDirecciones.nIdContacto = '';
+                this.fillDirecciones.cContacto = '';
+                this.fillDirecciones.cDireccion = '';
+                this.fillDirecciones.cCardCode = '';
+                this.fillDirecciones.cTipoPersona = '';
+                this.arrayContacto = [],
+                this.SAPNuevoContactoJson = ''
             },
             //Limpiar Paginación
             limpiarPaginacion(){

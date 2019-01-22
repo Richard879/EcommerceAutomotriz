@@ -3779,12 +3779,12 @@
                 axios.post(url, {
                     'contacto': contacto
                 }).then(response => {
-                    $("#myBar").hide();
                     // console.log(response.data);
 
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
                     this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
+                    $("#myBar").hide();
                     me.loading.close();
                 }).catch(error => {
                     console.log(error);
@@ -3804,7 +3804,6 @@
                     'CardType'      : dataJSON.CardType.toString(),
                     'LogRespuesta'  : logRpta
                 }).then(response => {
-                    $("#myBar").hide();
                     console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
