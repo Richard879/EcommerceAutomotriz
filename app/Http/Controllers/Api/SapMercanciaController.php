@@ -13,14 +13,14 @@ class SapMercanciaController extends Controller
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $array_rpta = [];
         $rptaSap   = [];
 
         $User       =   Auth::user()->id;
-        $cCardCode   =   'C'.$User;
+        $cCardCode  =   'C'.$User;
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -29,11 +29,15 @@ class SapMercanciaController extends Controller
                     "CardCode"      => $request->cCardCode,
                     //"DocDate"       => (string)$request->fDocDate,
                     //"DocDueDate"    => (string)$request->fDocDueDate,
+                    "U_SYP_MDMT"    =>  "01",
+                    "U_SYP_MDTD"    =>  "01",
+                    "U_SYP_MDSD"    =>  "1235",
+                    "U_SYP_MDCD"    =>  "12345679",
+                    "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                             [
-                                "BaseType"    => "22",
-                                "BaseEntry"    => (string)$value['nDocEntry'],
-                                "BaseLine"     => "0"
+                                "BaseType"      =>  "22",
+                                "BaseEntry"     =>  (string)$value['nDocEntry']
                             ]
                         ]
                     ]

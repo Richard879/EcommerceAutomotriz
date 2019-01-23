@@ -2092,6 +2092,7 @@
                         me.registroSapArticulo();
                     }
                     else{
+                        me.loadingProgressBar("OCURRIO UN PROBLEMA...");
                         me.verResultados();
                     }
                 }).catch(error => {
@@ -2145,6 +2146,11 @@
                 me.arraySapArticulo.map(function(x, y){
                     // Si se encuentra
                     //[01]
+                    // if (!me.arraySapItemCode.includes(x.cNumeroVin)) {
+                    //     me.arraySapCompra.push(x);
+                    // }
+                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en compra
+                    //Sino se encuentra no pase a compra
                     if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapCompra.push(x);
                     }
@@ -2152,12 +2158,12 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    'cCardCode': me.formCompra.ccarcode,
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode': me.formCompra.warehousecode,
-                    'Igv': 1 + parseFloat((me.formCompra.igv)),
-                    'data': me.arraySapCompra
+                    'cCardCode'     :   me.formCompra.ccarcode,
+                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode' :   me.formCompra.warehousecode,
+                    'Igv'           :   1 + parseFloat((me.formCompra.igv)),
+                    'data'          :   me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     me.arraySapRptCompra.map(function(x){

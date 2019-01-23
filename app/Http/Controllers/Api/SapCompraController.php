@@ -61,7 +61,7 @@ class SapCompraController extends Controller
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
-            
+
             $SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
 
             $json = [
