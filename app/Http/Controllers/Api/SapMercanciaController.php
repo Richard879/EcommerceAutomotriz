@@ -13,7 +13,7 @@ class SapMercanciaController extends Controller
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         $array_rpta = [];
@@ -21,6 +21,10 @@ class SapMercanciaController extends Controller
 
         $User       =   Auth::user()->id;
         $cCardCode  =   'C'.$User;
+
+        $ManufacturerSerialNumber = mt_rand(100000000, 999999999);
+        $InternalSerialNumber = mt_rand(100000,999999);
+        $ReceptionDate = date('Y-m-d');
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -38,10 +42,29 @@ class SapMercanciaController extends Controller
                             [
                                 "BaseType"      =>  "22",
                                 "BaseEntry"     =>  (string)$value['nDocEntry']
+                            ],
+                            "SerialNumbers" => [
+                                [
+                                    "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
+                                    "InternalSerialNumber"      =>  $InternalSerialNumber,
+                                    "ExpiryDate"                =>  null,
+                                    "ManufactureDate"           =>  null,
+                                    "ReceptionDate"             =>  $ReceptionDate,
+                                    "WarrantyStart"             =>  null,
+                                    "WarrantyEnd"               =>  null,
+                                    "Location"                  =>  null,
+                                    "Notes"                     =>  null,
+                                    "BatchID"                   =>  null,
+                                    "SystemSerialNumber"        =>  1,
+                                    "BaseLineNumber"            =>  0,
+                                    "Quantity"                  =>  1,
+                                    "TrackingNote"              =>  null,
+                                    "TrackingNoteLine"          =>  null
+                                ]
                             ]
-                        ]
                     ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaByOC/", $json);
             $rptaSap = json_decode($response->getBody());
