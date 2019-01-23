@@ -1060,7 +1060,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
-                                                                            <div class="form-group row">
+                                                                            <!--<div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Departamento</label>
@@ -1091,9 +1091,9 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-6">
+                                                                                <!--<div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Distrito</label>
                                                                                         <div class="col-sm-8">
@@ -1105,6 +1105,24 @@
                                                                                                 :value="item.id">
                                                                                                 </el-option>
                                                                                             </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>-->
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text" v-model="formNuevoContacto.niddistrito" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar Ubigeo </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('ubigeo','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -2022,6 +2040,91 @@
                 </div>
             </div>
 
+            <!-- Modal Ubigeo-->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">UBIGEO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayUbigeo.length">
+                                            <div class="table-responsive barraLateral">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acción</th>
+                                                            <th>Código</th>
+                                                            <th>Departamento</th>
+                                                            <th>Provincia</th>
+                                                            <th>Distrito</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="u in arrayUbigeo" :key="u.cCode">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" >
+                                                                    <div slot="content">Asignar {{ u.cU_SYP_DIST }}</div>
+                                                                    <i @click="asignarUbigeo(u)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </td>
+                                                            <td v-text="u.cCode"></td>
+                                                            <td v-text="u.cU_SYP_DEPA"></td>
+                                                            <td v-text="u.cU_SYP_PROV"></td>
+                                                            <td v-text="u.cU_SYP_DIST"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--<div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaReferencia(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2072,7 +2175,7 @@
                     //Variables de Datos de contacto
                     niddepartamento: 0,
                     nidprovincia: 0,
-                    niddistrito: 0,
+                    niddistrito: '',
                     cdireccion: '',
                     cmailprincipal: '',
                     cmailalternativo: '',
@@ -2099,7 +2202,8 @@
                     nidmodelo2: '',
                     naniofabricacion2: '',
                     naniomodelo2: '',
-                    dfechareferenciacompra2: ''
+                    dfechareferenciacompra2: '',
+                    cubigeo: ''
                 },
                 formNuevoContactoJurifico:{
                     //Datos Personales y Contacto del Representante
@@ -2118,9 +2222,10 @@
                 arrayTipoDocumento: [],
                 arrayEstadoCivil: [],
                 arrayProfesion: [],
-                arrayDptos:[],
+                /*arrayDptos:[],
                 arrayProv : [],
-                arrayDist: [],
+                arrayDist: [],*/
+                arrayUbigeo: [],
                 vistaDatosPersonaNatural: 1,
                 SAPNuevoContactoJson: '',
                 // =============================================================
@@ -3130,7 +3235,7 @@
             llenarUbigeo(){
                 var url = this.ruta + '/ubigeo/SapGetUbigeo';
                 axios.get(url).then(response => {
-                    console.log(response.data);
+                    this.arrayUbigeo = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3141,7 +3246,11 @@
                     }
                 });
             },
-            llenarComboDptos(){
+            asignarUbigeo(u){
+                this.formNuevoContacto.niddistrito = u.cCode;
+                this.cerrarModal();
+            },
+            /*llenarComboDptos(){
                 var url = this.ruta + '/ubigeo/GetDptos';
                 axios.get(url).then(response => {
                     this.arrayDptos = response.data;
@@ -3186,7 +3295,7 @@
                         }
                     }
                 });
-            },
+            },*/
             llenarComboEstadoCivil(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -3242,13 +3351,13 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formNuevoContacto.niddepartamento == 0){
+                /*if(this.formNuevoContacto.niddepartamento == 0){
                     this.mensajeError.push('Debe Seleccionar Departamento');
                 }
                 if(this.formNuevoContacto.nidprovincia == 0){
                     this.mensajeError.push('Debe Seleccionar Provincia');
-                }
-                if(this.formNuevoContacto.niddistrito == 0){
+                }*/
+                if(this.formNuevoContacto.niddistrito == 0 || !this.formNuevoContacto.niddistrito){
                     this.mensajeError.push('Debe Seleccionar Distrito');
                 }
                 if(!this.formNuevoContacto.cdireccion){
@@ -4127,6 +4236,17 @@
                             }
                         }
                     }break;
+                    case 'ubigeo':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             // ===========================================================
@@ -4155,9 +4275,9 @@
                 this.formNuevoContacto.cnombre = '',
                 this.formNuevoContacto.dfecnacimiento = '',
                 //Tab DATOS DE CONTACTO
-                this.formNuevoContacto.niddepartamento = 0,
-                this.formNuevoContacto.nidprovincia = 0,
-                this.formNuevoContacto.niddistrito = 0,
+                /*this.formNuevoContacto.niddepartamento = 0,
+                this.formNuevoContacto.nidprovincia = 0,*/
+                this.formNuevoContacto.niddistrito = '',
                 this.formNuevoContacto.cdireccion = '',
                 this.formNuevoContacto.cmailprincipal = '',
                 this.formNuevoContacto.cmailalternativo = '',
@@ -4237,5 +4357,11 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .barraLateral{
+        height: 45vh;
+        max-width:1200px;
+        overflow-x: auto;
+        overflow-y: auto;
     }
 </style>
