@@ -44,10 +44,20 @@ class SapArticuloController extends Controller
 
             $json = [
                 'json' => [
-                    "ItemCode"    => $value['cNumeroVin'],
-                    "ItemName"    => $cItemCode,
-                    "ItemType"    => $ItemType,
-                    "ItemsGroupCode" => "107"
+                    "ItemCode"              =>  $value['cNumeroVin'],
+                    "ItemName"              =>  $cItemCode,
+                    "ItemType"              =>  $ItemType,
+                    "ItemsGroupCode"        =>  "107",
+                    "IndirectTax"           =>  "tYES", //General           =>  Impuesto Directo
+                    "ManageSerialNumbers"   =>  "tYES", //General           =>  Articulo Gestiano Por
+                    "ApTaxCode"             =>  "IGV",  //Datos Compras     =>  Indicador impuestos acreedores
+                    "PurchaseUnit"          =>  "ZZ",   //Datos Compras     =>  Nombre de Unidad de Medida de Compras
+                    "ArTaxCode"             =>  "IGV",  //Datos Ventas      =>  Indicador de IVA
+                    "SalesUnit"             =>  "ZZ",   //Datos Ventas      =>  Indicador de IVA
+                    "U_SYP_TIPEXIST"        =>  "01",   //Campos Usuario    =>  Tipo de Existencia
+                    "U_SYP_TIPUNMED"        =>  "NIU",  //Campos Usuario    =>  Unidad Medida
+                    "U_SYP_CATEXIST"        =>  "1",    //Campos Usuario    =>  Catalogo de Existencias
+                    "U_SYP_CATEXIST1"       =>  "1"     //Campos Usuario    =>  Catalogo de Existencias - SUNAT
                 ]
             ];
 

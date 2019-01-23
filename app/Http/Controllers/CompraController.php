@@ -11,7 +11,6 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Compra;
 
-
 class CompraController extends Controller
 {
     public function GetCompra(Request $request)
@@ -111,9 +110,9 @@ class CompraController extends Controller
                 }
             }
             $data = [
-                'arrayVinExiste'=>$arrayVinExiste,
-                'arrayPrecioLista'=>$arrayPrecioLista,
-                'arrayNombreComercial'=>$arrayNombreComercial
+                'arrayVinExiste'        =>  $arrayVinExiste,
+                'arrayPrecioLista'      =>  $arrayPrecioLista,
+                'arrayNombreComercial'  =>  $arrayNombreComercial
             ];
             DB::commit();
             return response()->json($data);
