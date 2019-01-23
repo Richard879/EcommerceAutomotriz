@@ -2143,9 +2143,9 @@
                 me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
-                    // Si no se encuentra
+                    // Si se encuentra
                     //[01]
-                    if (!me.arraySapItemCode.includes(x.cNumeroVin)) {
+                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapCompra.push(x);
                     }
                 });
