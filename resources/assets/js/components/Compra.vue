@@ -1499,13 +1499,16 @@
                 //===========================================================
                 // =============  VARIABLES SAP ========================
                 arrayVinDepura: [],
+                //COMPRA
                 arraySapCompra: [],
                 arraySapRptCompra: [],
                 jsonCompra: '',
                 arraySapUpdCompra: [],
+                //ARTICULO
                 arraySapArticulo : [],
                 arraySapRptArticulo: [],
                 jsonArticulo: '',
+                //MERCANCIA
                 arraySapRptMercancia: [],
                 jsonMercancia: '',
                 arraySapUpdMercancia: [],
@@ -3039,7 +3042,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'compra':
                     {
                         switch(accion){
@@ -3064,7 +3068,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'lista':
                     {
                         switch(accion){
@@ -3076,7 +3081,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                 }
             },
             // ===========================================================
