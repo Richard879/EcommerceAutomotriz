@@ -2185,13 +2185,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" :v-if="vehiculo.cFlagTipoItem=='V'">
-                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
-                                                            <td v-text="vehiculo.cNombreArticulo"></td>
-                                                            <td v-text="vehiculo.fSobrePrecio"></td>
-                                                            <td v-text="vehiculo.fDescuento"></td>
-                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
-                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                            <template v-if="vehiculo.cFlagTipoItem=='V'">
+                                                                <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                <td v-text="vehiculo.fSobrePrecio"></td>
+                                                                <td v-text="vehiculo.fDescuento"></td>
+                                                                <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -2214,13 +2216,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
-                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
-                                                            <td v-text="vehiculo.cNombreArticulo"></td>
-                                                            <td v-text="vehiculo.nCantidad"></td>
-                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
-                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                            <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                                <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                <td v-text="vehiculo.nCantidad"></td>
+                                                                <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -2243,13 +2246,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
-                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
-                                                            <td v-text="vehiculo.cNombreArticulo"></td>
-                                                            <td v-text="vehiculo.nCantidad"></td>
-                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
-                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                            <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                                <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                <td v-text="vehiculo.nCantidad"></td>
+                                                                <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -2272,13 +2276,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
-                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
-                                                            <td v-text="vehiculo.cNombreArticulo"></td>
-                                                            <td v-text="vehiculo.nCantidad"></td>
-                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
-                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                            <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                                <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                <td v-text="vehiculo.nCantidad"></td>
+                                                                <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
