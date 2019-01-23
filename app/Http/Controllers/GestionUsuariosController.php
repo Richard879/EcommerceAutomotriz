@@ -149,4 +149,32 @@ class GestionUsuariosController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetInformacionUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdUsuario =   Auth::user()->id;
+
+        $usuario = DB::select('exec usp_Usuario_GetInformacionUsuario ?',
+                                                    [
+                                                        $nIdUsuario
+                                                    ]);
+
+        $tipocambio = DB::select('exec usp_TipoCambio_GetTipoCambio');
+
+        $flag = 0;
+        if (sizeof($tipocambio) > 0) {
+            $flag = 1;
+        } else {
+            $flag = 0;
+        }
+
+        $data = [
+            'flag'          =>  $flag,
+            'usuario'    =>  $usuario
+        ];
+
+        return response()->json($data);
+    }
 }

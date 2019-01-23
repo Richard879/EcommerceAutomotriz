@@ -75,6 +75,7 @@ Vue.component('cronograma', require('./components/Cronograma.vue'));
 Vue.component('lineamarcamodelo', require('./components/LineaMarcaModelo.vue'));
 Vue.component('asignavendedorjefeventas', require('./components/AsignaVendedorJefeVentas.vue'));
 Vue.component('gestionusuarios', require('./components/GestionUsuarios.vue'));
+Vue.component('tipocambio', require('./components/TipoCambio.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -82,7 +83,32 @@ const app = new Vue({
         menu: 1300362,
         ruta: 'http://localhost:8080/saisacsys/public'
     },
+    mounted() {
+        this.obtenerRolUsuario();
+    },
     methods: {
+        obtenerRolUsuario() {
+            var url = this.ruta + '/usuario/GetInformacionUsuario';
+            axios.get(url).then(response => {
+                console.log(response.data);
+                //PARA EL ADV
+                if (response.data.flag == 0 && response.data.usuario[0].nIdGrupoPar == '110083') {
+                    swal('BUEN DÍA ' + response.data.usuario[0].cNombre + ', DEBE AGREGAR EL TIPO DE CAMBIO DEL DÍA');
+                }
+                //PARA OTROS USUARIOS
+                if (response.data.flag == 0) {
+                    swal('BUEN DÍA ' + response.data.usuario[0].cNombre + ', CONTACTAR CON SU ADV PARA AGREGAR EL TIPO DE CAMBIO DEL DÍA');
+                }
+            }).catch(error => {
+                console.log(error);
+                if (error.response) {
+                    if (error.response.status == 401) {
+                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                        location.reload('0');
+                    }
+                }
+            });
+        },
         reiniciaMenu: function(data) {
             let me = this;
             me.menu = 0;

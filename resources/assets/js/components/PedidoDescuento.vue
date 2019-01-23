@@ -1035,13 +1035,18 @@
                     this.arrayHistorialPedidoDsctos   =   response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             getTipoCambio(){
                 var url = this.ruta + '/gescotizacion/GetTipoCambio';
                 axios.get(url).then(response => {
                     this.fillPedidoDscto.dTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
-                }).then(function (response) {
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

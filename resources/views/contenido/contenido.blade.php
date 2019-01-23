@@ -30,13 +30,9 @@
     <template v-if="menu==1300480">
         <lineamarcamodelo :ruta="ruta"></lineamarcamodelo>
     </template>
-    <template v-if="menu==1300481">
-        <asignavendedorjefeventas :ruta="ruta"></asignavendedorjefeventas>
+    <template v-if="menu==1300486">
+        <tipocambio :ruta="ruta"></tipocambio>
     </template>
-    <template v-if="menu==1300482">
-        <gestionusuarios :ruta="ruta"></gestionusuarios>
-    </template>
-
 
     <template v-if="menu==1300266">
         <turnoventa :ruta="ruta"></turnoventa>
@@ -61,6 +57,12 @@
     </template>
     <template v-if="menu==1300466">
         <asigvendedorcuotasublinea :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorcuotasublinea>
+    </template>
+    <template v-if="menu==1300481">
+        <asignavendedorjefeventas :ruta="ruta"></asignavendedorjefeventas>
+    </template>
+    <template v-if="menu==1300482">
+        <gestionusuarios :ruta="ruta"></gestionusuarios>
     </template>
 
 
