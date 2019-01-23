@@ -2113,9 +2113,11 @@
                         me.jsonArticulo= JSON.parse(x);
                         //console.log(me.arraySapJson);
                         //console.log(me.jsonArticulo.ItemCode);
-                        me.arraySapItemCode.push({
+                        //Se comentó por punto de compración [01]
+                        /*me.arraySapItemCode.push({
                             ItemCode: me.jsonArticulo.ItemCode
-                        });
+                        });*/
+                        me.arraySapItemCode.push(me.jsonArticulo.ItemCode);
                     });
 
                     //==============================================================
@@ -2139,6 +2141,7 @@
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
                     // Si no se encuentra
+                    //[01]
                     if (!me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapCompra.push(x);
                     }
