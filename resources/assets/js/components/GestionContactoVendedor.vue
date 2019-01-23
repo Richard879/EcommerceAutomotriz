@@ -3029,10 +3029,10 @@
             },
             cargarTabDatosPersonales(){
                 this.llenarComboTpoDocumento();
-                this.llenarComboDptos();
-                this.llenarComboDptos();
+                /*this.llenarComboDptos();
                 this.llenarComboProv();
-                this.llenarComboDist();
+                this.llenarComboDist();*/
+                this.llenarUbigeo();
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
                 this.llenarComboAnioFabricacion();
@@ -3126,6 +3126,20 @@
                         }
                     });
                 }
+            },
+            llenarUbigeo(){
+                var url = this.ruta + '/ubigeo/SapGetUbigeo';
+                axios.get(url).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             llenarComboDptos(){
                 var url = this.ruta + '/ubigeo/GetDptos';

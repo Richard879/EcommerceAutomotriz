@@ -396,5 +396,6 @@ Route::middleware(['auth'])->group(function(){
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
-    ///
+    //Ubigeo
+    Route::get('/ubigeo/SapGetUbigeo', 'Api\SapUbigeoController@SapGetUbigeo');
 });
