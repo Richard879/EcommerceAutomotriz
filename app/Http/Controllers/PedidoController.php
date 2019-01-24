@@ -117,6 +117,21 @@ class PedidoController extends Controller
         return ['arrayPedido'=>$arrayPedido];
     }
 
+    //fluno direcciones
+    public function GetDireccionByContacto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto    =   $request->nIdContacto;
+
+        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
+                                                    [
+                                                        $nIdContacto
+                                                    ]);
+
+        return response()->json($arrayDirecciones);
+    }
+
     public function GetDireccionContactoByPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

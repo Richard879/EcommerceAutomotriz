@@ -53,7 +53,7 @@ class SapContactoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $arrayContacto = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
+        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
                                             [
                                                 $request->contacto['nIdContacto']
                                             ]);
@@ -129,7 +129,7 @@ class SapContactoController extends Controller
                 ]
             ];
 
-            foreach ($arrayContacto as $key => $value) {
+            foreach ($arrayDirecciones as $key => $value) {
                 $json['json']['BPAddresses'][] = [
                     "AddressName"   =>  $value->AddressName,
                     "Street"        =>  $value->Street,
@@ -139,7 +139,7 @@ class SapContactoController extends Controller
                     "County"        =>  "Amazonas",
                     "Country"       =>  "PE",
                     "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
-                    "BPCode"        =>  $CardCode,
+                    "BPCode"        =>  $CardCode
                 ];
             }
         } else {
@@ -186,7 +186,7 @@ class SapContactoController extends Controller
                     // ]
                 ]
             ];
-            foreach ($arrayContacto as $key => $value) {
+            foreach ($arrayDirecciones as $key => $value) {
                 $json['json']['BPAddresses'][] = [
                     "AddressName"   =>  $value->AddressName,
                     "Street"        =>  $value->Street,
@@ -196,13 +196,49 @@ class SapContactoController extends Controller
                     "County"        =>  "Amazonas",
                     "Country"       =>  "PE",
                     "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
-                    "BPCode"        =>  $CardCode,
+                    "BPCode"        =>  $CardCode
                 ];
             }
         }
-        // return $json;
 
         $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
+        return $response->getBody();
+    }
+
+    public function SapSetUpdDireccionesContacto(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            // 'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
+                                            [
+                                                $request->nIdContacto
+                                            ]);
+
+        $json = [
+            'json' => [
+                "CardCode"      =>  $request->CardCode,
+                "BPAddresses"   =>  array()
+            ]
+        ];
+        foreach ($arrayDirecciones as $key => $value) {
+            $json['json']['BPAddresses'][] = [
+                "AddressName"   =>  $value->AddressName,
+                "Street"        =>  $value->Street,
+                "Block"         =>  "Chachapoyas",
+                "ZipCode"       =>  "010101",
+                "City"          =>  "Chachapoyas",
+                "County"        =>  "Amazonas",
+                "Country"       =>  "PE",
+                "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
+                "BPCode"        =>  $request->CardCode
+            ];
+        }
+
+        $response = $client->request('POST', "/api/Contacto/SapSetContactoUpd/", $json);
         return $response->getBody();
     }
 
