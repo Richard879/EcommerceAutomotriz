@@ -974,7 +974,9 @@
             flujoAprobarPedido(data){
                 this.fillDirecciones.cCardCode = data.cCardCode;
 
-                //SI EL CARDCODE NO ESTA INTEGRADO
+                //===========================================================================================
+                // ====================================  CASO 01 ============================================
+                //SI EL CARDCODE NO ESTA INTEGRADO (POR ENDE TAMPCO LAS DIRECCIONES)
                 if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null && this.arrayDireccionesExisten.length > 0) {
                     this.cFlagOpcion = 1;//Flag Requiere Registrar Direcciones/Integración Contacto/Pedido
                     //Abrir Modal
@@ -986,6 +988,8 @@
                     this.fillDirecciones.cContacto = data.cContacto;
                 }
 
+                //===========================================================================================
+                // ====================================  CASO 02 ============================================
                 //SI EL CARDCODE ESTA INTEGRADO Y HAY DIRECCIONES
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length > 0) {
                     //INTEGRAR PEDIDO
@@ -993,7 +997,9 @@
                     this.aprobarPedido(data);
                 }
 
-                //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES
+                //===========================================================================================
+                // ====================================  CASO 03 ============================================
+                //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES (CONTACOS ANTIGUOS)
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length == 0) {
                     this.cFlagOpcion = 1;
                     this.cFlagDireccionCU = 2;//Flag Requiere Actualizar Direcciones/Integración Direcciones/Pedido
@@ -1123,6 +1129,7 @@
                     'arrayDireccionesDespacho': this.arrayDireccionesDespacho
                 }).then(response => {
                     console.log(response.data);
+                    //VERIFICA SI ES DESDE EL CASO 01 (1) O SI ES DESDE EL CASO 03 (2)
                     (this.cFlagDireccionCU == 1) ? this.obtenerTipoPersona() : this.actualizarDireccionesByContacto();
                     // this.obtenerTipoPersona();
                 }).catch(error => {
@@ -1135,7 +1142,7 @@
                     }
                 });
             },
-            //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES
+            //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES - ACTUALIZAR DIRECCIONES
             actualizarDireccionesByContacto(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO DIRECCIONES DEL CLIENTE...");
