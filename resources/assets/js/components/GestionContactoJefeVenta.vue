@@ -2974,9 +2974,10 @@
                 arrayTipoDocumento: [],
                 arrayEstadoCivil: [],
                 arrayProfesion: [],
-                arrayDptos:[],
+                 /*arrayDptos:[],
                 arrayProv : [],
-                arrayDist: [],
+                arrayDist: [],*/
+                arrayUbigeo: [],
                 vistaDatosPersonaNatural: 1,
                 SAPNuevoContactoJson: '',
                 arrayTipoUbigeo: [
@@ -3000,7 +3001,6 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
-
                 arrayLinea2: [],
                 arrayMarca2: [],
                 arrayModelo2: [],
@@ -4981,9 +4981,9 @@
                     cRazonSocial: this.formNuevoContacto.cnombre.toUpperCase().toString(),
                     //cUbigeo: this.formNuevoContacto.niddistrito,
                     cUbigeo: this.formNuevoContacto.ccode,
-                    cDepartamento: this.formNuevoContacto.cdepartamento,
-                    cProvincia: this.formNuevoContacto.cprovincia,
-                    cDistrito: this.formNuevoContacto.cdistrito,
+                    cDepartamento: this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
+                    cProvincia: this.formNuevoContacto.cprovincia.toUpperCase().toString(),
+                    cDistrito: this.formNuevoContacto.cdistrito.toUpperCase().toString(),
                     cDireccion: this.formNuevoContacto.cdireccion.toUpperCase().toString(),
                     cEmail: this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
                     cEmailAlternativo: this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
