@@ -13,6 +13,7 @@ class SapUbigeoController extends Controller
     public function SapGetUbigeo(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 

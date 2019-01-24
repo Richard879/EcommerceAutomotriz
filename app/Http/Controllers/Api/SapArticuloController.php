@@ -13,6 +13,7 @@ class SapArticuloController extends Controller
     public function SapGetValidarArticulo(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
@@ -29,6 +30,7 @@ class SapArticuloController extends Controller
     public function SapSetArticulo(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
