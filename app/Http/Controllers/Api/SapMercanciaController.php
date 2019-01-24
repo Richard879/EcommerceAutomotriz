@@ -41,25 +41,25 @@ class SapMercanciaController extends Controller
                     "DocumentLines" => [
                             [
                                 "BaseType"      =>  "22",
-                                "BaseEntry"     =>  (string)$value['nDocEntry']
-                            ],
-                            "SerialNumbers" => [
-                                [
-                                    "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
-                                    "InternalSerialNumber"      =>  $InternalSerialNumber,
-                                    "ExpiryDate"                =>  null,
-                                    "ManufactureDate"           =>  null,
-                                    "ReceptionDate"             =>  $ReceptionDate,
-                                    "WarrantyStart"             =>  null,
-                                    "WarrantyEnd"               =>  null,
-                                    "Location"                  =>  null,
-                                    "Notes"                     =>  null,
-                                    "BatchID"                   =>  null,
-                                    "SystemSerialNumber"        =>  1,
-                                    "BaseLineNumber"            =>  0,
-                                    "Quantity"                  =>  1,
-                                    "TrackingNote"              =>  null,
-                                    "TrackingNoteLine"          =>  null
+                                "BaseEntry"     =>  (string)$value['nDocEntry'],
+                                "SerialNumbers" => [
+                                    [
+                                        "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
+                                        "InternalSerialNumber"      =>  $InternalSerialNumber,
+                                        "ExpiryDate"                =>  null,
+                                        "ManufactureDate"           =>  null,
+                                        "ReceptionDate"             =>  $ReceptionDate,
+                                        "WarrantyStart"             =>  null,
+                                        "WarrantyEnd"               =>  null,
+                                        "Location"                  =>  null,
+                                        "Notes"                     =>  null,
+                                        "BatchID"                   =>  null,
+                                        "SystemSerialNumber"        =>  1,
+                                        "BaseLineNumber"            =>  0,
+                                        "Quantity"                  =>  1,
+                                        "TrackingNote"              =>  null,
+                                        "TrackingNoteLine"          =>  null
+                                    ]
                                 ]
                             ]
                     ]
