@@ -16,13 +16,15 @@ class SapUbigeoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $json = [
-                    'json' => [
-                        "ItemCode"    => $request->cNumeroVin
-                        ]
-                ];
+        $nOpcion     = $request->nopcion;
+        $cFiltro     = $request->cfiltro;
+        $nOpcion = ($nOpcion == NULL) ? ($nOpcion = 0) : $nOpcion;
+        $cFiltro = ($cFiltro == NULL) ? ($cFiltro = '0') : $cFiltro;
 
-        $response = $client->request('GET', "/api/Ubigeo/GetUbigeo/");
+        $response = $client->request('GET', "/api/Ubigeo/GetUbigeo/", [
+                                                                        'query' => ['nOpcion' => $nOpcion,
+                                                                                    'cFiltro' => $cFiltro]
+                                                                      ]);
         return $response->getBody();
     }
 
