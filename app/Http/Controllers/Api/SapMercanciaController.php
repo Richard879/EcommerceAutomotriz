@@ -22,9 +22,10 @@ class SapMercanciaController extends Controller
         $User       =   Auth::user()->id;
         $cCardCode  =   'C'.$User;
 
-        $ManufacturerSerialNumber = mt_rand(100000000, 999999999);
-        $InternalSerialNumber = mt_rand(100000,999999);
-        $ReceptionDate = date('Y-m-d');
+        //DATOS DE PRUEBA
+        $ManufacturerSerialNumber   =   mt_rand(100000000, 999999999);
+        $InternalSerialNumber       =   mt_rand(100000,999999);
+        $ReceptionDate              =   date('Y-m-d');
 
         $data = $request->data;
         foreach ($data as $key => $value) {

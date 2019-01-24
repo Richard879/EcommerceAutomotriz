@@ -165,6 +165,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListHistorialPedidoDscto', 'PedidoController@GetListHistorialPedidoDscto');
     Route::post('/pedido/SetHistorialPedidoDscto', 'PedidoController@SetHistorialPedidoDscto');
     Route::get('/pedido/GetDireccionContactoByPedido', 'PedidoController@GetDireccionContactoByPedido');
+    Route::get('/pedido/GetDireccionByContacto', 'PedidoController@GetDireccionByContacto');
     Route::post('/pedido/SetRegistrarDireccionContacto', 'PedidoController@SetRegistrarDireccionContacto');
     Route::get('/pedido/GetObtenerTipoPersona', 'PedidoController@GetObtenerTipoPersona');
     Route::get('/pedido/GetListContactoBySinCarteraMes', 'PedidoController@GetListContactoBySinCarteraMes');
@@ -380,6 +381,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
     Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
+    Route::post('/gescontacto/SapSetUpdDireccionesContacto', 'Api\SapContactoController@SapSetUpdDireccionesContacto');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     //Entrada Mercancia
