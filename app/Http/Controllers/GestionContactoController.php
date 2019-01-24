@@ -13,13 +13,16 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPerNaturalContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPerNaturalContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdTipoDocumento,
                                                                 $request->cNumeroDocumento,
                                                                 $request->cNombre,
                                                                 $request->cApellidoPaterno,
                                                                 $request->cApellidoMaterno,
                                                                 $request->cUbigeo,
+                                                                $request->cDepartamento,
+                                                                $request->cProvincia,
+                                                                $request->cDistrito,
                                                                 $request->cDireccion,
                                                                 $request->cEmail,
                                                                 $request->cEmailAlternativo,
@@ -40,10 +43,13 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPerJuridicaContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPerJuridicaContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->cRuc,
                                                                     $request->cRazonSocial,
                                                                     $request->cUbigeo,
+                                                                    $request->cDepartamento,
+                                                                    $request->cProvincia,
+                                                                    $request->cDistrito,
                                                                     $request->cDireccion,
                                                                     $request->cEmail,
                                                                     $request->cEmailAlternativo,

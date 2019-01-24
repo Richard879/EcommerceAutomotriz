@@ -28,6 +28,7 @@ class SapContactoController extends Controller
     public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
@@ -48,6 +49,7 @@ class SapContactoController extends Controller
     public function SapSetContacto(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
@@ -242,6 +244,7 @@ class SapContactoController extends Controller
     public function SapSetContacto2(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 

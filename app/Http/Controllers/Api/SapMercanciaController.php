@@ -13,6 +13,7 @@ class SapMercanciaController extends Controller
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 

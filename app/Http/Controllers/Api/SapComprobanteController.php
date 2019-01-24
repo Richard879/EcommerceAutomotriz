@@ -13,6 +13,7 @@ class SapComprobanteController extends Controller
     public function SapSetFactura(Request $request)
     {
         $client = new Client([
+            'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
