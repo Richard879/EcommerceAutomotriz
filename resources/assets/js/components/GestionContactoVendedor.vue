@@ -2072,7 +2072,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-3">
+                                                <div class="col-sm-9 offset-sm-5">
                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo()"><i class="fa fa-search"></i> Buscar</button>
                                                 </div>
                                             </div>
@@ -3497,7 +3497,8 @@
                 $('#Tab33').addClass('nav-link active');
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').addClass('in active show');
-                this.llenarComboLinea();
+                //this.llenarComboLinea();
+                this.limpiarAsignacion();
             },
             llenarComboLinea(){
                 var url;
@@ -3752,7 +3753,8 @@
                 $('#Tab44').addClass('nav-link active');
                 $('#TabReferenciaVehiculo').removeClass('in active show');
                 $('#TabOtrosIntereses').addClass('in active show');
-                this.llenarComboLinea();
+                //this.llenarComboLinea();
+                this.limpiarAsignacion();
             },
             regresarOtrosIntereses(){
                 /*$('#Tab11').removeClass('nav-link active');
@@ -4341,6 +4343,7 @@
                 this.formNuevoContacto.cdepartamento = '',
                 this.formNuevoContacto.cprovincia = '',
                 this.formNuevoContacto.cdistrito = '',
+                this.arrayUbigeo = [],
                 this.formNuevoContacto.cdireccion = '',
                 this.formNuevoContacto.cmailprincipal = '',
                 this.formNuevoContacto.cmailalternativo = '',
