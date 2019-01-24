@@ -39,10 +39,9 @@ class SapMercanciaController extends Controller
                     "U_SYP_MDCD"    =>  "12345679",
                     "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
-                            [
-                                "BaseType"      =>  "22",
-                                "BaseEntry"     =>  (string)$value['nDocEntry']
-                            ],
+                        [
+                            "BaseType"      =>  "22",
+                            "BaseEntry"     =>  (string)$value['nDocEntry'],
                             "SerialNumbers" => [
                                 [
                                     "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
@@ -62,6 +61,7 @@ class SapMercanciaController extends Controller
                                     "TrackingNoteLine"          =>  null
                                 ]
                             ]
+                        ]
                     ]
                 ]
             ];
