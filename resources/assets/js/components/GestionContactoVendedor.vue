@@ -944,12 +944,12 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab33" href="#TabReferenciaVehiculo" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab33" href="#TabReferenciaVehiculo" @click="limpiarAsignacion();" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-car"></i> REFERENCIA VEHICULO
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab44" href="#TabOtrosIntereses" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab44" href="#TabOtrosIntereses" @click="limpiarAsignacion();" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-car"></i> OTROS INTERESES
                                                             </a>
                                                         </li>
