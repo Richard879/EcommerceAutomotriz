@@ -208,8 +208,9 @@ class SapContactoController extends Controller
     public function SapSetUpdDireccionesContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://localhost:49454/'
-            // 'base_uri'  => 'http://172.20.0.10/'
+            'verify'    => false,
+            // 'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',

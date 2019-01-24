@@ -960,7 +960,7 @@
                     }
                 }).then(response => {
                     this.arrayDireccionesExisten = response.data;
-                    // this.flujoAprobarPedido(data);
+                    this.flujoAprobarPedido(data);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -976,7 +976,7 @@
 
                 //SI EL CARDCODE NO ESTA INTEGRADO
                 if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null && this.arrayDireccionesExisten.length > 0) {
-                    this.cFlagOpcion = 1;//Flag Requiere Integración Contacto/Pedido
+                    this.cFlagOpcion = 1;//Flag Requiere Registrar Direcciones/Integración Contacto/Pedido
                     //Abrir Modal
                     this.accionmodal=4;
                     this.modal = 1;
@@ -985,16 +985,18 @@
                     this.fillDirecciones.nIdContacto = data.nIdContacto;
                     this.fillDirecciones.cContacto = data.cContacto;
                 }
+
                 //SI EL CARDCODE ESTA INTEGRADO Y HAY DIRECCIONES
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length > 0) {
                     //INTEGRAR PEDIDO
                     this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
                     this.aprobarPedido(data);
                 }
+
                 //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length == 0) {
                     this.cFlagOpcion = 1;
-                    this.cFlagDireccionCU = 2;//Flag Requiere Integración Direcciones/Contacto/Pedido
+                    this.cFlagDireccionCU = 2;//Flag Requiere Actualizar Direcciones/Integración Direcciones/Pedido
                     //Abrir Modal
                     this.accionmodal=4;
                     this.modal = 1;
@@ -1133,6 +1135,7 @@
                     }
                 });
             },
+            //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES
             actualizarDireccionesByContacto(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO DIRECCIONES DEL CLIENTE...");
@@ -1143,7 +1146,7 @@
                     'cCardCode': this.fillDirecciones.cCardCode
                 }).then(response => {
                     console.log(response.data);
-                    // this.aprobarPedido2();
+                    this.aprobarPedido2();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1154,6 +1157,7 @@
                     }
                 });
             },
+            //REGISTRAR CONTACTO
             obtenerTipoPersona(){
                 var url = this.ruta + '/pedido/GetObtenerTipoPersona';
                 axios.get(url, {
@@ -1174,7 +1178,6 @@
                     }
                 });
             },
-            //REGISTRAR CONTACTO
             listarContactoSinCarteraMes(){
                 var url = this.ruta + '/pedido/GetListContactoBySinCarteraMes';
                 axios.get(url, {
@@ -1839,6 +1842,8 @@
                 this.arrayDireccionesFiscales = [];
                 this.arrayDireccionesDespacho = [];
                 this.cFlagOpcion = '';
+                this.arrayDireccionesExisten = [];
+                this.cFlagDireccionCU = 1;
                 this.fillDirecciones.nIdCabeceraPedido = '';
                 this.fillDirecciones.nIdContacto = '';
                 this.fillDirecciones.cContacto = '';
