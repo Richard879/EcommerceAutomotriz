@@ -83,7 +83,7 @@
                                                         <td v-text="p.cParNombre"></td>
                                                         <td>
                                                             <el-tooltip class="item" :content="'Configurar Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                <i @click="abrirModal('parametro', 'tipoparametro', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
+                                                                <i @click="abrirModal('parametro', 'configurar', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <el-tooltip class="item" :content="'Editar ' + p.cParNombre" effect="dark" placement="top-start">
                                                                 <i @click="abrirFormulario('parametro','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
@@ -235,6 +235,97 @@
                 </div>
             </div>
 
+            <!-- Configuracion Tipo Parametro -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">CONFIGURACIONES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayTipoParametro.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Descripción</th>
+                                                            <th>Tipo Parametro</th>
+                                                            <th>Valor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="tipo in arrayTipoParametro" :key="tipo.nIdTipoPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Actualizar {{ tipo.cParNombre }}</div>
+                                                                    <i @click="actualizarTipoParametro(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="tipo.cParNombre"></td>
+                                                            <td v-text="tipo.cTipoDescripcion"></td>
+                                                            <td v-if="tipo.cTipoParametro=='D'">
+                                                                <input type="text" v-model="tipo.cDatoParDescripcion" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td v-if="tipo.cTipoParametro=='N'">
+                                                                <input type="text" v-model="tipo.nDatoParNumerico" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td v-if="tipo.cTipoParametro=='P'">
+                                                                <input type="text" v-model="tipo.fDatoParPorcentual" class="form-control form-control-sm">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaTipoParametro(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaTipoParametro(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaTipoParametro(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -263,6 +354,7 @@
                 },
                 arrayGrupoParametro: [],
                 arrayParametro: [],
+                arrayTipoParametro: [],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -620,6 +712,92 @@
                         }
                     })
             },
+            //================ CONFIGURAR TIPO PARAMETRO =====================
+            listarTipoParametro(page){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formParametro.nidpar,
+                        'ctipoparametro': '',
+                        'nidtipopar': 0,
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayTipoParametro = response.data.arrayTipoParametro.data;
+                    this.paginationModal.current_page =  response.data.arrayTipoParametro.current_page;
+                    this.paginationModal.total = response.data.arrayTipoParametro.total;
+                    this.paginationModal.per_page    = response.data.arrayTipoParametro.per_page;
+                    this.paginationModal.last_page   = response.data.arrayTipoParametro.last_page;
+                    this.paginationModal.from        = response.data.arrayTipoParametro.from;
+                    this.paginationModal.to           = response.data.arrayTipoParametro.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaTipoParametro(page){
+                this.paginationModal.current_page=page;
+                this.listarTipoParametro(page);
+            },
+            actualizarTipoParametro(objTipoPar){
+                swal({
+                    title: 'Estas seguro de actualizar este TipoParámetro?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Actualizar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            
+                            var cDatoParDescripcion = "", nDatoParNumerico = 0, fDatoParPorcentual = 0;
+
+                            if(objTipoPar.cTipoParametro == 'D'){
+                                this.cDatoParDescripcion =  objTipoPar.cDatoParDescripcion;
+                            };
+                            if(objTipoPar.cTipoParametro == 'N'){
+                                this.nDatoParNumerico =  objTipoPar.nDatoParNumerico;
+                            };
+                            if(objTipoPar.cTipoParametro == 'P'){
+                                this.fDatoParPorcentual =  objTipoPar.fDatoParPorcentual; 
+                            };
+
+                            var url = this.ruta + '/tipoparametro/UpdTipoParametroById';
+                            axios.post(url, {
+                                'nIdTipoPar': parseInt(objTipoPar.nIdTipoPar),
+                                'nIdPar': parseInt(objTipoPar.nIdPar),
+                                'cTipoParametro': objTipoPar.cTipoParametro,
+                                'cDatoParDescripcion': this.cDatoParDescripcion,
+                                'nDatoParNumerico': this.nDatoParNumerico,
+                                'fDatoParPorcentual': this.fDatoParPorcentual
+                            }).then(response => {
+                                swal(
+                                'Actualizado!',
+                                'El registro fue actulizado.'
+                                );
+                                this.listarTipoParametro(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
+            },
+            //==============================================
             cerrarModal(){
                 //this.accionmodal==1;
                 this.modal = 0
@@ -628,6 +806,23 @@
                 this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data){
+                switch(modelo){
+                    case 'parametro':
+                    {
+                        switch(accion){
+                            case 'configurar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.formParametro.nidpar = data.nIdPar;
+                                this.listarTipoParametro(1);
+                                break;
+                            }
+                        }
+                    }
+                }
             },
             abrirFormulario(modelo, accion, data){
                 switch(modelo){

@@ -1100,8 +1100,8 @@
                     this.fillDepositoTCEspecial.fMontoOrigenDolares         =   ((parseFloat(data.fMontoDolares)).toFixed(2));//Monto Actual en $
                     this.fillDepositoTCEspecial.fMontoOrigenSoles           =   ((parseFloat(data.fMontoSoles)).toFixed(2));//Monto Actual en S/
                     this.fillDepositoTCEspecial.fMontoFaltante              =   this.fillDepositoTCEspecial.fMontoTotal - this.fillDepositoTCEspecial.fMontoOrigenDolares
-                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial     =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
-                    this.fillDepositoTCEspecial.fTipoCambioEspecial         =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial     =   response.data.arrayTipoParametro.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+                    this.fillDepositoTCEspecial.fTipoCambioEspecial         =   response.data.arrayTipoParametro.data[0].fDatoParPorcentual;//Tipo Cambio Especial
 
                     //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
                     if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {//Soles

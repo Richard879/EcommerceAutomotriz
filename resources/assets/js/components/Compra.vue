@@ -1900,7 +1900,7 @@
                         'nidtipopar': 51
                     }
                 }).then(response => {
-                    this.formCompra.igv = response.data[0].fDatoParPorcentual;
+                    this.formCompra.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

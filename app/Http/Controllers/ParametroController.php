@@ -183,17 +183,22 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $cTipoParametro = $request->ctipoparametro;
         $nIdTipoPar = $request->nidtipopar;
+        $variable   = $request->opcion;
 
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
         $nIdTipoPar = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $tipoparametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+        $arrayTipoParametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   $nIdPar,
                                                                 $cTipoParametro,
                                                                 $nIdTipoPar
                                                             ]);
 
-        return response()->json($tipoparametro);
+        if($variable == "0"){
+            $arrayTipoParametro = $this->arrayPaginator($arrayTipoParametro, $request);
+        }
+        return ['arrayTipoParametro'=>$arrayTipoParametro];
     }
 
     public function GetParametroById(Request $request)
@@ -407,5 +412,29 @@ class ParametroController extends Controller
                                                             Auth::user()->id
                                                         ]);
         return response()->json($objParParametroExt);
+    }
+
+    public function UpdTipoParametroById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cDatoParDescripcion = $request->cDatoParDescripcion;
+        $nDatoParNumerico = $request->nDatoParNumerico;
+        $fDatoParPorcentual = $request->fDatoParPorcentual;
+
+        $cDatoParDescripcion = ($cDatoParDescripcion == NULL) ? ($cDatoParDescripcion = '') : $cDatoParDescripcion;
+        $nDatoParNumerico = ($nDatoParNumerico == NULL) ? ($nDatoParNumerico = 0) : $nDatoParNumerico;
+        $fDatoParPorcentual = ($fDatoParPorcentual == NULL) ? ($fDatoParPorcentual = 0) : $fDatoParPorcentual;
+
+        $parametro = DB::select('exec [usp_TipoPar_UpdTipoParametroById] ?, ?, ?, ?, ?, ?, ?',
+                                                        [   $request->nIdTipoPar,
+                                                            $request->nIdPar,
+                                                            $request->cTipoParametro,
+                                                            $cDatoParDescripcion,
+                                                            $nDatoParNumerico,
+                                                            $fDatoParPorcentual,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($parametro);
     }
 }

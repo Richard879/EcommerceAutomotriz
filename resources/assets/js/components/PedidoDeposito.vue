@@ -1629,10 +1629,11 @@
                     params: {
                         'nidpar' : criterio,
                         'ctipoparametro' : 'N',
-                        'nidtipopar': 0
+                        'nidtipopar': 0,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    let datos = response.data;
+                    let datos = response.data.arrayTipoParametro.data;
                     let me = this;
                     me.limpiarFormularioDesposito();//Limpiar Formulario
                     me.arrayTipoMovimientoPermisos = [];//Seteo los permisos para visualizar formularios

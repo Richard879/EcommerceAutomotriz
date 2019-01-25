@@ -1129,6 +1129,12 @@
                 arrayUbigeo: [],
                 vistaDatosPersonaNatural: 1,
                 SAPNuevoContactoJson: '',
+                arrayTipoUbigeo: [
+                    { value: 0, text: 'TODO'},
+                    { value: 1, text: 'DEPARTAMENTO'},
+                    { value: 2, text: 'PROVINCIA'},
+                    { value: 3, text: 'DISTRITO'}
+                ],
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -2338,7 +2344,7 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                this.accionmodal=5;
+                                this.accionmodal=3;
                                 this.modal = 1;
                                 break;
                             }
