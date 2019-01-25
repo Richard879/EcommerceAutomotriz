@@ -90,13 +90,15 @@ const app = new Vue({
         obtenerRolUsuario() {
             var url = this.ruta + '/usuario/GetInformacionUsuario';
             axios.get(url).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
+                // console.log(response.data.usuario[0].nIdGrupoPar);
+                // console.log(response.data.flag);
                 //PARA EL ADV
                 if (response.data.flag == 0 && response.data.usuario[0].nIdGrupoPar == '110083') {
                     swal('BUEN DÍA ' + response.data.usuario[0].cNombre + ', DEBE AGREGAR EL TIPO DE CAMBIO DEL DÍA');
                 }
                 //PARA OTROS USUARIOS
-                if (response.data.flag == 0) {
+                if (response.data.flag == 0 && response.data.usuario[0].nIdGrupoPar != '110083') {
                     swal('BUEN DÍA ' + response.data.usuario[0].cNombre + ', CONTACTAR CON SU ADV PARA AGREGAR EL TIPO DE CAMBIO DEL DÍA');
                 }
             }).catch(error => {

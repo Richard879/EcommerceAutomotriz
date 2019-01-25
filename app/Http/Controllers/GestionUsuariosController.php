@@ -164,7 +164,7 @@ class GestionUsuariosController extends Controller
         $tipocambio = DB::select('exec usp_TipoCambio_GetTipoCambio');
 
         $flag = 0;
-        if (sizeof($tipocambio) > 0) {
+        if ($tipocambio[0]->fValorTipoCambioComercial > 0) {
             $flag = 1;
         } else {
             $flag = 0;
@@ -172,7 +172,8 @@ class GestionUsuariosController extends Controller
 
         $data = [
             'flag'          =>  $flag,
-            'usuario'    =>  $usuario
+            'usuario'       =>  $usuario,
+            'tipocambio'    =>  $tipocambio
         ];
 
         return response()->json($data);
