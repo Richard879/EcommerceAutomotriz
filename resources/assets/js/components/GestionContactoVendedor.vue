@@ -2066,19 +2066,19 @@
                                                             </el-select>
                                                         </div>
                                                         <div class="col-md-8" v-if="formNuevoContacto.nopcion != 0">
-                                                            <input type="text" v-model="formNuevoContacto.cfiltro" class="form-control form-control-sm" @keyup.enter="llenarUbigeo()">
+                                                            <input type="text" v-model="formNuevoContacto.cfiltro" class="form-control form-control-sm" @keyup.enter="llenarUbigeo(1)">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo()"><i class="fa fa-search"></i> Buscar</button>
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo(1)"><i class="fa fa-search"></i> Buscar</button>
                                                 </div>
                                             </div>
                                         </form>
                                         <template v-if="arrayUbigeo.length">
-                                            <div class="table-responsive barraLateral">
+                                            <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
@@ -2105,22 +2105,22 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <!--<div class="col-sm-12">
+                                            <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-7">
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaReferencia(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaUbigeo(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaReferencia(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -2129,7 +2129,7 @@
                                                         <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                     </div>
                                                 </div>
-                                            </div>-->
+                                            </div>
                                         </template>
                                         <template v-else>
                                             <table>
@@ -3173,8 +3173,7 @@
                 this.llenarComboTpoDocumento();
                 /*this.llenarComboDptos();
                 this.llenarComboProv();
-                this.llenarComboDist();
-                this.llenarUbigeo();*/
+                this.llenarComboDist();*/
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
                 this.llenarComboAnioFabricacion();
@@ -3269,15 +3268,23 @@
                     });
                 }
             },
-            llenarUbigeo(){
-                var url = this.ruta + '/ubigeo/SapGetUbigeo';
+            llenarUbigeo(page){
+                //var url = this.ruta + '/ubigeo/SapGetUbigeo';
+                var url = this.ruta + '/ubigeo/GetUbigeo';
                 axios.get(url, {
                     params: {
                         'nopcion': this.formNuevoContacto.nopcion,
-                        'cfiltro': this.formNuevoContacto.cfiltro.toUpperCase().toString()
+                        'cfiltro': this.formNuevoContacto.cfiltro.toUpperCase().toString(),
+                        'page': page
                     }
                 }).then(response => {
-                    this.arrayUbigeo = response.data;
+                    this.arrayUbigeo = response.data.arrayUbigeo.data;
+                    this.paginationModal.current_page =  response.data.arrayUbigeo.current_page;
+                    this.paginationModal.total = response.data.arrayUbigeo.total;
+                    this.paginationModal.per_page    = response.data.arrayUbigeo.per_page;
+                    this.paginationModal.last_page   = response.data.arrayUbigeo.last_page;
+                    this.paginationModal.from        = response.data.arrayUbigeo.from;
+                    this.paginationModal.to           = response.data.arrayUbigeo.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3287,6 +3294,10 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaUbigeo(page){
+                this.paginationModal.current_page=page;
+                this.llenarUbigeo(page);
             },
             asignarUbigeo(u){
                 this.formNuevoContacto.cubigeo = u.cU_SYP_DEPA + ' - ' + u.cU_SYP_PROV + ' - ' + u.cU_SYP_DIST;

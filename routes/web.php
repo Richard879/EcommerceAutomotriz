@@ -113,6 +113,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
     Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
     Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
+    Route::get('/ubigeo/GetUbigeo', 'UbigeoController@GetUbigeo');
 
     Route::get('/gescontacto/GetLineasByUsuario', 'GestionContactoController@GetLineasByUsuario');
     Route::get('/gescontacto/GetMarcaByLinea', 'GestionContactoController@GetMarcaByLinea');
