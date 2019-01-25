@@ -15,4 +15,11 @@ class TipoCambioController extends Controller
 
         return response()->json($objTipoCambio);
     }
+
+    public function GetTipoCambioDay(Request $request)
+    {
+        $objTipoCambio = DB::select('exec [usp_TipoCambio_GetTipoCambio]');
+
+        return response()->json($objTipoCambio);
+    }
 }

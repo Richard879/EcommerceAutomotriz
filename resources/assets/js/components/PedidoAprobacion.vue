@@ -856,7 +856,6 @@
                     if (error.response) {
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1002,7 +1001,7 @@
                 //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES (CONTACOS ANTIGUOS)
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length == 0) {
                     this.cFlagOpcion = 1;
-                    this.cFlagDireccionCU = 2;//Flag Requiere Actualizar Direcciones/Integración Direcciones/Pedido
+                    this.cFlagDireccionCU = 2;//Flag Requiere Actualizar Direcciones/Integración Direcciones (Actualizar Contacto)/Pedido
                     //Abrir Modal
                     this.accionmodal=4;
                     this.modal = 1;
