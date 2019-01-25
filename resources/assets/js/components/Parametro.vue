@@ -243,50 +243,33 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        <h3 class="h4">CONFIGURACIONES</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <br/>
-                                        <template v-if="arrayProveedor.length">
+                                        <template v-if="arrayTipoParametro.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
+                                                            <th>Descripción</th>
+                                                            <th>Tipo Parametro</th>
+                                                            <th>Valor</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                        <tr v-for="tipo in arrayTipoParametro" :key="tipo.nIdTipoPar">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <div slot="content">Seleccionar {{ tipo.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
                                                                 </el-tooltip>
                                                             </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                            <td v-text="tipo.cParNombre"></td>
+                                                            <td v-text="tipo.cTipoDescripcion"></td>
+                                                            <td v-if="tipo.cTipoParametro=='D'" v-text="tipo.cDatoParDescripcion"></td>
+                                                            <td v-if="tipo.cTipoParametro=='N'" v-text="tipo.nDatoParNumerico"></td>
+                                                            <td v-if="tipo.cTipoParametro=='P'" v-text="tipo.fDatoParPorcentual"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -297,16 +280,16 @@
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaTipoParametro(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaTipoParametro(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaTipoParametro(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -365,6 +348,7 @@
                 },
                 arrayGrupoParametro: [],
                 arrayParametro: [],
+                arrayTipoParametro: [],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -727,12 +711,18 @@
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
-                        'nidpar': 1300477,
+                        'nidpar': this.formParametro.nidpar,
                         'ctipoparametro': '',
                         'nidtipopar': 0
                     }
                 }).then(response => {
-                    //this.formCompra.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
+                    this.arrayTipoParametro = response.data.arrayTipoParametro.data;
+                    this.paginationModal.current_page =  response.data.arrayTipoParametro.current_page;
+                    this.paginationModal.total = response.data.arrayTipoParametro.total;
+                    this.paginationModal.per_page    = response.data.arrayTipoParametro.per_page;
+                    this.paginationModal.last_page   = response.data.arrayTipoParametro.last_page;
+                    this.paginationModal.from        = response.data.arrayTipoParametro.from;
+                    this.paginationModal.to           = response.data.arrayTipoParametro.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -743,6 +733,18 @@
                     }
                 });
             },
+            cambiarPaginaTipoParametro(page){
+                this.paginationModal.current_page=page;
+                this.listarTipoParametro(page);
+            },
+            asignarProveedor(nProveedorId, cProveedorNombre){
+                this.formVersion.nidproveedor = nProveedorId;
+                this.formVersion.cproveedornombre = cProveedorNombre;
+                this.cerrarModal();
+                this.arrayMarca = [];
+                this.arrayModelo = [];
+                this.llenarComboLinea();
+            },
             cerrarModal(){
                 //this.accionmodal==1;
                 this.modal = 0
@@ -752,7 +754,7 @@
                 this.error = 0,
                 this.mensajeError = ''
             },
-            abrirModal(modelo, accion, data =[]){
+            abrirModal(modelo, accion, data){
                 switch(modelo){
                     case 'parametro':
                     {
@@ -761,7 +763,8 @@
                             {
                                 this.accionmodal=2;
                                 this.modal = 1;
-                                //this.listarProveedores(1);
+                                this.formParametro.nidpar = data.nIdPar;
+                                this.listarTipoParametro(1);
                                 break;
                             }
                         }
