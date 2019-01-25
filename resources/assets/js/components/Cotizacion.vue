@@ -4458,6 +4458,7 @@
                 $('#tab04').removeClass('nav-link active');
                 $('#tab04').addClass('nav-link disabled');
 
+                $('#TabMisCotizaciones').addClass("in active show");
                 $('#TabCotizacion').addClass("in active show");
                 $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');

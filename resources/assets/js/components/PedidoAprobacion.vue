@@ -1020,7 +1020,9 @@
                     me.arrayDireccionesFiscales.push({
                         AddressID : 'Dirección Fiscal ',
                         AddressName : '',
-                        Street: ''
+                        Street: '',
+                        nIdFiltro: '',
+                        nIdUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Fiscal');
                 }
@@ -1028,7 +1030,9 @@
                     me.arrayDireccionesDespacho.push({
                         AddressID : 'Dirección Despacho ',
                         AddressName : '',
-                        Street: ''
+                        Street: '',
+                        nIdFiltro: '',
+                        nIdUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Despacho');
                 }
