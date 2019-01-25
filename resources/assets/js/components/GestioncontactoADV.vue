@@ -1393,15 +1393,23 @@
                     });
                 }
             },
-            llenarUbigeo(){
-                var url = this.ruta + '/ubigeo/SapGetUbigeo';
+            llenarUbigeo(page){
+                //var url = this.ruta + '/ubigeo/SapGetUbigeo';
+                var url = this.ruta + '/ubigeo/GetUbigeo';
                 axios.get(url, {
                     params: {
                         'nopcion': this.formNuevoContacto.nopcion,
-                        'cfiltro': this.formNuevoContacto.cfiltro.toUpperCase().toString()
+                        'cfiltro': this.formNuevoContacto.cfiltro.toUpperCase().toString(),
+                        'page': page
                     }
                 }).then(response => {
-                    this.arrayUbigeo = response.data;
+                    this.arrayUbigeo = response.data.arrayUbigeo.data;
+                    this.paginationModal.current_page =  response.data.arrayUbigeo.current_page;
+                    this.paginationModal.total = response.data.arrayUbigeo.total;
+                    this.paginationModal.per_page    = response.data.arrayUbigeo.per_page;
+                    this.paginationModal.last_page   = response.data.arrayUbigeo.last_page;
+                    this.paginationModal.from        = response.data.arrayUbigeo.from;
+                    this.paginationModal.to           = response.data.arrayUbigeo.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1411,6 +1419,10 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaUbigeo(page){
+                this.paginationModal.current_page=page;
+                this.llenarUbigeo(page);
             },
             asignarUbigeo(u){
                 this.formNuevoContacto.cubigeo = u.cU_SYP_DEPA + ' - ' + u.cU_SYP_PROV + ' - ' + u.cU_SYP_DIST;

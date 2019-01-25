@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -62,5 +63,26 @@ class UbigeoController extends Controller
             ];
         }
         return response()->json($data);
+    }
+
+    public function GetUbigeo(Request $request)
+    {
+        $nOpcion     = $request->nopcion;
+        $cFiltro     = $request->cfiltro;
+        $variable   = $request->opcion;
+
+        $nOpcion = ($nOpcion == NULL) ? ($nOpcion = 0) : $nOpcion;
+        $cFiltro = ($cFiltro == NULL) ? ($cFiltro = '') : $cFiltro;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayUbigeo = DB::select('exec [usp_Ubi_GetUbigeo] ?, ?', 
+                                                [   $nOpcion,
+                                                    $cFiltro
+                                                ]);
+
+        if($variable == "0"){
+            $arrayUbigeo = ParametroController::arrayPaginator($arrayUbigeo, $request);
+        }
+        return ['arrayUbigeo'=>$arrayUbigeo];
     }
 }
