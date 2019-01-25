@@ -590,6 +590,7 @@
                                                             <tr>
                                                                 <th>ID Fiscal</th>
                                                                 <th>Nombre Dirección</th>
+                                                                <th>Ubigeo</th>
                                                                 <th>Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -597,6 +598,19 @@
                                                             <tr v-for="(direccion, index) in arrayDireccionesFiscales" :key="index">
                                                                 <td> {{ direccion.AddressName = direccion.AddressID + 0 + (index+1) }} </td>
                                                                 <td><input type="text" class="form-control form-control-sm" v-model="direccion.Street"/></td>
+                                                                <td>
+                                                                    <el-select v-model="direccion.cUbigeo"
+                                                                                filterable
+                                                                                clearable
+                                                                                placeholder="SELECCIONE">
+                                                                        <el-option
+                                                                            v-for="item in arrayUbigeos"
+                                                                            :key="item.nIdPar"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </td>
                                                                 <td>
                                                                     <el-tooltip content="Eliminar Dirección Fiscal" placement="top">
                                                                         <button type="button" rel="tooltip" class="btn btn-info" @click.prevent="removerDireccion(1, index)">
@@ -730,6 +744,7 @@
                 cFlagOpcion: '',
                 arrayDireccionesExisten: [],
                 cFlagDireccionCU: 1,
+                arrayUbigeos: [],
                 arrayDireccionesFiscales: [],
                 arrayDireccionesDespacho: [],
                 fillDirecciones: {
@@ -737,8 +752,9 @@
                     nIdContacto: '',
                     cContacto: '',
                     cDireccion: '',
-                    cCardCode: '',
-                    cTipoPersona: ''
+                    cUbigeo: '',
+                    cCardCode: '',//Valida si hay cardcode
+                    cTipoPersona: ''//Valida que tipo persona para integrarla
                 },
                 arrayContacto: [],
                 SAPNuevoContactoJson: '',
@@ -1021,8 +1037,7 @@
                         AddressID : 'Dirección Fiscal ',
                         AddressName : '',
                         Street: '',
-                        nIdFiltro: '',
-                        nIdUbigeo: ''
+                        cUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Fiscal');
                 }
@@ -1031,8 +1046,7 @@
                         AddressID : 'Dirección Despacho ',
                         AddressName : '',
                         Street: '',
-                        nIdFiltro: '',
-                        nIdUbigeo: ''
+                        cUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Despacho');
                 }
@@ -1050,6 +1064,9 @@
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Fiscal N° ' + (y+1));
                         }
+                        if(x.cUbigeo == ''){
+                            me.mensajeError.push('Debe seleccionar un Ubigeo' + (y+1));
+                        }
                     });
                 }
                 if(op == 2){
@@ -1059,6 +1076,9 @@
                         }
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Despacho N° ' + (y+1));
+                        }
+                        if(x.cUbigeo == ''){
+                            me.mensajeError.push('Debe seleccionar un Ubigeo' + (y+1));
                         }
                     });
                 }
@@ -1086,6 +1106,7 @@
                     }
                 }).then(response => {
                     this.fillDirecciones.cDireccion = response.data[0].cDireccion;
+                    this.fillDirecciones.cUbigeo    = response.data[0].cUbigeo;
                     this.cargarDireccionContacto(op);
                 }).catch(error => {
                     console.log(error);
@@ -1103,7 +1124,8 @@
                     this.arrayDireccionesFiscales.push({
                         AddressID : 'Dirección Fiscal ',
                         AddressName : '',
-                        Street: this.fillDirecciones.cDireccion
+                        Street: this.fillDirecciones.cDireccion,
+                        cUbigeo: this.fillDirecciones.cUbigeo
                     });
                     toastr.success('Se PreCargo la Dirección Fiscal');
                 }
@@ -1112,7 +1134,8 @@
                     this.arrayDireccionesDespacho.push({
                         AddressID : 'Dirección Despacho ',
                         AddressName : '',
-                        Street: this.fillDirecciones.cDireccion
+                        Street: this.fillDirecciones.cDireccion,
+                        cUbigeo: this.fillDirecciones.cUbigeo
                     });
                     toastr.success('Se PreCargo la Dirección Despacho');
                 }
