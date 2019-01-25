@@ -251,7 +251,7 @@
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th>Seleccione</th>
+                                                            <th>Acciones</th>
                                                             <th>Descripción</th>
                                                             <th>Tipo Parametro</th>
                                                             <th>Valor</th>
@@ -261,15 +261,21 @@
                                                         <tr v-for="tipo in arrayTipoParametro" :key="tipo.nIdTipoPar">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ tipo.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
+                                                                    <div slot="content">Actualizar {{ tipo.cParNombre }}</div>
+                                                                    <i @click="actualizarTipoParametro(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="tipo.cParNombre"></td>
                                                             <td v-text="tipo.cTipoDescripcion"></td>
-                                                            <td v-if="tipo.cTipoParametro=='D'" v-text="tipo.cDatoParDescripcion"></td>
-                                                            <td v-if="tipo.cTipoParametro=='N'" v-text="tipo.nDatoParNumerico"></td>
-                                                            <td v-if="tipo.cTipoParametro=='P'" v-text="tipo.fDatoParPorcentual"></td>
+                                                            <td v-if="tipo.cTipoParametro=='D'">
+                                                                <input type="text" v-model="tipo.cDatoParDescripcion" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td v-if="tipo.cTipoParametro=='N'">
+                                                                <input type="text" v-model="tipo.nDatoParNumerico" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td v-if="tipo.cTipoParametro=='P'">
+                                                                <input type="text" v-model="tipo.fDatoParPorcentual" class="form-control form-control-sm">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -706,7 +712,7 @@
                         }
                     })
             },
-            //================ CONFIGURAR TIPO PARAMETRO
+            //================ CONFIGURAR TIPO PARAMETRO =====================
             listarTipoParametro(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
@@ -733,18 +739,64 @@
                     }
                 });
             },
+            actualizarTipoParametro(objTipoPar){
+                swal({
+                    title: 'Estas seguro de actualizar este TipoParámetro?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Actualizar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            
+                            var cDatoParDescripcion, nDatoParNumerico, fDatoParPorcentual;
+
+                            if(objTipoPar.cTipoParametro = 'D'){
+                                this.cDatoParDescripcion =  objTipoPar.cDatoParDescripcion;
+                            };
+                            if(objTipoPar.cTipoParametro = 'N'){
+                                this.nDatoParNumerico =  objTipoPar.nDatoParNumerico;
+                            };
+                            if(objTipoPar.cTipoParametro = 'P'){
+                                this.fDatoParPorcentual =  objTipoPar.fDatoParPorcentual; 
+                            };
+
+                            var url = this.ruta + '/tipoparametro/UpdTipoParametroById';
+                            axios.post(url, {
+                                'nIdTipoPar': parseInt(objTipoPar.nIdTipoPar),
+                                'nIdPar': parseInt(objTipoPar.nIdPar),
+                                'cTipoParametro': objTipoPar.cTipoParametro,
+                                'cDatoParDescripcion': this.cDatoParDescripcion,
+                                'nDatoParNumerico': this.nDatoParNumerico,
+                                'fDatoParPorcentual': this.fDatoParPorcentual
+                            }).then(response => {
+                                swal(
+                                'Actualizado!',
+                                'El registro fue actulizado.'
+                                );
+                                this.listarParametroByGrupo(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
+            },
             cambiarPaginaTipoParametro(page){
                 this.paginationModal.current_page=page;
                 this.listarTipoParametro(page);
             },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formVersion.nidproveedor = nProveedorId;
-                this.formVersion.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
-            },
+            //==============================================
             cerrarModal(){
                 //this.accionmodal==1;
                 this.modal = 0

@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/parparametro/ElmParParametro', 'ParParametroController@ElmParParametro');
     Route::get('/parparametro/GetParParametro', 'ParParametroController@GetParParametro');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
+    Route::post('/tipoparametro/UpdTipoParametroById', 'ParametroController@UpdTipoParametroById');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
     Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
 

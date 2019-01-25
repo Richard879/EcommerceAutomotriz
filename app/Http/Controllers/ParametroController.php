@@ -413,4 +413,20 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($objParParametroExt);
     }
+
+    public function UpdTipoParametroById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parametro = DB::select('exec [usp_TipoPar_UpdTipoParametroById] ?, ?, ?, ?, ?, ? ?',
+                                                        [   $request->nIdTipoPar,
+                                                            $request->nIdPar,
+                                                            $request->cTipoParametro,
+                                                            $request->cDatoParDescripcion,
+                                                            $request->nDatoParNumerico,
+                                                            $request->fDatoParPorcentual,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($parametro);
+    }
 }
