@@ -1035,18 +1035,16 @@
             },
             validarAgregarDireccion(op){
                 let me = this;
-                let sw = 0;
-                me.mensajeError =[];
+                this.error = 0;
+                this.mensajeError =[];
 
                 if(op == 1) {
                     this.arrayDireccionesFiscales.map(function (x, y) {
                         if(x.AddressName == ''){
                             me.mensajeError.push('ID Dirección Fiscal, campo obligatorio ' + (y+1));
-                            sw = true;
                         }
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Fiscal N° ' + (y+1));
-                            sw = true;
                         }
                     });
                 }
@@ -1054,15 +1052,17 @@
                     this.arrayDireccionesDespacho.map(function (x, y) {
                         if(x.AddressName == ''){
                             me.mensajeError.push('ID Dirección Despacho, campo obligatorio ' + (y+1));
-                            sw = true;
                         }
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Despacho N° ' + (y+1));
-                            sw = true;
                         }
                     });
                 }
-                return sw;
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             removerDireccion(op, index){
                 if (op == 1){
@@ -1289,7 +1289,6 @@
             },
             validarDireccion(){
                 let me = this;
-                let sw = 0;
                 me.mensajeError =[];
 
                 if( me.arrayDireccionesFiscales.length == 0) {
@@ -1298,11 +1297,9 @@
                     me.arrayDireccionesFiscales.map(function (x, y) {
                         if(x.AddressID == '' || x.AddressName == ''){
                             me.mensajeError.push('ID Dirección Fiscal se encuentra vacío, campo obligatorio ' + (y+1));
-                            sw = true;
                         }
                         if(x.Street == ''){
                             me.mensajeError.push('Debe ingresar una Dirección Fiscal, campo obligatorio ' + (y+1));
-                            sw = true;
                         }
                     });
                 }
@@ -1310,14 +1307,15 @@
                 me.arrayDireccionesDespacho.map(function (x, y) {
                     if(x.AddressID == '' || x.AddressName == ''){
                         me.mensajeError.push('ID Dirección Despacho se encuentra vacío, campo obligatorio ' + (y+1));
-                        sw = true;
                     }
                     if(x.Street == ''){
                         me.mensajeError.push('Debe ingresar una Dirección Despacho, campo obligatorio ' + (y+1));
-                        sw = true;
                     }
                 });
-                return sw;
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             limpiarDireccion(){
                 this.arrayDireccionesFiscales = [];
