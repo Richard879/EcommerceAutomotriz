@@ -3058,7 +3058,7 @@
                         'nidtipopar': 4
                     }
                 }).then(response => {
-                    var fecha = moment().add(parseInt(response.data[0].nDatoParNumerico), 'days').format('DD/MM/YYYY');
+                    var fecha = moment().add(parseInt(response.data.arrayTipoParametro.data[0].nDatoParNumerico), 'days').format('DD/MM/YYYY');
                     this.fillConfigBasica.fechaFin = fecha;
                 }).catch(error => {
                     console.log(error);

@@ -2141,7 +2141,7 @@
                         'nidtipopar': 0
                     }
                 }).then(response => {
-                    this.cvalidabanco = response.data[0].cDatoParDescripcion;
+                    this.cvalidabanco = response.data.arrayTipoParametro.data[0].cDatoParDescripcion;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

@@ -183,17 +183,22 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $cTipoParametro = $request->ctipoparametro;
         $nIdTipoPar = $request->nidtipopar;
+        $variable   = $request->opcion;
 
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
         $nIdTipoPar = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $tipoparametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+        $arrayTipoParametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   $nIdPar,
                                                                 $cTipoParametro,
                                                                 $nIdTipoPar
                                                             ]);
 
-        return response()->json($tipoparametro);
+        if($variable == "0"){
+            $arrayTipoParametro = $this->arrayPaginator($arrayTipoParametro, $request);
+        }
+        return ['arrayTipoParametro'=>$arrayTipoParametro];
     }
 
     public function GetParametroById(Request $request)

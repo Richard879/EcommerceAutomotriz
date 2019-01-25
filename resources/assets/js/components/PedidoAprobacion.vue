@@ -1407,7 +1407,7 @@
                         'nidtipopar': 51
                     }
                 }).then(response => {
-                    this.formSap.igv = response.data[0].fDatoParPorcentual;
+                    this.formSap.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
                     if(this.formSap.igv > 0){
                         this.obtenerPedidoById();
                     } else {
