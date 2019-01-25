@@ -713,13 +713,14 @@
                     })
             },
             //================ CONFIGURAR TIPO PARAMETRO =====================
-            listarTipoParametro(){
+            listarTipoParametro(page){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
                         'nidpar': this.formParametro.nidpar,
                         'ctipoparametro': '',
-                        'nidtipopar': 0
+                        'nidtipopar': 0,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayTipoParametro = response.data.arrayTipoParametro.data;
@@ -739,6 +740,10 @@
                     }
                 });
             },
+            cambiarPaginaTipoParametro(page){
+                this.paginationModal.current_page=page;
+                this.listarTipoParametro(page);
+            },
             actualizarTipoParametro(objTipoPar){
                 swal({
                     title: 'Estas seguro de actualizar este TipoParámetro?',
@@ -751,15 +756,15 @@
                     }).then((result) => {
                         if (result.value) {
                             
-                            var cDatoParDescripcion, nDatoParNumerico, fDatoParPorcentual;
+                            var cDatoParDescripcion = "", nDatoParNumerico = 0, fDatoParPorcentual = 0;
 
-                            if(objTipoPar.cTipoParametro = 'D'){
+                            if(objTipoPar.cTipoParametro == 'D'){
                                 this.cDatoParDescripcion =  objTipoPar.cDatoParDescripcion;
                             };
-                            if(objTipoPar.cTipoParametro = 'N'){
+                            if(objTipoPar.cTipoParametro == 'N'){
                                 this.nDatoParNumerico =  objTipoPar.nDatoParNumerico;
                             };
-                            if(objTipoPar.cTipoParametro = 'P'){
+                            if(objTipoPar.cTipoParametro == 'P'){
                                 this.fDatoParPorcentual =  objTipoPar.fDatoParPorcentual; 
                             };
 
@@ -776,7 +781,7 @@
                                 'Actualizado!',
                                 'El registro fue actulizado.'
                                 );
-                                this.listarParametroByGrupo(1);
+                                this.listarTipoParametro(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -791,10 +796,6 @@
                         {
                         }
                     })
-            },
-            cambiarPaginaTipoParametro(page){
-                this.paginationModal.current_page=page;
-                this.listarTipoParametro(page);
             },
             //==============================================
             cerrarModal(){

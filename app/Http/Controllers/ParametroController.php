@@ -418,13 +418,21 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $parametro = DB::select('exec [usp_TipoPar_UpdTipoParametroById] ?, ?, ?, ?, ?, ? ?',
+        $cDatoParDescripcion = $request->cDatoParDescripcion;
+        $nDatoParNumerico = $request->nDatoParNumerico;
+        $fDatoParPorcentual = $request->fDatoParPorcentual;
+
+        $cDatoParDescripcion = ($cDatoParDescripcion == NULL) ? ($cDatoParDescripcion = '') : $cDatoParDescripcion;
+        $nDatoParNumerico = ($nDatoParNumerico == NULL) ? ($nDatoParNumerico = 0) : $nDatoParNumerico;
+        $fDatoParPorcentual = ($fDatoParPorcentual == NULL) ? ($fDatoParPorcentual = 0) : $fDatoParPorcentual;
+
+        $parametro = DB::select('exec [usp_TipoPar_UpdTipoParametroById] ?, ?, ?, ?, ?, ?, ?',
                                                         [   $request->nIdTipoPar,
                                                             $request->nIdPar,
                                                             $request->cTipoParametro,
-                                                            $request->cDatoParDescripcion,
-                                                            $request->nDatoParNumerico,
-                                                            $request->fDatoParPorcentual,
+                                                            $cDatoParDescripcion,
+                                                            $nDatoParNumerico,
+                                                            $fDatoParPorcentual,
                                                             Auth::user()->id
                                                         ]);
         return response()->json($parametro);
