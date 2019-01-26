@@ -1468,14 +1468,14 @@
                 });
             },
             llenarComboBanco_Destino(){
-                var url = this.ruta + '/parparametro/GetBancosByEmpresa';
+                var url = this.ruta + '/cuentabancaria/GetBancosByEmpresa';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar': 110021
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayBanco_Destino = response.data;
+                    this.arrayBanco_Destino = response.data.arrayCuentaBancaria.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

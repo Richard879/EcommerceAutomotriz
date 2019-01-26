@@ -35,7 +35,6 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/parametro/LineaMarcaModeloDesactiva','ParametroController@LineaMarcaModeloDesactiva');
     Route::put('/parametro/LineaMarcaModeloActiva','ParametroController@LineaMarcaModeloActiva');
 
-    Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');
     Route::post('/parparametro/SetParParametro', 'ParParametroController@SetParParametro');
     Route::post('/parparametro/ElmParParametro', 'ParParametroController@ElmParParametro');
@@ -367,6 +366,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/usuario/GetListPermisosByRol','GestionUsuariosController@GetListPermisosByRol');
     Route::post('/usuario/SetPermisosByUsuario','GestionUsuariosController@SetPermisosByUsuario');
     Route::get('/usuario/GetInformacionUsuario','GestionUsuariosController@GetInformacionUsuario');
+
+    Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
     ///========================================
     /////=================  ROUTES SAP
