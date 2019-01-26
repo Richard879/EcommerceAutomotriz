@@ -2461,6 +2461,28 @@
                     }
                     //Si NO existe articulo, registro articulo
                     else{
+                        me.arraySapCompra.push({
+                            cNumeroVin: compra.cNumeroVin,
+                            nIdCompra: compra.nIdCompra,
+                            cCronograma :compra.cNumeroMes + '-' + compra.cAnio,
+                            nOrdenCompra: compra.nOrdenCompra,
+                            cNombreLinea: compra.cNombreLinea,
+                            cNombreAlmacen: compra.cNombreAlmacen,
+                            nNumeroReserva: compra.nNumeroReserva,
+                            cNumeroVin: compra.cNumeroVin,
+                            cFormaPago: compra.cFormaPago,
+                            cNombreComercial: compra.cNombreComercial,
+                            nAnioFabricacion: compra.nAnioFabricacion,
+                            nAnioVersion: compra.nAnioVersion,
+                            cSimboloMoneda: compra.cSimboloMoneda,
+                            fTotalCompra: compra.fTotalCompra,
+                            cNumeroFactura: compra.cNumeroFactura,
+                            dFechaFacturado: compra.dFechaFacturado,
+                            dFechaCompra: compra.dFechaCompra,
+                            cItemType: compra.cItemType
+                        });
+                        //Obtener Codigo Sap Proveedor
+                        me.formCompra.ccarcode = compra.cCarCode;
                         //==============================================================
                         //================== REGITRO ARTICULO EN SAP ===============
                         me.generaSapArticulo();
@@ -2481,7 +2503,7 @@
 
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
-                    data: me.arraySapCompra
+                    'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
