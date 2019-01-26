@@ -77,6 +77,9 @@ class GestionContactoController extends Controller
         $nIdEmpresa     = $request->nidempresa;
         $nIdProveedor   = $request->nidproveedor;
         $nIdUsuario     = Auth::user()->id;
+        $variable   = $request->opcion;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Contacto_GetLineasByUsuario] ?, ?, ?',
                                             [   $nIdEmpresa, 
@@ -84,7 +87,10 @@ class GestionContactoController extends Controller
                                                 $nIdUsuario
                                             ]);
 
-        return response()->json($arrayLinea);
+        if($variable == "0"){
+            $arrayLinea = ParametroController::arrayPaginator($arrayLinea, $request);
+        }
+        return ['arrayLinea'=>$arrayLinea];
     }
 
     public function GetMarcaByLinea(Request $request)
@@ -93,11 +99,19 @@ class GestionContactoController extends Controller
 
         $nIdLinea     = $request->nidlinea;
         $nIdUsuario   = Auth::user()->id;
+        $variable   = $request->opcion;
 
-        $arrayMarca = DB::select('exec usp_Contacto_GetMarcasByLinea ?, ?',
-                                            [$nIdLinea, $nIdUsuario]);
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        
+        $arrayMarca = DB::select('exec [usp_Contacto_GetMarcasByLinea] ?, ?',
+                                            [   $nIdLinea, 
+                                                $nIdUsuario
+                                            ]);
 
-        return response()->json($arrayMarca);
+        if($variable == "0"){
+            $arrayMarca = ParametroController::arrayPaginator($arrayMarca, $request);
+        }
+        return ['arrayMarca'=>$arrayMarca];
     }
 
     public function GetModeloByMarca(Request $request)

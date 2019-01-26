@@ -106,19 +106,17 @@ class VersionVehiculoController extends Controller
     public function GetMarcaByLinea(Request $request)
     {
         $nIdLinea = $request->nidlinea;
+        $variable   = $request->opcion;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayMarca = DB::select('exec [usp_Par_GetMarcaByLinea] ?',
-                                                    [   $nIdLinea
-                                                    ]);
-
-        $data = [];
-        foreach ($arrayMarca as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdMarca,
-                'cParNombre' => $value->cMarcaNombre,
-            ];
+                                                            [   $nIdLinea
+                                                            ]);
+        if($variable == "0"){
+            $arrayMarca = ParametroController::arrayPaginator($arrayMarca, $request);
         }
-        return response()->json($data);
+        return ['arrayMarca'=>$arrayMarca];
     }
 
     public function GetModeloByMarca(Request $request)

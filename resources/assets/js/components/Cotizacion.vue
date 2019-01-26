@@ -101,10 +101,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillMisCotizaciones.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarSoloComboModelo()">
                                                                                     <el-option
-                                                                                    v-for="item in arrayMarca"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="marca in arrayMarca"
+                                                                                        :key="marca.nIdMarca"
+                                                                                        :label="marca.cMarcaNombre"
+                                                                                        :value="marca.nIdMarca">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -1584,10 +1584,10 @@
                                                         <div class="col-md-8">
                                                             <el-select v-model="fillBusqVehiculo.nidmarca" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                 <el-option
-                                                                v-for="item in arrayMarca"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                    v-for="marca in arrayMarca"
+                                                                    :key="marca.nIdMarca"
+                                                                    :label="marca.cMarcaNombre"
+                                                                    :value="marca.nIdMarca">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -3459,10 +3459,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': this.fillBusqVehiculo.nidlinea
+                        'nidlinea': this.fillBusqVehiculo.nidlinea,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data;
+                    this.arrayMarca = response.data.arrayMarca;
                     this.fillBusqVehiculo.nidmarca = this.fillAsignarContacto.nidmarca;
                     this.arrayModelo = [];
                     this.llenarComboModelo();

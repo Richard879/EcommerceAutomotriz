@@ -463,10 +463,10 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayMarca"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="marca in arrayMarca"
+                                                                                                    :key="marca.nIdMarca"
+                                                                                                    :label="marca.cMarcaNombre"
+                                                                                                    :value="marca.nIdMarca">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -656,10 +656,10 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmarca2" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                                 <el-option
-                                                                                                    v-for="item in arrayMarca2"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
+                                                                                                    v-for="marca in arrayMarca2"
+                                                                                                    :key="marca.nIdMarca"
+                                                                                                    :label="marca.cMarcaNombre"
+                                                                                                    :value="marca.nIdMarca">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1626,7 +1626,7 @@
             llenarComboLinea(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetLineasByProveedor') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
 
                 axios.get(url, {
                     params: {
@@ -1635,7 +1635,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    (this.cFlagReferenciaInteres == 1) ? (this.arrayLinea = response.data) : (this.arrayLinea2 = response.data.arrayLinea);
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayLinea = response.data.arrayLinea) : (this.arrayLinea2 = response.data.arrayLinea);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea = '' : this.formNuevoContacto.nidlinea2 = '';
 
                     this.llenarComboMarca();
@@ -1652,14 +1652,15 @@
             llenarComboMarca(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea : this.formNuevoContacto.nidlinea2
+                        'nidlinea': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea : this.formNuevoContacto.nidlinea2,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    (this.cFlagReferenciaInteres == 1) ? (this.arrayMarca = response.data) : (this.arrayMarca2 = response.data);
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayMarca = response.data.arrayMarca) : (this.arrayMarca2 = response.data.arrayMarca);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca = '' : this.formNuevoContacto.nidmarca2 = '';
 
                     this.arrayModelo = [];

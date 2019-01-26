@@ -59,10 +59,10 @@
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
-                                                            v-for="item in arrayMarca"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arrayMarca"
+                                                                :key="item.nIdMarca"
+                                                                :label="item.cMarcaNombre"
+                                                                :value="item.nIdMarca">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -221,10 +221,10 @@
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
-                                                            v-for="item in arrayMarca"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arrayMarca"
+                                                                :key="item.nIdMarca"
+                                                                :label="item.cMarcaNombre"
+                                                                :value="item.nIdMarca">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -533,10 +533,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlinea' : this.formVersion.nidlinea
+                        'nidlinea' : this.formVersion.nidlinea,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data;
+                    this.arrayMarca = response.data.arrayMarca;
                     if(this.vistaFormulario){
                         this.formVersion.nidmarca = '';
                     }

@@ -304,10 +304,10 @@
                                                 <div class="col-sm-4">
                                                     <el-select v-model="fillVendedor.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo();">
                                                         <el-option
-                                                        v-for="marca in arrayMarca"
-                                                        :key="marca.nIdPar"
-                                                        :label="marca.cParNombre"
-                                                        :value="marca.nIdPar">
+                                                            v-for="marca in arrayMarca"
+                                                            :key="marca.nIdMarca"
+                                                            :label="marca.cMarcaNombre"
+                                                            :value="marca.nIdMarca">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -618,10 +618,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlinea' : this.fillVendedor.nidlinea
+                        'nidlinea' : this.fillVendedor.nidlinea,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data;
+                    this.arrayMarca = response.data.arrayMarca;
                     if(this.vistaFormulario){
                         this.fillVendedor.nidmarca = '';
                     }
