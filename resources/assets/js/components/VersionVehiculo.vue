@@ -84,10 +84,10 @@
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
-                                                            v-for="item in arrayLinea"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arrayLinea"
+                                                                :key="item.nIdLinea"
+                                                                :label="item.cLineaNombre"
+                                                                :value="item.nIdLinea">
                                                             </el-option>
                                                         </el-select>
                                                     </div>

@@ -68,26 +68,6 @@ class ParametroController extends Controller
         return ['arrayProveedor'=>$arrayProveedor];
     }
 
-    public function GetLineasByProveedor(Request $request)
-    {
-        $nIdEmpresa = $request->nidempresa;
-        $nIdProveedor = $request->nidproveedor;
-        $cLineaNombre = $request->clineanombre;
-        $variable   = $request->opcion;
-        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
-
-        $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
-                                                            [   $nIdEmpresa,
-                                                                $nIdProveedor,
-                                                                $cLineaNombre
-                                                            ]);
-        if($variable == "0"){
-            $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
-        }
-        return ['arrayLinea'=>$arrayLinea];
-    }
-
     public function GetMarcasByProveedor(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;

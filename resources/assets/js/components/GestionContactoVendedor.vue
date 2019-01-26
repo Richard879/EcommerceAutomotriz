@@ -542,10 +542,10 @@
                                                                                             <input type="hidden" v-model="formNuevoContacto.nidcontacto">
                                                                                             <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayLinea"
-                                                                                                :key="item.nIdLinea"
-                                                                                                :label="item.cLineaNombre"
-                                                                                                :value="item.nIdLinea">
+                                                                                                    v-for="item in arrayLinea"
+                                                                                                    :key="item.nIdLinea"
+                                                                                                    :label="item.cLineaNombre"
+                                                                                                    :value="item.nIdLinea">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1546,10 +1546,10 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidlinea2" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayLinea2"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayLinea2"
+                                                                                                    :key="item.nIdLinea"
+                                                                                                    :label="item.cLineaNombre"
+                                                                                                    :value="item.nIdLinea">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -3518,10 +3518,11 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 130011,
-                        'nidproveedor': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidproveedor : this.formNuevoContacto.nidproveedor2
+                        'nidproveedor': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidproveedor : this.formNuevoContacto.nidproveedor2,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    (this.cFlagReferenciaInteres == 1) ? (this.arrayLinea = response.data) : (this.arrayLinea2 = response.data);
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayLinea = response.data) : (this.arrayLinea2 = response.data.arrayLinea);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea = '' : this.formNuevoContacto.nidlinea2 = '';
 
                     this.llenarComboMarca();

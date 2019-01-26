@@ -547,10 +547,11 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': sessionStorage.getItem("nIdEmpresa"),
-                        'nidproveedor' : this.fillAsigVendedorCuota.nidproveedor
+                        'nidproveedor' : this.fillAsigVendedorCuota.nidproveedor,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayLinea = response.data;
+                    this.arrayLinea = response.data.arrayLinea.data;
                     this.fillAsigVendedorCuota.nidlinea = '';
                     this.llenarComboMarca();
                 }).catch(error => {

@@ -97,10 +97,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillObjComercialCompra.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                     <el-option
-                                                                                    v-for="item in arrayLinea"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayLinea"
+                                                                                        :key="item.nIdLinea"
+                                                                                        :label="item.cLineaNombre"
+                                                                                        :value="item.nIdLinea">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -722,10 +722,11 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor' : this.fillProveedor.nidproveedor
+                        'nidproveedor' : this.fillProveedor.nidproveedor,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayLinea = response.data;
+                    this.arrayLinea = response.data.arrayLinea;
                     this.fillObjComercialCompra.nidlinea = '';
                     this.llenarComboMarca();
                 }).catch(error => {

@@ -19,8 +19,11 @@ class ComisionController extends Controller
         $nIdProveedor = $request->nidproveedor;
         $cLineaNombre = "";
 
-        $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?',
-                                            [$nIdEmpresa, $nIdProveedor, $cLineaNombre]);
+        $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
+                                            [   $nIdEmpresa, 
+                                                $nIdProveedor, 
+                                                $cLineaNombre
+                                            ]);
 
         $arrayLinea = ParametroController::arrayPaginator($arrayLinea, $request);
         return ['arrayLinea'=>$arrayLinea];

@@ -42,10 +42,10 @@
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
-                                                            v-for="item in arrayLinea"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arrayLinea"
+                                                                :key="item.nIdLinea"
+                                                                :label="item.cLineaNombre"
+                                                                :value="item.nIdLinea">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -203,11 +203,11 @@
                                                     <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
-                                                            <el-option
-                                                            v-for="item in arrayLinea"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                             <el-option
+                                                                v-for="item in arrayLinea"
+                                                                :key="item.nIdLinea"
+                                                                :label="item.cLineaNombre"
+                                                                :value="item.nIdLinea">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -509,10 +509,11 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor' : this.formVersion.nidproveedor
+                        'nidproveedor' : this.formVersion.nidproveedor,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayLinea = response.data;
+                    this.arrayLinea = response.data.arrayLinea;
                     if(this.vistaFormulario){
                         this.formVersion.nidlinea = '';
                     }

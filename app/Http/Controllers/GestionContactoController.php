@@ -78,8 +78,11 @@ class GestionContactoController extends Controller
         $nIdProveedor   = $request->nidproveedor;
         $nIdUsuario     = Auth::user()->id;
 
-        $arrayLinea = DB::select('exec usp_Contacto_GetLineasByUsuario ?, ?, ?',
-                                            [$nIdEmpresa, $nIdProveedor, $nIdUsuario]);
+        $arrayLinea = DB::select('exec [usp_Contacto_GetLineasByUsuario] ?, ?, ?',
+                                            [   $nIdEmpresa, 
+                                                $nIdProveedor, 
+                                                $nIdUsuario
+                                            ]);
 
         return response()->json($arrayLinea);
     }

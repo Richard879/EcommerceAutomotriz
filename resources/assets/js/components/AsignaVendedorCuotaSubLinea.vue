@@ -87,9 +87,9 @@
                                                                         placeholder="SELECCIONE" v-on:change="llenarComboSubLinea()">
                                                         <el-option
                                                             v-for="item in arrayLinea"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                            :key="item.nIdLinea"
+                                                            :label="item.cLineaNombre"
+                                                            :value="item.nIdLinea">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -524,10 +524,11 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': sessionStorage.getItem("nIdEmpresa"),
-                        'nidproveedor' : this.fillAsigVendedorCuota.nidproveedor
+                        'nidproveedor' : this.fillAsigVendedorCuota.nidproveedor,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayLinea = response.data;
+                    this.arrayLinea = response.data.arrayLinea;
                     this.fillAsigVendedorCuota.nidlinea = '';
                     this.llenarComboSubLinea();
                 }).catch(error => {

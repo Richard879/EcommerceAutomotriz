@@ -2211,7 +2211,7 @@
                 this.listarLineasByProveedor(1);
             },
             listarLineasByProveedor(page){
-                var url = this.ruta + '/parametro/GetLineasByProveedor';
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
 
                 axios.get(url, {
                     params: {

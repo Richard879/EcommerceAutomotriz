@@ -551,7 +551,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/parametro/GetLineasByProveedor';
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),

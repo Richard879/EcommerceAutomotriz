@@ -1079,12 +1079,13 @@
                 }
                 return this.error;
             },
-            cargarLineasByProveedor(){
-                var url = this.ruta + '/getComision/GetLineasByProveedor';
+            cargarLineasByProveedor(page){
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.fillProveedor.nidproveedor
+                        'nidproveedor' : this.fillProveedor.nidproveedor,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayLineaModal = response.data.arrayLinea.data;
@@ -1256,7 +1257,7 @@
                                         this.modal = 1;
                                         return;
                                     }
-                                    this.cargarLineasByProveedor();
+                                    this.cargarLineasByProveedor(1);
                                     this.accionmodal=3;
                                     this.modal=1;
                                 } else {

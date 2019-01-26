@@ -87,22 +87,20 @@ class VersionVehiculoController extends Controller
     {
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
-        $cLineaNombre = "";
+        $cLineaNombre = $request->clineanombre;
+        $variable   = $request->opcion;
+        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
-                                                            [   $nIdEmpresa, 
-                                                                $nIdProveedor, 
+                                                            [   $nIdEmpresa,
+                                                                $nIdProveedor,
                                                                 $cLineaNombre
                                                             ]);
-
-        $data = [];
-        foreach ($arrayLinea as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdLinea,
-                'cParNombre' => $value->cLineaNombre,
-            ];
+        if($variable == "0"){
+            $arrayLinea = ParametroController::arrayPaginator($arrayLinea, $request);
         }
-        return response()->json($data);
+        return ['arrayLinea'=>$arrayLinea];
     }
 
     public function GetMarcaByLinea(Request $request)
