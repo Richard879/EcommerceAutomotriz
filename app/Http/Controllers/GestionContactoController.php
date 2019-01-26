@@ -102,7 +102,7 @@ class GestionContactoController extends Controller
         $variable   = $request->opcion;
 
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
-        
+
         $arrayMarca = DB::select('exec [usp_Contacto_GetMarcasByLinea] ?, ?',
                                             [   $nIdLinea, 
                                                 $nIdUsuario
@@ -121,17 +121,22 @@ class GestionContactoController extends Controller
         $nIdLinea = $request->nidlinea;
         $nIdMarca = $request->nidmarca;
         $nIdUsuario   = Auth::user()->id;
+        $variable   = $request->opcion;
 
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayModelo = DB::select('exec usp_Contacto_GetModelosByMarca ?, ?, ?',
+        $arrayModelo = DB::select('exec [usp_Contacto_GetModelosByMarca] ?, ?, ?',
                                             [   $nIdLinea,
                                                 $nIdMarca,
                                                 $nIdUsuario
                                             ]);
 
-        return response()->json($arrayModelo);
+        if($variable == "0"){
+            $arrayModelo = ParametroController::arrayPaginator($arrayModelo, $request);
+        }
+        return ['arrayModelo'=>$arrayModelo];
     }
 
     public function SetContactoRefVehiculo(Request $request)

@@ -534,10 +534,10 @@
                                                         <div class="col-sm-8">
                                                             <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
-                                                                v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                    v-for="item in arrayModelo"
+                                                                    :key="item.nIdModelo"
+                                                                    :label="item.cModeloNombre"
+                                                                    :value="item.nIdModelo">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -683,10 +683,10 @@
                                                         <div class="col-sm-8">
                                                             <el-select v-model="fillFlete.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
-                                                                v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                    v-for="item in arrayModelo"
+                                                                    :key="item.nIdModelo"
+                                                                    :label="item.cModeloNombre"
+                                                                    :value="item.nIdModelo">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -1068,10 +1068,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.accionmodal==3 ? this.fillCompra.nidmarca : this.fillFlete.nidmarca
+                        'nidmarca' : this.accionmodal==3 ? this.fillCompra.nidmarca : this.fillFlete.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillFlete.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);

@@ -116,10 +116,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillMisCotizaciones.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
-                                                                                    v-for="item in arrayModelo"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayModelo"
+                                                                                        :key="item.nIdModelo"
+                                                                                        :label="item.cModeloNombre"
+                                                                                        :value="item.nIdModelo">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -1601,10 +1601,10 @@
                                                         <div class="col-md-8">
                                                             <el-select v-model="fillBusqVehiculo.nidmodelo" filterable disabled="disabled" clearable placeholder="SELECCIONE" >
                                                                 <el-option
-                                                                v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                    v-for="item in arrayModelo"
+                                                                    :key="item.nIdModelo"
+                                                                    :label="item.cModeloNombre"
+                                                                    :value="item.nIdModelo">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -2898,10 +2898,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.fillMisCotizaciones.nidmarca
+                        'nidmarca' : this.fillMisCotizaciones.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillMisCotizaciones.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
@@ -3481,10 +3482,11 @@
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url, {
                     params: {
-                        'nidmarca': this.fillBusqVehiculo.nidmarca
+                        'nidmarca': this.fillBusqVehiculo.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillBusqVehiculo.nidmodelo = this.fillAsignarContacto.nidmodelo;
                 }).catch(error => {
                     console.log(error);

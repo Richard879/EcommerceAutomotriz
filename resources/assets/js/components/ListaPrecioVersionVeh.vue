@@ -636,10 +636,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="formListaPrecioVh.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
-                                                                                    v-for="item in arrayModelo"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayModelo"
+                                                                                        :key="item.nIdModelo"
+                                                                                        :label="item.cModeloNombre"
+                                                                                        :value="item.nIdModelo">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -1605,10 +1605,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.formListaPrecioVh.nidmarca
+                        'nidmarca' : this.formListaPrecioVh.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.formListaPrecioVh.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);

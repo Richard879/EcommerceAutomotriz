@@ -1044,11 +1044,11 @@
                                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
-                                                                                                <el-option
-                                                                                                v-for="item in arrayModelo"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                               <el-option
+                                                                                                    v-for="item in arrayModelo"
+                                                                                                    :key="item.nIdModelo"
+                                                                                                    :label="item.cModeloNombre"
+                                                                                                    :value="item.nIdModelo">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1858,9 +1858,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                     v-for="item in arrayModelo"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
+                                                                                                    :key="item.nIdModelo"
+                                                                                                    :label="item.cModeloNombre"
+                                                                                                    :value="item.nIdModelo">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -2051,9 +2051,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo2" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                     v-for="item in arrayModelo2"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
+                                                                                                    :key="item.nIdModelo"
+                                                                                                    :label="item.cModeloNombre"
+                                                                                                    :value="item.nIdModelo">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -4454,10 +4454,11 @@
                 axios.get(url, {
                     params: {
                         'nidlinea': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea : this.formNuevoContacto.nidlinea2,
-                        'nidmarca': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca : this.formNuevoContacto.nidmarca2
+                        'nidmarca': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca : this.formNuevoContacto.nidmarca2,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    (this.cFlagReferenciaInteres == 1) ? (this.arrayModelo = response.data) : (this.arrayModelo2 = response.data);
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayModelo = response.data.arrayModelo) : (this.arrayModelo2 = response.data.arrayModelo);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmodelo = '' : this.formNuevoContacto.nidmodelo2 = '';
                 }).catch(error => {
                     console.log(error);

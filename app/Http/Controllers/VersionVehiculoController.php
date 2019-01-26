@@ -123,27 +123,21 @@ class VersionVehiculoController extends Controller
     {
         $nIdLinea = $request->nidlinea;
         $nIdMarca = $request->nidmarca;
+        $variable   = $request->opcion;
 
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayModelo = DB::select('exec [usp_Par_GetModeloByMarca] ?, ?',
                                                     [   $nIdLinea,
                                                         $nIdMarca
                                                     ]);
 
-        $data = [];
-        /*$data[0] = [
-            'nIdPar'   => 0,
-            'cParNombre' =>'SELECCIONE',
-        ];*/
-        foreach ($arrayModelo as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdModelo,
-                'cParNombre' => $value->cModeloNombre,
-            ];
+        if($variable == "0"){
+            $arrayModelo = ParametroController::arrayPaginator($arrayModelo, $request);
         }
-        return response()->json($data);
+        return ['arrayModelo'=>$arrayModelo];
     }
 
     public function GetSubLineaByLinea(Request $request)

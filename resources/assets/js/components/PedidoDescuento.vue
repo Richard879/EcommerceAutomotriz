@@ -104,10 +104,10 @@
                                                 <div class="col-md-8">
                                                     <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                         <el-option
-                                                        v-for="item in arrayModelo"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
+                                                            v-for="item in arrayModelo"
+                                                            :key="item.nIdModelo"
+                                                            :label="item.cModeloNombre"
+                                                            :value="item.nIdModelo">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -876,10 +876,11 @@
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url, {
                     params: {
-                        'nidmarca': this.fillBusquedaPedido.nidmarca
+                        'nidmarca': this.fillBusquedaPedido.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillBusquedaPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);

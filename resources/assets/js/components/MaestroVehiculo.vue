@@ -102,10 +102,10 @@
                                                                                         clearable
                                                                                         placeholder="Seleccione un Modelo" >
                                                                                 <el-option
-                                                                                v-for="item in arrayModelo"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdModelo"
+                                                                                    :label="item.cModeloNombre"
+                                                                                    :value="item.nIdModelo">
                                                                                 </el-option>
                                                                             </el-select>
                                                                         </div>
@@ -376,10 +376,10 @@
                                                                                                     clearable
                                                                                                     placeholder="Seleccione una Modelo">
                                                                                             <el-option
-                                                                                            v-for="item in arrayModelo"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                                v-for="item in arrayModelo"
+                                                                                                :key="item.nIdModelo"
+                                                                                                :label="item.cModeloNombre"
+                                                                                                :value="item.nIdModelo">
                                                                                             </el-option>
                                                                                         </el-select>
                                                                                     </div>
@@ -1522,10 +1522,11 @@
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url,{
                     params: {
-                        'nidmarca' : (data == 1) ? this.fillBusquedaVehiculo.nidmarca : this.fillNuevoVehiculo.nidmarca
+                        'nidmarca' : (data == 1) ? this.fillBusquedaVehiculo.nidmarca : this.fillNuevoVehiculo.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     if(data == 1 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=''
                     if(data == 2 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=''
                     // (data == 1) ? this.fillBusquedaVehiculo.nidmodelo=0 : this.fillNuevoVehiculo.nidmodelo=0;
