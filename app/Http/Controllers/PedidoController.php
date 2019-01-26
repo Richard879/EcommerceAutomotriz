@@ -118,52 +118,67 @@ class PedidoController extends Controller
     }
 
     //fluno direcciones
-    public function GetDireccionByContacto(Request $request)
+    public function GetDireccionesByPersona(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdContacto    =   $request->nIdContacto;
+        $nIdPersona    =   $request->nIdPersona;
+        $cTipoPersona  =   $request->cTipoPersona;
 
-        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
+        $arrayDirecciones = DB::select('exec [usp_Persona_GetDireccionesByPersona] ?, ?',
                                                     [
-                                                        $nIdContacto
+                                                        $nIdPersona,
+                                                        $cTipoPersona
                                                     ]);
 
         return response()->json($arrayDirecciones);
     }
 
-    public function GetDireccionContactoByPedido(Request $request)
+    public function GetDireccionPersonaByPersona(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdContacto    =   $request->nIdContacto;
+        $nIdPersona     =   $request->nIdPersona;
+        $cTipoPersona   =   $request->cTipoPersona;
 
-        $arrayDireccionContactoByPedido = DB::select('exec [usp_Pedido_GetDireccionContactoByPedido] ?',
-                                                    [   $nIdContacto
+        $arrayDireccionPersonaByPersona = DB::select('exec [usp_Persona_GetDireccionPersonaByPersona] ?, ?',
+                                                    [
+                                                        $nIdPersona,
+                                                        $cTipoPersona
                                                     ]);
-        return response()->json($arrayDireccionContactoByPedido);
+
+        return response()->json($arrayDireccionPersonaByPersona);
     }
 
-    public function SetRegistrarDireccionContacto(Request $request)
+    public function SetRegistrarDireccionPersona(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         try{
             DB::beginTransaction();
 
-            $nIdContacto = $request->nIdContacto;
+            $nIdPersona = $request->nIdPersona;
 
             $arrayDireccionesFiscalesLength = sizeof($request->arrayDireccionesFiscales);
             if($arrayDireccionesFiscalesLength > 0) {
                 $arrayDireccionesFiscales = $request->arrayDireccionesFiscales;
                 foreach($arrayDireccionesFiscales as $ep=>$det)
                 {
-                    $data = DB::select('exec [usp_Contacto_SetDirecciones] ?, ?, ?, ?, ?',
+                    $infoUbigeo = DB::select('exec [usp_Ubi_GetUbigeoByID] ?',
                                                                 [
-                                                                    $nIdContacto,
+                                                                    $det['cUbigeo']
+                                                                ]);
+
+                    $data = DB::select('exec [usp_Persona_SetDirecciones] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $nIdPersona,
                                                                     $det['AddressName'],
                                                                     $det['Street'],
                                                                     'F',
+                                                                    $det['cUbigeo'],
+                                                                    $infoUbigeo[0]->cU_SYP_DEPA,
+                                                                    $infoUbigeo[0]->cU_SYP_PROV,
+                                                                    $infoUbigeo[0]->cU_SYP_DIST,
                                                                     Auth::user()->id
                                                                 ]);
                 }
@@ -174,12 +189,21 @@ class PedidoController extends Controller
                 $arrayDireccionesDespacho = $request->arrayDireccionesDespacho;
                 foreach($arrayDireccionesDespacho as $ep=>$det)
                 {
-                    $data = DB::select('exec [usp_Contacto_SetDirecciones] ?, ?, ?, ?, ?',
+                    $infoUbigeo = DB::select('exec [usp_Ubi_GetUbigeoByID] ?',
                                                                 [
-                                                                    $nIdContacto,
+                                                                    $det['cUbigeo']
+                                                                ]);
+
+                    $data = DB::select('exec [usp_Persona_SetDirecciones] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $nIdPersona,
                                                                     $det['AddressName'],
                                                                     $det['Street'],
                                                                     'D',
+                                                                    $det['cUbigeo'],
+                                                                    $infoUbigeo[0]->cU_SYP_DEPA,
+                                                                    $infoUbigeo[0]->cU_SYP_PROV,
+                                                                    $infoUbigeo[0]->cU_SYP_DIST,
                                                                     Auth::user()->id
                                                                 ]);
                 }

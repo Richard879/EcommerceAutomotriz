@@ -166,9 +166,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoForDscto', 'PedidoController@GetListPedidoForDscto');
     Route::get('/pedido/GetListHistorialPedidoDscto', 'PedidoController@GetListHistorialPedidoDscto');
     Route::post('/pedido/SetHistorialPedidoDscto', 'PedidoController@SetHistorialPedidoDscto');
-    Route::get('/pedido/GetDireccionContactoByPedido', 'PedidoController@GetDireccionContactoByPedido');
-    Route::get('/pedido/GetDireccionByContacto', 'PedidoController@GetDireccionByContacto');
-    Route::post('/pedido/SetRegistrarDireccionContacto', 'PedidoController@SetRegistrarDireccionContacto');
+    Route::get('/pedido/GetDireccionPersonaByPersona', 'PedidoController@GetDireccionPersonaByPersona');
+    Route::get('/pedido/GetDireccionesByPersona', 'PedidoController@GetDireccionesByPersona');
+    Route::post('/pedido/SetRegistrarDireccionPersona', 'PedidoController@SetRegistrarDireccionPersona');
     Route::get('/pedido/GetObtenerTipoPersona', 'PedidoController@GetObtenerTipoPersona');
     Route::get('/pedido/GetListContactoBySinCarteraMes', 'PedidoController@GetListContactoBySinCarteraMes');
     Route::get('/pedido/GetPedidoById', 'PedidoController@GetPedidoById');
