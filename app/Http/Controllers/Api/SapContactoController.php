@@ -53,10 +53,14 @@ class SapContactoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
-                                            [
-                                                $request->contacto['nIdContacto']
-                                            ]);
+        $nIdPersona    =   $request->nIdPersona;
+        $cTipoPersona  =   $request->cTipoPersona;
+
+        $arrayDirecciones = DB::select('exec [usp_Persona_GetDireccionesByPersona] ?, ?',
+                                                    [
+                                                        $nIdPersona,
+                                                        $cTipoPersona
+                                                    ]);
 
         //Obtener Tipo Persona
         $tipoPersona = $request->contacto['cFlagTipoPersona'];
@@ -133,10 +137,10 @@ class SapContactoController extends Controller
                 $json['json']['BPAddresses'][] = [
                     "AddressName"   =>  $value->AddressName,
                     "Street"        =>  $value->Street,
-                    "Block"         =>  "Chachapoyas",
-                    "ZipCode"       =>  "010101",
-                    "City"          =>  "Chachapoyas",
-                    "County"        =>  "Amazonas",
+                    "Block"         =>  $value->cU_SYP_PROV,
+                    "ZipCode"       =>  $value->cUbigeo,
+                    "City"          =>  $value->cU_SYP_DIST,
+                    "County"        =>  $value->cU_SYP_DEPA,
                     "Country"       =>  "PE",
                     "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
                     "BPCode"        =>  $CardCode
@@ -159,41 +163,17 @@ class SapContactoController extends Controller
                     "Currency"      =>  "##",
                     "U_SYP_BPTP"    =>  $U_SYP_BPTP,
                     "U_SYP_BPTD"    =>  $U_SYP_BPTD,
-                    "BPAddresses"   =>  array(),
-                    // "BPAddresses"   => [
-                    //     [
-                    //         "AddressName"   =>  "Domicilio Fiscal",
-                    //         "Street"        =>  $Address,
-                    //         "Block"         =>  "Chachapoyas",
-                    //         "ZipCode"       =>  "010101",
-                    //         "City"          =>  "Chachapoyas",
-                    //         "County"        =>  "Amazonas",
-                    //         "Country"       =>  "PE",
-                    //         "AddressType"   =>  "bo_BillTo",
-                    //         "BPCode"        =>  $CardCode,
-                    //     ],
-                    //     [
-                    //         "AddressName"   =>  "Domicilio Despacho",
-                    //         "Street"        =>  $Address,
-                    //         "Block"         =>  "Chachapoyas",
-                    //         "ZipCode"       =>  "010101",
-                    //         "City"          =>  "Chachapoyas",
-                    //         "County"        =>  "Amazonas",
-                    //         "Country"       =>  "PE",
-                    //         "AddressType"   =>  "bo_ShipTo",
-                    //         "BPCode"        =>  $CardCode
-                    //     ]
-                    // ]
+                    "BPAddresses"   =>  array()
                 ]
             ];
             foreach ($arrayDirecciones as $key => $value) {
                 $json['json']['BPAddresses'][] = [
                     "AddressName"   =>  $value->AddressName,
                     "Street"        =>  $value->Street,
-                    "Block"         =>  "Chachapoyas",
-                    "ZipCode"       =>  "010101",
-                    "City"          =>  "Chachapoyas",
-                    "County"        =>  "Amazonas",
+                    "Block"         =>  $value->cU_SYP_PROV,
+                    "ZipCode"       =>  $value->cUbigeo,
+                    "City"          =>  $value->cU_SYP_DIST,
+                    "County"        =>  $value->cU_SYP_DEPA,
                     "Country"       =>  "PE",
                     "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
                     "BPCode"        =>  $CardCode
@@ -213,10 +193,14 @@ class SapContactoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $arrayDirecciones = DB::select('exec [usp_Contacto_GetDireccionsByContacto] ?',
-                                            [
-                                                $request->nIdContacto
-                                            ]);
+        $nIdPersona    =   $request->nIdPersona;
+        $cTipoPersona  =   $request->cTipoPersona;
+
+        $arrayDirecciones = DB::select('exec [usp_Persona_GetDireccionesByPersona] ?, ?',
+                                                    [
+                                                        $nIdPersona,
+                                                        $cTipoPersona
+                                                    ]);
 
         $json = [
             'json' => [
@@ -228,10 +212,10 @@ class SapContactoController extends Controller
             $json['json']['BPAddresses'][] = [
                 "AddressName"   =>  $value->AddressName,
                 "Street"        =>  $value->Street,
-                "Block"         =>  "Chachapoyas",
-                "ZipCode"       =>  "010101",
-                "City"          =>  "Chachapoyas",
-                "County"        =>  "Amazonas",
+                "Block"         =>  $value->cU_SYP_PROV,
+                "ZipCode"       =>  $value->cUbigeo,
+                "City"          =>  $value->cU_SYP_DIST,
+                "County"        =>  $value->cU_SYP_DEPA,
                 "Country"       =>  "PE",
                 "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",
                 "BPCode"        =>  $request->CardCode

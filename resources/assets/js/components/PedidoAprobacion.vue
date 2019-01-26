@@ -590,6 +590,7 @@
                                                             <tr>
                                                                 <th>ID Fiscal</th>
                                                                 <th>Nombre Dirección</th>
+                                                                <th>Ubigeo</th>
                                                                 <th>Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -597,6 +598,19 @@
                                                             <tr v-for="(direccion, index) in arrayDireccionesFiscales" :key="index">
                                                                 <td> {{ direccion.AddressName = direccion.AddressID + 0 + (index+1) }} </td>
                                                                 <td><input type="text" class="form-control form-control-sm" v-model="direccion.Street"/></td>
+                                                                <td>
+                                                                    <el-select v-model="direccion.cUbigeo"
+                                                                                filterable
+                                                                                clearable
+                                                                                placeholder="SELECCIONE">
+                                                                        <el-option
+                                                                            v-for="item in arrayUbigeos"
+                                                                            :key="item.cCode"
+                                                                            :label="item.cUbigeo"
+                                                                            :value="item.cCode">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </td>
                                                                 <td>
                                                                     <el-tooltip content="Eliminar Dirección Fiscal" placement="top">
                                                                         <button type="button" rel="tooltip" class="btn btn-info" @click.prevent="removerDireccion(1, index)">
@@ -628,6 +642,7 @@
                                                             <tr>
                                                                 <th>ID Despacho</th>
                                                                 <th>Nombre Dirección</th>
+                                                                <th>Ubigeo</th>
                                                                 <th>Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -635,6 +650,19 @@
                                                             <tr v-for="(direccion, index) in arrayDireccionesDespacho" :key="index">
                                                                 <td> {{ direccion.AddressName = direccion.AddressID + 0 + (index+1) }} </td>
                                                                 <td><input type="text" class="form-control form-control-sm" v-model="direccion.Street"/></td>
+                                                                <td>
+                                                                    <el-select v-model="direccion.cUbigeo"
+                                                                                filterable
+                                                                                clearable
+                                                                                placeholder="SELECCIONE">
+                                                                        <el-option
+                                                                            v-for="item in arrayUbigeos"
+                                                                            :key="item.cCode"
+                                                                            :label="item.cUbigeo"
+                                                                            :value="item.cCode">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </td>
                                                                 <td>
                                                                     <el-tooltip content="Eliminar Dirección Despacho" placement="top">
                                                                         <button type="button" rel="tooltip" class="btn btn-info" @click.prevent="removerDireccion(2, index)">
@@ -730,15 +758,18 @@
                 cFlagOpcion: '',
                 arrayDireccionesExisten: [],
                 cFlagDireccionCU: 1,
+                arrayUbigeos: [],
                 arrayDireccionesFiscales: [],
                 arrayDireccionesDespacho: [],
                 fillDirecciones: {
                     nIdCabeceraPedido: '',
+                    nIdPersona: '',
                     nIdContacto: '',
                     cContacto: '',
                     cDireccion: '',
-                    cCardCode: '',
-                    cTipoPersona: ''
+                    cUbigeo: '',
+                    cCardCode: '',//Valida si hay cardcode
+                    cTipoPersona: ''//Valida que tipo persona para integrarla
                 },
                 arrayContacto: [],
                 SAPNuevoContactoJson: '',
@@ -951,11 +982,12 @@
                 this.listarPedidos(page);
             },
             //METODOS ASIGNACIÓN DIRECCIONES
-            obtenerDireccionesPorContacto(nIdContacto, data){
-                var url = this.ruta + '/pedido/GetDireccionByContacto';
+            obtenerDireccionesPorContacto(data){
+                var url = this.ruta + '/pedido/GetDireccionesByPersona';
                 axios.get(url, {
                     params: {
-                        'nIdContacto': nIdContacto,
+                        'nIdPersona': data.nIdPersona,
+                        'cTipoPersona': data.cTipoPersona
                     }
                 }).then(response => {
                     this.arrayDireccionesExisten = response.data;
@@ -971,19 +1003,24 @@
                 });
             },
             flujoAprobarPedido(data){
+                console.log("entro");
                 this.fillDirecciones.cCardCode = data.cCardCode;
 
                 //===========================================================================================
                 // ====================================  CASO 01 ============================================
-                //SI EL CARDCODE NO ESTA INTEGRADO (POR ENDE TAMPCO LAS DIRECCIONES)
-                if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null && this.arrayDireccionesExisten.length > 0) {
+                //SI EL CARDCODE NO ESTA INTEGRADO (POR ENDE TAMPOCO LAS DIRECCIONES)
+                if ((this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null) && this.arrayDireccionesExisten.length == 0) {
+                    console.log("caso01");
+                    this.listarUbigeos();
                     this.cFlagOpcion = 1;//Flag Requiere Registrar Direcciones/Integración Contacto/Pedido
                     //Abrir Modal
                     this.accionmodal=4;
                     this.modal = 1;
                     //Info para Integracion
                     this.fillDirecciones.nIdCabeceraPedido = data.nIdCabeceraPedido;
+                    this.fillDirecciones.nIdPersona = data.nIdPersona;
                     this.fillDirecciones.nIdContacto = data.nIdContacto;
+                    this.fillDirecciones.cTipoPersona = data.cTipoPersona;
                     this.fillDirecciones.cContacto = data.cContacto;
                 }
 
@@ -991,6 +1028,7 @@
                 // ====================================  CASO 02 ============================================
                 //SI EL CARDCODE ESTA INTEGRADO Y HAY DIRECCIONES
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length > 0) {
+                    console.log("caso02");
                     //INTEGRAR PEDIDO
                     this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
                     this.aprobarPedido(data);
@@ -1000,6 +1038,8 @@
                 // ====================================  CASO 03 ============================================
                 //SI EL CARDCODE ESTA INTEGRADO Y NO HAY DIRECCIONES (CONTACOS ANTIGUOS)
                 if (this.fillDirecciones.cCardCode && this.arrayDireccionesExisten.length == 0) {
+                    console.log("caso03");
+                    this.listarUbigeos();
                     this.cFlagOpcion = 1;
                     this.cFlagDireccionCU = 2;//Flag Requiere Actualizar Direcciones/Integración Direcciones (Actualizar Contacto)/Pedido
                     //Abrir Modal
@@ -1007,9 +1047,31 @@
                     this.modal = 1;
                     //Info para Integracion
                     this.fillDirecciones.nIdCabeceraPedido = data.nIdCabeceraPedido;
+                    this.fillDirecciones.nIdPersona = data.nIdPersona;
                     this.fillDirecciones.nIdContacto = data.nIdContacto;
+                    this.fillDirecciones.cTipoPersona = data.cTipoPersona;
                     this.fillDirecciones.cContacto = data.cContacto;
                 }
+            },
+            listarUbigeos(){
+                var url = this.ruta + '/ubigeo/GetUbigeo';
+                axios.get(url, {
+                    params: {
+                        'nopcion': 0,
+                        'cfiltro': '',
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayUbigeos = response.data.arrayUbigeo;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             agregarDireccion(op){
                 if(this.validarAgregarDireccion(op)){
@@ -1020,7 +1082,8 @@
                     me.arrayDireccionesFiscales.push({
                         AddressID : 'Dirección Fiscal ',
                         AddressName : '',
-                        Street: ''
+                        Street: '',
+                        cUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Fiscal');
                 }
@@ -1028,7 +1091,8 @@
                     me.arrayDireccionesDespacho.push({
                         AddressID : 'Dirección Despacho ',
                         AddressName : '',
-                        Street: ''
+                        Street: '',
+                        cUbigeo: ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Despacho');
                 }
@@ -1046,6 +1110,9 @@
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Fiscal N° ' + (y+1));
                         }
+                        if(x.cUbigeo == ''){
+                            me.mensajeError.push('Debe seleccionar un Ubigeo' + (y+1));
+                        }
                     });
                 }
                 if(op == 2){
@@ -1055,6 +1122,9 @@
                         }
                         if(x.Street == ''){
                             me.mensajeError.push('Ingresa la Dirección Despacho N° ' + (y+1));
+                        }
+                        if(x.cUbigeo == ''){
+                            me.mensajeError.push('Debe seleccionar un Ubigeo' + (y+1));
                         }
                     });
                 }
@@ -1075,13 +1145,15 @@
                 }
             },
             asignarDireccion(op){
-                var url = this.ruta + '/pedido/GetDireccionContactoByPedido';
+                var url = this.ruta + '/pedido/GetDireccionPersonaByPersona';
                 axios.get(url, {
                     params: {
-                        'nIdContacto': this.fillDirecciones.nIdContacto,
+                        'nIdPersona': this.fillDirecciones.nIdPersona,
+                        'cTipoPersona': this.fillDirecciones.cTipoPersona
                     }
                 }).then(response => {
                     this.fillDirecciones.cDireccion = response.data[0].cDireccion;
+                    this.fillDirecciones.cUbigeo    = response.data[0].cUbigeo;
                     this.cargarDireccionContacto(op);
                 }).catch(error => {
                     console.log(error);
@@ -1099,7 +1171,8 @@
                     this.arrayDireccionesFiscales.push({
                         AddressID : 'Dirección Fiscal ',
                         AddressName : '',
-                        Street: this.fillDirecciones.cDireccion
+                        Street: this.fillDirecciones.cDireccion,
+                        cUbigeo: this.fillDirecciones.cUbigeo
                     });
                     toastr.success('Se PreCargo la Dirección Fiscal');
                 }
@@ -1108,7 +1181,8 @@
                     this.arrayDireccionesDespacho.push({
                         AddressID : 'Dirección Despacho ',
                         AddressName : '',
-                        Street: this.fillDirecciones.cDireccion
+                        Street: this.fillDirecciones.cDireccion,
+                        cUbigeo: this.fillDirecciones.cUbigeo
                     });
                     toastr.success('Se PreCargo la Dirección Despacho');
                 }
@@ -1121,15 +1195,15 @@
                 me.loadingProgressBar("SINCRONIZANDO DIRECCIONES CON EL CLIENTE...");
 
                 this.mostrarProgressBar();
-                var url = this.ruta + '/pedido/SetRegistrarDireccionContacto';
+                var url = this.ruta + '/pedido/SetRegistrarDireccionPersona';
                 axios.post(url, {
-                    'nIdContacto': this.fillDirecciones.nIdContacto,
+                    'nIdPersona': this.fillDirecciones.nIdPersona,
                     'arrayDireccionesFiscales': this.arrayDireccionesFiscales,
                     'arrayDireccionesDespacho': this.arrayDireccionesDespacho
                 }).then(response => {
                     console.log(response.data);
                     //VERIFICA SI ES DESDE EL CASO 01 (1) O SI ES DESDE EL CASO 03 (2)
-                    (this.cFlagDireccionCU == 1) ? this.obtenerTipoPersona() : this.actualizarDireccionesByContacto();
+                    (this.cFlagDireccionCU == 1) ? this.listarContactoSinCarteraMes() : this.actualizarDireccionesByContacto();
                     // this.obtenerTipoPersona();
                 }).catch(error => {
                     console.log(error);
@@ -1148,7 +1222,8 @@
 
                 var url = this.ruta + '/pedido/SapSetUpdDireccionesContacto';
                 axios.post(url, {
-                    'nIdContacto': this.fillDirecciones.nIdContacto,
+                    'nIdPersona': this.fillDirecciones.nIdPersona,
+                    'cTipoPersona': this.fillDirecciones.cTipoPersona,
                     'cCardCode': this.fillDirecciones.cCardCode
                 }).then(response => {
                     console.log(response.data);
@@ -1184,6 +1259,7 @@
                     }
                 });
             },
+            //SI EL CARDCODE NO ESTA INTEGRADO Y NO HAY DIRECCIONES - ACTUALIZAR DIRECCIONES
             listarContactoSinCarteraMes(){
                 var url = this.ruta + '/pedido/GetListContactoBySinCarteraMes';
                 axios.get(url, {
@@ -1191,7 +1267,7 @@
                         'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' :   220016,
-                        'ntipopersona'  :   (this.fillDirecciones.cTipoPersona == 'N') ? 1 : 2,
+                        'ntipopersona'  :   this.fillDirecciones.cTipoPersona,
                         'nIdContacto'   :   this.fillDirecciones.nIdContacto
                     }
                 }).then(response => {
@@ -1214,6 +1290,8 @@
 
                 var url = this.ruta + '/gescontacto/SapSetContacto';
                 axios.post(url, {
+                    'nIdPersona': this.fillDirecciones.nIdPersona,
+                    'cTipoPersona': this.fillDirecciones.cTipoPersona,
                     'contacto': this.arrayContacto[0]
                 }).then(response => {
                     // console.log(response.data);
@@ -1429,7 +1507,8 @@
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': (this.cFlagOpcion = 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido//Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido': (this.cFlagOpcion = 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
@@ -1783,7 +1862,7 @@
                         switch(accion){
                             case 'direcciones':
                             {
-                                this.obtenerDireccionesPorContacto(data.nIdContacto, data);
+                                this.obtenerDireccionesPorContacto(data);
 
                                 //SI EL CARDCODE NO ESTA INTEGRADO
                                 // if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null) {
@@ -1847,11 +1926,14 @@
                 this.arrayDireccionesDespacho = [];
                 this.cFlagOpcion = '';
                 this.arrayDireccionesExisten = [];
+                this.arrayUbigeos = [];
                 this.cFlagDireccionCU = 1;
                 this.fillDirecciones.nIdCabeceraPedido = '';
+                this.fillDirecciones.nIdPersona = '';
                 this.fillDirecciones.nIdContacto = '';
                 this.fillDirecciones.cContacto = '';
                 this.fillDirecciones.cDireccion = '';
+                this.fillDirecciones.cUbigeo = '';
                 this.fillDirecciones.cCardCode = '';
                 this.fillDirecciones.cTipoPersona = '';
                 this.arrayContacto = [],
