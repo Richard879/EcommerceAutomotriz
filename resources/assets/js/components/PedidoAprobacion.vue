@@ -1014,6 +1014,7 @@
                     console.log("caso01");
                     this.listarUbigeos();
                     this.cFlagOpcion = 1;//Flag Requiere Registrar Direcciones/Integración Contacto/Pedido
+                    this.cFlagDireccionCU = 1;
                     //Abrir Modal
                     this.accionmodal=4;
                     this.modal = 1;
@@ -1240,6 +1241,7 @@
                 });
             },
             //REGISTRAR CONTACTO
+            /*
             obtenerTipoPersona(){
                 var url = this.ruta + '/pedido/GetObtenerTipoPersona';
                 axios.get(url, {
@@ -1260,6 +1262,7 @@
                     }
                 });
             },
+            */
             //SI EL CARDCODE NO ESTA INTEGRADO Y NO HAY DIRECCIONES - ACTUALIZAR DIRECCIONES
             listarContactoSinCarteraMes(){
                 var url = this.ruta + '/pedido/GetListContactoBySinCarteraMes';
