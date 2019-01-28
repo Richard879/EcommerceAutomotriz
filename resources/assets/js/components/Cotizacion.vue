@@ -2662,7 +2662,7 @@
                     });
                 }
             },
-            //Calcula el Dscto 01
+            //Calcula el Dscto 02
             calcularDscto02: function(){
                 let me = this;
                 if(me.arrayVehiculo){
@@ -2680,7 +2680,7 @@
                     });
                 }
             },
-            //Calcula el Dscto 01
+            //Calcula el Dscto 03
             calcularDscto03: function(){
                 let me = this;
                 if(me.arrayVehiculo){

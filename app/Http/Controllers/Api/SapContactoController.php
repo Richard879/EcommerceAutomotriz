@@ -212,9 +212,9 @@ class SapContactoController extends Controller
             $json['json']['BPAddresses'][] = [
                 "AddressName"   =>  $value->AddressName,
                 "Street"        =>  $value->Street,
-                "Block"         =>  $value->cU_SYP_PROV,
+                "Block"         =>  $value->cU_SYP_DIST,
                 "ZipCode"       =>  $value->cUbigeo,
-                "City"          =>  $value->cU_SYP_DIST,
+                "City"          =>  $value->cU_SYP_PROV,
                 "County"        =>  $value->cU_SYP_DEPA,
                 "Country"       =>  "PE",
                 "AddressType"   =>  ($value->cTipoDireccion == 'F') ? "bo_BillTo" : "bo_ShipTo",

@@ -28,14 +28,14 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor = $request->nidproveedor;
-        $nidtipolista = $request->nidtipolista;
-        $nidlinea   = $request->nidlinea;
-        $nidmarca   = $request->nidmarca;
-        $nidmodelo  = $request->nidmodelo;
-        $cnombrecomercial = $request->cnombrecomercial;
+        $nidproveedor       = $request->nidproveedor;
+        $nidtipolista       = $request->nidtipolista;
+        $nidlinea           = $request->nidlinea;
+        $nidmarca           = $request->nidmarca;
+        $nidmodelo          = $request->nidmodelo;
+        $cnombrecomercial   = $request->cnombrecomercial;
 
-        $cnombrecomercial = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
+        $cnombrecomercial   = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
 
         $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?',
                                                                         [   $nidproveedor,
