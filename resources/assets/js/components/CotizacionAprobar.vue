@@ -443,7 +443,6 @@
                                                                     <th>Precio de Venta Soles</th>
                                                                     <th>Precio de Venta Dolares</th>
                                                                     <th>Descuento</th>
-                                                                    <th>Supera Dscto</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
                                                                     <th>Proveedor Cancelar</th>
@@ -457,7 +456,6 @@
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
                                                                     <td v-text="descuento.fSubTotalDolares"></td>
                                                                     <td v-text="descuento.fDescuento"></td>
-                                                                    <td v-text="descuento.fSuperaDescuento"></td>
                                                                     <td>
                                                                         <div class="input-group">
                                                                             <el-select v-model="descuento.nIdProveedor"
@@ -475,7 +473,7 @@
                                                                     <td>
                                                                         <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
                                                                     </td>
-                                                                    <td> <strong> {{ descuento.fMontoDesembolsar = (descuento.fSubTotalDolares * (descuento.fDistribucion / 100)) }} </strong> </td>
+                                                                    <td> <strong> {{ parseFloat(descuento.fMontoDesembolsar).toFixed(2) }} </strong> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
