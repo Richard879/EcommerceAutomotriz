@@ -96,12 +96,7 @@ class CotizacionController extends Controller
             $arrayvehiculos = $request->arrayvehiculos;
             foreach($arrayvehiculos as $ep=>$det)
             {
-                $fdscto02 = $request->fdscto02;
-                $fdscto02 = ($fdscto02 == NULL) ? ($fdscto02 = 0) : $fdscto02;
-                $fdscto03 = $request->fdscto03;
-                $fdscto03 = ($fdscto03 == NULL) ? ($fdscto03 = 0) : $fdscto03;
-
-                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,          //nIdCabeceraCotizacion
                                                                         $request->fTipoCambioComercial, //fTipoCambioComercial
                                                                         $det['flagTipoItem'],           //flagTipoItem
@@ -111,15 +106,11 @@ class CotizacionController extends Controller
                                                                         'N',                            //FlagActivaEvento
                                                                         0,                              //ObsequioElementoVenta
                                                                         'N',                            //FlagActivaObsequio
-                                                                        ($fdscto02 > 0) ? 'S' : 'N' ,   //SI DSCTO01 ES MAYOR 0 ENTONCES "S" SINO "N"
-                                                                        ($fdscto03 > 0) ? 'S' : 'N' ,   //SI DSCTO02 ES MAYOR 0 ENTONCES "S" SINO "N"
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
                                                                         $det['sobreprecio'],
                                                                         $det['dscto'],
-                                                                        $fdscto02,                      //SUPERA DSCTO 01
-                                                                        $fdscto03,                      //SUPERA DSCTO 02
                                                                         $det['subtotal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -131,7 +122,7 @@ class CotizacionController extends Controller
                 $arrayobsequios = $request->arrayobsequios;
                 foreach($arrayobsequios as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,          //nIdCabeceraCotizacion
                                                                         $request->fTipoCambioComercial, //fTipoCambioComercial
                                                                         $det['flagTipoItem'],           //flagTipoItem
@@ -141,15 +132,11 @@ class CotizacionController extends Controller
                                                                         'N',                            //FlagActivaEvento
                                                                         $det['codigoOEV'],              //ObsequioElementoVenta
                                                                         'S',                            //FlagActivaObsequio
-                                                                        'N',                            //SuperaDescuento1
-                                                                        'N',                            //SuperaDescuento2
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
                                                                         0,
                                                                         $det['dscto'],
-                                                                        0,                              //SUPERA DSCTO 01
-                                                                        0,                              //SUPERA DSCTO 02
                                                                         $det['preciofinal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -162,7 +149,7 @@ class CotizacionController extends Controller
                 $arrayelemventa = $request->arrayelemventa;
                 foreach($arrayelemventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,          //nIdCabeceraCotizacion
                                                                         $request->fTipoCambioComercial, //fTipoCambioComercial
                                                                         $det['flagTipoItem'],           //flagTipoItem
@@ -172,15 +159,11 @@ class CotizacionController extends Controller
                                                                         'N',                            //FlagActivaEvento
                                                                         0,                              //ObsequioElementoVenta
                                                                         'N',                            //FlagActivaObsequio
-                                                                        'N',                            //SuperaDescuento1
-                                                                        'N',                            //SuperaDescuento2
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
                                                                         0,
                                                                         $det['dscto'],
-                                                                        0,                              //SUPERA DSCTO 01
-                                                                        0,                              //SUPERA DSCTO 02
                                                                         $det['subtotal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -194,7 +177,7 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayeventoeleventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,          //nIdCabeceraCotizacion
                                                                         $request->fTipoCambioComercial, //fTipoCambioComercial
                                                                         $det['flagTipoItem'],           //flagTipoItem
@@ -204,15 +187,11 @@ class CotizacionController extends Controller
                                                                         'S',                            //FlagActivaEvento
                                                                         0,                              //ObsequioElementoVenta
                                                                         'N',                            //FlagActivaObsequio
-                                                                        'N',                            //SuperaDescuento1
-                                                                        'N',                            //SuperaDescuento2
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
                                                                         0,
                                                                         $det['dscto'],
-                                                                        0,                              //SUPERA DSCTO 01
-                                                                        0,                              //SUPERA DSCTO 02
                                                                         $det['preciofinal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -232,18 +211,13 @@ class CotizacionController extends Controller
             foreach ($arrayDatosCotizacion as $value) {
                 //Si el detalle de cotización es de tipo Vehiculo
                 if ($value->cFlagTipoItem == 'V') {
-                    //Verificar si supera dscto 01 Y no dscto 02
-                    if ($value->cFlagSuperaDescuento1 == 'S' && $value->cFlagSuperaDescuento2 == 'N' ) {
-                        //Si supera dscto, aumenta el cont de Gerencia
-                        $contAprobacionADV++;
-                    }
-                    //Verificar si supera dscto 01 Y dscto 02
-                    if ($value->cFlagSuperaDescuento1 == 'S' && $value->cFlagSuperaDescuento2 == 'S' ) {
+                    //Verificar si existe Dscto
+                    if (floatval($value->fDescuento) > 0) {
                         //Si supera dscto, aumenta el cont de Gerencia
                         $contAprobacionGerencia++;
                     }
                 } else {
-                    //Si el detalle de cotización es de tipo => EV, Obs o Campaña
+                    //Si el detalle de cotización es de tipo => EV, Obsq o Campaña
                     //Verificar si es una camapaña o obsequio
                     if ($value->cFlagActivaEventoCampania == 'S' || $value->cFlagActivaObsequio == 'S' ) {
                         //Si es evento y/o obsequio, aumenta el cont de ADV
@@ -257,10 +231,6 @@ class CotizacionController extends Controller
                 'contAprobacionGerencia'    => $contAprobacionGerencia,
                 'contAprobacionADV'         => $contAprobacionADV
             ];
-
-            // $data = [
-            //     'arrayDatosCotizacion' => $arrayDatosCotizacion
-            // ];
 
             DB::commit();
             return response()->json($data);
@@ -509,18 +479,13 @@ class CotizacionController extends Controller
         foreach ($arrayDatosCotizacion as $value) {
             //Si el detalle de cotización es de tipo Vehiculo
             if ($value->cFlagTipoItem == 'V') {
-                //Verificar si supera dscto 01 Y no dscto 02
-                if ($value->cFlagSuperaDescuento1 == 'S' && $value->cFlagSuperaDescuento2 == 'N' ) {
-                    //Si supera dscto, aumenta el cont de Gerencia
-                    $contADV++;
-                }
-                //Verificar si supera dscto 01 Y dscto 02
-                if ($value->cFlagSuperaDescuento1 == 'S' && $value->cFlagSuperaDescuento2 == 'S' ) {
+                //Verificar si existe Dscto
+                if (floatval($value->fDescuento) > 0) {
                     //Si supera dscto, aumenta el cont de Gerencia
                     $contGerencia++;
                 }
             } else {
-                //Si el detalle de cotización es de tipo => EV, Obs o Campaña
+                //Si el detalle de cotización es de tipo => EV, Obsq o Campaña
                 //Verificar si es una camapaña o obsequio
                 if ($value->cFlagActivaEventoCampania == 'S' || $value->cFlagActivaObsequio == 'S' ) {
                     //Si es evento y/o obsequio, aumenta el cont de ADV

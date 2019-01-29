@@ -623,10 +623,11 @@
                                                                                                         <th>Vehículo</th>
                                                                                                         <th>Cantidad</th>
                                                                                                         <th>Precio Base</th>
-                                                                                                        <th>Sobre Precio</th>
+                                                                                                        <th>Bono</th>
+                                                                                                        <th>Precio Lista</th>
                                                                                                         <th>Dscto</th>
-                                                                                                        <th>Precio Cierre + Flete</th>
-                                                                                                        <th>Limite de PVP</th>
+                                                                                                        <th>TYP</th>
+                                                                                                        <th>Flete</th>
                                                                                                         <th>Precio Cierre a Cliente</th>
                                                                                                     </tr>
                                                                                                 </thead>
@@ -644,20 +645,30 @@
                                                                                                         <td>
                                                                                                             <input type="number"
                                                                                                                    class="form-control form-control-sm"
+                                                                                                                   v-model="vehiculo.Bono"
+                                                                                                                   @keyup="changeBono(vehiculo.Bono)"
+                                                                                                                   min="0"/>
+                                                                                                        </td>
+                                                                                                        <td v-text="vehiculo.PrecioLista"></td>
+                                                                                                        <!-- <td>
+                                                                                                            <input type="number"
+                                                                                                                   class="form-control form-control-sm"
                                                                                                                    v-model="vehiculo.sobrePrecio"
                                                                                                                    @keyup="changeSobrePrecio(vehiculo.sobrePrecio)"
                                                                                                                    min="0"/>
-                                                                                                        </td>
+                                                                                                        </td> -->
                                                                                                         <td>
                                                                                                             <input type="number"
                                                                                                                    class="form-control form-control-sm"
+                                                                                                                   :class="[checked ? 'disabled' : '']"
                                                                                                                    v-model="vehiculo.descuento"
                                                                                                                    @keyup="changeDscto(vehiculo.descuento)"
                                                                                                                    min="0"/>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                        <td v-text="vehiculo.PrecioVenta"></td>
-                                                                                                        <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td>
+                                                                                                        <td v-text="vehiculo.TYP"></td>
+                                                                                                        <td v-text="vehiculo.Flete"></td>
+                                                                                                        <!-- <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td> -->
+                                                                                                        <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioLista) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio) + parseFloat(vehiculo.TYP) + parseFloat(vehiculo.Flete)) }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
@@ -666,11 +677,11 @@
                                                                                             <div class="row">
                                                                                                 <div class="col-lg-6">
                                                                                                     <div class="form-group row">
-                                                                                                        <div class="col-sm-12" :class="[(fdscto01 >= 0) ? '' : 'datos']">
-                                                                                                            <label class="col-sm-4 form-control-label">Dscto #01: </label>
-                                                                                                            <label class="form-control-label"><strong> {{ fdscto01 = calcularDscto01[0] }} </strong></label>
+                                                                                                        <div class="col-sm-12">
+                                                                                                            <label class="col-sm-4 form-control-label">Sobre Precio </label>
+                                                                                                            <label class="form-control-label"><strong> {{ this.arrayVehiculo[0].sobrePrecio = (parseFloat(this.arrayVehiculo[0].PrecioBase)-(parseFloat(this.arrayVehiculo[0].Bono)+parseFloat(this.arrayVehiculo[0].PrecioLista))) }} </strong></label>
                                                                                                         </div>
-                                                                                                        <div class="col-sm-12" :class="[(fdscto02 > 0) ? '' : 'datos']">
+                                                                                                        <!-- <div class="col-sm-12" :class="[(fdscto02 > 0) ? '' : 'datos']">
                                                                                                             <label class="col-sm-4 form-control-label">Dscto #02: </label>
                                                                                                             <label class="form-control-label"><strong>{{ fdscto02 = Math.abs(calcularDscto02[0]) }} </strong></label>
                                                                                                         </div>
@@ -681,7 +692,7 @@
                                                                                                         <div class="col-sm-12">
                                                                                                             <label class="col-sm-4 form-control-label">Dx: </label>
                                                                                                             <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
-                                                                                                        </div>
+                                                                                                        </div> -->
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="col-lg-6 direction-money">
@@ -698,7 +709,7 @@
                                                                                                         </label>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-lg-12" :class="[((fdscto02 > 0) || (fdscto03 > 0)) ? '' : 'datos']">
+                                                                                                <div class="col-lg-12" :class="[((this.arrayVehiculo[0].descuento > 0)) ? '' : 'datos']">
                                                                                                     <div class="form-group row">
                                                                                                         <div class="col-md-12">
                                                                                                             <div class="row">
@@ -717,9 +728,7 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="form-group row" :class="[(arrayVehiculo[0].sobrePrecio != '' ||
-                                                                                                                                arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
-                                                                                                                                arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
+                                                                                        <div class="form-group row">
                                                                                             <div class="col-sm-9 offset-sm-4">
                                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVentaPorRegalar">
                                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
@@ -1639,10 +1648,10 @@
                                                             <th>Año Fabricación</th>
                                                             <th>Año Modelo</th>
                                                             <th>Precio Base</th>
-                                                            <th>Descuento</th>
-                                                            <th>Precio Cierre</th>
-                                                            <th>Costo Dealer</th>
-                                                            <th>Precio Venta</th>
+                                                            <th>Bono</th>
+                                                            <th>Precio Lista</th>
+                                                            <th>TYP</th>
+                                                            <th>Flete</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1658,10 +1667,10 @@
                                                             <td v-text="vehiculo.AnioFab"></td>
                                                             <td v-text="vehiculo.AnioMod"></td>
                                                             <td v-text="vehiculo.PrecioBase"></td>
-                                                            <td v-text="vehiculo.Descuento"></td>
-                                                            <td v-text="vehiculo.PrecioCierre"></td>
-                                                            <td v-text="vehiculo.CostoDealer"></td>
-                                                            <td v-text="vehiculo.PrecioVenta"></td>
+                                                            <td v-text="vehiculo.Bono"></td>
+                                                            <td v-text="vehiculo.PrecioLista"></td>
+                                                            <td v-text="vehiculo.TYP"></td>
+                                                            <td> {{ parseFloat(vehiculo.Flete) }} </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -2482,12 +2491,13 @@
                 },
                 arrayVehiculoModal : [],
                 // ================= SUB TAB VEHICULO =================
+                checked: false,
                 arrayVehiculo: [],
-                flagLimiteSobrePrecio: 0,
-                fdscto01: 0,
-                fdscto02: 0,
-                fdscto03: 0,
-                fDx: 0,
+                // flagLimiteSobrePrecio: 0,
+                // fdscto01: 0,
+                // fdscto02: 0,
+                // fdscto03: 0,
+                // fDx: 0,
                 observacionDscto: '',
                 montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
@@ -2646,6 +2656,7 @@
                 }
                 return pagesArray;
             },
+            /*
             //Calcula el Dscto 01
             calcularDscto01: function(){
                 let me = this;
@@ -2703,7 +2714,7 @@
                         return x.PrecioBase - x.PrecioCierre;
                     });
                 }
-            },
+            },*/
             //Calcula SubTotales y Total del TAB Vehículo
             totalVehiculo: function(){
                 let me = this;
@@ -2713,7 +2724,9 @@
             },
             totalVehiculoSoles: function(){
                 let me = this;
+                //Monto en Soles = Monto en Dolares * Tipo de Cambio
                 let montoconvertido = me.montoTotalVehiculoDolar * me.fValorTipocambioComercial;
+                //Monto en Soles redondeado a 02 decimales
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -3570,21 +3583,24 @@
                     this.arrayVehiculo = [];
 
                     this.arrayVehiculo.push({
-                        codListaPrecioVD : vehiculo.codListaPrecioVD,
-                        NombreComercial  : vehiculo.NombreComercial,
-                        AnioFabricacion  : vehiculo.nAnioFabricacion,
-                        AnioModelo       : vehiculo.nAnioModelo,
-                        PrecioBase       : vehiculo.PrecioBase,
-                        PrecioCierre     : vehiculo.PrecioCierre,
-                        PrecioVenta      : vehiculo.PrecioVenta,
-                        cantidad         : 1,
-                        sobrePrecio      : 0,
-                        descuento        : 0,
-                        subtotal         : 0,
-                        nIdMoneda        : vehiculo.nIdMoneda,
-                        nIdLinea         : vehiculo.nIdLinea,
-                        nIdMarca         : vehiculo.nIdMarca,
-                        nIdModelo        : vehiculo.nIdModelo
+                        codListaPrecioVD    : vehiculo.codListaPrecioVD,
+                        NombreComercial     : vehiculo.NombreComercial,
+                        AnioFabricacion     : vehiculo.nAnioFabricacion,
+                        AnioModelo          : vehiculo.nAnioModelo,
+                        PrecioBase          : vehiculo.PrecioBase,
+                        Bono                : vehiculo.Bono,
+                        PrecioLista         : vehiculo.PrecioLista,
+                        TYP                 : (vehiculo.TYP == null) ? 0 : vehiculo.TYP,
+                        Flete               : (vehiculo.Flete == null) ? 0 : parseFloat(vehiculo.Flete),
+                        cantidad            : 1,
+                        sobrePrecio         : 0,
+                        descuento           : 0,
+                        subtotal            : 0,
+                        nIdMoneda           : vehiculo.nIdMoneda,
+                        nIdLinea            : vehiculo.nIdLinea,
+                        nIdMarca            : vehiculo.nIdMarca,
+                        nIdModelo           : vehiculo.nIdModelo,
+                        BonoFlag            : vehiculo.Bono,
                     });
 
                     toastr.success('Se Agregó vehículo "'+ vehiculo.NombreComercial +'"');
@@ -3592,6 +3608,7 @@
                 }
             },
             //Evalua el cambio del sobre Precio
+            /*
             changeSobrePrecio(value){
                 //Si existe descuento
                 if (this.arrayVehiculo[0].descuento > 0) {
@@ -3618,26 +3635,58 @@
                 }
                 this.$forceUpdate();
             },
+            */
+            //Evalua el Bono
+            changeBono(value){
+                //Si el Bono es modificado entonces deshabilitar Dscto
+                if (parseFloat(value) != parseFloat(this.arrayVehiculo[0].BonoFlag)) {
+                    this.checked = true;
+                    this.arrayVehiculo[0].descuento = 0;
+                } else {
+                    //Si el bono no se modifico habilitar Dscto
+                    this.checked = false;
+                    this.arrayVehiculo[0].descuento = 0;
+                }
+                // Si el bono es mayor al propio monto del bono, se setea al bono origen
+                if (value > this.arrayVehiculo[0].BonoFlag) {
+                    this.$message.error(`El Bono no puede tener una cantidad mayor al Bono Original`);
+                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                    this.checked = false;
+                }
+                //Verifica si es vacio o ingresas 0
+                if (value == '' || value < 0) {
+                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                    this.checked = false;
+                }
+                //Calcula el porcentaje del Sobre Precio respecto al Precio de Lista
+                let porcentaje = (parseFloat(this.arrayVehiculo[0].sobrePrecio) * 100) / parseFloat(this.arrayVehiculo[0].PrecioLista);
+
+                //Si el Porcentaje es > al 10% del Precio Lista
+                if (porcentaje > 10) {
+                    this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
+                    //Si es menor al 10% seteado al Bono Origen
+                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                    this.checked = false;
+                }
+            },
             //Evalua el cambio de Dscto
             changeDscto(value){
                 let me = this;
                 if (this.arrayVehiculo[0].sobrePrecio > 0) {
-                    this.$message.error(`Primero borre el Sobre Precio para generar el Descuento`);
+                    this.$message.error(`Primero Regrese el Bono Original para generar el Descuento`);
                     this.arrayVehiculo[0].descuento = 0;
                     this.$forceUpdate();
                 } else {
                     if(value == '' || value < 0){
                         this.arrayVehiculo[0].descuento = 0;
                     }
-                    // //Si el SubTotal es menor que el Precio de Venta (PVP)
-                    // if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta) ) {
-                    //     // this.$message.error(`El descuento no puede superar el limite del PVP`);
-                    //     // this.arrayVehiculo[0].descuento = 0;
-                    //     // this.$forceUpdate();
-                    //     this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del PVP ${this.arrayVehiculo[0].PrecioVenta}`);
-                    //     this.$forceUpdate();
-                    // }
 
+                    if (parseFloat(this.arrayVehiculo[0].descuento) > parseFloat(this.arrayVehiculo[0].subtotal)) {
+                        this.$message.warning(`El descuento ${this.arrayVehiculo[0].descuento} súperó el limite del Precio Cierre a Cliente ${this.arrayVehiculo[0].subtotal}`);
+                        this.arrayVehiculo[0].descuento = 0;
+                        this.$forceUpdate();
+                    }
+                    /*
                     if((parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta)) && (parseFloat(this.arrayVehiculo[0].subtotal) > (parseFloat(this.arrayVehiculo[0].PrecioCierre)))) {
                         // this.$message.error(`El descuento no puede superar el limite del PVP`);
                         // this.arrayVehiculo[0].descuento = 0;
@@ -3651,6 +3700,7 @@
                         this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del Precio de Cierre ${this.arrayVehiculo[0].PrecioCierre}`);
                         this.$forceUpdate();
                     }
+                    */
                     this.$forceUpdate();
                 }
                 this.$forceUpdate();
@@ -3710,7 +3760,7 @@
                     this.arrayVehiculo[0].descuento = 0;
                 }
 
-                if(this.fdscto02 > 0){
+                if(this.arrayVehiculo[0].descuento > 0){
                     if(!this.observacionDscto) {
                         this.mensajeError.push('Debe registrar una Observación de Dscto');
                     }
@@ -4150,9 +4200,9 @@
                         codigo       : v.codListaPrecioVD,
                         detalle      : v.NombreComercial,
                         cantidad     : v.cantidad,
+                        preciofinal  : v.PrecioBase,
                         sobreprecio  : v.sobrePrecio,
                         dscto        : v.descuento,
-                        preciofinal  : v.PrecioBase,
                         subtotal     : v.subtotal,
                         nidmoneda    : v.nIdMoneda,
                         flagTipoItem : 'V',
@@ -4280,8 +4330,6 @@
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
                         fTipoCambioComercial: this.fValorTipocambioComercial,
-                        fdscto02: this.fdscto02,
-                        fdscto03: this.fdscto03,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayobsequios: this.arrayConfiCotiObsequios,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
@@ -4408,7 +4456,7 @@
                 this.fillAsignarContacto.cemail = '';
                 this.fillAsignarContacto.cnrodocumento = '';
                 this.fillAsignarContacto.nidasignarcontacto = '';
-                this.fillAsignarContacto.nidcontacto = '';
+                this.fillAsignarContacto.nidcontacto = 0;
                 this.fillAsignarContacto.nidreferencia = '';
                 this.arrayReferenciavehiculo = [];
                 //Tab Detalle Cotización
@@ -4731,6 +4779,14 @@
     }
     .widthFull>.el-select>.el-input {
         width: 100%;
+    }
+    .disabled{
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events:none;
+    }
+    .table-sm th, .table-sm td{
+        text-align: center;
     }
 </style>
 

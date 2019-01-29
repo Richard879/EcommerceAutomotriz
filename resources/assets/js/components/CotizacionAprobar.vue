@@ -297,7 +297,7 @@
                                             <template v-if="cflagVerificaDistribucionAprobacion">
                                                 <template v-if="listDistribucionDescuento.length">
                                                     <vs-divider border-style="solid" color="dark">
-                                                        Distribución del Descuento Inferior al Precio Cierre
+                                                        Distribución del Descuento
                                                     </vs-divider>
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
@@ -309,7 +309,6 @@
                                                                     <th>Precio de Venta Soles</th>
                                                                     <th>Precio de Venta Dolares</th>
                                                                     <th>Descuento</th>
-                                                                    <th>Supera Dscto</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
                                                                     <th>Proveedor Cancelar</th>
@@ -323,7 +322,6 @@
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
                                                                     <td v-text="descuento.fSubTotalDolares"></td>
                                                                     <td v-text="descuento.fDescuento"></td>
-                                                                    <td v-text="descuento.fSuperaDescuento"></td>
                                                                     <td>
                                                                         <div class="input-group">
                                                                             <el-select v-model="descuento.nIdProveedor"
@@ -341,7 +339,7 @@
                                                                     <td>
                                                                         <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
                                                                     </td>
-                                                                    <td> <strong> {{ descuento.fMontoDesembolsar = (descuento.fSubTotalDolares * (descuento.fDistribucion / 100)) }} </strong> </td>
+                                                                    <td> <strong> {{ parseFloat(descuento.fMontoDesembolsar).toFixed(2) }} </strong> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1121,10 +1119,10 @@
                 }).then(response => {
                     //Si existen registros que van a generencia
                     if (response.data.contGerencia > 0){
-                        //Muestro un formulario
+                        //Mostrar formulario para dar conformidad y pase a Gerencia
                         this.cflagVerificaDistribucionAprobacion = true;
                     } else {
-                        //Sino muestro otro formulario
+                        //Mostrar formulario para aprobar cotización
                         this.cflagVerificaDistribucionAprobacion = false;
                         this.nIdCabeceraCotizacion = nIdCabeceraCotizacion;
                     }
@@ -1175,13 +1173,11 @@
                             nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
                             nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
                             cProveedorNombre        :   ec.cProveedorNombre,
-                            cFlagSuperaDescuento    :   ec.cFlagSuperaDescuento,
                             cNombreComercial        :   ec.cNombreComercial,
                             fSubTotalSoles          :   ec.fSubTotalSoles,
                             fSubTotalDolares        :   ec.fSubTotalDolares,
                             fDescuento              :   ec.fDescuento,
-                            fSuperaDescuento        :   ec.fSuperaDescuento,
-                            fMontoDesembolsar       :   ec.fMontoDesembolsar,
+                            fMontoDesembolsar       :   0,
                             nIdProveedor            :   '',
                             fDistribucion           :   0
                         });
@@ -1265,6 +1261,7 @@
                         me.listDistribucionDescuento[y].fDistribucion = 0;//Seteado a 0.
                         me.$forceUpdate();
                     }
+                    x.fMontoDesembolsar = (Number((parseFloat(x.fDescuento)).toFixed(2)) * (Number((parseFloat(x.fDistribucion)).toFixed(2)) / 100))
                     me.$forceUpdate();
                 });
             },
@@ -1352,27 +1349,16 @@
 
                 //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE SUPERA DESCUENTO
                 if(this.listDistribucionDescuento.length > 0) {
-                    let flagIdProveedorDscto = 0;
                     this.listDistribucionDescuento.map(function (x) {
                         if(x.nIdProveedor == ''){
-                            flagIdProveedorDscto = true;
+                            this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
                         }
-                    });
-                    if (flagIdProveedorDscto == true) {
-                        this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
-                    }
-
-                    let flagDistribucionDscto = 0;
-                    this.listDistribucionDescuento.map(function (x) {
-                        if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
-                            flagDistribucionDscto = true;
+                        if(parseFloat(x.fDistribucion) < 0 || parseFloat(x.fDistribucion) > 100){
+                            this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
                             x.fDistribucion = 0;//Seteado a 0
                         }
                         me.$forceUpdate();
                     });
-                    if (flagDistribucionDscto == true) {
-                        this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
-                    }
                 }
 
                 if(this.mensajeError.length){
