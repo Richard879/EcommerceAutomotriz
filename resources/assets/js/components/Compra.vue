@@ -1508,6 +1508,7 @@
                 arraySapLlamadaServicio: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
+                arraySapActLlamadaServicio: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -2267,6 +2268,7 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
+                                'nEquipmentCardNum': parseInt(me.jsonRespuesta.EquipmentCardNum),
                                 'cItemCode': me.jsonRespuesta.ItemCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString()
@@ -2296,81 +2298,6 @@
                 }).then(response => {
                     //===================================================================
                     //================== REGITRO DE LLAMADA SERVICIO EN SAP ===============
-                    setTimeout(function() {
-                        me.registroSapBusinessLlamadaServicio();
-                    }, 1600);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSapBusinessLlamadaServicio(){
-                let me = this;
-                //Depurar Array para registrar en SAP
-                me.arraySapArticulo.map(function(x, y){
-                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en LlamadaServicio
-                    //Sino se encuentra no pase a LlamadaServicio
-                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
-                        me.arraySapLlamadaServicio.push({
-                            'cCustomerCode': 'C20480683839',
-                            'cInternalSerialNum': x.cNumeroVin,
-                            'cItemCode': x.cNumeroVin,
-                            'cSubject': 'Compra'
-                        });
-                    }
-                });
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapItemCode = [];
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-                    
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
-                            });
-                        }
-                    });
-                    //=========================================================================
-                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                    setTimeout(function() {
-                        me.registroSgcLlamadaServicio();
-                    }, 1600);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSgcLlamadaServicio(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    //==============================================================
-                    //================== REGITRO COMPRA EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessCompra();
                     }, 1600);
@@ -2406,7 +2333,6 @@
                     'Igv'           :   1 + parseFloat((me.formCompra.igv)),
                     'data'          :   me.arraySapCompra
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = []; 
                     
@@ -2426,11 +2352,11 @@
                                 'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
 
-                             me.arraySapActividad.push({
+                            me.arraySapActividad.push({
                                 'dActivityDate': '2019-01-29',
                                 'hActivityTime': '08:13:00',
-                                //'cCardCode': 'C20480683839',
-                                'cCardCode': 'P20506006024',
+                                'cCardCode': 'C20480683839',
+                                //'cCardCode': 'P20506006024',
                                 'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum': me.jsonRespuesta.DocNum.toString(),
                                 'nDocType': '22',
@@ -2441,7 +2367,7 @@
                                 'cReminder': 'tYES',
                                 'nReminderPeriod': '15',
                                 'cReminderType': 'du_Minuts',
-                                'fStartDate': '2019-01-29',
+                                'dStartDate': '2019-01-29',
                                 'hStartTime': '08:13:00'
                             });
                         }
@@ -2489,7 +2415,6 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapActividad
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
                     
@@ -2498,12 +2423,14 @@
                         me.jsonRespuesta = '';
                         me.jsonRespuesta= JSON.parse(value);
                         //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.CardCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.CardCode); //PARA DEPURAR
-                            
+                        if(me.jsonRespuesta.ActivityCode){                            
                             me.arraySapUpdSgc.push({
+                                'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo': 22,
+                                'cActividadTipo': 'OrdenCompra',
                                 'cCardCode': me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString()
                             });
                         }
@@ -2529,7 +2456,108 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.verResultados();
+                    setTimeout(function() {
+                        me.getOrdenCompraActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getOrdenCompraActividad(){
+                let me = this;
+                
+                //Depurar Array para registrar en SAP
+                me.arraySapArticulo.map(function(x, y){
+                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en LlamadaServicio
+                    //Sino se encuentra no pase a LlamadaServicio
+                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
+
+                        var sapUrl = me.ruta + '/actividad/GetIntegraActividadByItemCode';
+                        axios.get(sapUrl, {
+                            params: {
+                                'citemcode': x.cNumeroVin,
+                                'nactividadtipo': 22
+                            }
+                        }).then(response => {
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode': response.data[0].nActivityCode,
+                                'cCustomerCode': response.data[0].cCustomerCode,
+                                'cInternalSerialNum': response.data[0].cItemCode,
+                                'cItemCode': response.data[0].cItemCode,
+                                'cSubject': response.data[0].cSubject
+                            });
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    }
+                });
+                setTimeout(function() {
+                    me.registroSapBusinessLlamadaServicio();
+                }, 1600);
+            },
+            registroSapBusinessLlamadaServicio(){
+                let me = this;
+                
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapItemCode = [];
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+                    
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                    setTimeout(function() {
+                        me.registroSgcLlamadaServicio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcLlamadaServicio(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.verResultados(); 
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3607,7 +3635,8 @@
                 this.arraySapTarjetaEquipo= [],
                 this.arraySapLlamadaServicio= [],
                 this.arraySapCompra= [],
-                this.arraySapActividad= [];
+                this.arraySapActividad= [],
+                this.arraySapActLlamadaServicio= [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
