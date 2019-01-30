@@ -93,33 +93,4 @@ class SapCompraController extends Controller
         }
         return $array_rpta;
     }
-
-    /*public function SapSetArticulo(Request $request)
-    {
-        $client = new Client([
-            'base_uri'  => 'http://172.20.0.10/'
-        ]);
-
-        $array_rpta = [];
-        $rptaSap   = [];
-
-        $User       = Auth::user()->id;
-        $CardCode   = 'C'.$User;
-
-        $data = $request->data;
-        foreach ($data as $key => $value) {
-            $json = [
-                'json' => [
-                    "ItemCode"    => $value['cNumeroVin'],
-                    "ItemName"    => $value['cNombreComercial'],
-                    "ItemType"    => "itItems"
-                ]
-            ];
-
-            $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
-            $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
-        }
-        return $array_rpta;
-    }*/
 }

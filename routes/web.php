@@ -74,8 +74,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/compra/GetLstCompraNoLineaCredito', 'CompraController@GetLstCompraNoLineaCredito');
     Route::post('/compra/UpdCompraLineaCreditoById', 'CompraController@UpdCompraLineaCreditoById');
     Route::get('/compra/GetListaPrecioByProveedor', 'CompraController@GetListaPrecioByProveedor');
-    Route::post('/compra/SapUpdCompraByDocEntry', 'CompraController@SapUpdCompraByDocEntry');
-    Route::post('/compra/SapUpdCompraByDocEntryMercancia', 'CompraController@SapUpdCompraByDocEntryMercancia');
     Route::put('/compra/activar','CompraController@activar');
 
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
@@ -369,6 +367,16 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
+    
+    //INTEGRACION
+    Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
+    Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
+    Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
+    Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
+    Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
+    Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
+
     ///========================================
     /////=================  ROUTES SAP
     //
@@ -401,6 +409,14 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/SapSetPedidoDscto', 'Api\SapPedidoController@SapSetPedidoDscto');
     //Comprobante
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
+    //Proyecto
+    Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
+    //TarjetaEquipo
+    Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
+    //LlamadaServicio
+    Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
+    //Actividad
+    Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
