@@ -369,6 +369,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
+    Route::get('/tablacosto/GetCompraTipoBeneficio','TablaCostoController@GetCompraTipoBeneficio');
+
     ///========================================
     /////=================  ROUTES SAP
     //

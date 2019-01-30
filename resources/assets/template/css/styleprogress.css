@@ -74,4 +74,16 @@
     .form-control-label {
         text-align: initial !important;
     }
+    nav.navbar .navbar-holder {
+        justify-content: center !important;
+    }
+    nav.navbar .nav-menu {
+        align-items: center;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+    .el-select {
+        margin-bottom: .2rem;
+    }
 }
