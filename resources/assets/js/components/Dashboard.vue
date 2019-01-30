@@ -18,6 +18,9 @@
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
                     <i class="fa fa-user"></i> User
                 </button>
+                <button type="button" class="btn btn-default btn-corner btn-sm" @click="GetCompraTC">
+                    <i class="fa fa-eye"></i> TC
+                </button>
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -486,6 +489,7 @@
         props:['ruta'],
         data(){
             return {
+                nidcronograma : '',
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -519,6 +523,9 @@
                 },
                 SessionId: 0
             }
+        },
+        mounted(){
+            this.obtenerCronogramaCompraActivo();
         },
         methods:{
             SapLogin(){
@@ -568,6 +575,111 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                });
+            },
+            obtenerCronogramaCompraActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
+                axios.get(url,{
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
+                    }
+                }).then(response => {
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetCompraTC(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetCompraTC';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma': this.nidcronograma,
+                        'nIdCompra': 4500002
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetCompraTipoBeneficio(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetCompraTipoBeneficio';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma': this.nidcronograma,
+                        'nIdCompra': 4500002
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetCompraCostoVehiculo(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetCompraCostoVehiculo';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma': this.nidcronograma,
+                        'nIdCompra': 4500002
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetCompraFlete(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetCompraFlete';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCompra': 4500002
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             mostrarProgressBar(){

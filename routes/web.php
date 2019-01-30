@@ -367,9 +367,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
-    Route::get('/tablacosto/GetCompraTipoBeneficio','TablaCostoController@GetCompraTipoBeneficio');
+    Route::get('/tablacosto/GetCompraTC','TablaCostoController@GetCompraTC');
 
-    //INTEGRACION
+    //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
