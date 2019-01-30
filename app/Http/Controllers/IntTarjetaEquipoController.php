@@ -18,8 +18,9 @@ class IntTarjetaEquipoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraTarjetaEquipo] ?, ?, ?, ?',
-                                                            [   $det['cItemCode'],
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraTarjetaEquipo] ?, ?, ?, ?, ?',
+                                                            [   $det['nEquipmentCardNum'],
+                                                                $det['cItemCode'],
                                                                 $det['cInternalSerialNum'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id

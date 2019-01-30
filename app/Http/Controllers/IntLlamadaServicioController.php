@@ -18,8 +18,9 @@ class IntLlamadaServicioController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?',
-                                                            [   $det['cItemCode'],
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?',
+                                                            [   $det['nServiceCallID'],
+                                                                $det['cItemCode'],
                                                                 $det['cInternalSerialNum'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id

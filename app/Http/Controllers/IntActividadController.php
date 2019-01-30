@@ -18,9 +18,13 @@ class IntActividadController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraActividad] ?, ?, ?, ?',
-                                                            [   $det['cCardCode'],
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraActividad] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['nActivityCode'],
+                                                                $det['nActividadTipo'],
+                                                                $det['cActividadTipo'],
+                                                                $det['cCardCode'],
                                                                 $det['nDocEntry'],
+                                                                $det['nDocNum'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);
@@ -31,4 +35,20 @@ class IntActividadController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetIntegraActividadByItemCode(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cItemCode      =  $request->citemcode;
+        $nActividadTipo =  $request->nactividadtipo;
+
+        $arrayActividad = DB::select('exec [usp_Integra_GetIntegraActividadByItemCode] ?, ?',
+                                            [   $cItemCode,
+                                                $nActividadTipo
+                                            ]);
+
+        return response()->json($arrayActividad);
+    }
+
 }

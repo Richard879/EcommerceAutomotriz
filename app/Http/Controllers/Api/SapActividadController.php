@@ -25,7 +25,7 @@ class SapActividadController extends Controller
 
             $json = [
                 'json' => [
-                    "ActivityDate"      => $value['dActivityDate'],
+                    "ActivityDate"      => (string)$value['dActivityDate'],
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],
                     "DocEntry"          => $value['nDocEntry'],
@@ -33,12 +33,12 @@ class SapActividadController extends Controller
                     "DocType"           => $value['nDocType'],
                     "Duration"          => $value['nDuration'],
                     "DurationType"      => $value['cDurationType'],
-                    "EndDueDate"        => $value['dEndDueDate'],
+                    "EndDueDate"        => (string)$value['dEndDueDate'],
                     "EndTime"           => $value['hEndTime'],
                     "Reminder"          => $value['cReminder'],
                     "ReminderPeriod"    => $value['nReminderPeriod'],
                     "ReminderType"      => $value['cReminderType'],
-                    "StartDate"         => $value['fStartDate'],
+                    "StartDate"         => (string)$value['dStartDate'],
                     "StartTime"         => $value['hStartTime']
                     ]
                 ];

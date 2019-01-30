@@ -28,7 +28,13 @@ class SapLlamadaServicioController extends Controller
                     "CustomerCode"         => $value['cCustomerCode'],
                     "InternalSerialNum"    => $value['cInternalSerialNum'],
                     "ItemCode"             => $value['cItemCode'],
-                    "Subject"             => $value['cSubject']
+                    "Subject"              => $value['cSubject'],
+                    "ServiceCallActivities" => [
+                            [
+                                "LineNum" => 0,
+                                "ActivityCode"=> (string)$value['nActivityCode']
+                            ]
+                        ]
                     ]
                 ];
 
