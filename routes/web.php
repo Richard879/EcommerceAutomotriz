@@ -367,7 +367,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
-    
+    Route::get('/tablacosto/GetCompraTipoBeneficio','TablaCostoController@GetCompraTipoBeneficio');
+
     //INTEGRACION
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');

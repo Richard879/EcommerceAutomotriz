@@ -936,7 +936,13 @@
                     swal('Objetivo Compra registrada exitosamente');
                     this.limpiarTabCompra();
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistrarObjComercial(){
@@ -953,7 +959,7 @@
                                 me.mensajeError.push('Seleccione Tipo Beneficio para ' + value.cNombreComercial);
                             }
                             if(me.arrayIndexFlagTipoValorId[key] == 0 || !me.arrayIndexFlagTipoValorId[key]){
-                                me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
+                                me.mensajeError.push('Seleccione Tipo Valor para ' + value.cNombreComercial);
                             }
                         }
                     });
@@ -1079,7 +1085,7 @@
                             fValorBeneficio     : !me.arrayIndexValorBeneficioVenta[key] ? 0 : me.arrayIndexValorBeneficioVenta[key]
                         });
                     }
-                });               
+                });
             },
             registrarObjComercialVenta(){
 
@@ -1105,7 +1111,13 @@
                     swal('Objetivo Venta registrado exitosamente');
                     this.limpiarTabVenta();
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistrarObjComercialVenta(){

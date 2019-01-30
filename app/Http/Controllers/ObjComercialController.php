@@ -60,7 +60,7 @@ class ObjComercialController extends Controller
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        
+
         $data = DB::select('exec [usp_ObjComercial_GetDetalleVehiculoCompra] ?, ?, ?, ?, ?, ?, ?',
                                                              [  $nIdEmpresa,
                                                                 $nIdSucursal,
@@ -82,7 +82,7 @@ class ObjComercialController extends Controller
             $detalles = $request->arrayData;
 
             foreach($detalles as $key => $det){
-                if($det['nCantidadVehiculo'] > 0){                    
+                if($det['nCantidadVehiculo'] > 0){
                     DB::select('exec [usp_ObjComercial_SetRegistrarCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $request->nIdEmpresa,
@@ -142,7 +142,7 @@ class ObjComercialController extends Controller
             $detalles = $request->arrayData;
 
             foreach($detalles as $key => $det){
-                if($det['nCantidadVehiculo'] > 0){                    
+                if($det['nCantidadVehiculo'] > 0){
                     DB::select('exec [usp_ObjComercial_SetRegistrarVenta] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $request->nIdEmpresa,
