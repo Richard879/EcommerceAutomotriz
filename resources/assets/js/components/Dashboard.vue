@@ -617,50 +617,6 @@
                     }
                 });
             },
-            GetCompraTipoBeneficio(){
-                let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraTipoBeneficio';
-                axios.get(url, {
-                    params: {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': this.nidcronograma,
-                        'nIdCompra': 4500002
-                    }
-                }).then(response => {
-                    console.log(response.data);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            GetCompraCostoVehiculo(){
-                let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraCostoVehiculo';
-                axios.get(url, {
-                    params: {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': this.nidcronograma,
-                        'nIdCompra': 4500002
-                    }
-                }).then(response => {
-                    console.log(response.data);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             GetCompraFlete(){
                 let me = this;
                 var url = me.ruta + '/tablacosto/GetCompraFlete';
