@@ -319,7 +319,7 @@ class CompraController extends Controller
         return ['arrayListaPrecio'=>$arrayListaPrecio];
     }
 
-    public function SapUpdCompraByDocEntry(Request $request)
+    public function SetIntegraCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -328,7 +328,7 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Compra_SapUpdCompraByDocEntry] ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraCompra] ?, ?, ?, ?, ?, ?',
                                                             [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
@@ -344,7 +344,7 @@ class CompraController extends Controller
         }
     }
 
-    public function SapUpdCompraByDocEntryMercancia(Request $request)
+    public function SetIntegraMercancia(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -353,7 +353,7 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Compra_SapUpdCompraByDocEntryMercancia] ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercancia] ?, ?, ?, ?, ?, ?',
                                                             [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
