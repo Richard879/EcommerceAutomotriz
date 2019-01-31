@@ -1510,6 +1510,10 @@
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapActLlamadaServicio: [],
+                //Tbls Costo
+                arrayTCTipoBeneficio: [],
+                arrayTCCostoVehiculo: [],
+                arrayTCFlete: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -2110,8 +2114,8 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapArticulo
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
                     me.arraySapUpdSgc= [];
 
                     me.arraySapRespuesta = response.data;
@@ -2182,8 +2186,8 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapProyecto
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
                     me.arraySapUpdSgc = [];
 
                     me.arraySapRespuesta = response.data;
@@ -2256,8 +2260,8 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapTarjetaEquipo
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
                     me.arraySapUpdSgc = [];
 
                     me.arraySapRespuesta = response.data;
@@ -2558,8 +2562,152 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.verResultados();
+                        me.registroSapBusinessTblCostoCabecera();
+                        // me.verResultados();
                     }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoCabecera(){
+                let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO TABLA COSTOS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/tablacosto/SapSetTablaCostoCabecera';
+                axios.post(sapUrl, {
+                    'data': me.arraySapArticulo
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //==== Si devuelve Json ItemCode
+                        if(me.jsonRespuesta.DocEntry){
+                            //Guardo los VINES Y DocEntry de la Cabecera de la Tabla Costos
+                            me.arraySapItemCode.push({
+                                'DocEntry' : me.jsonRespuesta.DocEntry,
+                                'U_SYP_VIN': me.jsonRespuesta.U_SYP_VIN
+                            });
+                        }
+                    });
+
+                    setTimeout(function() {
+                        me.obtenerConceptosTblCosto();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerConceptosTblCosto(){
+                let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("OBTENIENDO CONCEPTOS PARA LA TABLA COSTOS...");
+
+                var url = me.ruta + '/tablacosto/GetCompraTC';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma': this.nidcronograma,
+                        'arraySapArticulo': this.arraySapArticulo
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                    let me = this;
+                    // ====================== CONCEPTO =========================
+                    // ====================  TIPO DE BENEFICIO =================
+                    let arrayBeneficio = response.data.array_infoTipoBeneficio;
+                    arrayBeneficio.map(function (x) {
+                        me.arrayTCTipoBeneficio.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    // ====================== CONCEPTO =========================
+                    // ====================  COSTO DEL VEHICULO ================
+                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                    arrayCostoVehiculo.map(function (x) {
+                        me.arrayTCCostoVehiculo.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    // ====================== CONCEPTO =========================
+                    // ======================== FLETE ==========================
+                    let arrayFlete = response.data.array_infoFlete;
+                    arrayFlete.map(function (x) {
+                        me.arrayTCFlete.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoDetalle();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoDetalle(){
+                let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO CONCEPTOS EN LA TABLA COSTOS...");
+
+                var url = me.ruta + '/tablacosto/SapSetTablaCostoDetalleCabecera';
+                axios.get(url, {
+                    params: {
+                        'arrayCabeceraTblCost'  : this.arraySapItemCode,
+                        'arrayTCTipoBeneficio'  : this.arrayTCTipoBeneficio,
+                        'arrayTCCostoVehiculo'  : this.arrayTCCostoVehiculo,
+                        'arrayTCFlete'          : this.arrayTCFlete
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                    me.verResultados();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3087,7 +3235,7 @@
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
                         me.arraySapActividad= [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
@@ -3201,13 +3349,13 @@
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
                             me.jsonRespuesta= JSON.parse(x);
                             //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){                            
+                            if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
                                     'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
                                     'nActividadTipo': 22,
@@ -3289,14 +3437,14 @@
             },
             generaSapLlamadaServicioCompra(objCompra){
                 let me = this;
-                
+
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
                         me.jsonRespuesta = '';
@@ -3367,7 +3515,7 @@
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
                         me.arraySapActividad= [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
@@ -3484,13 +3632,13 @@
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
                             me.jsonRespuesta= JSON.parse(x);
                             //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){                            
+                            if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
                                     'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
                                     'nActividadTipo': 22,
@@ -3572,14 +3720,14 @@
             },
             generaSapLlamadaServicioMercancia(objCompra){
                 let me = this;
-                
+
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
                         me.jsonRespuesta = '';
@@ -4064,6 +4212,10 @@
                 this.arraySapCompra= [],
                 this.arraySapActividad= [],
                 this.arraySapActLlamadaServicio= [];
+                //Tbls Costo
+                this.arrayTCTipoBeneficio= [];
+                this.arrayTCCostoVehiculo= [];
+                this.arrayTCFlete= [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

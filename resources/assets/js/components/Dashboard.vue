@@ -675,43 +675,6 @@
                     }
                 });
             },
-            llenarArrayTblCosto(){
-                let me = this;
-                //Depurar Array para registrar en SAP
-                me.arrayTCCostoVehiculo.map(function(x, y){
-                    me.arrayTCTipoBeneficio.map(function(x, y){
-
-                    });
-                    if (me.arrayTCTipoBeneficio.includes(x.VIN)) {
-                        me.arrayTblCosto.push({
-                            'cCode': x.cNumeroVin,
-                            'cName': x.cNumeroVin
-                        });
-                    }
-                });
-            },
-            SetSapRegistrarTablaCosto(){
-                let me = this;
-                var url = me.ruta + '/tablacosto/SapSetTablaCosto';
-                axios.get(url, {
-                    params: {
-                        'arrayCabeceraTblCost'  : this.arrayCabeceraTblCost,
-                        'arrayTCTipoBeneficio'  : this.arrayTCTipoBeneficio,
-                        'arrayTCCostoVehiculo'  : this.arrayTCCostoVehiculo,
-                        'arrayTCFlete'          : this.arrayTCFlete
-                    }
-                }).then(response => {
-                    console.log(response.data);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();

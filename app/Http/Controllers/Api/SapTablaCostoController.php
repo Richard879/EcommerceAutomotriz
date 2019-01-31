@@ -10,7 +10,32 @@ use Illuminate\Support\Facades\Auth;
 
 class SapTablaCostoController extends Controller
 {
-    public function SapSetTablaCosto(Request $request)
+    public function SapSetTablaCostoCabecera(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $cabecera) {
+            $json = [
+                'json' => [
+                    "U_SYP_VIN" => (string)$cabecera['cNumeroVin']
+                ]
+            ];
+
+            $response = $client->request('POST', "/api/TablaCosto/SetCabeceraTablaCosto/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
+
+    public function SapSetTablaCostoDetalleCabecera(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -22,20 +47,11 @@ class SapTablaCostoController extends Controller
         $array_rptaCostoVehiculo = [];
         $array_rptaFlete = [];
 
-        $arrayTCCostoVehiculo = $request->arrayTCCostoVehiculo;
-        foreach ($arrayTCCostoVehiculo as $key => $cabecera) {
-            //OBTENER EL VIN PARA COMPRAR CON EL DETALLE (BENEFICIO,COSTO VEHÍCULO, FLETE)
-            $TblCostoVIN = $cabecera['U_SYP_VIN'];
-
-            $json = [
-                'json' => [
-                    "U_SYP_VIN" => (string)$cabecera['U_SYP_VIN'],
-                ]
-            ];
-
-            $rptaCabecera = $client->request('POST', "/api/TablaCosto/SetCabeceraTablaCosto/", $json);
-            $rptaSapCabecera = json_decode($rptaCabecera->getBody());
-            array_push($array_rptaCabecera, $rptaSapCabecera);
+        $arrayCabeceraTblCost = $request->arrayCabeceraTblCost;
+        foreach ($arrayCabeceraTblCost as $key => $cabecera) {
+            //OBTENER EL VIN PARA COMPARAR CON LOS CONCEPTOS (BENEFICIO,COSTO VEHÍCULO, FLETE) Y DOCENTRY PARA REFERENCIARLOS
+            $TblCostoDocEntry   =   $cabecera['DocEntry'];
+            $TblCostoVIN        =   $cabecera['U_SYP_VIN'];
 
             // ====================================================================================================
             // =========================  REGISTRAR DETALLE CABECERA TBL COST - BENEFICIO =========================
@@ -44,7 +60,7 @@ class SapTablaCostoController extends Controller
                 if ($TblCostoVIN == $beneficio['U_SYP_VIN']) {
                     $json = [
                         'json' => [
-                            "U_SYP_VIN"         => (string)$beneficio['U_SYP_VIN'],
+                            "DocEntry"          => (string)$TblCostoDocEntry,
                             "U_SYP_CCONCEPTO"   => (string)$beneficio['U_SYP_CCONCEPTO'],
                             "U_SYP_DCONCEPTO"   => (string)$beneficio['U_SYP_DCONCEPTO'],
                             "U_SYP_CDOCUMENTO"  => (string)$beneficio['U_SYP_CDOCUMENTO'],
@@ -55,7 +71,7 @@ class SapTablaCostoController extends Controller
                         ]
                     ];
 
-                    $rptaBeneficio = $client->request('POST', "/api/TablaCosto/SetDetalleCabeceraTablaCosto/", $json);
+                    $rptaBeneficio = $client->request('POST', "/api/TablaCosto/SetUpdDetalleCabeceraTablaCosto/", $json);
                     $rptaSapBeneficio = json_decode($rptaBeneficio->getBody());
                     array_push($array_rptaBeneficio, $rptaSapBeneficio);
                 }
@@ -69,7 +85,7 @@ class SapTablaCostoController extends Controller
                 if ($TblCostoVIN == $costovehiculo['U_SYP_VIN']) {
                     $json = [
                         'json' => [
-                            "U_SYP_VIN"         => (string)$costovehiculo['U_SYP_VIN'],
+                            "DocEntry"          => (string)$TblCostoDocEntry,
                             "U_SYP_CCONCEPTO"   => (string)$costovehiculo['U_SYP_CCONCEPTO'],
                             "U_SYP_DCONCEPTO"   => (string)$costovehiculo['U_SYP_DCONCEPTO'],
                             "U_SYP_CDOCUMENTO"  => (string)$costovehiculo['U_SYP_CDOCUMENTO'],
@@ -80,7 +96,7 @@ class SapTablaCostoController extends Controller
                         ]
                     ];
 
-                    $rptaCostoVehiculo = $client->request('POST', "/api/TablaCosto/SetDetalleCabeceraTablaCosto/", $json);
+                    $rptaCostoVehiculo = $client->request('POST', "/api/TablaCosto/SetUpdDetalleCabeceraTablaCosto/", $json);
                     $rptaSAPCostoVehiculo = json_decode($rptaCostoVehiculo->getBody());
                     array_push($array_rptaCostoVehiculo, $rptaSAPCostoVehiculo);
                 }
@@ -93,7 +109,7 @@ class SapTablaCostoController extends Controller
                 if ($TblCostoVIN == $flete['U_SYP_VIN']) {
                     $json = [
                         'json' => [
-                            "U_SYP_VIN"         => (string)$flete['U_SYP_VIN'],
+                            "DocEntry"          => (string)$TblCostoDocEntry,
                             "U_SYP_CCONCEPTO"   => (string)$flete['U_SYP_CCONCEPTO'],
                             "U_SYP_DCONCEPTO"   => (string)$flete['U_SYP_DCONCEPTO'],
                             "U_SYP_CDOCUMENTO"  => (string)$flete['U_SYP_CDOCUMENTO'],
@@ -104,7 +120,7 @@ class SapTablaCostoController extends Controller
                         ]
                     ];
 
-                    $rptaFlete = $client->request('POST', "/api/TablaCosto/SetDetalleCabeceraTablaCosto/", $json);
+                    $rptaFlete = $client->request('POST', "/api/TablaCosto/SetUpdDetalleCabeceraTablaCosto/", $json);
                     $rptaSapFlete = json_decode($rptaFlete->getBody());
                     array_push($array_rptaFlete, $rptaSapFlete);
                 }

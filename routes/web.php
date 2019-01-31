@@ -420,7 +420,8 @@ Route::middleware(['auth'])->group(function(){
     //Actividad
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     //Tabla Costos
-    Route::get('/tablacosto/SapSetTablaCosto','Api\SapTablaCostoController@SapSetTablaCosto');
+    Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
+    Route::post('/tablacosto/SapSetTablaCostoDetalleCabecera','Api\SapTablaCostoController@SapSetTablaCostoDetalleCabecera');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
