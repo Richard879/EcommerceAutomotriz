@@ -663,7 +663,7 @@
                             U_SYP_ESTADO        :   x.U_SYP_ESTADO
                         });
                     });
-                    this.llenarArrayTblCosto();
+                    // this.llenarArrayTblCosto();
                     // this.SetSapRegistrarTablaCosto();
                 }).catch(error => {
                     console.log(error);
@@ -678,11 +678,12 @@
             llenarArrayTblCosto(){
                 let me = this;
                 //Depurar Array para registrar en SAP
-                me.arraySapArticulo.map(function(x, y){
-                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en Proyecto
-                    //Sino se encuentra no pase a Proyecto
-                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
-                        me.arraySapProyecto.push({
+                me.arrayTCCostoVehiculo.map(function(x, y){
+                    me.arrayTCTipoBeneficio.map(function(x, y){
+
+                    });
+                    if (me.arrayTCTipoBeneficio.includes(x.VIN)) {
+                        me.arrayTblCosto.push({
                             'cCode': x.cNumeroVin,
                             'cName': x.cNumeroVin
                         });
@@ -691,11 +692,13 @@
             },
             SetSapRegistrarTablaCosto(){
                 let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraTC';
+                var url = me.ruta + '/tablacosto/SapSetTablaCosto';
                 axios.get(url, {
                     params: {
-                        'arrayCabeceraTblCost': this.arrayCabeceraTblCost,
-                        'arrayDetalleCabeceraTblCost' : this.arrayDetalleCabeceraTblCost
+                        'arrayCabeceraTblCost'  : this.arrayCabeceraTblCost,
+                        'arrayTCTipoBeneficio'  : this.arrayTCTipoBeneficio,
+                        'arrayTCCostoVehiculo'  : this.arrayTCCostoVehiculo,
+                        'arrayTCFlete'          : this.arrayTCFlete
                     }
                 }).then(response => {
                     console.log(response.data);
