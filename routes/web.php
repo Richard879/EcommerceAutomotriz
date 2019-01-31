@@ -419,6 +419,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     //Actividad
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
+    //Tabla Costos
+    Route::get('/tablacosto/SapSetTablaCosto','Api\SapTablaCostoController@SapSetTablaCosto');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
