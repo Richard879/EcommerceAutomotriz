@@ -2529,6 +2529,7 @@
 
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
+                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cItemCode': me.jsonRespuesta.ItemCode.toString(),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString()
