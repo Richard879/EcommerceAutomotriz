@@ -2869,21 +2869,11 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si NO existe Proyecto De EXCEL
-                        if(!objCompra.cCode){
-                            //==============================================================
-                            //================== REGISTRO PROYECTO EN SAP ===============
-                            setTimeout(function() {
-                                me.generarSapProyecto(objCompra);
-                            }, 1600);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO TARJETA EQUIPO ===============
-                            setTimeout(function() {
-                                me.generarSapTarjetaEquipo(objCompra);
-                            }, 1600);
-                        }
+                        //==============================================================
+                        //================== REGISTRO PROYECTO EN SAP ===============
+                        setTimeout(function() {
+                            me.generarSapProyecto(objCompra);
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2897,56 +2887,69 @@
             },
             generarSapProyecto(objCompra){
                 let me = this;
+                //Verifico Si NO existe Proyecto De EXCEL
+                if(!objCompra.cCode){
+                    //==============================================================
+                    //================== REGISTRO PROYECTO EN SAP ===============
+                    me.loadingProgressBar("INTEGRANDO PROYECTO CON SAP BUSINESS ONE...");
 
-                me.arraySapProyecto.push({
-                    Code: objCompra.cNumeroVin,
-                    Name: objCompra.cName
-                });
+                    me.arraySapProyecto.push({
+                        'cCode': objCompra.cNumeroVin,
+                        'cName': objCompra.cName
+                    });
 
-                var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
-                axios.post(sapUrl, {
-                    'data': me.arraySapProyecto
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
+                    var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapProyecto
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.Code){
-                            me.arraySapUpdSgc.push({
-                                'cCode': me.jsonRespuesta.Code.toString(),
-                                'cName': me.jsonRespuesta.Name.toString(),
-                                'cLogRespuesta': response.data.toString()
-                            });
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.Code){
+                                me.arraySapUpdSgc.push({
+                                    'cCode': me.jsonRespuesta.Code.toString(),
+                                    'cName': me.jsonRespuesta.Name.toString(),
+                                    'cLogRespuesta': response.data.toString()
+                                });
 
-                            //==============================================================
-                            //================== ACTUALIZO TABLA PROYECTO SGC ===============
-                            setTimeout(function() {
-                                me.generaActualizaProyecto(objCompra);
-                            }, 1600);
+                                //==============================================================
+                                //================== ACTUALIZO TABLA PROYECTO SGC ===============
+                                setTimeout(function() {
+                                    me.generaActualizaProyecto(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración de Artículo SapB1!',
+                        });
+                        me.loading.close();
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras();
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO TARJETA EQUIPO ===============
+                    setTimeout(function() {
+                        me.generarSapTarjetaEquipo(objCompra);
+                    }, 1600);
+                }
             },
             generaActualizaProyecto(objCompra){
                 let me = this;
@@ -2956,17 +2959,9 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe Tarjeta Equipo De EXCEL
-                        if(objCompra.nEquipmentCardNum==0){
-                            //==============================================================
-                            //================== REGISTRO TARJETA EQUIPO EN SAP ===============
-                            me.generarSapTarjetaEquipo(objCompra);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO TARJETA EQUIPO ===============
-                            me.generaSapLlamadaServicio(objCompra);
-                        }
+                        //==============================================================
+                        //============= REGISTRO TARJETA EQUIPO EN SAP ===============
+                        me.generarSapTarjetaEquipo(objCompra);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2981,56 +2976,70 @@
             generarSapTarjetaEquipo(objCompra){
                 let me = this;
 
-                me.arraySapTarjetaEquipo.push({
-                    CustomerCode: objCompra.cCustomerCode,
-                    InternalSerialNum: objCompra.cNumeroVin,
-                    ItemCode: objCompra.cNumeroVin
-                });
+                //Verifico Si No existe Tarjeta Equipo De EXCEL
+                if(objCompra.nEquipmentCardNum==0){
+                    //==============================================================
+                    //============= REGISTRO TARJETA EQUIPO EN SAP ===============
+                    me.loadingProgressBar("INTEGRANDO TARJETA EQUIPO CON SAP BUSINESS ONE...");
 
-                 var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
-                axios.post(sapUrl, {
-                    'data': me.arraySapTarjetaEquipo
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
+                    me.arraySapTarjetaEquipo.push({
+                        cCustomerCode: objCompra.cCustomerCode,
+                        cInternalSerialNum: objCompra.cNumeroVin,
+                        cItemCode: objCompra.cNumeroVin
+                    });
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta InternalSerialNum tiene un valor
-                        if(me.jsonRespuesta.InternalSerialNum){
-                            me.arraySapUpdSgc.push({
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cLogRespuesta': response.data.toString()
-                            });
+                    var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapTarjetaEquipo
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
 
-                            //==============================================================
-                            //================== ACTUALIZO TABLA TarjetaEquipo ===============
-                            setTimeout(function() {
-                                me.generaActualizaTarjetaEquipo(objCompra);
-                            }, 1600);
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta InternalSerialNum tiene un valor
+                            if(me.jsonRespuesta.InternalSerialNum){
+                                me.arraySapUpdSgc.push({
+                                    'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                    'cLogRespuesta': response.data.toString()
+                                });
+
+                                //==============================================================
+                                //================== ACTUALIZO TABLA TarjetaEquipo ===============
+                                setTimeout(function() {
+                                    me.generaActualizaTarjetaEquipo(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración de Artículo SapB1!',
+                        });
+                        me.loading.close();
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras();
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO COMPRA EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapCompra(objCompra);
+                    }, 1600);
+                }
             },
             generaActualizaTarjetaEquipo(objCompra){
                 let me = this;
@@ -3040,17 +3049,12 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe OrdenCompra De EXCEL
-                        if(objCompra.nDocEntry== 0){
-                            //==============================================================
-                            //================== REGISTRO COMPRA EN SAP ===============
+                        //==============================================================
+                        //================== REGISTRO COMPRA EN SAP ===============
+                        me.loading.close();
+                        setTimeout(function() {
                             me.generaSapCompra(objCompra);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO ACTIVIDAD EN SAP ===============
-                            me.generaSapActividad(objCompra);
-                        }
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3064,83 +3068,95 @@
             },
             generaSapCompra(objCompra){
                 let me = this;
-                me.loading.close();
-                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
+                //Verifico Si No existe OrdenCompra De EXCEL
+                if(objCompra.nDocEntry== 0){
+                    //==============================================================
+                    //================== REGISTRO COMPRA EN SAP ===============
+                    /*me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
 
-                var sapUrl = me.ruta + '/compra/SapSetCompra';
-                axios.post(sapUrl, {
-                    'cCardCode': me.formCompra.ccarcode,
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode': me.formCompra.warehousecode,
-                    'Igv': 1 + parseFloat((me.formCompra.igv)),
-                    'data': me.arraySapCompra
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-                    
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración SAP Compra : OK");
-                            console.log(me.jsonRespuesta.DocEntry);
-                            me.arraySapUpdSgc.push({
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
+                    var sapUrl = me.ruta + '/compra/SapSetCompra';
+                    axios.post(sapUrl, {
+                        'cCardCode': me.formCompra.ccarcode,
+                        'fDocDate': moment().format('YYYY-MM-DD'),
+                        'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'WarehouseCode': me.formCompra.warehousecode,
+                        'Igv': 1 + parseFloat((me.formCompra.igv)),
+                        'data': me.arraySapCompra
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
+                        
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuesta.DocEntry){
+                                console.log("Integración SAP Compra : OK");
+                                console.log(me.jsonRespuesta.DocEntry);
+                                me.arraySapUpdSgc.push({
+                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType': me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta': response.data.toString(),
+                                    'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                });
 
-                            me.arraySapActividad.push({
-                                'dActivityDate': '2019-01-29',
-                                'hActivityTime': '08:13:00',
-                                'cCardCode': me.ccodigoempresasap,
-                                //'cCardCode': 'P20506006024',
-                                'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum': me.jsonRespuesta.DocNum.toString(),
-                                'nDocType': '22',
-                                'nDuration': '15',
-                                'cDurationType': 'du_Minuts',
-                                'dEndDueDate': '2019-01-29',
-                                'hEndTime': '08:28:00',
-                                'cReminder': 'tYES',
-                                'nReminderPeriod': '15',
-                                'cReminderType': 'du_Minuts',
-                                'dStartDate': '2019-01-29',
-                                'hStartTime': '08:13:00'
-                            });
+                                me.arraySapActividad.push({
+                                    'dActivityDate': '2019-01-29',
+                                    'hActivityTime': '08:13:00',
+                                    'cCardCode': me.ccodigoempresasap,
+                                    //'cCardCode': 'P20506006024',
+                                    'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum': me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType': '22',
+                                    'nDuration': '15',
+                                    'cDurationType': 'du_Minuts',
+                                    'dEndDueDate': '2019-01-29',
+                                    'hEndTime': '08:28:00',
+                                    'cReminder': 'tYES',
+                                    'nReminderPeriod': '15',
+                                    'cReminderType': 'du_Minuts',
+                                    'dStartDate': '2019-01-29',
+                                    'hStartTime': '08:13:00'
+                                });
 
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarDocEntry(objCompra);
-                            }, 1600);
+                                //==============================================================
+                                //================== ACTUALIZAR DOCENTRY ===============
+                                setTimeout(function() {
+                                    me.generaActualizarDocEntry(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración Compra SapB1!',
+                        });
+                        me.loading.close();
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
-                    });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración Compra SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras();
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                    });*/
+                    alert("aquiiii");
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapActividad(objCompra);
+                    }, 1600);
+                }
             },
-            generaActualizarDocEntry(objCompra){
+            /*generaActualizarDocEntry(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SetIntegraCompra';
                 axios.post(sapUrl, {
@@ -3148,17 +3164,9 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe Actividad De EXCEL
-                        if(objCompra.nActivityCode== 0){
-                            //==============================================================
-                            //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        setTimeout(function() {
                             me.generaSapActividad(objCompra);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO LLAMADA SE SERVICIO EN SAP ===============
-                            //me.generaSapActividad(objCompra);
-                        }
+                        }, 1600);
                     }
                     else{
                         $("#myBar").hide();
@@ -3182,56 +3190,67 @@
             },
             generaSapActividad(objCompra){
                 let me = this;
+                //Verifico Si No existe Actividad De EXCEL
+                if(objCompra.nActivityCode== 0){
+                    //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapActividad
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+                        
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ActivityCode){                            
+                                me.arraySapUpdSgc.push({
+                                    'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                    'nActividadTipo': 22,
+                                    'cActividadTipo': 'OrdenCompra',
+                                    'cCardCode': me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta': response.data.toString()
+                                });
 
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
-                axios.post(sapUrl, {
-                    'data': me.arraySapActividad
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-                    
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ActivityCode){                            
-                            me.arraySapUpdSgc.push({
-                                'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo': 22,
-                                'cActividadTipo': 'OrdenCompra',
-                                'cCardCode': me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cLogRespuesta': response.data.toString()
-                            });
+                                me.arraySapLlamadaServicio.push({
+                                    'nActivityCode': me.jsonRespuesta.ActivityCode,
+                                    'cCustomerCode': objCompra.cCustomerCode,
+                                    'cInternalSerialNum': objCompra.cNumeroVin,
+                                    'cItemCode': objCompra.cNumeroVin,
+                                    'cSubject': objCompra.cSubject
+                                });
 
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode': me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode': objCompra.cCustomerCode,
-                                'cInternalSerialNum': objCompra.cNumeroVin,
-                                'cItemCode': objCompra.cNumeroVin,
-                                'cSubject': objCompra.cSubject
-                            });
-
-                            //================================================================
-                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            setTimeout(function() {
-                                me.generaActualizarActividad();
-                            }, 1600);
+                                //================================================================
+                                //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                                setTimeout(function() {
+                                    me.generaActualizarActividad(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //============= REGISTRO LLAMADA DE SERVICIO EN SAP ============
+                    setTimeout(function() {
+                            me.generaSapLlamadaServicio(objCompra);
+                    }, 1600);
+                }
             },
-            generaActualizarActividad(){
+            generaActualizarActividad(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
@@ -3243,12 +3262,18 @@
                         if(objCompra.nServiceCallID== 0){
                             //==============================================================
                             //================== REGISTRO ACTIVIDAD EN SAP ===============
-                            me.generaSapLlamadaServicio(objCompra);
+                            setTimeout(function() {
+                                me.generaSapLlamadaServicio(objCompra);
+                            }, 1600);
                         }
                         else{
                             //==============================================================
                             //================== FIN ===============
                             //me.generaSapActividad(objCompra);
+                            me.loading.close();
+                            swal('Compra registrada correctamente');
+                            me.limpiarFormulario();
+                            me.listarCompras();
                         }
                     }
                 }).catch(error => {
@@ -3309,7 +3334,10 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    alert("OK");
+                    me.loading.close();
+                    swal('Compra registrada correctamente');
+                    me.limpiarFormulario();
+                    me.listarCompras();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3319,7 +3347,7 @@
                         }
                     }
                 });
-            },
+            },*/
             /*generaEntradaMercancia(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");

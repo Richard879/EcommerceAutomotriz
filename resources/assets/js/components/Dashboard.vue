@@ -490,6 +490,16 @@
         data(){
             return {
                 nidcronograma : '',
+                arraySapArticulo: [
+                    'KMJAA27RPHK009687',
+                    'MALA251AAJM607756',
+                    'MALA751AAJM739136',
+                    'MALA251AAJM607732',
+                    'MALA251AAJM607738'
+                ],
+                arrayTCTipoBeneficio: [],
+                arrayTCCostoVehiculo: [],
+                arrayTCFlete: [],
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -603,10 +613,58 @@
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCronograma': this.nidcronograma,
-                        'nIdCompra': 4500002
+                        'arraySapArticulo': this.arraySapArticulo
                     }
                 }).then(response => {
                     console.log(response.data);
+                    let me = this;
+                    // =========================================================
+                    // ====================  TIPO DE BENEFICIO =================
+                    let arrayBeneficio = response.data.array_infoTipoBeneficio;
+                    arrayBeneficio.map(function (x) {
+                        me.arrayTCTipoBeneficio.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    // =========================================================
+                    // ====================  COSTO DEL VEHICULO ================
+                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                    arrayCostoVehiculo.map(function (x) {
+                        me.arrayTCCostoVehiculo.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    // =========================================================
+                    // ======================== FLETE ==========================
+                    let arrayFlete = response.data.array_infoFlete;
+                    arrayFlete.map(function (x) {
+                        me.arrayTCFlete.push({
+                            VIN                 :   x.VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    this.llenarArrayTblCosto();
+                    // this.SetSapRegistrarTablaCosto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -617,14 +675,27 @@
                     }
                 });
             },
-            GetCompraFlete(){
+            llenarArrayTblCosto(){
                 let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraFlete';
+                //Depurar Array para registrar en SAP
+                me.arraySapArticulo.map(function(x, y){
+                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en Proyecto
+                    //Sino se encuentra no pase a Proyecto
+                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
+                        me.arraySapProyecto.push({
+                            'cCode': x.cNumeroVin,
+                            'cName': x.cNumeroVin
+                        });
+                    }
+                });
+            },
+            SetSapRegistrarTablaCosto(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetCompraTC';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCompra': 4500002
+                        'arrayCabeceraTblCost': this.arrayCabeceraTblCost,
+                        'arrayDetalleCabeceraTblCost' : this.arrayDetalleCabeceraTblCost
                     }
                 }).then(response => {
                     console.log(response.data);
