@@ -3002,6 +3002,7 @@
                             //Si el valor de respuesta InternalSerialNum tiene un valor
                             if(me.jsonRespuesta.InternalSerialNum){
                                 me.arraySapUpdSgc.push({
+                                    'nEquipmentCardNum': parseInt(me.jsonRespuesta.EquipmentCardNum),
                                     'cItemCode': me.jsonRespuesta.ItemCode.toString(),
                                     'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                     'cLogRespuesta': response.data.toString()
@@ -3072,7 +3073,7 @@
                 if(objCompra.nDocEntry== 0){
                     //==============================================================
                     //================== REGISTRO COMPRA EN SAP ===============
-                    /*me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
+                    me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
 
                     var sapUrl = me.ruta + '/compra/SapSetCompra';
                     axios.post(sapUrl, {
@@ -3085,7 +3086,7 @@
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
@@ -3105,7 +3106,7 @@
                                 me.arraySapActividad.push({
                                     'dActivityDate': '2019-01-29',
                                     'hActivityTime': '08:13:00',
-                                    'cCardCode': me.ccodigoempresasap,
+                                    'cCardCode': objCompra.cCustomerCode,
                                     //'cCardCode': 'P20506006024',
                                     'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
                                     'nDocNum': me.jsonRespuesta.DocNum.toString(),
@@ -3145,8 +3146,7 @@
                                 location.reload('0');
                             }
                         }
-                    });*/
-                    alert("aquiiii");
+                    });
                 }
                 else{
                     //==============================================================
@@ -3200,13 +3200,13 @@
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
-                        
+
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
                             me.jsonRespuesta = '';
-                            me.jsonRespuesta= JSON.parse(value);
+                            me.jsonRespuesta= JSON.parse(x);
                             //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){                            
+                            if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
                                     'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
                                     'nActividadTipo': 22,
@@ -3288,27 +3288,28 @@
             },
             generaSapLlamadaServicio(objCompra){
                 let me = this;
-                
+
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
+                    me.arraySapRespuesta.map(function(x){
                         me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
+                        me.jsonRespuesta= JSON.parse(x);
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ItemCode){
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
+                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cLogRespuesta': response.data.toString()
                             });
 
                             //=========================================================================
