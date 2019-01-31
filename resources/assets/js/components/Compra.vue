@@ -3086,6 +3086,7 @@
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
+                        me.arraySapActividad= [];
                         
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(x){
@@ -3094,7 +3095,7 @@
                             //Verifico que devuelva DocEntry
                             if(me.jsonRespuesta.DocEntry){
                                 console.log("Integración SAP Compra : OK");
-                                console.log(me.jsonRespuesta.DocEntry);
+
                                 me.arraySapUpdSgc.push({
                                     'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
                                     'nDocNum': parseInt(me.jsonRespuesta.DocNum),
@@ -3152,7 +3153,7 @@
                     //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
-                        me.generaSapActividad(objCompra);
+                        me.generaSapActividad(objCompra, 22, 'OrdenCompra');
                     }, 1600);
                 }
             },
@@ -3165,7 +3166,7 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         setTimeout(function() {
-                            me.generaSapActividad(objCompra);
+                            me.generaSapActividad(objCompra, 22, 'OrdenCompra');
                         }, 1600);
                     }
                     else{
@@ -3188,7 +3189,7 @@
                     }
                 });
             },
-            generaSapActividad(objCompra){
+            generaSapActividad(objCompra, nObjetoTipo, cObjetoDescripcion){
                 let me = this;
                 //Verifico Si No existe Actividad De EXCEL
                 if(objCompra.nActivityCode== 0){
@@ -3209,14 +3210,15 @@
                             if(me.jsonRespuesta.ActivityCode){                            
                                 me.arraySapUpdSgc.push({
                                     'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
-                                    'nActividadTipo': 22,
-                                    'cActividadTipo': 'OrdenCompra',
+                                    'nActividadTipo': nObjetoTipo,
+                                    'cActividadTipo': cObjetoDescripcion,
                                     'cCardCode': me.jsonRespuesta.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
                                     'nDocNum': parseInt(me.jsonRespuesta.DocNum),
                                     'cLogRespuesta': response.data.toString()
                                 });
 
+                                me.arraySapLlamadaServicio = [];
                                 me.arraySapLlamadaServicio.push({
                                     'nActivityCode': me.jsonRespuesta.ActivityCode,
                                     'cCustomerCode': objCompra.cCustomerCode,
@@ -3269,7 +3271,6 @@
                         else{
                             //==============================================================
                             //================== FIN ===============
-                            //me.generaSapActividad(objCompra);
                             me.loading.close();
                             swal('Compra registrada correctamente');
                             me.limpiarFormulario();
@@ -3349,56 +3350,94 @@
                     }
                 });
             },
-            /*generaEntradaMercancia(){
+            generaSapEntradaMercancia(objCompra){
                 let me = this;
-                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+                //Verifico Si No existe OrdenCompra De EXCEL
+                if(objCompra.nDocEntryMercancia== 0){
+                    //==============================================================
+                    //================== REGISTRO MERCANCIA EN SAP ===============
+                    me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
-                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
-                axios.post(sapUrl, {
-                    'cCardCode': me.formCompra.ccarcode,
-                    'data': me.arraySapUpdCompra
-                }).then(response => {
-                    me.arraySapRptMercancia = response.data;
-                    me.arraySapRptMercancia.map(function(x){
-                        me.jsonMercancia= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonMercancia.DocEntry){
-                            console.log("Integración SAP Mercancia : OK");
-                            console.log(me.jsonMercancia.DocEntry);
-                            me.arraySapUpdMercancia.push({
-                                'nDocEntry': parseInt(me.jsonMercancia.DocEntry),
-                                'nDocNum': parseInt(me.jsonMercancia.DocNum),
-                                'cDocType': me.jsonMercancia.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonMercancia.DocumentLines[0].ItemCode.toString()
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarDocEntryStock();
-                            }, 1600);
+                    var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
+                    axios.post(sapUrl, {
+                        'cCardCode': objCompra.cCardCode,
+                        //'data': me.arraySapUpdCompra
+                        'data': objCompra
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
+                        me.arraySapActividad= [];
+                        
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuesta.DocEntry){
+                                console.log("Integración SAP Mercancia : OK");
+
+                                me.arraySapUpdSgc.push({
+                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType': me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta': response.data.toString(),
+                                    'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                });
+
+                                me.arraySapActividad.push({
+                                    'dActivityDate': '2019-01-29',
+                                    'hActivityTime': '08:13:00',
+                                    'cCardCode': objCompra.cCustomerCode,
+                                    //'cCardCode': 'P20506006024',
+                                    'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum': me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType': '22',
+                                    'nDuration': '15',
+                                    'cDurationType': 'du_Minuts',
+                                    'dEndDueDate': '2019-01-29',
+                                    'hEndTime': '08:28:00',
+                                    'cReminder': 'tYES',
+                                    'nReminderPeriod': '15',
+                                    'cReminderType': 'du_Minuts',
+                                    'dStartDate': '2019-01-29',
+                                    'hStartTime': '08:13:00'
+                                });
+
+                                //==============================================================
+                                //================== ACTUALIZAR DOCENTRY ===============
+                                setTimeout(function() {
+                                    me.generaActualizarDocEntryStock(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración Compra SapB1!',
+                        });
+                        me.loading.close();
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración Mercancia SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras();
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapActividad(objCompra, 100000, 'EntradaMercancia');
+                    }, 1600);
+                }
             },
-            generaActualizarDocEntryStock(compra){
+            generaActualizarDocEntryStock(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
                 axios.post(sapUrl, {
@@ -3407,10 +3446,9 @@
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        me.loading.close();
-                        swal('Compra registrada correctamente');
-                        me.limpiarFormulario();
-                        me.listarCompras();
+                        setTimeout(function() {
+                            me.generaSapActividad(objCompra, 10000, 'EntradaMercancia');
+                        }, 1600);
                     }
                     else{
                         swal({
@@ -3431,15 +3469,9 @@
                     }
                 });
             },
-            asignaMercancia(compra){
-                let me = this;
-                me.arraySapUpdCompra.push({
-                    'nDocEntry': parseInt(compra.nDocEntry)
-                });
-                //Obtener Codigo Sap Proveedor
-                me.formCompra.ccarcode = compra.cCarCode;
-                me.generaEntradaMercancia();
-            },*/
+            asignaMercancia(objCompra){
+                me.generaSapEntradaMercancia(objCompra);
+            },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
                 if(this.validarActualizar()){
