@@ -2112,14 +2112,14 @@
                 }).then(response => {
                     me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc= []; 
+                    me.arraySapUpdSgc= [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
                         me.jsonRespuesta= JSON.parse(value);
                         //==== Si devuelve Json ItemCode
-                        if(me.jsonRespuesta.ItemCode){                            
+                        if(me.jsonRespuesta.ItemCode){
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
@@ -2185,7 +2185,7 @@
                     me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
@@ -2255,11 +2255,11 @@
                 var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
                 axios.post(sapUrl, {
                     'data': me.arraySapTarjetaEquipo
-                }).then(response => { 
+                }).then(response => {
                     me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
@@ -2335,8 +2335,8 @@
                     'data'          :   me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = []; 
-                    
+                    me.arraySapUpdSgc = [];
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
@@ -2344,7 +2344,7 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             console.log("Integración SAP Compra : OK");
-                             
+
                             me.arraySapUpdSgc.push({
                                 'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum': parseInt(me.jsonRespuesta.DocNum),
@@ -2418,13 +2418,13 @@
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
                         me.jsonRespuesta= JSON.parse(value);
                         //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ActivityCode){                            
+                        if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
                                 'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo': 22,
@@ -2472,7 +2472,7 @@
             },
             getOrdenCompraActividad(){
                 let me = this;
-                
+
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
                     //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en LlamadaServicio
@@ -2510,7 +2510,7 @@
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
-                
+
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
@@ -2518,7 +2518,7 @@
                     me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
-                    
+
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
@@ -2557,7 +2557,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.verResultados(); 
+                        me.verResultados();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2578,7 +2578,7 @@
                     'cCardCode': me.formCompra.ccarcode,
                     'data': me.arraySapUpdCompra
                 }).then(response => {
-                    me.arraySapUpdSgc = [];  
+                    me.arraySapUpdSgc = [];
                     me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
                     me.jsonRespuesta = '';
@@ -2801,7 +2801,7 @@
                 });
                 //Obtener Codigo Sap Proveedor
                 me.formCompra.ccarcode = objCompra.cCarCode;
-            
+
                 //Verifico Si existe Artículo
                 if(!objCompra.cItemCode){
                     //==============================================================
