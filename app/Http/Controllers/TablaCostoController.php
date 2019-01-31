@@ -16,7 +16,6 @@ class TablaCostoController extends Controller
         $nIdEmpresa     = $request->nIdEmpresa;
         $nIdSucursal    = $request->nIdSucursal;
         $nIdCronograma  = $request->nIdCronograma;
-        // $nIdCompra      = $request->nIdCompra;
 
         $array_infoTipoBeneficio    =   [];
         $array_infoCostoVehiculo    =   [];
@@ -31,7 +30,7 @@ class TablaCostoController extends Controller
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             if ($data) {
@@ -45,6 +44,7 @@ class TablaCostoController extends Controller
                 $U_SYP_COSTO        =   '';
                 $U_SYP_ESTADO       =   '';
 
+                //Si es un Objetivo de Tipo Compra
                 if ($beneficio->cFlagTipoOperacion == 'C') {
                     $VIN = $beneficio->cNumeroVin;
                     //Bono
@@ -114,7 +114,7 @@ class TablaCostoController extends Controller
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             $costovehiculo = $data[0];
@@ -145,7 +145,7 @@ class TablaCostoController extends Controller
                                                     [
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             if ($data) {

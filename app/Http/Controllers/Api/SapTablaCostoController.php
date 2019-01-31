@@ -57,6 +57,7 @@ class SapTablaCostoController extends Controller
             // =========================  REGISTRAR DETALLE CABECERA TBL COST - BENEFICIO =========================
             $arrayTipoBeneficio = $request->arrayTipoBeneficio;
             foreach ($arrayTipoBeneficio as $key => $beneficio) {
+                //Verifica que el VIN de ese Beneficio sea Igual al VIN de la Cabecera Costo, para que se le asigne
                 if ($TblCostoVIN == $beneficio['U_SYP_VIN']) {
                     $json = [
                         'json' => [
@@ -82,6 +83,7 @@ class SapTablaCostoController extends Controller
             // ======================  REGISTRAR DETALLE CABECERA TBL COST - COSTO VEHÍCULO =======================
             $arrayTCCostoVehiculo = $request->arrayTCCostoVehiculo;
             foreach ($arrayTCCostoVehiculo as $key => $costovehiculo) {
+                //Verifica que el VIN de ese Costo de Vehículo sea Igual al VIN de la Cabecera Costo, para que se le asigne
                 if ($TblCostoVIN == $costovehiculo['U_SYP_VIN']) {
                     $json = [
                         'json' => [
@@ -106,6 +108,7 @@ class SapTablaCostoController extends Controller
             // ==========================  REGISTRAR DETALLE CABECERA TBL COST - FLETE ============================
             $arrayTCFlete = $request->arrayTCFlete;
             foreach ($arrayTCFlete as $key => $flete) {
+                //Verifica que el VIN de ese Flete sea Igual al VIN de la Cabecera Costo, para que se le asigne
                 if ($TblCostoVIN == $flete['U_SYP_VIN']) {
                     $json = [
                         'json' => [
