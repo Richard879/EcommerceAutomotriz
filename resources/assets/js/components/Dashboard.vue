@@ -490,6 +490,40 @@
         data(){
             return {
                 nidcronograma : '',
+                arraySapArticulo: [
+                    'KMJAA27RPHK009687',
+                    'MALA251AAJM607756',
+                    'MALA751AAJM739136',
+                    'MALA251AAJM607732',
+                    'MALA251AAJM607738'
+                ],
+                fillTCTipoBeneficio: {
+                    U_SYP_CCONCEPTO: '',
+                    U_SYP_DCONCEPTO: '',
+                    U_SYP_CDOCUMENTO: '',
+                    U_SYP_DDOCUMENTO: '',
+                    U_SYP_IMPORTE: '',
+                    U_SYP_COSTO: '',
+                    U_SYP_ESTADO: ''
+                },
+                fillTCCostoVehiculo: {
+                    U_SYP_CCONCEPTO: '',
+                    U_SYP_DCONCEPTO: '',
+                    U_SYP_CDOCUMENTO: '',
+                    U_SYP_DDOCUMENTO: '',
+                    U_SYP_IMPORTE: '',
+                    U_SYP_COSTO: '',
+                    U_SYP_ESTADO: ''
+                },
+                fillTCFlete: {
+                    U_SYP_CCONCEPTO: '',
+                    U_SYP_DCONCEPTO: '',
+                    U_SYP_CDOCUMENTO: '',
+                    U_SYP_DDOCUMENTO: '',
+                    U_SYP_IMPORTE: '',
+                    U_SYP_COSTO: '',
+                    U_SYP_ESTADO: ''
+                },
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -603,10 +637,38 @@
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCronograma': this.nidcronograma,
-                        'nIdCompra': 4500002
+                        'arraySapArticulo': this.arraySapArticulo
                     }
                 }).then(response => {
                     console.log(response.data);
+                    // =========================================================
+                    // ====================  TIPO DE BENEFICIO =================
+                    // this.fillTCTipoBeneficio.U_SYP_CCONCEPTO = response.data.infoTipoBeneficio.U_SYP_CCONCEPTO;
+                    // this.fillTCTipoBeneficio.U_SYP_DCONCEPTO = response.data.infoTipoBeneficio.U_SYP_DCONCEPTO;
+                    // this.fillTCTipoBeneficio.U_SYP_CDOCUMENTO = response.data.infoTipoBeneficio.U_SYP_CDOCUMENTO;
+                    // this.fillTCTipoBeneficio.U_SYP_DDOCUMENTO = response.data.infoTipoBeneficio.U_SYP_DDOCUMENTO;
+                    // this.fillTCTipoBeneficio.U_SYP_IMPORTE = response.data.infoTipoBeneficio.U_SYP_IMPORTE;
+                    // this.fillTCTipoBeneficio.U_SYP_COSTO = response.data.infoTipoBeneficio.U_SYP_COSTO;
+                    // this.fillTCTipoBeneficio.U_SYP_ESTADO = response.data.infoTipoBeneficio.U_SYP_ESTADO;
+                    // // =========================================================
+                    // // ====================  COSTO DEL VEHICULO ================
+                    // this.fillTCCostoVehiculo.U_SYP_CCONCEPTO = response.data.infoCostoVehiculo.U_SYP_CCONCEPTO;
+                    // this.fillTCCostoVehiculo.U_SYP_DCONCEPTO = response.data.infoCostoVehiculo.U_SYP_DCONCEPTO;
+                    // this.fillTCCostoVehiculo.U_SYP_CDOCUMENTO = response.data.infoCostoVehiculo.U_SYP_CDOCUMENTO;
+                    // this.fillTCCostoVehiculo.U_SYP_DDOCUMENTO = response.data.infoCostoVehiculo.U_SYP_DDOCUMENTO;
+                    // this.fillTCCostoVehiculo.U_SYP_IMPORTE = response.data.infoCostoVehiculo.U_SYP_IMPORTE;
+                    // this.fillTCCostoVehiculo.U_SYP_COSTO = response.data.infoCostoVehiculo.U_SYP_COSTO;
+                    // this.fillTCCostoVehiculo.U_SYP_ESTADO = response.data.infoCostoVehiculo.U_SYP_ESTADO;
+                    // // =========================================================
+                    // // ======================== FLETE ==========================
+                    // this.fillTCFlete.U_SYP_CCONCEPTO = response.data.infoFlete.U_SYP_CCONCEPTO;
+                    // this.fillTCFlete.U_SYP_DCONCEPTO = response.data.infoFlete.U_SYP_DCONCEPTO;
+                    // this.fillTCFlete.U_SYP_CDOCUMENTO = response.data.infoFlete.U_SYP_CDOCUMENTO;
+                    // this.fillTCFlete.U_SYP_DDOCUMENTO = response.data.infoFlete.U_SYP_DDOCUMENTO;
+                    // this.fillTCFlete.U_SYP_IMPORTE = response.data.infoFlete.U_SYP_IMPORTE;
+                    // this.fillTCFlete.U_SYP_COSTO = response.data.infoFlete.U_SYP_COSTO;
+                    // this.fillTCFlete.U_SYP_ESTADO = response.data.infoFlete.U_SYP_ESTADO;
+                    // this.SetSapRegistrarTablaCosto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -617,14 +679,13 @@
                     }
                 });
             },
-            GetCompraFlete(){
+            SetSapRegistrarTablaCosto(){
                 let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraFlete';
+                var url = me.ruta + '/tablacosto/GetCompraTC';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCompra': 4500002
+                        'arrayCabeceraTblCost': this.arrayCabeceraTblCost,
+                        'arrayDetalleCabeceraTblCost' : this.arrayDetalleCabeceraTblCost
                     }
                 }).then(response => {
                     console.log(response.data);
