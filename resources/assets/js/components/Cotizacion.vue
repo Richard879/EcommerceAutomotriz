@@ -3648,7 +3648,7 @@
                     this.arrayVehiculo[0].descuento = 0;
                 }
                 // Si el bono es mayor al propio monto del bono, se setea al bono origen
-                if (value > this.arrayVehiculo[0].BonoFlag) {
+                if (parseFloat(value) > parseFloat(this.arrayVehiculo[0].BonoFlag)) {
                     this.$message.error(`El Bono no puede tener una cantidad mayor al Bono Original`);
                     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
                     this.checked = false;
@@ -4772,7 +4772,7 @@
     .flex-rigth-margin{
         display: flex;
         justify-content: space-around;
-        align-content: space-around;
+        /* align-content: space-around; */
         flex-direction: column;
         align-items: flex-end;
         margin-right: 2rem;
