@@ -2125,7 +2125,7 @@
                         //==== Si devuelve Json ItemCode
                         if(me.jsonRespuesta.ItemCode){
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
+                            //PARA GUARDAR EN EL SGC LA INFO DE SAP
                             me.arraySapUpdSgc.push({
                                 'cItemCode': me.jsonRespuesta.ItemCode.toString(),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString()
@@ -2350,30 +2350,30 @@
                             console.log("Integración SAP Compra : OK");
 
                             me.arraySapUpdSgc.push({
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'nDocEntry' : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'   : parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'  : me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                'cItemCode' : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
 
                             me.arraySapActividad.push({
-                                'dActivityDate': '2019-01-29',
-                                'hActivityTime': '08:13:00',
-                                'cCardCode': me.ccodigoempresasap,
-                                //'cCardCode': 'P20506006024',
-                                'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum': me.jsonRespuesta.DocNum.toString(),
-                                'nDocType': '22',
-                                'nDuration': '15',
-                                'cDurationType': 'du_Minuts',
-                                'dEndDueDate': '2019-01-29',
-                                'hEndTime': '08:28:00',
-                                'cReminder': 'tYES',
-                                'nReminderPeriod': '15',
-                                'cReminderType': 'du_Minuts',
-                                'dStartDate': '2019-01-29',
-                                'hStartTime': '08:13:00'
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hActivityTime' :   '08:13:00',
+                                'cCardCode'     :   me.ccodigoempresasap,
+                                //'cCardCode'   :   'P20506006024',
+                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocType'      :   '22',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hEndTime'      :   '08:28:00',
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hStartTime'    :   '08:13:00'
                             });
                         }
                     });
@@ -2519,8 +2519,8 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
-                    me.arraySapItemCode = [];
                     me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
                     me.arraySapUpdSgc = [];
 
                     me.arraySapRespuesta = response.data;

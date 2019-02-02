@@ -27,8 +27,8 @@ class SapProyectoController extends Controller
                 'json' => [
                     "Code"      => $value['cCode'],
                     "Name"      => $value['cName']
-                    ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Proyecto/SapSetProyecto/", $json);
             $rptaSap = json_decode($response->getBody());

@@ -709,6 +709,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                ccodigoempresasap: 'C20480683839',
                 fillProveedor:{
                     nidproveedor: 0,
                     cproveedornombre: ''
@@ -780,14 +781,15 @@
                     ccardcode: '',
                     igv: 0
                 },
+                arraySapRespuesta: [],
+                arraySapItemCode: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+
                 arraySapPedido: [],
-                arraySapRptPedido: [],
-                jsonPedido: '',
-                arraySapUpdPedido: [],
-                arraySapFactura: [],
-                arraySapRptFactura: [],
-                jsonFactura: '',
-                arraySapUpdFactura: [],
+                arraySapActividad: [],
+                arraySapLlamadaServicio: [],
+                VINDelPedido: '',
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1517,7 +1519,7 @@
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
                     console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
-                    this.registroSapPedido();
+                    this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1529,7 +1531,7 @@
                 });
             },
             //REGISTRA PEDIDO EN SAP
-            registroSapPedido(){
+            registroSapBusinessPedido(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO EL PEDIDO CON SAP BUSINESS ONE...");
 
@@ -1540,27 +1542,52 @@
                     'Igv'           :   1 + parseFloat((me.formSap.igv)),
                     'data'          :   me.arraySapPedido
                 }).then(response => {
-                    me.arraySapRptPedido = response.data;
-                    me.arraySapRptPedido.map(function(x){
-                        me.jsonPedido= JSON.parse(x);
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
                         //Verifico que devuelva DocEntry
-                        if(me.jsonPedido.DocEntry){
+                        if(me.jsonRespuesta.DocEntry){
                             console.log("Integración Pedido SAP : OK");
-                            console.log(me.jsonPedido.DocEntry);
-                            me.arraySapUpdPedido.push({
+                            console.log(me.jsonRespuesta.DocEntry);
+                            //Guardo el VIN del Pedido
+                            me.VINDelPedido = me.jsonRespuesta.DocumentLines[0].ItemCode.toString();
+
+                            me.arraySapUpdSgc.push({
                                 'nIdCabeceraPedido' :   (me.cFlagOpcion = 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry'         :   parseInt(me.jsonPedido.DocEntry),
-                                'nDocNum'           :   parseInt(me.jsonPedido.DocNum),
-                                'cDocType'          :   me.jsonPedido.DocType.toString(),
-                                'cLogRespuesta'     :   response.data.toString(),
-                                'cItemCode'         :   me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     :   me.arraySapRespuesta[key].toString(),
+                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            me.arraySapActividad.push({
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hActivityTime' :   '08:13:00',
+                                'cCardCode'     :   me.ccodigoempresasap,
+                                //'cCardCode'   :   'P20506006024',
+                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocType'      :   '17',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hEndTime'      :   '08:28:00',
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hStartTime'    :   '08:13:00'
                             });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY PEDIDO ===============
                             setTimeout(function() {
-                                me.registroDocEntryPedido();
+                                me.registroSgcPedido();
                             }, 3800);
-
                         }
                     });
                 }).catch(error => {
@@ -1582,23 +1609,18 @@
                 });
             },
             //REGISTRA DOCENTRY-PEDIDO EN SQLSERVER
-            registroDocEntryPedido(){
+            registroSgcPedido(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
                 axios.post(sapUrl, {
-                    'data': me.arraySapUpdPedido
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
-                        me.limpiarFormulario();
-                        me.listarPedidos(1);
-                        swal(
-                            'Aprobado!',
-                            'El pedido ha sido APROBADO con éxito.',
-                            'success'
-                        );
-                        $("#myBar").hide();
-                        me.loading.close();
+                        setTimeout(function() {
+                            me.registroSapBusinessActividad();
+                        }, 1600);
+
                     } else {
                         swal({
                             type: 'error',
@@ -1627,6 +1649,169 @@
                     }
                 });
             },
+            registroSapBusinessActividad(){
+                let me = this;
+
+                me.loadingProgressBar("INTEGRANDO ACTIVIDAD DEL PEDIDO CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapActividad
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo': 17,
+                                'cActividadTipo': 'OrdenVenta',
+                                'cCardCode': me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcActividad(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.getOrdenVentaActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getOrdenVentaActividad(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/GetIntegraActividadVentaByItemCode';
+                axios.get(sapUrl, {
+                    params: {
+                        'citemcode': this.VINDelPedido,
+                        'nactividadtipo': 17
+                    }
+                }).then(response => {
+                    me.arraySapLlamadaServicio.push({
+                        'nActivityCode': response.data[0].nActivityCode,
+                        'cCustomerCode': response.data[0].cCustomerCode,
+                        'cInternalSerialNum': response.data[0].cItemCode,
+                        'cItemCode': response.data[0].cItemCode,
+                        'cSubject': response.data[0].cSubject
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+                setTimeout(function() {
+                    me.registroSapBusinessLlamadaServicio();
+                }, 1600);
+            },
+            registroSapBusinessLlamadaServicio(){
+                let me = this;
+
+                me.loadingProgressBar("INTEGRANDO LA LLAMADA DE SERVICIOS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapItemCode = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
+                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                    setTimeout(function() {
+                        me.registroSgcLlamadaServicio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcLlamadaServicio(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
+                    swal(
+                        'Aprobado!',
+                        'El pedido ha sido APROBADO con éxito.',
+                        'success'
+                    );
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             //REGISTRA COMPROBANTE SAP
             registroSapComprobante(){
                 let me = this;
@@ -1635,22 +1820,26 @@
                 axios.post(sapUrl, {
                     'cCardCode': me.formSap.ccardcode.toString(),
                     'fDocDate': moment().format('YYYY-MM-DD'),
-                    'data': me.arraySapUpdPedido
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.arraySapRptFactura = response.data;
-                    me.arraySapRptFactura.map(function(x){
-                        me.jsonFactura= JSON.parse(x);
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta = JSON.parse(value);
                         //Verifico que devuelva DocEntry
-                        if(me.jsonFactura.DocEntry){
+                        if(me.jsonRespuesta.DocEntry){
                             console.log("Integración Factura SAP : OK");
-                            console.log(me.jsonFactura.DocEntry);
-                            me.arraySapUpdFactura.push({
+                            console.log(me.jsonRespuesta.DocEntry);
+                            me.arraySapUpdSgc.push({
                                 'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry': parseInt(me.jsonFactura.DocEntry),
-                                'nDocNum': parseInt(me.jsonFactura.DocNum),
-                                'cDocType': me.jsonFactura.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': me.arraySapRespuesta.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
@@ -1683,17 +1872,18 @@
 
                 var sapUrl = me.ruta + '/pedido/SapUpdFacturaByDocEntry';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdFactura
+                    data: me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         me.limpiarFormulario();
                         me.listarPedidos(1);
-                        $("#myBar").hide();
                         swal(
                             'Aprobado!',
                             'El pedido ha sido APROBADO con éxito.',
                             'success'
                         );
+                        $("#myBar").hide();
+                        me.loading.close();
                     }else{
                         swal({
                             type: 'error',
@@ -1913,15 +2103,15 @@
             },
             limpiarFormulario(){
                 //Limpiar Variables SAP
-                this.arraySapPedido=  [],
-                this.arraySapRptPedido= [],
-                this.jsonPedido= '',
-                this.arraySapUpdPedido= [],
-                this.arraySapFactura= [],
-                this.arraySapRptFactura= [],
-                this.jsonFactura= '',
-                this.arraySapUpdFactura= [],
-                this.formSap.nidcabecerapedido= 0,
+                this.arraySapItemCode = [];
+                this.arraySapRespuesta = [];
+                this.jsonRespuesta = '';
+                this.arraySapUpdSgc= [];
+                this.arraySapPedido= [];
+                this.arraySapActividad= [];
+                this.arraySapLlamadaServicio= [];
+                this.VINDelPedido = '';
+                this.formSap.nidcabecerapedido= 0;
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
                 //Direcciones

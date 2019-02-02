@@ -28,8 +28,8 @@ class SapTarjetaEquipoController extends Controller
                     "CustomerCode"          => $value['cCustomerCode'],
                     "InternalSerialNum"     => $value['cInternalSerialNum'],
                     "ItemCode"              => $value['cItemCode']
-                    ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/TarjetaEquipo/SapSetTarjetaEquipo/", $json);
             $rptaSap = json_decode($response->getBody());

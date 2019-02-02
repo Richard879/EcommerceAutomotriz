@@ -40,8 +40,8 @@ class SapActividadController extends Controller
                     "ReminderType"      => $value['cReminderType'],
                     "StartDate"         => (string)$value['dStartDate'],
                     "StartTime"         => $value['hStartTime']
-                    ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());

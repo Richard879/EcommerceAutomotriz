@@ -51,4 +51,19 @@ class IntActividadController extends Controller
         return response()->json($arrayActividad);
     }
 
+    public function GetIntegraActividadVentaByItemCode(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cItemCode      =  $request->citemcode;
+        $nActividadTipo =  $request->nactividadtipo;
+
+        $arrayActividad = DB::select('exec [usp_Integra_GetIntegraActividadVentaByItemCode] ?, ?',
+                                            [   $cItemCode,
+                                                $nActividadTipo
+                                            ]);
+
+        return response()->json($arrayActividad);
+    }
+
 }
