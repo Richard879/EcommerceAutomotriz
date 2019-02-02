@@ -1619,7 +1619,7 @@
                     if (response.data[0].nFlagMsje == 1) {
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
-                        }, 1600);
+                        }, 1000);
 
                     } else {
                         swal({
@@ -2071,7 +2071,7 @@
                                 //     this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
                                 //     this.aprobarPedido(data);
                                 // }
-                                console.log(data);
+                                // console.log(data);
                                 break;
                             }
                         }

@@ -40,9 +40,9 @@ class SapPedidoController extends Controller
                                 "UnitPrice"   => (string)$SubTotal,
                                 "Currency"    => "US$"
                             ]
-                        ]
                     ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
