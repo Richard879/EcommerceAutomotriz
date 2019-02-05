@@ -205,7 +205,7 @@
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
-                                                                                <td v-text="pedido.cVendedorNombre"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
@@ -361,7 +361,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- Codigo 1300456 es cuando se seleccino tipo pago financiado -->
+                                                                        <!-- Codigo 1300456 es cuando se seleccino tipo pago financiado asimismo se selecciono una forma de pago-->
                                                                         <div class="col-sm-6" v-if="formParametrizacionDeposito.nidtipopago == 1300456 && formParametrizacionDeposito.nidformapago">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Forma Pago 2</label>
@@ -1006,6 +1006,7 @@
                 arrayModelo: [],
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
+                //Información del Deposito en la Cabecera del Form
                 formDeposito:{
                     nidcabecerapedido: 0,
                     cnombrecontacto: '',
@@ -1268,11 +1269,11 @@
                 this.formDeposito.nidtipomovimiento = '';
                 this.formDeposito.cNumeroPedido = '';
                 this.formDeposito.cnombrecontacto = '';
-                this.formDeposito.flagMontoTotalCotizacion = 0;
-                this.formDeposito.flagMontoTotalCancelarPendiente = 0;
-                this.formDeposito.flagMontoTotalDepositosPendiente = 0;
-                this.formDeposito.flagMontoTotalDepositosAprobados = 0;
-                this.formDeposito.flagMontoTotalDepositosRechazados = 0;
+                this.formDeposito.flagMontoTotalCotizacion = 0;//Monto Total del Pedido
+                this.formDeposito.flagMontoTotalCancelarPendiente = 0;//Monto Pendiente de Cancelar
+                this.formDeposito.flagMontoTotalDepositosPendiente = 0;//Monto Depositos Pendientes
+                this.formDeposito.flagMontoTotalDepositosAprobados = 0;//Monto Depositos Aprobados
+                this.formDeposito.flagMontoTotalDepositosRechazados = 0;//Monto Depositos Rechazados
                 this.limpiarFormularioDesposito();
             },
             activarTabDeposito(pedido){
@@ -1287,8 +1288,10 @@
                         'cFlagEstadoAprobacion': 'A'
                     }
                 }).then(response => {
+                    //Cabecera del Formulario Registro Deposito
                     this.formDeposito.cNumeroPedido = pedido.cNumeroPedido;
                     this.formDeposito.cnombrecontacto = pedido.cContacto;
+                    //Cabecera Información Deposito del Pedido
                     this.formDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
                     this.formDeposito.flagMontoTotalDepositosAprobados  = response.data[0].fMontoTotalDepositos;
                     this.cargarMontoDepositoPendiente(pedido);
@@ -1336,7 +1339,7 @@
                 }).then(response => {
                     this.formDeposito.flagMontoTotalDepositosRechazados = response.data[0].fMontoTotalDepositos;
 
-                    // Resto el Total a pagar - El Total Pagado
+                    // Resto el Total a pagar - El Total Pagado para obtener el monto a cancelar
                     var flagMontoTotalCotizacion = Number(parseFloat(this.formDeposito.flagMontoTotalCotizacion).toFixed(4))
                     var flagMontoTotalDepositosAprobados = Number(parseFloat(this.formDeposito.flagMontoTotalDepositosAprobados).toFixed(4))
                     var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
@@ -1619,9 +1622,11 @@
                 }
 
                 let criterio;
+                //Si es Tipo de Pago al Contado
                 if(this.formParametrizacionDeposito.nidtipopago == 1300450) {
                     criterio = this.formParametrizacionDeposito.nidformapago;
                 }
+                //Si es Tipo de Pago Financiado
                 if(this.formParametrizacionDeposito.nidtipopago == 1300456) {
                     criterio = this.formParametrizacionDeposito.nidformapago2;
                 }
@@ -1634,7 +1639,8 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    let datos = response.data.arrayTipoParametro.data;
+                    console.log(response.data);
+                    let datos = response.data.arrayTipoParametro;
                     let me = this;
                     me.limpiarFormularioDesposito();//Limpiar Formulario
                     me.arrayTipoMovimientoPermisos = [];//Seteo los permisos para visualizar formularios
@@ -1918,8 +1924,8 @@
                 }).then(response => {
                     this.fillDetalleDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
                     this.fillDetalleDeposito.cnombrecontacto   = pedido.cContacto;
-                    this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
-                    this.fillDetalleDeposito.flagMontoTotalDepositos  = response.data[0].fMontoTotalDepositos;
+                    this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;//Monto del Deposito
+                    this.fillDetalleDeposito.flagMontoTotalDepositos  = response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
 
                     // Resto el Total a pagar - El Total Pagado
                     var flagMontoTotalCotizacion = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
