@@ -30,7 +30,7 @@ class TablaCostoController extends Controller
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             if ($data) {
@@ -114,7 +114,7 @@ class TablaCostoController extends Controller
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             $costovehiculo = $data[0];
@@ -145,7 +145,7 @@ class TablaCostoController extends Controller
                                                     [
                                                         $nIdEmpresa,
                                                         $nIdSucursal,
-                                                        $value
+                                                        $value['cNumeroVin']
                                                     ]);
 
             if ($data) {
