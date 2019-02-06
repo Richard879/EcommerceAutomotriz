@@ -18,9 +18,9 @@
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
                     <i class="fa fa-user"></i> User
                 </button>
-                <button type="button" class="btn btn-default btn-corner btn-sm" @click="GetCompraTC">
+                <!-- <button type="button" class="btn btn-default btn-corner btn-sm" @click="GetCompraTC">
                     <i class="fa fa-eye"></i> TC
-                </button>
+                </button> -->
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -489,17 +489,17 @@
         props:['ruta'],
         data(){
             return {
-                nidcronograma : '',
-                arraySapArticulo: [
-                    'KMJAA27RPHK009687',
-                    'MALA251AAJM607756',
-                    'MALA751AAJM739136',
-                    'MALA251AAJM607732',
-                    'MALA251AAJM607738'
-                ],
-                arrayTCTipoBeneficio: [],
-                arrayTCCostoVehiculo: [],
-                arrayTCFlete: [],
+                // nidcronograma : '',
+                // arraySapArticulo: [
+                //     'KMJAA27RPHK009687',
+                //     'MALA251AAJM607756',
+                //     'MALA751AAJM739136',
+                //     'MALA251AAJM607732',
+                //     'MALA251AAJM607738'
+                // ],
+                // arrayTCTipoBeneficio: [],
+                // arrayTCCostoVehiculo: [],
+                // arrayTCFlete: [],
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -535,7 +535,7 @@
             }
         },
         mounted(){
-            this.obtenerCronogramaCompraActivo();
+            // this.obtenerCronogramaCompraActivo();
         },
         methods:{
             SapLogin(){
@@ -587,6 +587,7 @@
                     console.log(error);
                 });
             },
+            /*
             obtenerCronogramaCompraActivo(){
                 var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
                 axios.get(url,{
@@ -674,7 +675,7 @@
                         }
                     }
                 });
-            },
+            },*/
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
