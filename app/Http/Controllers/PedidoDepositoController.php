@@ -191,7 +191,7 @@ class PedidoDepositoController extends Controller
         //ADDON
         $CardCode   =   $request->CardCode;
         $CardName   =   $request->CardName;
-        $Type       =   '1';
+        $Type       =   $request->Type;
         $TransRef   =   $request->TransRef;
         $DocDate    =   $request->DocDate;
         $DocTotal   =   $request->DocTotal;
@@ -202,6 +202,14 @@ class PedidoDepositoController extends Controller
         $Account    =   '104111';
         $DocRate    =   $request->DocRate;
         $Migrado    =   $request->Migrado;
+
+        //Verificar el tipo de movimiento
+        if ($Type == '1300457') {
+            # Si es Tipo Leasing
+            $Type = 2;
+        } else {
+            $Type = 1;
+        }
 
         $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [

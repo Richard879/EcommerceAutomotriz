@@ -907,6 +907,7 @@
                             //AddON
                             CardCode            : deposito.CardCode,
                             CardName            : deposito.cContacto,
+                            Type                : deposito.nIdFormaPago,
                             TransRef            : deposito.nNumeroOperacion,
                             DocDate             : deposito.dFechaDeposito,
                             DocTotal            : deposito.fMontoSoles,
