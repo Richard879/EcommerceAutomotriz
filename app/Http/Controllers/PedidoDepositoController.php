@@ -181,19 +181,49 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        // return $request;
+
         $nIdDepositoPedido   =   $request->nIdDepositoPedido;
         $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
         $cFlagEstadoDeposito =   $request->cFlagEstadoDeposito;
         $nIdMonedaOrigen     =   $request->nIdMonedaOrigen;
         $fTipoCambio         =   $request->fTipoCambio;
+        //ADDON
+        $CardCode   =   $request->CardCode;
+        $CardName   =   $request->CardName;
+        $Type       =   '1';
+        $TransRef   =   $request->TransRef;
+        $DocDate    =   $request->DocDate;
+        $DocTotal   =   $request->DocTotal;
+        $DocTotalFC =   $request->DocTotalFC;
+        $DocNum     =   $request->DocNum;
+        $DocCurr    =   $request->DocCurr;
+        $DocCurrBank=   $request->DocCurrBank;
+        $Account    =   '104111';
+        $DocRate    =   $request->DocRate;
+        $Migrado    =   $request->Migrado;
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdDepositoPedido,
                                         $nIdCabeceraPedido,
                                         $cFlagEstadoDeposito,
                                         $nIdMonedaOrigen,
                                         $fTipoCambio,
+                                        //ADDON
+                                        $CardCode,
+                                        $CardName,
+                                        $Type,
+                                        $TransRef,
+                                        $DocDate,
+                                        $DocTotal,
+                                        $DocTotalFC,
+                                        $DocNum,
+                                        $DocCurr,
+                                        $DocCurrBank,
+                                        $Account,
+                                        $DocRate,
+                                        $Migrado,
                                         Auth::user()->id
                                     ]);
 

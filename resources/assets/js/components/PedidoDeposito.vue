@@ -1479,7 +1479,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayBanco_Destino = response.data.arrayCuentaBancaria.data;
+                    this.arrayBanco_Destino = response.data.arrayCuentaBancaria;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

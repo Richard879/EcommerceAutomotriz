@@ -899,16 +899,28 @@
                     if (result.value) {
                         var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
                         axios.put(url , {
-                            nIdDepositoPedido : deposito.nIdDepositoPedido,
-                            nIdCabeceraPedido : deposito.nIdCabeceraPedido,
-                            nIdMonedaOrigen : deposito.nIdMonedaOrigen,
-                            fTipoCambio : deposito.fTipoCambio,
-                            cFlagEstadoDeposito : 'A'
+                            nIdDepositoPedido   : deposito.nIdDepositoPedido,
+                            nIdCabeceraPedido   : deposito.nIdCabeceraPedido,
+                            nIdMonedaOrigen     : deposito.nIdMonedaOrigen,
+                            fTipoCambio         : deposito.fTipoCambio,
+                            cFlagEstadoDeposito : 'A',
+                            //AddON
+                            CardCode            : deposito.CardCode,
+                            CardName            : deposito.cContacto,
+                            TransRef            : deposito.nNumeroOperacion,
+                            DocDate             : deposito.dFechaDeposito,
+                            DocTotal            : deposito.fMontoSoles,
+                            DocTotalFC          : deposito.fMontoDolares,
+                            DocNum              : deposito.nDocNum,
+                            DocCurr             : deposito.cAbreviaturaMoneda,
+                            DocCurrBank         : deposito.cAbreviaturaMoneda,
+                            DocRate             : deposito.cTipoCambio,
+                            Migrado             : 'N'
                         }).then(response => {
                             console.log(response);
                             swal(
                                 'Aprobado!',
-                                'El registro fue aprobado exitosamente.'
+                                'El deposito fue aprobado exitosamente.'
                             );
                             this.tabBuscarPedido();
                         }).catch(function (error) {
@@ -1030,7 +1042,7 @@
                         }).then(response => {
                             swal(
                                 'Rechazado!',
-                                'El registro fue rechazado exitosamente.'
+                                'El deposito fue rechazado exitosamente.'
                             );
                             this.tabBuscarPedido();
                         }).catch(function (error) {
