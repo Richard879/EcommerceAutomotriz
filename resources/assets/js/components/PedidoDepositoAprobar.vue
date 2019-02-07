@@ -792,7 +792,7 @@
                 this.formDistribuirDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
                 this.formDistribuirDeposito.cNumeroPedido = pedido.cNumeroPedido;
                 this.formDistribuirDeposito.cnombrecontacto = pedido.cContacto;
-                this.formDistribuirDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
+                this.formDistribuirDeposito.flagMontoTotalCotizacion = pedido.fTotalPedido;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {

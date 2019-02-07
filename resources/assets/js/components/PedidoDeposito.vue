@@ -1292,7 +1292,7 @@
                     this.formDeposito.cNumeroPedido = pedido.cNumeroPedido;
                     this.formDeposito.cnombrecontacto = pedido.cContacto;
                     //Cabecera Información Deposito del Pedido
-                    this.formDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
+                    this.formDeposito.flagMontoTotalCotizacion = pedido.fTotalPedido;
                     this.formDeposito.flagMontoTotalDepositosAprobados  = response.data[0].fMontoTotalDepositos;
                     this.cargarMontoDepositoPendiente(pedido);
                 }).catch(error => {
@@ -1924,7 +1924,7 @@
                 }).then(response => {
                     this.fillDetalleDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
                     this.fillDetalleDeposito.cnombrecontacto   = pedido.cContacto;
-                    this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;//Monto del Deposito
+                    this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fTotalPedido;//Monto del Deposito
                     this.fillDetalleDeposito.flagMontoTotalDepositos  = response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
 
                     // Resto el Total a pagar - El Total Pagado
