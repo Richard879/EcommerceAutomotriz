@@ -918,7 +918,7 @@
                             DocRate             : deposito.cTipoCambio,
                             Migrado             : 'N'
                         }).then(response => {
-                            console.log(response);
+                            // console.log(response);
                             swal(
                                 'Aprobado!',
                                 'El deposito fue aprobado exitosamente.'

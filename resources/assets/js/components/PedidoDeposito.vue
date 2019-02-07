@@ -1639,7 +1639,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     let datos = response.data.arrayTipoParametro;
                     let me = this;
                     me.limpiarFormularioDesposito();//Limpiar Formulario
