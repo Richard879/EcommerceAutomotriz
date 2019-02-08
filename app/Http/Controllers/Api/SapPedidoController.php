@@ -17,13 +17,14 @@ class SapPedidoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $array_rpta = [];
+        //Setear arreglos para Pedido (Vehiculo)
+        $arrayVehiculo = [];
         $rptaSap   = [];
 
-        $data = $request->data;
-        foreach ($data as $key => $value) {
+        $arraySapPedido = $request->arraySapPedido;
+        foreach ($arraySapPedido as $key => $value) {
 
-            $SubTotal = (floatval($value['fTotalPedidoDolares']) / floatval($request->Igv));
+            $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
 
             $json = [
                 'json' => [
@@ -31,7 +32,7 @@ class SapPedidoController extends Controller
                     "DocDate"       => (string)$request->fDocDate,
                     "DocDueDate"    => (string)$request->fDocDueDate,
                     "DocCurrency"   => "US$",
-                    "DocTotal"      => (string)$value['fTotalPedidoDolares'],
+                    "DocTotal"      => (string)$value['fSubTotalDolares'],
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],
@@ -46,9 +47,48 @@ class SapPedidoController extends Controller
 
             $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
+            array_push($arrayVehiculo, $rptaSap);
         }
-        return $array_rpta;
+
+        //Setear arreglos para Pedido (Elemento Venta)
+        $arrayEV = [];
+        $rptaSap   = [];
+
+        $arraySAPEVPedidoLength = sizeof($request->arraySAPEVPedido);
+        if($arraySAPEVPedidoLength > 0) {
+            $arraySAPEVPedido = $request->arraySAPEVPedido;
+            foreach ($arraySAPEVPedido as $key => $value) {
+
+                $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
+
+                $json = [
+                    'json' => [
+                        "CardCode"      => $value['cCardCode'],
+                        "DocDate"       => (string)$request->fDocDate,
+                        "DocDueDate"    => (string)$request->fDocDueDate,
+                        "DocCurrency"   => "US$",
+                        "DocTotal"      => (string)$value['fSubTotalDolares'],
+                        "DocumentLines" => [
+                                [
+                                    "ItemCode"    => $value['cCodigoERP'],
+                                    "Quantity"    => "1",
+                                    "TaxCode"     => "IGV",
+                                    "UnitPrice"   => (string)$SubTotal,
+                                    "Currency"    => "US$"
+                                ]
+                        ]
+                    ]
+                ];
+
+                $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
+                $rptaSap = json_decode($response->getBody());
+                array_push($arrayEV, $rptaSap);
+            }
+        }
+        return [
+            'arrayVehiculo' =>  $arrayVehiculo,
+            'arrayEV'       =>  $arrayEV
+        ];
     }
 
     public function SapSetPedidoDscto(Request $request)

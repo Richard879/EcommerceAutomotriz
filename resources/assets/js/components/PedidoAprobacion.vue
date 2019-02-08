@@ -781,12 +781,23 @@
                     ccardcode: '',
                     igv: 0
                 },
+                arraySapRespuestaVehiculo: [],
+                arraySapItemCodeVehiculo: [],
+                jsonRespuestaVehiculo: '',
+                arraySapUpdSgcVehiculo: [],
+
+                arraySapRespuestaEV: [],
+                arraySapItemCodeEV: [],
+                jsonRespuestaEV: '',
+                arraySapUpdSgcEV: [],
+
                 arraySapRespuesta: [],
                 arraySapItemCode: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
 
                 arraySapPedido: [],
+                arraySAPEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
                 VINDelPedido: '',
@@ -1519,6 +1530,29 @@
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
                     console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
+                    this.obtenerEVById();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerEVById(){
+                var url = this.ruta + '/pedido/GetPedidoEVById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido': (this.cFlagOpcion = 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                    }
+                }).then(response => {
+                    this.arraySAPEVPedido = response.data.arrayEVPedido.data;
+                    console.log("Cantidad EV : " + this.arrayEVPedido.length);
                     this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
@@ -1537,13 +1571,17 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
-                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'Igv'           :   1 + parseFloat((me.formSap.igv)),
-                    'data'          :   me.arraySapPedido
+                    'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'arraySapPedido'    :   me.arraySapPedido,
+                    'arraySAPEVPedido'  :   me.arraySAPEVPedido
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
+
+                    // response.data.arrayVehiculo.data;
+                    // response.data.arrayEV.data;
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
@@ -1551,7 +1589,7 @@
                         me.jsonRespuesta= JSON.parse(value);
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración Pedido SAP : OK");
+                            console.log("Integración Pedido Vehiculo SAP : OK");
                             console.log(me.jsonRespuesta.DocEntry);
                             //Guardo el VIN del Pedido
                             me.VINDelPedido = me.jsonRespuesta.DocumentLines[0].ItemCode.toString();
@@ -1584,7 +1622,7 @@
                                 'hStartTime'    :   '08:13:00'
                             });
                             //==============================================================
-                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
+                            //================== ACTUALIZAR DOCENTRY PEDIDO ================
                             setTimeout(function() {
                                 me.registroSgcPedido();
                             }, 3800);
@@ -1620,7 +1658,6 @@
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
                         }, 1000);
-
                     } else {
                         swal({
                             type: 'error',
