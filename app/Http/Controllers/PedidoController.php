@@ -655,7 +655,7 @@ class PedidoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Pedido_SapUpdPedidoByDocEntry] ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraDetallePedido] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $det['nIdCabeceraPedido'],
                                                                 $det['cItemCode'],
                                                                 $det['nDocEntry'],
