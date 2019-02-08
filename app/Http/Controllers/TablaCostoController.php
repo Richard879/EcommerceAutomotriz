@@ -25,9 +25,8 @@ class TablaCostoController extends Controller
         foreach ($arraySapArticulo as $value) {
             // ==================================================================================
             // =======================  TIPO DE BENEFICIO ================================
-            $data = DB::select('exec usp_TablaCosto_GetCompra_TipoBeneficio ?, ?, ?, ?',
-                                                    [
-                                                        $nIdEmpresa,
+            $data = DB::select('exec [usp_TablaCosto_GetCompra_TipoBeneficio] ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
                                                         $value['cNumeroVin']
@@ -50,47 +49,47 @@ class TablaCostoController extends Controller
                     //Bono
                     if($beneficio->cFlagTipoBeneficio == 'B') {
                         //CONCETPO
-                        $U_SYP_CCONCEPTO = '01';
-                        $U_SYP_DCONCEPTO = 'Bono';
+                        $U_SYP_CCONCEPTO = $beneficio->U_SYP_CCONCEPTO;
+                        $U_SYP_DCONCEPTO = $beneficio->U_SYP_DCONCEPTO;
                         //DOCUMENTO
-                        $U_SYP_CDOCUMENTO = '01';
-                        $U_SYP_DDOCUMENTO = 'Nota de Crédito';
+                        $U_SYP_CDOCUMENTO = $beneficio->U_SYP_CDOCUMENTO;
+                        $U_SYP_DDOCUMENTO = $beneficio->U_SYP_DDOCUMENTO;
                         //IMPORTE
                         $U_SYP_IMPORTE = $beneficio->fValorBeneficio;
                         //COSTO
-                        $U_SYP_COSTO = 'Si';
+                        $U_SYP_COSTO = $beneficio->U_SYP_COSTO;
                         //Estado
-                        $U_SYP_ESTADO = 'Pendiente';
+                        $U_SYP_ESTADO = $beneficio->U_SYP_ESTADO;
                     }
                     //Beneficio
                     if($beneficio->cFlagTipoBeneficio == 'E') {
                         //CONCETPO
-                        $U_SYP_CCONCEPTO = '02';
-                        $U_SYP_DCONCEPTO = 'Beneficio';
+                        $U_SYP_CCONCEPTO = $beneficio->U_SYP_CCONCEPTO;
+                        $U_SYP_DCONCEPTO = $beneficio->U_SYP_DCONCEPTO;
                         //DOCUMENTO
-                        $U_SYP_CDOCUMENTO = '01';
-                        $U_SYP_DDOCUMENTO = 'Nota de Crédito';
+                        $U_SYP_CDOCUMENTO = $beneficio->U_SYP_CDOCUMENTO;
+                        $U_SYP_DDOCUMENTO = $beneficio->U_SYP_DDOCUMENTO;
                         //IMPORTE
                         $U_SYP_IMPORTE = $beneficio->fValorBeneficio;
                         //COSTO
-                        $U_SYP_COSTO = 'Si';
+                        $U_SYP_COSTO = $beneficio->U_SYP_COSTO;
                         //Estado
-                        $U_SYP_ESTADO = 'Pendiente';
+                        $U_SYP_ESTADO = $beneficio->U_SYP_ESTADO;
                     }
                     //Incentivo
                     if($beneficio->cFlagTipoBeneficio == 'I') {
                         //CONCETPO
-                        $U_SYP_CCONCEPTO = '03';
-                        $U_SYP_DCONCEPTO = 'Incentivo';
+                        $U_SYP_CCONCEPTO = $beneficio->U_SYP_CCONCEPTO;
+                        $U_SYP_DCONCEPTO = $beneficio->U_SYP_DCONCEPTO;
                         //DOCUMENTO
-                        $U_SYP_CDOCUMENTO = '04';
-                        $U_SYP_DDOCUMENTO = 'Por Facturar';
+                        $U_SYP_CDOCUMENTO = $beneficio->U_SYP_CDOCUMENTO;
+                        $U_SYP_DDOCUMENTO = $beneficio->U_SYP_DDOCUMENTO;
                         //IMPORTE
                         $U_SYP_IMPORTE = $beneficio->fValorBeneficio;
                         //COSTO
-                        $U_SYP_COSTO = 'No';
+                        $U_SYP_COSTO = $beneficio->U_SYP_COSTO;
                         //Estado
-                        $U_SYP_ESTADO = 'Pendiente';
+                        $U_SYP_ESTADO = $beneficio->U_SYP_ESTADO;
                     }
                 }
 
@@ -109,9 +108,8 @@ class TablaCostoController extends Controller
 
             // ==================================================================================
             // =============================  COSTO DEL VEHICULO ================================
-            $data = DB::select('exec usp_TablaCosto_GetCompra_CostoVehiculo ?, ?, ?, ?',
-                                                    [
-                                                        $nIdEmpresa,
+            $data = DB::select('exec [usp_TablaCosto_GetCompra_CostoVehiculo] ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
                                                         $value['cNumeroVin']
@@ -119,13 +117,13 @@ class TablaCostoController extends Controller
 
             $costovehiculo = $data[0];
             $VIN                =   $costovehiculo->cNumeroVin;
-            $U_SYP_CCONCEPTO    =   '04';
-            $U_SYP_DCONCEPTO    =   'Costo de Vehículo';
-            $U_SYP_CDOCUMENTO   =   '02';
-            $U_SYP_DDOCUMENTO   =   'Factura Proveedor';
+            $U_SYP_CCONCEPTO    =   $costovehiculo->U_SYP_CCONCEPTO;
+            $U_SYP_DCONCEPTO    =   $costovehiculo->U_SYP_DCONCEPTO;
+            $U_SYP_CDOCUMENTO   =   $costovehiculo->U_SYP_CDOCUMENTO;
+            $U_SYP_DDOCUMENTO   =   $costovehiculo->U_SYP_DDOCUMENTO;
             $U_SYP_IMPORTE      =   $costovehiculo->fTotalCompra;
-            $U_SYP_COSTO        =   'Si';
-            $U_SYP_ESTADO       =   'Pendiente';
+            $U_SYP_COSTO        =   $costovehiculo->U_SYP_COSTO;
+            $U_SYP_ESTADO       =   $costovehiculo->U_SYP_ESTADO;
 
             $infoCostoVehiculo = [
                 'VIN'               =>  $VIN,
@@ -141,9 +139,8 @@ class TablaCostoController extends Controller
 
             // ==================================================================================
             // =============================  FLETE =============================================
-            $data = DB::select('exec usp_TablaCosto_GetCompra_Flete ?, ?, ?',
-                                                    [
-                                                        $nIdEmpresa,
+            $data = DB::select('exec [usp_TablaCosto_GetCompra_Flete] ?, ?, ?',
+                                                    [   $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $value['cNumeroVin']
                                                     ]);
@@ -151,13 +148,13 @@ class TablaCostoController extends Controller
             if ($data) {
                 $flete = $data[0];
                 $VIN                =   $flete->cNumeroVin;
-                $U_SYP_CCONCEPTO    =   '05';
-                $U_SYP_DCONCEPTO    =   'Flete';
-                $U_SYP_CDOCUMENTO   =   '02';
-                $U_SYP_DDOCUMENTO   =   'Factura Proveedor';
+                $U_SYP_CCONCEPTO    =   $flete->U_SYP_CCONCEPTO;
+                $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
+                $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
+                $U_SYP_DDOCUMENTO   =   $flete->U_SYP_DDOCUMENTO;
                 $U_SYP_IMPORTE      =   $flete->fImporteFleteSinIgv;
-                $U_SYP_COSTO        =   'Si';
-                $U_SYP_ESTADO       =   'Pendiente';
+                $U_SYP_COSTO        =   $flete->U_SYP_COSTO;
+                $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
 
                 $infoFlete = [
                     'VIN'               =>  $VIN,
