@@ -3002,7 +3002,7 @@
                     });
                     me.loading.close();
                     me.limpiarFormulario();
-                    me.listarCompras();
+                    me.listarCompras(1);
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3084,7 +3084,7 @@
                         });
                         me.loading.close();
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3175,7 +3175,7 @@
                         });
                         me.loading.close();
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3290,7 +3290,7 @@
                         });
                         me.loading.close();
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3328,7 +3328,7 @@
                             text: 'Error en la Integración Stock SapB1!',
                         });
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3425,7 +3425,7 @@
                             /*me.loading.close();
                             swal('Compra registrada correctamente');
                             me.limpiarFormulario();
-                            me.listarCompras();*/
+                            me.listarCompras(1);*/
                             //==============================================================
                             //================== REGISTRO TABLA COSTO EN SAP ===============
                             setTimeout(function() {
@@ -3508,7 +3508,7 @@
                     /*me.loading.close();
                     swal('Compra registrada correctamente');
                     me.limpiarFormulario();
-                    me.listarCompras();*/
+                    me.listarCompras(1);*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3537,7 +3537,7 @@
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
                         me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
+                        me.jsonRespuesta= JSON.parse(x);
                         //==== Si devuelve Json ItemCode
                         if(me.jsonRespuesta.DocEntry){
                             //Guardo los VINES Y DocEntry de la Cabecera de la Tabla Costos
@@ -3560,20 +3560,29 @@
                         me.generaActualizarTblCostoCabecera(objCompra);
                     }, 1600);
                 }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+                    $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración de Artículo SapB1!',
+                        });
+                        me.loading.close();
+                        me.limpiarFormulario();
+                        me.listarCompras(1);
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
-                    }
                 });
             },
             generaActualizarTblCostoCabecera(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/tablacosto/SetIntegraTblCostoCab';
                 axios.post(sapUrl, {
-                    'data': me.arraySapCompra
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerConceptosTblCostoPorVin(objCompra);
@@ -3633,6 +3642,15 @@
                         me.generaSapTblCostoDetallePorVin();
                     }, 1600);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Artículo SapB1!',
+                    });
+                    me.loading.close();
+                    me.limpiarFormulario();
+                    me.listarCompras(1);
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3654,8 +3672,17 @@
                     me.loading.close();
                     swal('Compra registrada correctamente');
                     me.limpiarFormulario();
-                    me.listarCompras();
+                    me.listarCompras(1);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Artículo SapB1!',
+                    });
+                    me.loading.close();
+                    me.limpiarFormulario();
+                    me.listarCompras(1);
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3734,7 +3761,7 @@
                         });
                         me.loading.close();
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3772,7 +3799,7 @@
                             text: 'Error en Actualizar Mercancia!',
                         });
                         me.limpiarFormulario();
-                        me.listarCompras();
+                        me.listarCompras(1);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3872,7 +3899,7 @@
                             me.loading.close();
                             swal('Compra registrada correctamente');
                             me.limpiarFormulario();
-                            me.listarCompras();
+                            me.listarCompras(1);
                         }
                     }
                 }).catch(error => {
@@ -3937,7 +3964,7 @@
                     me.loading.close();
                     swal('Compra registrada correctamente');
                     me.limpiarFormulario();
-                    me.listarCompras();
+                    me.listarCompras(1);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
