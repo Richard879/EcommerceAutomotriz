@@ -133,7 +133,7 @@ class SapTablaCostoController extends Controller
 
         // ====================================================================================================
         // ==========================  REGISTRAR DETALLE CABECERA TBL COST - FLETE ============================
-        $arrayTCFlete = $request->arrayTCFlete;
+        $arrayTCFlete = $request->dataFlete;
         foreach ($arrayTCFlete as $key => $flete) {
             $json = [
                 'json' => [
@@ -141,13 +141,13 @@ class SapTablaCostoController extends Controller
                     "DocEntry"          => (string)$flete['DocEntry'],
                     "SYP_COSTODETCollection" => [
                         [
-                            "U_SYP_CCONCEPTO"   => (string)$beneficio['U_SYP_CCONCEPTO'],
-                            "U_SYP_DCONCEPTO"   => (string)$beneficio['U_SYP_DCONCEPTO'],
-                            "U_SYP_CDOCUMENTO"  => (string)$beneficio['U_SYP_CDOCUMENTO'],
-                            "U_SYP_DDOCUMENTO"  => (string)$beneficio['U_SYP_DDOCUMENTO'],
-                            "U_SYP_IMPORTE"     => (string)$beneficio['U_SYP_IMPORTE'],
-                            "U_SYP_COSTO"       => (string)$beneficio['U_SYP_COSTO'],
-                            "U_SYP_ESTADO"      => (string)$beneficio['U_SYP_ESTADO']
+                            "U_SYP_CCONCEPTO"   => (string)$flete['U_SYP_CCONCEPTO'],
+                            "U_SYP_DCONCEPTO"   => (string)$flete['U_SYP_DCONCEPTO'],
+                            "U_SYP_CDOCUMENTO"  => (string)$flete['U_SYP_CDOCUMENTO'],
+                            "U_SYP_DDOCUMENTO"  => (string)$flete['U_SYP_DDOCUMENTO'],
+                            "U_SYP_IMPORTE"     => (string)$flete['U_SYP_IMPORTE'],
+                            "U_SYP_COSTO"       => (string)$flete['U_SYP_COSTO'],
+                            "U_SYP_ESTADO"      => (string)$flete['U_SYP_ESTADO']
                         ]
                     ]
                 ]

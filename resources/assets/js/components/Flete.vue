@@ -500,7 +500,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerofactura" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerofactura" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -508,7 +508,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1133,6 +1133,8 @@
                     return;
                 }
 
+                me.mostrarProgressBar();
+
                 me.arrayFlete = [];
 
                 me.arrayTempFlete.map(function(value, key){
@@ -1197,6 +1199,7 @@
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'data': me.arrayFlete
                 }).then(response => {
+                    me.arrayTCFlete = [];
                     // ====================== CONCEPTO =========================
                     // ======================== FLETE ==========================
                     let arrayFlete = response.data.array_infoFlete;
@@ -1230,10 +1233,14 @@
             registroSapBusinessTblCostoFlete(){
                 let me = this;
 
+                me.loadingProgressBar("INTEGRANDO FLETE CON SAP BUSINESS ONE...");
+
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoFlete';
                 axios.post(url, {
                     'dataFlete'  : me.arrayTCFlete
                 }).then(response => {
+                    me.loading.close();
+                    $("#myBar").hide();
                     swal('Flete registrado exitosamente');
                     me.limpiarFormulario();
                 }).catch(error => {
@@ -1309,6 +1316,7 @@
                 this.formmFlete.cnumeroruc = '';
                 this.formmFlete.cseriecomprobante = '';
                 this.formmFlete.cnumerocomprobante = '';
+                this.arrayTCFlete = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1321,6 +1329,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){
