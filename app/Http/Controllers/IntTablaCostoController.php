@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IntTablaCostoController extends Controller
 {
-    public function GetCompraTC(Request $request)
+    public function GetCompraConceptosTblCosto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -166,5 +166,57 @@ class IntTablaCostoController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetCompraFleteTblCosto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdSucursal    = $request->nIdSucursal;
+        $nIdCronograma  = $request->nIdCronograma;
+
+        $array_infoFlete            =   [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            // ==================================================================================
+            // =============================  FLETE =============================================
+            $data = DB::select('exec [usp_TablaCosto_GetCompra_Flete] ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $value['cNumeroVin']
+                                                    ]);
+
+            if ($data) {
+                $flete = $data[0];
+                $U_SYP_VIN          =   $flete->cNumeroVin;
+                $U_SYP_CCONCEPTO    =   $flete->U_SYP_CCONCEPTO;
+                $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
+                $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
+                $U_SYP_DDOCUMENTO   =   $flete->U_SYP_DDOCUMENTO;
+                $U_SYP_IMPORTE      =   $flete->fImporteFleteSinIgv;
+                $U_SYP_COSTO        =   $flete->U_SYP_COSTO;
+                $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
+
+                $infoFlete = [
+                    'U_SYP_VIN'         =>  $U_SYP_VIN,
+                    'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
+                    'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
+                    'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
+                    'U_SYP_DDOCUMENTO'  =>  $U_SYP_DDOCUMENTO,
+                    'U_SYP_IMPORTE'     =>  $U_SYP_IMPORTE,
+                    'U_SYP_COSTO'       =>  $U_SYP_COSTO,
+                    'U_SYP_ESTADO'      =>  $U_SYP_ESTADO
+                ];
+                array_push($array_infoFlete, $infoFlete);
+            }
+        }
+
+        $tblCostos = [
+            'array_infoFlete'         =>  $array_infoFlete
+        ];
+
+        return response()->json($tblCostos);
     }
 }

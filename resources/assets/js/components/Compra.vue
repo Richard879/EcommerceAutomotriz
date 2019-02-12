@@ -2648,7 +2648,7 @@
             obtenerConceptosTblCosto(){
                 let me = this;
 
-                var url = me.ruta + '/tablacosto/GetCompraTC';
+                var url = me.ruta + '/tablacosto/GetCompraConceptosTblCosto';
                 axios.post(url, {
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
@@ -2685,21 +2685,6 @@
                             U_SYP_ESTADO        :   x.U_SYP_ESTADO
                         });
                     });
-                    // ====================== CONCEPTO =========================
-                    // ======================== FLETE ==========================
-                    /*let arrayFlete = response.data.array_infoFlete;
-                    arrayFlete.map(function (x) {
-                        me.arrayTCFlete.push({
-                            VIN                 :   x.VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
-                        });
-                    });*/
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoDetalle();
