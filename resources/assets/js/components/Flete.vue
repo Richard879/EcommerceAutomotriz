@@ -841,6 +841,8 @@
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
+                // =============  VARIBALES SAP ========================
+                arrayTCFlete: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1153,9 +1155,8 @@
                     'cSerieComprobante': this.formmFlete.cseriecomprobante,
                     'cNumeroComprobante': this.formmFlete.cnumerocomprobante,
                     'data': this.arrayFlete
-                }).then(response => {
-                    swal('Flete registrado exitosamente');
-                    this.limpiarFormulario();
+                }).then(response => { 
+                    this.obtenerFleteTblCosto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1194,7 +1195,6 @@
                 axios.post(url, {
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': me.nidcronograma,
                         'data': me.arrayFlete
                 }).then(response => {
                     // ====================== CONCEPTO =========================
@@ -1202,7 +1202,8 @@
                     let arrayFlete = response.data.array_infoFlete;
                     arrayFlete.map(function (x) {
                         me.arrayTCFlete.push({
-                            VIN                 :   x.VIN,
+                            U_SYP_VIN           :   x.U_SYP_VIN,
+                            DocEntry            :   x.DocEntry,
                             U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
                             U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
                             U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
@@ -1214,7 +1215,7 @@
                     });
 
                     setTimeout(function() {
-                        me.registroSapBusinessTblCostoDetalle();
+                        me.registroSapBusinessTblCostoFlete();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1226,14 +1227,15 @@
                     }
                 });
             },
-            registroSapBusinessTblCostoDetalle(){
+            registroSapBusinessTblCostoFlete(){
                 let me = this;
 
-                var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
+                var url = me.ruta + '/tablacosto/SapPachTablaCostoFlete';
                 axios.post(url, {
                     'dataFlete'  : me.arrayTCFlete
                 }).then(response => {
-                    me.verResultados();
+                    swal('Flete registrado exitosamente');
+                    me.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

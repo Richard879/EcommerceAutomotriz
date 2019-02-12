@@ -1513,7 +1513,6 @@
                 //Tbls Costo
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
-                arrayTCFlete: [],
                 arraySapCosto: [],
                 // ============================================================
                 pagination : {
@@ -2952,6 +2951,9 @@
                 //Obtener Codigo Sap Proveedor
                 me.formCompra.ccarcode = objCompra.cCarCode;
 
+                //Obtener Cronograma
+                me.nidcronograma = objCompra.nIdCronograma;
+
                 //Verifico Si existe Artículo
                 if(!objCompra.cItemCode){
                     //==============================================================
@@ -3420,10 +3422,15 @@
                         else{
                             //==============================================================
                             //================== FIN ===============
-                            me.loading.close();
+                            /*me.loading.close();
                             swal('Compra registrada correctamente');
                             me.limpiarFormulario();
-                            me.listarCompras();
+                            me.listarCompras();*/
+                            //==============================================================
+                            //================== REGISTRO TABLA COSTO EN SAP ===============
+                            setTimeout(function() {
+                                me.generaSapTblCostoCabecera(objCompra);
+                            }, 1600);
                         }
                     }
                 }).catch(error => {
@@ -3465,7 +3472,7 @@
                             //=========================================================================
                             //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                             setTimeout(function() {
-                                me.generaActualizarLlamadaServicio();
+                                me.generaActualizarLlamadaServicio(objCompra);
                             }, 1600);
                         }
                     });
@@ -3479,11 +3486,170 @@
                     }
                 });
             },
-            generaActualizarLlamadaServicio(){
+            generaActualizarLlamadaServicio(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
+                }).then(response => {
+                    ////////////////////////////////////////if()
+                     ////////////////////////////////////////if()
+                      ////////////////////////////////////////if()
+                       ////////////////////////////////////////if()
+                        ////////////////////////////////////////if()
+                         ////////////////////////////////////////if()
+                    //==============================================================
+                    //================== REGISTRO TABLA COSTO EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapTblCostoCabecera(objCompra);
+                    }, 1600);
+                    //==============================================================
+                    //================== FIN ===============
+                    /*me.loading.close();
+                    swal('Compra registrada correctamente');
+                    me.limpiarFormulario();
+                    me.listarCompras();*/
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapTblCostoCabecera(objCompra){
+                let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO TABLA COSTOS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/tablacosto/SapSetTablaCostoCabecera';
+                axios.post(sapUrl, {
+                    'data': me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    //me.arraySapItemCode = [];
+                    me.arraySapUpdSgc = [];
+                    me.arraySapCosto = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //==== Si devuelve Json ItemCode
+                        if(me.jsonRespuesta.DocEntry){
+                            //Guardo los VINES Y DocEntry de la Cabecera de la Tabla Costos
+                            //me.arraySapItemCode.push(me.jsonRespuesta.U_SYP_VIN);
+
+                            me.arraySapCosto.push({
+                                'DocEntry' : me.jsonRespuesta.DocEntry,
+                                'U_SYP_VIN': me.jsonRespuesta.U_SYP_VIN
+                            });
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry' : me.jsonRespuesta.DocEntry,
+                                'cU_SYP_VIN': me.jsonRespuesta.U_SYP_VIN,
+                                'cLogRespuesta': response.data.toString()
+                            });
+                        }
+                    });
+
+                    setTimeout(function() {
+                        me.generaActualizarTblCostoCabecera(objCompra);
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarTblCostoCabecera(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/tablacosto/SetIntegraTblCostoCab';
+                axios.post(sapUrl, {
+                    'data': me.arraySapCompra
+                }).then(response => {
+                    setTimeout(function() {
+                        me.obtenerConceptosTblCostoPorVin(objCompra);
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerConceptosTblCostoPorVin(objCompra){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/GetCompraConceptosTblCosto';
+                axios.post(url, {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma': me.nidcronograma,
+                        'data': me.arraySapCompra
+                }).then(response => {
+                    // ====================== CONCEPTO =========================
+                    // ====================  TIPO DE BENEFICIO =================
+                    let arrayBeneficio = response.data.array_infoTipoBeneficio;
+                    arrayBeneficio.map(function (x) {
+                        me.arrayTCTipoBeneficio.push({
+                            U_SYP_VIN           :   x.U_SYP_VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+                    // ====================== CONCEPTO =========================
+                    // ====================  COSTO DEL VEHICULO ================
+                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                    arrayCostoVehiculo.map(function (x) {
+                        me.arrayTCCostoVehiculo.push({
+                            U_SYP_VIN           :   x.U_SYP_VIN,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+
+                    setTimeout(function() {
+                        me.generaSapTblCostoDetallePorVin();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapTblCostoDetallePorVin(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
+                axios.post(url, {
+                    'dataCabecera'  : me.arraySapCosto,
+                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio,
+                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo
                 }).then(response => {
                     me.loading.close();
                     swal('Compra registrada correctamente');
@@ -4216,7 +4382,6 @@
                 //Tbls Costo
                 this.arrayTCTipoBeneficio= [];
                 this.arrayTCCostoVehiculo= [];
-                this.arrayTCFlete= [];
                 this.arraySapCosto= [];
             },
             limpiarPaginacion(){

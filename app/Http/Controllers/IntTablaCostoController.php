@@ -174,7 +174,6 @@ class IntTablaCostoController extends Controller
 
         $nIdEmpresa     = $request->nIdEmpresa;
         $nIdSucursal    = $request->nIdSucursal;
-        $nIdCronograma  = $request->nIdCronograma;
 
         $array_infoFlete            =   [];
 
@@ -191,6 +190,7 @@ class IntTablaCostoController extends Controller
             if ($data) {
                 $flete = $data[0];
                 $U_SYP_VIN          =   $flete->cNumeroVin;
+                $DocEntry           =   $flete->nDocEntry;
                 $U_SYP_CCONCEPTO    =   $flete->U_SYP_CCONCEPTO;
                 $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
                 $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
@@ -201,6 +201,7 @@ class IntTablaCostoController extends Controller
 
                 $infoFlete = [
                     'U_SYP_VIN'         =>  $U_SYP_VIN,
+                    'DocEntry'          =>  $DocEntry,
                     'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
                     'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
                     'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
