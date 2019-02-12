@@ -2994,15 +2994,7 @@
                         }
                     });
                 }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
+                    me.limpiarPorError("Error en la Integración de Artículo SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3076,15 +3068,7 @@
                             }
                         });
                     }).catch(error => {
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración de Artículo SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
+                        me.limpiarPorError("Error en la Integración de Proyecto SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3167,15 +3151,7 @@
                             }
                         });
                     }).catch(error => {
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración de Artículo SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
+                        me.limpiarPorError("Error en la Integración de Tarjeta Equipo SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3282,15 +3258,7 @@
                             }
                         });
                     }).catch(error => {
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración Compra SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
+                        me.limpiarPorError("Error en la Integración Compra SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3386,6 +3354,7 @@
                             }
                         });
                     }).catch(error => {
+                        me.limpiarPorError("Error en la Integración Actividad SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3477,6 +3446,7 @@
                         }
                     });
                 }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3560,22 +3530,14 @@
                         me.generaActualizarTblCostoCabecera(objCompra);
                     }, 1600);
                 }).catch(error => {
-                    $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración de Artículo SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
+                    me.limpiarPorError("Error en la Integración Tabla Costo Cabecera SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
                         }
+                    }
                 });
             },
             generaActualizarTblCostoCabecera(objCompra){
@@ -3674,15 +3636,7 @@
                     me.limpiarFormulario();
                     me.listarCompras(1);
                 }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
+                    me.limpiarPorError("Error en la Integración Tabla Costo Detalle SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -4418,6 +4372,17 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarCompras(1);
             },
             mostrarProgressBar(){
                 $("#myBar").show();
