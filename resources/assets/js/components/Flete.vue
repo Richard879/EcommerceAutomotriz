@@ -262,6 +262,7 @@
                                                             </div>
                                                             <br/>
                                                             <template v-if="arrayTempFlete.length">
+                                                                <span style="color:red; font-size: 12px;">* El Importe del Flete debe ser en SOLES y SIN IGV</span>
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -274,7 +275,7 @@
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
-                                                                                <th>Valor Flete</th>
+                                                                                <th>Importe Flete</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -611,8 +612,8 @@
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                     <a @click.prevent="cambiarPagina(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
-                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                :class="[page==isActived?'active':'']">
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
                                                                     href="#" @click.prevent="cambiarPagina(page)"
                                                                     v-text="page"></a>
