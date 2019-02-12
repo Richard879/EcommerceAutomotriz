@@ -367,8 +367,6 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
-    Route::get('/tablacosto/GetCompraTC','TablaCostoController@GetCompraTC');
-
     //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
@@ -379,6 +377,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::get('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
+    Route::post('/tablacosto/GetCompraTC','IntTablaCostoController@GetCompraTC');
+    Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
 
     ///========================================
     /////=================  ROUTES SAP
@@ -422,7 +422,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
-    Route::post('/tablacosto/SapSetTablaCostoDetalleCabecera','Api\SapTablaCostoController@SapSetTablaCostoDetalleCabecera');
+    Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

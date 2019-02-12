@@ -1514,6 +1514,7 @@
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
                 arrayTCFlete: [],
+                arraySapCosto: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -2587,6 +2588,8 @@
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
+                    me.arraySapUpdSgc = [];
+                    me.arraySapCosto = [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
@@ -2595,13 +2598,40 @@
                         //==== Si devuelve Json ItemCode
                         if(me.jsonRespuesta.DocEntry){
                             //Guardo los VINES Y DocEntry de la Cabecera de la Tabla Costos
-                            me.arraySapItemCode.push({
+                            me.arraySapItemCode.push(me.jsonRespuesta.U_SYP_VIN);
+
+                            me.arraySapCosto.push({
                                 'DocEntry' : me.jsonRespuesta.DocEntry,
                                 'U_SYP_VIN': me.jsonRespuesta.U_SYP_VIN
+                            });
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry' : me.jsonRespuesta.DocEntry,
+                                'cU_SYP_VIN': me.jsonRespuesta.U_SYP_VIN,
+                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
 
+                    setTimeout(function() {
+                        me.registroSgcTblCostoCabecera();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcTblCostoCabecera(){
+                let me = this;
+                var sapUrl = me.ruta + '/tablacosto/SetIntegraTblCostoCab';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
                     setTimeout(function() {
                         me.obtenerConceptosTblCosto();
                     }, 1600);
@@ -2622,22 +2652,18 @@
                 me.loadingProgressBar("OBTENIENDO CONCEPTOS PARA LA TABLA COSTOS...");
 
                 var url = me.ruta + '/tablacosto/GetCompraTC';
-                axios.get(url, {
-                    params: {
+                axios.post(url, {
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': this.nidcronograma,
-                        'arraySapArticulo': this.arraySapArticulo
-                    }
+                        'nIdCronograma': me.nidcronograma,
+                        'data': me.arraySapArticulo
                 }).then(response => {
-                    console.log(response.data);
-                    let me = this;
                     // ====================== CONCEPTO =========================
                     // ====================  TIPO DE BENEFICIO =================
                     let arrayBeneficio = response.data.array_infoTipoBeneficio;
                     arrayBeneficio.map(function (x) {
                         me.arrayTCTipoBeneficio.push({
-                            VIN                 :   x.VIN,
+                            U_SYP_VIN           :   x.U_SYP_VIN,
                             U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
                             U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
                             U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
@@ -2652,7 +2678,7 @@
                     let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                     arrayCostoVehiculo.map(function (x) {
                         me.arrayTCCostoVehiculo.push({
-                            VIN                 :   x.VIN,
+                            U_SYP_VIN           :   x.U_SYP_VIN,
                             U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
                             U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
                             U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
@@ -2664,7 +2690,7 @@
                     });
                     // ====================== CONCEPTO =========================
                     // ======================== FLETE ==========================
-                    let arrayFlete = response.data.array_infoFlete;
+                    /*let arrayFlete = response.data.array_infoFlete;
                     arrayFlete.map(function (x) {
                         me.arrayTCFlete.push({
                             VIN                 :   x.VIN,
@@ -2676,7 +2702,7 @@
                             U_SYP_COSTO         :   x.U_SYP_COSTO,
                             U_SYP_ESTADO        :   x.U_SYP_ESTADO
                         });
-                    });
+                    });*/
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoDetalle();
@@ -2694,19 +2720,12 @@
             registroSapBusinessTblCostoDetalle(){
                 let me = this;
 
-                me.loading.close();
-                me.loadingProgressBar("INTEGRANDO CONCEPTOS EN LA TABLA COSTOS...");
-
-                var url = me.ruta + '/tablacosto/SapSetTablaCostoDetalleCabecera';
-                axios.get(url, {
-                    params: {
-                        'arrayCabeceraTblCost'  : this.arraySapItemCode,
-                        'arrayTCTipoBeneficio'  : this.arrayTCTipoBeneficio,
-                        'arrayTCCostoVehiculo'  : this.arrayTCCostoVehiculo,
-                        'arrayTCFlete'          : this.arrayTCFlete
-                    }
+                var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
+                axios.post(url, {
+                    'dataCabecera'  : me.arraySapCosto,
+                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio,
+                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo
                 }).then(response => {
-                    console.log(response.data);
                     me.verResultados();
                 }).catch(error => {
                     console.log(error);
@@ -4216,6 +4235,7 @@
                 this.arrayTCTipoBeneficio= [];
                 this.arrayTCCostoVehiculo= [];
                 this.arrayTCFlete= [];
+                this.arraySapCosto= [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
