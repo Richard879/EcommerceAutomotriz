@@ -2648,9 +2648,6 @@
             obtenerConceptosTblCosto(){
                 let me = this;
 
-                me.loading.close();
-                me.loadingProgressBar("OBTENIENDO CONCEPTOS PARA LA TABLA COSTOS...");
-
                 var url = me.ruta + '/tablacosto/GetCompraTC';
                 axios.post(url, {
                         'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
