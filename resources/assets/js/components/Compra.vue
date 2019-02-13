@@ -2495,7 +2495,7 @@
                                 'cCustomerCode': response.data[0].cCustomerCode,
                                 'cInternalSerialNum': response.data[0].cItemCode,
                                 'cItemCode': response.data[0].cItemCode,
-                                'cSubject': response.data[0].cSubject
+                                'cSubject': 'COMPRA'
                             });
                         }).catch(error => {
                             console.log(error);
@@ -3287,16 +3287,6 @@
                         setTimeout(function() {
                             me.generaSapActividadCompra(objCompra);
                         }, 1600);
-                    }
-                    else{
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración Stock SapB1!',
-                        });
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
                     }
                 }).catch(error => {
                     console.log(error);
