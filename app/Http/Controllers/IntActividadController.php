@@ -15,6 +15,33 @@ class IntActividadController extends Controller
 
         try{
             DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraActividad] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['nActivityCode'],
+                                                                $det['nActividadTipo'],
+                                                                $det['cActividadTipo'],
+                                                                $det['cCardCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objProyecto);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function SetIntegraActividadVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
 
             // ======================================================================
             // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA VEHÍCULO EN SQL SERVER
