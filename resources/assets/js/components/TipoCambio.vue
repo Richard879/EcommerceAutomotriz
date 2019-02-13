@@ -154,14 +154,14 @@
 
                 axios.get(url, {
                     params: {
-                        'dfecha': '2019-02-14'
+                        'dfecha': moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     //Variable bandera para saber si debo registrar o actualizar
                     this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
 
                     //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
-                    this.fillTipoCambio.dFechaTipoCambio = '14/02/2019';
+                    this.fillTipoCambio.dFechaTipoCambio = moment().format('DD/MM/YYYY');
                     this.fillTipoCambio.fTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
                     this.fillTipoCambio.fTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                     this.fillTipoCambio.fTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
