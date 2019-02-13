@@ -15,6 +15,31 @@ class IntLlamadaServicioController extends Controller
 
         try{
             DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['nServiceCallID'],
+                                                                $det['nActivityCode'],
+                                                                $det['cItemCode'],
+                                                                $det['cInternalSerialNum'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objProyecto);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function SetIntegraLlamadaServicioVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
 
             // ======================================================================
             // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL VEHICULO EN SQL SERVER
