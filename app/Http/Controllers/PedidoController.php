@@ -676,19 +676,47 @@ class PedidoController extends Controller
 
         try{
             DB::beginTransaction();
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraDetallePedido] ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['nIdCabeceraPedido'],
-                                                                $det['nIdDetallePedido'],
-                                                                $det['cItemCode'],
-                                                                $det['nDocEntry'],
-                                                                $det['nDocNum'],
-                                                                $det['cDocType'],
-                                                                $det['cLogRespuesta'],
-                                                                Auth::user()->id
-                                                            ]);
+
+            // ======================================================================
+            // GUARDAR ORDEN VENTA PARA EL VEHÍCULO EN SQL SERVER
+            // ======================================================================
+            $arraySapUpdSgcVehiculoLength = sizeof($request->arraySapUpdSgcVehiculo);
+            if($arraySapUpdSgcVehiculoLength > 0) {
+                $arraySapUpdSgcVehiculo = $request->arraySapUpdSgcVehiculo;
+                foreach($arraySapUpdSgcVehiculo as $ep=>$det)
+                {
+                    $objCompra = DB::select('exec [usp_Integra_SetIntegraDetallePedido] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $det['nIdCabeceraPedido'],
+                                                                    $det['cItemCode'],
+                                                                    $det['nDocEntry'],
+                                                                    $det['nDocNum'],
+                                                                    $det['cDocType'],
+                                                                    $det['cLogRespuesta'],
+                                                                    1,
+                                                                    Auth::user()->id
+                                                                ]);
+                }
+            }
+
+            // ======================================================================
+            // GUARDAR ORDEN VENTA PARA LOS ELEMENTOS DE VENTA EN SQL SERVER
+            // ======================================================================
+            $arraySapUpdSgcEVLength = sizeof($request->arraySapUpdSgcEV);
+            if($arraySapUpdSgcEVLength > 0) {
+                $arraySapUpdSgcEV = $request->arraySapUpdSgcEV;
+                foreach($arraySapUpdSgcEV as $ep=>$det)
+                {
+                    $objCompra = DB::select('exec [usp_Integra_SetIntegraDetallePedido] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $det['nIdCabeceraPedido'],
+                                                                    $det['cItemCode'],
+                                                                    $det['nDocEntry'],
+                                                                    $det['nDocNum'],
+                                                                    $det['cDocType'],
+                                                                    $det['cLogRespuesta'],
+                                                                    2,
+                                                                    Auth::user()->id
+                                                                ]);
+                }
             }
             DB::commit();
             return response()->json($objCompra);

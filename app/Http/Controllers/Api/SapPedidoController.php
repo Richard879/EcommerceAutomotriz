@@ -17,9 +17,12 @@ class SapPedidoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        // ======================================================================
+        // GENERAR ORDEN VENTA PARA VEHÍCULO
+        // ======================================================================
         //Setear arreglos para Pedido (Vehiculo)
-        $arrayVehiculo = [];
-        $rptaSap   = [];
+        $arrayVehiculo  = [];
+        $rptaSap        = [];
 
         $arraySapPedido = $request->arraySapPedido;
         foreach ($arraySapPedido as $key => $value) {
@@ -34,13 +37,13 @@ class SapPedidoController extends Controller
                     "DocCurrency"   => "US$",
                     "DocTotal"      => (string)$value['fSubTotalDolares'],
                     "DocumentLines" => [
-                            [
-                                "ItemCode"    => $value['cNumeroVin'],
-                                "Quantity"    => "1",
-                                "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$SubTotal,
-                                "Currency"    => "US$"
-                            ]
+                        [
+                            "ItemCode"    => $value['cNumeroVin'],
+                            "Quantity"    => "1",
+                            "TaxCode"     => "IGV",
+                            "UnitPrice"   => (string)$SubTotal,
+                            "Currency"    => "US$"
+                        ]
                     ]
                 ]
             ];
@@ -50,46 +53,118 @@ class SapPedidoController extends Controller
             array_push($arrayVehiculo, $rptaSap);
         }
 
+        // ======================================================================
+        // GENERAR ORDEN VENTA PARA LOS ELEMENTOS DE VENTA
+        // ======================================================================
         //Setear arreglos para Pedido (Elemento Venta)
-        $arrayEV = [];
-        $rptaSap   = [];
+        $arrayEV  = [];
+        $rptaSap  = [];
 
+        //Obtener el numero de Elemento Venta encontrados
         $arraySAPEVPedidoLength = sizeof($request->arraySAPEVPedido);
+        //Verifica si existen Elemento Venta
         if($arraySAPEVPedidoLength > 0) {
+            //Guardar Arreglo de Ele. Venta
             $arraySAPEVPedido = $request->arraySAPEVPedido;
-            foreach ($arraySAPEVPedido as $key => $value) {
 
+            $json = [
+                'json' => [
+                    "CardCode"      =>  '',
+                    "DocDate"       =>  (string)$request->fDocDate,
+                    "DocDueDate"    =>  (string)$request->fDocDueDate,
+                    "DocCurrency"   =>  "US$",
+                    "DocTotal"      =>  '',
+                    "DocumentLines" =>  array()
+                ]
+            ];
+
+            //Setear el acumulador del DocTotal
+            $fMontoTotal = 0;
+
+            //Recorrer todos los Elementos de Venta
+            foreach ($arraySAPEVPedido as $key => $value) {
+                // Setear CardCode
+                $json['json']['CardCode'] = $value['cCardCode'];
+
+                // Obtener el Monto sin IGV
                 $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
 
-                $json = [
-                    'json' => [
-                        "CardCode"      => $value['cCardCode'],
-                        "DocDate"       => (string)$request->fDocDate,
-                        "DocDueDate"    => (string)$request->fDocDueDate,
-                        "DocCurrency"   => "US$",
-                        "DocTotal"      => (string)$value['fSubTotalDolares'],
-                        "DocumentLines" => [
-                                [
-                                    "ItemCode"    => $value['cCodigoERP'],
-                                    "Quantity"    => "1",
-                                    "TaxCode"     => "IGV",
-                                    "UnitPrice"   => (string)$SubTotal,
-                                    "Currency"    => "US$"
-                                ]
-                        ]
-                    ]
+                // Setear DocumentLines
+                $json['json']['DocumentLines'][] = [
+                    "ItemCode"  =>  $value['cCodigoERP'],
+                    "Quantity"  =>  $value['nCantidad'],
+                    "TaxCode"   =>  "IGV",
+                    "UnitPrice" =>  (string)$SubTotal,
+                    "Currency"  =>  "US$"
                 ];
 
-                $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
-                $rptaSap = json_decode($response->getBody());
-                array_push($arrayEV, $rptaSap);
+                //Acumulador para setear en el DocTotal
+                $fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
             }
+
+            // Setear DocTotal
+            $json['json']['DocTotal'] = (string)$fMontoTotal;
+
+            $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($arrayEV, $rptaSap);
         }
+
         return [
             'arrayVehiculo' =>  $arrayVehiculo,
             'arrayEV'       =>  $arrayEV
         ];
     }
+
+    /*
+        public function prueba(Request $request)
+        {
+            $arraySAPEVPedidoLength = sizeof($request->arraySAPEVPedido);
+            if($arraySAPEVPedidoLength > 0) {
+                //Guardar Arreglo de Ele. Venta
+                $arraySAPEVPedido = $request->arraySAPEVPedido;
+
+                $json = [
+                    'json' => [
+                        "CardCode"      =>  '',
+                        "DocDate"       =>  (string)$request->fDocDate,
+                        "DocDueDate"    =>  (string)$request->fDocDueDate,
+                        "DocCurrency"   =>  "US$",
+                        "DocTotal"      =>  '',
+                        "DocumentLines" =>  array(),
+                    ]
+                ];
+
+                //Setear a 0 el DocTotal
+                $fMontoTotal = 0;
+                //Recorrer todos los Elementos de Venta
+                foreach ($arraySAPEVPedido as $key => $value) {
+                    // ================ SETEAR CardCode ================
+                    $json['json']['CardCode'] = $value['cCardCode'];
+
+                    //Obtener el Monto sin IGV
+                    $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
+
+                    // ================ SETEAR DocumentLines ================
+                    $json['json']['DocumentLines'][] = [
+                        "ItemCode"  =>  $value['cCodigoERP'],
+                        "Quantity"  =>  $value['nCantidad'],
+                        "TaxCode"   =>  "IGV",
+                        "UnitPrice" =>  (string)$SubTotal,
+                        "Currency"  =>  "US$"
+                    ];
+
+                    //Acumulador para el DocTotal
+                    $fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
+                }
+
+                // ================ SETEAR DocTotal ================
+                $json['json']['DocTotal'] = (string)$fMontoTotal;
+
+                return $json;
+            }
+        }
+    */
 
     public function SapSetPedidoDscto(Request $request)
     {
