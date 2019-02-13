@@ -89,11 +89,7 @@ const app = new Vue({
     methods: {
         obtenerRolUsuario() {
             var url = this.ruta + '/usuario/GetInformacionUsuario';
-            axios.get(url, {
-                params: {
-                    'dfecha': moment().format('YYYY-MM-DD')
-                }
-            }).then(response => {
+            axios.get(url).then(response => {
                 // console.log(response.data);
                 // console.log(response.data.usuario[0].nIdGrupoPar);
                 // console.log(response.data.flag);

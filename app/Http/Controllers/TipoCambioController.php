@@ -22,6 +22,8 @@ class TipoCambioController extends Controller
     {
         $dFecha = $request->dfecha;
 
+        $dFecha = ($dFecha == NULL) ? ($dFecha = '') : $dFecha;
+
         $objTipoCambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?', 
                                                                 [   $dFecha
                                                                 ]);

@@ -155,6 +155,9 @@ class GestionUsuariosController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdUsuario =   Auth::user()->id;
+        $dFecha = $request->dfecha;
+
+        $dFecha = ($dFecha == NULL) ? ($dFecha = '') : $dFecha;
 
         $usuario = DB::select('exec usp_Usuario_GetInformacionUsuario ?',
                                                     [
