@@ -20,7 +20,11 @@ class TipoCambioController extends Controller
 
     public function GetTipoCambioByFecha(Request $request)
     {
-        $objTipoCambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha]');
+        $dFecha = $request->dfecha;
+
+        $objTipoCambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?', 
+                                                                [   $dFecha
+                                                                ]);
 
         return response()->json($objTipoCambio);
     }

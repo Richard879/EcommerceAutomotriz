@@ -161,8 +161,10 @@ class GestionUsuariosController extends Controller
                                                         $nIdUsuario
                                                     ]);
 
-        $tipocambio = DB::select('exec usp_TipoCambio_GetTipoCambio');
-
+        $tipocambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?', 
+                                                                [   $dFecha
+                                                                ]);
+                                                                                                               
         $flag = 0;
         if ($tipocambio[0]->fValorTipoCambioComercial > 0) {
             $flag = 1;

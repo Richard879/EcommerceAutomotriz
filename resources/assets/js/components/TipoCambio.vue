@@ -154,13 +154,13 @@
 
                 axios.get(url, {
                     params: {
-                        'dfecha': '14/02/2019'
+                        'dfecha': '2019-02-14'
                     }
                 }).then(response => {
                     //Variable bandera para saber si debo registrar o actualizar
                     this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
 
-                    //Obtengo Tipo Cambio
+                    //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
                     this.fillTipoCambio.dFechaTipoCambio = '14/02/2019';
                     this.fillTipoCambio.fTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
                     this.fillTipoCambio.fTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
@@ -186,16 +186,19 @@
                 
                 var url = me.ruta + '/tipocambio/SapGetTipoCambioByFecha';
 
+                // moment().format('YYYY-MM-DD')
                 axios.get(url, {
                     params: {
                         'dfecha': moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
-                    me.arraySapRespuesta = response.data;
+                    if(response.data.length()){
+                        me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(value, key){
                             me.fillTipoCambio.fTipoCambioVenta = value.Rate;
                         });
-
+                    }
+                    
                     me.loading.close();
                 }).catch(error => {
                     console.log(error);
