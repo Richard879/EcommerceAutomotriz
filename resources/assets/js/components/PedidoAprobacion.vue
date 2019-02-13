@@ -1879,7 +1879,7 @@
                             if(me.jsonRespuestaVehiculo.ActivityCode){
                                 me.arraySapUpdSgcVehiculo.push({
                                     'nActividadTipo': 17,
-                                    'cActividadTipo': 'OrdenVenta',
+                                    'cActividadTipo': 'Venta',
                                     'nActivityCode': parseInt(me.jsonRespuestaVehiculo.ActivityCode),
                                     'cCardCode': me.jsonRespuestaVehiculo.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuestaVehiculo.DocEntry),
@@ -1905,7 +1905,7 @@
                             if(me.jsonRespuestaEV.ActivityCode){
                                 me.arraySapUpdSgcEV.push({
                                     'nActividadTipo': 17,
-                                    'cActividadTipo': 'OrdenVenta',
+                                    'cActividadTipo': 'Venta',
                                     'nActivityCode': parseInt(me.jsonRespuestaEV.ActivityCode),
                                     'cCardCode': me.jsonRespuestaEV.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuestaEV.DocEntry),
@@ -1935,7 +1935,7 @@
                                 me.arraySapUpdSgc.push({
                                     'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
                                     'nActividadTipo': 17,
-                                    'cActividadTipo': 'OrdenVenta',
+                                    'cActividadTipo': 'Venta',
                                     'cCardCode': me.jsonRespuesta.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
                                     'nDocNum': parseInt(me.jsonRespuesta.DocNum),
@@ -1999,6 +1999,9 @@
                     me.arraySapRespuestaVehiculo = response.data.arrayInfoVehiculoActividad;
                     if(me.arraySapRespuestaVehiculo.length > 0) {
                         me.arraySapRespuestaVehiculo.map(function(value, key){
+
+                            me.cItemCodeVehiculo = value.cItemCode;
+
                             me.arraySapLlamadaServicioVehiculo.push({
                                 'nActivityCode': value.nActivityCode,
                                 'cCustomerCode': value.cCustomerCode,
@@ -2021,8 +2024,8 @@
                             me.arraySapLlamadaServicioEV.push({
                                 'nActivityCode': value.nActivityCode,
                                 'cCustomerCode': value.cCustomerCode,
-                                'cInternalSerialNum': value.cItemCode,
-                                'cItemCode': value.cItemCode,
+                                'cInternalSerialNum': value.cItemCode,//me.cItemCodeVehiculo
+                                'cItemCode': value.cItemCode,//me.cItemCodeVehiculo
                                 'cSubject': value.cSubject
                             });
                         });

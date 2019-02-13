@@ -55,39 +55,41 @@ class SapLlamadaServicioController extends Controller
         // GENERAR LLAMADA DE SERVICIO PARA LOS/EL ELEMENTO VENTA
         // ======================================================================
         //Setear arreglos para Pedido (Elemento Venta)
-        $arrayEV    = [];
-        $rptaSap    = [];
+        /*
+            $arrayEV    = [];
+            $rptaSap    = [];
 
-        $arraySapLlamadaServicioEVLength = sizeof($request->arraySapLlamadaServicioEV);
-        if($arraySapLlamadaServicioEVLength > 0) {
-            //Guardar Arreglo de Ele. Venta
-            $arraySapLlamadaServicioEV = $request->arraySapLlamadaServicioEV;
+            $arraySapLlamadaServicioEVLength = sizeof($request->arraySapLlamadaServicioEV);
+            if($arraySapLlamadaServicioEVLength > 0) {
+                //Guardar Arreglo de Ele. Venta
+                $arraySapLlamadaServicioEV = $request->arraySapLlamadaServicioEV;
 
-            foreach ($arraySapLlamadaServicioEV as $key => $value) {
-                $json = [
-                    'json' => [
-                        "CustomerCode"          => $value['cCustomerCode'],
-                        "InternalSerialNum"     => $value['cInternalSerialNum'],
-                        "ItemCode"              => $value['cItemCode'],
-                        "Subject"               => $value['cSubject'],
-                        "ServiceCallActivities" => [
-                            [
-                                "LineNum"       => 0,
-                                "ActivityCode"  => (string)$value['nActivityCode']
+                foreach ($arraySapLlamadaServicioEV as $key => $value) {
+                    $json = [
+                        'json' => [
+                            "CustomerCode"          => $value['cCustomerCode'],
+                            "InternalSerialNum"     => $value['cInternalSerialNum'],
+                            "ItemCode"              => $value['cItemCode'],
+                            "Subject"               => $value['cSubject'],
+                            "ServiceCallActivities" => [
+                                [
+                                    "LineNum"       => 0,
+                                    "ActivityCode"  => (string)$value['nActivityCode']
+                                ]
                             ]
                         ]
-                    ]
-                ];
+                    ];
 
-                $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
-                $rptaSap = json_decode($response->getBody());
-                array_push($arrayEV, $rptaSap);
+                    $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+                    $rptaSap = json_decode($response->getBody());
+                    array_push($arrayEV, $rptaSap);
+                }
             }
-        }
+        */
 
         return [
-            'arrayVehiculo' =>  $arrayVehiculo,
-            'arrayEV'       =>  $arrayEV
+            'arrayVehiculo' =>  $arrayVehiculo
+            // 'arrayEV'       =>  $arrayEV
         ];
     }
 }
