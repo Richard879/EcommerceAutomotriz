@@ -28,6 +28,7 @@ class SapActividadController extends Controller
                     "ActivityDate"      => (string)$value['dActivityDate'],
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],
+                    "Notes"             => $value['cNotes'],
                     "DocEntry"          => $value['nDocEntry'],
                     "DocNum"            => $value['nDocNum'],
                     "DocType"           => $value['nDocType'],
