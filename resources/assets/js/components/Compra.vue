@@ -2361,6 +2361,7 @@
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                 'hActivityTime' :   '08:13:00',
                                 'cCardCode'     :   me.ccodigoempresasap,
+                                'cNotes'        :   'OrdenCompra',
                                 //'cCardCode'   :   'P20506006024',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
@@ -3232,22 +3233,23 @@
                                 });
 
                                 me.arraySapActividad.push({
-                                    'dActivityDate': '2019-01-29',
-                                    'hActivityTime': '08:13:00',
-                                    'cCardCode': objCompra.cCustomerCode,
-                                    //'cCardCode': 'P20506006024',
-                                    'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
-                                    'nDocNum': me.jsonRespuesta.DocNum.toString(),
-                                    'nDocType': '22',
-                                    'nDuration': '15',
-                                    'cDurationType': 'du_Minuts',
-                                    'dEndDueDate': '2019-01-29',
-                                    'hEndTime': '08:28:00',
-                                    'cReminder': 'tYES',
+                                    'dActivityDate' : '2019-01-29',
+                                    'hActivityTime' : '08:13:00',
+                                    'cCardCode'     : objCompra.cCustomerCode,
+                                    'cNotes'        :   'OrdenCompra',
+                                    //'cCardCode'   : 'P20506006024',
+                                    'nDocEntry'     : me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum'       : me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType'      : '22',
+                                    'nDuration'     : '15',
+                                    'cDurationType' : 'du_Minuts',
+                                    'dEndDueDate'   : '2019-01-29',
+                                    'hEndTime'      : '08:28:00',
+                                    'cReminder'     : 'tYES',
                                     'nReminderPeriod': '15',
-                                    'cReminderType': 'du_Minuts',
-                                    'dStartDate': '2019-01-29',
-                                    'hStartTime': '08:13:00'
+                                    'cReminderType' : 'du_Minuts',
+                                    'dStartDate'    : '2019-01-29',
+                                    'hStartTime'    : '08:13:00'
                                 });
 
                                 //==============================================================
