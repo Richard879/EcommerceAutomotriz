@@ -17,12 +17,6 @@ class SapTipoCambioController extends Controller
             'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
-
-        /*$json = [
-                    'json' => [
-                        "ItemCode"    => $request->cNumeroVin
-                        ]
-                ];*/
         
         $dFecha     = $request->dfecha;
 

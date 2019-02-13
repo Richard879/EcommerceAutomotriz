@@ -150,18 +150,18 @@
         },
         methods: {
             llenarTipoCambio(){
-                var url = this.ruta + '/tipocambio/GetTipoCambioDay';
+                var url = this.ruta + '/tipocambio/GetTipoCambioByFecha';
 
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('DD/MM/YYYY')
+                        'dfecha': '14/02/2019'
                     }
                 }).then(response => {
                     //Variable bandera para saber si debo registrar o actualizar
                     this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
 
                     //Obtengo Tipo Cambio
-                    this.fillTipoCambio.dFechaTipoCambio = moment().format('DD/MM/YYYY');
+                    this.fillTipoCambio.dFechaTipoCambio = '14/02/2019';
                     this.fillTipoCambio.fTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
                     this.fillTipoCambio.fTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                     this.fillTipoCambio.fTipoCambioVenta = response.data[0].fValorTipoCambioVenta;

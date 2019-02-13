@@ -184,7 +184,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/deposito/SetCambiarMontosDepositoByTCE', 'PedidoDepositoController@SetCambiarMontosDepositoByTCE');
 
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
-    Route::get('/tipocambio/GetTipoCambioDay', 'TipoCambioController@GetTipoCambioDay');
+    Route::get('/tipocambio/GetTipoCambioByFecha', 'TipoCambioController@GetTipoCambioByFecha');
     Route::post('/tipocambio/SetRegistrarTipoCambio', 'TipoCambioController@SetRegistrarTipoCambio');
     Route::post('/tipocambio/SetActualizarTipoCambio', 'TipoCambioController@SetActualizarTipoCambio');
 
