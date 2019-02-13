@@ -45,7 +45,6 @@ class SapLlamadaServicioController extends Controller
         return $array_rpta;
     }
 
-
     public function SapSetLlamadaServicioVenta(Request $request)
     {
         $client = new Client([
@@ -60,32 +59,34 @@ class SapLlamadaServicioController extends Controller
         $arrayVehiculo  = [];
         $rptaSap   = [];
 
-        $arraySapLlamadaServicioVehiculoLength = sizeof($request->arraySapLlamadaServicioVehiculo);
-        if($arraySapLlamadaServicioVehiculoLength > 0) {
-            //Guardar Arreglo de Vehículo
-            $arraySapLlamadaServicioVehiculo = $request->arraySapLlamadaServicioVehiculo;
+        $json = [
+            'json' => [
+                "CustomerCode"          =>  $request->cCustomerCode,
+                "InternalSerialNum"     =>  $request->cInternalSerialNum,
+                "ItemCode"              =>  $request->cItemCode,
+                "Subject"               =>  $request->cSubject,
+                "ServiceCallActivities" =>  array()
+            ]
+        ];
 
-            foreach ($arraySapLlamadaServicioVehiculo as $key => $value) {
-                $json = [
-                    'json' => [
-                        "CustomerCode"          => $value['cCustomerCode'],
-                        "InternalSerialNum"     => $value['cInternalSerialNum'],
-                        "ItemCode"              => $value['cItemCode'],
-                        "Subject"               => $value['cSubject'],
-                        "ServiceCallActivities" => [
-                            [
-                                "LineNum"       => 0,
-                                "ActivityCode"  => (string)$value['nActivityCode']
-                            ]
-                        ]
-                    ]
+        //Inicializo el contador de la lina (Actividad)
+        $cont = 0;
+
+        $arraySapLlamadaServicioLength = sizeof($request->arraySapLlamadaServicio);
+        if($arraySapLlamadaServicioLength > 0) {
+            $arraySapLlamadaServicio = $request->arraySapLlamadaServicio;
+            foreach ($arraySapLlamadaServicio as $key => $value) {
+                $json['json']['ServiceCallActivities'][] = [
+                    "LineNum"       =>  $cont,
+                    "ActivityCode"  =>  (string)$value['nActivityCode'],
                 ];
-
-                $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
-                $rptaSap = json_decode($response->getBody());
-                array_push($arrayVehiculo, $rptaSap);
+                $cont++;//Aumento Linea
             }
         }
+
+        $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+        $rptaSap = json_decode($response->getBody());
+        array_push($arrayVehiculo, $rptaSap);
 
         // ======================================================================
         // GENERAR LLAMADA DE SERVICIO PARA LOS/EL ELEMENTO VENTA

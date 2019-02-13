@@ -116,56 +116,6 @@ class SapPedidoController extends Controller
         ];
     }
 
-    /*
-        public function prueba(Request $request)
-        {
-            $arraySAPEVPedidoLength = sizeof($request->arraySAPEVPedido);
-            if($arraySAPEVPedidoLength > 0) {
-                //Guardar Arreglo de Ele. Venta
-                $arraySAPEVPedido = $request->arraySAPEVPedido;
-
-                $json = [
-                    'json' => [
-                        "CardCode"      =>  '',
-                        "DocDate"       =>  (string)$request->fDocDate,
-                        "DocDueDate"    =>  (string)$request->fDocDueDate,
-                        "DocCurrency"   =>  "US$",
-                        "DocTotal"      =>  '',
-                        "DocumentLines" =>  array(),
-                    ]
-                ];
-
-                //Setear a 0 el DocTotal
-                $fMontoTotal = 0;
-                //Recorrer todos los Elementos de Venta
-                foreach ($arraySAPEVPedido as $key => $value) {
-                    // ================ SETEAR CardCode ================
-                    $json['json']['CardCode'] = $value['cCardCode'];
-
-                    //Obtener el Monto sin IGV
-                    $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
-
-                    // ================ SETEAR DocumentLines ================
-                    $json['json']['DocumentLines'][] = [
-                        "ItemCode"  =>  $value['cCodigoERP'],
-                        "Quantity"  =>  $value['nCantidad'],
-                        "TaxCode"   =>  "IGV",
-                        "UnitPrice" =>  (string)$SubTotal,
-                        "Currency"  =>  "US$"
-                    ];
-
-                    //Acumulador para el DocTotal
-                    $fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
-                }
-
-                // ================ SETEAR DocTotal ================
-                $json['json']['DocTotal'] = (string)$fMontoTotal;
-
-                return $json;
-            }
-        }
-    */
-
     public function SapSetPedidoDscto(Request $request)
     {
         $client = new Client([

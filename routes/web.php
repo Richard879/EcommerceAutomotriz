@@ -373,9 +373,11 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
+    Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
@@ -422,8 +424,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
+    Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
     //Actividad
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
+    Route::post('/actividad/SapSetActividadVenta', 'Api\SapActividadController@SapSetActividadVenta');
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
