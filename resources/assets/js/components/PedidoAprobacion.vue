@@ -119,6 +119,9 @@
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                 <i class="fa fa-search"></i> Buscar
                                             </button>
+                                            <!-- <button type="button" class="btn btn-primary btn-corner btn-sm" @click="obtenerIgv()">
+                                                <i class="fa fa-search"></i> prueba
+                                            </button> -->
                                         </div>
                                     </div>
                                 </form>
@@ -781,12 +784,48 @@
                     ccardcode: '',
                     igv: 0
                 },
+                arrayprueba: [
+                    {
+                        'cCardCode' :'c71431143',
+                        'cCodigoERP': '00225650',
+                        'fSubTotalDolares': '100',
+                        'nCantidad': '3'
+                    },
+                    {
+                        'cCardCode' :'c71431143',
+                        'cCodigoERP': '17225650',
+                        'fSubTotalDolares': '80',
+                        'nCantidad': '2'
+                    }
+                ],
+                //=====Variables SAP para OrdenVenta Vehiculo
+                arraySapRespuestaVehiculo: [],
+                arraySapUpdSgcVehiculo: [],
+                jsonRespuestaVehiculo: '',
+                arraySapItemCodeVehiculo: [],
+                arrayVINPedidoVehiculo: [],//Almacena VINES
+
+                arraySapActividadVehiculo: [],
+                arraySapLlamadaServicioVehiculo: [],
+
+                //=====Variables SAP para OrdenVenta Elemento Venta
+                arraySapRespuestaEV: [],
+                jsonRespuestaEV: '',
+                arraySapUpdSgcEV: [],
+                arraySapItemCodeEV: [],
+                arrayCodSAPPedidoEV: [],//Almacena CodSAP
+
+                arraySapActividadEV: [],
+                arraySapLlamadaServicioEV: [],
+
+                 //=====Variables SAP Antiguas OrdenVenta
                 arraySapRespuesta: [],
                 arraySapItemCode: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
 
                 arraySapPedido: [],
+                arraySAPEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
                 VINDelPedido: '',
@@ -1514,11 +1553,34 @@
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
-                        'nidcabecerapedido': (this.cFlagOpcion = 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                        'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
                     console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
+                    this.obtenerEVById();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerEVById(){
+                var url = this.ruta + '/pedido/GetPedidoEVById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                    }
+                }).then(response => {
+                    this.arraySAPEVPedido = response.data.arrayEVPedido.data;
+                    console.log("Cantidad EV : " + this.arraySAPEVPedido.length);
                     this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
@@ -1530,6 +1592,28 @@
                     }
                 });
             },
+            /*
+            prueba(){
+                let me = this;
+                var sapUrl = me.ruta + '/pedido/prueba';
+                axios.post(sapUrl, {
+                    'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'arraySAPEVPedido'  :   me.arrayprueba
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            */
             //REGISTRA PEDIDO EN SAP
             registroSapBusinessPedido(){
                 let me = this;
@@ -1537,59 +1621,179 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
-                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'Igv'           :   1 + parseFloat((me.formSap.igv)),
-                    'data'          :   me.arraySapPedido
+                    'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'arraySapPedido'    :   me.arraySapPedido,
+                    'arraySAPEVPedido'  :   me.arraySAPEVPedido
                 }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                    // ======================================================================
+                    // GUARDAR ORDEN VENTA PARA EL VEHÍCULO EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapUpdSgcVehiculo = [];
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración Pedido SAP : OK");
-                            console.log(me.jsonRespuesta.DocEntry);
-                            //Guardo el VIN del Pedido
-                            me.VINDelPedido = me.jsonRespuesta.DocumentLines[0].ItemCode.toString();
+                    me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;//arreglar
+                    if(me.arraySapRespuestaVehiculo.length > 0) {
+                        me.arraySapRespuestaVehiculo.map(function(value, key){
+                            me.jsonRespuestaVehiculo = '';
+                            me.jsonRespuestaVehiculo = JSON.parse(value);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuestaVehiculo.DocEntry){
+                                console.log("Integración Pedido Vehiculo SAP : OK");
+                                console.log(me.jsonRespuestaVehiculo.DocEntry);
+                                //Guardo el VIN del Pedido del Vehìculo
+                                me.arrayVINPedidoVehiculo.push({
+                                    'nDocEntry' : parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                    'cItemCode' : me.jsonRespuestaVehiculo.DocumentLines[0].ItemCode.toString()
+                                });
 
-                            me.arraySapUpdSgc.push({
-                                'nIdCabeceraPedido' :   (me.cFlagOpcion = 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta'     :   me.arraySapRespuesta[key].toString(),
-                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
+                                me.arraySapUpdSgcVehiculo.push({
+                                    'nIdCabeceraPedido' :   (me.cFlagOpcion == 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
+                                    'cItemCode'         :   me.jsonRespuestaVehiculo.DocumentLines[0].ItemCode.toString(),
+                                    'nDocEntry'         :   parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                    'nDocNum'           :   parseInt(me.jsonRespuestaVehiculo.DocNum),
+                                    'cDocType'          :   me.jsonRespuestaVehiculo.DocType.toString(),
+                                    'cLogRespuesta'     :   me.arraySapRespuestaVehiculo[key].toString()
+                                });
 
-                            me.arraySapActividad.push({
-                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hActivityTime' :   '08:13:00',
-                                'cCardCode'     :   me.ccodigoempresasap,
-                                //'cCardCode'   :   'P20506006024',
-                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
-                                'nDocType'      :   '17',
-                                'nDuration'     :   '15',
-                                'cDurationType' :   'du_Minuts',
-                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hEndTime'      :   '08:28:00',
-                                'cReminder'     :   'tYES',
-                                'nReminderPeriod':  '15',
-                                'cReminderType' :   'du_Minuts',
-                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hStartTime'    :   '08:13:00'
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
-                            setTimeout(function() {
-                                me.registroSgcPedido();
-                            }, 3800);
-                        }
-                    });
+                                me.arraySapActividadVehiculo.push({
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hActivityTime' :   '08:13:00',
+                                    'cCardCode'     :   me.ccodigoempresasap,
+                                    //'cCardCode'   :   'P20506006024',
+                                    'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
+                                    'nDocNum'       :   me.jsonRespuestaVehiculo.DocNum.toString(),
+                                    'nDocType'      :   '17',
+                                    'nDuration'     :   '15',
+                                    'cDurationType' :   'du_Minuts',
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hEndTime'      :   '08:28:00',
+                                    'cReminder'     :   'tYES',
+                                    'nReminderPeriod':  '15',
+                                    'cReminderType' :   'du_Minuts',
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hStartTime'    :   '08:13:00'
+                                });
+                            }
+                        });
+                    }
+
+                    // ======================================================================
+                    // GUARDAR ORDEN VENTA PARA LOS ELEMENTOS DE VENTA EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaEV = [];
+                    me.arraySapUpdSgcEV = [];
+
+                    me.arraySapRespuestaEV = response.data.arrayEV;
+                    if(me.arraySapRespuestaEV.length > 0) {
+                        me.arraySapRespuestaEV.map(function(value, key){
+                            me.jsonRespuestaEV = '';
+                            me.jsonRespuestaEV= JSON.parse(value);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuestaEV.DocEntry){
+                                console.log("Integración Pedido Ele.Venta SAP : OK");
+                                console.log(me.jsonRespuestaEV.DocEntry);
+
+                                //Generar varias lineas de la misma Orden Venta para actualizar DOCENTRY en cada detalle de Pedido en SQL SERVER
+                                let arrayDocumentLines = me.jsonRespuestaEV.DocumentLines;
+                                console.log(arrayDocumentLines);
+                                arrayDocumentLines.map(function(linea) {
+                                    console.log(linea);
+                                    //Guardo el Codigo SAP de los Elemento Venta
+                                    me.arrayCodSAPPedidoEV.push({
+                                        'nDocEntry' :   parseInt(me.jsonRespuestaEV.DocEntry),
+                                        'cItemCode' :   linea.ItemCode.toString()
+                                    });
+
+                                    me.arraySapUpdSgcEV.push({
+                                        'nIdCabeceraPedido' :   (me.cFlagOpcion == 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
+                                        'cItemCode'         :   linea.ItemCode.toString(),
+                                        'nDocEntry'         :   parseInt(me.jsonRespuestaEV.DocEntry),
+                                        'nDocNum'           :   parseInt(me.jsonRespuestaEV.DocNum),
+                                        'cDocType'          :   me.jsonRespuestaEV.DocType.toString(),
+                                        'cLogRespuesta'     :   me.arraySapRespuestaEV[key].toString()
+                                    });
+                                });
+
+                                me.arraySapActividadEV.push({
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hActivityTime' :   '08:13:00',
+                                    'cCardCode'     :   me.ccodigoempresasap,
+                                    //'cCardCode'   :   'P20506006024',
+                                    'nDocEntry'     :   me.jsonRespuestaEV.DocEntry.toString(),
+                                    'nDocNum'       :   me.jsonRespuestaEV.DocNum.toString(),
+                                    'nDocType'      :   '17',
+                                    'nDuration'     :   '15',
+                                    'cDurationType' :   'du_Minuts',
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hEndTime'      :   '08:28:00',
+                                    'cReminder'     :   'tYES',
+                                    'nReminderPeriod':  '15',
+                                    'cReminderType' :   'du_Minuts',
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hStartTime'    :   '08:13:00'
+                                });
+                            }
+                        });
+                    }
+
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY PEDIDO ================
+                    setTimeout(function() {
+                        me.registroSgcPedido();
+                    }, 3800);
+
+                    /*
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuesta.DocEntry){
+                                console.log("Integración Pedido Vehiculo SAP : OK");
+                                console.log(me.jsonRespuesta.DocEntry);
+                                //Guardo el VIN del Pedido
+                                me.VINDelPedido = me.jsonRespuesta.DocumentLines[0].ItemCode.toString();
+
+                                me.arraySapUpdSgc.push({
+                                    'nIdCabeceraPedido' :   (me.cFlagOpcion = 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
+                                    'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta'     :   me.arraySapRespuesta[key].toString(),
+                                    'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                });
+
+                                me.arraySapActividad.push({
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hActivityTime' :   '08:13:00',
+                                    'cCardCode'     :   me.ccodigoempresasap,
+                                    //'cCardCode'   :   'P20506006024',
+                                    'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType'      :   '17',
+                                    'nDuration'     :   '15',
+                                    'cDurationType' :   'du_Minuts',
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hEndTime'      :   '08:28:00',
+                                    'cReminder'     :   'tYES',
+                                    'nReminderPeriod':  '15',
+                                    'cReminderType' :   'du_Minuts',
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hStartTime'    :   '08:13:00'
+                                });
+                                //==============================================================
+                                //================== ACTUALIZAR DOCENTRY PEDIDO ================
+                                setTimeout(function() {
+                                    me.registroSgcPedido();
+                                }, 3800);
+                            }
+                        });
+                    */
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -1614,13 +1818,14 @@
 
                 var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
                 axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
+                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
+                    'arraySapUpdSgcEV': me.arraySapUpdSgcEV
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
+                        me.loading.close();
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
                         }, 1000);
-
                     } else {
                         swal({
                             type: 'error',
@@ -1656,33 +1861,89 @@
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividad';
                 axios.post(sapUrl, {
-                    'data': me.arraySapActividad
+                    'arraySapActividadVehiculo': me.arraySapActividadVehiculo,
+                    'arraySapActividadEV': me.arraySapActividadEV
                 }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA VEHÍCULO EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapUpdSgcVehiculo = [];
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ActivityCode){
-                            me.arraySapUpdSgc.push({
-                                'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo': 17,
-                                'cActividadTipo': 'OrdenVenta',
-                                'cCardCode': me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
-                            });
-                        }
-                    });
+                    me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
+                    if(me.arraySapRespuestaVehiculo.length > 0) {
+                        me.arraySapRespuestaVehiculo.map(function(value, key){
+                            me.jsonRespuestaVehiculo = '';
+                            me.jsonRespuestaVehiculo= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaVehiculo.ActivityCode){
+                                me.arraySapUpdSgcVehiculo.push({
+                                    'nActividadTipo': 17,
+                                    'cActividadTipo': 'OrdenVenta',
+                                    'nActivityCode': parseInt(me.jsonRespuestaVehiculo.ActivityCode),
+                                    'cCardCode': me.jsonRespuestaVehiculo.CardCode.toString(),
+                                    'nDocEntry': parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuestaVehiculo.DocNum),
+                                    'cLogRespuesta': me.arraySapRespuestaVehiculo[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA ELEMENTO VENTA EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaEV = [];
+                    me.arraySapUpdSgcEV = [];
+
+                    me.arraySapRespuestaEV = response.data.arrayEV;
+                    if(me.arraySapRespuestaEV.length > 0) {
+                        me.arraySapRespuestaEV.map(function(value, key){
+                            me.jsonRespuestaEV = '';
+                            me.jsonRespuestaEV= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaEV.ActivityCode){
+                                me.arraySapUpdSgcEV.push({
+                                    'nActividadTipo': 17,
+                                    'cActividadTipo': 'OrdenVenta',
+                                    'nActivityCode': parseInt(me.jsonRespuestaEV.ActivityCode),
+                                    'cCardCode': me.jsonRespuestaEV.CardCode.toString(),
+                                    'nDocEntry': parseInt(me.jsonRespuestaEV.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuestaEV.DocNum),
+                                    'cLogRespuesta': me.arraySapRespuestaEV[key].toString()
+                                });
+                            }
+                        });
+                    }
+
                     //================================================================
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
                     }, 1600);
+
+                    /*
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ActivityCode){
+                                me.arraySapUpdSgc.push({
+                                    'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                    'nActividadTipo': 17,
+                                    'cActividadTipo': 'OrdenVenta',
+                                    'cCardCode': me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+                    */
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1697,7 +1958,8 @@
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
+                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
+                    'arraySapUpdSgcEV': me.arraySapUpdSgcEV
                 }).then(response => {
                     setTimeout(function() {
                         me.getOrdenVentaActividad();
@@ -1716,19 +1978,64 @@
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/GetIntegraActividadVentaByItemCode';
-                axios.get(sapUrl, {
-                    params: {
-                        'citemcode': this.VINDelPedido,
-                        'nactividadtipo': 17
-                    }
+                axios.post(sapUrl, {
+                    // params: {
+                    //     // 'citemcode': this.VINDelPedido,
+                    //     'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
+                    //     'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
+                    //     'nactividadtipo': 17
+                    // }
+                    'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
+                    'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
+                    'nactividadtipo': 17
                 }).then(response => {
-                    me.arraySapLlamadaServicio.push({
-                        'nActivityCode': response.data[0].nActivityCode,
-                        'cCustomerCode': response.data[0].cCustomerCode,
-                        'cInternalSerialNum': response.data[0].cItemCode,
-                        'cItemCode': response.data[0].cItemCode,
-                        'cSubject': response.data[0].cSubject
-                    });
+                    console.log(response.data);
+                    // ======================================================================
+                    // OBTENER INFORMACIÓN DE LA ACTIVIDAD DEL VEHÍCULO PARA LLAMADA SERVICIOS
+                    // ======================================================================
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapLlamadaServicioVehiculo = [];
+
+                    me.arraySapRespuestaVehiculo = response.data.arrayInfoVehiculoActividad;
+                    if(me.arraySapRespuestaVehiculo.length > 0) {
+                        me.arraySapRespuestaVehiculo.map(function(value, key){
+                            me.arraySapLlamadaServicioVehiculo.push({
+                                'nActivityCode': value.nActivityCode,
+                                'cCustomerCode': value.cCustomerCode,
+                                'cInternalSerialNum': value.cItemCode,
+                                'cItemCode': value.cItemCode,
+                                'cSubject': value.cSubject
+                            });
+                        });
+                    }
+
+                    // ======================================================================
+                    // OBTENER INFORMACIÓN DE LA ACTIVIDAD DEL E.V PARA LLAMADA SERVICIOS
+                    // ======================================================================
+                    me.arraySapRespuestaEV = [];
+                    me.arraySapLlamadaServicioEV = [];
+
+                    me.arraySapRespuestaEV = response.data.arrayInfoEVActividad;
+                    if(me.arraySapRespuestaEV.length > 0) {
+                        me.arraySapRespuestaEV.map(function(value, key){
+                            me.arraySapLlamadaServicioEV.push({
+                                'nActivityCode': value.nActivityCode,
+                                'cCustomerCode': value.cCustomerCode,
+                                'cInternalSerialNum': value.cItemCode,
+                                'cItemCode': value.cItemCode,
+                                'cSubject': value.cSubject
+                            });
+                        });
+                    }
+                    /*
+                        me.arraySapLlamadaServicio.push({
+                            'nActivityCode': response.data[0].nActivityCode,
+                            'cCustomerCode': response.data[0].cCustomerCode,
+                            'cInternalSerialNum': response.data[0].cItemCode,
+                            'cItemCode': response.data[0].cItemCode,
+                            'cSubject': response.data[0].cSubject
+                        });
+                    */
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1739,6 +2046,7 @@
                     }
                 });
                 setTimeout(function() {
+                    me.loading.close();
                     me.registroSapBusinessLlamadaServicio();
                 }, 1600);
             },
@@ -1749,29 +2057,88 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
+                    // 'data': me.arraySapLlamadaServicio
+                    'arraySapLlamadaServicioVehiculo': me.arraySapLlamadaServicioVehiculo,
+                    'arraySapLlamadaServicioEV': me.arraySapLlamadaServicioEV
                 }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapItemCode = [];
-                    me.arraySapUpdSgc = [];
+                    // ======================================================================
+                    // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL VEHICULO EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapItemCodeVehiculo = [];
+                    me.arraySapUpdSgcVehiculo = [];
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+                    me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
+                    if(me.arraySapRespuestaVehiculo.length > 0) {
+                        me.arraySapRespuestaVehiculo.map(function(value, key){
+                            me.jsonRespuestaVehiculo = '';
+                            me.jsonRespuestaVehiculo = JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaVehiculo.ItemCode){
+                                me.arraySapItemCodeVehiculo.push(me.jsonRespuestaVehiculo.ItemCode); //PARA DEPURAR
 
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
-                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
-                            });
-                        }
-                    });
+                                me.arraySapUpdSgcVehiculo.push({
+                                    'nServiceCallID': me.jsonRespuestaVehiculo.ServiceCallID.toString(),
+                                    'nActivityCode': me.jsonRespuestaVehiculo.ServiceCallActivities[0].ActivityCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuestaVehiculo.InternalSerialNum.toString(),
+                                    'cItemCode': me.jsonRespuestaVehiculo.ItemCode.toString(),
+                                    'cLogRespuesta': me.arraySapRespuestaVehiculo[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    // ======================================================================
+                    // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL E.V EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaEV = [];
+                    me.arraySapItemCodeEV = [];
+                    me.arraySapUpdSgcEV = [];
+
+                    me.arraySapRespuestaEV = response.data.arrayEV;
+                    if(me.arraySapRespuestaEV.length > 0) {
+                        me.arraySapRespuestaEV.map(function(value, key){
+                            me.jsonRespuestaEV = '';
+                            me.jsonRespuestaEV = JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaEV.ItemCode){
+                                me.arraySapItemCodeEV.push(me.jsonRespuestaEV.ItemCode); //PARA DEPURAR
+
+                                me.arraySapUpdSgcEV.push({
+                                    'nServiceCallID': me.jsonRespuestaEV.ServiceCallID.toString(),
+                                    'nActivityCode': me.jsonRespuestaEV.ServiceCallActivities[0].ActivityCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuestaEV.InternalSerialNum.toString(),
+                                    'cItemCode': me.jsonRespuestaEV.ItemCode.toString(),
+                                    'cLogRespuesta': me.arraySapRespuestaEV[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    /*
+                        me.arraySapRespuesta = [];
+                        me.arraySapItemCode = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ItemCode){
+                                me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                                me.arraySapUpdSgc.push({
+                                    'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
+                                    'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                    'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                    'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+
+                     */
                     //=========================================================================
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
@@ -1791,7 +2158,9 @@
                 let me = this;
                 var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
+                    // 'data': me.arraySapUpdSgc
+                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
+                    'arraySapUpdSgcEV': me.arraySapUpdSgcEV
                 }).then(response => {
                     me.limpiarFormulario();
                     me.listarPedidos(1);

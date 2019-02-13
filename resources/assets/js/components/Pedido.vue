@@ -206,7 +206,7 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
-                                                                                <td v-text="pedido.nDocEntryPedido"></td>
+                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>

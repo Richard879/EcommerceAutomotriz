@@ -169,6 +169,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetObtenerTipoPersona', 'PedidoController@GetObtenerTipoPersona');
     Route::get('/pedido/GetListContactoBySinCarteraMes', 'PedidoController@GetListContactoBySinCarteraMes');
     Route::get('/pedido/GetPedidoById', 'PedidoController@GetPedidoById');
+    Route::get('/pedido/GetPedidoEVById', 'PedidoController@GetPedidoEVById');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
 
@@ -376,7 +377,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
-    Route::get('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
+    Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
@@ -409,6 +410,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
+    Route::post('/pedido/prueba', 'Api\SapPedidoController@prueba');
+
     //Pedido Descuento
     Route::post('/pedido/SapSetPedidoDscto', 'Api\SapPedidoController@SapSetPedidoDscto');
     //Comprobante
