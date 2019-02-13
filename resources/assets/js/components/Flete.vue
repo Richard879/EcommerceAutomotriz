@@ -262,6 +262,7 @@
                                                             </div>
                                                             <br/>
                                                             <template v-if="arrayTempFlete.length">
+                                                                <span style="color:red; font-size: 12px;">* El Importe del Flete debe ser en SOLES y SIN IGV</span>
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -274,7 +275,7 @@
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
-                                                                                <th>Valor Flete</th>
+                                                                                <th>Importe Flete</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -499,7 +500,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerofactura" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerofactura" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -507,7 +508,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -611,8 +612,8 @@
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                     <a @click.prevent="cambiarPagina(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
-                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                :class="[page==isActived?'active':'']">
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
                                                                     href="#" @click.prevent="cambiarPagina(page)"
                                                                     v-text="page"></a>
@@ -840,6 +841,8 @@
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
+                // =============  VARIBALES SAP ========================
+                arrayTCFlete: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1130,6 +1133,8 @@
                     return;
                 }
 
+                me.mostrarProgressBar();
+
                 me.arrayFlete = [];
 
                 me.arrayTempFlete.map(function(value, key){
@@ -1152,9 +1157,8 @@
                     'cSerieComprobante': this.formmFlete.cseriecomprobante,
                     'cNumeroComprobante': this.formmFlete.cnumerocomprobante,
                     'data': this.arrayFlete
-                }).then(response => {
-                    swal('Flete registrado exitosamente');
-                    this.limpiarFormulario();
+                }).then(response => { 
+                    this.obtenerFleteTblCosto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1185,6 +1189,69 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            obtenerFleteTblCosto(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/GetCompraFleteTblCosto';
+                axios.post(url, {
+                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'data': me.arrayFlete
+                }).then(response => {
+                    me.arrayTCFlete = [];
+                    // ====================== CONCEPTO =========================
+                    // ======================== FLETE ==========================
+                    let arrayFlete = response.data.array_infoFlete;
+                    arrayFlete.map(function (x) {
+                        me.arrayTCFlete.push({
+                            U_SYP_VIN           :   x.U_SYP_VIN,
+                            DocEntry            :   x.DocEntry,
+                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                            U_SYP_COSTO         :   x.U_SYP_COSTO,
+                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                        });
+                    });
+
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoFlete();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoFlete(){
+                let me = this;
+
+                me.loadingProgressBar("INTEGRANDO FLETE CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCostoFlete';
+                axios.post(url, {
+                    'dataFlete'  : me.arrayTCFlete
+                }).then(response => {
+                    me.loading.close();
+                    $("#myBar").hide();
+                    swal('Flete registrado exitosamente');
+                    me.limpiarFormulario();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =============================================
             // =============  MODAL ========================
@@ -1249,6 +1316,7 @@
                 this.formmFlete.cnumeroruc = '';
                 this.formmFlete.cseriecomprobante = '';
                 this.formmFlete.cnumerocomprobante = '';
+                this.arrayTCFlete = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1261,6 +1329,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

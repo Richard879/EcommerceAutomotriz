@@ -155,14 +155,19 @@ class GestionUsuariosController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdUsuario =   Auth::user()->id;
+        $dFecha = $request->dfecha;
+
+        $dFecha = ($dFecha == NULL) ? ($dFecha = '') : $dFecha;
 
         $usuario = DB::select('exec usp_Usuario_GetInformacionUsuario ?',
                                                     [
                                                         $nIdUsuario
                                                     ]);
 
-        $tipocambio = DB::select('exec usp_TipoCambio_GetTipoCambio');
-
+        $tipocambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?', 
+                                                                [   $dFecha
+                                                                ]);
+                                                                                                               
         $flag = 0;
         if ($tipocambio[0]->fValorTipoCambioComercial > 0) {
             $flag = 1;

@@ -185,7 +185,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/deposito/SetCambiarMontosDepositoByTCE', 'PedidoDepositoController@SetCambiarMontosDepositoByTCE');
 
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
-    Route::get('/tipocambio/GetTipoCambioDay', 'TipoCambioController@GetTipoCambioDay');
+    Route::get('/tipocambio/GetTipoCambioByFecha', 'TipoCambioController@GetTipoCambioByFecha');
     Route::post('/tipocambio/SetRegistrarTipoCambio', 'TipoCambioController@SetRegistrarTipoCambio');
     Route::post('/tipocambio/SetActualizarTipoCambio', 'TipoCambioController@SetActualizarTipoCambio');
 
@@ -368,8 +368,6 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
 
-    Route::get('/tablacosto/GetCompraTC','TablaCostoController@GetCompraTC');
-
     //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
@@ -380,6 +378,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::get('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
+    Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
+    Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
+    Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
 
     ///========================================
     /////=================  ROUTES SAP
@@ -425,7 +426,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
-    Route::post('/tablacosto/SapSetTablaCostoDetalleCabecera','Api\SapTablaCostoController@SapSetTablaCostoDetalleCabecera');
+    Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
+    Route::post('/tablacosto/SapPachTablaCostoFlete','Api\SapTablaCostoController@SapPachTablaCostoFlete');
+    //Tipo Cambio
+    Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

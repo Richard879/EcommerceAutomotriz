@@ -49,15 +49,25 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Tipo Cambio Venta</label>
                                                 <div class="col-sm-8">
-                                                    <input type="number" v-model="fillTipoCambio.fTipoCambioVenta" class="form-control form-control-sm">
+                                                    <div class="input-group">
+                                                        <input type="number" v-model="fillTipoCambio.fTipoCambioVenta" class="form-control form-control-sm" readonly>
+                                                        <div class="input-group-prepend">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Obtener Tipo Cambio Sap </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="obtenerSapTipoCamcioByFecha()">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="guardarTipoCambio(1)">
-                                                <i class="fa fa-save"></i> Guardar
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="guardarTipoCambio(1)">
+                                                <i class="fa fa-save"></i> Registrar
                                             </button>
                                         </div>
                                     </div>
@@ -105,6 +115,7 @@
                     fTipoCambioCompra: 0,
                     fTipoCambioVenta: 0
                 },
+                arraySapRespuesta: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -139,14 +150,18 @@
         },
         methods: {
             llenarTipoCambio(){
-                var url = this.ruta + '/tipocambio/GetTipoCambioDay';
+                var url = this.ruta + '/tipocambio/GetTipoCambioByFecha';
 
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
                     //Variable bandera para saber si debo registrar o actualizar
                     this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
 
-                    //Obtengo Tipo Cambio
-                    this.fillTipoCambio.dFechaTipoCambio = response.data[0].dFechaTipoCambio;
+                    //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
+                    this.fillTipoCambio.dFechaTipoCambio = moment().format('DD/MM/YYYY');
                     this.fillTipoCambio.fTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
                     this.fillTipoCambio.fTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                     this.fillTipoCambio.fTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
@@ -154,6 +169,37 @@
                     this.fillTipoCambio.fTipoCambioComercial = parseFloat(this.fillTipoCambio.fTipoCambioComercial);
                     this.fillTipoCambio.fTipoCambioCompra = parseFloat(this.fillTipoCambio.fTipoCambioCompra);
                     this.fillTipoCambio.fTipoCambioVenta = parseFloat(this.fillTipoCambio.fTipoCambioVenta);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerSapTipoCamcioByFecha(){
+                let me = this;
+
+                me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
+                
+                var url = me.ruta + '/tipocambio/SapGetTipoCambioByFecha';
+
+                // moment().format('YYYY-MM-DD')
+                axios.get(url, {
+                    params: {
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    if(response.data.length()){
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.fillTipoCambio.fTipoCambioVenta = value.Rate;
+                        });
+                    }
+                    
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -287,6 +333,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             },
             loadingProgressBar(texto){
                 this.loading = this.$loading({

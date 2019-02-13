@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class TablaCostoController extends Controller
+class IntTablaCostoController extends Controller
 {
-    public function GetCompraTC(Request $request)
+    public function GetCompraConceptosTblCosto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -19,10 +19,9 @@ class TablaCostoController extends Controller
 
         $array_infoTipoBeneficio    =   [];
         $array_infoCostoVehiculo    =   [];
-        $array_infoFlete            =   [];
 
-        $arraySapArticulo = $request->arraySapArticulo;
-        foreach ($arraySapArticulo as $value) {
+        $data = $request->data;
+        foreach ($data as $key => $value) {
             // ==================================================================================
             // =======================  TIPO DE BENEFICIO ================================
             $data = DB::select('exec [usp_TablaCosto_GetCompra_TipoBeneficio] ?, ?, ?, ?',
@@ -34,7 +33,7 @@ class TablaCostoController extends Controller
 
             if ($data) {
                 $beneficio = $data[0];
-                $VIN                =   '';
+                $U_SYP_VIN          =   '';
                 $U_SYP_CCONCEPTO    =   '';
                 $U_SYP_DCONCEPTO    =   '';
                 $U_SYP_CDOCUMENTO   =   '';
@@ -45,7 +44,7 @@ class TablaCostoController extends Controller
 
                 //Si es un Objetivo de Tipo Compra
                 if ($beneficio->cFlagTipoOperacion == 'C') {
-                    $VIN = $beneficio->cNumeroVin;
+                    $U_SYP_VIN = $beneficio->cNumeroVin;
                     //Bono
                     if($beneficio->cFlagTipoBeneficio == 'B') {
                         //CONCETPO
@@ -94,7 +93,7 @@ class TablaCostoController extends Controller
                 }
 
                 $infoTipoBeneficio = [
-                    'VIN'               =>  $VIN,
+                    'U_SYP_VIN'         =>  $U_SYP_VIN,
                     'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
                     'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
                     'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
@@ -116,7 +115,7 @@ class TablaCostoController extends Controller
                                                     ]);
 
             $costovehiculo = $data[0];
-            $VIN                =   $costovehiculo->cNumeroVin;
+            $U_SYP_VIN          =   $costovehiculo->cNumeroVin;
             $U_SYP_CCONCEPTO    =   $costovehiculo->U_SYP_CCONCEPTO;
             $U_SYP_DCONCEPTO    =   $costovehiculo->U_SYP_DCONCEPTO;
             $U_SYP_CDOCUMENTO   =   $costovehiculo->U_SYP_CDOCUMENTO;
@@ -126,7 +125,7 @@ class TablaCostoController extends Controller
             $U_SYP_ESTADO       =   $costovehiculo->U_SYP_ESTADO;
 
             $infoCostoVehiculo = [
-                'VIN'               =>  $VIN,
+                'U_SYP_VIN'         =>  $U_SYP_VIN,
                 'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
                 'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
                 'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
@@ -136,7 +135,50 @@ class TablaCostoController extends Controller
                 'U_SYP_ESTADO'      =>  $U_SYP_ESTADO
             ];
             array_push($array_infoCostoVehiculo, $infoCostoVehiculo);
+        }
 
+        $tblCostos = [
+            'array_infoTipoBeneficio' =>  $array_infoTipoBeneficio,
+            'array_infoCostoVehiculo' =>  $array_infoCostoVehiculo
+        ];
+
+        return response()->json($tblCostos);
+    }
+
+    public function SetIntegraTblCostoCab(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objTablaCosto = DB::select('exec [usp_Integra_SetIntegraTblCostoCab] ?, ?, ?, ?',
+                                                            [   $det['nDocEntry'],
+                                                                $det['cU_SYP_VIN'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objTablaCosto);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function GetCompraFleteTblCosto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdSucursal    = $request->nIdSucursal;
+
+        $array_infoFlete            =   [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
             // ==================================================================================
             // =============================  FLETE =============================================
             $data = DB::select('exec [usp_TablaCosto_GetCompra_Flete] ?, ?, ?',
@@ -147,7 +189,8 @@ class TablaCostoController extends Controller
 
             if ($data) {
                 $flete = $data[0];
-                $VIN                =   $flete->cNumeroVin;
+                $U_SYP_VIN          =   $flete->cNumeroVin;
+                $DocEntry           =   $flete->nDocEntry;
                 $U_SYP_CCONCEPTO    =   $flete->U_SYP_CCONCEPTO;
                 $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
                 $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
@@ -157,7 +200,8 @@ class TablaCostoController extends Controller
                 $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
 
                 $infoFlete = [
-                    'VIN'               =>  $VIN,
+                    'U_SYP_VIN'         =>  $U_SYP_VIN,
+                    'DocEntry'          =>  $DocEntry,
                     'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
                     'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
                     'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
@@ -171,8 +215,6 @@ class TablaCostoController extends Controller
         }
 
         $tblCostos = [
-            'array_infoTipoBeneficio' =>  $array_infoTipoBeneficio,
-            'array_infoCostoVehiculo' =>  $array_infoCostoVehiculo,
             'array_infoFlete'         =>  $array_infoFlete
         ];
 
