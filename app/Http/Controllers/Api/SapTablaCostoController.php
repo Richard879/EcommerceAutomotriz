@@ -53,34 +53,37 @@ class SapTablaCostoController extends Controller
 
             // ====================================================================================================
             // =========================  REGISTRAR DETALLE CABECERA TBL COST - BENEFICIO =========================
-            $dataTipoBenef = $request->dataTipoBeneficio;
-            foreach ($dataTipoBenef as $key => $beneficio) {
-                //Verifica que el VIN de ese Beneficio sea Igual al VIN de la Cabecera Costo, para que se le asigne al detalle como concepto
-                if ($TblCostoVIN == $beneficio['U_SYP_VIN']) {
-                    $json = [
-                        'json' => [
-                            "U_SYP_VIN"         => (string)$beneficio['U_SYP_VIN'],
-                            "DocEntry"          => (string)$TblCostoDocEntry,
-                            "SYP_COSTODETCollection" => [
-                                [
-                                    "DocEntry"          => (string)$TblCostoDocEntry,
-                                    "U_SYP_CCONCEPTO"   => (string)$beneficio['U_SYP_CCONCEPTO'],
-                                    "U_SYP_DCONCEPTO"   => (string)$beneficio['U_SYP_DCONCEPTO'],
-                                    "U_SYP_CDOCUMENTO"  => (string)$beneficio['U_SYP_CDOCUMENTO'],
-                                    "U_SYP_DDOCUMENTO"  => (string)$beneficio['U_SYP_DDOCUMENTO'],
-                                    "U_SYP_IMPORTE"     => (string)$beneficio['U_SYP_IMPORTE'],
-                                    "U_SYP_COSTO"       => (string)$beneficio['U_SYP_COSTO'],
-                                    "U_SYP_ESTADO"      => (string)$beneficio['U_SYP_ESTADO']
+            $arrayTipoBeneficio = sizeof($request->dataTipoBeneficio);
+            if($arrayTipoBeneficio > 0) {
+                $dataTipoBenef = $request->dataTipoBeneficio;
+                foreach ($dataTipoBenef as $key => $beneficio) {
+                    //Verifica que el VIN de ese Beneficio sea Igual al VIN de la Cabecera Costo, para que se le asigne al detalle como concepto
+                    if ($TblCostoVIN == $beneficio['U_SYP_VIN']) {
+                        $json = [
+                            'json' => [
+                                "U_SYP_VIN"         => (string)$beneficio['U_SYP_VIN'],
+                                "DocEntry"          => (string)$TblCostoDocEntry,
+                                "SYP_COSTODETCollection" => [
+                                    [
+                                        "DocEntry"          => (string)$TblCostoDocEntry,
+                                        "U_SYP_CCONCEPTO"   => (string)$beneficio['U_SYP_CCONCEPTO'],
+                                        "U_SYP_DCONCEPTO"   => (string)$beneficio['U_SYP_DCONCEPTO'],
+                                        "U_SYP_CDOCUMENTO"  => (string)$beneficio['U_SYP_CDOCUMENTO'],
+                                        "U_SYP_DDOCUMENTO"  => (string)$beneficio['U_SYP_DDOCUMENTO'],
+                                        "U_SYP_IMPORTE"     => (string)$beneficio['U_SYP_IMPORTE'],
+                                        "U_SYP_COSTO"       => (string)$beneficio['U_SYP_COSTO'],
+                                        "U_SYP_ESTADO"      => (string)$beneficio['U_SYP_ESTADO']
+                                    ]
                                 ]
                             ]
-                        ]
-                    ];
+                        ];
 
-                    $rptaBeneficio = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
-                    $rptaSapBeneficio = json_decode($rptaBeneficio->getBody());
-                    array_push($array_rptaBeneficio, $rptaSapBeneficio);
+                        $rptaBeneficio = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+                        $rptaSapBeneficio = json_decode($rptaBeneficio->getBody());
+                        array_push($array_rptaBeneficio, $rptaSapBeneficio);
+                    }
+
                 }
-
             }
 
             // ====================================================================================================

@@ -3571,34 +3571,39 @@
                 }).then(response => {
                     // ====================== CONCEPTO =========================
                     // ====================  TIPO DE BENEFICIO =================
-                    let arrayBeneficio = response.data.array_infoTipoBeneficio;
-                    arrayBeneficio.map(function (x) {
-                        me.arrayTCTipoBeneficio.push({
-                            U_SYP_VIN           :   x.U_SYP_VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                    if(response.data.array_infoTipoBeneficio.length){
+                        let arrayBeneficio = response.data.array_infoTipoBeneficio;
+                        arrayBeneficio.map(function (x) {
+                            me.arrayTCTipoBeneficio.push({
+                                U_SYP_VIN           :   x.U_SYP_VIN,
+                                U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                                U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                                U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                                U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                                U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                                U_SYP_COSTO         :   x.U_SYP_COSTO,
+                                U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                            });
                         });
-                    });
+                    }
+                    
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
-                    arrayCostoVehiculo.map(function (x) {
-                        me.arrayTCCostoVehiculo.push({
-                            U_SYP_VIN           :   x.U_SYP_VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                    if(response.data.array_infoCostoVehiculo.length){
+                        let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                        arrayCostoVehiculo.map(function (x) {
+                            me.arrayTCCostoVehiculo.push({
+                                U_SYP_VIN           :   x.U_SYP_VIN,
+                                U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
+                                U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
+                                U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
+                                U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
+                                U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
+                                U_SYP_COSTO         :   x.U_SYP_COSTO,
+                                U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                            });
                         });
-                    });
+                    }                    
 
                     setTimeout(function() {
                         me.generaSapTblCostoDetallePorVin();
