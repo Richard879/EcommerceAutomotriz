@@ -1978,13 +1978,16 @@
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/GetIntegraActividadVentaByItemCode';
-                axios.get(sapUrl, {
-                    params: {
-                        // 'citemcode': this.VINDelPedido,
-                        'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
-                        'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
-                        'nactividadtipo': 17
-                    }
+                axios.post(sapUrl, {
+                    // params: {
+                    //     // 'citemcode': this.VINDelPedido,
+                    //     'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
+                    //     'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
+                    //     'nactividadtipo': 17
+                    // }
+                    'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
+                    'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
+                    'nactividadtipo': 17
                 }).then(response => {
                     console.log(response.data);
                     // ======================================================================

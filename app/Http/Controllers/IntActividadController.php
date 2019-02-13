@@ -93,12 +93,12 @@ class IntActividadController extends Controller
         $arrayInfoVehiculoActividad = [];
         $arrayVINPedidoVehiculoLength = sizeof($request->arrayVINPedidoVehiculo);
         if($arrayVINPedidoVehiculoLength > 0) {
-            $arrayVINPedidoVehiculo = $request->arrayVINPedidoVehiculo;
-            foreach($arrayVINPedidoVehiculo as $data)
+            $data = $request->arrayVINPedidoVehiculo;
+            foreach($data as $key => $value)
             {
                 $arrayVehiculoActividad = DB::select('exec [usp_Integra_GetIntegraActividadVentaByItemCode] ?, ?, ?',
-                                                    [   $data['nDocEntry'],
-                                                        $data['cItemCode'],
+                                                    [   $value['nDocEntry'],
+                                                        $value['cItemCode'],
                                                         $nActividadTipo
                                                     ]);
 
@@ -112,12 +112,12 @@ class IntActividadController extends Controller
         $arrayInfoEVActividad = [];
         $arrayCodSAPPedidoEVLength = sizeof($request->arrayCodSAPPedidoEV);
         if($arrayCodSAPPedidoEVLength > 0) {
-            $arrayCodSAPPedidoEV = $request->arrayCodSAPPedidoEV;
-            foreach($arrayCodSAPPedidoEV as $data)
+            $data = $request->arrayCodSAPPedidoEV;
+            foreach($data as $key => $value)
             {
                 $arrayEVActividad = DB::select('exec [usp_Integra_GetIntegraActividadVentaByItemCode] ?, ?, ?',
-                                                    [   $data['nDocEntry'],
-                                                        $data['cItemCode'],
+                                                    [   $value['nDocEntry'],
+                                                        $value['cItemCode'],
                                                         $nActividadTipo
                                                     ]);
 

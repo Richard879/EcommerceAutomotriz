@@ -377,7 +377,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
-    Route::get('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
+    Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
