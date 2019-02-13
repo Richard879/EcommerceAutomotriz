@@ -425,6 +425,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
     Route::post('/tablacosto/SapPachTablaCostoFlete','Api\SapTablaCostoController@SapPachTablaCostoFlete');
+    //Tipo Cambio
+    Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
