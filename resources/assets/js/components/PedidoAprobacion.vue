@@ -800,6 +800,7 @@
                     cItemCode: '',
                     cSubject: ''
                 },
+                arrayServiceCallActivities: [],
 
                 //=====Variables SAP para OrdenVenta Elemento Venta
                 arraySapRespuestaEV: [],
@@ -1852,7 +1853,7 @@
                             if(me.jsonRespuestaVehiculo.ActivityCode){
                                 me.arraySapUpdSgcVehiculo.push({
                                     'nActividadTipo': 17,
-                                    'cActividadTipo': 'Venta',
+                                    'cActividadTipo': 'OrdenVenta',
                                     'nActivityCode': parseInt(me.jsonRespuestaVehiculo.ActivityCode),
                                     'cCardCode': me.jsonRespuestaVehiculo.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuestaVehiculo.DocEntry),
@@ -1878,7 +1879,7 @@
                             if(me.jsonRespuestaEV.ActivityCode){
                                 me.arraySapUpdSgcEV.push({
                                     'nActividadTipo': 17,
-                                    'cActividadTipo': 'Venta',
+                                    'cActividadTipo': 'OrdenVenta',
                                     'nActivityCode': parseInt(me.jsonRespuestaEV.ActivityCode),
                                     'cCardCode': me.jsonRespuestaEV.CardCode.toString(),
                                     'nDocEntry': parseInt(me.jsonRespuestaEV.DocEntry),
@@ -2090,11 +2091,21 @@
                             me.jsonRespuestaVehiculo = JSON.parse(value);
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuestaVehiculo.ItemCode){
+
+                                //Arreglo de Actividades para Actualizar por Llamada de Servicios en SQL SERVER
+                                let listServiceCallActivities = me.jsonRespuestaVehiculo.ServiceCallActivities;
+                                listServiceCallActivities.map(function(linea) {
+                                    me.arrayServiceCallActivities.push({
+                                        'nServiceCallID':   me.jsonRespuestaVehiculo.ServiceCallID.toString(),
+                                        'nActivityCode' :   linea.ActivityCode.toString()
+                                    });
+                                });
                                 me.arraySapUpdSgcVehiculo.push({
                                     'nServiceCallID': me.jsonRespuestaVehiculo.ServiceCallID.toString(),
-                                    'nActivityCode': me.jsonRespuestaVehiculo.ServiceCallActivities[0].ActivityCode.toString(),
-                                    'cInternalSerialNum': me.jsonRespuestaVehiculo.InternalSerialNum.toString(),
+                                    'cFlagTipo': 'V',
+                                    'nActivityCode': 0,
                                     'cItemCode': me.jsonRespuestaVehiculo.ItemCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuestaVehiculo.InternalSerialNum.toString(),
                                     'cLogRespuesta': me.arraySapRespuestaVehiculo[key].toString()
                                 });
                             }
@@ -2173,7 +2184,8 @@
                 var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioVenta';
                 axios.post(sapUrl, {
                     // 'data': me.arraySapUpdSgc
-                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo
+                    'arraySapUpdSgcVehiculo'    : me.arraySapUpdSgcVehiculo,
+                    'arrayServiceCallActivities': me.arrayServiceCallActivities
                     // 'arraySapUpdSgcEV': me.arraySapUpdSgcEV
                 }).then(response => {
                     me.limpiarFormulario();

@@ -49,13 +49,26 @@ class IntLlamadaServicioController extends Controller
                 $data = $request->arraySapUpdSgcVehiculo;
                 foreach($data as $ep=>$det)
                 {
-                    $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?',
+                    $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $det['nServiceCallID'],
+                                                                    $det['cFlagTipo'],
                                                                     $det['nActivityCode'],
                                                                     $det['cItemCode'],
                                                                     $det['cInternalSerialNum'],
                                                                     $det['cLogRespuesta'],
                                                                     Auth::user()->id
+                                                                ]);
+                }
+            }
+
+            $arrayServiceCallActivitiesLength = sizeof($request->arrayServiceCallActivities);
+            if($arrayServiceCallActivitiesLength > 0) {
+                $data = $request->arrayServiceCallActivities;
+                foreach($data as $ep=>$det)
+                {
+                    $objProyecto = DB::select('exec [usp_Integra_UpdActividadByServiceCallID] ?, ?',
+                                                                [   $det['nServiceCallID'],
+                                                                    $det['nActivityCode']
                                                                 ]);
                 }
             }
