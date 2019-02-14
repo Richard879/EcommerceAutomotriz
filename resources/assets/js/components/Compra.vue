@@ -2955,7 +2955,7 @@
                 me.formCompra.ccarcode = objCompra.cCarCode;
 
                 //Obtener Cronograma
-                me.nidcronograma = objCompra.nIdCronograma;
+                //me.nidcronograma = objCompra.nIdCronograma;
 
                 //Verifico Si existe Artículo
                 if(!objCompra.cItemCode){
