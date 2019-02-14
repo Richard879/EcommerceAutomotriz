@@ -18,8 +18,9 @@ class IntLlamadaServicioController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?',
+                $objLlamadaServicio = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $det['nServiceCallID'],
+                                                                $det['cFlagTipo'],
                                                                 $det['nActivityCode'],
                                                                 $det['cItemCode'],
                                                                 $det['cInternalSerialNum'],
@@ -28,7 +29,7 @@ class IntLlamadaServicioController extends Controller
                                                             ]);
             }
             DB::commit();
-            return response()->json($objProyecto);
+            return response()->json($objLlamadaServicio);
         } catch (Exception $e){
             DB::rollBack();
         }

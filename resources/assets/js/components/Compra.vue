@@ -2127,8 +2127,8 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
                             //PARA GUARDAR EN EL SGC LA INFO DE SAP
                             me.arraySapUpdSgc.push({
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
@@ -2199,9 +2199,9 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.Code); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
-                                'cCode': me.jsonRespuesta.Code.toString(),
-                                'cName': me.jsonRespuesta.Name.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cCode'         : me.jsonRespuesta.Code.toString(),
+                                'cName'         : me.jsonRespuesta.Name.toString(),
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
@@ -2249,9 +2249,9 @@
                     //Sino se encuentra no pase a TarjetaEquipo
                     if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapTarjetaEquipo.push({
-                            'cCustomerCode': me.ccodigoempresasap,
+                            'cCustomerCode'     : me.ccodigoempresasap,
                             'cInternalSerialNum': x.cNumeroVin,
-                            'cItemCode': x.cNumeroVin
+                            'cItemCode'         : x.cNumeroVin
                         });
                     }
                 });
@@ -2273,10 +2273,10 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
-                                'nEquipmentCardNum': parseInt(me.jsonRespuesta.EquipmentCardNum),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                'nEquipmentCardNum' : parseInt(me.jsonRespuesta.EquipmentCardNum),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
@@ -2431,13 +2431,13 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo': 22,
                                 'cActividadTipo': 'OrdenCompra',
-                                'cCardCode': me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
@@ -2487,16 +2487,16 @@
                         var sapUrl = me.ruta + '/actividad/GetIntegraActividadByItemCode';
                         axios.get(sapUrl, {
                             params: {
-                                'citemcode': x.cNumeroVin,
+                                'citemcode'     : x.cNumeroVin,
                                 'nactividadtipo': 22
                             }
                         }).then(response => {
                             me.arraySapLlamadaServicio.push({
-                                'nActivityCode': response.data[0].nActivityCode,
-                                'cCustomerCode': response.data[0].cCustomerCode,
+                                'nActivityCode'     : response.data[0].nActivityCode,
+                                'cCustomerCode'     : response.data[0].cCustomerCode,
                                 'cInternalSerialNum': response.data[0].cItemCode,
-                                'cItemCode': response.data[0].cItemCode,
-                                'cSubject': 'COMPRA'
+                                'cItemCode'         : response.data[0].cItemCode,
+                                'cSubject'          : 'COMPRA'
                             });
                         }).catch(error => {
                             console.log(error);
@@ -2533,11 +2533,12 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
-                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
-                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'C',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta[key].toString()
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
@@ -2650,24 +2651,24 @@
 
                 var url = me.ruta + '/tablacosto/GetCompraConceptosTblCosto';
                 axios.post(url, {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': me.nidcronograma,
-                        'data': me.arraySapArticulo
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma' : me.nidcronograma,
+                        'data'          : me.arraySapArticulo
                 }).then(response => {
                     // ====================== CONCEPTO =========================
                     // ====================  TIPO DE BENEFICIO =================
                     let arrayBeneficio = response.data.array_infoTipoBeneficio;
                     arrayBeneficio.map(function (x) {
                         me.arrayTCTipoBeneficio.push({
-                            U_SYP_VIN           :   x.U_SYP_VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                            'U_SYP_VIN'           :   x.U_SYP_VIN,
+                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
                     });
                     // ====================== CONCEPTO =========================
@@ -2675,14 +2676,14 @@
                     let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                     arrayCostoVehiculo.map(function (x) {
                         me.arrayTCCostoVehiculo.push({
-                            U_SYP_VIN           :   x.U_SYP_VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                            'U_SYP_VIN'           :   x.U_SYP_VIN,
+                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
                     });
 
@@ -2931,29 +2932,30 @@
                 let me = this;
 
                 me.arraySapCompra.push({
-                    nIdCompra: objCompra.nIdCompra,
-                    cCronograma :objCompra.cNumeroMes + '-' + objCompra.cAnio,
-                    nOrdenCompra: objCompra.nOrdenCompra,
-                    cNombreLinea: objCompra.cNombreLinea,
-                    cNombreAlmacen: objCompra.cNombreAlmacen,
-                    nNumeroReserva: objCompra.nNumeroReserva,
-                    cNumeroVin: objCompra.cNumeroVin,
-                    cFormaPago: objCompra.cFormaPago,
-                    cNombreComercial: objCompra.cNombreComercial,
-                    nAnioFabricacion: objCompra.nAnioFabricacion,
-                    nAnioVersion: objCompra.nAnioVersion,
-                    cSimboloMoneda: objCompra.cSimboloMoneda,
-                    fTotalCompra: objCompra.fTotalCompra,
-                    cNumeroFactura: objCompra.cNumeroFactura,
-                    dFechaFacturado: objCompra.dFechaFacturado,
-                    dFechaCompra: objCompra.dFechaCompra,
-                    cItemType: objCompra.cItemType
+                    'nIdCompra'         : objCompra.nIdCompra,
+                    'nIdCronograma'     : objCompra.nIdCronograma,
+                    'cCronograma'       : objCompra.cNumeroMes + '-' + objCompra.cAnio,
+                    'nOrdenCompra'      : objCompra.nOrdenCompra,
+                    'cNombreLinea'      : objCompra.cNombreLinea,
+                    'cNombreAlmacen'    : objCompra.cNombreAlmacen,
+                    'nNumeroReserva'    : objCompra.nNumeroReserva,
+                    'cNumeroVin'        : objCompra.cNumeroVin,
+                    'cFormaPago'        : objCompra.cFormaPago,
+                    'cNombreComercial'  : objCompra.cNombreComercial,
+                    'nAnioFabricacion'  : objCompra.nAnioFabricacion,
+                    'nAnioVersion'      : objCompra.nAnioVersion,
+                    'cSimboloMoneda'    : objCompra.cSimboloMoneda,
+                    'fTotalCompra'      : objCompra.fTotalCompra,
+                    'cNumeroFactura'    : objCompra.cNumeroFactura,
+                    'dFechaFacturado'   : objCompra.dFechaFacturado,
+                    'dFechaCompra'      : objCompra.dFechaCompra,
+                    'cItemType'         : objCompra.cItemType
                 });
                 //Obtener Codigo Sap Proveedor
                 me.formCompra.ccarcode = objCompra.cCarCode;
 
                 //Obtener Cronograma
-                me.nidcronograma = objCompra.nIdCronograma;
+                //me.nidcronograma = objCompra.nIdCronograma;
 
                 //Verifico Si existe Artículo
                 if(!objCompra.cItemCode){
@@ -2985,8 +2987,8 @@
                         //Si el valor de ItemCode tiene un valor
                         if(me.jsonRespuesta.ItemCode){
                             me.arraySapUpdSgc.push({
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': response.data.toString()
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta' : response.data.toString()
                             });
 
                             setTimeout(function() {
@@ -3056,9 +3058,9 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.Code){
                                 me.arraySapUpdSgc.push({
-                                    'cCode': me.jsonRespuesta.Code.toString(),
-                                    'cName': me.jsonRespuesta.Name.toString(),
-                                    'cLogRespuesta': response.data.toString()
+                                    'cCode'         : me.jsonRespuesta.Code.toString(),
+                                    'cName'         : me.jsonRespuesta.Name.toString(),
+                                    'cLogRespuesta' : response.data.toString()
                                 });
 
                                 //==============================================================
@@ -3138,10 +3140,10 @@
                             //Si el valor de respuesta InternalSerialNum tiene un valor
                             if(me.jsonRespuesta.InternalSerialNum){
                                 me.arraySapUpdSgc.push({
-                                    'nEquipmentCardNum': parseInt(me.jsonRespuesta.EquipmentCardNum),
-                                    'cItemCode': me.jsonRespuesta.ItemCode.toString(),
+                                    'nEquipmentCardNum' : parseInt(me.jsonRespuesta.EquipmentCardNum),
+                                    'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
                                     'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                    'cLogRespuesta': response.data.toString()
+                                    'cLogRespuesta'     : response.data.toString()
                                 });
 
                                 //==============================================================
@@ -3320,22 +3322,22 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
-                                    'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
+                                    'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
                                     'nActividadTipo': 22,
                                     'cActividadTipo': 'OrdenCompra',
-                                    'cCardCode': me.jsonRespuesta.CardCode.toString(),
-                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                    'cLogRespuesta': response.data.toString()
+                                    'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta' : response.data.toString()
                                 });
 
                                 me.arraySapLlamadaServicio = [];
                                 me.arraySapLlamadaServicio.push({
-                                    'nActivityCode': me.jsonRespuesta.ActivityCode,
-                                    'cCustomerCode': objCompra.cCustomerCode,
+                                    'nActivityCode'     : me.jsonRespuesta.ActivityCode,
+                                    'cCustomerCode'     : objCompra.cCustomerCode,
                                     'cInternalSerialNum': objCompra.cNumeroVin,
-                                    'cItemCode': objCompra.cNumeroVin,
-                                    'cSubject': objCompra.cSubject
+                                    'cItemCode'         : objCompra.cNumeroVin,
+                                    'cSubject'          : objCompra.cSubject
                                 });
 
                                 //================================================================
@@ -3423,11 +3425,12 @@
                             me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
                             me.arraySapUpdSgc.push({
-                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
-                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'C',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': response.data.toString()
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
                             });
 
                             //=========================================================================
@@ -3511,9 +3514,9 @@
                             });
 
                             me.arraySapUpdSgc.push({
-                                'nDocEntry' : me.jsonRespuesta.DocEntry,
-                                'cU_SYP_VIN': me.jsonRespuesta.U_SYP_VIN,
-                                'cLogRespuesta': response.data.toString()
+                                'nDocEntry'     : me.jsonRespuesta.DocEntry,
+                                'cU_SYP_VIN'    : me.jsonRespuesta.U_SYP_VIN,
+                                'cLogRespuesta' : response.data.toString()
                             });
                         }
                     });
@@ -3556,10 +3559,10 @@
 
                 var url = me.ruta + '/tablacosto/GetCompraConceptosTblCosto';
                 axios.post(url, {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': me.nidcronograma,
-                        'data': me.arraySapCompra
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma' : objCompra.nIdCronograma,
+                        'data'          : me.arraySapCompra
                 }).then(response => {
                     // ====================== CONCEPTO =========================
                     // ====================  TIPO DE BENEFICIO =================
@@ -3567,14 +3570,14 @@
                         let arrayBeneficio = response.data.array_infoTipoBeneficio;
                         arrayBeneficio.map(function (x) {
                             me.arrayTCTipoBeneficio.push({
-                                U_SYP_VIN           :   x.U_SYP_VIN,
-                                U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                                U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                                U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                                U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                                U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                                U_SYP_COSTO         :   x.U_SYP_COSTO,
-                                U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                                'U_SYP_VIN'           :   x.U_SYP_VIN,
+                                'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                                'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                                'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                                'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                                'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                                'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                                'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                             });
                         });
                     }
@@ -3585,14 +3588,14 @@
                         let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                         arrayCostoVehiculo.map(function (x) {
                             me.arrayTCCostoVehiculo.push({
-                                U_SYP_VIN           :   x.U_SYP_VIN,
-                                U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                                U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                                U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                                U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                                U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                                U_SYP_COSTO         :   x.U_SYP_COSTO,
-                                U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                                'U_SYP_VIN'           :   x.U_SYP_VIN,
+                                'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                                'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                                'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                                'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                                'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                                'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                                'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                             });
                         });
                     }                    
@@ -3624,9 +3627,9 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
-                    'dataCabecera'  : me.arraySapCosto,
-                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio,
-                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo
+                    'dataCabecera'      : me.arraySapCosto,
+                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio,
+                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo
                 }).then(response => {
                     me.loading.close();
                     swal('Compra registrada correctamente');
@@ -3853,69 +3856,6 @@
                             me.listarCompras(1);
                         }
                     }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapLlamadaServicioMercancia(objCompra){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID': me.jsonRespuesta.ServiceCallID.toString(),
-                                'nActivityCode': me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode': me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta': response.data.toString()
-                            });
-
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaActualizarLlamadaServicioMercancia();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaActualizarLlamadaServicioMercancia(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.loading.close();
-                    swal('Compra registrada correctamente');
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
