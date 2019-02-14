@@ -1988,10 +1988,8 @@
                 let me = this;
                 var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioVenta';
                 axios.post(sapUrl, {
-                    // 'data': me.arraySapUpdSgc
                     'arraySapUpdSgcVehiculo'    : me.arraySapUpdSgcVehiculo,
                     'arrayServiceCallActivities': me.arrayServiceCallActivities
-                    // 'arraySapUpdSgcEV': me.arraySapUpdSgcEV
                 }).then(response => {
                     me.limpiarFormulario();
                     me.listarPedidos(1);
