@@ -2350,7 +2350,7 @@
                                                                 <td>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Eliminar {{ obsequio.cNombre }}</div>
-                                                                        <i @click="removerElementoVentaCampania(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                        <i @click="removerObsequio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="obsequio.cNombre"></td>
@@ -3880,6 +3880,9 @@
                 $('#TabDCElementoVenta').addClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
+            },
+            removerObsequio(index){
+                this.$delete(this.arrayObsequioEleVentaModal, index);
             },
             // ======================
             // SUBTAB ELEMENTO VENTA
