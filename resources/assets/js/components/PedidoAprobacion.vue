@@ -1632,6 +1632,7 @@
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                     'hActivityTime' :   '08:13:00',
                                     'cCardCode'     :   me.ccodigoempresasap,
+                                    'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
                                     'nDocNum'       :   me.jsonRespuestaVehiculo.DocNum.toString(),
@@ -1691,6 +1692,7 @@
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                     'hActivityTime' :   '08:13:00',
                                     'cCardCode'     :   me.ccodigoempresasap,
+                                    'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaEV.DocEntry.toString(),
                                     'nDocNum'       :   me.jsonRespuestaEV.DocNum.toString(),
@@ -1964,18 +1966,16 @@
                     // OBTENER INFORMACIÓN DE LA ACTIVIDAD DEL VEHÍCULO PARA LLAMADA SERVICIOS
                     // ======================================================================
                     me.arraySapRespuestaVehiculo = [];
+                    me.arraySapLlamadaServicio = [];
 
                     me.arraySapRespuestaVehiculo = response.data.arrayInfoVehiculoActividad;
                     if(me.arraySapRespuestaVehiculo.length > 0) {
                         me.arraySapRespuestaVehiculo.map(function(value, key){
-                            me.jsonRespuestaVehiculo = '';
-                            me.jsonRespuestaVehiculo = JSON.parse(value);
-
                             //Guardar Cabecera Llamada Servicios
-                            me.fillLlamadaServicio.cCustomerCode        = me.jsonRespuestaVehiculo.cCustomerCode;
-                            me.fillLlamadaServicio.cInternalSerialNum   = me.jsonRespuestaVehiculo.cItemCode;
-                            me.fillLlamadaServicio.cItemCode            = me.jsonRespuestaVehiculo.cItemCode;
-                            me.fillLlamadaServicio.cSubject             = me.jsonRespuestaVehiculo.cSubject;
+                            me.fillLlamadaServicio.cCustomerCode        = value.cCustomerCode;
+                            me.fillLlamadaServicio.cInternalSerialNum   = value.cItemCode;
+                            me.fillLlamadaServicio.cItemCode            = value.cItemCode;
+                            me.fillLlamadaServicio.cSubject             = value.cSubject;
                             //Guardar Detalle de Actividades del Servicio
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode': value.nActivityCode
@@ -1987,15 +1987,16 @@
                     // OBTENER INFORMACIÓN DE LA ACTIVIDAD DEL E.V PARA LLAMADA SERVICIOS
                     // ======================================================================
                     me.arraySapRespuestaEV = [];
-                    me.arraySapLlamadaServicioEV = [];
 
                     me.arraySapRespuestaEV = response.data.arrayInfoEVActividad;
                     if(me.arraySapRespuestaEV.length > 0) {
                         me.arraySapRespuestaEV.map(function(value, key){
                             //Guardar Detalle de Actividades del Servicio
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode': value.nActivityCode
-                            });
+                            if(key == 0) {
+                                me.arraySapLlamadaServicio.push({
+                                    'nActivityCode': value.nActivityCode
+                                });
+                            }
                         });
                     }
                     /*
@@ -2080,7 +2081,6 @@
                     // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL VEHICULO EN SQL SERVER
                     // ======================================================================
                     me.arraySapRespuestaVehiculo = [];
-                    me.arraySapItemCodeVehiculo = [];
                     me.arraySapUpdSgcVehiculo = [];
 
                     me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
@@ -2090,8 +2090,6 @@
                             me.jsonRespuestaVehiculo = JSON.parse(value);
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuestaVehiculo.ItemCode){
-                                me.arraySapItemCodeVehiculo.push(me.jsonRespuestaVehiculo.ItemCode); //PARA DEPURAR
-
                                 me.arraySapUpdSgcVehiculo.push({
                                     'nServiceCallID': me.jsonRespuestaVehiculo.ServiceCallID.toString(),
                                     'nActivityCode': me.jsonRespuestaVehiculo.ServiceCallActivities[0].ActivityCode.toString(),
@@ -2487,9 +2485,30 @@
                 this.SAPNuevoContactoJson = ''
             },
             limpiarFormulario(){
+                //=====Variables SAP para OrdenVenta Vehiculo
+                this.arraySapRespuestaVehiculo= [],
+                this.arraySapUpdSgcVehiculo= [],
+                this.jsonRespuestaVehiculo= '',
+                this.arraySapItemCodeVehiculo= [],
+                this.arrayVINPedidoVehiculo= [],//Almacena VINES
+                this.arraySapActividadVehiculo = [];
+
+                //=====Variables SAP para OrdenVenta Elemento Venta
+                this.arraySapRespuestaEV = [],
+                this.jsonRespuestaEV = '',
+                this.arraySapUpdSgcEV = [],
+                this.arraySapItemCodeEV = [],
+                this.arrayCodSAPPedidoEV = [],//Almacena CodSAP
+                this.arraySapActividadEV = [];
+
+                this.fillLlamadaServicio.cCustomerCode = '';
+                this.fillLlamadaServicio.cInternalSerialNum = '';
+                this.fillLlamadaServicio.cItemCode = '';
+                this.fillLlamadaServicio.cSubject = '';
+
                 //Limpiar Variables SAP
-                this.arraySapItemCode = [];
                 this.arraySapRespuesta = [];
+                this.arraySapItemCode = [];
                 this.jsonRespuesta = '';
                 this.arraySapUpdSgc= [];
                 this.arraySapPedido= [];
@@ -2499,6 +2518,7 @@
                 this.formSap.nidcabecerapedido= 0;
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
+
                 //Direcciones
                 this.cerrarModal();
                 this.arrayDireccionesFiscales = [];

@@ -74,8 +74,8 @@ class SapLlamadaServicioController extends Controller
 
         $arraySapLlamadaServicioLength = sizeof($request->arraySapLlamadaServicio);
         if($arraySapLlamadaServicioLength > 0) {
-            $arraySapLlamadaServicio = $request->arraySapLlamadaServicio;
-            foreach ($arraySapLlamadaServicio as $key => $value) {
+            $data = $request->arraySapLlamadaServicio;
+            foreach ($data as $key => $value) {
                 $json['json']['ServiceCallActivities'][] = [
                     "LineNum"       =>  $cont,
                     "ActivityCode"  =>  (string)$value['nActivityCode'],
