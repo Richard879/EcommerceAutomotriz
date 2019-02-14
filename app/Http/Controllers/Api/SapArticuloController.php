@@ -77,13 +77,22 @@ class SapArticuloController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
         
-        $nWhsCode     = $request->nIdAlmacen;
-        $cItemCode    = $request->cItemCode;
+        $array_rpta = [];
+        $rptaSap   = [];
+        
+        $arraySapElemento = $request->arraySapElemento;
+        foreach ($arraySapElemento as $key => $value) {
 
-        $response = $client->request('POST', "/api/Articulo/SapGetCostoPromedio/", [
-                                                                                'query' => ['nWhsCode' => $nWhsCode,
-                                                                                            'cItemCode' => $cItemCode]
-                                                                            ]);
-        return $response->getBody();
+            $nWhsCode     = $value['nIdAlmacen'];
+            $cItemCode    = $value['cItemCode'];
+
+            $response = $client->request('POST', "/api/Articulo/SapGetCostoPromedio/", [
+                                                                                        'query' => ['nWhsCode' => $nWhsCode,
+                                                                                                    'cItemCode' => $cItemCode]
+                                                                                    ]);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
     }
 }

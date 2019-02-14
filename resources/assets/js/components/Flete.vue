@@ -262,7 +262,7 @@
                                                             </div>
                                                             <br/>
                                                             <template v-if="arrayTempFlete.length">
-                                                                <span style="color:red; font-size: 12px;">* El Importe del Flete debe ser en SOLES y SIN IGV</span>
+                                                                <span style="color:red; font-size: 12px;"><strong>* El Importe del Flete debe ser en SOLES y SIN IGV</strong></span>
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>

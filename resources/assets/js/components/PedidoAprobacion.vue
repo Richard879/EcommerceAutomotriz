@@ -1551,7 +1551,7 @@
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
-                    console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
+                    //console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
                     this.obtenerEVById();
                 }).catch(error => {
                     console.log(error);
@@ -1574,7 +1574,7 @@
                     }
                 }).then(response => {
                     this.arraySAPEVPedido = response.data.arrayEVPedido.data;
-                    console.log("Cantidad EV : " + this.arraySAPEVPedido.length);
+                    //console.log("Cantidad EV : " + this.arraySAPEVPedido.length);
                     this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
