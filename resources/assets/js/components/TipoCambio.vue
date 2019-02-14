@@ -192,7 +192,7 @@
                         'dfecha': moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
-                    if(response.data.length()){
+                    if(response.data.length){
                         me.arraySapRespuesta = response.data;
                         me.arraySapRespuesta.map(function(value, key){
                             me.fillTipoCambio.fTipoCambioVenta = value.Rate;
