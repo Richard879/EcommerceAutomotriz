@@ -780,7 +780,9 @@
                     ccardcode: '',
                     igv: 0,
                     cnumerovin: '',
-                    ndocentry: 0
+                    ndocentry: 0,
+                    nidalmacen: 0,
+                    warehousecode: '',
                 },
                 //=====Variables SAP para OrdenVenta Vehiculo
                 arraySapRespuestaVehiculo: [],
@@ -856,6 +858,11 @@
                 mensajeError: [],
                 loading: false
             }
+        },
+        mounted(){
+            this.llenarComboMarca();
+            this.llenarComboModelo();
+            this.obtenerLocalidadBySucursal();
         },
         computed:{
             isActived: function(){
@@ -1021,6 +1028,56 @@
             cambiarPaginaPedido(page){
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
+            },
+            obtenerLocalidadBySucursal(){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo': 0,
+                        'nparsrcgrupoarametro': 110102,
+                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro': 110022,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    if(response.data.arrayParParametro.length){
+                        this.formSap.nidalmacen = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.obtenerAlmacenByLocalidad();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerAlmacenByLocalidad(){
+                var url = this.ruta + '/parametro/GetParametroById';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formSap.nidalmacen,
+                        'nidtipopar': 110102
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        this.formSap.warehousecode = response.data[0].cParJerarquia;
+                    }
+                    else{
+                        this.formSap.warehousecode = '';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //METODOS ASIGNACIÓN DIRECCIONES
             obtenerDireccionesPorContacto(data){
@@ -1607,7 +1664,7 @@
                     me.arraySAPEVArticulos.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySAPEVArticulosEnvia.push({
-                                'nWhsCode'  :  parseInt('01'),
+                                'nWhsCode'  :  this.formSap.warehousecode ? parseInt(this.formSap.warehousecode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
@@ -2517,10 +2574,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            this.llenarComboMarca();
-            this.llenarComboModelo();
         }
     }
 </script>
