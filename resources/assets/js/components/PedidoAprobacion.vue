@@ -822,6 +822,10 @@
                 arraySapLlamadaServicio: [],
                 arraySapCostoProm: [],
                 arraySapCosto: [],
+                arraySAPEVArticulos: [],
+                arraySAPEVArticulosEnvia: [],
+                arraySAPEVServicios: [],
+                arraySAPEVServiciosEnvia: [],
                 VINDelPedido: '',
                 fAvgPrice: 0,
                 // =============================================================
@@ -1598,13 +1602,21 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    me.arraySAPEVPedido = response.data.arrayEVPedido;
+                    me.arraySAPEVArticulos = response.data.arrayEVPedido;
 
-                    me.arraySAPEVPedido.map(function(value, key) {
-                        me.arrayCodSAPPedidoEV.push({
-                            'nWhsCode'  :  parseInt('01'),
-                            'cItemCode' :  value.cCodigoERP
-                        });
+                    me.arraySAPEVArticulos.map(function(value, key) {
+                        //if(value.nIdTipoElementoVenta != 1300025){
+                            me.arraySAPEVArticulosEnvia.push({
+                                'nWhsCode'  :  parseInt('01'),
+                                'cItemCode' :  value.cCodigoERP
+                            });
+                        //}
+                        /*else{
+                            me.arraySAPEVServiciosEnvia.push({
+                                'nWhsCode'  :  parseInt('01'),
+                                'cItemCode' :  value.cCodigoERP
+                            });
+                        }*/
                     });
 
                     //================================================================
@@ -2045,10 +2057,8 @@
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
-                    'data': me.arrayCodSAPPedidoEV
+                    'data': me.arraySAPEVArticulosEnvia
                 }).then(response => {
-                    me.loading.close();
-                   
                     me.arraySapRespuestaVehiculo = [];
                     me.arraySapUpdSgcVehiculo = [];
 
@@ -2443,6 +2453,10 @@
                 this.formSap.ndocentry = 0;
                 this.arraySapCostoProm= [];
                 this.arraySapCosto= [];
+                this.arraySAPEVArticulos= [];
+                this.arraySAPEVArticulosEnvia= [];
+                this.arraySAPEVServicios= [];
+                this.arraySAPEVServiciosEnvia= [];
 
                 //Direcciones
                 this.cerrarModal();
