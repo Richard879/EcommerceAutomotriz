@@ -170,6 +170,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListContactoBySinCarteraMes', 'PedidoController@GetListContactoBySinCarteraMes');
     Route::get('/pedido/GetPedidoById', 'PedidoController@GetPedidoById');
     Route::get('/pedido/GetPedidoEVById', 'PedidoController@GetPedidoEVById');
+    Route::get('/pedido/GetCampaniaObsequioByIdPedido', 'PedidoController@GetCampaniaObsequioByIdPedido');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
 
@@ -410,6 +411,7 @@ Route::middleware(['auth'])->group(function(){
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
+    Route::post('/articulo/SapGetCostoPromedio', 'Api\SapArticuloController@SapGetCostoPromedio');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     Route::post('/pedido/prueba', 'Api\SapPedidoController@prueba');
@@ -431,7 +433,7 @@ Route::middleware(['auth'])->group(function(){
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
-    Route::post('/tablacosto/SapPachTablaCostoFlete','Api\SapTablaCostoController@SapPachTablaCostoFlete');
+    Route::post('/tablacosto/SapPachTablaCosto','Api\SapTablaCostoController@SapPachTablaCosto');
     //Tipo Cambio
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     /// ============================================================

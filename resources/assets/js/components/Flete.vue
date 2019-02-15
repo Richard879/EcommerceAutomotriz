@@ -1235,9 +1235,9 @@
 
                 me.loadingProgressBar("INTEGRANDO FLETE CON SAP BUSINESS ONE...");
 
-                var url = me.ruta + '/tablacosto/SapPachTablaCostoFlete';
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'dataFlete'  : me.arrayTCFlete
+                    'data'  : me.arrayTCFlete
                 }).then(response => {
                     me.loading.close();
                     $("#myBar").hide();

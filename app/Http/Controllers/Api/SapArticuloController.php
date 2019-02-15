@@ -70,7 +70,7 @@ class SapArticuloController extends Controller
         return $array_rpta;
     }
 
-    public function SapGetCostoPromedio()
+    public function SapGetCostoPromedio(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -80,10 +80,10 @@ class SapArticuloController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
         
-        $arraySapElemento = $request->arraySapElemento;
+        $arraySapElemento = $request->data;
         foreach ($arraySapElemento as $key => $value) {
 
-            $nWhsCode     = $value['nIdAlmacen'];
+            $nWhsCode     = $value['nWhsCode'];
             $cItemCode    = $value['cItemCode'];
 
             $response = $client->request('POST', "/api/Articulo/SapGetCostoPromedio/", [

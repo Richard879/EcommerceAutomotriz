@@ -154,10 +154,6 @@
                                             <tbody>
                                                 <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                     <td>
-                                                        <!-- <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="aprobarPedido(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
-                                                        </el-tooltip>&nbsp;&nbsp; -->
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('contacto', 'direcciones', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
@@ -782,7 +778,9 @@
                 formSap:{
                     nidcabecerapedido: 0,
                     ccardcode: '',
-                    igv: 0
+                    igv: 0,
+                    cnumerovin: '',
+                    ndocentry: 0
                 },
                 //=====Variables SAP para OrdenVenta Vehiculo
                 arraySapRespuestaVehiculo: [],
@@ -822,7 +820,10 @@
                 arraySAPEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
+                arraySapCostoProm: [],
+                arraySapCosto: [],
                 VINDelPedido: '',
+                fAvgPrice: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1586,6 +1587,41 @@
                     }
                 });
             },
+            obtenerObsequiosCampaniasByIdPedido(objPedido){
+                let me = this;
+                var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': objPedido.nIdCabeceraPedido,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    me.arraySAPEVPedido = response.data.arrayEVPedido;
+
+                    me.arraySAPEVPedido.map(function(value, key) {
+                        me.arrayCodSAPPedidoEV.push({
+                            'nWhsCode'  :  parseInt('01'),
+                            'cItemCode' :  value.cCodigoERP
+                        });
+                    });
+
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.integracSapCosto();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             //REGISTRA PEDIDO EN SAP
             registroSapBusinessPedido(){
                 let me = this;
@@ -1613,7 +1649,7 @@
                             //Verifico que devuelva DocEntry
                             if(me.jsonRespuestaVehiculo.DocEntry){
                                 console.log("Integración Pedido Vehiculo SAP : OK");
-                                console.log(me.jsonRespuestaVehiculo.DocEntry);
+                                //console.log(me.jsonRespuestaVehiculo.DocEntry);
                                 //Guardo el VIN del Pedido del Vehìculo
                                 me.arrayVINPedidoVehiculo.push({
                                     'nDocEntry' : parseInt(me.jsonRespuestaVehiculo.DocEntry),
@@ -1666,13 +1702,13 @@
                             //Verifico que devuelva DocEntry
                             if(me.jsonRespuestaEV.DocEntry){
                                 console.log("Integración Pedido Ele.Venta SAP : OK");
-                                console.log(me.jsonRespuestaEV.DocEntry);
+                                //console.log(me.jsonRespuestaEV.DocEntry);
 
                                 //Generar varias lineas de la misma Orden Venta para actualizar DOCENTRY en cada detalle de Pedido en SQL SERVER
                                 let arrayDocumentLines = me.jsonRespuestaEV.DocumentLines;
-                                console.log(arrayDocumentLines);
+                                //console.log(arrayDocumentLines);
                                 arrayDocumentLines.map(function(linea) {
-                                    console.log(linea);
+                                    //console.log(linea);
                                     //Guardo el Codigo SAP de los Elemento Venta
                                     me.arrayCodSAPPedidoEV.push({
                                         'nDocEntry' :   parseInt(me.jsonRespuestaEV.DocEntry),
@@ -1991,6 +2027,89 @@
                     'arraySapUpdSgcVehiculo'    : me.arraySapUpdSgcVehiculo,
                     'arrayServiceCallActivities': me.arrayServiceCallActivities
                 }).then(response => {
+                    setTimeout(function() {
+                        me.obtenerSapCostoPromedio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerSapCostoPromedio(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
+                var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
+                axios.post(sapUrl, {
+                    'data': me.arrayCodSAPPedidoEV
+                }).then(response => {
+                    me.loading.close();
+                   
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapUpdSgcVehiculo = [];
+
+                    me.arraySapRespuestaVehiculo = response.data;
+                    me.arraySapRespuestaVehiculo.map(function(value, key){
+                        me.arraySapCostoProm.push(value[0]);
+                        
+                    });
+                   
+                    me.arraySapCostoProm.map(function(value, key){
+                        me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
+                    });
+
+                    me.arraySapCosto = [];
+                    // ====================== CONCEPTO =========================
+                    // ======================== FLETE ==========================
+                    me.arraySapCosto.push({
+                        U_SYP_VIN           :   me.formSap.cnumerovin,
+                        DocEntry            :   me.formSap.ndocentry,
+                        U_SYP_CCONCEPTO     :   '06',
+                        U_SYP_DCONCEPTO     :   'Accesorios',
+                        U_SYP_CDOCUMENTO    :   '02',
+                        U_SYP_DDOCUMENTO    :   'Factura Proveedor',
+                        U_SYP_IMPORTE       :   me.fAvgPrice,
+                        U_SYP_COSTO         :   'Si',
+                        U_SYP_ESTADO        :   'Pendiente'
+                    });
+
+                    if(me.fAvgPrice > 0 && me.formSap.ndocentry != 0){
+                        setTimeout(function() {
+                            me.registroSapBusinessTblCostoEV();
+                        }, 1600);
+                    }else{
+                        me.limpiarFormulario();
+                        me.listarPedidos(1);
+                        swal(
+                            'Aprobado!',
+                            'El pedido ha sido APROBADO con éxito.',
+                            'success'
+                        );
+                        $("#myBar").hide();
+                        me.loading.close();
+                    }
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Costos SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoEV(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapCosto
+                }).then(response => {
                     me.limpiarFormulario();
                     me.listarPedidos(1);
                     swal(
@@ -2254,22 +2373,9 @@
                         switch(accion){
                             case 'direcciones':
                             {
+                                this.formSap.cnumerovin = data['cNumeroVin'];
+                                this.formSap.ndocentry = data['nDocEntry'];
                                 this.obtenerDireccionesPorContacto(data);
-
-                                //SI EL CARDCODE NO ESTA INTEGRADO
-                                // if (this.fillDirecciones.cCardCode == '' || this.fillDirecciones.cCardCode == null) {
-                                //     this.cFlagOpcion = 1;//Flag Requiere Integración Contacto/Pedido
-                                //     this.accionmodal=4;
-                                //     this.modal = 1;
-                                //     this.fillDirecciones.nIdCabeceraPedido = data.nIdCabeceraPedido;
-                                //     this.fillDirecciones.nIdContacto = data.nIdContacto;
-                                //     this.fillDirecciones.cContacto = data.cContacto;
-                                // } else {
-                                //     //INTEGRAR PEDIDO
-                                //     this.cFlagOpcion = 2;//Flag Requiere Integración Pedido
-                                //     this.aprobarPedido(data);
-                                // }
-                                // console.log(data);
                                 break;
                             }
                         }
@@ -2333,6 +2439,10 @@
                 this.formSap.nidcabecerapedido= 0;
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
+                this.formSap.cnumerovin = '';
+                this.formSap.ndocentry = 0;
+                this.arraySapCostoProm= [];
+                this.arraySapCosto= [];
 
                 //Direcciones
                 this.cerrarModal();
@@ -2369,6 +2479,17 @@
                 this.paginationModal.last_page = 0,
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarPedidos(1);
             },
             mostrarProgressBar(){
                 $("#myBar").show();
