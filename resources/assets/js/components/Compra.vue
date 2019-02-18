@@ -2035,6 +2035,7 @@
             },
             eliminarItemExcel(index){
                 this.$delete(this.arrayExcel, index);
+                this.contadorArrayExcel = this.arrayExcel.length;
             },
             //Registrar Excel Compra
             registrar(){
@@ -3694,7 +3695,7 @@
 
                     var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                     axios.post(sapUrl, {
-                        'data': me.objCompra
+                        'data': me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
