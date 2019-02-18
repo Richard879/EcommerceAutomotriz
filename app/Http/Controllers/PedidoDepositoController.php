@@ -196,7 +196,7 @@ class PedidoDepositoController extends Controller
         $DocDate    =   $request->DocDate;
         $DocTotal   =   $request->DocTotal;
         $DocTotalFC =   $request->DocTotalFC;
-        $DocNum     =   $request->DocNum;
+        // $DocNum     =   $request->DocNum;
         $DocCurr    =   $request->DocCurr;
         $DocCurrBank=   $request->DocCurrBank;
         $Account    =   '104111';
@@ -207,11 +207,9 @@ class PedidoDepositoController extends Controller
         if ($Type == '1300457') {
             # Si es Tipo Leasing
             $Type = 2;
-        } else {
-            $Type = 1;
         }
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdDepositoPedido,
                                         $nIdCabeceraPedido,
@@ -226,7 +224,7 @@ class PedidoDepositoController extends Controller
                                         $DocDate,
                                         $DocTotal,
                                         $DocTotalFC,
-                                        $DocNum,
+                                        // $DocNum,
                                         $DocCurr,
                                         $DocCurrBank,
                                         $Account,

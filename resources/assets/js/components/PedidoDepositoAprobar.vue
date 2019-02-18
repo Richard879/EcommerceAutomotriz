@@ -789,10 +789,10 @@
             llenarDepositos(pedido){
                 this.mostrarProgressBar();
 
-                this.formDistribuirDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
-                this.formDistribuirDeposito.cNumeroPedido = pedido.cNumeroPedido;
-                this.formDistribuirDeposito.cnombrecontacto = pedido.cContacto;
-                this.formDistribuirDeposito.flagMontoTotalCotizacion = pedido.fTotalPedido;
+                this.formDistribuirDeposito.nidcabecerapedido           = pedido.nIdCabeceraPedido;
+                this.formDistribuirDeposito.cNumeroPedido               = pedido.cNumeroPedido;
+                this.formDistribuirDeposito.cnombrecontacto             = pedido.cContacto;
+                this.formDistribuirDeposito.flagMontoTotalCotizacion    = pedido.fTotalPedido;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
@@ -912,7 +912,7 @@
                             DocDate             : deposito.dFechaDeposito,
                             DocTotal            : deposito.fMontoSoles,
                             DocTotalFC          : deposito.fMontoDolares,
-                            DocNum              : deposito.nDocNum,
+                            // DocNum              : deposito.nDocNum,
                             DocCurr             : deposito.cAbreviaturaMoneda,
                             DocCurrBank         : deposito.cAbreviaturaMoneda,
                             DocRate             : deposito.cTipoCambio,
@@ -938,6 +938,7 @@
                     }
                 })
             },
+            /*
             //REGISTRA COMPROBANTE SAP
             registroSapComprobante(){
                 let me = this;
@@ -1022,6 +1023,7 @@
                     }
                 });
             },
+            */
             rechazarDeposito(deposito){
                 swal({
                     title: 'Estas seguro de rechazar el Deposito',
