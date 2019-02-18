@@ -2106,21 +2106,6 @@
             getTipoCambioById(){
                 let me = this;
                 if(me.formEventoCamp.nidtipocambio != 0){
-                    /*this.mostrarProgressBar();
-                    var url = this.ruta + '/tipocambio/GetTipoCambioById';
-                    axios.get(url, {
-                        params: {
-                            'nidtipotransaccion' : this.formEventoCamp.nidtipocambio
-                        }
-                    }).then(response => {
-                        this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
-
-                        this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
-                        this.nIdTipoCambio = response.data[0].nIdTipoCambio;
-                        $("#myBar").hide();
-                    }).catch(error => {
-                        console.log(error);
-                    });*/
                     $.each(me.arrayTipoCambio, function (index, value) {
                         if(value.nIdTipoCambio == me.formEventoCamp.nidtipocambio){
                             me.formEventoCamp.fvalortipocambio = value.fValorTipoCambio;
@@ -2883,7 +2868,7 @@
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad,
+                            text: 'La suma de los valores NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad,
                         })
                         return;
                     }
@@ -2927,7 +2912,7 @@
                 valorCantidad = valorCantidad + parseInt(cantidad);
 
                 if(valorCantidad > this.formModalEntrega.ntotalcantidad){
-                    this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad);
+                    this.mensajeError.push('La suma de los valores NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad);
                 };
 
                 if(this.mensajeError.length){

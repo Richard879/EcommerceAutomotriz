@@ -125,44 +125,44 @@ class SapTablaCostoController extends Controller
         return $rpta;
     }
 
-    public function SapPachTablaCostoFlete(Request $request)
+    public function SapPachTablaCosto(Request $request)
     {
         $client = new Client([
             'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $array_rptaFlete = [];
+        $array_rpta = [];
 
         // ====================================================================================================
         // ==========================  REGISTRAR DETALLE CABECERA TBL COST - FLETE ============================
-        $arrayTCFlete = $request->dataFlete;
-        foreach ($arrayTCFlete as $key => $flete) {
+        $data = $request->data;
+        foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "U_SYP_VIN"         => (string)$flete['U_SYP_VIN'],
-                    "DocEntry"          => (string)$flete['DocEntry'],
+                    "U_SYP_VIN"         => (string)$value['U_SYP_VIN'],
+                    "DocEntry"          => (string)$value['DocEntry'],
                     "SYP_COSTODETCollection" => [
                         [
-                            "U_SYP_CCONCEPTO"   => (string)$flete['U_SYP_CCONCEPTO'],
-                            "U_SYP_DCONCEPTO"   => (string)$flete['U_SYP_DCONCEPTO'],
-                            "U_SYP_CDOCUMENTO"  => (string)$flete['U_SYP_CDOCUMENTO'],
-                            "U_SYP_DDOCUMENTO"  => (string)$flete['U_SYP_DDOCUMENTO'],
-                            "U_SYP_IMPORTE"     => (string)$flete['U_SYP_IMPORTE'],
-                            "U_SYP_COSTO"       => (string)$flete['U_SYP_COSTO'],
-                            "U_SYP_ESTADO"      => (string)$flete['U_SYP_ESTADO']
+                            "U_SYP_CCONCEPTO"   => (string)$value['U_SYP_CCONCEPTO'],
+                            "U_SYP_DCONCEPTO"   => (string)$value['U_SYP_DCONCEPTO'],
+                            "U_SYP_CDOCUMENTO"  => (string)$value['U_SYP_CDOCUMENTO'],
+                            "U_SYP_DDOCUMENTO"  => (string)$value['U_SYP_DDOCUMENTO'],
+                            "U_SYP_IMPORTE"     => (string)$value['U_SYP_IMPORTE'],
+                            "U_SYP_COSTO"       => (string)$value['U_SYP_COSTO'],
+                            "U_SYP_ESTADO"      => (string)$value['U_SYP_ESTADO']
                         ]
                     ]
                 ]
             ];
 
-            $rptaFlete = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
-            $rptaSapFlete = json_decode($rptaFlete->getBody());
-            array_push($array_rptaFlete, $rptaSapFlete);
+            $rpta = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+            $rptaSap = json_decode($rpta->getBody());
+            array_push($array_rpta, $rptaSap);
         }
 
         $rpta = [
-            'array_rptaFlete'           =>  $array_rptaFlete
+            'array_rpta' =>  $array_rpta
         ];
 
         return $rpta;

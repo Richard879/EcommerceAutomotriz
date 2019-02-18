@@ -64,6 +64,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Código</th>
+                                                        <th>Código SAP</th>
                                                         <th>Proveedor</th>
                                                         <th>Tipo Elemento</th>
                                                         <th>Nombre Elemento</th>
@@ -77,6 +78,7 @@
                                                 <tbody>
                                                     <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
                                                         <td v-text="elemento.nIdElemento"></td>
+                                                        <td v-text="elemento.cCodigoERP"></td>
                                                         <td v-text="elemento.cProveedorNombre"></td>
                                                         <td v-text="elemento.cTipoElemenNombre"></td>
                                                         <td v-text="elemento.cElemenNombre"></td>

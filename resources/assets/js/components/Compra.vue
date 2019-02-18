@@ -207,22 +207,22 @@
                                                                                             <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Editar Compra  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;-->
+                                                                                    </el-tooltip>&nbsp;&nbsp;<!---->
                                                                                     <template v-if="compra.nDocEntry==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <!--<template v-if="compra.nDocEntryMercanciaValida==0">
+                                                                                    <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
+                                                                                            <i @click="generaSapEntradaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>-->
+                                                                                    </template><!---->
                                                                                 </td>
                                                                                 <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
@@ -489,7 +489,8 @@
                                                                                     <th>Año Mod</th>
                                                                                     <th>Mon</th>
                                                                                     <th>Total</th>
-                                                                                    <th>Nro Factura</th>
+                                                                                    <th>Serie Comprobante</th>
+                                                                                    <th>Nro Comprobante</th>
                                                                                     <th>Fecha Facturado</th>
                                                                                 </tr>
                                                                             </thead>
@@ -515,7 +516,8 @@
                                                                                     <td v-text="compra.nAnioVersion"></td>
                                                                                     <td v-text="compra.cSimboloMoneda"></td>
                                                                                     <td v-text="compra.fTotalCompra"></td>
-                                                                                    <td v-text="compra.cNumeroFactura"></td>
+                                                                                    <td v-text="compra.cSerieComprobante"></td>
+                                                                                    <td v-text="compra.cNumeroComprobante"></td>
                                                                                     <td v-text="compra.dFechaFacturado"></td>
                                                                                 </tr>
                                                                             </tbody>
@@ -1043,7 +1045,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* O/C</label>
                                                     <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
+                                                        <input type="text" v-model="formModalCompra.nordencompra" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1051,7 +1053,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
                                                     <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
+                                                        <input type="text" v-model="formModalCompra.cnombrecomercial" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1061,7 +1063,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Número VIN</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
+                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1088,6 +1090,24 @@
                                                     <label class="col-sm-4 form-control-label">Nombre Color</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Serie Comprobante</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cseriecomprobante" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Numero Comprobante</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalCompra.cnumerocomprobante" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1469,7 +1489,9 @@
                     cnumerodua: '',
                     cnombrecolor: '',
                     cnumerodua: '',
-                    nordencompra: ''
+                    nordencompra: '',
+                    cseriecomprobante: '',
+                    cnumerocomprobante: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
@@ -2013,6 +2035,7 @@
             },
             eliminarItemExcel(index){
                 this.$delete(this.arrayExcel, index);
+                this.contadorArrayExcel = this.arrayExcel.length;
             },
             //Registrar Excel Compra
             registrar(){
@@ -2362,18 +2385,17 @@
                                 'hActivityTime' :   '08:13:00',
                                 'cCardCode'     :   me.ccodigoempresasap,
                                 'cNotes'        :   'OrdenCompra',
-                                //'cCardCode'   :   'P20506006024',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
                                 'nDocType'      :   '22',
                                 'nDuration'     :   '15',
                                 'cDurationType' :   'du_Minuts',
-                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
                                 'hEndTime'      :   '08:28:00',
                                 'cReminder'     :   'tYES',
                                 'nReminderPeriod':  '15',
                                 'cReminderType' :   'du_Minuts',
-                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),
                                 'hStartTime'    :   '08:13:00'
                             });
                         }
@@ -2925,6 +2947,7 @@
             descargaFormatoCompra(){
                 window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
             },
+            //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapArticulo(objCompra){
                 this.mostrarProgressBar();
@@ -2946,7 +2969,8 @@
                     'nAnioVersion'      : objCompra.nAnioVersion,
                     'cSimboloMoneda'    : objCompra.cSimboloMoneda,
                     'fTotalCompra'      : objCompra.fTotalCompra,
-                    'cNumeroFactura'    : objCompra.cNumeroFactura,
+                    'cSerieComprobante' : objCompra.cSerieComprobante,
+                    'cNumeroComprobante': objCompra.cNumeroComprobante,
                     'dFechaFacturado'   : objCompra.dFechaFacturado,
                     'dFechaCompra'      : objCompra.dFechaCompra,
                     'cItemType'         : objCompra.cItemType
@@ -3235,22 +3259,21 @@
                                 });
 
                                 me.arraySapActividad.push({
-                                    'dActivityDate' : '2019-01-29',
+                                    'dActivityDate' : moment().format('YYYY-MM-DD'),
                                     'hActivityTime' : '08:13:00',
                                     'cCardCode'     : objCompra.cCustomerCode,
-                                    'cNotes'        :   'OrdenCompra',
-                                    //'cCardCode'   : 'P20506006024',
+                                    'cNotes'        : 'OrdenCompra',
                                     'nDocEntry'     : me.jsonRespuesta.DocEntry.toString(),
                                     'nDocNum'       : me.jsonRespuesta.DocNum.toString(),
                                     'nDocType'      : '22',
                                     'nDuration'     : '15',
                                     'cDurationType' : 'du_Minuts',
-                                    'dEndDueDate'   : '2019-01-29',
+                                    'dEndDueDate'   : moment().format('YYYY-MM-DD'),
                                     'hEndTime'      : '08:28:00',
                                     'cReminder'     : 'tYES',
                                     'nReminderPeriod': '15',
                                     'cReminderType' : 'du_Minuts',
-                                    'dStartDate'    : '2019-01-29',
+                                    'dStartDate'    : moment().format('YYYY-MM-DD'),
                                     'hStartTime'    : '08:13:00'
                                 });
 
@@ -3646,19 +3669,33 @@
                     }
                 });
             },
-            /*generaSapEntradaMercancia(objCompra){
+            //=================== Generar Entrada Mercancia ==============
+            generaSapEntradaMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe OrdenCompra De EXCEL
                 if(objCompra.nDocEntryMercancia== 0){
+                    me.arraySapCompra.push({
+                        'nIdCompra'         : objCompra.nIdCompra,
+                        'nIdCronograma'     : objCompra.nIdCronograma,
+                        'cNumeroVin'        : objCompra.cNumeroVin,
+                        'cNombreComercial'  : objCompra.cNombreComercial,
+                        'nAnioFabricacion'  : objCompra.nAnioFabricacion,
+                        'nAnioVersion'      : objCompra.nAnioVersion,
+                        'cSimboloMoneda'    : objCompra.cSimboloMoneda,
+                        'fTotalCompra'      : objCompra.fTotalCompra,
+                        'cSerieComprobante' : objCompra.cSerieComprobante,
+                        'cNumeroComprobante': objCompra.cNumeroComprobante,
+                        'nDocEntry'         : objCompra.nDocEntry,
+                        'cItemType'         : objCompra.cItemType,
+                        'cCardCode'         : objCompra.cCardCode
+                    });
                     //==============================================================
                     //================== REGISTRO MERCANCIA EN SAP ===============
                     me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
                     var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                     axios.post(sapUrl, {
-                        'cCardCode': objCompra.cCardCode,
-                        //'data': me.arraySapUpdCompra
-                        'data': objCompra
+                        'data': me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -3681,22 +3718,22 @@
                                 });
 
                                 me.arraySapActividad.push({
-                                    'dActivityDate': '2019-01-29',
-                                    'hActivityTime': '08:13:00',
-                                    'cCardCode': objCompra.cCustomerCode,
-                                    //'cCardCode': 'P20506006024',
-                                    'nDocEntry': me.jsonRespuesta.DocEntry.toString(),
-                                    'nDocNum': me.jsonRespuesta.DocNum.toString(),
-                                    'nDocType': '22',
-                                    'nDuration': '15',
-                                    'cDurationType': 'du_Minuts',
-                                    'dEndDueDate': '2019-01-29',
-                                    'hEndTime': '08:28:00',
-                                    'cReminder': 'tYES',
+                                    'dActivityDate' : moment().format('YYYY-MM-DD'),
+                                    'hActivityTime' : '08:13:00',
+                                    'cCardCode'     : objCompra.cCustomerCode,
+                                    'cNotes'        : 'EntradaMercancia',
+                                    'nDocEntry'     : me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum'       : me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType'      : '20',
+                                    'nDuration'     : '15',
+                                    'cDurationType' : 'du_Minuts',
+                                    'dEndDueDate'   : moment().format('YYYY-MM-DD'),
+                                    'hEndTime'      : '08:28:00',
+                                    'cReminder'     : 'tYES',
                                     'nReminderPeriod': '15',
-                                    'cReminderType': 'du_Minuts',
-                                    'dStartDate': '2019-01-29',
-                                    'hStartTime': '08:13:00'
+                                    'cReminderType' : 'du_Minuts',
+                                    'dStartDate'    : moment().format('YYYY-MM-DD'),
+                                    'hStartTime'    : '08:13:00'
                                 });
 
                                 //==============================================================
@@ -3707,15 +3744,7 @@
                             }
                         });
                     }).catch(error => {
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración Compra SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
+                        me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3737,9 +3766,10 @@
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdMercancia
+                    data: me.arraySapUpdSgc
                 }).then(response => {
-                    $("#myBar").hide();
+                    me.limpiarFormulario();
+                    /*$("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
                         setTimeout(function() {
@@ -3754,7 +3784,7 @@
                         });
                         me.limpiarFormulario();
                         me.listarCompras(1);
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3765,10 +3795,7 @@
                     }
                 });
             },
-            asignaMercancia(objCompra){
-                me.generaSapEntradaMercancia(objCompra);
-            },
-            generaSapActividadMercancia(objCompra){
+            /*generaSapActividadMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe Actividad De EXCEL
                 if(objCompra.nActivityCode== 0){
@@ -3882,7 +3909,9 @@
                     cNumeroVin: this.formModalCompra.cnumerovin,
                     cNumeroMotor: this.formModalCompra.cnumeromotor,
                     cNumeroDua: this.formModalCompra.cnumerodua,
-                    cNombreColor: this.formModalCompra.cnombrecolor
+                    cNombreColor: this.formModalCompra.cnombrecolor,
+                    cSerieComprobante: this.formModalCompra.cseriecomprobante,
+                    cNumeroComprobante: this.formModalCompra.cnumerocomprobante
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         swal('Compra actualizada correctamente');
@@ -4245,6 +4274,8 @@
                                 this.formModalCompra.cnumeromotor = data['cNumeroMotor'];
                                 this.formModalCompra.cnumerodua = data['cNumeroDua'];
                                 this.formModalCompra.cnombrecolor = data['cNombreColor'];
+                                this.formModalCompra.cseriecomprobante = data['cSerieComprobante'];
+                                this.formModalCompra.cnumerocomprobante = data['cNumeroComprobante'];
                                 break;
                             }
                             case 'lineacredito':

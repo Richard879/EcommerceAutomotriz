@@ -20,34 +20,29 @@ class SapMercanciaController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $User       =   Auth::user()->id;
-        $cCardCode  =   'C'.$User;
-
         //DATOS DE PRUEBA
-        $ManufacturerSerialNumber   =   mt_rand(100000000, 999999999);
-        $InternalSerialNumber       =   mt_rand(100000,999999);
         $ReceptionDate              =   date('Y-m-d');
 
         $data = $request->data;
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "CardCode"      => $request->cCardCode,
+                    "CardCode"      => (string)$value['cCardCode'],
                     //"DocDate"       => (string)$request->fDocDate,
                     //"DocDueDate"    => (string)$request->fDocDueDate,
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "01",
-                    "U_SYP_MDSD"    =>  "1235",
-                    "U_SYP_MDCD"    =>  "12345679",
+                    "U_SYP_MDSD"    =>  (string)$value['cSerieComprobante'],
+                    "U_SYP_MDCD"    =>  (string)$value['cNumeroComprobante'],
                     "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                         [
-                            "BaseType"      =>  "22",
-                            "BaseEntry"     =>  (string)$value['nDocEntry'],
+                            "BaseType"      =>  "22", //PurchaseOrder
+                            "BaseEntry"     =>  (string)$value['nDocEntry'], //DocEntry PurchaseOrder
                             "SerialNumbers" => [
                                 [
-                                    "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
-                                    "InternalSerialNumber"      =>  $InternalSerialNumber,
+                                    "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                                    "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
                                     "ExpiryDate"                =>  null,
                                     "ManufactureDate"           =>  null,
                                     "ReceptionDate"             =>  $ReceptionDate,

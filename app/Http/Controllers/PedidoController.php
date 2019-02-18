@@ -670,6 +670,29 @@ class PedidoController extends Controller
         return ['arrayEVPedido'=>$arrayEVPedido];
     }
 
+    public function GetCampaniaObsequioByIdPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
+        $variable           =   $request->opcion;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayEVPedido = DB::select('exec [usp_Pedido_GetCampaniaObsquioByIdPedido] ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraPedido
+                                                            ]);
+        if($variable == "0"){
+            $arrayEVPedido = ParametroController::arrayPaginator($arrayEVPedido, $request);
+        }
+        return ['arrayEVPedido'=>$arrayEVPedido];
+    }
+
     public function SapUpdPedidoByDocEntry(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

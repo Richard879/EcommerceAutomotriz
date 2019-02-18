@@ -69,4 +69,30 @@ class SapArticuloController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapGetCostoPromedio(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+        
+        $array_rpta = [];
+        $rptaSap   = [];
+        
+        $arraySapElemento = $request->data;
+        foreach ($arraySapElemento as $key => $value) {
+
+            $nWhsCode     = $value['nWhsCode'];
+            $cItemCode    = $value['cItemCode'];
+
+            $response = $client->request('POST', "/api/Articulo/SapGetCostoPromedio/", [
+                                                                                        'query' => ['nWhsCode' => $nWhsCode,
+                                                                                                    'cItemCode' => $cItemCode]
+                                                                                    ]);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
 }

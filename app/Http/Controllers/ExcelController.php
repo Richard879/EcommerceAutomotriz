@@ -51,13 +51,14 @@ class ExcelController extends Controller
                     'cNombreMarca' => $value[6],
                     'cNombreModelo' => $value[7],
                     'cNombreComercial' => $value[8],
-                    'cNombreColor' => $value[9],
+                    'cNombreColor' => ($value[9] == NULL) ? ($value[9] = '') : $value[9],
                     'nAnioFabricacion' => $value[10],
                     'nAnioVersion' => $value[11],
                     'cSimboloMoneda' => $value[12],
                     'fTotalCompra' => $value[13],
-                    'cNumeroFactura' => $value[14],
-                    'dFechaFacturado' => $value[15],
+                    'cSerieComprobante' => ($value[14] == NULL) ? ($value[14] = '') : $value[14],
+                    'cNumeroComprobante' => ($value[15] == NULL) ? ($value[15] = '') : $value[15],
+                    'dFechaFacturado' => $value[16],
                     'cItemType' => 'itItems'
                 ];
             }

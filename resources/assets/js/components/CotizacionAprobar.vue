@@ -811,6 +811,9 @@
                     ftotalcotizaciondolares: 0
                 },
                 arrayDetalleCotizacion: [],
+                cFlagActivaElemento: 0,
+                cFlagActivaObsequio: 0,
+                cFlagActivaCampania: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -924,6 +927,7 @@
                     }
                 }).then(response => {
                     this.arrayDetalleCotizacion = response.data.arrayDetalleCotizacion.data;
+                    this.verificaDetalleCotizacion();
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -933,6 +937,24 @@
                             location.reload('0');
                         }
                     }
+                });
+            },
+            verificaDetalleCotizacion(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+
+                me.arrayDetalleCotizacion.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
                 });
             },
             //===========================================================

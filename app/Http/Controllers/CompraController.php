@@ -74,7 +74,7 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
@@ -95,7 +95,9 @@ class CompraController extends Controller
                                                                 $det['nAnioVersion'],
                                                                 $det['cSimboloMoneda'],
                                                                 $fTotalCompra,
-                                                                $det['cNumeroFactura'],
+                                                                '01',
+                                                                $det['cSerieComprobante'],
+                                                                $det['cNumeroComprobante'],
                                                                 $det['dFechaFacturado'],
                                                                 Auth::user()->id
                                                             ]);
@@ -228,7 +230,7 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $compra = DB::select('exec [usp_Compra_UpdCompraById] ?, ?, ?, ?, ?, ?, ?, ?',
+        $compra = DB::select('exec [usp_Compra_UpdCompraById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                         [   $request->nIdEmpresa,
                                                             $request->nIdProveedor,
                                                             $request->nIdCompra,
@@ -236,6 +238,8 @@ class CompraController extends Controller
                                                             $request->cNumeroMotor,
                                                             $request->cNumeroDua,
                                                             $request->cNombreColor,
+                                                            $request->cSerieComprobante,
+                                                            $request->cNumeroComprobante,
                                                             Auth::user()->id
                                                         ]);
         return response()->json($compra);

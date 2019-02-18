@@ -158,6 +158,7 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <template v-if="arrayDetalleVehiculoCompra.length">
+                                                                    <span style="color:red; font-size: 12px;"><strong>* El Valor Beneficio Moneda debe ser en SOLES y SIN IGV</strong></span>
                                                                     <!--<div id="divDespliegue">
                                                                         <el-collapse v-model="activeNames" @change="handleChange">
                                                                             <el-collapse-item title="" name="1">-->
