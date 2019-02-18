@@ -42,8 +42,8 @@ class SapMercanciaController extends Controller
                     "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                         [
-                            "BaseType"      =>  "22",
-                            "BaseEntry"     =>  (string)$value['nDocEntry'],
+                            "BaseType"      =>  "22", //PurchaseOrder
+                            "BaseEntry"     =>  (string)$value['nDocEntry'], //DocEntry PurchaseOrder
                             "SerialNumbers" => [
                                 [
                                     "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
