@@ -489,7 +489,8 @@
                                                                                     <th>Año Mod</th>
                                                                                     <th>Mon</th>
                                                                                     <th>Total</th>
-                                                                                    <th>Nro Factura</th>
+                                                                                    <th>Serie Comprobante</th>
+                                                                                    <th>Nro Comprobante</th>
                                                                                     <th>Fecha Facturado</th>
                                                                                 </tr>
                                                                             </thead>
@@ -515,7 +516,8 @@
                                                                                     <td v-text="compra.nAnioVersion"></td>
                                                                                     <td v-text="compra.cSimboloMoneda"></td>
                                                                                     <td v-text="compra.fTotalCompra"></td>
-                                                                                    <td v-text="compra.cNumeroFactura"></td>
+                                                                                    <td v-text="compra.cSerieComprobante"></td>
+                                                                                    <td v-text="compra.cNumeroComprobante"></td>
                                                                                     <td v-text="compra.dFechaFacturado"></td>
                                                                                 </tr>
                                                                             </tbody>
@@ -2945,7 +2947,8 @@
                     'nAnioVersion'      : objCompra.nAnioVersion,
                     'cSimboloMoneda'    : objCompra.cSimboloMoneda,
                     'fTotalCompra'      : objCompra.fTotalCompra,
-                    'cNumeroFactura'    : objCompra.cNumeroFactura,
+                    'cSerieComprobante' : objCompra.cSerieComprobante,
+                    'cNumeroComprobante': objCompra.cNumeroComprobante,
                     'dFechaFacturado'   : objCompra.dFechaFacturado,
                     'dFechaCompra'      : objCompra.dFechaCompra,
                     'cItemType'         : objCompra.cItemType
