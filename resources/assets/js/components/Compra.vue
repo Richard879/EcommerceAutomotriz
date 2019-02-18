@@ -207,10 +207,10 @@
                                                                                             <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Editar Compra  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;-->
+                                                                                    </el-tooltip>&nbsp;&nbsp;<!---->
                                                                                     <template v-if="compra.nDocEntry==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
@@ -1045,7 +1045,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* O/C</label>
                                                     <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
+                                                        <input type="text" v-model="formModalCompra.nordencompra" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1053,7 +1053,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
                                                     <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
+                                                        <input type="text" v-model="formModalCompra.cnombrecomercial" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1063,7 +1063,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Número VIN</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
+                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1090,6 +1090,24 @@
                                                     <label class="col-sm-4 form-control-label">Nombre Color</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Serie Comprobante</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cseriecomprobante" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Numero Comprobante</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalCompra.cnumerocomprobante" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1471,7 +1489,9 @@
                     cnumerodua: '',
                     cnombrecolor: '',
                     cnumerodua: '',
-                    nordencompra: ''
+                    nordencompra: '',
+                    cseriecomprobante: '',
+                    cnumerocomprobante: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
@@ -3883,7 +3903,9 @@
                     cNumeroVin: this.formModalCompra.cnumerovin,
                     cNumeroMotor: this.formModalCompra.cnumeromotor,
                     cNumeroDua: this.formModalCompra.cnumerodua,
-                    cNombreColor: this.formModalCompra.cnombrecolor
+                    cNombreColor: this.formModalCompra.cnombrecolor,
+                    cSerieComprobante: this.formModalCompra.cseriecomprobante,
+                    cNumeroComprobante: this.formModalCompra.cnumerocomprobante
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         swal('Compra actualizada correctamente');
@@ -4246,6 +4268,8 @@
                                 this.formModalCompra.cnumeromotor = data['cNumeroMotor'];
                                 this.formModalCompra.cnumerodua = data['cNumeroDua'];
                                 this.formModalCompra.cnombrecolor = data['cNombreColor'];
+                                this.formModalCompra.cseriecomprobante = data['cSerieComprobante'];
+                                this.formModalCompra.cnumerocomprobante = data['cNumeroComprobante'];
                                 break;
                             }
                             case 'lineacredito':
