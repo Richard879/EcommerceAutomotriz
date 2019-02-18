@@ -912,7 +912,7 @@
                             DocDate             : deposito.dFechaDeposito,
                             DocTotal            : deposito.fMontoSoles,
                             DocTotalFC          : deposito.fMontoDolares,
-                            // DocNum              : deposito.nDocNum,
+                            // DocNum              : deposito.nDocNum,x
                             DocCurr             : deposito.cAbreviaturaMoneda,
                             DocCurrBank         : deposito.cAbreviaturaMoneda,
                             DocRate             : deposito.cTipoCambio,
