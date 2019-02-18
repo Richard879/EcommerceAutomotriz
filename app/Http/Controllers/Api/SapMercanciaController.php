@@ -27,13 +27,13 @@ class SapMercanciaController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "CardCode"      => $request->cCardCode,
+                    "CardCode"      => (string)$value['cCardCode'],
                     //"DocDate"       => (string)$request->fDocDate,
                     //"DocDueDate"    => (string)$request->fDocDueDate,
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "01",
-                    "U_SYP_MDSD"    =>  $value['cSerieComprobante'],
-                    "U_SYP_MDCD"    =>  $value['cNumeroComprobante'],
+                    "U_SYP_MDSD"    =>  (string)$value['cSerieComprobante'],
+                    "U_SYP_MDCD"    =>  (string)$value['cNumeroComprobante'],
                     "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                         [
@@ -41,8 +41,8 @@ class SapMercanciaController extends Controller
                             "BaseEntry"     =>  (string)$value['nDocEntry'], //DocEntry PurchaseOrder
                             "SerialNumbers" => [
                                 [
-                                    "ManufacturerSerialNumber"  =>  $value['cNumeroVin'],
-                                    "InternalSerialNumber"      =>  $value['cNumeroVin'],
+                                    "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                                    "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
                                     "ExpiryDate"                =>  null,
                                     "ManufactureDate"           =>  null,
                                     "ReceptionDate"             =>  $ReceptionDate,

@@ -220,7 +220,7 @@
                                                                                     <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
+                                                                                            <i @click="generaSapEntradaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template><!---->
                                                                                 </td>
@@ -3669,9 +3669,6 @@
                 });
             },
             //=================== Generar Entrada Mercancia ==============
-            asignaMercancia(objCompra){
-                this.generaSapEntradaMercancia(objCompra);
-            },
             generaSapEntradaMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe OrdenCompra De EXCEL
@@ -3688,7 +3685,8 @@
                         'cSerieComprobante' : objCompra.cSerieComprobante,
                         'cNumeroComprobante': objCompra.cNumeroComprobante,
                         'nDocEntry'         : objCompra.nDocEntry,
-                        'cItemType'         : objCompra.cItemType
+                        'cItemType'         : objCompra.cItemType,
+                        'cCardCode'         : objCompra.cCardCode
                     });
                     //==============================================================
                     //================== REGISTRO MERCANCIA EN SAP ===============
@@ -3696,8 +3694,7 @@
 
                     var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                     axios.post(sapUrl, {
-                        'cCardCode': objCompra.cCardCode,
-                        'data': me.arraySapCompra
+                        'data': me.objCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
