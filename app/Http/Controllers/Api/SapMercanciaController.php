@@ -28,8 +28,8 @@ class SapMercanciaController extends Controller
             $json = [
                 'json' => [
                     "CardCode"      => (string)$value['cCardCode'],
-                    //"DocDate"       => (string)$request->fDocDate,
-                    //"DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocDueDate"    => (string)$request->fDocDueDate,
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "01",
                     "U_SYP_MDSD"    =>  (string)$value['cSerieComprobante'],

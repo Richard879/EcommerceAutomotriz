@@ -42,7 +42,8 @@ class SapPedidoController extends Controller
                             "Quantity"    => "1",
                             "TaxCode"     => "IGV",
                             "UnitPrice"   => (string)$SubTotal,
-                            "Currency"    => "US$"
+                            "Currency"    => "US$",
+                            "WarehouseCode" =>(string)$request->WarehouseCode
                         ]
                     ]
                 ]
