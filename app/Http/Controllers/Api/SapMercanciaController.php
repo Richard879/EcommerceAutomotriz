@@ -20,12 +20,7 @@ class SapMercanciaController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $User       =   Auth::user()->id;
-        $cCardCode  =   'C'.$User;
-
         //DATOS DE PRUEBA
-        $ManufacturerSerialNumber   =   mt_rand(100000000, 999999999);
-        $InternalSerialNumber       =   mt_rand(100000,999999);
         $ReceptionDate              =   date('Y-m-d');
 
         $data = $request->data;
@@ -37,8 +32,8 @@ class SapMercanciaController extends Controller
                     //"DocDueDate"    => (string)$request->fDocDueDate,
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "01",
-                    "U_SYP_MDSD"    =>  "1235",
-                    "U_SYP_MDCD"    =>  "12345679",
+                    "U_SYP_MDSD"    =>  $value['cSerieComprobante'],
+                    "U_SYP_MDCD"    =>  $value['cNumeroComprobante'],
                     "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                         [
@@ -46,8 +41,8 @@ class SapMercanciaController extends Controller
                             "BaseEntry"     =>  (string)$value['nDocEntry'], //DocEntry PurchaseOrder
                             "SerialNumbers" => [
                                 [
-                                    "ManufacturerSerialNumber"  =>  $ManufacturerSerialNumber,
-                                    "InternalSerialNumber"      =>  $InternalSerialNumber,
+                                    "ManufacturerSerialNumber"  =>  $value['cNumeroVin'],
+                                    "InternalSerialNumber"      =>  $value['cNumeroVin'],
                                     "ExpiryDate"                =>  null,
                                     "ManufactureDate"           =>  null,
                                     "ReceptionDate"             =>  $ReceptionDate,

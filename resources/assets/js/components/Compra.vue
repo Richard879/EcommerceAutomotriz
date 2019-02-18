@@ -217,12 +217,12 @@
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <!--<template v-if="compra.nDocEntryMercanciaValida==0">
+                                                                                    <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>-->
+                                                                                    </template><!---->
                                                                                 </td>
                                                                                 <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
@@ -2946,6 +2946,7 @@
             descargaFormatoCompra(){
                 window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
             },
+            //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapArticulo(objCompra){
                 this.mostrarProgressBar();
@@ -3667,10 +3668,28 @@
                     }
                 });
             },
-            /*generaSapEntradaMercancia(objCompra){
+            //=================== Generar Entrada Mercancia ==============
+            asignaMercancia(objCompra){
+                this.generaSapEntradaMercancia(objCompra);
+            },
+            generaSapEntradaMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe OrdenCompra De EXCEL
                 if(objCompra.nDocEntryMercancia== 0){
+                    me.arraySapCompra.push({
+                        'nIdCompra'         : objCompra.nIdCompra,
+                        'nIdCronograma'     : objCompra.nIdCronograma,
+                        'cNumeroVin'        : objCompra.cNumeroVin,
+                        'cNombreComercial'  : objCompra.cNombreComercial,
+                        'nAnioFabricacion'  : objCompra.nAnioFabricacion,
+                        'nAnioVersion'      : objCompra.nAnioVersion,
+                        'cSimboloMoneda'    : objCompra.cSimboloMoneda,
+                        'fTotalCompra'      : objCompra.fTotalCompra,
+                        'cSerieComprobante' : objCompra.cSerieComprobante,
+                        'cNumeroComprobante': objCompra.cNumeroComprobante,
+                        'nDocEntry'         : objCompra.nDocEntry,
+                        'cItemType'         : objCompra.cItemType
+                    });
                     //==============================================================
                     //================== REGISTRO MERCANCIA EN SAP ===============
                     me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
@@ -3678,8 +3697,7 @@
                     var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                     axios.post(sapUrl, {
                         'cCardCode': objCompra.cCardCode,
-                        //'data': me.arraySapUpdCompra
-                        'data': objCompra
+                        'data': me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -3728,15 +3746,7 @@
                             }
                         });
                     }).catch(error => {
-                        $("#myBar").hide();
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en la Integración Compra SapB1!',
-                        });
-                        me.loading.close();
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
+                        me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
@@ -3758,9 +3768,10 @@
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdMercancia
+                    data: me.arraySapUpdSgc
                 }).then(response => {
-                    $("#myBar").hide();
+                    me.limpiarFormulario();
+                    /*$("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
                         setTimeout(function() {
@@ -3775,7 +3786,7 @@
                         });
                         me.limpiarFormulario();
                         me.listarCompras(1);
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3786,10 +3797,7 @@
                     }
                 });
             },
-            asignaMercancia(objCompra){
-                me.generaSapEntradaMercancia(objCompra);
-            },
-            generaSapActividadMercancia(objCompra){
+            /*generaSapActividadMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe Actividad De EXCEL
                 if(objCompra.nActivityCode== 0){

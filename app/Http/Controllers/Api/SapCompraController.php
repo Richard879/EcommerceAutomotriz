@@ -74,7 +74,7 @@ class SapCompraController extends Controller
                     "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
-                                "ItemCode"    => $value['cNumeroVin'],
+                                "ItemCode"    => (string)$value['cNumeroVin'],
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
