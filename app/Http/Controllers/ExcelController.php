@@ -56,8 +56,8 @@ class ExcelController extends Controller
                     'nAnioVersion' => $value[11],
                     'cSimboloMoneda' => $value[12],
                     'fTotalCompra' => $value[13],
-                    'cSerieComprobante' => $value[14],
-                    'cNumeroComprobante' => $value[15],
+                    'cSerieComprobante' => ($value[14] == NULL) ? ($value[14] = '') : $value[14],
+                    'cNumeroComprobante' => ($value[15] == NULL) ? ($value[15] = '') : $value[15],
                     'dFechaFacturado' => $value[16],
                     'cItemType' => 'itItems'
                 ];
