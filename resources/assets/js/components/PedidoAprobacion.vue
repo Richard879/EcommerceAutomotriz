@@ -823,7 +823,8 @@
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
                 arraySapCostoProm: [],
-                arraySapCosto: [],
+                arraySapCostoEV: [],
+                arraySapCostoServicio: [],
                 arraySAPEVArticulos: [],
                 arraySAPEVArticulosEnvia: [],
                 arraySAPEVServicios: [],
@@ -1671,7 +1672,8 @@
                         /*else{
                             me.arraySAPEVServiciosEnvia.push({
                                 'nWhsCode'  :  parseInt('01'),
-                                'cItemCode' :  value.cCodigoERP
+                                'cItemCode' :  value.cCodigoERP,
+                                'fImporte'  : value.fImporte
                             });
                         }*/
                     });
@@ -2130,10 +2132,10 @@
                         me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
                     });
 
-                    me.arraySapCosto = [];
+                    me.arraySapCostoEV = [];
                     // ====================== CONCEPTO =========================
-                    // ======================== FLETE ==========================
-                    me.arraySapCosto.push({
+                    // ======================== ACCESORIOS ==========================
+                    me.arraySapCostoEV.push({
                         U_SYP_VIN           :   me.formSap.cnumerovin,
                         DocEntry            :   me.formSap.ndocentry,
                         U_SYP_CCONCEPTO     :   '06',
@@ -2176,7 +2178,53 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapCosto
+                    'data'  : me.arraySapCostoEV
+                }).then(response => {
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
+                    swal(
+                        'Aprobado!',
+                        'El pedido ha sido APROBADO con éxito.',
+                        'success'
+                    );
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerSapCostoServicio(){
+                me.arraySAPEVServiciosEnvia.map(function(value, key){
+                        me.fImporte = me.fImporte + value.fImporte;
+                    });
+
+                me.arraySapCostoServicio = [];
+                // ====================== CONCEPTO =========================
+                // ======================== SERVICIOS ==========================
+                me.arraySapCostoServicio.push({
+                    U_SYP_VIN           :   me.formSap.cnumerovin,
+                    DocEntry            :   me.formSap.ndocentry,
+                    U_SYP_CCONCEPTO     :   '06',
+                    U_SYP_DCONCEPTO     :   'Accesorios',
+                    U_SYP_CDOCUMENTO    :   '02',
+                    U_SYP_DDOCUMENTO    :   'Factura Proveedor',
+                    U_SYP_IMPORTE       :   me.fImporte,
+                    U_SYP_COSTO         :   'Si',
+                    U_SYP_ESTADO        :   'Pendiente'
+                });
+            },
+            registroSapBusinessTblCostoServicios(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapCostoServicio
                 }).then(response => {
                     me.limpiarFormulario();
                     me.listarPedidos(1);
@@ -2510,7 +2558,8 @@
                 this.formSap.cnumerovin = '';
                 this.formSap.ndocentry = 0;
                 this.arraySapCostoProm= [];
-                this.arraySapCosto= [];
+                this.arraySapCostoEV= [];
+                this.arraySapCostoServicio= [];
                 this.arraySAPEVArticulos= [];
                 this.arraySAPEVArticulosEnvia= [];
                 this.arraySAPEVServicios= [];
