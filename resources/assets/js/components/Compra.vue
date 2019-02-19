@@ -1531,7 +1531,6 @@
                 arraySapLlamadaServicio: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
-                arraySapActLlamadaServicio: [],
                 //Tbls Costo
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
@@ -4329,7 +4328,6 @@
                 this.arraySapLlamadaServicio= [],
                 this.arraySapCompra= [],
                 this.arraySapActividad= [],
-                this.arraySapActLlamadaServicio= [];
                 //Tbls Costo
                 this.arrayTCTipoBeneficio= [];
                 this.arrayTCCostoVehiculo= [];
