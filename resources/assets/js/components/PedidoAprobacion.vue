@@ -817,18 +817,16 @@
                 arraySapItemCode: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-
                 arraySapPedido: [],
-                arraySAPEVPedido: [],
+                arraySapEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
                 arraySapCostoProm: [],
                 arraySapCostoEV: [],
                 arraySapCostoServicio: [],
-                arraySAPEVArticulos: [],
-                arraySAPEVArticulosEnvia: [],
-                arraySAPEVServicios: [],
-                arraySAPEVServiciosEnvia: [],
+                arraySapElementoVenta: [],
+                arraySapEVArticulosEnvia: [],
+                arraySapEVServiciosEnvia: [],
                 VINDelPedido: '',
                 fAvgPrice: 0,
                 // =============================================================
@@ -1636,8 +1634,7 @@
                         'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
-                    this.arraySAPEVPedido = response.data.arrayEVPedido.data;
-                    //console.log("Cantidad EV : " + this.arraySAPEVPedido.length);
+                    this.arraySapEVPedido = response.data.arrayEVPedido.data;
                     this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
@@ -1660,17 +1657,17 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    me.arraySAPEVArticulos = response.data.arrayEVPedido;
+                    me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySAPEVArticulos.map(function(value, key) {
+                    me.arraySapElementoVenta.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySAPEVArticulosEnvia.push({
+                            me.arraySapEVArticulosEnvia.push({
                                 'nWhsCode'  :  this.formSap.warehousecode ? parseInt(this.formSap.warehousecode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
                         /*else{
-                            me.arraySAPEVServiciosEnvia.push({
+                            me.arraySapEVServiciosEnvia.push({
                                 'nWhsCode'  :  parseInt('01'),
                                 'cItemCode' :  value.cCodigoERP,
                                 'fImporte'  : value.fImporte
@@ -1705,7 +1702,7 @@
                     'WarehouseCode'     :   me.formSap.warehousecode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
-                    'arraySAPEVPedido'  :   me.arraySAPEVPedido
+                    'arraySapEVPedido'  :   me.arraySapEVPedido
                 }).then(response => {
                     // ======================================================================
                     // GUARDAR ORDEN VENTA PARA EL VEHÍCULO EN SQL SERVER
@@ -2117,7 +2114,7 @@
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
-                    'data': me.arraySAPEVArticulosEnvia
+                    'data': me.arraySapEVArticulosEnvia
                 }).then(response => {
                     me.arraySapRespuestaVehiculo = [];
                     me.arraySapUpdSgcVehiculo = [];
@@ -2200,7 +2197,7 @@
                 });
             },
             obtenerSapCostoServicio(){
-                me.arraySAPEVServiciosEnvia.map(function(value, key){
+                me.arraySapEVServiciosEnvia.map(function(value, key){
                         me.fImporte = me.fImporte + value.fImporte;
                     });
 
@@ -2560,10 +2557,9 @@
                 this.arraySapCostoProm= [];
                 this.arraySapCostoEV= [];
                 this.arraySapCostoServicio= [];
-                this.arraySAPEVArticulos= [];
-                this.arraySAPEVArticulosEnvia= [];
-                this.arraySAPEVServicios= [];
-                this.arraySAPEVServiciosEnvia= [];
+                this.arraySapElementoVenta= [];
+                this.arraySapEVArticulosEnvia= [];
+                this.arraySapEVServiciosEnvia= [];
 
                 //Direcciones
                 this.cerrarModal();
