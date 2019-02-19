@@ -1068,18 +1068,18 @@
                     
                     me.arraySapActividad.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
-                        'hActivityTime' :   moment().format('h:mm:ss'),
+                        'hActivityTime' :   moment().format('HH:mm:ss'),
                         'cCardCode'     :   me.ccodigoempresasap,
                         'cNotes'        :   'EntregaVehiculo',
                         'nDuration'     :   '15',
                         'cDurationType' :   'du_Minuts',
                         'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
-                        'hEndTime'      :   moment().add(15, 'minutes').format('h:mm:ss'),
+                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
                         'cReminder'     :   'tYES',
                         'nReminderPeriod':  '15',
                         'cReminderType' :   'du_Minuts',
                         'dStartDate'    :   moment().format('YYYY-MM-DD'),
-                        'hStartTime'    :   moment().format('h:mm:ss')
+                        'hStartTime'    :   moment().format('HH:mm:ss')
                     });
 
                     setTimeout(function() {

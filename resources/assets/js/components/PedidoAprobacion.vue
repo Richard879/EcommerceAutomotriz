@@ -1737,7 +1737,7 @@
 
                                 me.arraySapActividadVehiculo.push({
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hActivityTime' :   '08:13:00',
+                                    'hActivityTime' :   moment().format('HH:mm:ss'),
                                     'cCardCode'     :   me.ccodigoempresasap,
                                     'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
@@ -1747,12 +1747,12 @@
                                     'nDuration'     :   '15',
                                     'cDurationType' :   'du_Minuts',
                                     'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hEndTime'      :   '08:28:00',
+                                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
                                     'cReminder'     :   'tYES',
                                     'nReminderPeriod':  '15',
                                     'cReminderType' :   'du_Minuts',
                                     'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hStartTime'    :   '08:13:00'
+                                    'hStartTime'    :   moment().format('HH:mm:ss')
                                 });
                             }
                         });
