@@ -1912,7 +1912,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayTipoBusquedaVehiculoTDV = response.data.arrayTipoParametro.data;
+                    this.arrayTipoBusquedaVehiculoTDV = response.data.arrayTipoParametro;
                     this.fillNuevaSolicitud.nidtipobusqueda = this.arrayTipoBusquedaVehiculoTDV[0].nDatoParNumerico;//SETEAR AL ITEM CARGADO
                 }).catch(error => {
                     console.log(error);

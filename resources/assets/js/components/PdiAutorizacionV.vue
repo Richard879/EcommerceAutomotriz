@@ -1427,10 +1427,11 @@
                     params: {
                         'nidpar' : this.fillNuevaSolicitud.nidtiposolicitud,
                         'ctipoparametro' : 'D',
-                        'nidtipopar': 0
+                        'nidtipopar': 0,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayTipoBusquedaVehiculoTDV = response.data;
+                    this.arrayTipoBusquedaVehiculoTDV = response.data.arrayTipoParametro;
                     this.fillNuevaSolicitud.nidtipobusqueda = this.arrayTipoBusquedaVehiculoTDV[0].nDatoParNumerico;//SETEAR AL ITEM CARGADO
                 }).catch(error => {
                     console.log(error);
