@@ -32,6 +32,7 @@ class SapActividadController extends Controller
                     "DocEntry"          => $value['nDocEntry'],
                     "DocNum"            => $value['nDocNum'],
                     "DocType"           => $value['nDocType'],
+                    "ActivityProperty"  => "cn_Task",
                     "Duration"          => $value['nDuration'],
                     "DurationType"      => $value['cDurationType'],
                     "EndDueDate"        => (string)$value['dEndDueDate'],
