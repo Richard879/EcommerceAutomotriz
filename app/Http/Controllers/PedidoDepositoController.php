@@ -196,10 +196,11 @@ class PedidoDepositoController extends Controller
         $DocDate    =   $request->DocDate;
         $DocTotal   =   $request->DocTotal;
         $DocTotalFC =   $request->DocTotalFC;
-        // $DocNum     =   $request->DocNum;
         $DocCurr    =   $request->DocCurr;
         $DocCurrBank=   $request->DocCurrBank;
         $Account    =   '104111';
+        $FacturaDocTotal=   $request->FacturaDocTotal;
+        $FacturaDocTotalFC=   $request->FacturaDocTotalFC;
         $DocRate    =   $request->DocRate;
         $Migrado    =   $request->Migrado;
 
@@ -209,7 +210,7 @@ class PedidoDepositoController extends Controller
             $Type = 2;
         }
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDepositoAddon ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdDepositoPedido,
                                         $nIdCabeceraPedido,
@@ -224,10 +225,11 @@ class PedidoDepositoController extends Controller
                                         $DocDate,
                                         $DocTotal,
                                         $DocTotalFC,
-                                        // $DocNum,
                                         $DocCurr,
                                         $DocCurrBank,
                                         $Account,
+                                        $FacturaDocTotal,
+                                        $FacturaDocTotalFC,
                                         $DocRate,
                                         $Migrado,
                                         Auth::user()->id

@@ -3695,6 +3695,8 @@
 
                     var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                     axios.post(sapUrl, {
+                        'fDocDate': moment().format('YYYY-MM-DD'),
+                        'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                         'data': me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];

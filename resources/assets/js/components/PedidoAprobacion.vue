@@ -1700,6 +1700,7 @@
                 axios.post(sapUrl, {
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode'     :   me.formSap.warehousecode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySAPEVPedido'  :   me.arraySAPEVPedido
