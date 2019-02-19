@@ -912,9 +912,11 @@
                             DocDate             : deposito.dFechaDeposito,
                             DocTotal            : deposito.fMontoSoles,
                             DocTotalFC          : deposito.fMontoDolares,
-                            // DocNum              : deposito.nDocNum,
+                            // DocNum              : deposito.nDocNum,x
                             DocCurr             : deposito.cAbreviaturaMoneda,
                             DocCurrBank         : deposito.cAbreviaturaMoneda,
+                            FacturaDocTotal     : deposito.FacturaDocTotal,
+                            FacturaDocTotalFC   : deposito.FacturaDocTotalFC,
                             DocRate             : deposito.cTipoCambio,
                             Migrado             : 'N'
                         }).then(response => {
