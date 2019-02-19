@@ -1430,7 +1430,7 @@
                         'nidtipopar': 0
                     }
                 }).then(response => {
-                    this.arrayTipoBusquedaVehiculoTDV = response.data;
+                    this.arrayTipoBusquedaVehiculoTDV = response.data.arrayTipoParametro.data;
                     this.fillNuevaSolicitud.nidtipobusqueda = this.arrayTipoBusquedaVehiculoTDV[0].nDatoParNumerico;//SETEAR AL ITEM CARGADO
                 }).catch(error => {
                     console.log(error);
