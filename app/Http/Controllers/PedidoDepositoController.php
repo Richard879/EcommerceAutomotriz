@@ -189,20 +189,20 @@ class PedidoDepositoController extends Controller
         $nIdMonedaOrigen     =   $request->nIdMonedaOrigen;
         $fTipoCambio         =   $request->fTipoCambio;
         //ADDON
-        $CardCode   =   $request->CardCode;
-        $CardName   =   $request->CardName;
-        $Type       =   $request->Type;
-        $TransRef   =   $request->TransRef;
-        $DocDate    =   $request->DocDate;
-        $DocTotal   =   $request->DocTotal;
-        $DocTotalFC =   $request->DocTotalFC;
-        $DocCurr    =   $request->DocCurr;
-        $DocCurrBank=   $request->DocCurrBank;
-        $Account    =   '104111';
-        $FacturaDocTotal=   $request->FacturaDocTotal;
-        $FacturaDocTotalFC=   $request->FacturaDocTotalFC;
-        $DocRate    =   $request->DocRate;
-        $Migrado    =   $request->Migrado;
+        $CardCode           =   $request->CardCode;
+        $CardName           =   $request->CardName;
+        $Type               =   $request->Type;
+        $TransRef           =   $request->TransRef;
+        $DocDate            =   $request->DocDate;
+        $DocTotal           =   $request->DocTotal;
+        $DocTotalFC         =   $request->DocTotalFC;
+        $DocCurr            =   $request->DocCurr;
+        $DocCurrBank        =   $request->DocCurrBank;
+        $Account            =   $request->cAcctCode;
+        $FacturaDocTotal    =   $request->FacturaDocTotal;
+        $FacturaDocTotalFC  =   $request->FacturaDocTotalFC;
+        $DocRate            =   $request->DocRate;
+        $Migrado            =   $request->Migrado;
 
         //Verificar el tipo de movimiento
         if ($Type == '1300457') {

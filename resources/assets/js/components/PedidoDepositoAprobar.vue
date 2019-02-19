@@ -915,6 +915,7 @@
                             // DocNum              : deposito.nDocNum,x
                             DocCurr             : deposito.cAbreviaturaMoneda,
                             DocCurrBank         : deposito.cAbreviaturaMoneda,
+                            cAcctCode           : deposito.cAcctCode,
                             FacturaDocTotal     : deposito.FacturaDocTotal,
                             FacturaDocTotalFC   : deposito.FacturaDocTotalFC,
                             DocRate             : deposito.cTipoCambio,
