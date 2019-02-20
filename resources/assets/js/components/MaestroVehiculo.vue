@@ -39,7 +39,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="row">
                                                                         <label class="col-md-4 form-control-label">*Tipo Persona</label>
-                                                                        <div class="col-md-8 widthFull">
+                                                                        <div class="col-md-8">
                                                                             <el-radio-group v-model="fillBusquedaVehiculo.ntipopersona">
                                                                                 <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
                                                                             </el-radio-group>
@@ -77,7 +77,7 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
-                                                                        <div class="col-sm-8 widthFull">
+                                                                        <div class="col-sm-8">
                                                                             <el-select v-model="fillBusquedaVehiculo.nidmarca"
                                                                                         filterable
                                                                                         clearable
@@ -96,7 +96,7 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                        <div class="col-sm-8 widthFull">
+                                                                        <div class="col-sm-8">
                                                                             <el-select v-model="fillBusquedaVehiculo.nidmodelo"
                                                                                         filterable
                                                                                         clearable
@@ -116,7 +116,7 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                                        <div class="col-sm-8 widthFull">
+                                                                        <div class="col-sm-8">
                                                                             <el-select v-model="fillBusquedaVehiculo.nidaniofabricacion"
                                                                                         filterable
                                                                                         clearable
@@ -134,7 +134,7 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">*Fecha Venta</label>
-                                                                        <div class="col-sm-8 widthFull">
+                                                                        <div class="col-sm-8">
                                                                             <el-date-picker
                                                                                 v-model="fillBusquedaVehiculo.dfechaventa"
                                                                                 value-format="yyyy-MM-dd"
@@ -331,7 +331,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Clase</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidclase"
                                                                                                     filterable
                                                                                                     clearable
@@ -349,7 +349,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Marca</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidmarca"
                                                                                                     filterable
                                                                                                     clearable
@@ -370,7 +370,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Modelo</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidmodelo"
                                                                                                     filterable
                                                                                                     clearable
@@ -388,7 +388,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Color</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidcolor"
                                                                                                     filterable
                                                                                                     clearable
@@ -408,7 +408,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Año Fabricacion</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidaniofabricacion"
                                                                                                     filterable
                                                                                                     clearable
@@ -426,7 +426,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">*Fecha Venta</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-date-picker
                                                                                             v-model="fillNuevoVehiculo.dfechaventa"
                                                                                             value-format="yyyy-MM-dd"
@@ -442,7 +442,7 @@
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Combustible</label>
-                                                                                    <div class="col-sm-8 widthFull">
+                                                                                    <div class="col-sm-8">
                                                                                         <el-select v-model="fillNuevoVehiculo.nidcombustible"
                                                                                                     filterable
                                                                                                     clearable
