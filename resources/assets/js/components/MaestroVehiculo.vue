@@ -581,337 +581,369 @@
                                                         <section class="forms">
                                                             <div class="container-fluid">
                                                                 <div class="col-lg-12">
-                                                                    <ul class="nav nav-tabs">
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link" id="tab020201" href="#TabDatosPersonales" @click="tabDatosPersonales" role="tab" data-toggle="tab">
-                                                                                <i class="fa fa-id-badge"></i> DATOS PERSONALES
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link disabled" id="tab020202" href="#TabDatosContacto" role="tab" data-toggle="tab">
-                                                                                <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-
-                                                                    <div class="tab-content">
-                                                                        <div class="tab-pane fade in active show" id="TabDatosPersonales">
-                                                                            <section class="forms">
-                                                                                <div class="container-fluid">
-                                                                                    <div class="col-lg-12">
-                                                                                        <form class="form-horizontal">
-                                                                                            <div v-if="cFlagEditar == 1 && cFlagTipoPersona == null || cFlagEditar == 2 && cFlagTipoPersona == null" class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-md-4 form-control-label">*Tipo Persona</label>
-                                                                                                        <div class="col-md-8 widthFull">
-                                                                                                            <el-radio-group v-model="fillPropietario.ntipopersona" @change="cambiarTipoPersona">
-                                                                                                                <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
-                                                                                                            </el-radio-group>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Habilitar Formulario Nueva Persona ?</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-checkbox v-model="checked" :label="checked ? 'No' : 'Si'"></el-checkbox>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <template v-if="checked">
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                                    <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
+                                                                                        <el-row>
+                                                                                            <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Contacto</div>
+                                                                                                    <el-input placeholder="Seleccione un Contacto"  :disabled="true" class="input-with-select" :clearable="true">
+                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
+                                                                                                    </el-input>
+                                                                                                </el-tooltip>
                                                                                             </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                                        <div class="col-sm-8 widthFull">
-                                                                                                            <el-select v-model="fillPropietario.ntpodocumento"
-                                                                                                                        filterable
-                                                                                                                        clearable
-                                                                                                                        placeholder="Seleccione un Tipo de Documento">
-                                                                                                                <el-option
-                                                                                                                v-for="item in arrayTipoDocumento"
-                                                                                                                :key="item.nIdPar"
-                                                                                                                :label="item.cParNombre"
-                                                                                                                :value="item.nIdPar">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                placeholder="Nro del Documento"
-                                                                                                                v-model="fillPropietario.cnrodocumento"
-                                                                                                                clearable>
-                                                                                                            </el-input>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <template v-if="vistaDatosPersonaNatural">
-                                                                                                <div class="form-group row">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    placeholder="Ingrese el Apellido Paterno"
-                                                                                                                    v-model="fillPropietario.capepaterno"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    placeholder="Ingrese el Apellido Materno"
-                                                                                                                    v-model="fillPropietario.capematerno"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="form-group row">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label v-text="fillPropietario.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    :placeholder="'Ingrese' + fillPropietario.lblcnombres"
-                                                                                                                    v-model="fillPropietario.cnombre"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-date-picker
-                                                                                                                    v-model="fillPropietario.dfecnacimiento"
-                                                                                                                    type="date"
-                                                                                                                    value-format="yyyy-MM-dd"
-                                                                                                                    format="dd/MM/yyyy"
-                                                                                                                    placeholder="dd/mm/aaaa">
-                                                                                                                </el-date-picker>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <div class="form-group row">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label v-text="fillPropietario.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    :placeholder="'Ingrese' + fillPropietario.lblcnombres"
-                                                                                                                    v-model="fillPropietario.cnombre"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-7 offset-sm-5">
-                                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab020202();">
-                                                                                                        <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
+                                                                                        </el-row>
                                                                                     </div>
                                                                                 </div>
-                                                                            </section>
+                                                                            </div>
                                                                         </div>
-                                                                        <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
-                                                                            <section class="forms">
-                                                                                <div class="container-fluid">
-                                                                                    <div class="col-lg-12">
-                                                                                        <form class="form-horizontal">
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Ubigeo</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <div class="input-group">
-                                                                                                                <input type="text" v-model="fillPropietario.cubigeo" disabled="disabled" class="form-control form-control-sm">
-                                                                                                                <div class="input-group-prepend">
-                                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                        <div slot="content">Buscar Ubigeo </div>
-                                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('ubigeo','buscar')">
-                                                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                                                        </button>
-                                                                                                                    </el-tooltip>
-                                                                                                                </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <ul class="nav nav-tabs">
+                                                                            <li class="nav-item">
+                                                                                <a class="nav-link" id="tab020201" href="#TabDatosPersonales" @click="tabDatosPersonales" role="tab" data-toggle="tab">
+                                                                                    <i class="fa fa-id-badge"></i> DATOS PERSONALES
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="nav-item">
+                                                                                <a class="nav-link disabled" id="tab020202" href="#TabDatosContacto" role="tab" data-toggle="tab">
+                                                                                    <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <div class="tab-content">
+                                                                            <div class="tab-pane fade in active show" id="TabDatosPersonales">
+                                                                                <section class="forms">
+                                                                                    <div class="container-fluid">
+                                                                                        <div class="col-lg-12">
+                                                                                            <form class="form-horizontal">
+                                                                                                <div v-if="cFlagEditar == 1 && cFlagTipoPersona == null || cFlagEditar == 2 && cFlagTipoPersona == null" class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-md-4 form-control-label">*Tipo Persona</label>
+                                                                                                            <div class="col-md-8 widthFull">
+                                                                                                                <el-radio-group v-model="fillPropietario.ntipopersona" @change="cambiarTipoPersona">
+                                                                                                                    <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
+                                                                                                                </el-radio-group>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Dirección</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese una Dirección'"
-                                                                                                                v-model="fillPropietario.cdireccion"
-                                                                                                                clearable>
-                                                                                                            </el-input>
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Tipo Documento</label>
+                                                                                                            <div class="col-sm-8 widthFull">
+                                                                                                                <el-select v-model="fillPropietario.ntpodocumento"
+                                                                                                                            filterable
+                                                                                                                            clearable
+                                                                                                                            placeholder="Seleccione un Tipo de Documento">
+                                                                                                                    <el-option
+                                                                                                                    v-for="item in arrayTipoDocumento"
+                                                                                                                    :key="item.nIdPar"
+                                                                                                                    :label="item.cParNombre"
+                                                                                                                    :value="item.nIdPar">
+                                                                                                                    </el-option>
+                                                                                                                </el-select>
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese un Email'"
-                                                                                                                v-model="fillPropietario.cmailprincipal"
-                                                                                                                clearable>
-                                                                                                            </el-input>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">Email Alternativo</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese una Email Alternativo'"
-                                                                                                                v-model="fillPropietario.cmailalternativo"
-                                                                                                                clearable>
-                                                                                                            </el-input>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">Telefono Fijo</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese un Telefono Fijo'"
-                                                                                                                v-model="fillPropietario.ctelefonofijo"
-                                                                                                                clearable>
-                                                                                                            </el-input>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Celular</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese un N° Celular'"
-                                                                                                                v-model="fillPropietario.ncelular"
-                                                                                                                clearable>
-                                                                                                            </el-input>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">Celular Alternativo</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-input
-                                                                                                                :placeholder="'Ingrese un N° Celular Alternativo'"
-                                                                                                                v-model="fillPropietario.ncelularalternativo"
-                                                                                                                clearable>
-                                                                                                            </el-input>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    placeholder="Nro del Documento"
+                                                                                                                    v-model="fillPropietario.cnrodocumento"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <template v-if="vistaDatosPersonaNatural">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">Estado Civil</label>
-                                                                                                            <div class="col-sm-8 widthFull">
-                                                                                                                <el-select v-model="fillPropietario.nestadocivil"
-                                                                                                                            filterable
-                                                                                                                            clearable
-                                                                                                                            placeholder="Seleccione un Estado Civil">
-                                                                                                                    <el-option
-                                                                                                                        v-for="item in arrayEstadoCivil"
-                                                                                                                        :key="item.nIdPar"
-                                                                                                                        :label="item.cParNombre"
-                                                                                                                        :value="item.nIdPar">
-                                                                                                                    </el-option>
-                                                                                                                </el-select>
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        placeholder="Ingrese el Apellido Paterno"
+                                                                                                                        v-model="fillPropietario.capepaterno"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        placeholder="Ingrese el Apellido Materno"
+                                                                                                                        v-model="fillPropietario.capematerno"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label v-text="fillPropietario.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        :placeholder="'Ingrese' + fillPropietario.lblcnombres"
+                                                                                                                        v-model="fillPropietario.cnombre"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-date-picker
+                                                                                                                        v-model="fillPropietario.dfecnacimiento"
+                                                                                                                        type="date"
+                                                                                                                        value-format="yyyy-MM-dd"
+                                                                                                                        format="dd/MM/yyyy"
+                                                                                                                        placeholder="dd/mm/aaaa">
+                                                                                                                    </el-date-picker>
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </template>
-                                                                                            </div>
-                                                                                            <template v-if="vistaDatosPersonaNatural">
-                                                                                                <div class="form-group row">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">Profesión</label>
-                                                                                                            <div class="col-sm-8 widthFull">
-                                                                                                                <el-select v-model="fillPropietario.nprofesion"
-                                                                                                                            filterable
-                                                                                                                            clearable
-                                                                                                                            placeholder="Seleccione una Profesión" >
-                                                                                                                    <el-option
-                                                                                                                        v-for="item in arrayProfesion"
-                                                                                                                        :key="item.nIdPar"
-                                                                                                                        :label="item.cParNombre"
-                                                                                                                        :value="item.nIdPar">
-                                                                                                                    </el-option>
-                                                                                                                </el-select>
+                                                                                                <template v-else>
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label v-text="fillPropietario.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        :placeholder="'Ingrese' + fillPropietario.lblcnombres"
+                                                                                                                        v-model="fillPropietario.cnombre"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">Centro Laboral</label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    :placeholder="'Ingrese un Centro Laboral'"
-                                                                                                                    v-model="fillPropietario.ccentrolaboral"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
+                                                                                                </template>
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-7 offset-sm-5">
+                                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab020202();">
+                                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="form-group row">
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="row">
-                                                                                                            <label class="col-sm-4 form-control-label">Número de Licencia</label>
-                                                                                                            <div class="col-sm-8">
-                                                                                                                <el-input
-                                                                                                                    :placeholder="'Número de Licencia'"
-                                                                                                                    v-model="fillPropietario.cnrolicencia"
-                                                                                                                    clearable>
-                                                                                                                </el-input>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-7 offset-sm-5">
-                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab0203();">
-                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                            </button>
+                                                                                            </form>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </section>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
+                                                                                <section class="forms">
+                                                                                    <div class="container-fluid">
+                                                                                        <div class="col-lg-12">
+                                                                                            <form class="form-horizontal">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <div class="input-group">
+                                                                                                                    <input type="text" v-model="fillPropietario.cubigeo" disabled="disabled" class="form-control form-control-sm">
+                                                                                                                    <div class="input-group-prepend">
+                                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                            <div slot="content">Buscar Ubigeo </div>
+                                                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('ubigeo','buscar')">
+                                                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                                                            </button>
+                                                                                                                        </el-tooltip>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese una Dirección'"
+                                                                                                                    v-model="fillPropietario.cdireccion"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese un Email'"
+                                                                                                                    v-model="fillPropietario.cmailprincipal"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">Email Alternativo</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese una Email Alternativo'"
+                                                                                                                    v-model="fillPropietario.cmailalternativo"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">Telefono Fijo</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese un Telefono Fijo'"
+                                                                                                                    v-model="fillPropietario.ctelefonofijo"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Celular</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese un N° Celular'"
+                                                                                                                    v-model="fillPropietario.ncelular"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-input
+                                                                                                                    :placeholder="'Ingrese un N° Celular Alternativo'"
+                                                                                                                    v-model="fillPropietario.ncelularalternativo"
+                                                                                                                    clearable>
+                                                                                                                </el-input>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <template v-if="vistaDatosPersonaNatural">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">Estado Civil</label>
+                                                                                                                <div class="col-sm-8 widthFull">
+                                                                                                                    <el-select v-model="fillPropietario.nestadocivil"
+                                                                                                                                filterable
+                                                                                                                                clearable
+                                                                                                                                placeholder="Seleccione un Estado Civil">
+                                                                                                                        <el-option
+                                                                                                                            v-for="item in arrayEstadoCivil"
+                                                                                                                            :key="item.nIdPar"
+                                                                                                                            :label="item.cParNombre"
+                                                                                                                            :value="item.nIdPar">
+                                                                                                                        </el-option>
+                                                                                                                    </el-select>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </template>
+                                                                                                </div>
+                                                                                                <template v-if="vistaDatosPersonaNatural">
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">Profesión</label>
+                                                                                                                <div class="col-sm-8 widthFull">
+                                                                                                                    <el-select v-model="fillPropietario.nprofesion"
+                                                                                                                                filterable
+                                                                                                                                clearable
+                                                                                                                                placeholder="Seleccione una Profesión" >
+                                                                                                                        <el-option
+                                                                                                                            v-for="item in arrayProfesion"
+                                                                                                                            :key="item.nIdPar"
+                                                                                                                            :label="item.cParNombre"
+                                                                                                                            :value="item.nIdPar">
+                                                                                                                        </el-option>
+                                                                                                                    </el-select>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">Centro Laboral</label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        :placeholder="'Ingrese un Centro Laboral'"
+                                                                                                                        v-model="fillPropietario.ccentrolaboral"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-6">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-sm-4 form-control-label">Número de Licencia</label>
+                                                                                                                <div class="col-sm-8">
+                                                                                                                    <el-input
+                                                                                                                        :placeholder="'Número de Licencia'"
+                                                                                                                        v-model="fillPropietario.cnrolicencia"
+                                                                                                                        clearable>
+                                                                                                                    </el-input>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </template>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-7 offset-sm-5">
+                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab0203();">
+                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </template>
                                                                 </div>
                                                             </div>
                                                         </section>
@@ -1302,6 +1334,7 @@
         props:['ruta'],
         data(){
             return {
+                checked: true,
                 // =============================================================
                 // VARIABLES TAB BUSQUEDA VEHÍCULOS
                 // =============================================================

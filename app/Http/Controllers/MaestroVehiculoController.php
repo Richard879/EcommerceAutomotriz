@@ -141,7 +141,7 @@ class MaestroVehiculoController extends Controller
         $cFlagEditar        = $request->cFlagEditar;
 
         $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPersonaNatural] 
-                                             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                 [
                                                     $nidpersona,
                                                     $ntpodocumento,
