@@ -142,7 +142,6 @@
                                                     <th>Contacto</th>
                                                     <th>Vehiculo</th>
                                                     <th>Número VIN</th>
-                                                    <th>Número DUA</th>
                                                     <th>Fecha Pedido</th>
                                                     <th>Aprobación</th>
                                                     <th>Estado Pedido</th>
@@ -171,12 +170,11 @@
                                                     <td v-text="pedido.cContacto"></td>
                                                     <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                     <td v-text="pedido.cNumeroVin"></td>
-                                                    <td v-text="pedido.cNumeroDUA"></td>
                                                     <td v-text="pedido.dFechaPedido"></td>
                                                     <td v-text="pedido.cEstadoAprobacion"></td>
                                                     <td v-text="pedido.cEstadoPedido"></td>
+                                                    <td v-text="pedido.cNombreVendedor"></td>
                                                     <td v-text="pedido.nDocEntryPedido"></td>
-                                                    <td v-text="pedido.nDocNum"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -293,7 +291,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-6 form-control-label">Monto Nuevo</label>
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label" >
+                                                            <label class="form-control-label">
                                                                 USD/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
                                                             </label>
                                                         </div>
@@ -692,7 +690,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -1030,6 +1027,20 @@
                     }, 1500);
                 }
             },
+            getTipoCambio(){
+                var url = this.ruta + '/gescotizacion/GetTipoCambio';
+                axios.get(url).then(response => {
+                    this.fillPedidoDscto.dTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             getHistorialDsctos(page, data = null){
                 var url = this.ruta + '/pedido/GetListHistorialPedidoDscto';
                 axios.get(url, {
@@ -1051,24 +1062,10 @@
                     }
                 });
             },
-            getTipoCambio(){
-                var url = this.ruta + '/gescotizacion/GetTipoCambio';
-                axios.get(url).then(response => {
-                    this.fillPedidoDscto.dTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             getDatosPedido(data){
                 this.fillPedidoDscto.nIdCabeceraPedido  = data.nIdCabeceraPedido
                 this.fillPedidoDscto.cNumeroPedido      = data.cNumeroPedido
-                this.fillPedidoDscto.dMontoPedido       = data.fTotalPedidoDolares
+                this.fillPedidoDscto.dMontoPedido       = data.fTotalPedidoVehiculoDolar
                 //Integración Dscto
                 this.fillPedidoDscto.cCardCode          = data.cCardCode
                 this.fillPedidoDscto.nDocEntryPedido    = data.nDocEntryPedido
@@ -1085,23 +1082,26 @@
                 if (op == 2) {
                     let me = this;
 
+                    //TIPO DSCTO ES 1 (DOLARES)
                     if (me.fillPedidoDscto.cTipoDscto == '1') {
 
-                        //TIPO DSCTO ES 1 (DOLARES) Y EL MONTO ES MAYOR AL MONTO ACTUAL DEL PEDIDO
-                        if(parseFloat(value) > me.fillPedidoDscto.dMontoPedido) {
+                        // SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
+                        if(parseFloat(value) > parseFloat(me.fillPedidoDscto.dMontoPedido)) {
+                            console.log(1, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
                             value = 0;
                             me.$forceUpdate();
-                        } else {
-                            //TIPO DSCTO ES 1 (DOLARES) Y EL MONTO A DESCONTAR ES VACÍO O < A 0
-                            if(!value || parseFloat(value) == '' || value < 0){
-                                me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
-                                me.fillPedidoDscto.dMontoDescontar = 0;
-                                me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                                me.$forceUpdate();
-                            }
+                        }
+                        // EL MONTO A DESCONTAR ES VACÍO // MENOR A 0
+                        if((parseInt(value) === '') || (parseInt(value) < 0)){
+                            console.log(1, 2, value);
+                            me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
+                            me.fillPedidoDscto.dMontoDescontar = 0;
+                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            value = 0;
+                            me.$forceUpdate();
                         }
 
                         me.fillPedidoDscto.dMontoDescontarFlag  = value;
@@ -1110,25 +1110,33 @@
                         me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
 
                     } else {
+                        //TIPO DSCTO ES 2 (% PORCENTAJE)
+
                         //Calcular Porcentaje de Dscto
                         let montoPorcent    =   parseFloat(me.fillPedidoDscto.dMontoDescontar) / 100;
                         let montoNuevo      =   montoPorcent * parseFloat(me.fillPedidoDscto.dMontoPedido);
 
-                        //TIPO DSCTO ES 2 (%) Y EL MONTO ES MAYOR AL MONTO ACTUAL DEL PEDIDO
+                        //SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
                         if(montoNuevo > me.fillPedidoDscto.dMontoPedido) {
+                            console.log(2, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
                             montoNuevo = 0;
                             me.$forceUpdate();
-                        } else {
-                            //TIPO DSCTO ES 2 (%) Y EL MONTO A DESCONTAR ES < A 0 > A 100 Ó VACÍO
-                            if(value < 0 || parseFloat(value) > 100 || !value || parseFloat(value) == ''){
-                                me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
-                                me.fillPedidoDscto.dMontoDescontar = 0;
-                                me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                                me.$forceUpdate();
-                            }
+                        }
+                        //SI EL MONTO A DESCONTAR ES <0 // >100 // VACÍO
+                        if((parseInt(value) < 0) || (parseInt(value) > 100) || (parseInt(value) === '')){
+                            console.log(parseInt(value) < 0)
+                            console.log(parseInt(value) > 100)
+                            console.log(parseInt(value) == '')
+
+                            console.log(2, 2, value);
+                            me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
+                            me.fillPedidoDscto.dMontoDescontar = 0;
+                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            montoNuevo = 0;
+                            me.$forceUpdate();
                         }
 
                         me.fillPedidoDscto.dMontoDescontarFlag  = montoNuevo;
