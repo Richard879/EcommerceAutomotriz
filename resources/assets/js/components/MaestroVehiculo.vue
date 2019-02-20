@@ -584,7 +584,9 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-12">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Habilitar Formulario Nueva Persona ?</label>
+                                                                                <label class="col-sm-4 form-control-label">
+                                                                                    <strong>* Habilitar Formulario Nueva Persona?</strong>
+                                                                                </label>
                                                                                 <div class="col-sm-8">
                                                                                     <el-checkbox v-model="checked" :label="checked ? 'No' : 'Si'"></el-checkbox>
                                                                                 </div>
@@ -596,17 +598,18 @@
                                                                             <div class="col-sm-12">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Contacto</label>
-                                                                                    <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
-                                                                                        <el-row>
-                                                                                            <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                    <div class="col-sm-6" :class="[checked ? 'disabled' : '']">
+                                                                                        <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                            <input type="text" v-model="fillPropietario.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                            <div class="input-group-prepend">
                                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                     <div slot="content">Buscar Contacto</div>
-                                                                                                    <el-input placeholder="Seleccione un Contacto"  :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
-                                                                                                    </el-input>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
                                                                                                 </el-tooltip>
                                                                                             </div>
-                                                                                        </el-row>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1422,7 +1425,8 @@
                     cnrolicencia: '',
                     cubigeo: '',
                     nopcion: 0,
-                    cfiltro: ''
+                    cfiltro: '',
+                    cnombrecontacto: ''
                 },
                 arrayTipoDocumento: [],
                 vistaDatosPersonaNatural: 1,
@@ -1679,6 +1683,7 @@
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
                 (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
+                (this.cFlagEditar == 2) ? (this.checked = false) : (this.checked = true);
             },
             // ================================
             // METODOS SUBTAB VEHICULO
