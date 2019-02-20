@@ -67,7 +67,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-md-6">
                                                                         <div class="row">
-                                                                            <label class="col-md-4 form-control-label">*Estado</label>
+                                                                            <label class="col-md-4 form-control-label">Estado</label>
                                                                             <div class="col-md-8 widthFull">
                                                                                 <el-select v-model="fillBusquedaVehiculo.nidestado"
                                                                                         filterable
@@ -113,6 +113,7 @@
                                                                                 <th>Fecha Inpsección</th>
                                                                                 <th>Hora Inspección</th>
                                                                                 <th>Placa</th>
+                                                                                <th>Vin</th>
                                                                                 <th>Encargado</th>
                                                                                 <th>Ref.Solicitud Entrega</th>
                                                                                 <th>Fecha Entrega</th>
@@ -125,6 +126,7 @@
                                                                                 <td v-text="entrega.dFechaInspeccion"></td>
                                                                                 <td v-text="entrega.cHoraInspeccion"></td>
                                                                                 <td v-text="entrega.cPlaca"></td>
+                                                                                <td v-text="entrega.cNumeroVin"></td>
                                                                                 <td v-text="entrega.encargado"></td>
                                                                                 <td v-text="entrega.cNumeroSolicitud"></td>
                                                                                 <td v-text="entrega.dFechaEntregaVehiculo"></td>
@@ -652,6 +654,7 @@
         props:['ruta'],
         data(){
             return {
+                ccodigoempresasap: 'C20480683839',
                 // =============================================================
                 // VARIABLES TAB INSPECCIONES
                 // =============================================================
@@ -686,7 +689,8 @@
                     nIdPersonaRecibe: '',
                     cNombrePersonaRecibe: '',
                     fConforme: true,
-                    fFacebook: true
+                    fFacebook: true,
+                    cnumerovin: ''
                 },
                 checked: true,
                 attachments: [],// Listado de archivos a almacenar
@@ -701,6 +705,14 @@
                     cfiltrodescripcion: '',
                 },
                 arrayContacto: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapItemCode: [],
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+                arraySapLlamadaServicio: [],
+                arraySapActividad: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -867,6 +879,7 @@
             // TAB BUSCAR INSPECCIONES
             // ======================
             buscarMisInspecciones(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/entregavehiculo/GetLstInspecciones';
                 axios.get(url, {
                     params: {
@@ -886,6 +899,7 @@
                     this.pagination.last_page    = info.last_page;
                     this.pagination.from         = info.from;
                     this.pagination.to           = info.to;
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -943,6 +957,7 @@
                 }
 
                 this.limpiarEntregaVehiculo();
+                this.fillEntregaVehiculo.cnumerovin = data['cNumeroVin'];
                 this.fillEntregaVehiculo.nIdCabeceraInspeccion = data['nIdCabeceraInspeccion'];
 
                 $('#tab01').removeClass('nav-link active');
@@ -952,6 +967,15 @@
 
                 $('#TabMisInspecciones').removeClass('in active show');
                 $('#TaEntregaVehiculo').addClass('in active show');
+
+                //========= VARIABLES SAP =============
+                //Limpiar variables Sap Articulo
+                this.arraySapItemCode= [],
+                this.arraySapRespuesta= [],
+                this.jsonRespuesta= '',
+                this.arraySapUpdSgc= [],
+                this.arraySapLlamadaServicio= [],
+                this.arraySapActividad= [];
             },
             validarTab02(){
                 this.error = 0;
@@ -1014,6 +1038,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 let me = this;
                 this.form = new FormData;//Setear cada vez que entre a registrar
 
@@ -1035,13 +1061,175 @@
                     }.bind(this)
                 };
                 // Realizar peticòn HTTP
-                var url = this.ruta + '/entregavehiculo/SetGenerarEntregaVehículo';
+                var url = this.ruta + '/entregavehiculo/SetGenerarEntregaVehiculo';
                 axios.post(url, this.form, config).
                 then(response => {
-                    this.tabMisInspecciones();
-                    toastr.success('Se generó la entrega del vehículo!', 'Success');
-                    this.attachments = [];
-                    this.form = new FormData;
+                    me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
+                    
+                    me.arraySapActividad.push({
+                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                        'hActivityTime' :   moment().format('HH:mm:ss'),
+                        'cCardCode'     :   me.ccodigoempresasap,
+                        'cNotes'        :   'EntregaVehiculo',
+                        'nDuration'     :   '15',
+                        'cDurationType' :   'du_Minuts',
+                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                        'cReminder'     :   'tYES',
+                        'nReminderPeriod':  '15',
+                        'cReminderType' :   'du_Minuts',
+                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                        'hStartTime'    :   moment().format('HH:mm:ss')
+                    });
+
+                    setTimeout(function() {
+                        me.generaSapActividadEntregaVeh();
+                    }, 1600);
+
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapActividadEntregaVeh(){
+                let me = this;
+                //==============================================================
+                //================== REGISTRO ACTIVIDAD EN SAP ===============
+                var sapUrl = me.ruta + '/actividad/SapSetActividadEntregaVeh';
+                axios.post(sapUrl, {
+                    'data': me.arraySapActividad
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo': 5,
+                                'cActividadTipo': 'EntregaVehiculo',
+                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'     : 0,
+                                'nDocNum'       : 0,
+                                'cLogRespuesta' : response.data.toString()
+                            });
+
+                            me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
+                                'cCustomerCode'     : me.ccodigoempresasap,
+                                'cInternalSerialNum': me.fillEntregaVehiculo.cnumerovin,
+                                'cItemCode'         : me.fillEntregaVehiculo.cnumerovin,
+                                'cSubject'          : 'ENTREGA VEHICULO'
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaSgcActividadEntregaVeh();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Actividad SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcActividadEntregaVeh(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //==============================================================
+                        //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioEntregaVeh();
+                        }, 1600);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapLlamadaServicioEntregaVeh(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'E',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //=========================================================================
+                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                            setTimeout(function() {
+                                me.generaSgcLlamadaServicioEntregaVeh();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicioEntregaVeh(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.loading.close();
+                    swal('Se generó la entrega del vehículo');
+                    me.attachments = [];
+                    me.form = new FormData;
+                    me.tabMisInspecciones();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1235,6 +1423,18 @@
                 this.error = 0;
                 this.mensajeError = '';
                 this.arrayArchivosAdjuntos = [];
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }

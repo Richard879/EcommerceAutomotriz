@@ -50,7 +50,7 @@ class EntregaVehiculoController extends Controller
         return ['arrayInspeccionesAprobadas'=>$arrayInspeccionesAprobadas];
     }
 
-    public function SetGenerarEntregaVehículo(Request $request)
+    public function SetGenerarEntregaVehiculo(Request $request)
     {
         // print_r($request->file('files'));
         // foreach($request->file('files') as $file) {

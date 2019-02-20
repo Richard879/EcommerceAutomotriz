@@ -317,7 +317,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/asignavendedorcuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaController@SetRegistraAsignacionCuota');
 
     Route::get('/entregavehiculo/GetLstInspecciones','EntregaVehiculoController@GetLstInspecciones');
-    Route::post('/entregavehiculo/SetGenerarEntregaVehículo','EntregaVehiculoController@SetGenerarEntregaVehículo');
+    Route::post('/entregavehiculo/SetGenerarEntregaVehiculo','EntregaVehiculoController@SetGenerarEntregaVehiculo');
     Route::get('/entregavehiculo/GetLstArchivosAdjuntos','EntregaVehiculoController@GetLstArchivosAdjuntos');
 
     Route::post('/exhibicion/importFileExhibicion','ExcelController@importFileExhibicion');
@@ -430,6 +430,7 @@ Route::middleware(['auth'])->group(function(){
     //Actividad
     Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     Route::post('/actividad/SapSetActividadVenta', 'Api\SapActividadController@SapSetActividadVenta');
+    Route::post('/actividad/SapSetActividadEntregaVeh', 'Api\SapActividadController@SapSetActividadEntregaVeh');
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');

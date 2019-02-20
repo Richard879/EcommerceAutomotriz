@@ -62,11 +62,11 @@ class SapPedidoController extends Controller
         $rptaSap  = [];
 
         //Obtener el numero de Elemento Venta encontrados
-        $arraySAPEVPedidoLength = sizeof($request->arraySAPEVPedido);
+        $arraySAPEVPedidoLength = sizeof($request->arraySapEVPedido);
         //Verifica si existen Elemento Venta
         if($arraySAPEVPedidoLength > 0) {
             //Guardar Arreglo de Ele. Venta
-            $arraySAPEVPedido = $request->arraySAPEVPedido;
+            $arraySapEVPedido = $request->arraySapEVPedido;
 
             $json = [
                 'json' => [
@@ -83,7 +83,7 @@ class SapPedidoController extends Controller
             $fMontoTotal = 0;
 
             //Recorrer todos los Elementos de Venta
-            foreach ($arraySAPEVPedido as $key => $value) {
+            foreach ($arraySapEVPedido as $key => $value) {
                 // Setear CardCode
                 $json['json']['CardCode'] = $value['cCardCode'];
 

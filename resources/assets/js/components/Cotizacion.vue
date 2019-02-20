@@ -1659,7 +1659,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar Vehiculo {{ vehiculo.NombreComercial }}</div>
-                                                                    <i @click.prevent="agregarVehículoLista(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click.prevent="agregarVehiculoLista(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="vehiculo.codListaPrecioVD"></td>
@@ -3574,7 +3574,7 @@
                 this.fillBusqVehiculo.nidmodelo = '';
                 this.fillBusqVehiculo.cnombrecomercial = '';
             },
-            agregarVehículoLista(vehiculo){
+            agregarVehiculoLista(vehiculo){
                 if(this.encontrarVehiculo(vehiculo.NombreComercial)){
                     swal({
                         type: 'error',

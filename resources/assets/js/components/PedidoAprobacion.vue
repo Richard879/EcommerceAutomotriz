@@ -817,17 +817,16 @@
                 arraySapItemCode: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-
                 arraySapPedido: [],
-                arraySAPEVPedido: [],
+                arraySapEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
                 arraySapCostoProm: [],
-                arraySapCosto: [],
-                arraySAPEVArticulos: [],
-                arraySAPEVArticulosEnvia: [],
-                arraySAPEVServicios: [],
-                arraySAPEVServiciosEnvia: [],
+                arraySapCostoEV: [],
+                arraySapCostoServicio: [],
+                arraySapElementoVenta: [],
+                arraySapEVArticulosEnvia: [],
+                arraySapEVServiciosEnvia: [],
                 VINDelPedido: '',
                 fAvgPrice: 0,
                 // =============================================================
@@ -1635,8 +1634,7 @@
                         'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
-                    this.arraySAPEVPedido = response.data.arrayEVPedido.data;
-                    //console.log("Cantidad EV : " + this.arraySAPEVPedido.length);
+                    this.arraySapEVPedido = response.data.arrayEVPedido.data;
                     this.registroSapBusinessPedido();
                 }).catch(error => {
                     console.log(error);
@@ -1659,19 +1657,20 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    me.arraySAPEVArticulos = response.data.arrayEVPedido;
+                    me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySAPEVArticulos.map(function(value, key) {
+                    me.arraySapElementoVenta.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySAPEVArticulosEnvia.push({
+                            me.arraySapEVArticulosEnvia.push({
                                 'nWhsCode'  :  this.formSap.warehousecode ? parseInt(this.formSap.warehousecode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
                         /*else{
-                            me.arraySAPEVServiciosEnvia.push({
+                            me.arraySapEVServiciosEnvia.push({
                                 'nWhsCode'  :  parseInt('01'),
-                                'cItemCode' :  value.cCodigoERP
+                                'cItemCode' :  value.cCodigoERP,
+                                'fImporte'  : value.fImporte
                             });
                         }*/
                     });
@@ -1703,7 +1702,7 @@
                     'WarehouseCode'     :   me.formSap.warehousecode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
-                    'arraySAPEVPedido'  :   me.arraySAPEVPedido
+                    'arraySapEVPedido'  :   me.arraySapEVPedido
                 }).then(response => {
                     // ======================================================================
                     // GUARDAR ORDEN VENTA PARA EL VEHÍCULO EN SQL SERVER
@@ -1737,7 +1736,7 @@
 
                                 me.arraySapActividadVehiculo.push({
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hActivityTime' :   '08:13:00',
+                                    'hActivityTime' :   moment().format('HH:mm:ss'),
                                     'cCardCode'     :   me.ccodigoempresasap,
                                     'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
@@ -1747,12 +1746,12 @@
                                     'nDuration'     :   '15',
                                     'cDurationType' :   'du_Minuts',
                                     'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hEndTime'      :   '08:28:00',
+                                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
                                     'cReminder'     :   'tYES',
                                     'nReminderPeriod':  '15',
                                     'cReminderType' :   'du_Minuts',
                                     'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                    'hStartTime'    :   '08:13:00'
+                                    'hStartTime'    :   moment().format('HH:mm:ss')
                                 });
                             }
                         });
@@ -2115,7 +2114,7 @@
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
-                    'data': me.arraySAPEVArticulosEnvia
+                    'data': me.arraySapEVArticulosEnvia
                 }).then(response => {
                     me.arraySapRespuestaVehiculo = [];
                     me.arraySapUpdSgcVehiculo = [];
@@ -2130,10 +2129,10 @@
                         me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
                     });
 
-                    me.arraySapCosto = [];
+                    me.arraySapCostoEV = [];
                     // ====================== CONCEPTO =========================
-                    // ======================== FLETE ==========================
-                    me.arraySapCosto.push({
+                    // ======================== ACCESORIOS ==========================
+                    me.arraySapCostoEV.push({
                         U_SYP_VIN           :   me.formSap.cnumerovin,
                         DocEntry            :   me.formSap.ndocentry,
                         U_SYP_CCONCEPTO     :   '06',
@@ -2176,7 +2175,53 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapCosto
+                    'data'  : me.arraySapCostoEV
+                }).then(response => {
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
+                    swal(
+                        'Aprobado!',
+                        'El pedido ha sido APROBADO con éxito.',
+                        'success'
+                    );
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerSapCostoServicio(){
+                me.arraySapEVServiciosEnvia.map(function(value, key){
+                        me.fImporte = me.fImporte + value.fImporte;
+                    });
+
+                me.arraySapCostoServicio = [];
+                // ====================== CONCEPTO =========================
+                // ======================== SERVICIOS ==========================
+                me.arraySapCostoServicio.push({
+                    U_SYP_VIN           :   me.formSap.cnumerovin,
+                    DocEntry            :   me.formSap.ndocentry,
+                    U_SYP_CCONCEPTO     :   '06',
+                    U_SYP_DCONCEPTO     :   'Accesorios',
+                    U_SYP_CDOCUMENTO    :   '02',
+                    U_SYP_DDOCUMENTO    :   'Factura Proveedor',
+                    U_SYP_IMPORTE       :   me.fImporte,
+                    U_SYP_COSTO         :   'Si',
+                    U_SYP_ESTADO        :   'Pendiente'
+                });
+            },
+            registroSapBusinessTblCostoServicios(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapCostoServicio
                 }).then(response => {
                     me.limpiarFormulario();
                     me.listarPedidos(1);
@@ -2510,11 +2555,11 @@
                 this.formSap.cnumerovin = '';
                 this.formSap.ndocentry = 0;
                 this.arraySapCostoProm= [];
-                this.arraySapCosto= [];
-                this.arraySAPEVArticulos= [];
-                this.arraySAPEVArticulosEnvia= [];
-                this.arraySAPEVServicios= [];
-                this.arraySAPEVServiciosEnvia= [];
+                this.arraySapCostoEV= [];
+                this.arraySapCostoServicio= [];
+                this.arraySapElementoVenta= [];
+                this.arraySapEVArticulosEnvia= [];
+                this.arraySapEVServiciosEnvia= [];
 
                 //Direcciones
                 this.cerrarModal();
