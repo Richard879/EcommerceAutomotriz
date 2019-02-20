@@ -1374,7 +1374,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Modal Ubigeo-->
         <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1621,6 +1621,19 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
+                // ===============================
+                // VARIABLES MODAL CONTACTO
+                // ===============================
+                modalMisContactos:{
+                    ntipopersona: 1,
+                    cnrodocumento: '',
+                    cfiltrodescripcion: '',
+                },
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                arrayContacto: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -2679,6 +2692,56 @@
                     me.fillPropietario.ntpodocumento = me.arrayTipoDocumento[1].nIdPar;//asigno el tipo de documento RUC
                 })
             },
+            // ======================
+            // MODAL BUSCAR CONTACTOS
+            // ======================
+            cambiarTipoPersonaMisContactos(){
+                this.arrayContacto = [];
+                this.cambiarPaginaMisContactos(1);
+            },
+            cambiarPaginaMisContactos(page){
+                this.paginationModal.current_page=page;
+                this.listarContactos(page);
+            },
+            listarContactos(page){
+                var url = this.ruta + '/autorizacion/GetLstContactosByUsuario';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : 220016,
+                        'ntipopersona' : this.modalMisContactos.ntipopersona,
+                        'cnrodocumento' : String(this.modalMisContactos.cnrodocumento.toString()),
+                        'cfiltrodescripcion' : this.modalMisContactos.cfiltrodescripcion.toString(),
+                        'tipoRol': 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayContactosByUsuario;
+                    this.arrayContacto                = info.data;
+                    this.paginationModal.current_page =  info.current_page;
+                    this.paginationModal.total        = info.total;
+                    this.paginationModal.per_page     = info.per_page;
+                    this.paginationModal.last_page    = info.last_page;
+                    this.paginationModal.from         = info.from;
+                    this.paginationModal.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            limpiarAlAsignarContacto(){
+                //Limpiar Asignación contacto cada vez que se asigne
+                this.arrayReferenciavehiculo = [];
+                this.fillNuevaSolicitud.nidasigcontacto = '';
+                this.fillNuevaSolicitud.nidcontacto = '';
+                this.fillNuevaSolicitud.cnombrecontacto = '';
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -2712,9 +2775,9 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                this.flagBuscarContacto = data;
-                                this.modalMisContactos.ntipopersona = 1;
-                                this.listarContactos(1);
+                                /*this.flagBuscarContacto = data;
+                                this.modalMisContactos.ntipopersona = 1;*/
+                                //this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;

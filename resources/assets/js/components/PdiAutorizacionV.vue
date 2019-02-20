@@ -1614,9 +1614,9 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                console.log(data);
+                                //console.log(data);
                                 this.flagBuscarVehiculoByCriterio = data;
-                                this.listarVehiculo(1);
+                                //this.listarVehiculo(1);
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 break;
@@ -1631,7 +1631,7 @@
                             {
                                 this.flagBuscarContacto = data;
                                 this.modalMisContactos.ntipopersona = 1;
-                                this.listarContactos(1);
+                                //this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
