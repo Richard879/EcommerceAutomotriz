@@ -64,7 +64,7 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
  
-        $versionvehiculo = DB::select('exec [usp_ListaPrecioVh_SetListaPrecio] ?, ?, ? ,? , ?, ?, ?',
+        $versionvehiculo = DB::select('exec [usp_ListaPrecioVh_SetListaPrecio] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdProveedor,

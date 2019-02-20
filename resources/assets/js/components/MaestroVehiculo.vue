@@ -52,11 +52,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Contacto</label>
                                                                         <div class="col-sm-8">
-                                                                            <el-input
-                                                                                placeholder="Nombre del Contacto"
-                                                                                v-model="fillBusquedaVehiculo.cfiltrodescripcion"
-                                                                                clearable>
-                                                                            </el-input>
+                                                                            <input type="text" v-model="fillBusquedaVehiculo.cfiltrodescripcion" @keyup.enter="buscarVehiculo(1)" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -64,11 +60,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nro Documento</label>
                                                                         <div class="col-sm-8">
-                                                                            <el-input
-                                                                                placeholder="Número de Documento"
-                                                                                v-model="fillBusquedaVehiculo.cnrodocumento"
-                                                                                clearable>
-                                                                            </el-input>
+                                                                            <input type="text" v-model="fillBusquedaVehiculo.cnrodocumento" @keyup.enter="buscarVehiculo(1)" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -81,7 +73,7 @@
                                                                             <el-select v-model="fillBusquedaVehiculo.nidmarca"
                                                                                         filterable
                                                                                         clearable
-                                                                                        placeholder="Seleccione una Marca"
+                                                                                        placeholder="SELECCIONE"
                                                                                         v-on:change="llenarComboModelo(1)">
                                                                                 <el-option
                                                                                 v-for="item in arrayMarca"
@@ -100,7 +92,7 @@
                                                                             <el-select v-model="fillBusquedaVehiculo.nidmodelo"
                                                                                         filterable
                                                                                         clearable
-                                                                                        placeholder="Seleccione un Modelo" >
+                                                                                        placeholder="SELECCIONE" >
                                                                                 <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdModelo"
@@ -120,7 +112,7 @@
                                                                             <el-select v-model="fillBusquedaVehiculo.nidaniofabricacion"
                                                                                         filterable
                                                                                         clearable
-                                                                                        placeholder="Seleccione un Año de Fabricación">
+                                                                                        placeholder="SELECCIONE">
                                                                                 <el-option
                                                                                 v-for="item in arrayAnioFabricacion"
                                                                                 :key="item.nIdPar"
@@ -133,14 +125,14 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Venta</label>
+                                                                        <label class="col-sm-4 form-control-label">Fecha Venta</label>
                                                                         <div class="col-sm-8">
                                                                             <el-date-picker
                                                                                 v-model="fillBusquedaVehiculo.dfechaventa"
                                                                                 value-format="yyyy-MM-dd"
                                                                                 format="yyyy/MM/dd"
                                                                                 type="date"
-                                                                                placeholder="Seleccionar fecha de venta">
+                                                                                placeholder="">
                                                                             </el-date-picker>
                                                                         </div>
                                                                     </div>
@@ -174,12 +166,12 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
-                                                                                    <th>Placa</th>
-                                                                                    <th>Año Fabricación</th>
                                                                                     <th>Marca</th>
-                                                                                    <th>Marca</th>
+                                                                                    <th>Modelo</th>
                                                                                     <th>Serie</th>
                                                                                     <th>Tarjeta</th>
+                                                                                    <th>Placa</th>
+                                                                                    <th>Año Fabricación</th>
                                                                                     <th>Propietario</th>
                                                                                     <th>D.Identificación</th>
                                                                                     <th>Celular</th>
@@ -194,12 +186,12 @@
                                                                                             <i @click="tabNuevoVehiculo(vehiculo, 2)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;
                                                                                     </td>
-                                                                                    <td v-text="vehiculo.cPlaca"></td>
-                                                                                    <td v-text="vehiculo.cAnioFab"></td>
                                                                                     <td v-text="vehiculo.cMarca"></td>
                                                                                     <td v-text="vehiculo.cModelo"></td>
                                                                                     <td v-text="vehiculo.cNroSerie"></td>
                                                                                     <td v-text="vehiculo.cNroTarjeta"></td>
+                                                                                    <td v-text="vehiculo.cPlaca"></td>
+                                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
                                                                                     <td v-text="vehiculo.cPropietario"></td>
                                                                                     <td v-text="vehiculo.cNroIdentificacion"></td>
                                                                                     <td v-text="vehiculo.cNroCelular"></td>
@@ -207,28 +199,6 @@
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-                                                                        <!--<el-table v-loading="loading" :data="arrayVehiculoBuscar" style="width: 100%">
-                                                                            <el-table-column  property="cPlaca"   label="Placa"   width="100"></el-table-column>
-                                                                            <el-table-column  property="cAnioFab"   label="Año Fabricación"   width="100"></el-table-column>
-                                                                            <el-table-column  property="cMarca"   label="Marca"   width="120"></el-table-column>
-                                                                            <el-table-column  property="cModelo"   label="Modelo"   width="170"></el-table-column>
-                                                                            <el-table-column  property="cNroSerie"   label="Serie"   width="100"></el-table-column>
-                                                                            <el-table-column  property="cNroTarjeta"   label="Tarjeta"   width="90"></el-table-column>
-                                                                            <el-table-column  property="cPropietario"   label="Propietario"   width="130"></el-table-column>
-                                                                            <el-table-column  property="cNroIdentificacion"   label="D.Identificación"  width="80"></el-table-column>
-                                                                            <el-table-column  property="cNroCelular"   label="Celular"   width="80"></el-table-column>
-                                                                            <el-table-column  property="cEstado"   label="SOAT"   show-overflow-tooltip></el-table-column>
-                                                                            <el-table-column  fixed="right"   label="Acciones"   width="80">
-                                                                                <template slot-scope="scope">
-                                                                                    <el-tooltip class="item"
-                                                                                                effect="dark"
-                                                                                                content="Editar"
-                                                                                                placement="top-start">
-                                                                                        <el-button @click="tabNuevoVehiculo(scope.row, 2)"><i class="fa fa-edit"></i></el-button>
-                                                                                    </el-tooltip>
-                                                                                </template>
-                                                                            </el-table-column>
-                                                                        </el-table>-->
                                                                         <div class="col-lg-12">
                                                                             <div class="row">
                                                                                 <div class="col-lg-7">
@@ -335,7 +305,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidclase"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione una Clase">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayClase"
                                                                                             :key="item.nIdPar"
@@ -353,7 +323,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidmarca"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione una Marca"
+                                                                                                    placeholder="SELECCIONE"
                                                                                                     v-on:change="llenarComboModelo(2)">
                                                                                             <el-option
                                                                                             v-for="item in arrayMarca"
@@ -374,7 +344,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidmodelo"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione una Modelo">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                                 v-for="item in arrayModelo"
                                                                                                 :key="item.nIdModelo"
@@ -392,7 +362,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidcolor"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione una Color">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayColor"
                                                                                             :key="item.nIdPar"
@@ -412,7 +382,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidaniofabricacion"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione un Año de Fabricacion">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayAnioFabricacion"
                                                                                             :key="item.nIdPar"
@@ -431,8 +401,7 @@
                                                                                             v-model="fillNuevoVehiculo.dfechaventa"
                                                                                             value-format="yyyy-MM-dd"
                                                                                             format="yyyy/MM/dd"
-                                                                                            type="date"
-                                                                                            placeholder="Seleccionar fecha de venta">
+                                                                                            placeholder="">
                                                                                         </el-date-picker>
                                                                                     </div>
                                                                                 </div>
@@ -446,7 +415,7 @@
                                                                                         <el-select v-model="fillNuevoVehiculo.nidcombustible"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione una Combustible">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayCombustible"
                                                                                             :key="item.nIdPar"
@@ -461,12 +430,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Motor</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Motor"
-                                                                                            type="number"
-                                                                                            v-model="fillNuevoVehiculo.cnromotor"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnromotor" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -476,12 +440,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Serie</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Serie"
-                                                                                            type="text"
-                                                                                            v-model="fillNuevoVehiculo.cnroserie"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="text" v-model="fillNuevoVehiculo.cnroserie" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -489,12 +448,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Rueda</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Rueda"
-                                                                                            type="text"
-                                                                                            v-model="fillNuevoVehiculo.cnrorueda"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnrorueda" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -504,12 +458,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Cilindros</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Cilindros"
-                                                                                            type="number"
-                                                                                            v-model="fillNuevoVehiculo.cnrocilindros"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnrocilindros" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -517,12 +466,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Asientos</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Asientos"
-                                                                                            type="number"
-                                                                                            v-model="fillNuevoVehiculo.cnroasiento"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnroasiento" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -532,12 +476,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* N° Pasajeros</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Pasajeros"
-                                                                                            type="number"
-                                                                                            v-model="fillNuevoVehiculo.cnropasajeros"
-                                                                                            clearable>
-                                                                                        </el-input>
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnropasajeros" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -628,7 +567,7 @@
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="activarTab0202">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="activarTab0202">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
                                                                                 </button>
                                                                             </div>
@@ -795,64 +734,6 @@
                                                                                     <div class="col-lg-12">
                                                                                         <form class="form-horizontal">
                                                                                             <div class="form-group row">
-                                                                                                <!--<div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Departamento</label>
-                                                                                                        <div class="col-sm-8 widthFull">
-                                                                                                            <el-select v-model="fillPropietario.niddepartamento"
-                                                                                                                        filterable
-                                                                                                                        clearable
-                                                                                                                        placeholder="Seleccione un Departamento"
-                                                                                                                        v-on:change="llenarComboProv()">
-                                                                                                                <el-option
-                                                                                                                    v-for="item in arrayDptos"
-                                                                                                                    :key="item.id"
-                                                                                                                    :label="item.text"
-                                                                                                                    :value="item.id">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Provincia</label>
-                                                                                                        <div class="col-sm-8 widthFull">
-                                                                                                            <el-select v-model="fillPropietario.nidprovincia"
-                                                                                                                        filterable
-                                                                                                                        clearable
-                                                                                                                        placeholder="Seleccione una Provincia"
-                                                                                                                        v-on:change="llenarComboDist()">
-                                                                                                                <el-option
-                                                                                                                    v-for="item in arrayProv"
-                                                                                                                    :key="item.id"
-                                                                                                                    :label="item.text"
-                                                                                                                    :value="item.id">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>-->
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <!--<div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Distrito</label>
-                                                                                                        <div class="col-sm-8 widthFull">
-                                                                                                            <el-select v-model="fillPropietario.niddistrito"
-                                                                                                                        filterable
-                                                                                                                        clearable
-                                                                                                                        placeholder="Seleccione un Distrito" >
-                                                                                                                <el-option
-                                                                                                                    v-for="item in arrayDist"
-                                                                                                                    :key="item.id"
-                                                                                                                    :label="item.text"
-                                                                                                                    :value="item.id">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>-->
                                                                                                 <div class="col-sm-6">
                                                                                                     <div class="row">
                                                                                                         <label class="col-sm-4 form-control-label">* Ubigeo</label>
@@ -1494,9 +1375,6 @@
                     dfecnacimiento : '',
                     lblcnombres: '* Nombres',
                     //Tab DATOS DE CONTACTO
-                    niddepartamento : '',
-                    nidprovincia : '',
-                    niddistrito : '',
                     nidproveedor: '',
                     cproveedornombre: '',
                     cdireccion : '',
@@ -1579,7 +1457,7 @@
             }
         },
         mounted() {
-            this.tabBuscarVehiculo();
+            //this.tabBuscarVehiculo();
         },
         computed:{
             isActived: function(){
@@ -1903,9 +1781,8 @@
                 this.fillPropietario.dfecnacimiento = '';
                 this.cambiarTipoPersona();
                 //Tab DATOS DE CONTACTO
-                this.fillPropietario.niddepartamento = '';
-                this.fillPropietario.nidprovincia = '';
-                this.fillPropietario.niddistrito = '';
+                this.fillPropietario.ccode = '',
+                this.fillPropietario.cubigeo = '',
                 this.fillPropietario.cdireccion = '';
                 this.fillPropietario.cmailprincipal = '';
                 this.fillPropietario.cmailalternativo = '';
@@ -2080,9 +1957,8 @@
             },
             limpiarDatosContacto(){
                 //Tab DATOS DE CONTACTO
-                this.fillPropietario.niddepartamento = '';
-                this.fillPropietario.nidprovincia = '';
-                this.fillPropietario.niddistrito = '';
+                this.fillPropietario.ccode = '';
+                this.fillPropietario.cubigeo = '';
                 this.fillPropietario.cdireccion = '';
                 this.fillPropietario.cmailprincipal = '';
                 this.fillPropietario.cmailalternativo = '';
@@ -2094,60 +1970,6 @@
                 this.fillPropietario.ccentrolaboral = '';
                 this.fillPropietario.cnrolicencia = '';
             },
-            /*llenarComboDptos(){
-                var url = this.ruta + '/ubigeo/GetDptos';
-                axios.get(url).then(response => {
-                    this.arrayDptos = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboProv(){
-                var url = this.ruta + '/ubigeo/GetProvinciasByDpto';
-                axios.get(url, {
-                    params: {
-                        'niddepartamento' : this.fillPropietario.niddepartamento
-                    }
-                }).then(response => {
-                    this.arrayProv = response.data;
-                    (this.cFlagEditar == 1) ? this.fillPropietario.nidprovincia = 0 : ''
-                    this.arrayDist = [];
-                    this.llenarComboDist();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboDist(){
-                var url = this.ruta + '/ubigeo/GetDistritosByProv';
-                axios.get(url, {
-                    params: {
-                        'nidprovincia' : this.fillPropietario.nidprovincia
-                    }
-                }).then(response => {
-                    this.arrayDist = response.data;
-                    (this.cFlagEditar == 1) ? this.fillPropietario.niddistrito = 0 : ''
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             llenarUbigeo(page){
                 //var url = this.ruta + '/ubigeo/SapGetUbigeo';
                 var url = this.ruta + '/ubigeo/GetUbigeo';
@@ -2246,14 +2068,8 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillPropietario.niddepartamento){
-                    this.mensajeError.push('Debes Seleccionar Departamento');
-                }
-                if(!this.fillPropietario.nidprovincia){
-                    this.mensajeError.push('Debes Seleccionar Provincia');
-                }
-                if(!this.fillPropietario.niddistrito){
-                    this.mensajeError.push('Debes Seleccionar Distrito');
+                if(this.fillPropietario.ccode == 0 || !this.fillPropietario.ccode){
+                    this.mensajeError.push('Debe Seleccionar Ubigeo');
                 }
                 if(!this.fillPropietario.cdireccion){
                     this.mensajeError.push('Debes Ingresar Dirección');
@@ -2605,9 +2421,8 @@
                     this.fillPropietario.cnombre = data['cNombre'];
                     this.fillPropietario.dfecnacimiento = data['dFechaNacimiento'];
                     this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '* Nombres': '* Razón Social';
-                    this.fillPropietario.niddepartamento = data['nIdDepartamento'];
-                    this.fillPropietario.nidprovincia = data['nIdProvincia'];
-                    this.fillPropietario.niddistrito = data['nIdDistrito'];
+                    this.fillPropietario.ccode = data['cCode'];
+                    this.fillPropietario.cubigeo = data['cUbigeo'];
                     this.fillPropietario.cdireccion = data['cDireccion'];
                     this.fillPropietario.cmailprincipal = data['cEmail'];
                     this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];
@@ -2627,9 +2442,8 @@
                     this.fillPropietario.cnrodocumento = data['cRuc'];
                     this.fillPropietario.cnombre = data['cRazonSocial'];
                     this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'J') ? '* Razón Social': '* Nombres';
-                    this.fillPropietario.niddepartamento = data['nIdDepartamento'];
-                    this.fillPropietario.nidprovincia = data['nIdProvincia'];
-                    this.fillPropietario.niddistrito = data['nIdDistrito'];
+                    this.fillPropietario.ccode = data['cCode'];
+                    this.fillPropietario.cubigeo = data['cUbigeo'];
                     this.fillPropietario.cdireccion = data['cDireccion'];
                     this.fillPropietario.cmailprincipal = data['cEmail'];
                     this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];

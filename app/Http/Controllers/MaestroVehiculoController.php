@@ -104,7 +104,7 @@ class MaestroVehiculoController extends Controller
         $cnombre                =   $request->fillPropietario['cnombre'];
         $capepaterno            =   $request->fillPropietario['capepaterno'];
         $capematerno            =   $request->fillPropietario['capematerno'];
-        $niddistrito            =   $request->fillPropietario['niddistrito'];
+        $ccode                  =   $request->fillPropietario['ccode'];
         $cdireccion             =   $request->fillPropietario['cdireccion'];
         $cmailprincipal         =   $request->fillPropietario['cmailprincipal'];
         $cmailalternativo       =   $request->fillPropietario['cmailalternativo'];
@@ -123,7 +123,7 @@ class MaestroVehiculoController extends Controller
         $cnombre                = ($cnombre == NULL) ? ($cnombre = ' ') : $cnombre;
         $capepaterno            = ($capepaterno == NULL) ? ($capepaterno = ' ') : $capepaterno;
         $capematerno            = ($capematerno == NULL) ? ($capematerno = ' ') : $capematerno;
-        $niddistrito            = ($niddistrito == NULL) ? ($niddistrito = ' ') : $niddistrito;
+        $ccode                  = ($ccode == NULL) ? ($ccode = ' ') : $ccode;
         $cdireccion             = ($cdireccion == NULL) ? ($cdireccion = ' ') : $cdireccion;
         $cmailprincipal         = ($cmailprincipal == NULL) ? ($cmailprincipal = ' ') : $cmailprincipal;
         $cmailalternativo       = ($cmailalternativo == NULL) ? ($cmailalternativo = ' ') : $cmailalternativo;
@@ -149,7 +149,7 @@ class MaestroVehiculoController extends Controller
                                                     $cnombre,
                                                     $capepaterno,
                                                     $capematerno,
-                                                    $niddistrito,
+                                                    $ccode,
                                                     $cdireccion,
                                                     $cmailprincipal,
                                                     $cmailalternativo,
@@ -175,7 +175,7 @@ class MaestroVehiculoController extends Controller
         $nidpersona             =   $request->fillPropietario['nidpersona'];
         $cnrodocumento          =   $request->fillPropietario['cnrodocumento'];
         $cnombre                =   $request->fillPropietario['cnombre'];
-        $niddistrito            =   $request->fillPropietario['niddistrito'];
+        $ccode                  =   $request->fillPropietario['ccode'];
         $cdireccion             =   $request->fillPropietario['cdireccion'];
         $cmailprincipal         =   $request->fillPropietario['cmailprincipal'];
         $cmailalternativo       =   $request->fillPropietario['cmailalternativo'];
@@ -186,7 +186,7 @@ class MaestroVehiculoController extends Controller
         $nidpersona             = ($nidpersona == NULL) ? ($nidpersona = ' ') : $nidpersona;
         $cnrodocumento          = ($cnrodocumento == NULL) ? ($cnrodocumento = ' ') : $cnrodocumento;
         $cnombre                = ($cnombre == NULL) ? ($cnombre = ' ') : $cnombre;
-        $niddistrito            = ($niddistrito == NULL) ? ($niddistrito = ' ') : $niddistrito;
+        $ccode                  = ($ccode == NULL) ? ($ccode = ' ') : $ccode;
         $cdireccion             = ($cdireccion == NULL) ? ($cdireccion = ' ') : $cdireccion;
         $cmailprincipal         = ($cmailprincipal == NULL) ? ($cmailprincipal = ' ') : $cmailprincipal;
         $cmailalternativo       = ($cmailalternativo == NULL) ? ($cmailalternativo = ' ') : $cmailalternativo;
@@ -197,12 +197,12 @@ class MaestroVehiculoController extends Controller
         $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
         $cFlagEditar        = $request->cFlagEditar;
 
-        $arrayPropietario = DB::select('exec usp_MaestroVehiculo_SetPerJuridica ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPerJuridica] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidpersona,
                                         trim($cnrodocumento),
                                         $cnombre,
-                                        $niddistrito,
+                                        $ccode,
                                         $cdireccion,
                                         $cmailprincipal,
                                         $cmailalternativo,
