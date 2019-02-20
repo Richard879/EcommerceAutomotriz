@@ -795,7 +795,7 @@
                                                                                     <div class="col-lg-12">
                                                                                         <form class="form-horizontal">
                                                                                             <div class="form-group row">
-                                                                                                <div class="col-sm-6">
+                                                                                                <!--<div class="col-sm-6">
                                                                                                     <div class="row">
                                                                                                         <label class="col-sm-4 form-control-label">* Departamento</label>
                                                                                                         <div class="col-sm-8 widthFull">
@@ -832,10 +832,10 @@
                                                                                                             </el-select>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                </div>
+                                                                                                </div>-->
                                                                                             </div>
                                                                                             <div class="form-group row">
-                                                                                                <div class="col-sm-6">
+                                                                                                <!--<div class="col-sm-6">
                                                                                                     <div class="row">
                                                                                                         <label class="col-sm-4 form-control-label">* Distrito</label>
                                                                                                         <div class="col-sm-8 widthFull">
@@ -850,6 +850,24 @@
                                                                                                                     :value="item.id">
                                                                                                                 </el-option>
                                                                                                             </el-select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>-->
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <div class="input-group">
+                                                                                                                <input type="text" v-model="fillPropietario.cubigeo" disabled="disabled" class="form-control form-control-sm">
+                                                                                                                <div class="input-group-prepend">
+                                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                        <div slot="content">Buscar Ubigeo </div>
+                                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('ubigeo','buscar')">
+                                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                                        </button>
+                                                                                                                    </el-tooltip>
+                                                                                                                </div>
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -1283,6 +1301,118 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Ubigeo-->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">UBIGEO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-md-10">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <el-select v-model="fillPropietario.nopcion" filterable clearable placeholder="SELECCIONE">
+                                                                <el-option
+                                                                v-for="item in arrayTipoUbigeo"
+                                                                :key="item.value"
+                                                                :label="item.text"
+                                                                :value="item.value">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                        <div class="col-md-8" v-if="fillPropietario.nopcion != 0">
+                                                            <input type="text" v-model="fillPropietario.cfiltro" class="form-control form-control-sm" @keyup.enter="llenarUbigeo(1)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo(1)"><i class="fa fa-search"></i> Buscar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <template v-if="arrayUbigeo.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acción</th>
+                                                            <th>Código</th>
+                                                            <th>Departamento</th>
+                                                            <th>Provincia</th>
+                                                            <th>Distrito</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="u in arrayUbigeo" :key="u.cCode">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" >
+                                                                    <div slot="content">Asignar {{ u.cU_SYP_DIST }}</div>
+                                                                    <i @click="asignarUbigeo(u)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </td>
+                                                            <td v-text="u.cCode"></td>
+                                                            <td v-text="u.cU_SYP_DEPA"></td>
+                                                            <td v-text="u.cU_SYP_PROV"></td>
+                                                            <td v-text="u.cU_SYP_DIST"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaUbigeo(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </main>
 </template>
 
@@ -1379,6 +1509,9 @@
                     nprofesion : '',
                     ccentrolaboral : '',
                     cnrolicencia: '',
+                    cubigeo: '',
+                    nopcion: 0,
+                    cfiltro: ''
                 },
                 arrayTipoDocumento: [],
                 vistaDatosPersonaNatural: 1,
@@ -1406,6 +1539,16 @@
                 },
                 arrayProveedor: [],
                 arraySOAT: [],
+                // ======================================
+                // VARIABLES UBIGEO
+                // ======================================
+                arrayUbigeo: [],
+                arrayTipoUbigeo: [
+                    { value: 0, text: 'TODO'},
+                    { value: 1, text: 'DEPARTAMENTO'},
+                    { value: 2, text: 'PROVINCIA'},
+                    { value: 3, text: 'DISTRITO'}
+                ],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1929,9 +2072,9 @@
             // SUBTAB - DATOS CONTACTO
             // ===========================
             tabDatosContacto(){
-                this.llenarComboDptos();
+                /*this.llenarComboDptos();
                 this.llenarComboProv();
-                this.llenarComboDist();
+                this.llenarComboDist();*/
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
             },
@@ -1951,7 +2094,7 @@
                 this.fillPropietario.ccentrolaboral = '';
                 this.fillPropietario.cnrolicencia = '';
             },
-            llenarComboDptos(){
+            /*llenarComboDptos(){
                 var url = this.ruta + '/ubigeo/GetDptos';
                 axios.get(url).then(response => {
                     this.arrayDptos = response.data;
@@ -2004,6 +2147,45 @@
                         }
                     }
                 });
+            },*/
+            llenarUbigeo(page){
+                //var url = this.ruta + '/ubigeo/SapGetUbigeo';
+                var url = this.ruta + '/ubigeo/GetUbigeo';
+                axios.get(url, {
+                    params: {
+                        'nopcion': this.fillPropietario.nopcion,
+                        'cfiltro': this.fillPropietario.cfiltro.toUpperCase().toString(),
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayUbigeo = response.data.arrayUbigeo.data;
+                    this.paginationModal.current_page =  response.data.arrayUbigeo.current_page;
+                    this.paginationModal.total = response.data.arrayUbigeo.total;
+                    this.paginationModal.per_page    = response.data.arrayUbigeo.per_page;
+                    this.paginationModal.last_page   = response.data.arrayUbigeo.last_page;
+                    this.paginationModal.from        = response.data.arrayUbigeo.from;
+                    this.paginationModal.to           = response.data.arrayUbigeo.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaUbigeo(page){
+                this.paginationModal.current_page=page;
+                this.llenarUbigeo(page);
+            },
+            asignarUbigeo(u){
+                this.fillPropietario.cubigeo = u.cU_SYP_DEPA + ' - ' + u.cU_SYP_PROV + ' - ' + u.cU_SYP_DIST;
+                this.fillPropietario.ccode = u.cCode;
+                this.fillPropietario.cdepartamento = u.cU_SYP_DEPA;
+                this.fillPropietario.cprovincia = u.cU_SYP_PROV;
+                this.fillPropietario.cdistrito = u.cU_SYP_DIST;
+                this.cerrarModal();
             },
             llenarComboEstadoCivil(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -2504,8 +2686,18 @@
                                 break;
                             }
                         }
-                    }
-                    break;
+                    }break;
+                    case 'ubigeo':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             //Limpiar Paginación

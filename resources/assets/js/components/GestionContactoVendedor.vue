@@ -2056,7 +2056,7 @@
                                                 <div class="col-md-10">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <el-select v-model="formNuevoContacto.nopcion" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                            <el-select v-model="formNuevoContacto.nopcion" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
                                                                 v-for="item in arrayTipoUbigeo"
                                                                 :key="item.value"
