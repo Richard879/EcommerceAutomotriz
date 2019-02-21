@@ -588,34 +588,12 @@
                                                                                     <strong>* Habilitar Formulario Nueva Persona?</strong>
                                                                                 </label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-checkbox v-model="checked" :label="checked ? 'No' : 'Si'"></el-checkbox>
+                                                                                    <el-checkbox v-model="checked" :label="checked ? 'Si' : 'No'"></el-checkbox>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <template v-if="checked">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
-                                                                                    <div class="col-sm-6" :class="[checked ? 'disabled' : '']">
-                                                                                        <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                                                            <input type="text" v-model="fillPropietario.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
-                                                                                            <div class="input-group-prepend">
-                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                    <div slot="content">Buscar Contacto</div>
-                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
-                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                    </button>
-                                                                                                </el-tooltip>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
-                                                                    <template v-else>
                                                                         <ul class="nav nav-tabs">
                                                                             <li class="nav-item">
                                                                                 <a class="nav-link" id="tab020201" href="#TabDatosPersonales" @click="tabDatosPersonales" role="tab" data-toggle="tab">
@@ -944,6 +922,28 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </section>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                                    <div class="col-sm-6" :class="[checked ? 'disabled' : '']">
+                                                                                        <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                            <input type="text" v-model="fillPropietario.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Contacto</div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </template>
@@ -1289,7 +1289,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ c.cContacto }}</div>
-                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click.prevent="asignarContacto(c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="c.cContacto"></td>
@@ -1316,7 +1316,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ c.cRazonSocial }}</div>
-                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click.prevent="asignarContacto(c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="c.cRazonSocial"></td>
@@ -1853,7 +1853,7 @@
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
                 (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
-                (this.cFlagEditar == 2) ? (this.checked = false) : (this.checked = true);
+                (this.cFlagEditar == 2) ? (this.checked = true) : (this.checked = false);
             },
             // ================================
             // METODOS SUBTAB VEHICULO
@@ -2705,6 +2705,7 @@
             },
             listarContactos(page){
                 var url = this.ruta + '/autorizacion/GetLstContactosByUsuario';
+                //var url = this.ruta + '/persona/GetLstPersonaByTipo';
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2735,12 +2736,8 @@
                     }
                 });
             },
-            limpiarAlAsignarContacto(){
-                //Limpiar Asignación contacto cada vez que se asigne
-                this.arrayReferenciavehiculo = [];
-                this.fillNuevaSolicitud.nidasigcontacto = '';
-                this.fillNuevaSolicitud.nidcontacto = '';
-                this.fillNuevaSolicitud.cnombrecontacto = '';
+            asignarContacto(objContacto){
+
             },
             // =================================================================
             // METODOS GENERICOS
@@ -2775,48 +2772,12 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                /*this.flagBuscarContacto = data;
-                                this.modalMisContactos.ntipopersona = 1;*/
                                 //this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
                             }
                             break;
-                            /*case 'asignar':
-                            {
-                                if(this.modalMisContactos.ntipopersona == 1){
-                                    if (this.flagBuscarContacto == 1) {
-                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
-                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
-                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cContacto'];
-                                    } else {
-                                        //Limpiar Asignación contacto cada vez que se asigne
-                                        this.limpiarAlAsignarContacto();
-                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
-                                        this.fillNuevaSolicitud.cnombrecontacto = data['cContacto'];
-                                        this.llenarReferenciasVehiculo();
-                                    }
-                                } else {
-                                    if (this.flagBuscarContacto == 1) {
-                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
-                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
-                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cRazonSocial'];
-                                    } else {
-                                        //Limpiar Asignación contacto cada vez que se asigne
-                                        this.limpiarAlAsignarContacto();
-                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
-                                        this.fillNuevaSolicitud.cnombrecontacto = data['cRazonSocial'];
-                                        this.llenarReferenciasVehiculo();
-                                    }
-                                }
-                                this.modalMisContactos.ntipopersona = 1;
-                                this.modalMisContactos.cnrodocumento = '';
-                                this.modalMisContactos.cfiltrodescripcion = '';
-                                this.cerrarModalSolicitud();
-                                break;
-                            }
-                            break;*/
                         }
                     }
                 }
