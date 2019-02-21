@@ -435,6 +435,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
     Route::post('/tablacosto/SapPachTablaCosto','Api\SapTablaCostoController@SapPachTablaCosto');
+    Route::post('/tablacosto/SapPachTablaCostoDscto','Api\SapTablaCostoController@SapPachTablaCostoDscto');
     //Tipo Cambio
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     /// ============================================================
