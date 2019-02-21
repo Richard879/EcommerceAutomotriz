@@ -269,7 +269,9 @@
                                                     <div class="row">
                                                         <label class="col-sm-6 form-control-label">Monto a Actual</label>
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label" v-text="fillPedidoDscto.dMontoPedido" ></label>
+                                                            <label class="form-control-label">
+                                                                $ {{ fillPedidoDscto.dMontoPedido }}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -280,7 +282,7 @@
                                                         <label class="col-sm-6 form-control-label">Monto a Descontar</label>
                                                         <div class="col-sm-6">
                                                             <label class="form-control-label">
-                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
+                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
                                                             </label>
                                                         </div>
                                                     </div>
@@ -292,7 +294,7 @@
                                                         <label class="col-sm-6 form-control-label">Monto Nuevo</label>
                                                         <div class="col-sm-6">
                                                             <label class="form-control-label">
-                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
+                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
                                                             </label>
                                                         </div>
                                                     </div>
