@@ -584,35 +584,16 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-12">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Habilitar Formulario Nueva Persona ?</label>
+                                                                                <label class="col-sm-4 form-control-label">
+                                                                                    <strong>* Habilitar Formulario Nueva Persona?</strong>
+                                                                                </label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-checkbox v-model="checked" :label="checked ? 'No' : 'Si'"></el-checkbox>
+                                                                                    <el-checkbox v-model="checked" :label="checked ? 'Si' : 'No'"></el-checkbox>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <template v-if="checked">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
-                                                                                    <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
-                                                                                        <el-row>
-                                                                                            <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                    <div slot="content">Buscar Contacto</div>
-                                                                                                    <el-input placeholder="Seleccione un Contacto"  :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
-                                                                                                    </el-input>
-                                                                                                </el-tooltip>
-                                                                                            </div>
-                                                                                        </el-row>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
-                                                                    <template v-else>
                                                                         <ul class="nav nav-tabs">
                                                                             <li class="nav-item">
                                                                                 <a class="nav-link" id="tab020201" href="#TabDatosPersonales" @click="tabDatosPersonales" role="tab" data-toggle="tab">
@@ -944,6 +925,28 @@
                                                                             </div>
                                                                         </div>
                                                                     </template>
+                                                                    <template v-else>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                                    <div class="col-sm-6" :class="[checked ? 'disabled' : '']">
+                                                                                        <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                            <input type="text" v-model="fillPropietario.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Contacto</div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
                                                                 </div>
                                                             </div>
                                                         </section>
@@ -1215,116 +1218,273 @@
             </div>
         </div>
 
-        <!-- Modal Ubigeo-->
-            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">UBIGEO</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-md-10">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <el-select v-model="fillPropietario.nopcion" filterable clearable placeholder="SELECCIONE">
-                                                                <el-option
-                                                                v-for="item in arrayTipoUbigeo"
-                                                                :key="item.value"
-                                                                :label="item.text"
-                                                                :value="item.value">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                        <div class="col-md-8" v-if="fillPropietario.nopcion != 0">
-                                                            <input type="text" v-model="fillPropietario.cfiltro" class="form-control form-control-sm" @keyup.enter="llenarUbigeo(1)">
-                                                        </div>
+        <!-- Modal Buscar Contactos -->
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSQUEDA CONTACTOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                    <div class="col-sm-8">
+                                                        <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                            <input type="radio" class="radio-template" v-model="modalMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
+                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo(1)"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="modalMisContactos.cnrodocumento" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                        <template v-if="arrayUbigeo.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="modalMisContactos.cfiltrodescripcion" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactos(1);">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <br/>
+                                    <template v-if="arrayContacto.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <template v-if="modalMisContactos.ntipopersona == 1">
                                                     <thead>
                                                         <tr>
-                                                            <th>Acción</th>
-                                                            <th>Código</th>
-                                                            <th>Departamento</th>
-                                                            <th>Provincia</th>
-                                                            <th>Distrito</th>
+                                                            <th>Acciones</th>
+                                                            <th>Contacto</th>
+                                                            <th>Nro Documento</th>
+                                                            <th>Telefono</th>
+                                                            <th>Dirección</th>
+                                                            <th>Email</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="u in arrayUbigeo" :key="u.cCode">
+                                                        <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                             <td>
-                                                                <el-tooltip class="item" effect="dark" >
-                                                                    <div slot="content">Asignar {{ u.cU_SYP_DIST }}</div>
-                                                                    <i @click="asignarUbigeo(u)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ c.cContacto }}</div>
+                                                                    <i @click.prevent="asignarContacto(c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
-                                                            <td v-text="u.cCode"></td>
-                                                            <td v-text="u.cU_SYP_DEPA"></td>
-                                                            <td v-text="u.cU_SYP_PROV"></td>
-                                                            <td v-text="u.cU_SYP_DIST"></td>
+                                                            <td v-text="c.cContacto"></td>
+                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                            <td v-text="c.cDireccion"></td>
+                                                            <td v-text="c.cEmail"></td>
                                                         </tr>
                                                     </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaUbigeo(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Razon Social</th>
+                                                            <th>Nro Documento</th>
+                                                            <th>Telefono</th>
+                                                            <th>Email</th>
+                                                            <th>Persona Contacto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ c.cRazonSocial }}</div>
+                                                                    <i @click.prevent="asignarContacto(c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="c.cRazonSocial"></td>
+                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                            <td v-text="c.cEmail"></td>
+                                                            <td v-text="c.cContacto"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </template>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                            :class="[page==isActivedModal?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPaginaMisContactos(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                 </div>
                                             </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Modal Ubigeo-->
+        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">UBIGEO</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <el-select v-model="fillPropietario.nopcion" filterable clearable placeholder="SELECCIONE">
+                                                            <el-option
+                                                            v-for="item in arrayTipoUbigeo"
+                                                            :key="item.value"
+                                                            :label="item.text"
+                                                            :value="item.value">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                    <div class="col-md-8" v-if="fillPropietario.nopcion != 0">
+                                                        <input type="text" v-model="fillPropietario.cfiltro" class="form-control form-control-sm" @keyup.enter="llenarUbigeo(1)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="llenarUbigeo(1)"><i class="fa fa-search"></i> Buscar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <template v-if="arrayUbigeo.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Acción</th>
+                                                        <th>Código</th>
+                                                        <th>Departamento</th>
+                                                        <th>Provincia</th>
+                                                        <th>Distrito</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="u in arrayUbigeo" :key="u.cCode">
+                                                        <td>
+                                                            <el-tooltip class="item" effect="dark" >
+                                                                <div slot="content">Asignar {{ u.cU_SYP_DIST }}</div>
+                                                                <i @click="asignarUbigeo(u)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
+                                                        </td>
+                                                        <td v-text="u.cCode"></td>
+                                                        <td v-text="u.cU_SYP_DEPA"></td>
+                                                        <td v-text="u.cU_SYP_PROV"></td>
+                                                        <td v-text="u.cU_SYP_DIST"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                            :class="[page==isActivedModal?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPaginaUbigeo(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaUbigeo(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 </template>
@@ -1422,7 +1582,8 @@
                     cnrolicencia: '',
                     cubigeo: '',
                     nopcion: 0,
-                    cfiltro: ''
+                    cfiltro: '',
+                    cnombrecontacto: ''
                 },
                 arrayTipoDocumento: [],
                 vistaDatosPersonaNatural: 1,
@@ -1460,6 +1621,23 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
+                // ======================================
+                // VARIABLES Propietario
+                // ======================================
+                arrayPropietario: [],
+                // ===============================
+                // VARIABLES MODAL CONTACTO
+                // ===============================
+                modalMisContactos:{
+                    ntipopersona: 1,
+                    cnrodocumento: '',
+                    cfiltrodescripcion: '',
+                },
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                arrayContacto: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1679,6 +1857,7 @@
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
                 (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
+                (this.cFlagEditar == 2) ? (this.checked = true) : (this.checked = false);
             },
             // ================================
             // METODOS SUBTAB VEHICULO
@@ -2255,7 +2434,12 @@
                     cFlagEditar       : this.cFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
+                        if(checked==true){
+                            this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
+                        }
+                        else{
+                            this.registrarPropietario(response.data[0].nIdVehiculoPlaca);
+                        }
                     }else{
                         swal('Ocurrio un error al registrar el vehículo');
                     }
@@ -2517,6 +2701,79 @@
                     me.fillPropietario.ntpodocumento = me.arrayTipoDocumento[1].nIdPar;//asigno el tipo de documento RUC
                 })
             },
+            // ======================
+            // MODAL BUSCAR CONTACTOS
+            // ======================
+            cambiarTipoPersonaMisContactos(){
+                this.arrayContacto = [];
+                this.cambiarPaginaMisContactos(1);
+            },
+            cambiarPaginaMisContactos(page){
+                this.paginationModal.current_page=page;
+                this.listarContactos(page);
+            },
+            listarContactos(page){
+                var url = this.ruta + '/autorizacion/GetLstContactosByUsuario';
+                //var url = this.ruta + '/persona/GetLstPersonaByTipo';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : 220016,
+                        'ntipopersona' : this.modalMisContactos.ntipopersona,
+                        'cnrodocumento' : String(this.modalMisContactos.cnrodocumento.toString()),
+                        'cfiltrodescripcion' : this.modalMisContactos.cfiltrodescripcion.toString(),
+                        'tipoRol': 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayContactosByUsuario;
+                    this.arrayContacto                = info.data;
+                    this.paginationModal.current_page =  info.current_page;
+                    this.paginationModal.total        = info.total;
+                    this.paginationModal.per_page     = info.per_page;
+                    this.paginationModal.last_page    = info.last_page;
+                    this.paginationModal.from         = info.from;
+                    this.paginationModal.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            asignarContacto(objContacto){
+                if(this.modalMisContactos.ntipopersona == 1){
+                    
+                } else {
+                    
+                }
+            },
+            /**
+             * REGISTRA PROPIETARIO
+             */
+            registrarPropietario(data){
+                var url = this.ruta + '/maestrovehiculo/SetRegistrarPropietario';
+                axios.post(url, {
+                    arrayPropietario    :   this.arrayPropietario,
+                    fillProveedor       :   this.fillProveedor,
+                    nIdVehiculoPlaca    :   data,
+                    cFlagEditar         :   this.cFlagEditar
+                }).then(response => {
+                    this.registrarSOAT(data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -2545,6 +2802,19 @@
                             }
                         }
                     }break;
+                    case "contacto":
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                //this.listarContactos(1);
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                break;
+                            }
+                            break;
+                        }
+                    }
                 }
             },
             //Limpiar Paginación

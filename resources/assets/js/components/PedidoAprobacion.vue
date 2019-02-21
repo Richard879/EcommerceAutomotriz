@@ -1674,12 +1674,6 @@
                             });
                         }*/
                     });
-
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                    setTimeout(function() {
-                        me.integracSapCosto();
-                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
