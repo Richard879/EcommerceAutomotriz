@@ -1369,7 +1369,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -1621,6 +1621,10 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
+                // ======================================
+                // VARIABLES Propietario
+                // ======================================
+                arrayPropietario: [],
                 // ===============================
                 // VARIABLES MODAL CONTACTO
                 // ===============================
@@ -2430,7 +2434,12 @@
                     cFlagEditar       : this.cFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
+                        if(checked==true){
+                            this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
+                        }
+                        else{
+                            this.registrarPropietario(response.data[0].nIdVehiculoPlaca);
+                        }
                     }else{
                         swal('Ocurrio un error al registrar el vehículo');
                     }
@@ -2737,7 +2746,33 @@
                 });
             },
             asignarContacto(objContacto){
-
+                if(this.modalMisContactos.ntipopersona == 1){
+                    
+                } else {
+                    
+                }
+            },
+            /**
+             * REGISTRA PROPIETARIO
+             */
+            registrarPropietario(data){
+                var url = this.ruta + '/maestrovehiculo/SetRegistrarPropietario';
+                axios.post(url, {
+                    arrayPropietario    :   this.arrayPropietario,
+                    fillProveedor       :   this.fillProveedor,
+                    nIdVehiculoPlaca    :   data,
+                    cFlagEditar         :   this.cFlagEditar
+                }).then(response => {
+                    this.registrarSOAT(data);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =================================================================
             // METODOS GENERICOS
