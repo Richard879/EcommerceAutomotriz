@@ -750,7 +750,7 @@
                     dMontoDescontar: 0,
                     dMontoDescontarFlag: 0,
                     dTipoCambioComercial: '',
-                    cTipoDscto: '1',
+                    cTipoDscto: '2',
                     dMontoPedido: '',
                     dMontoNuevoDolares: '',
                     dMontoNuevoSoles: '',
@@ -760,7 +760,7 @@
                     cItemCode: ''
                 },
                 arrayTipoDscto: [
-                    { value: '1', text: 'USD'},
+                    // { value: '1', text: '%'},
                     { value: '2', text: '%'}
                 ],
                 arrayHistorialPedidoDsctos: [],
@@ -791,7 +791,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         computed:{
@@ -1000,7 +1001,7 @@
                 this.fillPedidoDscto.dMontoDescontar = 0;
                 this.fillPedidoDscto.dMontoDescontarFlag = 0;
                 this.fillPedidoDscto.dTipoCambioComercial = '';
-                this.fillPedidoDscto.cTipoDscto = '1';
+                this.fillPedidoDscto.cTipoDscto = '2';
                 this.fillPedidoDscto.dMontoPedido = '';
                 this.fillPedidoDscto.dMontoNuevoDolares = '';
                 this.fillPedidoDscto.dMontoNuevoSoles = '';
@@ -1087,7 +1088,7 @@
 
                         // SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
                         if(parseFloat(value) > parseFloat(me.fillPedidoDscto.dMontoPedido)) {
-                            console.log(1, 1, value);
+                            // console.log(1, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1096,7 +1097,7 @@
                         }
                         // EL MONTO A DESCONTAR ES VACÍO // MENOR A 0
                         if((parseInt(value) === '') || (parseInt(value) < 0)){
-                            console.log(1, 2, value);
+                            // console.log(1, 2, value);
                             me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1118,7 +1119,7 @@
 
                         //SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
                         if(montoNuevo > me.fillPedidoDscto.dMontoPedido) {
-                            console.log(2, 1, value);
+                            // console.log(2, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1127,11 +1128,11 @@
                         }
                         //SI EL MONTO A DESCONTAR ES <0 // >100 // VACÍO
                         if((parseInt(value) < 0) || (parseInt(value) > 100) || (parseInt(value) === '')){
-                            console.log(parseInt(value) < 0)
-                            console.log(parseInt(value) > 100)
-                            console.log(parseInt(value) == '')
+                            // console.log(parseInt(value) < 0)
+                            // console.log(parseInt(value) > 100)
+                            // console.log(parseInt(value) == '')
+                            // console.log(2, 2, value);
 
-                            console.log(2, 2, value);
                             me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1154,15 +1155,21 @@
             },
             //REGISTRO DSCTO PEDIDO//NOTA CREDITO EN SAP
             registrarDsctoPedidoSAP(){
+                let me = this;
+                this.mostrarProgressBar();
+                me.loadingProgressBar("GENERANDO DESCUENTO DEL PEDIDO EN SAP BUSINESS ONE...");
+
                 var url = this.ruta + '/pedido/SapSetPedidoDscto';
                 axios.post(url, {
+                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
                     nDocEntryPedido     : this.fillPedidoDscto.nDocEntryPedido,
                     cCardCode           : this.fillPedidoDscto.cCardCode,
                     cItemCode           : this.fillPedidoDscto.cItemCode,
-                    dMontoNuevoSoles    : this.fillPedidoDscto.dMontoNuevoSoles,
+                    dMontoNuevoDolares  : this.fillPedidoDscto.dMontoNuevoDolares,
+                    dMontoDescontar     : this.fillPedidoDscto.dMontoDescontar,
                     dFechaModificacion  : moment().format('YYYY-MM-DD'),
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     console.log("Integración Descuento del Pedido - SAP : OK");
                     this.registrarDsctoPedido();
                 }).catch(error => {
@@ -1183,17 +1190,22 @@
             },
             //GENERAR DSCTO EN PEDIDO-HISTORIAL EN SQLSERVER
             registrarDsctoPedido(){
+                let me = this;
+
                 var url = this.ruta + '/pedido/SetHistorialPedidoDscto';
                 axios.post(url, {
-                    nIdCabeceraPedido: this.fillPedidoDscto.nIdCabeceraPedido,
-                    dMontoNuevoDolares: this.fillPedidoDscto.dMontoNuevoDolares,
-                    dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
-                    dMontoDescontarFlag: this.fillPedidoDscto.dMontoDescontarFlag,
-                    dTipoCambioComercial: this.fillPedidoDscto.dTipoCambioComercial
+                    nIdCabeceraPedido       : this.fillPedidoDscto.nIdCabeceraPedido,
+                    dMontoNuevoDolares      : this.fillPedidoDscto.dMontoNuevoDolares,
+                    dMontoNuevoSoles        : this.fillPedidoDscto.dMontoNuevoSoles,
+                    dMontoDescontarFlag     : this.fillPedidoDscto.dMontoDescontarFlag,
+                    dMontoDescontar         : this.fillPedidoDscto.dMontoDescontar,
+                    dTipoCambioComercial    : this.fillPedidoDscto.dTipoCambioComercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         swal(response.data[0].cMensaje);
                         this.arrayPedidos = [];
+                        $("#myBar").hide();
+                        me.loading.close();
                         this.generarDsctoPedido(1);
                     }else{
                         swal('Ocurrio un error al generar el descuento del pedido' + this.fillPedidoDscto.cNumeroPedido);
@@ -1317,6 +1329,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

@@ -606,14 +606,15 @@ class PedidoController extends Controller
             $dMontoNuevoDolares     =   $request->dMontoNuevoDolares;
             $dMontoNuevoSoles       =   $request->dMontoNuevoSoles;
             $dMontoDescontarFlag    =   $request->dMontoDescontarFlag;
+            $dMontoDescontar        =   $request->dMontoDescontar;
             $dTipoCambioComercial   =   $request->dTipoCambioComercial;
 
-
-            $data = DB::select('exec [usp_Pedido_SetHistorialPedidoDscto] ?, ?, ?, ?, ?, ?',
+            $data = DB::select('exec [usp_Pedido_SetHistorialPedidoDscto] ?, ?, ?, ?, ?, ?, ?',
                                                         [   $nIdCabeceraPedido,
                                                             $dMontoNuevoDolares,
                                                             $dMontoNuevoSoles,
                                                             $dMontoDescontarFlag,
+                                                            $dMontoDescontar,
                                                             $dTipoCambioComercial,
                                                             Auth::user()->id
                                                         ]);
