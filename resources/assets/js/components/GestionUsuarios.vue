@@ -265,10 +265,10 @@
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarUsuario()">
-                                                    <i class="fa fa-plus"></i> Registrar
+                                                    <i class="fa fa-save"></i> Registrar
                                                 </button>
-                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="cambiarVistaFormulario(1)">
-                                                    <i class="fa fa-arrow-left"></i> Cancelar
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario(1)">
+                                                    <i class="fa fa-close"></i> Cancelar
                                                 </button>
                                             </div>
                                         </div>
