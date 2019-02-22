@@ -106,14 +106,15 @@
                                                         <td v-text="usuario.usuario"></td>
                                                         <td v-text="usuario.cGrupoParNombre"></td>
                                                         <td>
-                                                            <!-- <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Ver Permisos {{ usuario.cParNombre }}</div>
-                                                                <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                            </el-tooltip>&nbsp;
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Integrar Trabajador  {{ usuario.cParNombre }}</div>
+                                                                <i @click="integrarVendedor(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
+                                                            <!-- @click="cambiarVistaFormulario(0, rol)" -->
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ usuario.cParNombre }}</div>
-                                                                <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp; -->
+                                                                <i :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            </el-tooltip>&nbsp;
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -672,6 +673,11 @@
                     }
                 });
             },
+            //========================================================================
+            //===================== METODOS REGISTRAR USUARIO SAP ====================
+            integrarVendedor(usuario){
+                console.log(usuario);
+            },
             //============================================================
             //===================== METODOS GENÉRICOS ====================
             cerrarModal(){
@@ -766,8 +772,8 @@
         font-size: 0.75rem;
     }
     .imgRedonda {
-        width:60px;
-        height:60px;
+        width:30px;
+        height:30px;
         border-radius:150px;
         border:3px solid #666;
     }

@@ -120,7 +120,7 @@ class GestionUsuariosController extends Controller
             $nIdEmpresa = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
             $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
 
-            //REGISTRAR RELACIÓN
+            //REGISTRAR RELACIÓN DEL USUARIO CON LA EMPRESA/SUCURSAL
             DB::select('EXEC usp_Usuario_SetRelacionByUsuario ?, ?, ?, ?',
                                     [
                                         $nIdEmpresa,
@@ -132,7 +132,7 @@ class GestionUsuariosController extends Controller
             $detalles = $request->arrayData;
             foreach($detalles as $ep=>$det)
             {
-                //REGISTRAR PERMISOS
+                //REGISTRAR PERMISOS DEL USUARIO
                 $data = DB::select('exec usp_Usuario_SetPermisosByUsuario ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
@@ -164,10 +164,10 @@ class GestionUsuariosController extends Controller
                                                         $nIdUsuario
                                                     ]);
 
-        $tipocambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?', 
+        $tipocambio = DB::select('exec [usp_TipoCambio_GetTipoCambioByFecha] ?',
                                                                 [   $dFecha
                                                                 ]);
-                                                                                                               
+
         $flag = 0;
         if ($tipocambio[0]->fValorTipoCambioComercial > 0) {
             $flag = 1;
