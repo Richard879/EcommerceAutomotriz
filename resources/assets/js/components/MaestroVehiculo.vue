@@ -2727,21 +2727,18 @@
                 this.listarContactos(page);
             },
             listarContactos(page){
-                var url = this.ruta + '/autorizacion/GetLstContactosByUsuario';
-                //var url = this.ruta + '/persona/GetLstPersonaByTipo';
+                var url = this.ruta + '/persona/GetLstPersona';
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
                         'ntipopersona' : this.modalMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.modalMisContactos.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.modalMisContactos.cfiltrodescripcion.toString(),
-                        'tipoRol': 1,
                         'page' : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContactosByUsuario;
+                    let info = response.data.arrayPersona;
                     this.arrayContacto                = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
