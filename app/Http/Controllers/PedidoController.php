@@ -602,19 +602,21 @@ class PedidoController extends Controller
         try{
             DB::beginTransaction();
 
-            $nIdCabeceraPedido      =   $request->nIdCabeceraPedido;
-            $dMontoNuevoDolares     =   $request->dMontoNuevoDolares;
-            $dMontoNuevoSoles       =   $request->dMontoNuevoSoles;
-            $dMontoDescontarFlag    =   $request->dMontoDescontarFlag;
-            $dMontoDescontar        =   $request->dMontoDescontar;
-            $dTipoCambioComercial   =   $request->dTipoCambioComercial;
+            $nIdCabeceraPedido          =   $request->nIdCabeceraPedido;
+            $dMontoNuevoDolares         =   $request->dMontoNuevoDolares;
+            $dMontoNuevoSoles           =   $request->dMontoNuevoSoles;
+            $dMontoDescontarDolares     =   $request->dMontoDescontarDolares;
+            $dMontoDescontarSoles       =   $request->dMontoDescontarSoles;
+            $dPorcentaje                =   $request->dPorcentaje;
+            $dTipoCambioComercial       =   $request->dTipoCambioComercial;
 
-            $data = DB::select('exec [usp_Pedido_SetHistorialPedidoDscto] ?, ?, ?, ?, ?, ?, ?',
+            $data = DB::select('exec [usp_Pedido_SetHistorialPedidoDscto] ?, ?, ?, ?, ?, ?, ?, ?',
                                                         [   $nIdCabeceraPedido,
                                                             $dMontoNuevoDolares,
                                                             $dMontoNuevoSoles,
-                                                            $dMontoDescontarFlag,
-                                                            $dMontoDescontar,
+                                                            $dMontoDescontarDolares,
+                                                            $dMontoDescontarSoles,
+                                                            $dPorcentaje,
                                                             $dTipoCambioComercial,
                                                             Auth::user()->id
                                                         ]);

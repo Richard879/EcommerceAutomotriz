@@ -227,7 +227,7 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-5">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -313,7 +313,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-7">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h3 class="h4">HISTORIAL DE DESCUENTOS</h3>
@@ -326,7 +326,8 @@
                                                                     <tr>
                                                                         <th>Dolares</th>
                                                                         <th>Soles</th>
-                                                                        <th>Descuento</th>
+                                                                        <th>Descuento en $</th>
+                                                                        <th>Descuento en S/.</th>
                                                                         <th>Porcentaje</th>
                                                                         <th>Tipo Cambio</th>
                                                                         <th>Tipo Historial</th>
@@ -337,7 +338,8 @@
                                                                     <tr v-for="(histodsctos, index) in arrayHistorialPedidoDsctos" :key="index">
                                                                         <td>$ {{ ((parseFloat(histodsctos.fMontoDolares)).toFixed(2)) }}</td>
                                                                         <td>S/. {{ ((parseFloat(histodsctos.fMontoSoles)).toFixed(2)) }}</td>
-                                                                        <td>$ {{ ((parseFloat(histodsctos.fDsctoActual)).toFixed(2)) }}</td>
+                                                                        <td>$ {{ ((parseFloat(histodsctos.fDsctoActualDolares)).toFixed(2)) }}</td>
+                                                                        <td>S/. {{ ((parseFloat(histodsctos.fDsctoActualSoles)).toFixed(2)) }}</td>
                                                                         <td>% {{ ((parseFloat(histodsctos.nPorcentaje)).toFixed(2)) }}</td>
                                                                         <td>{{ ((parseFloat(histodsctos.cTipoCambio)).toFixed(2)) }}</td>
                                                                         <td v-text="histodsctos.cTipoHistorial"></td>
@@ -1207,14 +1209,14 @@
                     U_SYP_DCONCEPTO     :   'Descuento de Proveedor',
                     U_SYP_CDOCUMENTO    :   '01',
                     U_SYP_DDOCUMENTO    :   'Nota de Crédito',
-                    U_SYP_IMPORTE       :   this.fillPedidoDscto.dMontoDescontarFlag,
+                    U_SYP_IMPORTE       :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
                     U_SYP_COSTO         :   'Si',
                     U_SYP_ESTADO        :   'Pendiente'
                 }).then(response => {
                     // console.log(response.data);
-                    me.arraySapRespuesta = response.data;
-                    me.jsonRespuesta = '';
-                    me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+                    // me.arraySapRespuesta = response.data;
+                    // me.jsonRespuesta = '';
+                    // me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
 
                     this.registrarDsctoPedido();
                 }).catch(error => {
@@ -1236,8 +1238,9 @@
                     nIdCabeceraPedido       :   this.fillPedidoDscto.nIdCabeceraPedido,
                     dMontoNuevoDolares      :   this.fillPedidoDscto.dMontoNuevoDolares,
                     dMontoNuevoSoles        :   this.fillPedidoDscto.dMontoNuevoSoles,
-                    dMontoDescontarFlag     :   this.fillPedidoDscto.dMontoDescontarFlag,
-                    dMontoDescontar         :   this.fillPedidoDscto.dMontoDescontar,
+                    dMontoDescontarDolares  :   this.fillPedidoDscto.dMontoDescontarFlag,
+                    dMontoDescontarSoles    :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
+                    dPorcentaje             :   this.fillPedidoDscto.dMontoDescontar,
                     dTipoCambioComercial    :   this.fillPedidoDscto.dTipoCambioComercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
