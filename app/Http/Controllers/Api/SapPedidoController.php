@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,20 +126,38 @@ class SapPedidoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+        $data = DB::select('exec [usp_Pedido_GetNumDsctosPedidoHistorial] ?',
+                                                            [
+                                                                $nIdCabeceraPedido,
+                                                            ]);
+
         $nDocEntryPedido    =   $request->nDocEntryPedido;
         $cCardCode          =   $request->cCardCode;
         $cItemCode          =   $request->cItemCode;
-        $dMontoNuevoSoles   =   $request->dMontoNuevoSoles;
-        $dMontoNuevoSoles   =   round($dMontoNuevoSoles, 2);
-
+        //Calcular nuevo dscto
+        $dMontoNuevoDolares =   $request->dMontoNuevoDolares;
+        $dMontoNuevoDolares =   round($dMontoNuevoDolares, 2);
+        $dMontoDescontar    =   $request->dMontoDescontar;
         $dFechaModificacion =   $request->dFechaModificacion;
+
+
+        // Obtener el Total Porcentaje Historico
+        $nPorcentajeHistorial   =   $data[0]->nCantPorcentaje;
+        // Sumar el Porcentaje Historico + el Porcentaje Enviado
+        $nPorcentajeTotal       =   $nPorcentajeHistorial + $dMontoDescontar;
 
         $json = [
             'json' => [
                 "DocEntryPedido"    => (string)$nDocEntryPedido,
                 "CardCode"          => (string)$cCardCode,
-                "DocTotal"          => (string)$dMontoNuevoSoles,
+                "DocTotal"          => (string)$dMontoNuevoDolares,
                 "Comments"          => (string)$dFechaModificacion,
+                "DocumentLines" => [
+                    [
+                        "DiscountPercent"   => (string)$nPorcentajeTotal
+                    ]
+                ]
             ]
         ];
 

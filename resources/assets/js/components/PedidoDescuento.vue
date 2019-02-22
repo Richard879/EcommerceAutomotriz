@@ -227,7 +227,7 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-5">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -269,7 +269,9 @@
                                                     <div class="row">
                                                         <label class="col-sm-6 form-control-label">Monto a Actual</label>
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label" v-text="fillPedidoDscto.dMontoPedido" ></label>
+                                                            <label class="form-control-label">
+                                                                $ {{ fillPedidoDscto.dMontoPedido }}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -280,7 +282,7 @@
                                                         <label class="col-sm-6 form-control-label">Monto a Descontar</label>
                                                         <div class="col-sm-6">
                                                             <label class="form-control-label">
-                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
+                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
                                                             </label>
                                                         </div>
                                                     </div>
@@ -292,7 +294,7 @@
                                                         <label class="col-sm-6 form-control-label">Monto Nuevo</label>
                                                         <div class="col-sm-6">
                                                             <label class="form-control-label">
-                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
+                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
                                                             </label>
                                                         </div>
                                                     </div>
@@ -311,7 +313,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-7">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h3 class="h4">HISTORIAL DE DESCUENTOS</h3>
@@ -324,7 +326,9 @@
                                                                     <tr>
                                                                         <th>Dolares</th>
                                                                         <th>Soles</th>
-                                                                        <th>Descuento</th>
+                                                                        <th>Descuento en $</th>
+                                                                        <th>Descuento en S/.</th>
+                                                                        <th>Porcentaje</th>
                                                                         <th>Tipo Cambio</th>
                                                                         <th>Tipo Historial</th>
                                                                         <th>Fecha</th>
@@ -332,9 +336,11 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(histodsctos, index) in arrayHistorialPedidoDsctos" :key="index">
-                                                                        <td>{{ ((parseFloat(histodsctos.fMontoDolares)).toFixed(2)) }}</td>
-                                                                        <td>{{ ((parseFloat(histodsctos.fMontoSoles)).toFixed(2)) }}</td>
-                                                                        <td>{{ ((parseFloat(histodsctos.fDsctoActual)).toFixed(2)) }}</td>
+                                                                        <td>$ {{ ((parseFloat(histodsctos.fMontoDolares)).toFixed(2)) }}</td>
+                                                                        <td>S/. {{ ((parseFloat(histodsctos.fMontoSoles)).toFixed(2)) }}</td>
+                                                                        <td>$ {{ ((parseFloat(histodsctos.fDsctoActualDolares)).toFixed(2)) }}</td>
+                                                                        <td>S/. {{ ((parseFloat(histodsctos.fDsctoActualSoles)).toFixed(2)) }}</td>
+                                                                        <td>% {{ ((parseFloat(histodsctos.nPorcentaje)).toFixed(2)) }}</td>
                                                                         <td>{{ ((parseFloat(histodsctos.cTipoCambio)).toFixed(2)) }}</td>
                                                                         <td v-text="histodsctos.cTipoHistorial"></td>
                                                                         <td v-text="histodsctos.dFechaGeneracionDscto"></td>
@@ -750,22 +756,25 @@
                     dMontoDescontar: 0,
                     dMontoDescontarFlag: 0,
                     dTipoCambioComercial: '',
-                    cTipoDscto: '1',
+                    cTipoDscto: '2',
                     dMontoPedido: '',
                     dMontoNuevoDolares: '',
                     dMontoNuevoSoles: '',
                     //Integración Dscto
                     cCardCode: '',
                     nDocEntryPedido: '',
-                    cItemCode: ''
+                    cItemCode: '',
+                    nDocEntryTblCosto: ''
                 },
                 arrayTipoDscto: [
-                    { value: '1', text: 'USD'},
+                    // { value: '1', text: '%'},
                     { value: '2', text: '%'}
                 ],
                 arrayHistorialPedidoDsctos: [],
                 arraySapRptPedido: [],
                 arraySapUpdPedido: [],
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -791,7 +800,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         computed:{
@@ -1000,7 +1010,7 @@
                 this.fillPedidoDscto.dMontoDescontar = 0;
                 this.fillPedidoDscto.dMontoDescontarFlag = 0;
                 this.fillPedidoDscto.dTipoCambioComercial = '';
-                this.fillPedidoDscto.cTipoDscto = '1';
+                this.fillPedidoDscto.cTipoDscto = '2';
                 this.fillPedidoDscto.dMontoPedido = '';
                 this.fillPedidoDscto.dMontoNuevoDolares = '';
                 this.fillPedidoDscto.dMontoNuevoSoles = '';
@@ -1070,6 +1080,7 @@
                 this.fillPedidoDscto.cCardCode          = data.cCardCode
                 this.fillPedidoDscto.nDocEntryPedido    = data.nDocEntryPedido
                 this.fillPedidoDscto.cItemCode          = data.cItemCode
+                this.fillPedidoDscto.nDocEntryTblCosto  = data.nDocEntryTblCosto
             },
             calcularNuevoMonto(op, value = null){
                 //Al cargar la ventana
@@ -1087,7 +1098,7 @@
 
                         // SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
                         if(parseFloat(value) > parseFloat(me.fillPedidoDscto.dMontoPedido)) {
-                            console.log(1, 1, value);
+                            // console.log(1, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1096,7 +1107,7 @@
                         }
                         // EL MONTO A DESCONTAR ES VACÍO // MENOR A 0
                         if((parseInt(value) === '') || (parseInt(value) < 0)){
-                            console.log(1, 2, value);
+                            // console.log(1, 2, value);
                             me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1118,7 +1129,7 @@
 
                         //SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
                         if(montoNuevo > me.fillPedidoDscto.dMontoPedido) {
-                            console.log(2, 1, value);
+                            // console.log(2, 1, value);
                             me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1127,11 +1138,11 @@
                         }
                         //SI EL MONTO A DESCONTAR ES <0 // >100 // VACÍO
                         if((parseInt(value) < 0) || (parseInt(value) > 100) || (parseInt(value) === '')){
-                            console.log(parseInt(value) < 0)
-                            console.log(parseInt(value) > 100)
-                            console.log(parseInt(value) == '')
+                            // console.log(parseInt(value) < 0)
+                            // console.log(parseInt(value) > 100)
+                            // console.log(parseInt(value) == '')
+                            // console.log(2, 2, value);
 
-                            console.log(2, 2, value);
                             me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1154,17 +1165,23 @@
             },
             //REGISTRO DSCTO PEDIDO//NOTA CREDITO EN SAP
             registrarDsctoPedidoSAP(){
+                let me = this;
+                this.mostrarProgressBar();
+                me.loadingProgressBar("GENERANDO DESCUENTO DEL PEDIDO EN SAP BUSINESS ONE...");
+
                 var url = this.ruta + '/pedido/SapSetPedidoDscto';
                 axios.post(url, {
+                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
                     nDocEntryPedido     : this.fillPedidoDscto.nDocEntryPedido,
                     cCardCode           : this.fillPedidoDscto.cCardCode,
                     cItemCode           : this.fillPedidoDscto.cItemCode,
-                    dMontoNuevoSoles    : this.fillPedidoDscto.dMontoNuevoSoles,
+                    dMontoNuevoDolares  : this.fillPedidoDscto.dMontoNuevoDolares,
+                    dMontoDescontar     : this.fillPedidoDscto.dMontoDescontar,
                     dFechaModificacion  : moment().format('YYYY-MM-DD'),
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     console.log("Integración Descuento del Pedido - SAP : OK");
-                    this.registrarDsctoPedido();
+                    this.registrarTblCostoSAP();
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -1181,20 +1198,59 @@
                     }
                 });
             },
+            registrarTblCostoSAP(){
+                let me = this;
+
+                var url = this.ruta + '/tablacosto/SapPachTablaCostoDscto';
+                axios.post(url, {
+                    U_SYP_VIN           :   this.fillPedidoDscto.cItemCode,
+                    DocEntry            :   this.fillPedidoDscto.nDocEntryTblCosto,
+                    U_SYP_CCONCEPTO     :   '08',
+                    U_SYP_DCONCEPTO     :   'Descuento de Proveedor',
+                    U_SYP_CDOCUMENTO    :   '01',
+                    U_SYP_DDOCUMENTO    :   'Nota de Crédito',
+                    U_SYP_IMPORTE       :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
+                    U_SYP_COSTO         :   'Si',
+                    U_SYP_ESTADO        :   'Pendiente'
+                }).then(response => {
+                    // console.log(response.data);
+                    // me.arraySapRespuesta = response.data;
+                    // me.jsonRespuesta = '';
+                    // me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+
+                    this.registrarDsctoPedido();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             //GENERAR DSCTO EN PEDIDO-HISTORIAL EN SQLSERVER
             registrarDsctoPedido(){
+                let me = this;
+
                 var url = this.ruta + '/pedido/SetHistorialPedidoDscto';
                 axios.post(url, {
-                    nIdCabeceraPedido: this.fillPedidoDscto.nIdCabeceraPedido,
-                    dMontoNuevoDolares: this.fillPedidoDscto.dMontoNuevoDolares,
-                    dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
-                    dMontoDescontarFlag: this.fillPedidoDscto.dMontoDescontarFlag,
-                    dTipoCambioComercial: this.fillPedidoDscto.dTipoCambioComercial
+                    nIdCabeceraPedido       :   this.fillPedidoDscto.nIdCabeceraPedido,
+                    dMontoNuevoDolares      :   this.fillPedidoDscto.dMontoNuevoDolares,
+                    dMontoNuevoSoles        :   this.fillPedidoDscto.dMontoNuevoSoles,
+                    dMontoDescontarDolares  :   this.fillPedidoDscto.dMontoDescontarFlag,
+                    dMontoDescontarSoles    :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
+                    dPorcentaje             :   this.fillPedidoDscto.dMontoDescontar,
+                    dTipoCambioComercial    :   this.fillPedidoDscto.dTipoCambioComercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         swal(response.data[0].cMensaje);
                         this.arrayPedidos = [];
+                        $("#myBar").hide();
+                        me.loading.close();
                         this.generarDsctoPedido(1);
+                        //Forzar Actualización
+                        this.$forceUpdate();
                     }else{
                         swal('Ocurrio un error al generar el descuento del pedido' + this.fillPedidoDscto.cNumeroPedido);
                     }
@@ -1317,6 +1373,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

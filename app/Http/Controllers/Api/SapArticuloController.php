@@ -18,10 +18,10 @@ class SapArticuloController extends Controller
         ]);
 
         $json = [
-                    'json' => [
-                        "ItemCode"    => $request->cNumeroVin
-                        ]
-                ];
+            'json' => [
+                "ItemCode"    => $request->cNumeroVin
+            ]
+        ];
 
         $response = $client->request('POST', "/api/Articulo/SapGetValidarArticulo/", $json);
         return $response->getBody();
@@ -76,10 +76,10 @@ class SapArticuloController extends Controller
             'verify'    => false,
             'base_uri'  => 'http://172.20.0.10/'
         ]);
-        
+
         $array_rpta = [];
         $rptaSap   = [];
-        
+
         $arraySapElemento = $request->data;
         foreach ($arraySapElemento as $key => $value) {
 

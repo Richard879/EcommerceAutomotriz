@@ -641,7 +641,7 @@
                                                                                                         </td>
                                                                                                         <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
                                                                                                         <td v-html="vehiculo.cantidad"></td>
-                                                                                                        <td v-text="vehiculo.PrecioBase"></td>
+                                                                                                        <td>$ {{ vehiculo.PrecioBase }} </td>
                                                                                                         <td>
                                                                                                             <input type="number"
                                                                                                                    class="form-control form-control-sm"
@@ -649,7 +649,7 @@
                                                                                                                    @keyup="changeBono(vehiculo.Bono)"
                                                                                                                    min="0"/>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.PrecioLista"></td>
+                                                                                                        <td>$ {{ vehiculo.PrecioLista }} </td>
                                                                                                         <!-- <td>
                                                                                                             <input type="number"
                                                                                                                    class="form-control form-control-sm"
@@ -665,10 +665,10 @@
                                                                                                                    @keyup="changeDscto(vehiculo.descuento)"
                                                                                                                    min="0"/>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.TYP"></td>
-                                                                                                        <td v-text="vehiculo.Flete"></td>
+                                                                                                        <td>$ {{ vehiculo.TYP }} </td>
+                                                                                                        <td>$ {{ vehiculo.Flete }} </td>
                                                                                                         <!-- <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td> -->
-                                                                                                        <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioLista) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio) + parseFloat(vehiculo.TYP) + parseFloat(vehiculo.Flete)) }} </td>
+                                                                                                        <td> $ {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioLista) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio) + parseFloat(vehiculo.TYP) + parseFloat(vehiculo.Flete)) }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
@@ -679,7 +679,7 @@
                                                                                                     <div class="form-group row">
                                                                                                         <div class="col-sm-12">
                                                                                                             <label class="col-sm-4 form-control-label">Sobre Precio </label>
-                                                                                                            <label class="form-control-label"><strong> {{ this.arrayVehiculo[0].sobrePrecio = (parseFloat(this.arrayVehiculo[0].PrecioBase)-(parseFloat(this.arrayVehiculo[0].Bono)+parseFloat(this.arrayVehiculo[0].PrecioLista))) }} </strong></label>
+                                                                                                            <label class="form-control-label"><strong>$ {{ this.arrayVehiculo[0].sobrePrecio = (parseFloat(this.arrayVehiculo[0].PrecioBase)-(parseFloat(this.arrayVehiculo[0].Bono)+parseFloat(this.arrayVehiculo[0].PrecioLista))) }} </strong></label>
                                                                                                         </div>
                                                                                                         <!-- <div class="col-sm-12" :class="[(fdscto02 > 0) ? '' : 'datos']">
                                                                                                             <label class="col-sm-4 form-control-label">Dscto #02: </label>
@@ -697,7 +697,7 @@
                                                                                                 </div>
                                                                                                 <div class="col-lg-6 direction-money">
                                                                                                     <div class="form-group row">
-                                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                                         <label class="form-control-label">
                                                                                                             <strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong>
                                                                                                         </label>
@@ -815,7 +815,7 @@
                                                                                     <div class="col-lg-12">
                                                                                         <div class="row flex-rigth-margin">
                                                                                             <div class="form-group row">
-                                                                                                <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                                 <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
                                                                                             </div>
                                                                                             <div class="form-group row">
@@ -887,7 +887,7 @@
                                                                                         <div class="col-lg-12">
                                                                                             <div class="row flex-rigth-margin">
                                                                                                 <div class="form-group row">
-                                                                                                    <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                                     <label class="form-control-label"><strong>{{ montoTotalElementoVenta = totalElementoVenta }}</strong></label>
                                                                                                 </div>
                                                                                                 <div class="form-group row">
@@ -1033,7 +1033,7 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                             <label class="form-control-label"><strong> {{ montoTotalConfiCotiVehiculo = totalConfiCotiVehiculo }}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
@@ -1083,7 +1083,7 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                             <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVenta = totalElementoVenta }}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
@@ -1133,7 +1133,7 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                             <label class="form-control-label"><strong>{{ montoTotalConfiCotiObsequios = totalElementoVentaPorRegalar }}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
@@ -1183,7 +1183,7 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
                                                                                             <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
@@ -1208,7 +1208,7 @@
                                                                                 <div class="row flex-rigth-margin">
                                                                                     <div class="form-group row">
                                                                                         <strong>
-                                                                                            TOTAL USD &nbsp; &nbsp; <label> {{ montoTotalCotizacion = totalConfiCoti }} </label>
+                                                                                            TOTAL $ &nbsp; &nbsp; <label> {{ montoTotalCotizacion = totalConfiCoti }} </label>
                                                                                         </strong>
                                                                                     </div>
                                                                                     <div class="form-group row">
