@@ -340,6 +340,12 @@
                 urlImage: '',
                 arrayPermisosbyRol: [],
                 //==========================================================
+                //================== VARIABLES SAP =====================
+                arraySapRptVendedor: [],
+                arraySapUpdVendedor: [],
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                //==========================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -364,7 +370,8 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaFormulario: 1
+                vistaFormulario: 1,
+                loading: false
             }
         },
         computed:{
@@ -676,7 +683,38 @@
             //========================================================================
             //===================== METODOS REGISTRAR USUARIO SAP ====================
             integrarVendedor(usuario){
-                console.log(usuario);
+                // console.log(usuario);
+                let me = this;
+                this.mostrarProgressBar();
+                me.loadingProgressBar("GENERANDO VENDEDOR EN SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/persona/SapSetEmpleado';
+                axios.post(url, {
+                    cNombre : usuario.cParNombre,
+                    cRol    : usuario.cGrupoParNombre
+                }).then(response => {
+                    console.log(response.data);
+                    me.arraySapRespuesta = response.data;
+                    me.jsonRespuesta = '';
+                    me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+                    console.log("Integración Vendedor - SAP : OK");
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error al Generar el Vendedor en SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //============================================================
             //===================== METODOS GENÉRICOS ====================
@@ -745,6 +783,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
