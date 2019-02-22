@@ -58,7 +58,7 @@ class MaestroVehiculoController extends Controller
         $cancho                 = ($cancho == NULL)         ? ($cancho = ' ')           : $cancho;
         $ccargautil             = ($ccargautil == NULL)     ? ($ccargautil = ' ')       : $ccargautil;
 
-        $cFlagEditar = $request->cFlagEditar;
+        $nFlagEditar = $request->nFlagEditar;
 
         $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca] 
                                                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
@@ -87,7 +87,7 @@ class MaestroVehiculoController extends Controller
                                         $caltura,
                                         $cancho,
                                         $ccargautil,
-                                        $cFlagEditar,
+                                        $nFlagEditar,
                                         Auth::user()->id
                                     ]);
 
@@ -138,7 +138,7 @@ class MaestroVehiculoController extends Controller
 
 
         $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
-        $cFlagEditar        = $request->cFlagEditar;
+        $nFlagEditar        = $request->nFlagEditar;
 
         $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPersonaNatural] 
                                                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
@@ -162,7 +162,7 @@ class MaestroVehiculoController extends Controller
                                                     $nprofesion,
                                                     $cnrolicencia,
                                                     $nIdVehiculoPlaca,
-                                                    $cFlagEditar,
+                                                    $nFlagEditar,
                                                     Auth::user()->id
                                                 ]);
         return response()->json($arrayPropietario);
@@ -195,7 +195,7 @@ class MaestroVehiculoController extends Controller
         $ncelularalternativo    = ($ncelularalternativo == NULL) ? ($ncelularalternativo = ' ') : $ncelularalternativo;
 
         $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
-        $cFlagEditar        = $request->cFlagEditar;
+        $nFlagEditar        = $request->nFlagEditar;
 
         $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPerJuridica] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
@@ -210,7 +210,7 @@ class MaestroVehiculoController extends Controller
                                         $ncelular,
                                         $ncelularalternativo,
                                         $nIdVehiculoPlaca,
-                                        $cFlagEditar,
+                                        $nFlagEditar,
                                         Auth::user()->id
                                     ]);
 
@@ -224,7 +224,7 @@ class MaestroVehiculoController extends Controller
         $arraySOAT          = $request->arraySOAT;
         $fillProveedor      = $request->fillProveedor;
         $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
-        $cFlagEditar        = $request->cFlagEditar;
+        $nFlagEditar        = $request->nFlagEditar;
 
         try{
             DB::beginTransaction();
@@ -240,7 +240,7 @@ class MaestroVehiculoController extends Controller
                                         $value['dfechainicio'],
                                         $value['dfechafin'],
                                         $value['nidestado'],
-                                        $cFlagEditar,
+                                        $nFlagEditar,
                                         Auth::user()->id
                                     ]);
                 }
@@ -285,5 +285,20 @@ class MaestroVehiculoController extends Controller
 
         $arrayVehiculo = ParametroController::arrayPaginator($arrayVehiculo, $request);
         return ['arrayVehiculo'=>$arrayVehiculo];
+    }
+
+    public function SetRegistrarPropietario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPropietarioVehiculo]  ?, ?, ?, ?, ?, ?',
+                                                [   $request->cFlagTipoPersona,
+                                                    $request->nIdPersonaNatural,
+                                                    $request->nIdPersonaJuridica,
+                                                    $request->nIdVehiculoPlaca,
+                                                    $request->nFlagEditar,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayPropietario);
     }
 }

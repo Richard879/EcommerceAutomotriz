@@ -612,7 +612,7 @@
                                                                                     <div class="container-fluid">
                                                                                         <div class="col-lg-12">
                                                                                             <form class="form-horizontal">
-                                                                                                <div v-if="cFlagEditar == 1 && cFlagTipoPersona == null || cFlagEditar == 2 && cFlagTipoPersona == null" class="form-group row">
+                                                                                                <div v-if="nFlagEditar == 1 && cFlagTipoPersona == null || nFlagEditar == 2 && cFlagTipoPersona == null" class="form-group row">
                                                                                                     <div class="col-sm-6">
                                                                                                         <div class="row">
                                                                                                             <label class="col-md-4 form-control-label">*Tipo Persona</label>
@@ -944,6 +944,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-12 offset-sm-5">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab0203();">
+                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                     </template>
@@ -1521,7 +1528,7 @@
                 // ======================================
                 // VARIABLES SUBTAB VEHÍCULO
                 // ======================================
-                cFlagEditar: '',
+                nFlagEditar: '',
                 cFlagTipoPersona: null,
                 fillNuevoVehiculo: {
                     nidvehiculo: '',
@@ -1583,10 +1590,14 @@
                     cubigeo: '',
                     nopcion: 0,
                     cfiltro: '',
-                    cnombrecontacto: ''
+                    cnombrecontacto: '',
+                    cflagtipopersona: '',
+                    nidpersonanatural: 0,
+                    nidpersonajuridica: 0
                 },
                 arrayTipoDocumento: [],
                 vistaDatosPersonaNatural: 1,
+                arrayPropietario: [],
                 // =======================
                 // SUBTAB DATOS CONTACTO
                 // =======================
@@ -1621,10 +1632,6 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
-                // ======================================
-                // VARIABLES Propietario
-                // ======================================
-                arrayPropietario: [],
                 // ===============================
                 // VARIABLES MODAL CONTACTO
                 // ===============================
@@ -1846,18 +1853,18 @@
              * Si "data" no es vacio y "op" es 2 viene de presionar el botón "Editar"
              */
             tabNuevoVehiculo(data, op){
-                this.cFlagEditar = op;
+                this.nFlagEditar = op;
                 this.tabVehiculo();
                 this.limpiarTabBusquedaVehiculo();
                 //this.llenarComboModelo(2);
                 this.llenarComboColor();
                 this.llenarComboAnioFabricacion();
                 this.llenarComboCombustible();
-                (this.cFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
+                (this.nFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
-                (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
-                (this.cFlagEditar == 2) ? (this.checked = true) : (this.checked = false);
+                (this.nFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
+                (this.nFlagEditar == 2) ? (this.checked = true) : (this.checked = false);
             },
             // ================================
             // METODOS SUBTAB VEHICULO
@@ -1977,7 +1984,7 @@
             // METODOS SUBTAB PROPIETARIO
             // ================================
             tabPropietario(){
-                (this.cFlagEditar == 1) ? this.limpiarPropietario(): '';
+                (this.nFlagEditar == 1) ? this.limpiarPropietario(): '';
                 this.tabDatosPersonales();
             },
             limpiarPropietario(){
@@ -2430,11 +2437,11 @@
                 }
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarVehiculoPlaca';
                 axios.post(url, {
-                    fillNuevoVehiculo : this.fillNuevoVehiculo,
-                    cFlagEditar       : this.cFlagEditar
+                    'fillNuevoVehiculo' : this.fillNuevoVehiculo,
+                    'nFlagEditar'       : this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        if(checked==true){
+                        if(this.checked==true){
                             this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
                         }
                         else{
@@ -2471,7 +2478,7 @@
                 axios.post(url, {
                     fillPropietario     :   this.fillPropietario,
                     nIdVehiculoPlaca    :   data,
-                    cFlagEditar         :   this.cFlagEditar
+                    nFlagEditar         :   this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarSOAT(data);
@@ -2496,7 +2503,7 @@
                 axios.post(url, {
                     fillPropietario     :   this.fillPropietario,
                     nIdVehiculoPlaca    :   data,
-                    cFlagEditar         :   this.cFlagEditar
+                    nFlagEditar         :   this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarSOAT(data);
@@ -2522,7 +2529,7 @@
                     arraySOAT           :   this.arraySOAT,
                     fillProveedor       :   this.fillProveedor,
                     nIdVehiculoPlaca    :   data,
-                    cFlagEditar         :   this.cFlagEditar
+                    nFlagEditar         :   this.nFlagEditar
                 }).then(response => {
                     this.limpiarVehiculo();
                     this.limpiarPropietario();
@@ -2747,9 +2754,17 @@
             },
             asignarContacto(objContacto){
                 if(this.modalMisContactos.ntipopersona == 1){
-                    
-                } else {
-                    
+                    this.fillPropietario.cflagtipopersona = 'N',
+                    this.fillPropietario.nidpersonanatural = objContacto.nIdPersonaNatural,
+                    this.fillPropietario.nidpersonajuridica = 0,
+                    this.fillPropietario.cnombrecontacto = objContacto.cContacto,
+                    this.cerrarModal();
+                }else{
+                    this.fillPropietario.cflagtipopersona = 'J',
+                    this.fillPropietario.nidpersonanatural = 0,
+                    this.fillPropietario.nidpersonajuridica = objContacto.nIdPersonaJuridica,
+                    this.fillPropietario.cnombrecontacto = objContacto.cContacto,
+                    this.cerrarModal();
                 }
             },
             /**
@@ -2758,10 +2773,11 @@
             registrarPropietario(data){
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPropietario';
                 axios.post(url, {
-                    arrayPropietario    :   this.arrayPropietario,
-                    fillProveedor       :   this.fillProveedor,
-                    nIdVehiculoPlaca    :   data,
-                    cFlagEditar         :   this.cFlagEditar
+                    'cFlagTipoPersona'    : this.fillPropietario.cflagtipopersona,
+                    'nIdPersonaNatural'   : this.fillPropietario.nidpersonanatural,
+                    'nIdPersonaJuridica'  : this.fillPropietario.nidpersonajuridica,
+                    'nIdVehiculoPlaca'    : data,
+                    'nFlagEditar'         : this.nFlagEditar
                 }).then(response => {
                     this.registrarSOAT(data);
                 }).catch(error => {
