@@ -2287,26 +2287,33 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillPropietario.ccode == 0 || !this.fillPropietario.ccode){
+                if(this.checked==true){
+                    if(this.fillPropietario.ccode == 0 || !this.fillPropietario.ccode){
                     this.mensajeError.push('Debe Seleccionar Ubigeo');
-                }
-                if(!this.fillPropietario.cdireccion){
-                    this.mensajeError.push('Debes Ingresar Dirección');
-                }
-                if(!this.fillPropietario.cmailprincipal){
-                    this.mensajeError.push('El correo es obligatorio');
-                } else if (!this.validarEmail(this.fillPropietario.cmailprincipal)) {
-                    this.errors.push('Debe ingresar un correo electronico válido.');
-                }
-                if(!this.fillPropietario.ncelular){
-                    this.mensajeError.push('Debes Ingresar Celular');
-                }
-                if(this.fillPropietario.ncelular){
-                    if(this.fillPropietario.ncelular.length > 9){
-                        this.mensajeError.push('El numero de Celular es incorrecto');
+                    }
+                    if(!this.fillPropietario.cdireccion){
+                        this.mensajeError.push('Debes Ingresar Dirección');
+                    }
+                    if(!this.fillPropietario.cmailprincipal){
+                        this.mensajeError.push('El correo es obligatorio');
+                    } else if (!this.validarEmail(this.fillPropietario.cmailprincipal)) {
+                        this.errors.push('Debe ingresar un correo electronico válido.');
+                    }
+                    if(!this.fillPropietario.ncelular){
+                        this.mensajeError.push('Debes Ingresar Celular');
+                    }
+                    if(this.fillPropietario.ncelular){
+                        if(this.fillPropietario.ncelular.length > 9){
+                            this.mensajeError.push('El numero de Celular es incorrecto');
+                        }
                     }
                 }
-
+                if(this.checked==false){
+                    if(this.fillPropietario.nidpersonanatural==0 && this.fillPropietario.nidpersonajuridica==0){
+                        this.mensajeError.push('Debes seleccionar un Contacto');
+                    }
+                }
+                
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2757,15 +2764,15 @@
                     this.fillPropietario.cflagtipopersona = 'N',
                     this.fillPropietario.nidpersonanatural = objContacto.nIdPersonaNatural,
                     this.fillPropietario.nidpersonajuridica = 0,
-                    this.fillPropietario.cnombrecontacto = objContacto.cContacto,
-                    this.cerrarModal();
+                    this.fillPropietario.cnombrecontacto = objContacto.cContacto
                 }else{
                     this.fillPropietario.cflagtipopersona = 'J',
                     this.fillPropietario.nidpersonanatural = 0,
                     this.fillPropietario.nidpersonajuridica = objContacto.nIdPersonaJuridica,
-                    this.fillPropietario.cnombrecontacto = objContacto.cContacto,
-                    this.cerrarModal();
+                    this.fillPropietario.cnombrecontacto = objContacto.cContacto                    
                 }
+                this.cerrarModal();
+                this.arrayContacto = [];
             },
             /**
              * REGISTRA PROPIETARIO
@@ -2823,7 +2830,6 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                //this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
