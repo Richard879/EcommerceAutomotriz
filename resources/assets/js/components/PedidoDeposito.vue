@@ -1922,16 +1922,16 @@
                         'cFlagEstadoAprobacion': 'A'
                     }
                 }).then(response => {
-                    this.fillDetalleDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
-                    this.fillDetalleDeposito.cnombrecontacto   = pedido.cContacto;
-                    this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fTotalPedido;//Monto del Deposito
-                    this.fillDetalleDeposito.flagMontoTotalDepositos  = response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
+                    this.fillDetalleDeposito.nidcabecerapedido          =   pedido.nIdCabeceraPedido;
+                    this.fillDetalleDeposito.cnombrecontacto            =   pedido.cContacto;
+                    this.fillDetalleDeposito.flagMontoTotalCotizacion   =   pedido.fTotalPedido;//Monto del Deposito
+                    this.fillDetalleDeposito.flagMontoTotalDepositos    =   response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
 
                     // Resto el Total a pagar - El Total Pagado
-                    var flagMontoTotalCotizacion = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
-                    var flagMontoTotalDepositosAprobados = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalDepositos).toFixed(4))
-                    var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
-                    this.fillDetalleDeposito.flagMontoCancelar = resultadoMontoCancelar;
+                    var flagMontoTotalCotizacion                = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados        = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalDepositos).toFixed(4))
+                    var resultadoMontoCancelar                  = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.fillDetalleDeposito.flagMontoCancelar  = resultadoMontoCancelar;
                     (this.fillDetalleDeposito.flagMontoCancelar < 0 ) ? this.fillDetalleDeposito.flagMontoCancelar = 0 : this.fillDetalleDeposito.flagMontoCancelar;
                     this.listarDetalleDepositosPorPedido(pedido);
                 }).catch(error => {

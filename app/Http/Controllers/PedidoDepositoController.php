@@ -12,8 +12,8 @@ class PedidoDepositoController extends Controller
     public function GetNumeroCuentaByBancoAndMoneda(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;
-        $nIdBanco = $request->nidbanco;
-        $nIdMoneda = $request->nidmoneda;
+        $nIdBanco   = $request->nidbanco;
+        $nIdMoneda  = $request->nidmoneda;
         $variable   = $request->opcion;
 
         $cuentabancaria = DB::select('exec usp_Deposito_GetNumeroCuentaByBancoAndMoneda ?, ?, ?', [$nIdEmpresa, $nIdBanco, $nIdMoneda]);
@@ -64,13 +64,13 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdTipoPago = $request->nIdTipoPago;
-        $nIdFormaPago = $request->nIdFormaPago;
-        $nIdFormaPago2 = $request->nIdFormaPago2;
+        $nIdTipoPago    = $request->nIdTipoPago;
+        $nIdFormaPago   = $request->nIdFormaPago;
+        $nIdFormaPago2  = $request->nIdFormaPago2;
 
-        $nIdTipoPago = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
-        $nIdFormaPago = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
-        $nIdFormaPago2 = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
+        $nIdTipoPago    = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
+        $nIdFormaPago   = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
+        $nIdFormaPago2  = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
 
         $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
@@ -103,9 +103,9 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa         =   $request->nidempresa;
-        $nIdSucursal        =   $request->nidsucursal;
-        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdCabeceraPedido      =   $request->nIdCabeceraPedido;
         $cFlagEstadoAprobacion  =   $request->cFlagEstadoAprobacion;
 
         $nIdCabeceraPedido = ($nIdCabeceraPedido == NULL) ? ($nIdCabeceraPedido = 0) : $nIdCabeceraPedido;
