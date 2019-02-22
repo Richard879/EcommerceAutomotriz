@@ -284,6 +284,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/maestrovehiculo/SetRegistrarPerNatural', 'MaestroVehiculoController@SetRegistrarPerNatural');
     Route::post('/maestrovehiculo/SetRegistrarPerJuridica', 'MaestroVehiculoController@SetRegistrarPerJuridica');
     Route::post('/maestrovehiculo/SetRegistrarSoat', 'MaestroVehiculoController@SetRegistrarSoat');
+    Route::post('/maestrovehiculo/SetRegistrarPropietario', 'MaestroVehiculoController@SetRegistrarPropietario');
     Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
 
     Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
@@ -368,6 +369,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/usuario/GetInformacionUsuario','GestionUsuariosController@GetInformacionUsuario');
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
+
+    Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 
     //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
