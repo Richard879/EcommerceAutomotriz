@@ -442,7 +442,7 @@ Route::middleware(['auth'])->group(function(){
     //Tipo Cambio
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     //Vendedor
-    Route::post('/persona/SapSetEmpleado', 'Api\SapPersonaController@SapSetEmpleado');
+    Route::post('/empleado/SapSetEmpleado', 'Api\SapEmpleadoController@SapSetEmpleado');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

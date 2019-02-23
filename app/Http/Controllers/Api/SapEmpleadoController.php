@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class SapPersonaController extends Controller
+class SapEmpleadoController extends Controller
 {
     public function SapSetEmpleado(Request $request)
     {
