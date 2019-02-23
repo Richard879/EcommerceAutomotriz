@@ -1090,25 +1090,6 @@
                                                                     @select="asignarAccesorio"
                                                                     >
                                                             </el-autocomplete>
-                                                            <!--<div class="input-group">
-                                                                    <el-autocomplete
-                                                                            class=""
-                                                                            v-model="fillAccesorio.cnombre"
-                                                                            :fetch-suggestions="querySearch"
-                                                                            placeholder=""
-                                                                            :trigger-on-focus="false"
-                                                                            @select="asignarAccesorio"
-                                                                            >
-                                                                    </el-autocomplete>
-                                                                    <div class="input-group-prepend">
-                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                            <div slot="content">Buscar Accesorio </div>
-                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="">
-                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                            </button>
-                                                                        </el-tooltip>
-                                                                    </div>
-                                                                </div>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1319,7 +1300,7 @@
                 validaAccionModal: 0                
             }
         },
-         mounted(){
+        mounted(){
             this.llenarComboEstadoPdi();
             this.llenarTipoInspeccion();
         },
@@ -1810,12 +1791,13 @@
                 var links = this.links;
                 var results = queryString ? links.filter(this.createFilter(queryString)) : links;
                 // call callback function to return suggestions
+                //console.log(results);
                 cb(results);
             },
             createFilter(queryString) {
-                return (nIdPar) => {
-                    return (nIdPar.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-                };
+                return (obj) => {
+                    return (obj.value.indexOf(queryString.toUpperCase()) >= 0);
+                 };
             },
             asignarAccesorio(item) {
                 let me = this;
@@ -1847,6 +1829,7 @@
                     });
                 });
                 this.nflagaccesorioValida =1;
+                this.fillAccesorio.cnombre = '';
                 this.cerrarModal();
             },
             encontrarAccesorio(nIdPar){
