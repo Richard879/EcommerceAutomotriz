@@ -2975,7 +2975,7 @@
                     'cItemType'         : objCompra.cItemType
                 });
                 //Obtener Codigo Sap Proveedor
-                me.formCompra.ccarcode = objCompra.cCarCode;
+                me.formCompra.ccarcode = objCompra.cCardCode;
 
                 //Obtener Cronograma
                 //me.nidcronograma = objCompra.nIdCronograma;
