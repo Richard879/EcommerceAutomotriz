@@ -43,6 +43,13 @@ class SapCompraController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
+                                                    [
+                                                        Auth::user()->id
+                                                    ]);
+        // Obtener el EmployeeCode del Usuario Autenticado
+        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
+
         $array_rpta = [];
         $rptaSap   = [];
         //$DocEntry   = [];
@@ -67,11 +74,12 @@ class SapCompraController extends Controller
 
             $json = [
                 'json' => [
-                    "CardCode"      => $request->cCardCode,
-                    "DocDate"       => (string)$request->fDocDate,
-                    "DocDueDate"    => (string)$request->fDocDueDate,
-                    "DocCurrency"   => "US$",
-                    "DocTotal"      => (string)$value['fTotalCompra'],
+                    "CardCode"          =>  $request->cCardCode,
+                    "DocDate"           =>  (string)$request->fDocDate,
+                    "DocDueDate"        =>  (string)$request->fDocDueDate,
+                    "DocCurrency"       =>  "US$",
+                    "DocTotal"          =>  (string)$value['fTotalCompra'],
+                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => (string)$value['cNumeroVin'],

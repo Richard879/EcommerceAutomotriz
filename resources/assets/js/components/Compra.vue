@@ -3603,7 +3603,7 @@
                             });
                         });
                     }
-                    
+
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
                     if(response.data.array_infoCostoVehiculo.length){
@@ -3620,7 +3620,7 @@
                                 'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                             });
                         });
-                    }                    
+                    }
 
                     setTimeout(function() {
                         me.generaSapTblCostoDetallePorVin();

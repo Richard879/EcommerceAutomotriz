@@ -18,6 +18,13 @@ class SapPedidoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
+                                                    [
+                                                        Auth::user()->id
+                                                    ]);
+        // Obtener el EmployeeCode del Usuario Autenticado
+        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
+
         // ======================================================================
         // GENERAR ORDEN VENTA PARA VEHÍCULO
         // ======================================================================
@@ -32,11 +39,12 @@ class SapPedidoController extends Controller
 
             $json = [
                 'json' => [
-                    "CardCode"      => $value['cCardCode'],
-                    "DocDate"       => (string)$request->fDocDate,
-                    "DocDueDate"    => (string)$request->fDocDueDate,
-                    "DocCurrency"   => "US$",
-                    "DocTotal"      => (string)$value['fSubTotalDolares'],
+                    "CardCode"          =>  $value['cCardCode'],
+                    "DocDate"           =>  (string)$request->fDocDate,
+                    "DocDueDate"        =>  (string)$request->fDocDueDate,
+                    "DocCurrency"       =>  "US$",
+                    "DocTotal"          =>  (string)$value['fSubTotalDolares'],
+                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
                         [
                             "ItemCode"    => $value['cNumeroVin'],
