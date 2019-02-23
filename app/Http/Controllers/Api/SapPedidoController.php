@@ -79,12 +79,13 @@ class SapPedidoController extends Controller
 
             $json = [
                 'json' => [
-                    "CardCode"      =>  '',
-                    "DocDate"       =>  (string)$request->fDocDate,
-                    "DocDueDate"    =>  (string)$request->fDocDueDate,
-                    "DocCurrency"   =>  "US$",
-                    "DocTotal"      =>  '',
-                    "DocumentLines" =>  array()
+                    "CardCode"          =>  '',
+                    "DocDate"           =>  (string)$request->fDocDate,
+                    "DocDueDate"        =>  (string)$request->fDocDueDate,
+                    "DocCurrency"       =>  "US$",
+                    "DocTotal"          =>  '',
+                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    "DocumentLines"     =>  array()
                 ]
             ];
 
