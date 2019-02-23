@@ -387,6 +387,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
+    Route::post('/empleado/SapUpdEmpleadoByEmployeeCode','IntEmpleadoController@SapUpdEmpleadoByEmployeeCode');
 
     ///========================================
     /////=================  ROUTES SAP

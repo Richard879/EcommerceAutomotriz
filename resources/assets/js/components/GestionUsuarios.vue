@@ -108,7 +108,7 @@
                                                         <td>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Integrar Trabajador  {{ usuario.cParNombre }}</div>
-                                                                <i @click="integrarVendedor(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                <i @click="registrarSapBusinessEmpleado(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <!-- @click="cambiarVistaFormulario(0, rol)" -->
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
@@ -682,13 +682,13 @@
             },
             //========================================================================
             //===================== METODOS REGISTRAR USUARIO SAP ====================
-            integrarVendedor(usuario){
+            registrarSapBusinessEmpleado(usuario){
                 // console.log(usuario);
                 let me = this;
                 this.mostrarProgressBar();
                 me.loadingProgressBar("GENERANDO VENDEDOR EN SAP BUSINESS ONE...");
 
-                var url = this.ruta + '/persona/SapSetEmpleado';
+                var url = this.ruta + '/empleado/SapSetEmpleado';
                 axios.post(url, {
                     cNombre : usuario.cParNombre,
                     cRol    : usuario.cGrupoParNombre
@@ -697,7 +697,20 @@
                     me.arraySapRespuesta = response.data;
                     me.jsonRespuesta = '';
                     me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
-                    console.log("Integración Vendedor - SAP : OK");
+                    if(me.jsonRespuesta.SalesEmployeeCode) {
+                        console.log("Integración Vendedor - SAP : OK");
+                        me.arraySapUpdVendedor.push({
+                            'nUsuario'          :   parseInt(usuario.nIdUsuario),
+                            'SalesEmployeeCode' :   parseInt(me.jsonRespuesta.SalesEmployeeCode),
+                            'cLogRespuesta'     :   me.arraySapRespuesta.toString()
+                        });
+                    }
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY PEDIDO ================
+                    setTimeout(function() {
+                        me.registroSgcVendedor();
+                    }, 3800);
+
                     $("#myBar").hide();
                     me.loading.close();
                 }).catch(error => {
@@ -707,6 +720,35 @@
                         title: 'Error...',
                         text: 'Error al Generar el Vendedor en SapB1!',
                     });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcVendedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/empleado/SIntegraEmpleado';
+                axios.post(sapUrl, {
+                    'arraySapUpdVendedor': me.arraySapUpdVendedor
+                }).then(response => {
+                    if (response.data[0].nFlagMsje == 1) {
+                        me.loading.close();
+                        setTimeout(function() {
+                            me.registroSapBusinessActividad();
+                        }, 1000);
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
