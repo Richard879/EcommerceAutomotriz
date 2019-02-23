@@ -1090,6 +1090,25 @@
                                                                     @select="asignarAccesorio"
                                                                     >
                                                             </el-autocomplete>
+                                                            <!--<div class="input-group">
+                                                                    <el-autocomplete
+                                                                            class=""
+                                                                            v-model="fillAccesorio.cnombre"
+                                                                            :fetch-suggestions="querySearch"
+                                                                            placeholder=""
+                                                                            :trigger-on-focus="false"
+                                                                            @select="asignarAccesorio"
+                                                                            >
+                                                                    </el-autocomplete>
+                                                                    <div class="input-group-prepend">
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Buscar Accesorio </div>
+                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="">
+                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                            </button>
+                                                                        </el-tooltip>
+                                                                    </div>
+                                                                </div>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1770,11 +1789,12 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid': 110089,
-                        'cparnombre': this.fillAccesorio.cnombre,
+                        'cparnombre': '',
                         'opcion' : 0
                     }
                 }).then(response => {
                     let me = this;
+                    me.links = [];
                     me.links = response.data.arrayParametro.data;
                 }).catch(error => {
                     console.log(error);
@@ -1794,7 +1814,7 @@
             },
             createFilter(queryString) {
                 return (nIdPar) => {
-                return (nIdPar.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                    return (nIdPar.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
             },
             asignarAccesorio(item) {
