@@ -106,10 +106,12 @@
                                                         <td v-text="usuario.usuario"></td>
                                                         <td v-text="usuario.cGrupoParNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Integrar Trabajador  {{ usuario.cParNombre }}</div>
-                                                                <i @click="registrarSapBusinessEmpleado(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                            </el-tooltip>&nbsp;&nbsp;
+                                                            <template v-if="!usuario.nSalesEmployeeCode">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Integrar Trabajador  {{ usuario.cParNombre }}</div>
+                                                                    <i @click="registrarSapBusinessEmpleado(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </template>
                                                             <!-- @click="cambiarVistaFormulario(0, rol)" -->
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ usuario.cParNombre }}</div>
@@ -341,9 +343,8 @@
                 arrayPermisosbyRol: [],
                 //==========================================================
                 //================== VARIABLES SAP =====================
-                arraySapRptVendedor: [],
-                arraySapUpdVendedor: [],
                 arraySapRespuesta: [],
+                arraySapUpdVendedor: [],
                 jsonRespuesta: '',
                 //==========================================================
                 pagination: {
@@ -693,7 +694,7 @@
                     cNombre : usuario.cParNombre,
                     cRol    : usuario.cGrupoParNombre
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     me.arraySapRespuesta = response.data;
                     me.jsonRespuesta = '';
                     me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
@@ -705,14 +706,13 @@
                             'cLogRespuesta'     :   me.arraySapRespuesta.toString()
                         });
                     }
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY PEDIDO ================
+                    // ==============================================================
+                    // ================== ACTUALIZAR DOCENTRY PEDIDO ================
                     setTimeout(function() {
                         me.registroSgcVendedor();
                     }, 3800);
 
-                    $("#myBar").hide();
-                    me.loading.close();
+
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -732,20 +732,20 @@
             registroSgcVendedor(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/empleado/SIntegraEmpleado';
+                var sapUrl = me.ruta + '/empleado/SetIntegraEmpleado';
                 axios.post(sapUrl, {
                     'arraySapUpdVendedor': me.arraySapUpdVendedor
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje)
+                        this.limpiarFormulario();
+                        $("#myBar").hide();
                         me.loading.close();
-                        setTimeout(function() {
-                            me.registroSapBusinessActividad();
-                        }, 1000);
                     } else {
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
+                            text: 'Error en el Registro del Empleado!',
                         })
                     }
                 }).catch(error => {
@@ -791,6 +791,10 @@
                 this.fillBsqUsuario.nidsucursal = '';
                 this.fillBsqUsuario.cdescripcion = '';
                 this.arrayUsuarios = [];
+                //Integracion
+                this.arraySapRespuesta = [];
+                this.jsonRespuesta = '';
+                this.arraySapUpdVendedor = [];
                 //Registrar
                 this.fillUsuario.nIdUsuario = '';
                 this.fillUsuario.cnombrecompleto = '';

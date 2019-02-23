@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class IntEmpleadoController extends Controller
 {
-    public function SIntegraEmpleado(Request $request)
+    public function SetIntegraEmpleado(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         try{
             DB::beginTransaction();
-            $detalles = $request->data;
+            $detalles = $request->arraySapUpdVendedor;
             foreach($detalles as $ep=>$det)
             {
                 $data = DB::select('exec [usp_Integra_SetIntegraVendedor] ?, ?, ?, ?',
