@@ -1077,21 +1077,19 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-10">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <label class="col-sm-4 form-control-label">Buscar Accesorio</label>
                                                         <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillAccesorio.cnombre" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar Accesorio </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarAccesorio(1)">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
+                                                            <el-autocomplete
+                                                                    class=""
+                                                                    v-model="fillAccesorio.cnombre"
+                                                                    :fetch-suggestions="querySearch"
+                                                                    placeholder=""
+                                                                    :trigger-on-focus="false"
+                                                                    @select="asignarAccesorio"
+                                                                    >
+                                                            </el-autocomplete>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1103,6 +1101,12 @@
                                                 <table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Eliminar {{ a.cParNombre }}</div>
+                                                                    <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
                                                             <td v-text="a.cParNombre"></td>
                                                             <td><input type="text" v-model="arrayAccesorioCantidad[index]" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
@@ -1118,25 +1122,6 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <!--<vs-table max-items="10" stripe pagination :data="arrayAccesorio">
-                                                    <template slot="thead">
-                                                        <vs-th>
-
-                                                        </vs-th>
-                                                    </template>
-
-                                                    <template slot-scope="{data}">
-                                                        <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                                                            <vs-td :data="data[indextr].nIdPar">
-                                                            {{data[indextr].nIdPar}}
-                                                            </vs-td>
-
-                                                            <vs-td :data="data[indextr].cParNombre">
-                                                            {{data[indextr].cParNombre}}
-                                                            </vs-td>
-                                                        </vs-tr>
-                                                    </template>
-                                                </vs-table>-->
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-6">
@@ -1276,6 +1261,8 @@
                 fillAccesorio:{
                     cnombre: ''
                 },
+                state2: '',
+                links: [],
                 arrayAccesorio: [],
                 arrayTempAccesorio: [],
                 arrayAccesorioFlagMarca:  [],
@@ -1310,7 +1297,7 @@
                 attachment: null,
                 form: new FormData,
                 textFile: '',
-                validaAccionModal: 0
+                validaAccionModal: 0                
             }
         },
          mounted(){
@@ -1788,10 +1775,7 @@
                     }
                 }).then(response => {
                     let me = this;
-                    me.arrayAccesorio = response.data.arrayParametro.data;
-                    me.arrayAccesorio.map(function(value, key){
-                       me.arrayAccesorioCantidad[key] = 0;
-                    });
+                    me.links = response.data.arrayParametro.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1802,6 +1786,36 @@
                     }
                 });
             },
+            querySearch(queryString, cb) {
+                var links = this.links;
+                var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+                // call callback function to return suggestions
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (nIdPar) => {
+                return (nIdPar.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+            },
+            asignarAccesorio(item) {
+                let me = this;
+                if(me.encontrarAccesorio(item.nIdPar)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El accesorio ya se encuentra agregado!',
+                    })
+                } else {
+                    //console.log(item);
+                    me.arrayAccesorio.push(item);
+                    me.arrayAccesorio.map(function(value, key){
+                        if(item.nIdPar == value.nIdPar){
+                            me.arrayAccesorioCantidad[key] = 0;
+                        }
+                    });
+                    toastr.success('Se agregó accesorio');
+                }
+            }, 
             aceptarAccesorio(){
                 let me = this;
                 me.arrayTempAccesorio = [];
@@ -1814,6 +1828,18 @@
                 });
                 this.nflagaccesorioValida =1;
                 this.cerrarModal();
+            },
+            encontrarAccesorio(nIdPar){
+                var sw=0;
+                this.arrayAccesorio.map(function (x) {
+                    if(x.nIdPar == nIdPar){
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
+            removerAccesorio(index){
+                this.$delete(this.arrayAccesorio, index);
             },
             //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
@@ -2299,5 +2325,8 @@
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events:none;
+    }
+    .el-autocomplete{
+        width: 100%;
     }
 </style>
