@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> CONFIGURACIÓN DE COMISIONES</h2>
+                    <h2 class="no-margin-bottom">COMISIONES</h2>
                 </div>
             </header>
 
@@ -11,252 +11,586 @@
                 <div class="container-fluid">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">CONFIGURACIÓN DE COMISIONES</h3>
-                            </div>
                             <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab01" href="#TabBandejaComision" @click="tabBandejaComision" role="tab" data-toggle="tab">
+                                            <i class="fa fa-wpforms"></i> BANDEJA DE COMISIONES
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab02" href="#TabConfigurarComision" @click="tabConfiguradorComision" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bus"></i> CONFIGURADOR DE COMISIÓN
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabBandejaComision">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BANDEJA DE COMISIONES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.nIdProveedor"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Proveedor">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayProveedor"
+                                                                                        :key="concepto.nIdPar"
+                                                                                        :label="concepto.cParNombre"
+                                                                                        :value="concepto.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.nIdConcepto"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Concepto Comisión">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayConceptoComision"
+                                                                                        :key="concepto.nIdPar"
+                                                                                        :label="concepto.cParNombre"
+                                                                                        :value="concepto.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Turno</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.nIdTurno"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Turno">
+                                                                                    <el-option
+                                                                                        v-for="turno in arrayTurnoVendedor"
+                                                                                        :key="turno.nIdPar"
+                                                                                        :label="turno.cParNombre"
+                                                                                        :value="turno.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Flag Comisión</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.cFlagComision"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Concepto Comisión">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayFlagComision"
+                                                                                        :key="concepto.value"
+                                                                                        :label="concepto.text"
+                                                                                        :value="concepto.value">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.cTipoComision"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Tipo Comisión">
+                                                                                    <el-option
+                                                                                        v-for="tipocomision in arrayTipoComision"
+                                                                                        :key="tipocomision.nIdPar"
+                                                                                        :label="tipocomision.cParNombre"
+                                                                                        :value="tipocomision.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBsqComision.cTipoMoneda"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Tipo Moneda">
+                                                                                    <el-option
+                                                                                        v-for="moneda in arrayTipoMoneda"
+                                                                                        :key="moneda.nIdPar"
+                                                                                        :label="moneda.cParNombre"
+                                                                                        :value="moneda.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarComisiones(1)">
+                                                                            <i class="fa fa-search"></i> BUSCAR
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Sucursal</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                        <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO DE COMISIONES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <template v-if="arrayListComisiones.length">
+                                                                    <template v-if="arrayListComisiones[0].cFlagComision == '1'">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Codigo</th>
+                                                                                        <th>Linea</th>
+                                                                                        <th>Proveedor</th>
+                                                                                        <th>Concepto</th>
+                                                                                        <th>Moneda</th>
+                                                                                        <th>Turno</th>
+                                                                                        <th>Tipo Comision</th>
+                                                                                        <th>Valor</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(comision, index) in arrayListComisiones" :key="index">
+                                                                                        <td>
+                                                                                            <a href="#">
+                                                                                                <i :style="'color:red'" class="fa-md fa fa-check"></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td v-text="comision.nIdLinea"></td>
+                                                                                        <td v-text="comision.cNombreLinea"></td>
+                                                                                        <td v-text="comision.cNombreProveedor"></td>
+                                                                                        <td v-text="comision.cNombreConcepto"></td>
+                                                                                        <td v-text="comision.cNombreMoneda"></td>
+                                                                                        <td v-text="comision.cNombreTurno"></td>
+                                                                                        <td v-text="comision.cFlagTipoComision"></td>
+                                                                                        <td v-text="comision.fValorMonto"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaComisiones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaComisiones(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaComisiones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Codigo</th>
+                                                                                        <th>Codigo ERP</th>
+                                                                                        <th>Linea</th>
+                                                                                        <th>Proveedor</th>
+                                                                                        <th>Concepto</th>
+                                                                                        <th>Moneda</th>
+                                                                                        <th>Turno</th>
+                                                                                        <th>Tipo Comision</th>
+                                                                                        <th>Valor</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(comision, index) in arrayListComisiones" :key="index">
+                                                                                        <td>
+                                                                                            <a href="#">
+                                                                                                <i :style="'color:red'" class="fa-md fa fa-check"></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td v-text="comision.nIdElementoVenta"></td>
+                                                                                        <td v-text="comision.cCodigoERP"></td>
+                                                                                        <td v-text="comision.cNombreElemento"></td>
+                                                                                        <td v-text="comision.cNombreProveedor"></td>
+                                                                                        <td v-text="comision.cNombreConcepto"></td>
+                                                                                        <td v-text="comision.cNombreMoneda"></td>
+                                                                                        <td v-text="comision.cNombreTurno"></td>
+                                                                                        <td v-text="comision.cFlagTipoComision"></td>
+                                                                                        <td v-text="comision.fValorMonto"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaComisiones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaComisiones(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaComisiones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
-                                                <div class="col-md-8 widthFull">
-                                                    <el-select v-model="fillConfigurarComision.nidconcepto"
-                                                            filterable
-                                                            clearable
-                                                            loading-text
-                                                            placeholder="Seleccione un Concepto Comisión">
-                                                        <el-option
-                                                            v-for="concepto in arrayConceptoComision"
-                                                            :key="concepto.nIdPar"
-                                                            :label="concepto.cParNombre"
-                                                            :value="concepto.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </section>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">* Por Turno de Vendedor</label>
-                                                <div class="col-md-5">
-                                                    <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                        <input type="text" v-model="fillConfigurarComision.cnombreturno" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Turno Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabConfigurarComision">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">CONFIGURACIÓN DE COMISIONES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="fillProveedor.nidproveedor">
+                                                                                    <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillConfigurarComision.nidconcepto"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Concepto Comisión">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayConceptoComision"
+                                                                                        :key="concepto.nIdPar"
+                                                                                        :label="concepto.cParNombre"
+                                                                                        :value="concepto.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Por Turno de Vendedor</label>
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                                                    <input type="text" v-model="fillConfigurarComision.cnombreturno" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <button type="button" title="Buscar Turno Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <div class="i-checks">
+                                                                                    <input id="checkbox" type="checkbox" class="checkbox-template" v-model="checked" @change="updateEstadoChecked">
+                                                                                    <label class="form-control-label" v-text="checked ? 'InHabilitado' : 'Habilitado'"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Flag Comisión</label>
+                                                                            <div class="col-sm-6">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayFlagComision" :key="tipo.id">
+                                                                                    <input :id="tipo.value" type="radio" class="radio-template" v-model="fillConfigurarComision.nidflagcomision" :value="tipo.value">
+                                                                                    <label :for="tipo.value" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <button type="button" title="Buscar Flag Comisión" class="btn btn-info btn-corner btn-sm" @click="abrirModal('flagComision','buscar', fillConfigurarComision.nidflagcomision)">
+                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillConfigurarComision.nidtipocomision"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Tipo Comisión">
+                                                                                    <el-option
+                                                                                        v-for="tipocomision in arrayTipoComision"
+                                                                                        :key="tipocomision.nIdPar"
+                                                                                        :label="tipocomision.cParNombre"
+                                                                                        :value="tipocomision.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillConfigurarComision.nidtipomoneda"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Tipo Moneda">
+                                                                                    <el-option
+                                                                                        v-for="moneda in arrayTipoMoneda"
+                                                                                        :key="moneda.nIdPar"
+                                                                                        :label="moneda.cParNombre"
+                                                                                        :value="moneda.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Valor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillConfigurarComision.nvalor" class="form-control form-control-sm">
+                                                                                <input type="hidden" :value="fillDetalleFlagComision.flagTipo = verificarFlagTipo">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="i-checks">
-                                                        <input id="checkbox" type="checkbox" class="checkbox-template" v-model="checked" @change="updateEstadoChecked">
-                                                        <label class="form-control-label" v-text="checked ? 'InHabilitado' : 'Habilitado'"></label>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
+                                                                    <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Codigo</th>
+                                                                                        <th>Codigo ERP</th>
+                                                                                        <th>Elemento Venta</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
+                                                                                        <td>
+                                                                                            <a href="#" @click="removerElementoVentaLista(index);">
+                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td v-text="elementoventa.nIdElemento"></td>
+                                                                                        <td v-text="elementoventa.cCodigoERP"></td>
+                                                                                        <td v-text="elementoventa.cElemenNombre"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </template>
+                                                                </template>
+                                                                <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
+                                                                    <template v-if="fillDetalleFlagComision.arrayLineas.length">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Codigo</th>
+                                                                                        <th>Linea</th>
+                                                                                        <th>Abreviatura</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
+                                                                                        <td>
+                                                                                            <a href="#" @click="removerLineasByProveedorLista(index);">
+                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td v-text="lineas.nIdLinea"></td>
+                                                                                        <td v-text="lineas.cLineaNombre"></td>
+                                                                                        <td v-text="lineas.cLineaAbreviatura"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </template>
+                                                                </template>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(1)">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                        <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(2)">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Flag Comisión</label>
-                                                <div class="col-sm-6">
-                                                    <label class="checkbox-inline" v-for="tipo in arrayFlagComision" :key="tipo.id">
-                                                        <input :id="tipo.value" type="radio" class="radio-template" v-model="fillConfigurarComision.nidflagcomision" :value="tipo.value">
-                                                        <label :for="tipo.value" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    </label>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <button type="button" title="Buscar Flag Comisión" class="btn btn-info btn-corner btn-sm" @click="abrirModal('flagComision','buscar', fillConfigurarComision.nidflagcomision)">
-                                                        <i class="fa-lg fa fa-search"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </section>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
-                                                <div class="col-md-8 widthFull">
-                                                    <el-select v-model="fillConfigurarComision.nidtipocomision"
-                                                            filterable
-                                                            clearable
-                                                            loading-text
-                                                            placeholder="Seleccione un Tipo Comisión">
-                                                        <el-option
-                                                            v-for="tipocomision in arrayTipoComision"
-                                                            :key="tipocomision.nIdPar"
-                                                            :label="tipocomision.cParNombre"
-                                                            :value="tipocomision.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                <div class="col-md-8 widthFull">
-                                                    <el-select v-model="fillConfigurarComision.nidtipomoneda"
-                                                            filterable
-                                                            clearable
-                                                            loading-text
-                                                            placeholder="Seleccione un Tipo Moneda">
-                                                        <el-option
-                                                            v-for="moneda in arrayTipoMoneda"
-                                                            :key="moneda.nIdPar"
-                                                            :label="moneda.cParNombre"
-                                                            :value="moneda.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Valor</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" min="1" v-model="fillConfigurarComision.nvalor" class="form-control form-control-sm">
-                                                    <input type="hidden" :value="fillDetalleFlagComision.flagTipo = verificarFlagTipo">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
-                                        <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acción</th>
-                                                            <th>Codigo</th>
-                                                            <th>Codigo ERP</th>
-                                                            <th>Elemento Venta</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
-                                                            <td>
-                                                                <a href="#" @click="removerElementoVentaLista(index);">
-                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="elementoventa.nIdElemento"></td>
-                                                            <td v-text="elementoventa.cCodigoERP"></td>
-                                                            <td v-text="elementoventa.cElemenNombre"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </template>
-                                    <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
-                                        <template v-if="fillDetalleFlagComision.arrayLineas.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acción</th>
-                                                            <th>Codigo</th>
-                                                            <th>Linea</th>
-                                                            <th>Abreviatura</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
-                                                            <td>
-                                                                <a href="#" @click="removerLineasByProveedorLista(index);">
-                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="lineas.nIdLinea"></td>
-                                                            <td v-text="lineas.cLineaNombre"></td>
-                                                            <td v-text="lineas.cLineaAbreviatura"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </template>
-                                    <div class="form-group row">
-                                        <div class="col-md-9 offset-md-5">
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(1)">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(2)">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -666,7 +1000,19 @@
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // =======================
-                // VARIABLES FORMULARIO
+                // VARIABLES BANDEJA COMISIÓN
+                // =======================
+                fillBsqComision: {
+                    nIdProveedor: '',
+                    nIdConcepto: '',
+                    nIdTurno: '',
+                    cFlagComision: '',
+                    cTipoComision: '',
+                    cTipoMoneda: ''
+                },
+                arrayListComisiones: [],
+                // =======================
+                // VARIABLES CONFIGURADOR DE COMISIÓN
                 // =======================
                 fillConfigurarComision:{
                     nidconcepto: '',
@@ -742,6 +1088,8 @@
             }
         },
         mounted(){
+            this.listarProveedores();
+            this.listarTurnos(1);
             this.llenarConceptoComision();
             this.llenarTipoComision();
             this.llenarTipoMoneda();
@@ -813,6 +1161,66 @@
             }
         },
         methods: {
+            tabBandejaComision(){
+                this.limpiarTabBsqComision();
+            },
+            tabConfiguradorComision(){
+                this.limpiarTabConfiguracionComision();
+            },
+            validarListarComisiones(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillBsqComision.cFlagComision == ''){
+                    this.mensajeError.push('Debe seleccionar un tipo de Comisión');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            listarComisiones(page){
+                if(this.validarListarComisiones()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                var url = this.ruta + '/getComision/GetListComisiones';
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa'    :   sessionStorage.getItem("nIdEmpresa"),
+                        'nIdSucursal'   :   sessionStorage.getItem("nIdSucursal"),
+                        'nIdProveedor'  :   this.fillBsqComision.nIdProveedor,
+                        'nIdConcepto'   :   this.fillBsqComision.nIdConcepto,
+                        'nIdTurno'      :   this.fillBsqComision.nIdTurno,
+                        'cFlagComision' :   this.fillBsqComision.cFlagComision,
+                        'cTipoComision' :   this.fillBsqComision.cTipoComision,
+                        'cTipoMoneda'   :   this.fillBsqComision.cTipoMoneda,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayListComisiones       =   response.data.arrayComisiones.data;
+                    this.pagination.current_page   =   response.data.arrayComisiones.current_page;
+                    this.pagination.total          =   response.data.arrayComisiones.total;
+                    this.pagination.per_page       =   response.data.arrayComisiones.per_page;
+                    this.pagination.last_page      =   response.data.arrayComisiones.last_page;
+                    this.pagination.from           =   response.data.arrayComisiones.from;
+                    this.pagination.to             =   response.data.arrayComisiones.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaComisiones(page){
+                this.pagination.current_page=page;
+                this.listarComisiones(page);
+            },
             llenarConceptoComision(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -881,7 +1289,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
@@ -889,12 +1297,12 @@
                     }
                 }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page   =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total          = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from           = response.data.arrayProveedor.from;
-                    this.paginationModal.to             = response.data.arrayProveedor.to;
+                    this.paginationModal.current_page   =   response.data.arrayProveedor.current_page;
+                    this.paginationModal.total          =   response.data.arrayProveedor.total;
+                    this.paginationModal.per_page       =   response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page      =   response.data.arrayProveedor.last_page;
+                    this.paginationModal.from           =   response.data.arrayProveedor.from;
+                    this.paginationModal.to             =   response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1009,7 +1417,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillBusqTipoElemento.ntpoelemen == 0){
+                if(this.fillBusqTipoElemento.ntpoelemen == ''){
                     this.mensajeError.push('Debe seleccionar un tipo de elemento de venta');
                 }
 
@@ -1176,7 +1584,7 @@
                     'tipo'                  :   data
                 }).then(response => {
                     swal('Comisión registrada exitosamente');
-                    this.limpiarProceso();
+                    this.limpiarTabConfiguracionComision();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -1191,18 +1599,18 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillConfigurarComision.nidconcepto == 0){
+                if(this.fillConfigurarComision.nidconcepto == ''){
                     this.mensajeError.push('Debe seleccionar un concepto de comisión');
                 }
-                if(this.fillConfigurarComision.nidtipocomision == 0){
+                if(this.fillConfigurarComision.nidtipocomision == ''){
                     this.mensajeError.push('Debe seleccionar un tipo de comisión');
                 }
                 if(!this.checked){
-                    if(this.fillConfigurarComision.nidturnovendedor == 0){
+                    if(this.fillConfigurarComision.nidturnovendedor == ''){
                         this.mensajeError.push('Debe seleccionar un turno de vendedor');
                     }
                 }
-                if(this.fillConfigurarComision.nidtipomoneda == 0){
+                if(this.fillConfigurarComision.nidtipomoneda == ''){
                     this.mensajeError.push('Debe seleccionar un tipo de moneda');
                 }
                 if(data == 1){
@@ -1298,23 +1706,30 @@
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
             },
-            limpiarProceso(){
-                this.fillProveedor.nidproveedor = 0;
+            limpiarTabBsqComision(){
+                this.fillBsqComision.nIdProveedor = '';
+                this.fillBsqComision.nIdConcepto = '';
+                this.fillBsqComision.nIdTurno = '';
+                this.fillBsqComision.cFlagComision = '';
+                this.fillBsqComision.cTipoComision = '';
+                this.fillBsqComision.cTipoMoneda = '';
+            },
+            limpiarTabConfiguracionComision(){
+                this.fillProveedor.nidproveedor = '';
                 this.fillProveedor.cproveedornombre = '';
                 this.checked = true;
                 this.fillConfigurarComision.cflagturno = '';
                 this.fillConfigurarComision.cnombreturno = '';
                 this.fillConfigurarComision.nidturnovendedor = '';
                 this.fillConfigurarComision.nidflagcomision = 1;
-                this.fillBusqTipoElemento.ntpoelemen = 0;
-                this.fillConfigurarComision.nidconcepto = 0;
-                this.fillConfigurarComision.nidtipocomision = 0;
-                this.fillConfigurarComision.nidtipomoneda = 0;
-                this.fillConfigurarComision.nvalor = 0;
+                this.fillBusqTipoElemento.ntpoelemen = '';
+                this.fillConfigurarComision.nidconcepto = '';
+                this.fillConfigurarComision.nidtipocomision = '';
+                this.fillConfigurarComision.nidtipomoneda = '';
+                this.fillConfigurarComision.nvalor = '';
                 this.fillDetalleFlagComision.arrayElementoVenta = [];
                 this.fillDetalleFlagComision.arrayLineas = [];
                 this.fillDetalleFlagComision.flagTipo = '';
-
             },
             //Cerrar Modal
             cerrarModal(){

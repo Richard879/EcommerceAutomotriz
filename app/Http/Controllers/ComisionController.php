@@ -39,6 +39,41 @@ class ComisionController extends Controller
         return response()->json($parametro);
     }
 
+    public function GetListComisiones(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdSucursal    = $request->nIdSucursal;
+        $nIdProveedor   = $request->nIdProveedor;
+        $nIdConcepto    = $request->nIdConcepto;
+        $nIdTurno       = $request->nIdTurno;
+        $cFlagComision  = $request->cFlagComision;
+        $cTipoComision  = $request->cTipoComision;
+        $cTipoMoneda    = $request->cTipoMoneda;
+
+        $nIdProveedor   = ($nIdProveedor)   == null ? 0 : $nIdProveedor;
+        $nIdConcepto    = ($nIdConcepto)    == null ? 0 : $nIdConcepto;
+        $nIdTurno       = ($nIdTurno)       == null ? 0 : $nIdTurno;
+        $cFlagComision  = ($cFlagComision)  == null ? 0 : $cFlagComision;
+        $cTipoComision  = ($cTipoComision)  == null ? '' : $cTipoComision;
+        $cTipoMoneda    = ($cTipoMoneda)    == null ? 0 : $cTipoMoneda;
+
+        $arrayComisiones = DB::select('exec [usp_Comision_GetListarComision] ?, ?, ?, ?, ?, ?, ?, ?',
+                                            [   $nIdEmpresa,
+                                                $nIdSucursal,
+                                                $nIdProveedor,
+                                                $nIdConcepto,
+                                                $nIdTurno,
+                                                $cFlagComision,
+                                                $cTipoComision,
+                                                $cTipoMoneda
+                                            ]);
+
+        $arrayComisiones = ParametroController::arrayPaginator($arrayComisiones, $request);
+        return ['arrayComisiones'=>$arrayComisiones];
+    }
+
     public function SetRegistrarComision(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

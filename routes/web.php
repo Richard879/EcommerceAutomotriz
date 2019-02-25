@@ -257,6 +257,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');
+    Route::get('/getComision/GetListComisiones', 'ComisionController@GetListComisiones');
 
     Route::get('/objComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
     Route::get('/objComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
