@@ -180,6 +180,7 @@
                                                         <tr>
                                                             <th>Acción</th>
                                                             <th>Codigo</th>
+                                                            <th>Codigo ERP</th>
                                                             <th>Elemento Venta</th>
                                                         </tr>
                                                     </thead>
@@ -191,6 +192,7 @@
                                                                 </a>
                                                             </td>
                                                             <td v-text="elementoventa.nIdElemento"></td>
+                                                            <td v-text="elementoventa.cCodigoERP"></td>
                                                             <td v-text="elementoventa.cElemenNombre"></td>
                                                         </tr>
                                                     </tbody>
@@ -667,13 +669,13 @@
                 // VARIABLES FORMULARIO
                 // =======================
                 fillConfigurarComision:{
-                    nidconcepto: 0,
-                    nidturnovendedor: 0,
+                    nidconcepto: '',
+                    nidturnovendedor: '',
                     cflagturno: '',
                     cnombreturno: '',
                     nidflagcomision: '1',
-                    nidtipocomision: 0,
-                    nidtipomoneda: 0,
+                    nidtipocomision: '',
+                    nidtipomoneda: '',
                     nvalor: '1'
                 },
                 arrayConceptoComision: [],
@@ -796,12 +798,15 @@
                 return pagesArray;
             },
             verificarFlagTipo: function() {
+                // Verifica que ambos Tipos de Comisión esten sin elementos
                 if (this.fillDetalleFlagComision.arrayElementoVenta.length == 0 && this.fillDetalleFlagComision.arrayLineas.length == 0) {
                     return this.fillDetalleFlagComision.flagTipo = '';
                 }
+                // Verifica que el Tipo de Comisión E este con elementos
                 if (this.fillDetalleFlagComision.arrayElementoVenta.length > 0){
                     return this.fillDetalleFlagComision.flagTipo = 'E';
                 }
+                // Verifica que el Tipo de Comisión L este con elementos
                 if(this.fillDetalleFlagComision.arrayLineas.length > 0){
                     return this.fillDetalleFlagComision.flagTipo = 'L';
                 }
@@ -813,7 +818,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110064,
-                        'opcion' : 0
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayConceptoComision = response.data;
@@ -832,7 +837,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110065,
-                        'opcion' : 0
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayTipoComision = response.data;
@@ -851,7 +856,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110028,
-                        'opcion' : 0
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -942,7 +947,7 @@
             },
             updateEstadoChecked(){
                 if(this.checked){
-                    this.fillConfigurarComision.nidturnovendedor = 0;
+                    this.fillConfigurarComision.nidturnovendedor = '';
                     this.fillConfigurarComision.cnombreturno = '';
                     this.fillConfigurarComision.cflagturno = '';
                 }
@@ -977,7 +982,7 @@
                 var url = this.ruta + '/elemento/GetElementoByTipo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen' : this.fillBusqTipoElemento.ntpoelemen,
                         'celementonombre': this.fillBusqTipoElemento.celementonombre,
                         'page' : page
@@ -1083,7 +1088,7 @@
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.fillProveedor.nidproveedor,
                         'page': page
                     }
@@ -1113,7 +1118,7 @@
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'La Linea ya se encuentra agregado!',
+                        text: 'La Linea ya se encuentra agregada!',
                     })
                 } else {
                     this.fillDetalleFlagComision.flagTipo = 'L';
@@ -1155,7 +1160,7 @@
                 }
                 var url = this.ruta + '/getComision/SetRegistrarComision';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdConceptoComision'   :   this.fillConfigurarComision.nidconcepto,

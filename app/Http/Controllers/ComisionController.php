@@ -20,8 +20,8 @@ class ComisionController extends Controller
         $cLineaNombre = "";
 
         $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
-                                            [   $nIdEmpresa, 
-                                                $nIdProveedor, 
+                                            [   $nIdEmpresa,
+                                                $nIdProveedor,
                                                 $cLineaNombre
                                             ]);
 
