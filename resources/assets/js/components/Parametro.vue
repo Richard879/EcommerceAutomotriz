@@ -39,11 +39,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Descripción</label>
                                                     <div class="col-sm-8">
-                                                        <el-input
-                                                            placeholder=""
-                                                            v-model="fillParametro.cparnombre"
-                                                            clearable>
-                                                        </el-input>
+                                                        <input type="text" v-model="fillParametro.cparnombre" @keyup.enter="listarParametroByGrupo(1)" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
