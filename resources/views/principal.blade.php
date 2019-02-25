@@ -136,25 +136,12 @@
                                 </li>
                             </ul>
                         </li>
-                        <!-- Languages dropdown    -->
-                        <!--<li class="nav-item dropdown">
-                            <a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle">
-                                <img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span>
-                            </a>
-                            <ul aria-labelledby="languages" class="dropdown-menu">
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French</a>
-                                </li>
-                            </ul>
-                        </li>-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{-- <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src="img/prueba.png" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
                                 <span class="d-md-down-none">{{ Auth::user()->usuario }}</span>
-                            </a>
+                            </a> --}}
+                            <cabeceralogin :ruta="ruta" :usuario="{{ auth()->user() }}"></cabeceralogin>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!--<div class="dropdown-header text-center">
                                     <strong>Cuenta</strong>

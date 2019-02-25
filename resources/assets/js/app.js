@@ -22,6 +22,7 @@ var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)
 
 Vue.component('cabecera', require('./components/Cabecera.vue'));
+Vue.component('cabeceralogin', require('./components/CabeceraLogin.vue'));
 Vue.component('mimenu', require('./components/Menu.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('versionvehiculo', require('./components/VersionVehiculo.vue'));

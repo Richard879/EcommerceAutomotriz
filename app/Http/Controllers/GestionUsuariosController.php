@@ -183,4 +183,17 @@ class GestionUsuariosController extends Controller
 
         return response()->json($data);
     }
+
+    public function GetInformacionUsuarioCabecera(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdUsuario =   Auth::user()->id;
+
+        $usuario = DB::select('exec usp_Usuario_GetInformacionUsuario ?',
+                                                    [
+                                                        $nIdUsuario
+                                                    ]);
+        return response()->json($usuario);
+    }
 }
