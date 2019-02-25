@@ -785,7 +785,7 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
+                                            <div class="form-group row">{{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }}
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Vin</label>
@@ -2122,7 +2122,7 @@
                             case 'buscar':
                             {
                                 this.flagBuscarVehiculoByCriterio = data;
-                                this.listarVehiculo(1);
+                                //this.listarVehiculo(1);
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 break;
@@ -2137,7 +2137,7 @@
                             {
                                 this.flagBuscarContacto = data;
                                 this.modalMisContactos.ntipopersona = 1;
-                                this.listarContactos(1);
+                                //this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;

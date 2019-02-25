@@ -575,7 +575,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Vin o Placa</label>
+                                                        <label class="col-sm-4 form-control-label">{{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }}</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
                                                                 <input type="text" v-model="modalVehiculo.cnrovehiculo" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
