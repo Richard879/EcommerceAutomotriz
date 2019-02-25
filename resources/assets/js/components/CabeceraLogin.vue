@@ -28,7 +28,7 @@
                     }
                 }).then(response => {
                     this.formLogin.cRuta = response.data[0].cPathImage;
-                    this.formLogin.cUsuario = response.data[0].cNombre;
+                    this.formLogin.cUsuario = response.data[0].cUsuario;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
