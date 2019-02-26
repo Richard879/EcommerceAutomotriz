@@ -117,6 +117,22 @@
                                                                 <div slot="content">Editar {{ usuario.cParNombre }}</div>
                                                                 <i :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                             </el-tooltip>&nbsp;
+                                                            <template v-if="usuario.condicion == 1">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Desactivar Usuario {{ usuario.cParNombre }}</div>
+                                                                    <i  @click="cambiarEstado(0, usuario)"
+                                                                        :style="'color:red'"
+                                                                        class="fa-md fa fa-trash"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </template>
+                                                            <template v-else>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Activar Usuario {{ usuario.cParNombre }}</div>
+                                                                    <i  @click="cambiarEstado(1, usuario)"
+                                                                        :style="'color:green'"
+                                                                        class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </template>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -442,6 +458,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -460,6 +480,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -495,6 +519,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -521,6 +549,49 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            cambiarEstado(op, usuario){
+                swal({
+                    title: '¿Esta seguro de ' + ((op == 0) ? 'Desactivar' : ' Activar ') + ' Al Usuario ' + usuario.cParNombre + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, ' + ((op == 0) ? 'Desactivar' : ' Activar '),
+                    cancelButtonText: 'No, cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/usuario/SetCambiarEstadoUsuario';
+                        axios.put(url, {
+                            nIdUsuario : usuario.nIdUsuario,
+                            opcion : op
+                        }).then(response => {
+                            console.log(response)
+                            me.listarUsuarios(1);
+                            $("#myBar").hide();
+                            swal(
+                                ((op == 0) ? 'Desactivado' : ' Activado '),
+                                'El Usuario ' + usuario.cParNombre +' ha sido ' + ((op == 0) ? 'Desactivado' : ' Activado ') + ' con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 403) {
+                                    swal('ACCESO RESTRINGIDO - 403');
+                                    location.reload('0');
+                                }
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
             },
             //====================================================================
             //===================== METODOS REGISTRAR USUARIO ====================
@@ -554,6 +625,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -597,6 +672,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -647,6 +726,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -675,6 +758,10 @@
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             location.reload('0');
                         }
@@ -722,6 +809,10 @@
                     });
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -751,6 +842,10 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            swal('ACCESO RESTRINGIDO - 403');
+                            location.reload('0');
+                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');

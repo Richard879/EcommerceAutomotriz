@@ -355,7 +355,7 @@ class ParametroController extends Controller
     public function SetLineaMarcaModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
+
         $objParParametroExt = DB::select('exec [usp_Par_SetLineaMarcaModelo] ?, ?, ?, ?, ?',
                                                             [   $request->nIdProveedor,
                                                                 $request->nIdLinea,
