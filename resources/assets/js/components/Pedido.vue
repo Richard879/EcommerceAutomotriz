@@ -1641,6 +1641,11 @@
                 return pagesArray;
             }
         },
+        mounted(){
+            this.llenarComboMarcas();
+            this.llenarComboModelos();
+            this.llenarEstadoPedido();
+        },
         methods:{
             tabBuscarPedido(){
                 this.formPedido.nidmarca = '';
@@ -2270,74 +2275,6 @@
                     }
                 });
             },
-            /*obtenerPedidoById(){
-                var url = this.ruta + '/pedido/GetPedidoById';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': this.formPedido.nidcabecerapedido
-                    }
-                }).then(response => {
-                    this.arraySapPedido = response.data.arrayCabeceraPedido.data;
-                    this.registroSapPedido();
-                }).catch(error => {
-                    this.errors = error
-                });
-            },
-            registroSapPedido(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/pedido/SapSetPedido';
-                axios.post(sapUrl, {
-                    data: me.arraySapPedido
-                }).then(response => {
-                    me.arraySapRptPedido = response.data;
-                    me.arraySapRptPedido.map(function(x){
-                        me.jsonPedido= JSON.parse(x);
-                        me.arraySapUpdPedido.push({
-                            'nIdCabeceraPedido': me.formPedido.nidcabecerapedido.toString(),
-                            'DocEntry': me.jsonPedido.DocEntry.toString(),
-                            'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
-                        });
-                    });
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY ===============
-                    setTimeout(function() {
-                        me.registroDocEntryPedido();
-                    }, 3800);
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            registroDocEntryPedido(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
-                axios.post(sapUrl, {
-                    data: me.arraySapUpdPedido
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        if(this.attachment.length){
-                            this.subirArchivos(this.formPedido.nidcabecerapedido);
-                        }
-                        else{
-                            this.vistaFormularioPedido= 1;
-                            this.limpiarFormulario();
-                            $("#myBar").hide();
-                            swal('Pedido registrado correctamente');
-                        }
-                    }else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
-                        })
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
-            },*/
             validaRegistraraPedido(){
                 let me = this;
                 me.error = 0;
@@ -2464,11 +2401,6 @@
                 $("#myBar").show();
                 progress();
             }
-        },
-        mounted(){
-            this.llenarComboMarcas();
-            this.llenarComboModelos();
-            this.llenarEstadoPedido();
         }
     }
 </script>
