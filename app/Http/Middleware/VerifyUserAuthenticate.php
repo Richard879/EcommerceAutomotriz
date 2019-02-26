@@ -19,7 +19,15 @@ class VerifyUserAuthenticate
         $user = Auth::user();
 
         if ($user->condicion == 0) {// Si la Condicion del Usuario está inactiva
+            // Auth::logout();
+            // remueve todas las sesiones realacionas al usuario actual
+            app('db')->table('sessions')
+                    ->where('user_id', Auth::user()->id)
+                    ->delete();
+
             Auth::logout();
+            $request->session()->invalidate();
+
             if ($request->ajax()) {
                 return response()->json([
                     'error' => 'Su acceso esta restringido. '

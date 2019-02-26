@@ -41,15 +41,19 @@ class LoginController extends Controller
         ]);
     }
 
-    static function logout(Request $request)
+    public function logout(Request $request)
     {
-        Auth::logout();
-        // remove all the sessionIds related to the current user
-        // app('db')->table('sessions')
-        //          ->where('user_id', Auth::user()->id)
-        //          ->delete();
+        // remueve todas las sesiones realacionas al usuario actual
+        app('db')->table('sessions')
+                 ->where('user_id', Auth::user()->id)
+                 ->delete();
 
+        Auth::logout();
         $request->session()->invalidate();
         return redirect('/');
+
+        // Auth::logout();
+        // $request->session()->invalidate();
+        // return redirect('/');
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\ParametroController as Parametro;
-use App\Http\Controllers\Auth\LoginController as Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -215,7 +214,6 @@ class GestionUsuariosController extends Controller
                                                         $estado
                                                     ]);
 
-        // $arrayUsuarios = Login::logout();
         return response()->json($usuario);
     }
 }
