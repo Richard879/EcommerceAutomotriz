@@ -820,7 +820,6 @@
                 arraySapElementoVenta: [],
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
-                VINDelPedido: '',
                 fAvgPrice: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -2535,7 +2534,6 @@
                 this.arraySapPedido= [];
                 this.arraySapActividad= [];
                 this.arraySapLlamadaServicio= [];
-                this.VINDelPedido = '';
                 this.formSap.nidcabecerapedido= 0;
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
