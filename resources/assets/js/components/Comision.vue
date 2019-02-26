@@ -1740,7 +1740,7 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
                 //Modal Buscar Proveedores
-                this.arrayProveedor = [];
+                // this.arrayProveedor = [];
             }
         }
     }
