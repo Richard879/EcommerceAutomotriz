@@ -790,10 +790,7 @@
                 jsonRespuestaVehiculo: '',
                 arraySapItemCodeVehiculo: [],
                 arrayVINPedidoVehiculo: [],//Almacena VINES
-
                 arraySapActividadVehiculo: [],
-                // arraySapLlamadaServicioVehiculo: [],
-
                 fillLlamadaServicio: {
                     cCustomerCode: '',
                     cInternalSerialNum: '',
@@ -801,17 +798,13 @@
                     cSubject: ''
                 },
                 arrayServiceCallActivities: [],
-
                 //=====Variables SAP para OrdenVenta Elemento Venta
                 arraySapRespuestaEV: [],
                 jsonRespuestaEV: '',
                 arraySapUpdSgcEV: [],
                 arraySapItemCodeEV: [],
                 arrayCodSAPPedidoEV: [],//Almacena CodSAP
-
                 arraySapActividadEV: [],
-                // arraySapLlamadaServicioEV: [],
-
                  //=====Variables SAP Antiguas OrdenVenta
                 arraySapRespuesta: [],
                 arraySapItemCode: [],
@@ -827,7 +820,6 @@
                 arraySapElementoVenta: [],
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
-                VINDelPedido: '',
                 fAvgPrice: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -2542,7 +2534,6 @@
                 this.arraySapPedido= [];
                 this.arraySapActividad= [];
                 this.arraySapLlamadaServicio= [];
-                this.VINDelPedido = '';
                 this.formSap.nidcabecerapedido= 0;
                 this.formSap.ccardcode= ''
                 this.formSap.igv = '';
