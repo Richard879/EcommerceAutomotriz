@@ -3,12 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistema de Gestión Comercial">
     <meta name="author" content="hyundai.com">
     <meta name="keyword" content="Sistema de Gestión Comercial">
     <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- Id for Channel Notification -->
+    <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : '' }}">
+
     <title>Sistema Ventas - SAISAC</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="css/plantilla.css">

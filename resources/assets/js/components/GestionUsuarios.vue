@@ -458,10 +458,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -480,10 +476,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -519,10 +511,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -580,10 +568,6 @@
                         }).catch(error => {
                             console.log(error);
                             if (error.response) {
-                                if (error.response.status == 403) {
-                                    swal('ACCESO RESTRINGIDO - 403');
-                                    location.reload('0');
-                                }
                                 if (error.response.status == 401) {
                                     swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                                     location.reload('0');
@@ -625,10 +609,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -672,10 +652,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -726,10 +702,6 @@
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
@@ -758,10 +730,6 @@
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             location.reload('0');
                         }
@@ -798,8 +766,6 @@
                     setTimeout(function() {
                         me.registroSgcVendedor();
                     }, 3800);
-
-
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -809,10 +775,6 @@
                     });
                     console.log(error);
                     if (error.response) {
-                        if (error.response.status == 403) {
-                            swal('ACCESO RESTRINGIDO - 403');
-                            location.reload('0');
-                        }
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');

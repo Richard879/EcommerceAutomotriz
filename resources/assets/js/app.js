@@ -85,6 +85,11 @@ const app = new Vue({
         ruta: 'http://localhost:8080/saisacsys/public'
     },
     mounted() {
+        // var userId = $('meta[name="userId"]').attr('content');
+        // Echo.private('User.' + userId + '.logout')
+        //     .listen('LogoutFromEveryWhere', (e) => {
+        //         location.reload()
+        //     })
         this.obtenerRolUsuario();
     },
     methods: {
