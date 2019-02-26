@@ -781,11 +781,11 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">BUSQUEDA VEHICULO POR {{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }} </h3>
+                                        <h3 class="h4">BUSQUEDA VEHICULO POR {{ (fillNuevaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }} </h3>
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">{{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }}
+                                            <div class="form-group row">{{ (fillNuevaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }}
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Vin</label>
