@@ -1,9 +1,6 @@
 <template>
     <transition name="slide-fade" appear>
         <li class="nav-item d-flex align-items-center">
-            <el-input placeholder="Tipo Cambio Comercial" v-model="cTipoCambio">
-                <template slot="prepend">TCC</template>
-            </el-input>
             <el-select v-model="formCabecera.nidempresa"
                        filterable
                        clearable
@@ -28,6 +25,8 @@
                     :value="item.nIdPar">
                 </el-option>
             </el-select>
+            <span>&nbsp;T.C.C&nbsp;&nbsp;</span>
+            <span v-text="cTipoCambio"></span>
         </li>
     </transition>
 </template>
