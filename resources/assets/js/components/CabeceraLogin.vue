@@ -1,8 +1,18 @@
 <template>
-    <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <img :src="formLogin.cRuta" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" :alt="formLogin.cUsuario">
-        <span class="d-md-down-none"> {{ formLogin.cUsuario }} </span>
-    </a>
+    <div>
+        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <img :src="formLogin.cRuta" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" :alt="formLogin.cUsuario">
+            <span class="d-md-down-none"> {{ formLogin.cUsuario }} </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-header text-center">
+                <u><strong>{{ formLogin.cRol }} </strong></u>
+            </div>
+            <a class="dropdown-item" @click.prevent="logout">
+                <i class="fa fa-lock"></i> Cerrar sesión
+            </a>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -12,7 +22,8 @@
             return {
                 formLogin:{
                     cRuta: '',
-                    cUsuario: ''
+                    cUsuario: '',
+                    cRol: ''
                 }
             }
         },
@@ -29,6 +40,7 @@
                 }).then(response => {
                     this.formLogin.cRuta = response.data[0].cPathImage;
                     this.formLogin.cUsuario = response.data[0].cUsuario;
+                    this.formLogin.cRol = response.data[0].cGrupoParNombre;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -38,6 +50,19 @@
                         }
                     }
                 });
+            },
+            logout(){
+                axios.post('logout').then(function(response) {
+                    location.reload('0');
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal("SU SESIÓN HA EXPIRADO, VUELVA INICIAR SESIÓN");
+                            location.reload('0');
+                        }
+                    }
+                })
             }
         }
     }

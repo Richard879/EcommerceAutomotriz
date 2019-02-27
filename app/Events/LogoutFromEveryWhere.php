@@ -9,8 +9,10 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use App\User;
 
-class LogoutFromEveryWhere
+class LogoutFromEveryWhere implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,20 +23,21 @@ class LogoutFromEveryWhere
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
 
     /**
-     * Get the channels the event should broadcast on.
+     * Obtener los canales en los que el evento debería transmitir.
+     * Este método es responsable de devolver los canales que el
+     * evento debe transmitir
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
         // return new PrivateChannel('channel-name');
-        // return new PrivateChannel("App.User.{$this->user->id}");
-        return new PrivateChannel("App.User.{$this->user->id}.logout");
+        return new PrivateChannel('userlogout.'.$this->user->id);
     }
 }
