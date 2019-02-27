@@ -25,8 +25,10 @@
                     :value="item.nIdPar">
                 </el-option>
             </el-select>
-            <span>&nbsp;T.C.C&nbsp;&nbsp;</span>
-            <span v-text="cTipoCambio"></span>
+            <div class="tcc">
+                <span>&nbsp;T.C.C&nbsp;&nbsp;</span>
+                <span v-text="cTipoCambio"></span>
+            </div>
         </li>
     </transition>
 </template>
@@ -144,3 +146,15 @@
         },
     }
 </script>
+
+<style lang="">
+    .tcc{
+        display: flex;
+        background: brown;
+        padding: .4rem;
+        border-radius: .2rem;
+    }
+    .tcc span{
+        font-weight: bold;
+    }
+</style>
