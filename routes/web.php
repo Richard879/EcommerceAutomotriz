@@ -221,6 +221,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
     Route::get('/pdi/GetListSeccion', 'PdiProcesoController@GetListSeccion');
     Route::get('/pdi/GetListItem', 'PdiProcesoController@GetListItem');
+    Route::get('/pdi/GetElementoByTipo', 'PdiProcesoController@GetElementoByTipo');
     Route::post('/pdi/SetCabeceraInspeccion', 'PdiProcesoController@SetCabeceraInspeccion');
     Route::get('/pdi/GetListPdi', 'PdiProcesoController@GetListPdi');
     Route::get('/pdi/GetDetalleTipoInspeccionById', 'PdiProcesoController@GetDetalleTipoInspeccionById');

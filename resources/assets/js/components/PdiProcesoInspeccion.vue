@@ -1099,15 +1099,23 @@
                                         <template v-if="arrayAccesorio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Nombre</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Conformidad</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
-                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
+                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdElemento">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Eliminar {{ a.cParNombre }}</div>
+                                                                    <div slot="content">Eliminar {{ a.cElemenNombre }}</div>
                                                                     <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
-                                                            <td v-text="a.cParNombre"></td>
+                                                            <td v-text="a.cElemenNombre"></td>
                                                             <td><input type="text" v-model="arrayAccesorioCantidad[index]" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
                                                                 <span v-text="arrayAccesorioFlagMarca[index] ? 'CONFORME' : 'NO CONFORME'"></span>
@@ -1765,18 +1773,18 @@
             },
             //=============== LISTAR MODAL ACCESORIO ===================
             listarAccesorio(){
-                var url = this.ruta + '/parametro/GetListParametroByNombre';
+                var url = this.ruta + '/pdi/GetElementoByTipo';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110089,
-                        'cparnombre': '',
-                        'opcion' : 0
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoelemen' : 0,
+                        'celementonombre': ''
                     }
                 }).then(response => {
                     let me = this;
                     me.links = [];
-                    me.links = response.data.arrayParametro.data;
+                    me.links = response.data.arrayElementoVenta;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1801,7 +1809,7 @@
             },
             asignarAccesorio(item) {
                 let me = this;
-                if(me.encontrarAccesorio(item.nIdPar)){
+                if(me.encontrarAccesorio(item.nIdElemento)){
                     swal({
                         type: 'error',
                         title: 'Error...',
@@ -1811,7 +1819,7 @@
                     //console.log(item);
                     me.arrayAccesorio.push(item);
                     me.arrayAccesorio.map(function(value, key){
-                        if(item.nIdPar == value.nIdPar){
+                        if(item.nIdElemento == value.nIdElemento){
                             me.arrayAccesorioCantidad[key] = 0;
                         }
                     });
@@ -1832,10 +1840,10 @@
                 this.fillAccesorio.cnombre = '';
                 this.cerrarModal();
             },
-            encontrarAccesorio(nIdPar){
+            encontrarAccesorio(nIdElemento){
                 var sw=0;
                 this.arrayAccesorio.map(function (x) {
-                    if(x.nIdPar == nIdPar){
+                    if(x.nIdElemento == nIdElemento){
                         sw = true;
                     }
                 });
