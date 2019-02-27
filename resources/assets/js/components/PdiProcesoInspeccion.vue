@@ -759,9 +759,9 @@
                                                             <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
                                                                 v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                :key="item.nIdModelo"
+                                                                :label="item.cModeloNombre"
+                                                                :value="item.nIdModelo">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -906,7 +906,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                        <tr v-for="vehiculo in arrayVehiculoPlaca" :key="vehiculo.cPlaca">
                                                             <td>
                                                                 <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
                                                                     <i class='fa-md fa fa-check-circle'></i>
@@ -1645,10 +1645,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.fillCompra.nidmarca
+                        'nidmarca' : this.fillCompra.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
@@ -1678,7 +1679,7 @@
                     }
                 }).then(response => {
                     let info = response.data.arrayVehiculosByCriterio;
-                    this.arrayVehiculosByCriterio     = info.data;
+                    this.arrayVehiculoPlaca           = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
                     this.paginationModal.per_page     = info.per_page;
@@ -2212,12 +2213,12 @@
                                     this.modal =1;
                                     this.llenarComboMarca();
                                     this.llenarComboModelo();
-                                    this.listarPorVin(1);
+                                    //this.listarPorVin(1);
                                 }
                                 else{
                                     this.accionmodal=6;
                                     this.modal =1;
-                                    this.listarPorPlaca(1);
+                                    //this.listarPorPlaca(1);
                                 }
                                 break;
                             }
