@@ -876,12 +876,12 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <label class="col-sm-4 form-control-label">Nro Placa</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarPorPlaca(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
+                                                                    <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarPorPlaca(1);">
                                                                         <i class="fa-lg fa fa-search"></i>
                                                                     </button>
                                                                 </div>
@@ -1083,6 +1083,7 @@
                                                         <div class="col-sm-8">
                                                             <el-autocomplete
                                                                     class=""
+                                                                    clearable
                                                                     v-model="fillAccesorio.cnombre"
                                                                     :fetch-suggestions="querySearch"
                                                                     placeholder=""
@@ -1671,8 +1672,8 @@
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : 1300013,
-                        'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
-                        'criterio': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'cnrovehiculo' : this.fillVehiculoPlaca.cdescripcion.toString(),
+                        'criterio': 2,
                         'page' : page,
                     }
                 }).then(response => {
