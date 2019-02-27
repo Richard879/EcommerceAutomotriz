@@ -516,24 +516,8 @@
                                                     <div class="form-group row">
                                                         <div class="col-sm-6">
                                                             <div class="row">
-                                                                <!--<label class="col-sm-4 form-control-label">Cliente</label>-->
                                                                 <div class="col-sm-8">
                                                                     <h2 class="no-margin-bottom" v-text="fillAsignarContacto.ccontacto"></h2>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* SubLinea</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-select v-model="fillAsignarContacto.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
-                                                                        <el-option
-                                                                            v-for="sublinea in arraySubLinea"
-                                                                            :key="sublinea.nIdSubLinea"
-                                                                            :label="sublinea.cSubLineaNombre"
-                                                                            :value="sublinea.nIdSubLinea">
-                                                                        </el-option>
-                                                                    </el-select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -595,6 +579,21 @@
                                                                                                             </el-tooltip>
                                                                                                         </div>
                                                                                                     </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* SubLinea</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <el-select v-model="fillAsignarContacto.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                                        <el-option
+                                                                                                            v-for="sublinea in arraySubLinea"
+                                                                                                            :key="sublinea.nIdSubLinea"
+                                                                                                            :label="sublinea.cSubLineaNombre"
+                                                                                                            :value="sublinea.nIdSubLinea">
+                                                                                                        </el-option>
+                                                                                                    </el-select>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -3768,6 +3767,10 @@
                     }
                 }
 
+                if(!this.fillAsignarContacto.nidsublinea){
+                    this.mensajeError.push('Debe seleccionar una SubLinea');
+                }
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -4442,9 +4445,6 @@
                 if(!this.fillAsignarContacto.nidcontacto){
                     this.mensajeError.push('Debe asignar un contacto');
                 };
-                if(!this.fillAsignarContacto.nidsublinea){
-                    this.mensajeError.push('Debe seleccionar una SubLinea');
-                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
