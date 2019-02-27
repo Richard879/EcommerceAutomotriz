@@ -2694,7 +2694,7 @@
                     });
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                    /*let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                     arrayCostoVehiculo.map(function (x) {
                         me.arrayTCCostoVehiculo.push({
                             'U_SYP_VIN'           :   x.U_SYP_VIN,
@@ -2706,7 +2706,7 @@
                             'U_SYP_COSTO'         :   x.U_SYP_COSTO,
                             'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
-                    });
+                    });*/
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoDetalle();
@@ -2727,8 +2727,8 @@
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
                     'dataCabecera'  : me.arraySapCosto,
-                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio,
-                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo
+                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio/*,
+                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo*/
                 }).then(response => {
                     me.verResultados();
                 }).catch(error => {
@@ -3606,7 +3606,7 @@
 
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    if(response.data.array_infoCostoVehiculo.length){
+                    /*if(response.data.array_infoCostoVehiculo.length){
                         let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                         arrayCostoVehiculo.map(function (x) {
                             me.arrayTCCostoVehiculo.push({
@@ -3620,7 +3620,7 @@
                                 'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                             });
                         });
-                    }
+                    }*/
 
                     setTimeout(function() {
                         me.generaSapTblCostoDetallePorVin();
@@ -3650,8 +3650,8 @@
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
                     'dataCabecera'      : me.arraySapCosto,
-                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio,
-                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo
+                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio/*,
+                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo*/
                 }).then(response => {
                     me.loading.close();
                     swal('Compra registrada correctamente');

@@ -88,7 +88,7 @@ class SapTablaCostoController extends Controller
 
             // ====================================================================================================
             // ======================  REGISTRAR DETALLE CABECERA TBL COST - COSTO VEHÍCULO =======================
-            $dataCostoVeh = $request->dataCostoVehiculo;
+            /*$dataCostoVeh = $request->dataCostoVehiculo;
             foreach ($dataCostoVeh as $key => $costovehiculo) {
                 //Verifica que el VIN de ese Costo de Vehículo sea Igual al VIN de la Cabecera Costo, para que se le asigne al detalle como concepto
                 if ($TblCostoVIN == $costovehiculo['U_SYP_VIN']) {
@@ -114,12 +114,12 @@ class SapTablaCostoController extends Controller
                     $rptaSAPCostoVehiculo = json_decode($rptaCostoVehiculo->getBody());
                     array_push($array_rptaCostoVehiculo, $rptaSAPCostoVehiculo);
                 }
-            }
+            }*/
         }
 
         $rpta = [
-            'array_rptaBeneficio'       =>  $array_rptaBeneficio,
-            'array_rptaCostoVehiculo'   =>  $array_rptaCostoVehiculo
+            'array_rptaBeneficio'       =>  $array_rptaBeneficio/*,
+            'array_rptaCostoVehiculo'   =>  $array_rptaCostoVehiculo*/
         ];
 
         return $rpta;
