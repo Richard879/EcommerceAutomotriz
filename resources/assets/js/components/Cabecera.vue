@@ -1,6 +1,9 @@
 <template>
     <transition name="slide-fade" appear>
         <li class="nav-item d-flex align-items-center">
+            <el-input placeholder="Tipo Cambio Comercial" v-model="cTipoCambio">
+                <template slot="prepend">TCC</template>
+            </el-input>
             <el-select v-model="formCabecera.nidempresa"
                        filterable
                        clearable
@@ -38,6 +41,7 @@
                     nidempresa: '',
                     nidsucursal: ''
                 },
+                cTipoCambio: '',
                 arrayEmpresa:[],
                 arraySucursal:[]
             }
@@ -47,7 +51,38 @@
             this.listarEmpresaByUsuario();
             //this.listarSucursalByEmpresa();
         },
+        created() {
+            let me = this;
+            setTimeout(function() {
+                me.llenarTipoCambio();
+            }, 1600);
+            this.$bus.$on('tcc', function (data) {
+               //console.log(data);
+               me.llenarTipoCambio();
+            })
+        },
         methods:{
+            llenarTipoCambio(){
+                var url = this.ruta + '/tipocambio/GetTipoCambioByFecha';
+
+                axios.get(url, {
+                    params: {
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cTipoCambio = response.data[0].fValorTipoCambioComercial;
+                    //Parseo a 0 si es ".000"
+                    this.cTipoCambio = parseFloat(this.cTipoCambio);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             listarEmpresaByUsuario(){
                 var url = this.ruta + '/perrelacion/GetLstEmpresaByUsuario';
                 axios.get(url, {

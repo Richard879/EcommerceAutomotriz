@@ -183,7 +183,7 @@
                 let me = this;
 
                 me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
-                
+
                 var url = me.ruta + '/tipocambio/SapGetTipoCambioByFecha';
 
                 // moment().format('YYYY-MM-DD')
@@ -198,7 +198,7 @@
                             me.fillTipoCambio.fTipoCambioVenta = value.Rate;
                         });
                     }
-                    
+
                     me.loading.close();
                 }).catch(error => {
                     console.log(error);
@@ -239,6 +239,9 @@
                     if (response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
                         this.llenarTipoCambio();
+
+                        this.$bus.$emit('tcc');//Evento BUS para actualizar el TCC en la Cabecera
+
                         $("#myBar").hide();
                     } else {
                         swal({
@@ -269,6 +272,9 @@
                     if (response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
                         this.llenarTipoCambio();
+
+                        this.$bus.$emit('tcc');//Evento BUS para actualizar el TCC en la Cabecera
+
                         $("#myBar").hide();
                     } else {
                         swal({
