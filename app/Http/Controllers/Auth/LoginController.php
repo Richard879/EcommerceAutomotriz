@@ -48,17 +48,15 @@ class LoginController extends Controller
         // app('db')->table('sessions')
         //          ->where('user_id', Auth::user()->id)
         //          ->delete();
-
         // Auth::logout();
         // $request->session()->invalidate();
         // return redirect('/');
 
-        //PASO 01 = CUANDO SE ACCIONA EL METODO LOGOUT
+        // broadcast(new LogoutFromEveryWhere(Auth::user()));
         // event(new LogoutFromEveryWhere(Auth::user()));
-        broadcast(new LogoutFromEveryWhere(Auth::user()));
 
         Auth::logout();
         $request->session()->invalidate();
-        return redirect('/');
+        // return redirect('/');
     }
 }
