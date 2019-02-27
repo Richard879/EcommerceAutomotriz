@@ -41,7 +41,13 @@ class GestionUsuariosController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayRoles = DB::select('exec usp_Usuario_GetListRoles');
+        $cnombre = $request->cnombre;
+        $cnombre = ($cnombre == NULL) ? ($cnombre = '') : $cnombre;
+
+        $arrayRoles = DB::select('exec usp_Usuario_GetListRoles ?',
+                                                        [
+                                                            $cnombre
+                                                        ]);
 
         return response()->json($arrayRoles);
     }

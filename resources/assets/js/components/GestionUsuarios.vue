@@ -252,7 +252,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <!-- <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Rol</label>
                                                     <div class="col-sm-8">
@@ -264,6 +264,21 @@
                                                                 :value="item.nIdGrupoPar">
                                                             </el-option>
                                                         </el-select>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Rol</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" placeholder="SELECCIONE UN ROL" v-model="fillUsuario.cnombrerol" disabled="disabled" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('rol','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,6 +335,81 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Buscar Proveedores -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTAR ROLES</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillRol.crolnombre" @keyup.enter="bucarRol()" class="form-control form-control-sm">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Rol" class="btn btn-info btn-corner btn-sm" @click="bucarRol();">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <template v-if="arrayRoles.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Rol</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="rol in arrayRoles" :key="rol.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarRol(rol.nIdGrupoPar, rol.cGrupoParNombre);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="rol.cGrupoParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -350,7 +440,11 @@
                     cnombrecompleto: '',
                     cusuario: '',
                     cpassword: '',
-                    nrol: ''
+                    nrol: '',
+                    cnombrerol: ''
+                },
+                fillRol:{
+                    crolnombre: ''
                 },
                 arrayRoles: [],
                 attachment: '',// Archivo a almacenar
@@ -579,6 +673,12 @@
             },
             //====================================================================
             //===================== METODOS REGISTRAR USUARIO ====================
+            // =======================
+            // MODAL ROL
+            // =======================
+            bucarRol(){
+                this.listarRolesPreConfig(1);
+            },
             getFile(e){
                 let selectFile  = e.target.files[0];
                 this.attachment = selectFile;
@@ -586,7 +686,11 @@
             },
             listarRolesPreConfig(){
                 var url = this.ruta + '/usuario/GetListRoles';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'cnombre': this.fillRol.crolnombre
+                    }
+                }).then(response => {
                     this.arrayRoles = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -597,6 +701,11 @@
                         }
                     }
                 });
+            },
+            asignarRol(nIdGrupoPar, cGrupoParNombre){
+                this.fillUsuario.nrol = nIdGrupoPar;
+                this.fillUsuario.cnombrerol = cGrupoParNombre;
+                this.cerrarModal();
             },
             listarSucursal2(){
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
@@ -680,7 +789,7 @@
                 if(!this.fillUsuario.cpassword) {
                     me.mensajeError.push('Debe Ingresar una Contraseña, es un campo obligatorio ');
                 }
-                if(!this.fillUsuario.nrol) {
+                if(!this.fillUsuario.nrol && !this.fillUsuario.cnombrerol) {
                     me.mensajeError.push('Debe seleccionar un Rol, es un campo obligatorio ');
                 }
 
@@ -720,8 +829,9 @@
                 }).then(response => {
                     // console.log(response.data);
                     if(response.data[0].nFlagMsje == 1) {
-                        swal(response.data[0].cMensaje);
-                        this.cambiarVistaFormulario(1);
+                        this.registrarSapBusinessEmpleado2();
+                        // swal(response.data[0].cMensaje);
+                        // this.cambiarVistaFormulario(1);
                     } else {
                         swal("Ocurrio un error al generar los permisos del Usuario");
                     }
@@ -731,6 +841,48 @@
                     this.errors = error
                     if (error.response) {
                         if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registrarSapBusinessEmpleado2(){
+                let me = this;
+                this.mostrarProgressBar();
+                me.loadingProgressBar("GENERANDO VENDEDOR EN SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/empleado/SapSetEmpleado';
+                axios.post(url, {
+                    cNombre : me.fillUsuario.cnombrecompleto,
+                    cRol    : me.fillUsuario.cnombrerol
+                }).then(response => {
+                    me.arraySapRespuesta = response.data;
+                    me.jsonRespuesta = '';
+                    me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+                    if(me.jsonRespuesta.SalesEmployeeCode) {
+                        console.log("Integración Vendedor - SAP : OK");
+                        me.arraySapUpdVendedor.push({
+                            'nUsuario'          :   parseInt(me.fillUsuario.nIdUsuario),
+                            'SalesEmployeeCode' :   parseInt(me.jsonRespuesta.SalesEmployeeCode),
+                            'cLogRespuesta'     :   me.arraySapRespuesta.toString()
+                        });
+                    }
+                    // ==============================================================
+                    // ================== ACTUALIZAR DOCENTRY PEDIDO ================
+                    setTimeout(function() {
+                        me.registroSgcVendedor();
+                    }, 3800);
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error al Generar el Vendedor en SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -822,19 +974,16 @@
                 this.error = 0,
                 this.mensajeError = ''
             },
-            abrirFormulario(modelo, accion, data =[]){
+            abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'usuario':
+                    case 'rol':
                     {
                         switch(accion){
-                            case 'registrar':
+                            case 'buscar':
                             {
-
-                                break;
-                            }
-                            case 'permisos':
-                            {
-
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarRolesPreConfig();
                                 break;
                             }
                         }
@@ -858,6 +1007,7 @@
                 this.fillUsuario.cusuario = '';
                 this.fillUsuario.cpassword = '';
                 this.fillUsuario.nrol = '';
+                this.fillUsuario.cnombrerol = '';
                 this.attachment = '';
                 this.form = '';//Seteo a vacio
                 this.form = new FormData;//Inicializo el Obj FormData
