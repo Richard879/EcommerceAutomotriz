@@ -1560,22 +1560,7 @@
                 });
             },
             llenarAlmacen(){
-                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
-                axios.get(url, {
-                    params: {
-                        //'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal"))
-                    }
-                }).then(response => {
-                    this.arrayAlmacen = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+
             },
             //=============== LISTAR MODAL POR VIN ===================
             listarPorVin(page){
