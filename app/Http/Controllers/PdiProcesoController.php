@@ -292,4 +292,25 @@ class PdiProcesoController extends Controller
 
         return response()->json($arrayPedido);
     }
+
+    public function GetElementoByTipo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa   = $request->nidempresa;
+        $nIdTipoElemento = $request->nidtipoelemen;
+        $cElemenNombre = $request->celementonombre;
+        $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
+        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipo] ?, ?, ?',
+                                                                [   $nIdEmpresa,
+                                                                    $nIdTipoElemento,
+                                                                    $cElemenNombre
+                                                                ]);
+
+        //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
+    }
+
 }

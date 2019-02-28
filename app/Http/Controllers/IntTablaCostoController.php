@@ -18,7 +18,7 @@ class IntTablaCostoController extends Controller
         $nIdCronograma  = $request->nIdCronograma;
 
         $array_infoTipoBeneficio    =   [];
-        $array_infoCostoVehiculo    =   [];
+        //$array_infoCostoVehiculo    =   [];
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -107,7 +107,7 @@ class IntTablaCostoController extends Controller
 
             // ==================================================================================
             // =============================  COSTO DEL VEHICULO ================================
-            $data = DB::select('exec [usp_TablaCosto_GetCompra_CostoVehiculo] ?, ?, ?, ?',
+            /*$data = DB::select('exec [usp_TablaCosto_GetCompra_CostoVehiculo] ?, ?, ?, ?',
                                                     [   $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCronograma,
@@ -134,12 +134,12 @@ class IntTablaCostoController extends Controller
                 'U_SYP_COSTO'       =>  $U_SYP_COSTO,
                 'U_SYP_ESTADO'      =>  $U_SYP_ESTADO
             ];
-            array_push($array_infoCostoVehiculo, $infoCostoVehiculo);
+            array_push($array_infoCostoVehiculo, $infoCostoVehiculo);*/
         }
 
         $tblCostos = [
-            'array_infoTipoBeneficio' =>  $array_infoTipoBeneficio,
-            'array_infoCostoVehiculo' =>  $array_infoCostoVehiculo
+            'array_infoTipoBeneficio' =>  $array_infoTipoBeneficio/*,
+            'array_infoCostoVehiculo' =>  $array_infoCostoVehiculo*/
         ];
 
         return response()->json($tblCostos);

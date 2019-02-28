@@ -337,9 +337,19 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
+                                                                            <label class="col-sm-4 form-control-label">* Almacén</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
+                                                                                <div class="input-group">
+                                                                                    <input type="text" v-model="formAlmacen.cwhsname" class="form-control form-control-sm" readonly>
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Almacén </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('almacen','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -434,16 +444,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-8">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-8">
                                                                         <div class="row">
@@ -1434,6 +1434,88 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL ALMACENES -->
+            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE ALMACENES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayAlmacen.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Código Almacén</th>
+                                                            <th>Nombre Almacén</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
+                                                                    <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td>{{almacen.cWhsCode}}</td>
+                                                            <td>{{almacen.cWhsName}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAlmacen(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaAlmacen(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAlmacen(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1470,8 +1552,6 @@
                     cproveedornombre: '',
                     nnumerolista: '',
                     nidlistaprecio: 0,
-                    nidalmacen: 0,
-                    warehousecode: '',
                     ccarcode: '',
                     igv: 0
                 },
@@ -1479,6 +1559,14 @@
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
                 arrayListaPrecio: [],
+                //===========================================================
+                // =============  VARIABLES ALMACEN ========================
+                formAlmacen:{
+                    nidlocalidad: 0,
+                    cwhscode: '',
+                    cwhsname: ''
+                },
+                arrayAlmacen: [],
                 // ==========================================================
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
@@ -1877,7 +1965,7 @@
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
-                        this.formCompra.nidalmacen = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
                         this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
@@ -1891,18 +1979,20 @@
                 });
             },
             obtenerAlmacenByLocalidad(){
-                var url = this.ruta + '/parametro/GetParametroById';
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formCompra.nidalmacen,
-                        'nidtipopar': 110102
+                        'nidpar': this.formAlmacen.nidlocalidad,
+                        'nidgrupopar': 110102
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formCompra.warehousecode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
-                        this.formCompra.warehousecode = "SIN CÓDIGO";
+                        this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2356,7 +2446,7 @@
                     'cCardCode'     :   me.formCompra.ccarcode,
                     'fDocDate'      :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' :   me.formCompra.warehousecode,
+                    'WarehouseCode' :   me.formAlmacen.cwhscode,
                     'Igv'           :   1 + parseFloat((me.formCompra.igv)),
                     'data'          :   me.arraySapCompra
                 }).then(response => {
@@ -2694,7 +2784,7 @@
                     });
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
+                    /*let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                     arrayCostoVehiculo.map(function (x) {
                         me.arrayTCCostoVehiculo.push({
                             'U_SYP_VIN'           :   x.U_SYP_VIN,
@@ -2706,7 +2796,7 @@
                             'U_SYP_COSTO'         :   x.U_SYP_COSTO,
                             'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
-                    });
+                    });*/
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoDetalle();
@@ -2727,8 +2817,8 @@
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
                     'dataCabecera'  : me.arraySapCosto,
-                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio,
-                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo
+                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio/*,
+                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo*/
                 }).then(response => {
                     me.verResultados();
                 }).catch(error => {
@@ -3233,7 +3323,7 @@
                         'cCardCode': me.formCompra.ccarcode,
                         'fDocDate': moment().format('YYYY-MM-DD'),
                         'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode': me.formCompra.warehousecode,
+                        'WarehouseCode': me.formAlmacen.cwhscode,
                         'Igv': 1 + parseFloat((me.formCompra.igv)),
                         'data': me.arraySapCompra
                     }).then(response => {
@@ -3606,7 +3696,7 @@
 
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    if(response.data.array_infoCostoVehiculo.length){
+                    /*if(response.data.array_infoCostoVehiculo.length){
                         let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
                         arrayCostoVehiculo.map(function (x) {
                             me.arrayTCCostoVehiculo.push({
@@ -3620,7 +3710,7 @@
                                 'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                             });
                         });
-                    }
+                    }*/
 
                     setTimeout(function() {
                         me.generaSapTblCostoDetallePorVin();
@@ -3650,8 +3740,8 @@
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
                     'dataCabecera'      : me.arraySapCosto,
-                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio,
-                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo
+                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio/*,
+                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo*/
                 }).then(response => {
                     me.loading.close();
                     swal('Compra registrada correctamente');
@@ -4239,6 +4329,42 @@
                 }
                 return this.error;
             },
+            // =============  LISTAR ALMACEN ======================
+            listarAlmacen(page){
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
+
+                axios.get(url, {
+                    params: {
+                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayAlmacen = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from        = response.data.arrayAlmacen.from;
+                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaAlmacen(page){
+                this.paginationModal.current_page=page;
+                this.listarAlmacen(page);
+            },
+            asignarAlmacen(objAlmacen){
+                this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
+                this.formAlmacen.cwhsname = objAlmacen.cWhsName;              
+                this.cerrarModal();
+            },
             // =============================================
             // =============  MODAL ========================
             cerrarModal(){
@@ -4297,6 +4423,19 @@
                                 this.accionmodal=6;
                                 this.modal = 1;
                                 this.listarListaPrecioVersionVeh(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'almacen':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=7;
+                                this.modal = 1;
+                                this.listarAlmacen(1);
                                 break;
                             }
                         }

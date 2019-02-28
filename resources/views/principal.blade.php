@@ -97,7 +97,7 @@
                                         </ul>
                                     </li>
                                     <!-- Messages -->
-                                    <li class="nav-item dropdown">
+                                    <!--<li class="nav-item dropdown">
                                         <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
                                             <i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span>
                                         </a>
@@ -136,7 +136,7 @@
                                                 <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"><strong>Read all messages</strong></a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li>-->
                                 </div>
                                 <li class="nav-item dropdown">
                                     <cabeceralogin :ruta="ruta" :usuario="{{ auth()->user() }}"></cabeceralogin>

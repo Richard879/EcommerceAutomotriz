@@ -229,6 +229,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
     Route::get('/pdi/GetListSeccion', 'PdiProcesoController@GetListSeccion');
     Route::get('/pdi/GetListItem', 'PdiProcesoController@GetListItem');
+    Route::get('/pdi/GetElementoByTipo', 'PdiProcesoController@GetElementoByTipo');
     Route::post('/pdi/SetCabeceraInspeccion', 'PdiProcesoController@SetCabeceraInspeccion');
     Route::get('/pdi/GetListPdi', 'PdiProcesoController@GetListPdi');
     Route::get('/pdi/GetDetalleTipoInspeccionById', 'PdiProcesoController@GetDetalleTipoInspeccionById');
@@ -380,6 +381,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/usuario/SetCambiarEstadoUsuario','GestionUsuariosController@SetCambiarEstadoUsuario');
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
+    Route::get('/almacen/GetAlmacenByLocalidad','AlmacenController@GetAlmacenByLocalidad');
+    Route::get('/almacen/GetAlmacenPorDefecto','AlmacenController@GetAlmacenPorDefecto');
 
     Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 
@@ -423,6 +426,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
+    Route::post('/mercancia/SapSetMercancia', 'Api\SapMercanciaController@SapSetMercancia');
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');

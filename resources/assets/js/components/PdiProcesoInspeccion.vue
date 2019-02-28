@@ -357,16 +357,19 @@
                                              <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Almacén</label>
+                                                        <label class="col-sm-4 form-control-label">* Almacén</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="formPdi.nidalmacen" filterable clearable placeholder="SELECCIONE" >
-                                                                <el-option
-                                                                v-for="item in arrayAlmacen"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
-                                                                </el-option>
-                                                            </el-select>
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="formAlmacen.cwhsname" class="form-control form-control-sm" readonly>
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Almacén </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('almacen','buscar')">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -759,9 +762,9 @@
                                                             <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
                                                                 v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                :key="item.nIdModelo"
+                                                                :label="item.cModeloNombre"
+                                                                :value="item.nIdModelo">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -876,12 +879,12 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <label class="col-sm-4 form-control-label">Nro Placa</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarPorPlaca(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
+                                                                    <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarPorPlaca(1);">
                                                                         <i class="fa-lg fa fa-search"></i>
                                                                     </button>
                                                                 </div>
@@ -906,7 +909,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                        <tr v-for="vehiculo in arrayVehiculoPlaca" :key="vehiculo.cPlaca">
                                                             <td>
                                                                 <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
                                                                     <i class='fa-md fa fa-check-circle'></i>
@@ -1083,6 +1086,7 @@
                                                         <div class="col-sm-8">
                                                             <el-autocomplete
                                                                     class=""
+                                                                    clearable
                                                                     v-model="fillAccesorio.cnombre"
                                                                     :fetch-suggestions="querySearch"
                                                                     placeholder=""
@@ -1099,15 +1103,23 @@
                                         <template v-if="arrayAccesorio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Nombre</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Conformidad</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
-                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
+                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdElemento">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Eliminar {{ a.cParNombre }}</div>
+                                                                    <div slot="content">Eliminar {{ a.cElemenNombre }}</div>
                                                                     <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
-                                                            <td v-text="a.cParNombre"></td>
+                                                            <td v-text="a.cElemenNombre"></td>
                                                             <td><input type="text" v-model="arrayAccesorioCantidad[index]" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
                                                                 <span v-text="arrayAccesorioFlagMarca[index] ? 'CONFORME' : 'NO CONFORME'"></span>
@@ -1145,6 +1157,87 @@
                             </div>
                         </div>
                         <div v-if="!arrayAccesorio.length" class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL ALMACENES -->
+            <div class="modal fade" v-if="accionmodal==9" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE ALMACENES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayAlmacen.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Código Almacén</th>
+                                                            <th>Nombre Almacén</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
+                                                                    <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td>{{almacen.cWhsCode}}</td>
+                                                            <td>{{almacen.cWhsName}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAlmacen(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaAlmacen(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAlmacen(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
@@ -1268,6 +1361,23 @@
                 arrayAccesorioFlagMarca:  [],
                 arrayAccesorioDescripcion: [],
                 arrayAccesorioCantidad: [],
+                //===========================================================
+                // =============  VARIABLES ALMACEN ========================
+                formAlmacen:{
+                    nidlocalidad: 0,
+                    cwhscode: '',
+                    cwhsname: '',
+                    cacctcode: ''
+                },
+                arrayAlmacen: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapArticulo: [],
+                arraySapItemCode: [],
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+                arraySapMercancia: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1550,14 +1660,22 @@
                     }
                 });
             },
-            llenarAlmacen(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+            obtenerLocalidadBySucursal(){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110088
+                        'nparsrccodigo': 0,
+                        'nparsrcgrupoarametro': 110102,
+                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro': 110022,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayAlmacen = response.data;
+                    if(response.data.arrayParParametro.length){
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.obtenerAlmacenByLocalidad();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1567,6 +1685,71 @@
                         }
                     }
                 });
+            },
+            obtenerAlmacenByLocalidad(){
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formAlmacen.nidlocalidad,
+                        'nidgrupopar': 110102
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cacctcode = response.data[0].cAcctCode;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;  
+                    }
+                    else{
+                        this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cacctcode = '';  
+                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =============  LISTAR ALMACEN ======================
+            listarAlmacen(page){
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
+
+                axios.get(url, {
+                    params: {
+                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayAlmacen = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from        = response.data.arrayAlmacen.from;
+                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaAlmacen(page){
+                this.paginationModal.current_page=page;
+                this.listarAlmacen(page);
+            },
+            asignarAlmacen(objAlmacen){
+                this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
+                this.formAlmacen.cwhsname = objAlmacen.cWhsName;
+                this.formAlmacen.cacctcode = objAlmacen.cAcctCode;                      
+                this.cerrarModal();
             },
             //=============== LISTAR MODAL POR VIN ===================
             listarPorVin(page){
@@ -1636,10 +1819,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.fillCompra.nidmarca
+                        'nidmarca' : this.fillCompra.nidmarca,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    this.arrayModelo = response.data.arrayModelo;
                     this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
@@ -1662,14 +1846,14 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : 1300013,
-                        'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
-                        'criterio': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnrovehiculo' : this.fillVehiculoPlaca.cdescripcion.toString(),
+                        'criterio': 2,
                         'page' : page,
                     }
                 }).then(response => {
                     let info = response.data.arrayVehiculosByCriterio;
-                    this.arrayVehiculosByCriterio     = info.data;
+                    this.arrayVehiculoPlaca           = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
                     this.paginationModal.per_page     = info.per_page;
@@ -1765,18 +1949,18 @@
             },
             //=============== LISTAR MODAL ACCESORIO ===================
             listarAccesorio(){
-                var url = this.ruta + '/parametro/GetListParametroByNombre';
+                var url = this.ruta + '/pdi/GetElementoByTipo';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110089,
-                        'cparnombre': '',
-                        'opcion' : 0
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoelemen' : 0,
+                        'celementonombre': ''
                     }
                 }).then(response => {
                     let me = this;
                     me.links = [];
-                    me.links = response.data.arrayParametro.data;
+                    me.links = response.data.arrayElementoVenta;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1801,7 +1985,7 @@
             },
             asignarAccesorio(item) {
                 let me = this;
-                if(me.encontrarAccesorio(item.nIdPar)){
+                if(me.encontrarAccesorio(item.nIdElemento)){
                     swal({
                         type: 'error',
                         title: 'Error...',
@@ -1811,7 +1995,7 @@
                     //console.log(item);
                     me.arrayAccesorio.push(item);
                     me.arrayAccesorio.map(function(value, key){
-                        if(item.nIdPar == value.nIdPar){
+                        if(item.nIdElemento == value.nIdElemento){
                             me.arrayAccesorioCantidad[key] = 0;
                         }
                     });
@@ -1832,10 +2016,10 @@
                 this.fillAccesorio.cnombre = '';
                 this.cerrarModal();
             },
-            encontrarAccesorio(nIdPar){
+            encontrarAccesorio(nIdElemento){
                 var sw=0;
                 this.arrayAccesorio.map(function (x) {
-                    if(x.nIdPar == nIdPar){
+                    if(x.nIdElemento == nIdElemento){
                         sw = true;
                     }
                 });
@@ -2100,6 +2284,98 @@
                     }
                 });
             },
+            //Generar Sap Entrada Mercancia
+            generaSapMercancia(objCompra){
+                let me = this;
+
+                me.arraySapMercancia.push({
+                    'ItemCode'       : objCompra.nIdCompra,
+                    'WarehouseCode'  : me.formAlmacen.cwhscode,
+                    'Quantity'       : objCompra.cNumeroVin,
+                    'UnitPrice'      : 0.01,
+                    'AccountCode'    : me.formAlmacen.cacctcode 
+                });
+                //==============================================================
+                //================== REGISTRO MERCANCIA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/mercancia/SapSetMercancia';
+                axios.post(sapUrl, {
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapMercancia
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+                    me.arraySapActividad= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Mercancia : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            /*setTimeout(function() {
+                                me.generaActualizarDocEntryStock(objCompra);
+                            }, 1600);*/
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryStock(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdSgc
+                }).then(response => {
+                    me.limpiarFormulario();
+                    /*$("#myBar").hide();
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        setTimeout(function() {
+                            me.generaSapActividadMercancia(objCompra, 10000, 'EntradaMercancia');
+                        }, 1600);
+                    }
+                    else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en Actualizar Mercancia!',
+                        });
+                        me.limpiarFormulario();
+                        me.listarCompras(1);
+                    }*/
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
@@ -2145,7 +2421,7 @@
                                 this.accion = 1;
                                 this.tituloFormulario = 'NUEVO PROCESO DE INSPECCIÓN';
                                 this.llenarTipoInspeccion();
-                                this.llenarAlmacen();
+                                this.obtenerLocalidadBySucursal();
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -2154,7 +2430,7 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
-                                this.llenarAlmacen();
+                                this.obtenerLocalidadBySucursal();
                                 this.formPdi.nidcabecerainspeccion = data['nIdCabeceraInspeccion'];
                                 this.formPdi.nidtipoinspeccion = data['nIdTipoInspeccion'];
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
@@ -2203,12 +2479,12 @@
                                     this.modal =1;
                                     this.llenarComboMarca();
                                     this.llenarComboModelo();
-                                    this.listarPorVin(1);
+                                    //this.listarPorVin(1);
                                 }
                                 else{
                                     this.accionmodal=6;
                                     this.modal =1;
-                                    this.listarPorPlaca(1);
+                                    //this.listarPorPlaca(1);
                                 }
                                 break;
                             }
@@ -2236,6 +2512,20 @@
                             }
                         }
                     }
+                    break;
+                    case 'almacen':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=9;
+                                this.modal = 1;
+                                this.listarAlmacen(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             },
             validarMostrarModal(){
@@ -2299,6 +2589,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
