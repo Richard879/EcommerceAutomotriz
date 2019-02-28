@@ -1513,7 +1513,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </transition>
 </template>
@@ -1560,6 +1560,7 @@
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
                 arrayListaPrecio: [],
+                arrayAlmacen: [],
                 // ==========================================================
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
