@@ -1456,14 +1456,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="almacen in arrayAlmacen" :key="almacen.cWarehouseCode">
+                                                        <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ almacen.cAcctName }}</div>
+                                                                    <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
                                                                     <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
-                                                            <td>{{almacen.cAcctName}}</td>
+                                                            <td>{{almacen.cWhsName}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1551,7 +1551,7 @@
                     nnumerolista: '',
                     nidlistaprecio: 0,
                     nidlocalidad: 0,
-                    cwarehousecode: '',
+                    cwhscode: '',
                     cwhsname: '',
                     ccarcode: '',
                     igv: 0
@@ -1981,12 +1981,12 @@
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formCompra.cwhsname = response.data[0].cAlmacenNombre;
-                        this.formCompra.cwarehousecode = response.data[0].cParJerarquia;
+                        this.formCompra.cwhsname = response.data[0].cWhsName;
+                        this.formCompra.cwhscode = response.data[0].cParJerarquia;
                     }
                     else{
                         this.formCompra.cwhsname = 'Sin Almacén Definido';
-                        this.formCompra.cwarehousecode = '';
+                        this.formCompra.cwhscode = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2440,7 +2440,7 @@
                     'cCardCode'     :   me.formCompra.ccarcode,
                     'fDocDate'      :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' :   me.formCompra.cwarehousecode,
+                    'WarehouseCode' :   me.formCompra.cwhscode,
                     'Igv'           :   1 + parseFloat((me.formCompra.igv)),
                     'data'          :   me.arraySapCompra
                 }).then(response => {
@@ -3317,7 +3317,7 @@
                         'cCardCode': me.formCompra.ccarcode,
                         'fDocDate': moment().format('YYYY-MM-DD'),
                         'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode': me.formCompra.cwarehousecode,
+                        'WarehouseCode': me.formCompra.cwhscode,
                         'Igv': 1 + parseFloat((me.formCompra.igv)),
                         'data': me.arraySapCompra
                     }).then(response => {
@@ -4355,8 +4355,8 @@
                 this.listarAlmacen(page);
             },
             asignarAlmacen(objAlmacen){
-                this.formCompra.cwhsname = objAlmacen.cWhsName;
-                this.formCompra.cwarehousecode = objAlmacen.cWarehouseCode;
+                this.formCompra.cwhscode = objAlmacen.cWhsCode;
+                this.formCompra.cwhsname = objAlmacen.cWhsName;              
                 this.cerrarModal();
             },
             // =============================================

@@ -782,7 +782,7 @@
                     cnumerovin: '',
                     ndocentry: 0,
                     nidlocalidad: 0,
-                    cwarehousecode: '',
+                    cwhscode: '',
                     cwhsname: ''
                 },
                 //=====Variables SAP para OrdenVenta Vehiculo
@@ -1056,12 +1056,12 @@
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formSap.cwhsname = response.data[0].cAlmacenNombre;
-                        this.formSap.cwarehousecode = response.data[0].cParJerarquia;
+                        this.formSap.cwhsname = response.data[0].cWhsName;
+                        this.formSap.cwhscode = response.data[0].cParJerarquia;
                     }
                     else{
                         this.formSap.cwhsname = 'Sin Almacén Definido';
-                        this.formSap.cwarehousecode = '';
+                        this.formSap.cwhscode = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1657,7 +1657,7 @@
                     me.arraySapElementoVenta.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  this.formSap.cwarehousecode ? parseInt(this.formSap.cwarehousecode) : parseInt('00'),
+                                'nWhsCode'  :  this.formSap.cwhscode ? parseInt(this.formSap.cwhscode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
@@ -1688,7 +1688,7 @@
                 axios.post(sapUrl, {
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode'     :   me.formSap.cwarehousecode,
+                    'WarehouseCode'     :   me.formSap.cwhscode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySapEVPedido'  :   me.arraySapEVPedido
