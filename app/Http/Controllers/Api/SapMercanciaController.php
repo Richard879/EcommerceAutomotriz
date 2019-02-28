@@ -70,7 +70,7 @@ class SapMercanciaController extends Controller
         return $array_rpta;
     }
 
-    public function SapSetMercancia(Request $request)
+    public function SapSetMercanciaEntry(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -96,7 +96,7 @@ class SapMercanciaController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Mercancia/SapSetMercancia/", $json);
+            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaEntry/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
