@@ -1366,9 +1366,18 @@
                 formAlmacen:{
                     nidlocalidad: 0,
                     cwhscode: '',
-                    cwhsname: ''
+                    cwhsname: '',
+                    cacctcode: ''
                 },
                 arrayAlmacen: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapArticulo: [],
+                arraySapItemCode: [],
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+                arraySapMercancia: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1687,10 +1696,12 @@
                 }).then(response => {
                     if(response.data.length){
                         this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
+                        this.formAlmacen.cacctcode = response.data[0].cAcctCode;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;  
                     }
                     else{
                         this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cacctcode = '';  
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
@@ -1736,7 +1747,8 @@
             },
             asignarAlmacen(objAlmacen){
                 this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
-                this.formAlmacen.cwhsname = objAlmacen.cWhsName;              
+                this.formAlmacen.cwhsname = objAlmacen.cWhsName;
+                this.formAlmacen.cacctcode = objAlmacen.cAcctCode;                      
                 this.cerrarModal();
             },
             //=============== LISTAR MODAL POR VIN ===================
@@ -2272,6 +2284,98 @@
                     }
                 });
             },
+            //Generar Sap Entrada Mercancia
+            generaSapMercancia(objCompra){
+                let me = this;
+
+                me.arraySapMercancia.push({
+                    'ItemCode'       : objCompra.nIdCompra,
+                    'WarehouseCode'  : me.formAlmacen.cwhscode,
+                    'Quantity'       : objCompra.cNumeroVin,
+                    'UnitPrice'      : 0.01,
+                    'AccountCode'    : me.formAlmacen.cacctcode 
+                });
+                //==============================================================
+                //================== REGISTRO MERCANCIA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/mercancia/SapSetMercancia';
+                axios.post(sapUrl, {
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapMercancia
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+                    me.arraySapActividad= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Mercancia : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            /*setTimeout(function() {
+                                me.generaActualizarDocEntryStock(objCompra);
+                            }, 1600);*/
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryStock(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdSgc
+                }).then(response => {
+                    me.limpiarFormulario();
+                    /*$("#myBar").hide();
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        setTimeout(function() {
+                            me.generaSapActividadMercancia(objCompra, 10000, 'EntradaMercancia');
+                        }, 1600);
+                    }
+                    else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en Actualizar Mercancia!',
+                        });
+                        me.limpiarFormulario();
+                        me.listarCompras(1);
+                    }*/
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
@@ -2485,6 +2589,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }

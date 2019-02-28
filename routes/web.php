@@ -418,6 +418,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
+    Route::post('/mercancia/SapSetMercancia', 'Api\SapMercanciaController@SapSetMercancia');
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
