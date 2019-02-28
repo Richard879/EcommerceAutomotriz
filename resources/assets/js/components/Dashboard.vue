@@ -4,74 +4,156 @@
             <!-- Page Header-->
             <header class="page-header">
                 <div class="container-fluid">
-                <h2 class="no-margin-bottom">Dashboard</h2>
+                    <h2 class="no-margin-bottom">Dashboard de {{ formLogin.cUsuario }} - {{ formLogin.cRol }} </h2>
                 </div>
-                <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
-                    <i class="fa fa-user"></i> Login
-                </button>
-                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapLogout">
-                    <i class="fa fa-out"></i> Logout
-                </button>
-                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapMetaData">
-                    <i class="fa fa-out"></i> MetaData
-                </button>-->
-                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
-                    <i class="fa fa-user"></i> User
-                </button>
-                <!-- <button type="button" class="btn btn-default btn-corner btn-sm" @click="GetCompraTC">
-                    <i class="fa fa-eye"></i> TC
-                </button> -->
             </header>
-            <!-- Dashboard Counts Section-->
+
+            <!-- Dashboard Section - Cantidad de Trabajadores Por Cargo ||  JV/ADV//Gerencia-->
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                <div class="container-fluid">
+                    <div class="row bg-white has-shadow">
+                        <div class="col-xs-12" style="width: 100%;">
+                            <h3>Cantidad de Trabajadores Por Cargo</h3>
+                        </div>
+                        <!-- JV/ADV//Gerencia-->
+                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                    <div class="title"><span>N°<br>Asesores Comerciales</span>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                        </div>
+                                    </div>
+                                    <div class="number"><strong> {{ cDashboard01.nCantidadAsesoresComerciales }} </strong></div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ADV//Gerencia-->
+                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                    <div class="title"><span>N°<br>Jefe Ventas</span>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                        </div>
+                                    </div>
+                                    <div class="number"><strong> {{ cDashboard01.nCantidadJefeVentas }} </strong></div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ADV//Gerencia-->
+                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                    <div class="title"><span>N°<br>Administrador de Ventas</span>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                        </div>
+                                    </div>
+                                    <div class="number"><strong> {{ cDashboard01.nCantidadADV }} </strong></div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Gerencia-->
+                        <template v-if="formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                    <div class="title"><span>N°<br>Gerencia</span>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                        </div>
+                                    </div>
+                                    <div class="number"><strong> {{ cDashboard01.nCantidadGerente }} </strong></div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ADV/Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                    <div class="title"><span>N°<br>Tramitador</span>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                        </div>
+                                    </div>
+                                    <div class="number"><strong> {{ cDashboard01.nCantidadTramitador }} </strong></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Section 02 -->
             <section class="dashboard-counts no-padding-bottom">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
-                        <!-- Item -->
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="icon bg-violet"><i class="icon-user"></i></div>
-                                <div class="title"><span>New<br>Clients</span>
-                                    <div class="progress">
-                                        <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                        <!-- V/JV/ADV -->
+                        <template v-if="formLogin.nIdRol == 110026 || formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083">
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <canvas id="GetMisCotizaciones"></canvas>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- JV/ADV//Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <canvas id="GetCotizacioneByVendedor"></canvas>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Header Section    -->
+            <section class="dashboard-header" v-if="formLogin.nIdRol == 110025">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Statistics -->
+                        <div class="chart col-lg-3 col-12">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="col-xs-12" style="width: 100%;">
+                                        <h3>ESTADISTICAS DE COTIZACIONES POR ASESOR COMERCIAL</h3>
                                     </div>
                                 </div>
-                                <div class="number"><strong>25</strong></div>
+                            </div>
+                            <el-select v-model="cDashboard03.fillInfoUsuarioFind.nIdUsuario"
+                                    filterable
+                                    clearable
+                                    placeholder="SELECCIONE UN ASESOR DE VENTAS">
+                                <el-option
+                                    v-for="item in cDashboard03.arrayAsesoresByJV"
+                                    :key="item.nIdUsuario"
+                                    :label="item.cNombreUsuario"
+                                    :value="item.nIdUsuario">
+                                </el-option>
+                            </el-select>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary btn-corner btn-sm btnBuscar" @click.prevent="GetCotizacionByUserFind">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <!-- Item -->
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="icon bg-red"><i class="icon-padnote"></i></div>
-                                <div class="title"><span>Work<br>Orders</span>
-                                    <div class="progress">
-                                        <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
-                                    </div>
-                                </div>
-                                <div class="number"><strong>70</strong></div>
-                            </div>
-                        </div>
-                        <!-- Item -->
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="icon bg-green"><i class="icon-bill"></i></div>
-                                <div class="title"><span>New<br>Invoices</span>
-                                    <div class="progress">
-                                        <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
-                                    </div>
-                                </div>
-                                <div class="number"><strong>40</strong></div>
-                            </div>
-                        </div>
-                        <!-- Item -->
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="icon bg-orange"><i class="icon-check"></i></div>
-                                <div class="title"><span>Open<br>Cases</span>
-                                    <div class="progress">
-                                        <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>
-                                    </div>
-                                </div>
-                                <div class="number"><strong>50</strong></div>
+                        <div class="chart col-lg-9 col-12">
+                            <div class="bar-chart has-shadow bg-white">
+                                <div class="title"><strong class="text-violet"> {{ cDashboard03.fillInfoUsuarioFind.cNombreRol }} </strong><br>
+                                <small>{{ cDashboard03.fillInfoUsuarioFind.cNombreUsuario }}</small></div>
+                                <canvas id="arrayDashboardUserFind"></canvas>
                             </div>
                         </div>
                     </div>
@@ -79,50 +161,50 @@
             </section>
 
             <!-- Dashboard Header Section    -->
-            <section class="dashboard-header">
+            <section class="dashboard-header" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Statistics -->
-                        <div class="statistics col-lg-3 col-12">
-                            <div class="statistic d-flex align-items-center bg-white has-shadow">
-                                <div class="icon bg-red"><i class="fa fa-tasks"></i></div>
-                                <div class="text"><strong>234</strong><br><small>Applications</small></div>
-                            </div>
-                            <div class="statistic d-flex align-items-center bg-white has-shadow">
-                                <div class="icon bg-green"><i class="fa fa-calendar-o"></i></div>
-                                <div class="text"><strong>152</strong><br><small>Interviews</small></div>
-                            </div>
-                            <div class="statistic d-flex align-items-center bg-white has-shadow">
-                                <div class="icon bg-orange"><i class="fa fa-paper-plane-o"></i></div>
-                                <div class="text"><strong>147</strong><br><small>Forwards</small></div>
-                            </div>
-                        </div>
-                        <!-- Line Chart            -->
-                        <div class="chart col-lg-6 col-12">
-                            <div class="line-chart bg-white d-flex align-items-center justify-content-center has-shadow">
-                                <canvas id="lineCahrt"></canvas>
-                            </div>
-                        </div>
                         <div class="chart col-lg-3 col-12">
-                            <!-- Bar Chart   -->
-                            <div class="bar-chart has-shadow bg-white">
-                                <div class="title"><strong class="text-violet">95%</strong><br><small>Current Server Uptime</small></div>
-                                <canvas id="barChartHome"></canvas>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="col-xs-12" style="width: 100%;">
+                                        <h3>ESTADISTICAS DE COTIZACIONES POR ASESOR COMERCIAL</h3>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- Numbers-->
-                            <div class="statistic d-flex align-items-center bg-white has-shadow">
-                                <div class="icon bg-green"><i class="fa fa-line-chart"></i></div>
-                                <div class="text"><strong>99.9%</strong><br><small>Success Rate</small></div>
+                            <el-select v-model="cDashboard04.fillInfoUsuario.nIdUsuario"
+                                    filterable
+                                    clearable
+                                    placeholder="SELECCIONE UN ASESOR DE VENTAS">
+                                <el-option
+                                    v-for="item in cDashboard04.arrayAsesoresByAll"
+                                    :key="item.nIdUsuario"
+                                    :label="item.cNombreUsuario"
+                                    :value="item.nIdUsuario">
+                                </el-option>
+                            </el-select>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary btn-corner btn-sm btnBuscar" @click.prevent="GetCotizacionByUserAllFind">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart col-lg-9 col-12">
+                            <div class="bar-chart has-shadow bg-white">
+                                <div class="title"><strong class="text-violet"> {{ cDashboard04.fillInfoUsuario.cNombreRol }} </strong><br>
+                                <small>{{ cDashboard04.fillInfoUsuario.cNombreUsuario }}</small></div>
+                                <canvas id="arrayDashboardUserAllFind"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Projects Section-->
+            <!-- Projects Section -->
             <section class="projects no-padding-top">
                 <div class="container-fluid">
-                    <!-- Project-->
                     <div class="project">
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
@@ -145,7 +227,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Project-->
                     <div class="project">
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
@@ -168,7 +249,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Project-->
                     <div class="project">
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
@@ -191,7 +271,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Project-->
                     <div class="project">
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
@@ -217,11 +296,10 @@
                 </div>
             </section>
 
-            <!-- Client Section-->
+            <!-- Client Section
             <section class="client no-padding-top">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Work Amount  -->
                         <div class="col-lg-4">
                             <div class="work-amount card">
                                 <div class="card-close">
@@ -244,7 +322,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Client Profile -->
                         <div class="col-lg-4">
                             <div class="client card">
                                 <div class="card-close">
@@ -283,7 +360,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Total Overdue -->
                         <div class="col-lg-4">
                             <div class="overdue card">
                                 <div class="card-close">
@@ -310,11 +386,10 @@
                 </div>
             </section>
 
-            <!-- Feeds Section-->
+            Feeds Section
             <section class="feeds no-padding-top">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Trending Articles-->
                         <div class="col-lg-6">
                             <div class="articles card">
                                 <div class="card-close">
@@ -345,7 +420,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Check List -->
                         <div class="col-lg-6">
                             <div class="checklist card">
                                 <div class="card-close">
@@ -374,11 +448,10 @@
                 </div>
             </section>
 
-            <!-- Updates Section  -->
+            Updates Section
             <section class="updates no-padding-top">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Recent Updates-->
                         <div class="col-lg-4">
                             <div class="recent-updates card">
                                 <div class="card-close">
@@ -396,7 +469,6 @@
                                     <h3 class="h4">Recent Updates</h3>
                                 </div>
                                 <div class="card-body no-padding">
-                                    <!-- Item-->
                                     <div class="item d-flex justify-content-between">
                                         <div class="info d-flex">
                                             <div class="icon"><i class="icon-rss-feed"></i></div>
@@ -410,7 +482,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Daily Feeds -->
                         <div class="col-lg-4">
                             <div class="daily-feeds card">
                                 <div class="card-close">
@@ -428,7 +499,6 @@
                                     <h3 class="h4">Daily Feeds</h3>
                                 </div>
                                 <div class="card-body no-padding">
-                                    <!-- Item-->
                                     <div class="item">
                                         <div class="feed d-flex justify-content-between">
                                             <div class="feed-body d-flex justify-content-between">
@@ -444,7 +514,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Recent Activities -->
                         <div class="col-lg-4">
                             <div class="recent-activities card">
                                 <div class="card-close">
@@ -479,27 +548,94 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     <!--</transition>-->
 </template>
 
 <script>
     export default {
-        props:['ruta'],
+        props:['ruta', 'usuario'],
         data(){
             return {
-                // nidcronograma : '',
-                // arraySapArticulo: [
-                //     'KMJAA27RPHK009687',
-                //     'MALA251AAJM607756',
-                //     'MALA751AAJM739136',
-                //     'MALA251AAJM607732',
-                //     'MALA251AAJM607738'
-                // ],
-                // arrayTCTipoBeneficio: [],
-                // arrayTCCostoVehiculo: [],
-                // arrayTCFlete: [],
+                formLogin:{
+                    cRuta: '',
+                    nIdUsuario: '',
+                    cUsuario: '',
+                    cRol: '',
+                    nIdRol: ''
+                },
+                cDashboard01: {
+                    nCantidadAsesoresComerciales: 0,
+                    nCantidadJefeVentas: 0,
+                    nCantidadADV: 0,
+                    nCantidadGerente: 0,
+                    nCantidadTramitador: 0
+                },
+                cDashboard02: {
+                    // Mis Cotizaciones
+                    arrayMisCotizaciones: [],
+                    arraInfoMisCotizacionesNombre: [],
+                    arraInfoMisCotizacionesCantidad: [],
+                    // Cotizaciones Por Rol Asesor Comercial
+                    arrayCotizacionesByAsesorComercial: [],
+                    arraInfoAsesorComercialNombre: [],
+                    arraInfoAsesorComercialCantidad: [],
+                    // Cotizaciones Por Rol Jefe Ventas
+                    arrayCotizacionesByJefeVentas: [],
+                    arraInfoJefeVentasNombre: [],
+                    arraInfoJefeVentasCantidad: [],
+                    // Cotizaciones Por Rol ADV
+                    arrayCotizacionesByADV: [],
+                    arraInfoADVNombre: [],
+                    arraInfoADVCantidad: [],
+                },
+                cDashboard03: {
+                    arrayAsesoresByJV: [],
+                    fillInfoUsuarioFind: {
+                        nIdUsuario: '',
+                        cNombreUsuario: '',
+                        cNombreRol: ''
+                    },
+                    arrayDashboardAsesoresByJV: [],
+                    arraInfoAsesorComercialNombre: [],
+                    arraInfoAsesorComercialCantidad: []
+                },
+                cDashboard04: {
+                    arrayAsesoresByAll: [],
+                    fillInfoUsuario: {
+                        nIdUsuario: '',
+                        cNombreUsuario: '',
+                        cNombreRol: ''
+                    },
+                    arrayDashboardAsesoresByAll: [],
+                    arraInfoAsesorComercialNombre: [],
+                    arraInfoAsesorComercialCantidad: []
+                },
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -525,147 +661,26 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaFormulario: 1,
-                data: {
-                    CompanyDB: "SBO_INKA_PROD",
-                    UserName: "janton",
-                    Password: "1234"
-                },
-                SessionId: 0
+                vistaFormulario: 1
             }
         },
         mounted(){
-            // this.obtenerCronogramaCompraActivo();
+            this.cargarInformacionUsuario();
         },
         methods:{
-            SapLogin(){
-                //JSON.stringify(this.data)
-                var url = this.ruta + '/SAPLoginController/login';
-                axios.post(url, this.data, {
-                }).then(response => {
-                    console.log(response.data.SessionId);
-                    this.SessionId = response.data.SessionId;
-                    swal('INICIO SESIÓN CORRECTAMENTE');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapLogout(){
-                var url = this.ruta + '/SAPLoginController/logout';
-                axios.post(url,  {
-                    "B1SESSION" : this.SessionId
-                }).then(response => {
-                    console.log(response.data);
-                    swal('CERRÓ SESIÓN CORRECTAMENTE');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapMetaData(){
-                var url = this.ruta + '/SAPLoginController/MetaData';
-                axios.get(url).then(response => {
-                    console.log(response.data);
-                    swal('METADATA');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapGetValidarContacto(){
-                var url = this.ruta + '/gescontacto/SapGetValidarContacto';
-
-                this.loadingProgressBar("VERIFICANDO CONTACTO EN SAP BUSINESS ONE...");
-
-                axios.get(url).then(response => {
-                    this.loading.close();
-                    console.log(response.data);
-                    if(response.data == true){
-                        swal("EXISTE");
-                    }else{
-                        swal("NO EXISTE");
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            /*
-            obtenerCronogramaCompraActivo(){
-                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
-                axios.get(url,{
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
-                    }
-                }).then(response => {
-                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            GetCompraTC(){
-                let me = this;
-                var url = me.ruta + '/tablacosto/GetCompraTC';
+            cargarInformacionUsuario(){
+                var url = this.ruta + '/usuario/GetInformacionUsuarioCabecera';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCronograma': this.nidcronograma,
-                        'arraySapArticulo': this.arraySapArticulo
+                        'nidusuario': this.usuario.id
                     }
                 }).then(response => {
-                    console.log(response.data);
-                    let me = this;
-                    // =========================================================
-                    // ====================  TIPO DE BENEFICIO =================
-                    let arrayBeneficio = response.data.array_infoTipoBeneficio;
-                    arrayBeneficio.map(function (x) {
-                        me.arrayTCTipoBeneficio.push({
-                            VIN                 :   x.VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
-                        });
-                    });
-                    // =========================================================
-                    // ====================  COSTO DEL VEHICULO ================
-                    let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
-                    arrayCostoVehiculo.map(function (x) {
-                        me.arrayTCCostoVehiculo.push({
-                            VIN                 :   x.VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
-                        });
-                    });
-                    // =========================================================
-                    // ======================== FLETE ==========================
-                    let arrayFlete = response.data.array_infoFlete;
-                    arrayFlete.map(function (x) {
-                        me.arrayTCFlete.push({
-                            VIN                 :   x.VIN,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
-                        });
-                    });
-                    // this.llenarArrayTblCosto();
-                    // this.SetSapRegistrarTablaCosto();
+                    this.formLogin.cRuta        = response.data[0].cPathImage;
+                    this.formLogin.nIdUsuario   = response.data[0].id;
+                    this.formLogin.cUsuario     = response.data[0].cUsuario;
+                    this.formLogin.cRol         = response.data[0].cGrupoParNombre;
+                    this.formLogin.nIdRol       = response.data[0].nIdGrupoPar;
+                    this.loadAllDashboard();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -675,7 +690,433 @@
                         }
                     }
                 });
-            },*/
+            },
+            loadAllDashboard(){
+                // Dashboard 01
+                this.GetAsesoresComercialesByRol();
+                this.GetJefeVentasByRol();
+                this.GetADVByRol();
+                this.GetGenerenteByRol();
+                this.GetTramitadorByRol();
+
+                // Dashboard 02
+                if(this.formLogin.nIdRol == 110026 || this.formLogin.nIdRol == 110025 || this.formLogin.nIdRol == 110083) {
+                    //Solo si es V/JV/ADV
+                    this.GetMisCotizaciones();
+                }
+                if(this.formLogin.nIdRol == 110025 || this.formLogin.nIdRol == 110083 || this.formLogin.nIdRol == 110096) {
+                    //Solo si es JV/ADV//Gerencia
+                    this.GetCotizacionesPorAsesorComercial();
+                }
+
+                // Dashboard 03
+                if(this.formLogin.nIdRol == 110025) {
+                     //Solo si es JV
+                    this.GetAsesoresByJV();
+                }
+
+                // Dashboard 04
+                if(this.formLogin.nIdRol == 110083 || this.formLogin.nIdRol == 110096) {
+                    //Solo si es ADV//Gerencia
+                    this.GetAsesoresByAll();
+                }
+            },
+            // Dashboard 01
+            GetAsesoresComercialesByRol(){
+                var url = this.ruta + '/dashboard/GetEmpleadosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidrol': 110026
+                    }
+                }).then(response => {
+                    this.cDashboard01.nCantidadAsesoresComerciales = response.data[0].nCantidaEmpleados;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetJefeVentasByRol(){
+                var url = this.ruta + '/dashboard/GetEmpleadosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidrol': 110025
+                    }
+                }).then(response => {
+                    this.cDashboard01.nCantidadJefeVentas = response.data[0].nCantidaEmpleados;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetADVByRol(){
+                var url = this.ruta + '/dashboard/GetEmpleadosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidrol': 110083
+                    }
+                }).then(response => {
+                    this.cDashboard01.nCantidadADV = response.data[0].nCantidaEmpleados;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetGenerenteByRol(){
+                var url = this.ruta + '/dashboard/GetEmpleadosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidrol': 110096
+                    }
+                }).then(response => {
+                    this.cDashboard01.nCantidadGerente = response.data[0].nCantidaEmpleados;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetTramitadorByRol(){
+                var url = this.ruta + '/dashboard/GetEmpleadosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidrol': 110086
+                    }
+                }).then(response => {
+                    this.cDashboard01.nCantidadTramitador = response.data[0].nCantidaEmpleados;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // Dashboard 02
+            GetMisCotizaciones(){
+                var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
+                axios.get(url, {
+                    params: {
+                        'nIdUsuario': this.formLogin.nIdUsuario,
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cDashboard02.arrayMisCotizaciones = response.data;
+                    this.createDashBoardObtenerMisCotizaciones()
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            createDashBoardObtenerMisCotizaciones(){
+                let me=this;
+
+                if (me.cDashboard02.arrayMisCotizaciones.length > 0) {
+                    me.cDashboard02.arrayMisCotizaciones.map(function(x) {
+                        me.cDashboard02.arraInfoMisCotizacionesNombre.push(x.cNombreMes);
+                        me.cDashboard02.arraInfoMisCotizacionesCantidad.push(x.nCantidaCotizaciones);
+                    });
+                }
+
+                var ctx = document.getElementById('GetMisCotizaciones').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // Tipo de Chart
+                    type: 'bar',
+                    // Los Datos para el Chart
+                    data: {
+                        labels: (this.cDashboard02.arrayMisCotizaciones.length > 0) ? me.cDashboard02.arraInfoMisCotizacionesNombre : '',
+                        datasets: [{
+                            label: "Mis Cotizaciones por Mes",
+                            backgroundColor: '#3b5998',
+                            borderColor: '#32506d',
+                            data: (this.cDashboard02.arrayMisCotizaciones.length > 0) ? me.cDashboard02.arraInfoMisCotizacionesCantidad : '',
+                        }]
+                    },
+                    // Configuration options go here
+                    options: {}
+                });
+            },
+            GetCotizacionesPorAsesorComercial(){
+                var url = this.ruta + '/dashboard/GetCotizacionesByRol';
+                axios.get(url, {
+                    params: {
+                        'nIdRol': '110026',
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cDashboard02.arrayCotizacionesByAsesorComercial = response.data;
+                    this.createDashBoardObtenerCotizacionesPorAsesorVentas()
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            createDashBoardObtenerCotizacionesPorAsesorVentas(){
+                let me=this;
+
+                if(me.cDashboard02.arrayCotizacionesByAsesorComercial.length > 0) {
+                    me.cDashboard02.arrayCotizacionesByAsesorComercial.map(function(x) {
+                        me.cDashboard02.arraInfoAsesorComercialNombre.push(x.cNombreMes);
+                        me.cDashboard02.arraInfoAsesorComercialCantidad.push(x.nCantidaCotizaciones);
+                    });
+                }
+
+                var ctx = document.getElementById('GetCotizacioneByVendedor').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // Tipo de Chart
+                    type: 'bar',
+                    // Los Datos para el Chart
+                    data: {
+                        labels: (this.cDashboard02.arrayCotizacionesByAsesorComercial.length > 0) ? me.cDashboard02.arraInfoAsesorComercialNombre : '',
+                        datasets: [{
+                            label: "Cotizaciones por Mes de los Asesores Ventas",
+                            backgroundColor: '#3b5998',
+                            borderColor: '#32506d',
+                            data: (this.cDashboard02.arrayCotizacionesByAsesorComercial.length > 0) ? me.cDashboard02.arraInfoAsesorComercialCantidad : '',
+                        }]
+                    },
+                    // Configuration options go here
+                    options: {}
+                });
+            },
+            // Dashboard 03
+            GetAsesoresByJV(){
+                var url = this.ruta + '/dashboard/GetAsesoresByJV';
+                axios.get(url, {
+                    params: {
+                        'nIdUsuario': this.formLogin.nIdUsuario
+                    }
+                }).then(response => {
+                    this.cDashboard03.arrayAsesoresByJV = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarCotizacionByUserFind(){
+                let me = this;
+                me.error = 0;
+                me.mensajeError =[];
+
+                if (!me.cDashboard03.fillInfoUsuarioFind.nIdUsuario) {
+                    me.mensajeError.push("Debe seleccionar un Asesor de Ventas para Mostrar sus estadisticas");
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            GetCotizacionByUserFind(){
+                if(this.validarCotizacionByUserFind()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
+                axios.get(url, {
+                    params: {
+                        'nIdUsuario': this.cDashboard03.fillInfoUsuarioFind.nIdUsuario,
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cDashboard03.fillInfoUsuarioFind.cNombreUsuario = '';
+                    this.cDashboard03.fillInfoUsuarioFind.cNombreRol = '';
+                    this.cDashboard03.arrayDashboardAsesoresByJV = [];
+
+                    if(response.data.length) {
+                        // console.log(response.data);
+                        this.cDashboard03.fillInfoUsuarioFind.cNombreUsuario = response.data[0].cNombreUsuario;
+                        this.cDashboard03.fillInfoUsuarioFind.cNombreRol = response.data[0].cNombreRol;
+                        this.cDashboard03.arrayDashboardAsesoresByJV = response.data;
+                    }
+                    this.createDashBoardCotizacionByUserFind()
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            createDashBoardCotizacionByUserFind(){
+                let me = this;
+
+                //Setear Información
+                me.cDashboard03.arraInfoAsesorComercialNombre = [];
+                me.cDashboard03.arraInfoAsesorComercialCantidad = [];
+                let ctx = '';
+                let chart = '';
+
+                if(me.cDashboard03.arrayDashboardAsesoresByJV.length > 0) {
+                    me.cDashboard03.arrayDashboardAsesoresByJV.map(function(x) {
+                        me.cDashboard03.arraInfoAsesorComercialNombre.push(x.cNombreMes);
+                        me.cDashboard03.arraInfoAsesorComercialCantidad.push(x.nCantidaCotizaciones);
+                    });
+                }
+
+                ctx = document.getElementById('arrayDashboardUserFind').getContext('2d');
+                chart = new Chart(ctx, {
+                    // Tipo de Chart
+                    type: 'bar',
+                    // Los Datos para el Chart
+                    data: {
+                        labels: (this.cDashboard03.arrayDashboardAsesoresByJV.length > 0) ? me.cDashboard03.arraInfoAsesorComercialNombre : '',
+                        datasets: [{
+                            label: "Número de Cotizaciones por Mes",
+                            backgroundColor: '#3b5998',
+                            borderColor: '#32506d',
+                            data: (this.cDashboard03.arrayDashboardAsesoresByJV.length > 0) ? me.cDashboard03.arraInfoAsesorComercialCantidad : '',
+                        }]
+                    },
+                    // Configuration options go here
+                    options: {}
+                });
+            },
+            // Dashboard 04
+            GetAsesoresByAll(){
+                var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
+                axios.get(url, {
+                    params: {
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cDashboard04.arrayAsesoresByAll = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarCotizacionByUserAllFind(){
+                let me = this;
+                me.error = 0;
+                me.mensajeError =[];
+
+                if (!me.cDashboard04.fillInfoUsuario.nIdUsuario) {
+                    me.mensajeError.push("Debe seleccionar un Asesor de Ventas para Mostrar sus estadisticas de Cotizaciones");
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            GetCotizacionByUserAllFind(){
+                if(this.validarCotizacionByUserAllFind()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
+                axios.get(url, {
+                    params: {
+                        'nIdUsuario': this.cDashboard04.fillInfoUsuario.nIdUsuario,
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    this.cDashboard04.fillInfoUsuario.cNombreUsuario = '';
+                    this.cDashboard04.fillInfoUsuario.cNombreRol = '';
+                    this.cDashboard04.arrayDashboardAsesoresByAll = [];
+
+                    if(response.data.length) {
+                        this.cDashboard04.fillInfoUsuario.cNombreUsuario = response.data[0].cNombreUsuario;
+                        this.cDashboard04.fillInfoUsuario.cNombreRol = response.data[0].cNombreRol;
+                        this.cDashboard04.arrayDashboardAsesoresByAll = response.data;
+                    }
+                    this.createDashBoardCotizacionByUserFind()
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            createDashBoardCotizacionByUserFind(){
+                let me = this;
+
+                //Setear Información
+                me.cDashboard04.arraInfoAsesorComercialNombre = [];
+                me.cDashboard04.arraInfoAsesorComercialCantidad = [];
+                let ctx = '';
+                let chart = '';
+
+                if(me.cDashboard04.arrayDashboardAsesoresByAll.length > 0) {
+                    me.cDashboard04.arrayDashboardAsesoresByAll.map(function(x) {
+                        me.cDashboard04.arraInfoAsesorComercialNombre.push(x.cNombreMes);
+                        me.cDashboard04.arraInfoAsesorComercialCantidad.push(x.nCantidaCotizaciones);
+                    });
+                }
+
+                ctx = document.getElementById('arrayDashboardUserAllFind').getContext('2d');
+                chart = new Chart(ctx, {
+                    // Tipo de Chart
+                    type: 'bar',
+                    // Los Datos para el Chart
+                    data: {
+                        labels: (this.cDashboard04.arrayDashboardAsesoresByAll.length > 0) ? me.cDashboard04.arraInfoAsesorComercialNombre : '',
+                        datasets: [{
+                            label: "Número de Cotizaciones por Mes",
+                            backgroundColor: '#3b5998',
+                            borderColor: '#32506d',
+                            data: (this.cDashboard04.arrayDashboardAsesoresByAll.length > 0) ? me.cDashboard04.arraInfoAsesorComercialCantidad : '',
+                        }]
+                    },
+                    // Configuration options go here
+                    options: {}
+                });
+            },
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0,
+                this.error = 0,
+                this.mensajeError = []
+            },
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
@@ -691,3 +1132,31 @@
         }
     }
 </script>
+
+<style>
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+    .btnBuscar{
+        width: 100%;
+        padding: .5rem;
+        margin-top: .4rem;
+    }
+</style>

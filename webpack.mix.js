@@ -38,7 +38,8 @@ mix.styles([
         'resources/assets/template/js/activemenu.js',
         'resources/assets/template/js/toastr.js',
         'resources/assets/template/js/sweetalert2.js',
-        'resources/assets/template/js/moment.min.js'
+        'resources/assets/template/js/moment.min.js',
+        'resources/assets/template/js/Chart.min.js'
         // 'resources/assets/template/js/treeview.js'
     ], 'public/js/plantilla.js')
     .js('resources/assets/js/app.js', 'public/js/app.js')

@@ -1,44 +1,44 @@
 @extends('principal')
 @section('contenido')
     <template v-if="menu==1300362">
-        <dashBoard :ruta="ruta"></dashBoard>
+        <dashBoard :ruta="ruta" :usuario="{{ auth()->user() }}"></dashBoard>
     </template>
     <template v-if="menu==1300298">
-        <permisos :ruta="ruta" @cabecera="reiniciaMenu"></permisos>
+        <permisos :ruta="ruta" :usuario="{{ auth()->user() }}" @cabecera="reiniciaMenu"></permisos>
     </template>
     <template v-if="menu==1300261">
-        <elementoventa :ruta="ruta"></elementoventa>
+        <elementoventa :ruta="ruta" :usuario="{{ auth()->user() }}"></elementoventa>
     </template>
     <template v-if="menu==1300262">
-        <versionvehiculo :ruta="ruta"></versionvehiculo>
+        <versionvehiculo :ruta="ruta" :usuario="{{ auth()->user() }}"></versionvehiculo>
     </template>
     <template v-if="menu==1300263">
-        <pditipoinspeccion :ruta="ruta"></pditipoinspeccion>
+        <pditipoinspeccion :ruta="ruta" :usuario="{{ auth()->user() }}"></pditipoinspeccion>
     </template>
     <template v-if="menu==1300264">
-        <pdiplantilla :ruta="ruta"></pdiplantilla>
+        <pdiplantilla :ruta="ruta" :usuario="{{ auth()->user() }}"></pdiplantilla>
     </template>
     <template v-if="menu==1300460">
-        <parametro :ruta="ruta"></parametro>
+        <parametro :ruta="ruta" :usuario="{{ auth()->user() }}"></parametro>
     </template>
     <template v-if="menu==1300467">
-        <parparametro :ruta="ruta"></parparametro>
+        <parparametro :ruta="ruta" :usuario="{{ auth()->user() }}"></parparametro>
     </template>
     <template v-if="menu==1300469">
-        <cronograma :ruta="ruta"></cronograma>
+        <cronograma :ruta="ruta" :usuario="{{ auth()->user() }}"></cronograma>
     </template>
     <template v-if="menu==1300480">
-        <lineamarcamodelo :ruta="ruta"></lineamarcamodelo>
+        <lineamarcamodelo :ruta="ruta" :usuario="{{ auth()->user() }}"></lineamarcamodelo>
     </template>
     <template v-if="menu==1300486">
-        <tipocambio :ruta="ruta"></tipocambio>
+        <tipocambio :ruta="ruta" :usuario="{{ auth()->user() }}"></tipocambio>
     </template>
 
     <template v-if="menu==1300266">
-        <turnoventa :ruta="ruta"></turnoventa>
+        <turnoventa :ruta="ruta" :usuario="{{ auth()->user() }}"></turnoventa>
     </template>
     <template v-if="menu==1300267">
-        <objcomercial :ruta="ruta"></objcomercial>
+        <objcomercial :ruta="ruta" :usuario="{{ auth()->user() }}"></objcomercial>
     </template>
     <template v-if="menu==1300268">
         <asignavendedormodelo :ruta="ruta" :usuario="{{ auth()->user() }}"></asignavendedormodelo>

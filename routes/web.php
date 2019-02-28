@@ -10,6 +10,14 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+    //Dashboard
+    Route::get('/dashboard/GetEmpleadosByRol', 'DashboardController@GetEmpleadosByRol');
+    Route::get('/dashboard/GetCotizacionesByUsuario', 'DashboardController@GetCotizacionesByUsuario');
+    Route::get('/dashboard/GetCotizacionesByRol', 'DashboardController@GetCotizacionesByRol');
+    Route::get('/dashboard/GetAsesoresByRol', 'DashboardController@GetAsesoresByRol');
+    Route::get('/dashboard/GetAsesoresByJV', 'DashboardController@GetAsesoresByJV');
+    Route::post('/dashboard/GetCotizacionesPorAsesorComercialDeJVEspecifico', 'DashboardController@GetCotizacionesPorAsesorComercialDeJVEspecifico');
+
     Route::get('/perrelacion/GetLstEmpresaByUsuario', 'PerRelacionController@GetLstEmpresaByUsuario');
     Route::get('/perrelacion/GetLstSucursalByEmpresa', 'PerRelacionController@GetLstSucursalByEmpresa');
 
