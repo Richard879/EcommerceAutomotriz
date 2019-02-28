@@ -1560,10 +1560,10 @@
                 });
             },
             llenarAlmacen(){
-                var url = this.ruta + '/almacen/GetAlmacenBySucursal';
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
                 axios.get(url, {
                     params: {
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal"))
+                        //'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal"))
                     }
                 }).then(response => {
                     this.arrayAlmacen = response.data;

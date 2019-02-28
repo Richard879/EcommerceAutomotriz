@@ -22,7 +22,7 @@ class AlmacenController extends Controller
         return response()->json($data);
     }
 
-    public function GetAlmacenBySucursal(Request $request)
+    public function GetAlmacenByLocalidad(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
  
@@ -32,7 +32,7 @@ class AlmacenController extends Controller
         $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
                 
-        $arraySucursal = DB::select('exec [usp_Almacen_GetAlmacenBySucursal] ?', 
+        $arraySucursal = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?', 
                                                                 [   $nIdSucursal
                                                                 ]);
 

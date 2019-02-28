@@ -781,8 +781,9 @@
                     igv: 0,
                     cnumerovin: '',
                     ndocentry: 0,
-                    nidalmacen: 0,
-                    warehousecode: '',
+                    nidlocalidad: 0,
+                    cwarehousecode: '',
+                    cwhsname: ''
                 },
                 //=====Variables SAP para OrdenVenta Vehiculo
                 arraySapRespuestaVehiculo: [],
@@ -1033,7 +1034,7 @@
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
-                        this.formSap.nidalmacen = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.formSap.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
                         this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
@@ -1047,18 +1048,20 @@
                 });
             },
             obtenerAlmacenByLocalidad(){
-                var url = this.ruta + '/parametro/GetParametroById';
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formSap.nidalmacen,
-                        'nidtipopar': 110102
+                        'nidpar': this.formSap.nidlocalidad,
+                        'nidgrupopar': 110102
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formSap.warehousecode = response.data[0].cParJerarquia;
+                        this.formSap.cwhsname = response.data[0].cAlmacenNombre;
+                        this.formSap.cwarehousecode = response.data[0].cParJerarquia;
                     }
                     else{
-                        this.formSap.warehousecode = '';
+                        this.formSap.cwhsname = 'Sin Almacén Definido';
+                        this.formSap.cwarehousecode = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1654,7 +1657,7 @@
                     me.arraySapElementoVenta.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  this.formSap.warehousecode ? parseInt(this.formSap.warehousecode) : parseInt('00'),
+                                'nWhsCode'  :  this.formSap.cwarehousecode ? parseInt(this.formSap.cwarehousecode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
@@ -1685,7 +1688,7 @@
                 axios.post(sapUrl, {
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode'     :   me.formSap.warehousecode,
+                    'WarehouseCode'     :   me.formSap.cwarehousecode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySapEVPedido'  :   me.arraySapEVPedido

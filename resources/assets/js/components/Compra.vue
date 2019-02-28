@@ -337,9 +337,9 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
+                                                                            <label class="col-sm-4 form-control-label">* Almacén</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
+                                                                                <input type="text" v-model="formCompra.cwhsname" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -434,16 +434,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-8">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-8">
                                                                         <div class="row">
@@ -1471,7 +1461,8 @@
                     nnumerolista: '',
                     nidlistaprecio: 0,
                     nidlocalidad: 0,
-                    warehousecode: '',
+                    cwarehousecode: '',
+                    cwhsname: '',
                     ccarcode: '',
                     igv: 0
                 },
@@ -1891,8 +1882,7 @@
                 });
             },
             obtenerAlmacenByLocalidad(){
-                var url = this.ruta + '/parametro/GetParametroById';
-                //var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
                         'nidpar': this.formCompra.nidlocalidad,
@@ -1900,10 +1890,12 @@
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formCompra.warehousecode = response.data[0].cParJerarquia;
+                        this.formCompra.cwhsname = response.data[0].cAlmacenNombre;
+                        this.formCompra.cwarehousecode = response.data[0].cParJerarquia;
                     }
                     else{
-                        this.formCompra.warehousecode = "SIN ALMACÉN DEFINIDO";
+                        this.formCompra.cwhsname = 'Sin Almacén Definido';
+                        this.formCompra.cwarehousecode = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2357,7 +2349,7 @@
                     'cCardCode'     :   me.formCompra.ccarcode,
                     'fDocDate'      :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' :   me.formCompra.warehousecode,
+                    'WarehouseCode' :   me.formCompra.cwarehousecode,
                     'Igv'           :   1 + parseFloat((me.formCompra.igv)),
                     'data'          :   me.arraySapCompra
                 }).then(response => {
@@ -3234,7 +3226,7 @@
                         'cCardCode': me.formCompra.ccarcode,
                         'fDocDate': moment().format('YYYY-MM-DD'),
                         'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode': me.formCompra.warehousecode,
+                        'WarehouseCode': me.formCompra.cwarehousecode,
                         'Igv': 1 + parseFloat((me.formCompra.igv)),
                         'data': me.arraySapCompra
                     }).then(response => {
