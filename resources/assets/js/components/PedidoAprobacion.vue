@@ -780,10 +780,7 @@
                     ccardcode: '',
                     igv: 0,
                     cnumerovin: '',
-                    ndocentry: 0,
-                    nidlocalidad: 0,
-                    cwhscode: '',
-                    cwhsname: ''
+                    ndocentry: 0
                 },
                 //=====Variables SAP para OrdenVenta Vehiculo
                 arraySapRespuestaVehiculo: [],
@@ -822,6 +819,14 @@
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
                 fAvgPrice: 0,
+                //===========================================================
+                // =============  VARIABLES ALMACEN ========================
+                formAlmacen:{
+                    nidlocalidad: 0,
+                    cwhscode: '',
+                    cwhsname: ''
+                },
+                arrayAlmacen: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1034,7 +1039,7 @@
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
-                        this.formSap.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
                         this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
@@ -1051,17 +1056,17 @@
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formSap.nidlocalidad,
+                        'nidpar': this.formAlmacen.nidlocalidad,
                         'nidgrupopar': 110102
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formSap.cwhsname = response.data[0].cWhsName;
-                        this.formSap.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
-                        this.formSap.cwhsname = 'Sin Almacén Definido';
-                        this.formSap.cwhscode = '';
+                        this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1657,7 +1662,7 @@
                     me.arraySapElementoVenta.map(function(value, key) {
                         //if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  this.formSap.cwhscode ? parseInt(this.formSap.cwhscode) : parseInt('00'),
+                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         //}
@@ -1688,7 +1693,7 @@
                 axios.post(sapUrl, {
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode'     :   me.formSap.cwhscode,
+                    'WarehouseCode'     :   me.formAlmacen.cwhscode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySapEVPedido'  :   me.arraySapEVPedido

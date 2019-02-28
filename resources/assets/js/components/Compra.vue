@@ -1963,7 +1963,7 @@
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
-                        this.formCompra.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
                         this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
@@ -1980,16 +1980,16 @@
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formCompra.nidlocalidad,
+                        'nidpar': this.formAlmacen.nidlocalidad,
                         'nidgrupopar': 110102
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formCompra.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
                         this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
-                        this.formCompra.cwhscode = '';
+                        this.formAlmacen.cwhscode = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
@@ -4333,7 +4333,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlocalidad': this.formCompra.nidlocalidad,
+                        'nidlocalidad': this.formAlmacen.nidlocalidad,
                         'page' : page
                     }
                 }).then(response => {

@@ -1277,6 +1277,14 @@
                 arrayAccesorioFlagMarca:  [],
                 arrayAccesorioDescripcion: [],
                 arrayAccesorioCantidad: [],
+                //===========================================================
+                // =============  VARIABLES ALMACEN ========================
+                formAlmacen:{
+                    nidlocalidad: 0,
+                    cwhscode: '',
+                    cwhsname: ''
+                },
+                arrayAlmacen: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1559,8 +1567,93 @@
                     }
                 });
             },
-            llenarAlmacen(){
+            obtenerLocalidadBySucursal(){
+                var url = this.ruta + '/parparametro/GetParParametro';
 
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo': 0,
+                        'nparsrcgrupoarametro': 110102,
+                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro': 110022,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    if(response.data.arrayParParametro.length){
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.obtenerAlmacenByLocalidad();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerAlmacenByLocalidad(){
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formAlmacen.nidlocalidad,
+                        'nidgrupopar': 110102
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
+                    }
+                    else{
+                        this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =============  LISTAR ALMACEN ======================
+            listarAlmacen(page){
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
+
+                axios.get(url, {
+                    params: {
+                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayAlmacen = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from        = response.data.arrayAlmacen.from;
+                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaAlmacen(page){
+                this.paginationModal.current_page=page;
+                this.listarAlmacen(page);
+            },
+            asignarAlmacen(objAlmacen){
+                this.formCompra.cwhscode = objAlmacen.cWhsCode;
+                this.formAlmacen.cwhsname = objAlmacen.cWhsName;              
+                this.cerrarModal();
             },
             //=============== LISTAR MODAL POR VIN ===================
             listarPorVin(page){
@@ -2140,7 +2233,7 @@
                                 this.accion = 1;
                                 this.tituloFormulario = 'NUEVO PROCESO DE INSPECCIÓN';
                                 this.llenarTipoInspeccion();
-                                this.llenarAlmacen();
+                                this.obtenerLocalidadBySucursal();
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -2149,7 +2242,7 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
-                                this.llenarAlmacen();
+                                this.obtenerLocalidadBySucursal();
                                 this.formPdi.nidcabecerainspeccion = data['nIdCabeceraInspeccion'];
                                 this.formPdi.nidtipoinspeccion = data['nIdTipoInspeccion'];
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
