@@ -1560,10 +1560,10 @@
                 });
             },
             llenarAlmacen(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                var url = this.ruta + '/almacen/GetAlmacenBySucursal';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110088
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal"))
                     }
                 }).then(response => {
                     this.arrayAlmacen = response.data;
@@ -1672,7 +1672,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnrovehiculo' : this.fillVehiculoPlaca.cdescripcion.toString(),
                         'criterio': 2,
                         'page' : page,

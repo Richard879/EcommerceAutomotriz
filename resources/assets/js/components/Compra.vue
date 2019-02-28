@@ -1470,7 +1470,7 @@
                     cproveedornombre: '',
                     nnumerolista: '',
                     nidlistaprecio: 0,
-                    nidalmacen: 0,
+                    nidlocalidad: 0,
                     warehousecode: '',
                     ccarcode: '',
                     igv: 0
@@ -1877,7 +1877,7 @@
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
-                        this.formCompra.nidalmacen = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.formCompra.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
                         this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
@@ -1892,17 +1892,18 @@
             },
             obtenerAlmacenByLocalidad(){
                 var url = this.ruta + '/parametro/GetParametroById';
+                //var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formCompra.nidalmacen,
-                        'nidtipopar': 110102
+                        'nidpar': this.formCompra.nidlocalidad,
+                        'nidgrupopar': 110102
                     }
                 }).then(response => {
                     if(response.data.length){
                         this.formCompra.warehousecode = response.data[0].cParJerarquia;
                     }
                     else{
-                        this.formCompra.warehousecode = "SIN CÓDIGO";
+                        this.formCompra.warehousecode = "SIN ALMACÉN DEFINIDO";
                     }
                 }).catch(error => {
                     console.log(error);
