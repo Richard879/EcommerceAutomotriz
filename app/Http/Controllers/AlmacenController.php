@@ -26,19 +26,19 @@ class AlmacenController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
  
-        $nIdSucursal   = $request->nidsucursal;
+        $nIdLocalidad  = $request->nidlocalidad;
         $variable   = $request->opcion;
 
-        $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+        $nIdLocalidad = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
                 
-        $arraySucursal = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?', 
-                                                                [   $nIdSucursal
+        $arrayAlmacen = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?', 
+                                                                [   $nIdLocalidad
                                                                 ]);
 
         if($variable == "0"){
-            $arraySucursal = ParametroController::arrayPaginator($arraySucursal, $request);
+            $arrayAlmacen = ParametroController::arrayPaginator($arrayAlmacen, $request);
         }
-        return ['arraySucursal'=>$arraySucursal];
+        return ['arrayAlmacen'=>$arrayAlmacen];
     }
 }
