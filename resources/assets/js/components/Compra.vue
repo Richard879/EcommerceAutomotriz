@@ -1452,7 +1452,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
-                                                            <th>Nombre Almacen</th>
+                                                            <th>Código Almacén</th>
+                                                            <th>Nombre Almacén</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1463,6 +1464,7 @@
                                                                     <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td>{{almacen.cWhsCode}}</td>
                                                             <td>{{almacen.cWhsName}}</td>
                                                         </tr>
                                                     </tbody>
@@ -4359,7 +4361,7 @@
                 this.listarAlmacen(page);
             },
             asignarAlmacen(objAlmacen){
-                this.formCompra.cwhscode = objAlmacen.cWhsCode;
+                this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
                 this.formAlmacen.cwhsname = objAlmacen.cWhsName;              
                 this.cerrarModal();
             },
