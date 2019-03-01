@@ -802,7 +802,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
-                                                                    <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click="asignarVin(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="compra.nIdCompra"></td>
@@ -911,7 +911,7 @@
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayVehiculoPlaca" :key="vehiculo.cPlaca">
                                                             <td>
-                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                <a href="#" @click="asignarPlaca(vehiculo)" data-toggle="tooltip">
                                                                     <i class='fa-md fa fa-check-circle'></i>
                                                                 </a>
                                                             </td>
@@ -930,16 +930,16 @@
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaPlaca(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaPlaca(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaPlaca(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -1789,9 +1789,9 @@
                 this.paginationModal.current_page=page;
                 this.listarPorVin(page);
             },
-            asignarVin(nIdCompra, cNumeroVin){
-                this.formPdi.nidcompra = nIdCompra;
-                this.formPdi.cvinplacanombre = cNumeroVin;
+            asignarVin(objCompra){
+                this.formPdi.nidcompra = objCompra.nIdCompra;
+                this.formPdi.cvinplacanombre = objCompra.cNumeroVin;
                 this.formPdi.nidvehiculoplaca = 0;
                 this.cerrarModal();
             },
@@ -1869,6 +1869,16 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaPlaca(page){
+                this.paginationModal.current_page=page;
+                this.listarPorPlaca(page);
+            },
+            asignarPlaca(objVehiculo){
+                this.formPdi.nidcompra = 0;
+                this.formPdi.cvinplacanombre = objVehiculo.cPlaca;
+                this.formPdi.nidvehiculoplaca = objVehiculo.nIdVehiculoPlaca;
+                this.cerrarModal();
             },
             //=============== LISTAR MODAL PLANTILLA ===================
             listarSeccion(){
@@ -2007,9 +2017,10 @@
                 me.arrayTempAccesorio = [];
                 me.arrayAccesorio.map(function(value, key){
                     me.arrayTempAccesorio.push({
-                        nIdAccesorio: value.nIdPar,
-                        cFlagMarca: me.arrayAccesorioFlagMarca[key]==false ? 'N' : 'C',
-                        cDescripcionNoConformidad: me.arrayAccesorioDescripcion[key]==null ? '' : me.arrayAccesorioDescripcion[key]
+                        'nIdAccesorio'      : value.nIdElemento,
+                        'nCantidad'         : me.arrayAccesorioCantidad[key],
+                        'cFlagMarca'        : me.arrayAccesorioFlagMarca[key]==false ? 'N' : 'C',
+                        'cDescripcionNoConformidad': me.arrayAccesorioDescripcion[key]==null ? '' : me.arrayAccesorioDescripcion[key]
                     });
                 });
                 this.nflagaccesorioValida =1;
@@ -2041,35 +2052,53 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdPuntoInspeccion: this.formPdi.nidpuntoinspeccion,
-                    nIdSolicitudAutorizacion: this.formPdi.nidsolicitud,
-                    nIdCompra: this.formPdi.nidcompra,
-                    nIdVehiculoPlaca: this.formPdi.nidvehiculoplaca,
-                    nIdTipoInspeccion: this.formPdi.nidtipoinspeccion,
-                    nIdAlmacen: this.formPdi.nidalmacen,
-                    cNumeroInspeccion: this.formPdi.cnumeroinspeccion,
-                    dFechaInspeccion: this.formPdi.dfechainspeccion,
-                    cHoraInspeccion: this.formPdi.chorainspeccion,
-                    cFlagTipoMovimiento: this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
-                    cFlagVinPlaca: this.formPdi.nidcompra == 0 ? 'P' : 'V',
-                    cNumeroMovimientoAlmacen: '',
-                    dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
-                    cFlagEstadoAprobacion: this.formPdi.nidconformidad == 1 ? 'C' : 'N',
-                    cObservacion: this.formPdi.cobservacion
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdPuntoInspeccion'        : this.formPdi.nidpuntoinspeccion,
+                    'nIdSolicitudAutorizacion'  : this.formPdi.nidsolicitud,
+                    'nIdCompra'                 : this.formPdi.nidcompra,
+                    'nIdVehiculoPlaca'          : this.formPdi.nidvehiculoplaca,
+                    'nIdTipoInspeccion'         : this.formPdi.nidtipoinspeccion,
+                    'cIdAlmacen'                : this.formAlmacen.cwhscode,
+                    'cNumeroInspeccion'         : this.formPdi.cnumeroinspeccion,
+                    'dFechaInspeccion'          : this.formPdi.dfechainspeccion,
+                    'cHoraInspeccion'           : this.formPdi.chorainspeccion,
+                    'cFlagTipoMovimiento'       : this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
+                    'cFlagVinPlaca'             : this.formPdi.nidcompra == 0 ? 'P' : 'V',
+                    'cNumeroMovimientoAlmacen'  : '',
+                    'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
+                    'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
+                    'cObservacion'              : this.formPdi.cobservacion
                 }).then(response => {
-                    /*if(response.data[0].nFlagMsje == 1)
+                    if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Item Agregado registrada');
-                        //this.vistaFormulario = 1;
-                        //this.listarItemPlantilla();
+                        this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
+
+                        if(this.nflagseccioninspeccionValida==1){
+                            if(this.arrayPlantilla.length){
+                                this.registrarPlantilla();
+                            }
+                        }
+                        if(this.nflagaccesorioValida==1){
+                            if(this.arrayTempAccesorio.length){
+                                this.registrarAccesorios();
+                            }
+                        }
+                        if(this.attachment){
+                            this.subirArchivo();
+                        }
+
+                        setTimeout(function() {
+                            this.confirmaPdi();
+                        }, 3600);
                     }
                     else{
-                        swal('Ya existe Item');
-                    }*/
+                        swal('ERROR EN LA INSPECCIÓN');
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2079,6 +2108,12 @@
                         }
                     }
                 });
+            },
+            confirmaPdi(){
+                swal('Inspección realizada con éxito');
+                this.limpiarFormulario();
+                this.vistaFormulario = 1;
+                this.listarPdi(1);
             },
             validar(){
                 this.error = 0;
@@ -2117,11 +2152,8 @@
                     this.mensajeError.push('Debes Validar Accesorios');
                 };
                 if(this.nflagalmacen ==1 && this.nflagalmacenValida ==0){
-                    if(this.formPdi.nidalmacen ==0){
+                    if(!this.formAlmacen.cwhscode){
                         this.mensajeError.push('Debes Seleccionar Almacén');
-                    };
-                    if(this.formPdi.dfechamovimientoalmacen ==''){
-                        this.mensajeError.push('Debes Ingresar Fecha Movimiento Almacén');
                     };
                 };
                 if(this.mensajeError.length){
@@ -2206,17 +2238,17 @@
 
                 var url = this.ruta + '/pdi/UpdCabeceraInspeccion';
                 axios.post(url, {
-                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdAlmacen: this.formPdi.nidalmacen,
-                    cNumeroInspeccion: this.formPdi.cnumeroinspeccion,
-                    dFechaInspeccion: this.formPdi.dfechainspeccion,
-                    cHoraInspeccion: this.formPdi.chorainspeccion,
-                    cNumeroMovimientoAlmacen: '',
-                    dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
-                    cFlagEstadoAprobacion: this.formPdi.nidconformidad == 1 ? 'C' : 'N',
-                    cObservacion: this.formPdi.cobservacion
+                    'nIdCabeceraInspeccion'     : this.formPdi.nidcabecerainspeccion,
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'cIdAlmacen'                : this.formAlmacen.cwhscode,
+                    'cNumeroInspeccion'         : this.formPdi.cnumeroinspeccion,
+                    'dFechaInspeccion'          : this.formPdi.dfechainspeccion,
+                    'cHoraInspeccion'           : this.formPdi.chorainspeccion,
+                    'cNumeroMovimientoAlmacen'  : '',
+                    'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
+                    'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
+                    'cObservacion'              : this.formPdi.cobservacion
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -2268,12 +2300,18 @@
                 });
             },
             registrarAccesorios(){
-                var url = this.ruta + '/pdi/SetAccesorioPdi';
-                axios.post(url, {
-                    'nIdCabeceraInspeccion': this.formPdi.nidcabecerainspeccion,
-                    'data': this.arrayTempAccesorio
-                }).then(response => {
+                let me = this;
 
+                var url = me.ruta + '/pdi/SetAccesorioPdi';
+                axios.post(url, {
+                    'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
+                    'data': me.arrayTempAccesorio
+                }).then(response => {
+                    if(me.formPdi.nidtipoinspeccion == 6){
+                        setTimeout(function() {
+                            me.generaSapMercancia();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2285,25 +2323,27 @@
                 });
             },
             //Generar Sap Entrada Mercancia
-            generaSapMercancia(objCompra){
+            generaSapMercancia(){
                 let me = this;
 
-                me.arraySapMercancia.push({
-                    'ItemCode'       : objCompra.nIdCompra,
-                    'WarehouseCode'  : me.formAlmacen.cwhscode,
-                    'Quantity'       : objCompra.cNumeroVin,
-                    'UnitPrice'      : 0.01,
-                    'AccountCode'    : me.formAlmacen.cacctcode 
+                me.arrayTempAccesorio.map(function(value, key) {
+                    me.arraySapMercancia.push({
+                        'ItemCode'       : value.nIdAccesorio,
+                        'WarehouseCode'  : me.formAlmacen.cwhscode,
+                        'Quantity'       : me.arrayAccesorioCantidad[key],
+                        'UnitPrice'      : 0.01,
+                        'AccountCode'    : me.formAlmacen.cacctcode 
+                    });
                 });
                 //==============================================================
                 //================== REGISTRO MERCANCIA EN SAP ===============
                 me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
-                var sapUrl = me.ruta + '/mercancia/SapSetMercancia';
+                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaEntry';
                 axios.post(sapUrl, {
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'data': me.arraySapMercancia
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data'          : me.arraySapMercancia
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -2327,9 +2367,9 @@
 
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY ===============
-                            /*setTimeout(function() {
-                                me.generaActualizarDocEntryStock(objCompra);
-                            }, 1600);*/
+                            setTimeout(function() {
+                                me.generaActualizarMercancia();
+                            }, 1600);
                         }
                     });
                 }).catch(error => {
@@ -2343,29 +2383,13 @@
                     }
                 });
             },
-            generaActualizarDocEntryStock(objCompra){
+            generaActualizarMercancia(){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
+                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdSgc
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.limpiarFormulario();
-                    /*$("#myBar").hide();
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        setTimeout(function() {
-                            me.generaSapActividadMercancia(objCompra, 10000, 'EntradaMercancia');
-                        }, 1600);
-                    }
-                    else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en Actualizar Mercancia!',
-                        });
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
-                    }*/
+
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2573,6 +2597,17 @@
                 this.arrayAccesorio =[],
                 this.arrayTempAccesorio =[],
                 this.arrayAccesorioCantidad=[]
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarPdi(1);
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;
