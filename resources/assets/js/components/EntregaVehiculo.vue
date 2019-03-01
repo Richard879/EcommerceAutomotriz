@@ -1174,7 +1174,29 @@
                     }
                 });
             },
-            generaSapLlamadaServicioEntregaVeh(){
+            generaSapActividadServiceCall(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
+                axios.post(sapUrl, {
+                    'nActivityCode'     : me.nactivitycode,
+                    'nServiceCallID'    : me.nservicecallid,
+                    'nLine'             : 0
+                }).then(response => {
+                    me.loading.close();
+                    me.confirmaPdi();
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            /*generaSapLlamadaServicioEntregaVeh(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
@@ -1239,7 +1261,7 @@
                         }
                     }
                 });
-            },
+            },*/
             validarRegistrarEntregaVehiculo(){
                 this.error = 0;
                 this.mensajeError =[];

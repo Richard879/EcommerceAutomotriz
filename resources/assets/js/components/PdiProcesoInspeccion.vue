@@ -2521,9 +2521,6 @@
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
                 axios.post(sapUrl, {
-                    'cCustomerCode'     : me.ccustomercode,
-                    'cInternalSerialNum': me.formPdi.cnumerovin,
-                    'cItemCode'         : me.formPdi.cnumerovin,
                     'nActivityCode'     : me.nactivitycode,
                     'nServiceCallID'    : me.nservicecallid,
                     'nLine'             : 0
