@@ -2395,6 +2395,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
+                    me.loading.close();
                     me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
