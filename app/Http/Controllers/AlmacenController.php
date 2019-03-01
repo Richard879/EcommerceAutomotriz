@@ -9,10 +9,37 @@ use Illuminate\Support\Facades\Auth;
 
 class AlmacenController extends Controller
 {
+    public function GetListAlmacen(Request $request)
+    {
+        $nIdLocalidad  = $request->nIdLocalidad;
+        $nIdAlmacen    = $request->nIdAlmacen;
+        $nCodigoCuenta = $request->nCodigoCuenta;
+
+        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen     = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuenta  = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
+
+        $data = DB::select('exec [usp_Almacen_GetListAlmacen] ?, ?, ?',
+                                                [   $nIdLocalidad,
+                                                    $nIdAlmacen,
+                                                    $nCodigoCuenta
+                                                ]);
+
+        $arrayAlmacen = ParametroController::arrayPaginator($data, $request);
+        return ['arrayAlmacen'=>$arrayAlmacen];
+    }
+
+    public function GetAlmacen(Request $request)
+    {
+        $data = DB::select('exec [usp_Almacen_GetAlmacen]');
+
+        return response()->json($data);
+    }
+
     public function GetAlmacenPorDefecto(Request $request)
     {
-        $nIdPar = $request->nidpar;
-        $nIdGrupoPar = $request->nidgrupopar;
+        $nIdPar         = $request->nidpar;
+        $nIdGrupoPar    = $request->nidgrupopar;
 
         $data = DB::select('exec [usp_Almacen_GetAlmacenPorDefecto] ?, ?',
                                                 [   $nIdPar,
@@ -25,14 +52,14 @@ class AlmacenController extends Controller
     public function GetAlmacenByLocalidad(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
-        $nIdLocalidad  = $request->nidlocalidad;
-        $variable   = $request->opcion;
 
-        $nIdLocalidad = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
-                
-        $arrayAlmacen = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?', 
+        $nIdLocalidad   = $request->nidlocalidad;
+        $variable       = $request->opcion;
+
+        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayAlmacen = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?',
                                                                 [   $nIdLocalidad
                                                                 ]);
 
@@ -40,5 +67,25 @@ class AlmacenController extends Controller
             $arrayAlmacen = ParametroController::arrayPaginator($arrayAlmacen, $request);
         }
         return ['arrayAlmacen'=>$arrayAlmacen];
+    }
+
+    public function SetRegistrarAlmacen(Request $request)
+    {
+        $nIdLocalidad  = $request->nIdLocalidad;
+        $nIdAlmacen    = $request->nIdAlmacen;
+        $nCodigoCuenta = $request->nCodigoCuenta;
+
+        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen     = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuenta  = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
+
+        $data = DB::select('exec [usp_Almacen_SetRegistrarAlmacen] ?, ?, ?, ?',
+                                                [   $nIdLocalidad,
+                                                    $nIdAlmacen,
+                                                    $nCodigoCuenta,
+                                                    Auth::user()->id
+                                                ]);
+
+        return response()->json($data);
     }
 }

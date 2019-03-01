@@ -383,6 +383,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
     Route::get('/almacen/GetAlmacenByLocalidad','AlmacenController@GetAlmacenByLocalidad');
     Route::get('/almacen/GetAlmacenPorDefecto','AlmacenController@GetAlmacenPorDefecto');
+    Route::get('/almacen/GetAlmacen','AlmacenController@GetAlmacen');
+    Route::get('/almacen/GetListAlmacen','AlmacenController@GetListAlmacen');
+    Route::post('/almacen/SetRegistrarAlmacen','AlmacenController@SetRegistrarAlmacen');
 
     Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 

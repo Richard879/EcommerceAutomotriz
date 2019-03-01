@@ -19,7 +19,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tab02" href="#TabConfigurarComision" @click="tabConfiguradorComision" role="tab" data-toggle="tab">
+                                        <a class="nav-link" id="tab02" href="#TabConfiguradorAlmacenes" @click="tabConfiguradorAlmacenes" role="tab" data-toggle="tab">
                                             <i class="fa fa-bus"></i> CONFIGURADOR DE ALMACENES/CUENTA
                                         </a>
                                     </li>
@@ -40,7 +40,7 @@
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">* Localidad</label>
                                                                             <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillCuenta.nIdLocalidad"
+                                                                                <el-select v-model="fillBsqAlmacen.nIdLocalidad"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
@@ -59,7 +59,7 @@
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">* Almacen</label>
                                                                             <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillCuenta.nIdAlmacen"
+                                                                                <el-select v-model="fillBsqAlmacen.nIdAlmacen"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
@@ -80,15 +80,180 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
                                                                             <div class="col-md-8 widthFull">
-                                                                                <input type="text" v-model="fillCuenta.nCodigoCuenta" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillBsqAlmacen.nCodigoCuenta" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarComisiones(1)">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarAlmacenes(1)">
                                                                             <i class="fa fa-search"></i> BUSCAR
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO DE ALMACENES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <template v-if="arrayListAlmacenes.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acción</th>
+                                                                                    <th>Localidad</th>
+                                                                                    <th>Almacen</th>
+                                                                                    <th>Codigo Almacen</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(almacen, index) in arrayListAlmacenes" :key="index">
+                                                                                    <td>
+                                                                                        <a href="#">
+                                                                                            <i :style="'color:red'" class="fa-md fa fa-check"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td v-text="almacen.cNombreLocalidad"></td>
+                                                                                    <td v-text="almacen.cWhsName"></td>
+                                                                                    <td v-text="almacen.cAcctCode"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                        :class="[page==isActivedModal?'active':'']">
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPaginaAlmacenes(page)"
+                                                                                            v-text="page"></a>
+                                                                                        </li>
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-lg-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabConfiguradorAlmacenes">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">CONFIGURADOR ALMACENES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Localidad</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillAlmacen.nIdLocalidad"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        v-validate="'required'"
+                                                                                        data-vv-as="Localidad"
+                                                                                        name="nLocalidad"
+                                                                                        :class="{'has-error': vErrors.has('nLocalidad')}"
+                                                                                        placeholder="Seleccione una Localidad">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayLocalidad"
+                                                                                        :key="concepto.nIdPar"
+                                                                                        :label="concepto.cParNombre"
+                                                                                        :value="concepto.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">* Almacen</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillAlmacen.nIdAlmacen"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        v-validate="'required'"
+                                                                                        data-vv-as="Almacen"
+                                                                                        name="nAlmacen"
+                                                                                        :class="{'has-error': vErrors.has('nAlmacen')}"
+                                                                                        placeholder="Seleccione un Almacen">
+                                                                                    <el-option
+                                                                                        v-for="concepto in arrayAlmacen"
+                                                                                        :key="concepto.nIdPar"
+                                                                                        :label="concepto.cParNombre"
+                                                                                        :value="concepto.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                                <span v-show="vErrors.has('nAlmacen')" class="alert-danger">
+                                                                                    {{ vErrors.first('nAlmacen') }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <input type="text"
+                                                                                        v-model.number="fillAlmacen.nCodigoCuenta"
+                                                                                        class="form-control form-control-sm"
+                                                                                        v-validate="'required|numeric|digits:6|max:6'"
+                                                                                        data-vv-as="Codigo de Cuenta"
+                                                                                        name="nCodigoCuenta"
+                                                                                        :class="{'has-error': vErrors.has('nCodigoCuenta')}">
+                                                                                <span v-show="vErrors.has('nCodigoCuenta')" class="alert-danger">
+                                                                                    {{ vErrors.first('nCodigoCuenta') }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="guardarAlmacen(1)">
+                                                                            <i class="fa fa-save"></i> REGISTRAR
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -105,6 +270,84 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Show Coincidencias -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="(e, index) in mensajeError" :key="index">
+                                    <h4>El Almacen </h4>
+                                    <strong v-text="e.cWhsName"></strong><br>
+                                    <span>Ya se encuentra registrado</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Show Errors Validate -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <!-- <div v-for="e in arraCoincidencias" :key="e" v-text="e"></div> -->
+                                <!-- <li v-for="(error, index) in vErrors.collect('nCodigoCuenta')" :key="index">{{ error }}</li> -->
+                                <li v-for="(group, index) in vErrors.collect()" :key="index">
+                                    <ul>
+                                        <li v-for="(error, index2) in group" :key="index2">
+                                            {{ error }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -114,14 +357,25 @@
         props:['ruta'],
         data(){
             return {
-                fillCuenta: {
+                // =============================================================
+                // VARIABLES TAB BSQ ALMACEN
+                // =============================================================
+                fillBsqAlmacen: {
                     nIdLocalidad: '',
                     nIdAlmacen: '',
                     nCodigoCuenta: ''
                 },
                 arrayLocalidad: [],
                 arrayAlmacen: [],
-                arrayConfigAlmacen: [],
+                arrayListAlmacenes: [],
+                // =============================================================
+                // VARIABLES TAB CONFIGURAR ALMACEN
+                // =============================================================
+                fillAlmacen: {
+                    nIdLocalidad: '',
+                    nIdAlmacen: '',
+                    nCodigoCuenta: ''
+                },
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -151,6 +405,9 @@
             }
         },
         mounted(){
+            this.llenarLocalidades();
+            this.llenarAlmacenes();
+            this.tabBandejaAlmacenes();
         },
         computed:{
             isActived: function(){
@@ -205,9 +462,216 @@
             }
         },
         methods: {
+            llenarLocalidades(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110102,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayLocalidad = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarAlmacenes(){
+                var url = this.ruta + '/almacen/GetAlmacen';
+                axios.get(url).then(response => {
+                    this.arrayAlmacen = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            GetAlmacenByLocalidad(){
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
+                axios.get(url, {
+                    params: {
+                        'nidlocalidad'  :   this.fillAlmacen.nIdLocalidad,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayAlmacen = response.data.arrayAlmacen.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =================================================================
+            // TAB BANDEJA DE ALMACENES
+            // =================================================================
             tabBandejaAlmacenes(){
                 this.limpiarTabBsqAlmacenes();
             },
+            limpiarTabBsqAlmacenes(){
+                this.fillBsqAlmacen.nIdLocalidad = '';
+                this.fillBsqAlmacen.nIdAlmacen = '';
+                this.fillBsqAlmacen.nCodigoCuenta = '';
+                this.arrayListAlmacenes = [];
+            },
+            listarAlmacenes(page){
+                var url = this.ruta + '/almacen/GetListAlmacen';
+                axios.get(url, {
+                    params: {
+                        'nIdLocalidad'  :   this.fillBsqAlmacen.nIdLocalidad,
+                        'nIdAlmacen'    :   this.fillBsqAlmacen.nIdAlmacen,
+                        'nCodigoCuenta' :   this.fillBsqAlmacen.nCodigoCuenta,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayListAlmacenes       =   response.data.arrayAlmacen.data;
+                    this.pagination.current_page   =   response.data.arrayAlmacen.current_page;
+                    this.pagination.total          =   response.data.arrayAlmacen.total;
+                    this.pagination.per_page       =   response.data.arrayAlmacen.per_page;
+                    this.pagination.last_page      =   response.data.arrayAlmacen.last_page;
+                    this.pagination.from           =   response.data.arrayAlmacen.from;
+                    this.pagination.to             =   response.data.arrayAlmacen.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaAlmacenes(page){
+                this.pagination.current_page=page;
+                this.listarAlmacenes(page);
+            },
+            // =================================================================
+            // TAB CONFIGURADOR DE ALMACENES
+            // =================================================================
+            tabConfiguradorAlmacenes(){
+                this.limpiarTabBsqConfigurarAlmacenes();
+            },
+            limpiarTabBsqConfigurarAlmacenes(){
+                this.fillAlmacen.nIdLocalidad = '';
+                this.fillAlmacen.nIdAlmacen = '';
+                this.fillAlmacen.nCodigoCuenta = '';
+            },
+            guardarAlmacen(op){
+                (op == 1) ? this.registrarAlmacen() : this.actualizarAlmacen();
+            },
+            validarRegistrarAlmacen(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillAlmacen.nIdLocalidad == ''){
+                    this.mensajeError.push('Debe seleccionar una Localidad');
+                }
+                if(this.fillAlmacen.nIdAlmacen == ''){
+                    this.mensajeError.push('Debe seleccionar un Almacen');
+                }
+                if(this.fillAlmacen.nCodigoCuenta == ''){
+                    this.mensajeError.push('Debe digitar un código de cuenta');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            registrarAlmacen(){
+                if(this.validarRegistrarAlmacen()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.$validator.validate().then(result => {
+                    if(result) {
+                        var url = this.ruta + '/almacen/SetRegistrarAlmacen';
+                        axios.post(url, {
+                            'nIdLocalidad'  :   this.fillAlmacen.nIdLocalidad,
+                            'nIdAlmacen'    :   (this.fillAlmacen.nIdAlmacen).toString(),
+                            'nCodigoCuenta' :   this.fillAlmacen.nCodigoCuenta,
+                        }).then(response => {
+                            if (response.data[0].nFlagMsje == 1) {
+                                swal(response.data[0].cMensaje);
+                                this.limpiarTabBsqConfigurarAlmacenes();
+                                // this.vErrors.items = [];
+                            } else {
+                                swal(response.data[0].cMensaje);
+                            }
+                        }).catch(error => {
+                            this.errors = error
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    }
+                    if (!result) {
+                        //Coleccion de Errores
+                        this.accionmodal=3;
+                        this.modal = 1;
+                    }
+                })
+            },
+            // =================================================================
+            // METODOS GENERICOS
+            // =================================================================
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case "case":
+                    {
+                        switch(accion){
+                            case 'case2':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            //Limpiar Paginación
+            limpiarPaginacion(){
+                this.pagination.current_page =  0,
+                this.pagination.total = 0,
+                this.pagination.per_page = 0,
+                this.pagination.last_page = 0,
+                this.pagination.from  = 0,
+                this.pagination.to = 0
+            },
+            limpiarPaginacionModal(){
+                this.paginationModal.current_page =  0,
+                this.paginationModal.total = 0,
+                this.paginationModal.per_page = 0,
+                this.paginationModal.last_page = 0,
+                this.paginationModal.from  = 0,
+                this.paginationModal.to = 0
+            },
+            //Cerrar Modal
+            cerrarModal(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
+                this.limpiarPaginacionModal();
+            }
         }
     }
 </script>
@@ -240,5 +704,11 @@
         cursor: not-allowed;
         border: 2px outset buttonface;
         pointer-events:none;
+    }
+    .alert-danger {
+        color: red;
+    }
+    .has-error {
+        border-color: red;
     }
 </style>

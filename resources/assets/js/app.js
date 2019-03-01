@@ -21,6 +21,22 @@ window.Vue.use(Vuesax)
 var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)
 
+/**
+ * Biblioteca Vee Validate - Validar Inputs de VueJs
+ */
+// Inside a component.
+import VeeValidate from 'vee-validate';
+var VueValidationEs = require('vee-validate/dist/locale/es');
+
+// Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+    locale: 'es',
+    dictionary: {
+        es: VueValidationEs
+    },
+    errorBagName: 'vErrors'
+});
+
 Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('cabeceralogin', require('./components/CabeceraLogin.vue'));
 Vue.component('mimenu', require('./components/Menu.vue'));
