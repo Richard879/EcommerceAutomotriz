@@ -2018,6 +2018,7 @@
                 me.arrayAccesorio.map(function(value, key){
                     me.arrayTempAccesorio.push({
                         'nIdAccesorio'      : value.nIdElemento,
+                        'cCodigoERP'        : value.cCodigoERP,
                         'nCantidad'         : me.arrayAccesorioCantidad[key],
                         'cFlagMarca'        : me.arrayAccesorioFlagMarca[key]==false ? 'N' : 'C',
                         'cDescripcionNoConformidad': me.arrayAccesorioDescripcion[key]==null ? '' : me.arrayAccesorioDescripcion[key]
@@ -2329,7 +2330,7 @@
 
                 me.arrayTempAccesorio.map(function(value, key) {
                     me.arraySapMercancia.push({
-                        'ItemCode'       : value.nIdAccesorio,
+                        'ItemCode'       : value.cCodigoERP,
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
                         'Quantity'       : me.arrayAccesorioCantidad[key],
                         'UnitPrice'      : 0.01,
