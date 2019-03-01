@@ -1160,13 +1160,13 @@
                     {
                         //==============================================================
                         //================== REGISTRO ACTIVIDAD EN SAP ===============
-                        /*setTimeout(function() {
-                            me.generaSapLlamadaServicioEntregaVeh();
-                        }, 1600);*/
-
                         setTimeout(function() {
-                            me.generaSapActividadServiceCall();
+                            me.generaSapLlamadaServicioEntregaVeh();
                         }, 1600);
+
+                        /*setTimeout(function() {
+                            me.generaSapActividadServiceCall();
+                        }, 1600);*/
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1178,7 +1178,7 @@
                     }
                 });
             },
-            generaSapActividadServiceCall(){
+            /*generaSapActividadServiceCall(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
@@ -1202,8 +1202,8 @@
                         }
                     }
                 });
-            },
-            /*generaSapLlamadaServicioEntregaVeh(){
+            },*/
+            generaSapLlamadaServicioEntregaVeh(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
@@ -1268,7 +1268,7 @@
                         }
                     }
                 });
-            },*/
+            },
             validarRegistrarEntregaVehiculo(){
                 this.error = 0;
                 this.mensajeError =[];
