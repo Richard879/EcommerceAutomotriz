@@ -46,13 +46,26 @@ class SapPedidoController extends Controller
                     "DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
-                        [
+                        [        
                             "ItemCode"    => $value['cNumeroVin'],
                             "Quantity"    => "1",
                             "TaxCode"     => "IGV",
                             "UnitPrice"   => (string)$SubTotal,
                             "Currency"    => "US$",
                             "WarehouseCode" =>(string)$request->WarehouseCode
+
+                            /*IF(NDOCENTRMERCANCIA<>0)
+                            [
+                                [
+                                    "SerialNumbers" => [
+                                        [
+                                            "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                                            "InternalSerialNumber"      =>  (string)$value['cNumeroVin']
+                                        ]
+                                    ]
+                                ]
+                            ],*/
+                            
                         ]
                     ]
                 ]
