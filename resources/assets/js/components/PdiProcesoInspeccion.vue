@@ -2370,14 +2370,14 @@
                                 'cLogRespuesta': response.data.toString(),
                                 'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
-
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarMercancia();
-                            }, 1600);
                         }
                     });
+
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.generaActualizarMercancia();
+                    }, 1600);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
                     console.log(error);
