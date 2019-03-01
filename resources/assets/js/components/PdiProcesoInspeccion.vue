@@ -2074,6 +2074,7 @@
                     'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
                     'cObservacion'              : this.formPdi.cobservacion
                 }).then(response => {
+                    let me = this;
                     if(response.data[0].nFlagMsje == 1)
                     {
                         this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
@@ -2093,7 +2094,7 @@
                         }
 
                         setTimeout(function() {
-                            this.confirmaPdi();
+                            me.confirmaPdi();
                         }, 3600);
                     }
                     else{
