@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SapActividadController extends Controller
 {
-    public function SapSetActividad(Request $request)
+    public function SapSetActividadCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -143,7 +143,7 @@ class SapActividadController extends Controller
         ];
     }
 
-    public function SapSetActividadEntregaVeh(Request $request)
+    public function SapSetActividad(Request $request)
     {
         $client = new Client([
             'verify'    => false,

@@ -1253,6 +1253,8 @@
         data(){
 
             return {
+                ccustomercode: '',
+                nservicecallid: 0,
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // ============================================
@@ -1289,6 +1291,7 @@
                     nidsolicitud: 0,
                     cnombresolicitud: '',
                     nidflagvinplaca: 1,
+                    cnumerovin: '',
                     cvinplacanombre: '',
                     nidcompra: 0,
                     nidvehiculoplaca: 0,
@@ -1378,6 +1381,8 @@
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
                 arraySapMercancia: [],
+                arraySapLlamadaServicio: [],
+                arraySapActividad: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1792,6 +1797,9 @@
             asignarVin(objCompra){
                 this.formPdi.nidcompra = objCompra.nIdCompra;
                 this.formPdi.cvinplacanombre = objCompra.cNumeroVin;
+                this.formPdi.cnumerovin = objCompra.cNumeroVin;
+                this.ccustomercode = objCompra.cCustomerCode;
+                this.nservicecallid = objCompra.nServiceCallID;
                 this.formPdi.nidvehiculoplaca = 0;
                 this.cerrarModal();
             },
@@ -2018,6 +2026,7 @@
                 me.arrayAccesorio.map(function(value, key){
                     me.arrayTempAccesorio.push({
                         'nIdAccesorio'      : value.nIdElemento,
+                        'cCodigoERP'        : value.cCodigoERP,
                         'nCantidad'         : me.arrayAccesorioCantidad[key],
                         'cFlagMarca'        : me.arrayAccesorioFlagMarca[key]==false ? 'N' : 'C',
                         'cDescripcionNoConformidad': me.arrayAccesorioDescripcion[key]==null ? '' : me.arrayAccesorioDescripcion[key]
@@ -2074,6 +2083,7 @@
                     'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
                     'cObservacion'              : this.formPdi.cobservacion
                 }).then(response => {
+                    let me = this;
                     if(response.data[0].nFlagMsje == 1)
                     {
                         this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
@@ -2083,18 +2093,19 @@
                                 this.registrarPlantilla();
                             }
                         }
-                        if(this.nflagaccesorioValida==1){
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
-                        }
                         if(this.attachment){
                             this.subirArchivo();
                         }
 
-                        setTimeout(function() {
-                            this.confirmaPdi();
-                        }, 3600);
+                        if(this.nflagaccesorioValida==1){
+                            if(this.arrayTempAccesorio.length){
+                                this.registrarAccesorios();
+                            }
+                        }else{
+                            setTimeout(function() {
+                                me.confirmaPdi();
+                            }, 3600);
+                        }
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2312,6 +2323,9 @@
                             me.generaSapMercancia();
                         }, 1600);
                     }
+                    else{
+                        me.confirmaPdi();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2328,7 +2342,7 @@
 
                 me.arrayTempAccesorio.map(function(value, key) {
                     me.arraySapMercancia.push({
-                        'ItemCode'       : value.nIdAccesorio,
+                        'ItemCode'       : value.cCodigoERP,
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
                         'Quantity'       : me.arrayAccesorioCantidad[key],
                         'UnitPrice'      : 0.01,
@@ -2364,14 +2378,14 @@
                                 'cLogRespuesta': response.data.toString(),
                                 'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
-
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarMercancia();
-                            }, 1600);
                         }
                     });
+
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.generaActualizarMercancia();
+                    }, 1600);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
                     console.log(error);
@@ -2385,12 +2399,128 @@
             },
             generaActualizarMercancia(){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
+                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaEntry';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-
+                    me.arraySapActividad.push({
+                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                        'hActivityTime' :   moment().format('HH:mm:ss'),
+                        'cCardCode'     :   me.ccustomercode,
+                        'cNotes'        :   'PdiEntrada',
+                        'nDuration'     :   '15',
+                        'cDurationType' :   'du_Minuts',
+                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                        'cReminder'     :   'tYES',
+                        'nReminderPeriod':  '15',
+                        'cReminderType' :   'du_Minuts',
+                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                        'hStartTime'    :   moment().format('HH:mm:ss')
+                    });
+                    setTimeout(function() {
+                        me.generaSapActividadEntradaMercancia();
+                    }, 1600);
                 }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapActividadEntradaMercancia(){
+                let me = this;
+                //==============================================================
+                //================== REGISTRO ACTIVIDAD EN SAP ===============
+                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapActividad
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.nservicecallid,
+                                'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo'    : 4,
+                                'cActividadTipo'    : 'PdiEntrada',
+                                'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'         : 0,
+                                'nDocNum'           : 0,
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'cCustomerCode'     : me.ccustomercode,
+                                'cInternalSerialNum': me.formPdi.cnumerovin,
+                                'cItemCode'         : me.formPdi.cnumerovin,
+                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
+                                'nServiceCallID'    : me.nservicecallid
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaSgcActividadEntradaMercancia();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Actividad SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcActividadEntradaMercancia(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //==============================================================
+                        //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioEntrada();
+                        }, 1600);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapLlamadaServicioEntrada(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapPatchLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.loading.close();
+                    me.confirmaPdi();
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {

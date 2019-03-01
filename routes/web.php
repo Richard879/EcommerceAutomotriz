@@ -397,7 +397,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
+    Route::post('/compra/SetIntegraMercanciaEntry', 'CompraController@SetIntegraMercanciaEntry');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
+    Route::post('/actividad/SetIntegraActividadCompra','IntActividadController@SetIntegraActividadCompra');
     Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
@@ -449,10 +451,11 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
+    Route::post('/llamadaservicio/SapPatchLlamadaServicio', 'Api\SapLlamadaServicioController@SapPatchLlamadaServicio');
     //Actividad
-    Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
+    Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');
     Route::post('/actividad/SapSetActividadVenta', 'Api\SapActividadController@SapSetActividadVenta');
-    Route::post('/actividad/SapSetActividadEntregaVeh', 'Api\SapActividadController@SapSetActividadEntregaVeh');
+    Route::post('/actividad/SapSetActividad', 'Api\SapActividadController@SapSetActividad');
     //Tabla Costos
     Route::post('/tablacosto/SapSetTablaCostoCabecera','Api\SapTablaCostoController@SapSetTablaCostoCabecera');
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
