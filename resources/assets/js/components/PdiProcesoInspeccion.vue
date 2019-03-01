@@ -2315,6 +2315,9 @@
                             me.generaSapMercancia();
                         }, 1600);
                     }
+                    else{
+                        me.confirmaPdi();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
