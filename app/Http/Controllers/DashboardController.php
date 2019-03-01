@@ -64,6 +64,7 @@ class DashboardController extends Controller
     public function GetAsesoresByJV(Request $request)
     {
         $nIdUsuario = $request->nIdUsuario;
+        $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
 
         $dashboard = DB::select('EXEC usp_Dashboard_GetAsesoresByRol ?',
                                                         [

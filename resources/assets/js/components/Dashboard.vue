@@ -1012,12 +1012,8 @@
             },
             // Dashboard 04
             GetAsesoresByAll(){
-                var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
-                axios.get(url, {
-                    params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
-                    }
-                }).then(response => {
+                var url = this.ruta + '/dashboard/GetAsesoresByJV';
+                axios.get(url).then(response => {
                     this.cDashboard04.arrayAsesoresByAll = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -1065,7 +1061,7 @@
                         this.cDashboard04.fillInfoUsuario.cNombreRol = response.data[0].cNombreRol;
                         this.cDashboard04.arrayDashboardAsesoresByAll = response.data;
                     }
-                    this.createDashBoardCotizacionByUserFind()
+                    this.createDashBoardCotizacionByUserFindAll()
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1076,7 +1072,7 @@
                     }
                 });
             },
-            createDashBoardCotizacionByUserFind(){
+            createDashBoardCotizacionByUserFindAll(){
                 let me = this;
 
                 //Setear Información
