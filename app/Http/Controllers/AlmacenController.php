@@ -88,4 +88,49 @@ class AlmacenController extends Controller
 
         return response()->json($data);
     }
+
+    public function SetCambiarEstado(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdLocalidad   =   $request->nIdLocalidad;
+        $nIdAlmacen     =   $request->nIdAlmacen;
+        $nCodigoCuenta  =   $request->nCodigoCuenta;
+        $nIdUsuario     =   Auth::user()->id;
+
+        $estado     = ($request->opcion == 0) ? ($estado = 'D') : ($estado = 'A');
+
+        $usuario = DB::select('exec usp_Almacen_SetCambiarEstado ?, ?, ?, ?',
+                                                    [
+                                                        $nIdLocalidad,
+                                                        $nIdAlmacen,
+                                                        $nCodigoCuenta,
+                                                        $estado,
+                                                        $nIdUsuario
+                                                    ]);
+        return response()->json($usuario);
+    }
+
+    public function SetActualizarAlmacen(Request $request)
+    {
+        $nIdLocalidad       = $request->nIdLocalidad;
+        $nIdAlmacen         = $request->nIdAlmacen;
+        $nCodigoCuenta      = $request->nCodigoCuenta;
+        $nIdAlmacenAntiguo  = $request->nIdAlmacenAntiguo;
+
+        $nIdLocalidad       = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen         = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuenta      = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
+        $nIdAlmacenAntiguo  = ($nIdAlmacenAntiguo == NULL) ? ($nIdAlmacenAntiguo = 0) : $nIdAlmacenAntiguo;
+
+        $data = DB::select('exec [usp_Almacen_SetActualizarAlmacen] ?, ?, ?, ?, ?',
+                                                [   $nIdLocalidad,
+                                                    $nIdAlmacen,
+                                                    $nCodigoCuenta,
+                                                    $nIdAlmacenAntiguo,
+                                                    Auth::user()->id
+                                                ]);
+
+        return response()->json($data);
+    }
 }

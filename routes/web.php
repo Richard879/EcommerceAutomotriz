@@ -385,7 +385,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/almacen/GetAlmacenPorDefecto','AlmacenController@GetAlmacenPorDefecto');
     Route::get('/almacen/GetAlmacen','AlmacenController@GetAlmacen');
     Route::get('/almacen/GetListAlmacen','AlmacenController@GetListAlmacen');
+    Route::put('/almacen/SetCambiarEstado','AlmacenController@SetCambiarEstado');
     Route::post('/almacen/SetRegistrarAlmacen','AlmacenController@SetRegistrarAlmacen');
+    Route::put('/almacen/SetActualizarAlmacen','AlmacenController@SetActualizarAlmacen');
 
     Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 

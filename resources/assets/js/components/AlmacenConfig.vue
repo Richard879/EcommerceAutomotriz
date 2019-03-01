@@ -14,256 +14,265 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="tab01" href="#TabBandejaAlmacenes" @click="tabBandejaAlmacenes" role="tab" data-toggle="tab">
+                                        <a class="nav-link" :class="{'active': (vistaFormulario == 1)}" id="tab01" href="#TabBandejaAlmacenes" @click="tabBandejaAlmacenes" role="tab" data-toggle="tab">
                                             <i class="fa fa-wpforms"></i> BANDEJA DE ALMACENES
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tab02" href="#TabConfiguradorAlmacenes" @click="tabConfiguradorAlmacenes" role="tab" data-toggle="tab">
+                                        <a class="nav-link" :class="{'active': (vistaFormulario == 0)}" id="tab02" href="#TabConfiguradorAlmacenes" @click="tabConfiguradorAlmacenes" role="tab" data-toggle="tab">
                                             <i class="fa fa-bus"></i> CONFIGURADOR DE ALMACENES/CUENTA
                                         </a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabBandejaAlmacenes">
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">BANDEJA DE ALMACENES</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">* Localidad</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillBsqAlmacen.nIdLocalidad"
-                                                                                        filterable
-                                                                                        clearable
-                                                                                        loading-text
-                                                                                        placeholder="Seleccione una Localidad">
-                                                                                    <el-option
-                                                                                        v-for="concepto in arrayLocalidad"
-                                                                                        :key="concepto.nIdPar"
-                                                                                        :label="concepto.cParNombre"
-                                                                                        :value="concepto.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                    <template v-if="vistaFormulario">
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 1)}" id="TabBandejaAlmacenes">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BANDEJA DE ALMACENES</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-md-4 form-control-label">* Localidad</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <el-select v-model="fillBsqAlmacen.nIdLocalidad"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            loading-text
+                                                                                            placeholder="Seleccione una Localidad">
+                                                                                        <el-option
+                                                                                            v-for="concepto in arrayLocalidad"
+                                                                                            :key="concepto.nIdPar"
+                                                                                            :label="concepto.cParNombre"
+                                                                                            :value="concepto.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="row">
+                                                                                <label class="col-md-4 form-control-label">* Almacen</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <el-select v-model="fillBsqAlmacen.nIdAlmacen"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            loading-text
+                                                                                            placeholder="Seleccione un Almacen">
+                                                                                        <el-option
+                                                                                            v-for="concepto in arrayAlmacen"
+                                                                                            :key="concepto.nIdPar"
+                                                                                            :label="concepto.cParNombre"
+                                                                                            :value="concepto.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">* Almacen</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillBsqAlmacen.nIdAlmacen"
-                                                                                        filterable
-                                                                                        clearable
-                                                                                        loading-text
-                                                                                        placeholder="Seleccione un Almacen">
-                                                                                    <el-option
-                                                                                        v-for="concepto in arrayAlmacen"
-                                                                                        :key="concepto.nIdPar"
-                                                                                        :label="concepto.cParNombre"
-                                                                                        :value="concepto.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <input type="text" v-model="fillBsqAlmacen.nCodigoCuenta" class="form-control form-control-sm">
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <input type="text" v-model="fillBsqAlmacen.nCodigoCuenta" class="form-control form-control-sm">
-                                                                            </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-md-9 offset-md-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarAlmacenes(1)">
+                                                                                <i class="fa fa-search"></i> BUSCAR
+                                                                            </button>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarAlmacenes(1)">
-                                                                            <i class="fa fa-search"></i> BUSCAR
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO DE ALMACENES</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <template v-if="arrayListAlmacenes.length">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acción</th>
-                                                                                    <th>Localidad</th>
-                                                                                    <th>Almacen</th>
-                                                                                    <th>Codigo Almacen</th>
-                                                                                </tr>
-                                                                            </thead>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO DE ALMACENES</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <template v-if="arrayListAlmacenes.length">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Localidad</th>
+                                                                                        <th>Almacen</th>
+                                                                                        <th>Codigo Almacen</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(almacen, index) in arrayListAlmacenes" :key="index">
+                                                                                        <td>
+                                                                                            <template v-if="almacen.cEstado == 'A'">
+                                                                                                <a href="#" @click.prevent="cambiarEstado(0, almacen)"><i :style="'color:red'" class="fa-md fa fa-trash"></i></a>
+                                                                                                <a href="#" @click.prevent="cambiarVista(0, almacen)"><i :style="'color:blue'" class="fa-md fa fa-edit"></i></a>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <a href="#" @click.prevent="cambiarEstado(1, almacen)"><i :style="'color:green'" class="fa-md fa fa-check"></i></a>
+                                                                                            </template>
+                                                                                        </td>
+                                                                                        <td v-text="almacen.cNombreLocalidad"></td>
+                                                                                        <td v-text="almacen.cWhsName"></td>
+                                                                                        <td v-text="almacen.cAcctCode"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaAlmacenes(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <table>
                                                                             <tbody>
-                                                                                <tr v-for="(almacen, index) in arrayListAlmacenes" :key="index">
-                                                                                    <td>
-                                                                                        <a href="#">
-                                                                                            <i :style="'color:red'" class="fa-md fa fa-check"></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                    <td v-text="almacen.cNombreLocalidad"></td>
-                                                                                    <td v-text="almacen.cWhsName"></td>
-                                                                                    <td v-text="almacen.cAcctCode"></td>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-7">
-                                                                                <nav>
-                                                                                    <ul class="pagination">
-                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                            <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                        </li>
-                                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                                            <a class="page-link"
-                                                                                            href="#" @click.prevent="cambiarPaginaAlmacenes(page)"
-                                                                                            v-text="page"></a>
-                                                                                        </li>
-                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                            <a @click.prevent="cambiarPaginaAlmacenes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </nav>
-                                                                            </div>
-                                                                            <div class="col-lg-5">
-                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <table>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td colspan="10">No existen registros!</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </template>
-                                                            </form>
+                                                                    </template>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabConfiguradorAlmacenes">
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">CONFIGURADOR ALMACENES</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">* Localidad</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillAlmacen.nIdLocalidad"
-                                                                                        filterable
-                                                                                        clearable
-                                                                                        loading-text
-                                                                                        v-validate="'required'"
-                                                                                        data-vv-as="Localidad"
-                                                                                        name="nLocalidad"
-                                                                                        :class="{'has-error': vErrors.has('nLocalidad')}"
-                                                                                        placeholder="Seleccione una Localidad">
-                                                                                    <el-option
-                                                                                        v-for="concepto in arrayLocalidad"
-                                                                                        :key="concepto.nIdPar"
-                                                                                        :label="concepto.cParNombre"
-                                                                                        :value="concepto.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                            </section>
+                                        </div>
+                                    </template>
+
+                                    <template v-else>
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}"  id="TabConfiguradorAlmacenes">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">CONFIGURADOR ALMACENES</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-md-4 form-control-label">* Localidad</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <el-select v-model="fillAlmacen.nIdLocalidad"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            loading-text
+                                                                                            v-validate="'required'"
+                                                                                            data-vv-as="Localidad"
+                                                                                            name="nLocalidad"
+                                                                                            :class="{'has-error': vErrors.has('nLocalidad')}"
+                                                                                            placeholder="Seleccione una Localidad">
+                                                                                        <el-option
+                                                                                            v-for="concepto in arrayLocalidad"
+                                                                                            :key="concepto.nIdPar"
+                                                                                            :label="concepto.cParNombre"
+                                                                                            :value="concepto.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="row">
+                                                                                <label class="col-md-4 form-control-label">* Almacen</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <el-select v-model="fillAlmacen.nIdAlmacen"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            loading-text
+                                                                                            v-validate="'required'"
+                                                                                            data-vv-as="Almacen"
+                                                                                            name="nAlmacen"
+                                                                                            :class="{'has-error': vErrors.has('nAlmacen')}"
+                                                                                            placeholder="Seleccione un Almacen">
+                                                                                        <el-option
+                                                                                            v-for="concepto in arrayAlmacen"
+                                                                                            :key="concepto.nIdPar"
+                                                                                            :label="concepto.cParNombre"
+                                                                                            :value="concepto.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                    <span v-show="vErrors.has('nAlmacen')" class="alert-danger">
+                                                                                        {{ vErrors.first('nAlmacen') }}
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">* Almacen</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <el-select v-model="fillAlmacen.nIdAlmacen"
-                                                                                        filterable
-                                                                                        clearable
-                                                                                        loading-text
-                                                                                        v-validate="'required'"
-                                                                                        data-vv-as="Almacen"
-                                                                                        name="nAlmacen"
-                                                                                        :class="{'has-error': vErrors.has('nAlmacen')}"
-                                                                                        placeholder="Seleccione un Almacen">
-                                                                                    <el-option
-                                                                                        v-for="concepto in arrayAlmacen"
-                                                                                        :key="concepto.nIdPar"
-                                                                                        :label="concepto.cParNombre"
-                                                                                        :value="concepto.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                                <span v-show="vErrors.has('nAlmacen')" class="alert-danger">
-                                                                                    {{ vErrors.first('nAlmacen') }}
-                                                                                </span>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <input type="text"
+                                                                                            v-model.number="fillAlmacen.nCodigoCuenta"
+                                                                                            class="form-control form-control-sm"
+                                                                                            v-validate="'required|numeric|digits:6|max:6'"
+                                                                                            data-vv-as="Codigo de Cuenta"
+                                                                                            name="nCodigoCuenta"
+                                                                                            :class="{'has-error': vErrors.has('nCodigoCuenta')}">
+                                                                                    <span v-show="vErrors.has('nCodigoCuenta')" class="alert-danger">
+                                                                                        {{ vErrors.first('nCodigoCuenta') }}
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
-                                                                            <div class="col-md-8 widthFull">
-                                                                                <input type="text"
-                                                                                        v-model.number="fillAlmacen.nCodigoCuenta"
-                                                                                        class="form-control form-control-sm"
-                                                                                        v-validate="'required|numeric|digits:6|max:6'"
-                                                                                        data-vv-as="Codigo de Cuenta"
-                                                                                        name="nCodigoCuenta"
-                                                                                        :class="{'has-error': vErrors.has('nCodigoCuenta')}">
-                                                                                <span v-show="vErrors.has('nCodigoCuenta')" class="alert-danger">
-                                                                                    {{ vErrors.first('nCodigoCuenta') }}
-                                                                                </span>
-                                                                            </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-md-9 offset-md-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="guardarAlmacen()">
+                                                                                <i class="fa fa-save"></i> GUARDAR
+                                                                            </button>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="guardarAlmacen(1)">
-                                                                            <i class="fa fa-save"></i> REGISTRAR
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-                                    </div>
+                                            </section>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -374,7 +383,8 @@
                 fillAlmacen: {
                     nIdLocalidad: '',
                     nIdAlmacen: '',
-                    nCodigoCuenta: ''
+                    nCodigoCuenta: '',
+                    nIdAlmacenAntiguo: '' //Almacen cargado antes de actualizar
                 },
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -401,7 +411,10 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false,
+                vistaFormulario: 1,
+                flagGuardar: 1
             }
         },
         mounted(){
@@ -518,6 +531,7 @@
             // TAB BANDEJA DE ALMACENES
             // =================================================================
             tabBandejaAlmacenes(){
+                this.vistaFormulario = 1;
                 this.limpiarTabBsqAlmacenes();
             },
             limpiarTabBsqAlmacenes(){
@@ -557,10 +571,102 @@
                 this.pagination.current_page=page;
                 this.listarAlmacenes(page);
             },
+            cambiarEstado(op, almacen){
+                swal({
+                    title: '¿Esta seguro de ' + ((op == 0) ? 'Desactivar' : ' Activar ') + ' el Almacen ' + almacen.cWhsName + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, ' + ((op == 0) ? 'Desactivar' : ' Activar '),
+                    cancelButtonText: 'No, cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/almacen/SetCambiarEstado';
+                        axios.put(url, {
+                            nIdLocalidad  :   almacen.cIdLocalidad,
+                            nIdAlmacen    :   (almacen.cWhsCode).toString(),
+                            nCodigoCuenta :   almacen.cAcctCode,
+                            opcion : op
+                        }).then(response => {
+                            me.listarAlmacenes(1);
+                            $("#myBar").hide();
+                            swal(
+                                ((op == 0) ? 'Desactivado' : ' Activado '),
+                                'El Almacen ' + almacen.cWhsName +' ha sido ' + ((op == 0) ? 'Desactivado' : ' Activado ') + ' con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            cambiarVista(op, almacen){
+                this.vistaFormulario = op;
+                this.flagGuardar = 0;
+                this.fillAlmacen.nIdLocalidad       = almacen.cIdLocalidad;
+                this.fillAlmacen.nIdAlmacen         = (almacen.cWhsCode).toString();
+                this.fillAlmacen.nCodigoCuenta      = almacen.cAcctCode;
+                this.fillAlmacen.nIdAlmacenAntiguo  = (almacen.cWhsCode).toString();
+            },
+            actualizarAlmacen(){
+                if(this.validarRegistrarAlmacen()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                //Comprueba todas las validaciones
+                this.$validator.validate().then(result => {
+                    if(result) {
+                        var url = this.ruta + '/almacen/SetActualizarAlmacen';
+                        axios.put(url, {
+                            nIdLocalidad        :   this.fillAlmacen.nIdLocalidad,
+                            nIdAlmacen          :   (this.fillAlmacen.nIdAlmacen).toString(),
+                            nCodigoCuenta       :   this.fillAlmacen.nCodigoCuenta,
+                            nIdAlmacenAntiguo   :   (this.fillAlmacen.nIdAlmacenAntiguo).toString(),
+                        }).then(response => {
+                            if (response.data[0].nFlagMsje == 1) {
+                                swal(response.data[0].cMensaje);
+                                this.limpiarTabBsqConfigurarAlmacenes();
+                                this.vErrors.clear();//Limpiar Errores
+                                this.tabBandejaAlmacenes();
+                            } else {
+                                swal(response.data[0].cMensaje);
+                            }
+                        }).catch(error => {
+                            this.errors = error
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    }
+                    if (!result) {
+                        //Coleccion de Errores
+                        this.accionmodal=3;
+                        this.modal = 1;
+                    }
+                })
+            },
             // =================================================================
             // TAB CONFIGURADOR DE ALMACENES
             // =================================================================
             tabConfiguradorAlmacenes(){
+                this.vistaFormulario = 0;
+                this.flagGuardar = 1;
                 this.limpiarTabBsqConfigurarAlmacenes();
             },
             limpiarTabBsqConfigurarAlmacenes(){
@@ -568,8 +674,8 @@
                 this.fillAlmacen.nIdAlmacen = '';
                 this.fillAlmacen.nCodigoCuenta = '';
             },
-            guardarAlmacen(op){
-                (op == 1) ? this.registrarAlmacen() : this.actualizarAlmacen();
+            guardarAlmacen(){
+                (this.flagGuardar == 1) ? this.registrarAlmacen() : this.actualizarAlmacen();
             },
             validarRegistrarAlmacen(){
                 this.error = 0;
@@ -597,6 +703,7 @@
                     return;
                 }
 
+                //Comprueba todas las validaciones
                 this.$validator.validate().then(result => {
                     if(result) {
                         var url = this.ruta + '/almacen/SetRegistrarAlmacen';
@@ -608,7 +715,8 @@
                             if (response.data[0].nFlagMsje == 1) {
                                 swal(response.data[0].cMensaje);
                                 this.limpiarTabBsqConfigurarAlmacenes();
-                                // this.vErrors.items = [];
+                                this.vErrors.clear();//Limpiar Errores
+                                this.tabBandejaAlmacenes();
                             } else {
                                 swal(response.data[0].cMensaje);
                             }
@@ -671,6 +779,18 @@
                 this.error = 0;
                 this.mensajeError = '';
                 this.limpiarPaginacionModal();
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
