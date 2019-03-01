@@ -77,6 +77,7 @@ Vue.component('lineamarcamodelo', require('./components/LineaMarcaModelo.vue'));
 Vue.component('asignavendedorjefeventas', require('./components/AsignaVendedorJefeVentas.vue'));
 Vue.component('gestionusuarios', require('./components/GestionUsuarios.vue'));
 Vue.component('tipocambio', require('./components/TipoCambio.vue'));
+Vue.component('almacen', require('./components/AlmacenConfig.vue'));
 
 const app = new Vue({
     el: '#app',
