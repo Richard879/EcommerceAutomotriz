@@ -64,6 +64,9 @@
     <template v-if="menu==1300482">
         <gestionusuarios :ruta="ruta"></gestionusuarios>
     </template>
+    <template v-if="menu==1300495">
+        <almacen :ruta="ruta"></almacen>
+    </template>
 
 
     <template v-if="menu==1300284">

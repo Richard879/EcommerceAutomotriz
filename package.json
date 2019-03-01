@@ -26,6 +26,7 @@
         "laravel-echo": "^1.5.3",
         "material-icons": "^0.2.3",
         "pusher-js": "^4.4.0",
+        "vee-validate": "^2.1.7",
         "vue-event-bus": "^1.0.2",
         "vue-simple-calendar": "^4.0.2",
         "vuesax": "^3.4.7"
