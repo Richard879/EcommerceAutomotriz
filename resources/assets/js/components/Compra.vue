@@ -2528,7 +2528,7 @@
             registroSapBusinessActividad(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapActividad
                 }).then(response => {
@@ -3420,7 +3420,7 @@
                 if(objCompra.nActivityCode== 0){
                     //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
-                    var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                    var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                     axios.post(sapUrl, {
                         'data': me.arraySapActividad
                     }).then(response => {
