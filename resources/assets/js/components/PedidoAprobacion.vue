@@ -708,7 +708,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                ccodigoempresasap: 'C20480683839',
+                ccustomercode: 'C20480683839',
                 fillProveedor:{
                     nidproveedor: 0,
                     cproveedornombre: ''
@@ -1731,7 +1731,7 @@
                                 me.arraySapActividadVehiculo.push({
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                     'hActivityTime' :   moment().format('HH:mm:ss'),
-                                    'cCardCode'     :   me.ccodigoempresasap,
+                                    'cCardCode'     :   me.ccustomercode,
                                     'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
@@ -1791,7 +1791,7 @@
                                 me.arraySapActividadEV.push({
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                     'hActivityTime' :   '08:13:00',
-                                    'cCardCode'     :   me.ccodigoempresasap,
+                                    'cCardCode'     :   me.ccustomercode,
                                     'cNotes'        :   'OrdenVenta',
                                     //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaEV.DocEntry.toString(),

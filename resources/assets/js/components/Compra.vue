@@ -1526,7 +1526,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                ccodigoempresasap: 'C20480683839',
+                ccustomercode: 'C20480683839',
                 canio: '',
                 cmes: '',
                 nidcronograma: 0,
@@ -2361,7 +2361,7 @@
                     //Sino se encuentra no pase a TarjetaEquipo
                     if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapTarjetaEquipo.push({
-                            'cCustomerCode'     : me.ccodigoempresasap,
+                            'cCustomerCode'     : me.ccustomercode,
                             'cInternalSerialNum': x.cNumeroVin,
                             'cItemCode'         : x.cNumeroVin
                         });
@@ -2472,7 +2472,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccodigoempresasap,
+                                'cCardCode'     :   me.ccustomercode,
                                 'cNotes'        :   'OrdenCompra',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
