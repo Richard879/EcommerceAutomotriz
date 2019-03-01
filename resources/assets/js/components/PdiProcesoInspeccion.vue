@@ -2449,13 +2449,14 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo': 4,
-                                'cActividadTipo': 'PdiEntrada',
-                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'     : 0,
-                                'nDocNum'       : 0,
-                                'cLogRespuesta' : response.data.toString()
+                                'nServiceCallID'    : me.nservicecallid,
+                                'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo'    : 4,
+                                'cActividadTipo'    : 'PdiEntrada',
+                                'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'         : 0,
+                                'nDocNum'           : 0,
+                                'cLogRespuesta'     : response.data.toString()
                             });
 
                             me.arraySapLlamadaServicio = [];

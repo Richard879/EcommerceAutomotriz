@@ -396,6 +396,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
     Route::post('/compra/SetIntegraMercanciaEntry', 'CompraController@SetIntegraMercanciaEntry');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
+    Route::post('/actividad/SetIntegraActividadCompra','IntActividadController@SetIntegraActividadCompra');
     Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');

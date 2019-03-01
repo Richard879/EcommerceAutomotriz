@@ -2569,7 +2569,7 @@
             },
             registroSgcActividad(){
                 let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -3480,7 +3480,7 @@
             },
             generaActualizarActividadCompra(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -3951,7 +3951,7 @@
             },
             generaActualizarActividadMercancia(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
