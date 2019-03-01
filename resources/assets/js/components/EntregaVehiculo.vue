@@ -1160,8 +1160,12 @@
                     {
                         //==============================================================
                         //================== REGISTRO ACTIVIDAD EN SAP ===============
-                        setTimeout(function() {
+                        /*setTimeout(function() {
                             me.generaSapLlamadaServicioEntregaVeh();
+                        }, 1600);*/
+
+                        setTimeout(function() {
+                            me.generaSapActividadServiceCall();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -1184,7 +1188,10 @@
                     'nLine'             : 0
                 }).then(response => {
                     me.loading.close();
-                    me.confirmaPdi();
+                    swal('Se generó la entrega del vehículo');
+                    me.attachments = [];
+                    me.form = new FormData;
+                    me.tabMisInspecciones();
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
                     console.log(error);
@@ -1429,6 +1436,17 @@
                 this.paginationModal.last_page = 0,
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarPdi(1);
             },
             //Cerrar Modal
             cerrarModal(){
