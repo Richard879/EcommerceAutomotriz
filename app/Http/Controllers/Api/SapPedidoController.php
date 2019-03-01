@@ -47,6 +47,17 @@ class SapPedidoController extends Controller
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
                         [
+                            /*IF(NDOCENTRMERCANCIA<>0)
+                            [
+                                [
+                                    "SerialNumbers" => [
+                                        [
+                                            "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                                            "InternalSerialNumber"      =>  (string)$value['cNumeroVin']
+                                        ]
+                                    ]
+                                ]
+                            ],*/
                             "ItemCode"    => $value['cNumeroVin'],
                             "Quantity"    => "1",
                             "TaxCode"     => "IGV",
