@@ -654,7 +654,7 @@
         props:['ruta'],
         data(){
             return {
-                ccodigoempresasap: 'C20480683839',
+                ccustomercode: 'C20480683839',
                 // =============================================================
                 // VARIABLES TAB INSPECCIONES
                 // =============================================================
@@ -1069,7 +1069,7 @@
                     me.arraySapActividad.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
                         'hActivityTime' :   moment().format('HH:mm:ss'),
-                        'cCardCode'     :   me.ccodigoempresasap,
+                        'cCardCode'     :   me.ccustomercode,
                         'cNotes'        :   'EntregaVehiculo',
                         'nDuration'     :   '15',
                         'cDurationType' :   'du_Minuts',
@@ -1126,7 +1126,7 @@
                             me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccodigoempresasap,
+                                'cCustomerCode'     : me.ccustomercode,
                                 'cInternalSerialNum': me.fillEntregaVehiculo.cnumerovin,
                                 'cItemCode'         : me.fillEntregaVehiculo.cnumerovin,
                                 'cSubject'          : 'ENTREGA VEHICULO'
