@@ -2052,6 +2052,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
                     'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2298,12 +2300,14 @@
                 });
             },
             registrarAccesorios(){
-                var url = this.ruta + '/pdi/SetAccesorioPdi';
+                let me = this;
+
+                var url = me.ruta + '/pdi/SetAccesorioPdi';
                 axios.post(url, {
-                    'nIdCabeceraInspeccion': this.formPdi.nidcabecerainspeccion,
-                    'data': this.arrayTempAccesorio
+                    'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
+                    'data': me.arrayTempAccesorio
                 }).then(response => {
-                    if(this.formPdi.nidtipoinspeccion == 6){
+                    if(me.formPdi.nidtipoinspeccion == 6){
                         setTimeout(function() {
                             me.generaSapMercancia();
                         }, 1600);
@@ -2324,7 +2328,7 @@
 
                 me.arrayTempAccesorio.map(function(value, key) {
                     me.arraySapMercancia.push({
-                        'ItemCode'       : value.nIdElemento,
+                        'ItemCode'       : value.nIdAccesorio,
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
                         'Quantity'       : me.arrayAccesorioCantidad[key],
                         'UnitPrice'      : 0.01,
@@ -2337,9 +2341,9 @@
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaEntry';
                 axios.post(sapUrl, {
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'data': me.arraySapMercancia
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data'          : me.arraySapMercancia
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
