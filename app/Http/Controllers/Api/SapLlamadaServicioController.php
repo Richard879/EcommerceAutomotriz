@@ -129,23 +129,5 @@ class SapLlamadaServicioController extends Controller
             // 'arrayEV'       =>  $arrayEV
         ];
     }
-
-    public function SapSetActividadByServiceCallId(Request $request)
-    {
-        $client = new Client([
-            'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
-        ]);
-
-        $nOpcion     = $request->nopcion;
-        $cFiltro     = $request->cfiltro;
-        $nOpcion = ($nOpcion == NULL) ? ($nOpcion = 0) : $nOpcion;
-        $cFiltro = ($cFiltro == NULL) ? ($cFiltro = '0') : $cFiltro;
-
-        $response = $client->request('GET', "/api/Ubigeo/GetUbigeo/", [
-                                                                        'query' => ['nOpcion' => $nOpcion,
-                                                                                    'cFiltro' => $cFiltro]
-                                                                      ]);
-        return $response->getBody();
-    }
+    
 }

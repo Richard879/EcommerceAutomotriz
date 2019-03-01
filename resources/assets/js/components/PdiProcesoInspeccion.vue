@@ -2498,13 +2498,13 @@
                     {
                         //==============================================================
                         //================== REGISTRO ACTIVIDAD EN SAP ===============
-                        /*setTimeout(function() {
-                            me.generaSapActividadServiceCall();
-                        }, 1600);*/
-
                         setTimeout(function() {
-                            me.generaSapLlamadaServicioEntrada();
+                            me.generaSapActividadServiceCall();
                         }, 1600);
+
+                        /*setTimeout(function() {
+                            me.generaSapLlamadaServicioEntrada();
+                        }, 1600);*/
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2516,16 +2516,17 @@
                     }
                 });
             },
-            /*generaSapActividadServiceCall(){
+            generaSapActividadServiceCall(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapPatchLlamadaServicio';
+                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
                 axios.post(sapUrl, {
                     'cCustomerCode'     : me.ccustomercode,
                     'cInternalSerialNum': me.formPdi.cnumerovin,
                     'cItemCode'         : me.formPdi.cnumerovin,
                     'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : me.nservicecallid
+                    'nServiceCallID'    : me.nservicecallid,
+                    'nLine'             : 0
                 }).then(response => {
                     me.loading.close();
                     me.confirmaPdi();
@@ -2539,8 +2540,8 @@
                         }
                     }
                 });
-            },*/
-            generaSapLlamadaServicioEntrada(){
+            },
+            /*generaSapLlamadaServicioEntrada(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
@@ -2602,7 +2603,7 @@
                         }
                     }
                 });
-            },
+            },*/
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
