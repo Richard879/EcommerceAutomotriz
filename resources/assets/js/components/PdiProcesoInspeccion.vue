@@ -2085,18 +2085,19 @@
                                 this.registrarPlantilla();
                             }
                         }
-                        if(this.nflagaccesorioValida==1){
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
-                        }
                         if(this.attachment){
                             this.subirArchivo();
                         }
 
-                        setTimeout(function() {
-                            me.confirmaPdi();
-                        }, 3600);
+                        if(this.nflagaccesorioValida==1){
+                            if(this.arrayTempAccesorio.length){
+                                this.registrarAccesorios();
+                            }
+                        }else{
+                            setTimeout(function() {
+                                me.confirmaPdi();
+                            }, 3600);
+                        }
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2391,7 +2392,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-
+                    me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
