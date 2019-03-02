@@ -3876,27 +3876,14 @@
             },
             generaActualizarDocEntryStock(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SapIntegracionMercancia';
+                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
                 axios.post(sapUrl, {
                     data: me.arraySapUpdSgc
                 }).then(response => {
+                    me.loading.close();
+                    swal('Entrada Mercancia registrada correctamente');
                     me.limpiarFormulario();
-                    /*$("#myBar").hide();
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        setTimeout(function() {
-                            me.generaSapActividadMercancia(objCompra, 10000, 'EntradaMercancia');
-                        }, 1600);
-                    }
-                    else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en Actualizar Mercancia!',
-                        });
-                        me.limpiarFormulario();
-                        me.listarCompras(1);
-                    }*/
+                    me.listarCompras(1);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
