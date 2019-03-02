@@ -3899,7 +3899,7 @@
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
                 axios.post(sapUrl, {
                     'data': me.arraySapActividad
                 }).then(response => {
