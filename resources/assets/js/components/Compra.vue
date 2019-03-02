@@ -3826,11 +3826,11 @@
                                 console.log("Integración SAP Mercancia : OK");
 
                                 me.arraySapUpdSgc.push({
-                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                    'cDocType': me.jsonRespuesta.DocType.toString(),
-                                    'cLogRespuesta': response.data.toString(),
-                                    'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                    'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'      : me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta' : response.data.toString(),
+                                    'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                                 });
 
                                 me.arraySapActividad.push({
@@ -3899,7 +3899,7 @@
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
                 axios.post(sapUrl, {
                     'data': me.arraySapActividad
                 }).then(response => {
