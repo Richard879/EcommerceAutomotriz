@@ -655,6 +655,9 @@
         data(){
             return {
                 ccustomercode: 'C20480683839',
+                nservicecallidcompra: 0,
+                nservicecallidventa: 0,
+                nactivitycode: 0,
                 // =============================================================
                 // VARIABLES TAB INSPECCIONES
                 // =============================================================
@@ -959,6 +962,7 @@
                 this.limpiarEntregaVehiculo();
                 this.fillEntregaVehiculo.cnumerovin = data['cNumeroVin'];
                 this.fillEntregaVehiculo.nIdCabeceraInspeccion = data['nIdCabeceraInspeccion'];
+                this.nservicecallidventa = data['nServiceCallIDVenta'];
 
                 $('#tab01').removeClass('nav-link active');
                 $('#tab01').addClass('nav-link');
@@ -1134,6 +1138,7 @@
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadEntregaVeh();
                             }, 1600);
@@ -1160,13 +1165,13 @@
                     {
                         //==============================================================
                         //================== REGISTRO ACTIVIDAD EN SAP ===============
-                        setTimeout(function() {
-                            me.generaSapLlamadaServicioEntregaVeh();
-                        }, 1600);
-
                         /*setTimeout(function() {
-                            me.generaSapActividadServiceCall();
+                            me.generaSapLlamadaServicioEntregaVeh();
                         }, 1600);*/
+
+                        setTimeout(function() {
+                            me.generaSapActividadServiceCall();
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1178,13 +1183,13 @@
                     }
                 });
             },
-            /*generaSapActividadServiceCall(){
+            generaSapActividadServiceCall(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
                 axios.post(sapUrl, {
                     'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : me.nservicecallid,
+                    'nServiceCallID'    : me.nservicecallidventa,
                     'nLine'             : 0
                 }).then(response => {
                     me.loading.close();
@@ -1202,8 +1207,8 @@
                         }
                     }
                 });
-            },*/
-            generaSapLlamadaServicioEntregaVeh(){
+            },
+            /*generaSapLlamadaServicioEntregaVeh(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
@@ -1268,7 +1273,7 @@
                         }
                     }
                 });
-            },
+            },*/
             validarRegistrarEntregaVehiculo(){
                 this.error = 0;
                 this.mensajeError =[];
