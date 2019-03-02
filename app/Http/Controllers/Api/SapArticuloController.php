@@ -95,4 +95,19 @@ class SapArticuloController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapSetSerialNumber(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://localhost:49454/'
+        ]);
+
+        $cItemCode    = $request->cItemCode;
+
+        $response = $client->request('POST', "/api/Articulo/SapSetSerialNumber/", [
+                                                                        'query' => ['cItemCode' => $cItemCode]
+                                                                      ]);
+        return $response->getBody();
+    }
 }
