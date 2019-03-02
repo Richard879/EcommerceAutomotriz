@@ -1530,6 +1530,8 @@
                 canio: '',
                 cmes: '',
                 nidcronograma: 0,
+                nservicecallid: 0,
+                nactivitycode: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -3853,7 +3855,7 @@
                                 //==============================================================
                                 //================== ACTUALIZAR DOCENTRY ===============
                                 setTimeout(function() {
-                                    me.generaActualizarDocEntryStock(objCompra);
+                                    me.generaActualizarMercancia(objCompra);
                                 }, 1600);
                             }
                         });
@@ -3868,24 +3870,21 @@
                         }
                     });
                 }
-                else{
-                    //==============================================================
-                    //================== REGISTRO ACTIVIDAD EN SAP ===============
-                    setTimeout(function() {
-                        me.generaSapActividadMercancia(objCompra, 100000, 'EntradaMercancia');
-                    }, 1600);
-                }
             },
-            generaActualizarDocEntryStock(objCompra){
+            generaActualizarMercancia(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdSgc
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.loading.close();
-                    swal('Entrada Mercancia registrada correctamente');
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                         //==============================================================
+                        //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapActividadMercancia(objCompra);
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3914,26 +3913,28 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo': 22,
-                                'cActividadTipo': 'OrdenCompra',
-                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
-                                'cLogRespuesta' : response.data.toString()
+                                'nServiceCallID'    : objCompra.nServiceCallID,
+                                'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo'    : 20,
+                                'cActividadTipo'    : 'EntradaMercancia',
+                                'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
+                                'cLogRespuesta'     : response.data.toString()
                             });
 
-                            /*me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
-                                'nActivityCode': me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode': objCompra.cCustomerCode,
+                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
+                                'cCustomerCode'     : objCompra.cCustomerCode,
                                 'cInternalSerialNum': objCompra.cNumeroVin,
-                                'cItemCode': objCompra.cNumeroVin,
-                                'cSubject': objCompra.cSubject
-                            });*/
+                                'cItemCode'         : objCompra.cNumeroVin,
+                                'cSubject'          : objCompra.cSubject
+                            });
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaActualizarActividadMercancia(objCompra);
                             }, 1600);
@@ -3951,28 +3952,17 @@
             },
             generaActualizarActividadMercancia(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe Actividad De EXCEL
-                        if(objCompra.nServiceCallID== 0){
-                            //==============================================================
-                            //================== REGISTRO ACTIVIDAD EN SAP ===============
-                            setTimeout(function() {
-                                me.generaSapLlamadaServicioMercancia(objCompra);
-                            }, 1600);
-                        }
-                        else{
-                            //==============================================================
-                            //================== FIN ===============
-                            me.loading.close();
-                            swal('Compra registrada correctamente');
-                            me.limpiarFormulario();
-                            me.listarCompras(1);
-                        }
+                        //================================================================================
+                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
+                        setTimeout(function() {
+                            me.generaSapActividadServiceCall(objCompra);
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3983,7 +3973,31 @@
                         }
                     }
                 });
-            },/**/
+            },
+            generaSapActividadServiceCall(objCompra){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
+                axios.post(sapUrl, {
+                    'nActivityCode'     : me.nactivitycode,
+                    'nServiceCallID'    : objCompra.nServiceCallID,
+                    'nLine'             : 0
+                }).then(response => {
+                    me.loading.close();
+                    swal('Entrada Mercancia registrada correctamente');
+                    me.limpiarFormulario();
+                    me.listarCompras(1);
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
                 if(this.validarActualizar()){
