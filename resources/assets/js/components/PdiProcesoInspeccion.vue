@@ -1243,7 +1243,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -1251,7 +1250,6 @@
     export default {
         props:['ruta'],
         data(){
-
             return {
                 ccustomercode: '',
                 nservicecallid: 0,
@@ -1413,7 +1411,7 @@
                 attachment: null,
                 form: new FormData,
                 textFile: '',
-                validaAccionModal: 0                
+                validaAccionModal: 0
             }
         },
         mounted(){
@@ -1703,11 +1701,11 @@
                     if(response.data.length){
                         this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
                         this.formAlmacen.cacctcode = response.data[0].cAcctCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;  
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
                         this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cacctcode = '';  
+                        this.formAlmacen.cacctcode = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
@@ -1754,7 +1752,7 @@
             asignarAlmacen(objAlmacen){
                 this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
                 this.formAlmacen.cwhsname = objAlmacen.cWhsName;
-                this.formAlmacen.cacctcode = objAlmacen.cAcctCode;                      
+                this.formAlmacen.cacctcode = objAlmacen.cAcctCode;
                 this.cerrarModal();
             },
             //=============== LISTAR MODAL POR VIN ===================
@@ -2020,7 +2018,7 @@
                     });
                     toastr.success('Se agregó accesorio');
                 }
-            }, 
+            },
             aceptarAccesorio(){
                 let me = this;
                 me.arrayTempAccesorio = [];
@@ -2347,7 +2345,7 @@
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
                         'Quantity'       : me.arrayAccesorioCantidad[key],
                         'UnitPrice'      : 0.01,
-                        'AccountCode'    : me.formAlmacen.cacctcode 
+                        'AccountCode'    : me.formAlmacen.cacctcode
                     });
                 });
                 //==============================================================
