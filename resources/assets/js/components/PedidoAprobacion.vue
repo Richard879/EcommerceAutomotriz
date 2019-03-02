@@ -2117,9 +2117,9 @@
                     me.arraySapRespuestaVehiculo = response.data;
                     me.arraySapRespuestaVehiculo.map(function(value, key){
                         me.arraySapCostoProm.push(value[0]);
-                        
+
                     });
-                   
+
                     me.arraySapCostoProm.map(function(value, key){
                         me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
                     });
