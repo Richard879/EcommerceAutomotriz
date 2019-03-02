@@ -46,7 +46,7 @@ class SapPedidoController extends Controller
                     "DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
-                        [        
+                        [
                             "ItemCode"    => $value['cNumeroVin'],
                             "Quantity"    => "1",
                             "TaxCode"     => "IGV",
@@ -65,7 +65,7 @@ class SapPedidoController extends Controller
                                     ]
                                 ]
                             ],*/
-                            
+
                         ]
                     ]
                 ]
