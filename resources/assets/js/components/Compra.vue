@@ -3760,6 +3760,8 @@
             },
             //=================== Generar Entrada Mercancia ==============
             generarSerieSap(objCompra){
+                this.mostrarProgressBar();
+                
                 let me = this;
 
                 var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
