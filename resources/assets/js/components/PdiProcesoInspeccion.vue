@@ -2614,12 +2614,13 @@
                     me.arraySapMercancia.push({
                         'ItemCode'       : value.cCodigoERP,
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
-                        'Quantity'       : me.arrayAccesorioCantidad[key]
+                        'Quantity'       : me.arrayAccesorioCantidad[key],
+                        'AccountCode'    : me.formAlmacen.cacctcode
                     });
                 });
                 //==============================================================
                 //================== REGISTRO MERCANCIA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+                me.loadingProgressBar("INTEGRANDO SALIDA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaExit';
                 axios.post(sapUrl, {
@@ -2667,7 +2668,7 @@
             },
             generaActualizarMercanciaExit(){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaEntry';
+                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaExit';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {

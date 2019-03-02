@@ -121,7 +121,8 @@ class SapMercanciaController extends Controller
                         [
                             "ItemCode"      =>  (string)$value['ItemCode'],
                             "WarehouseCode" =>  (string)$value['WarehouseCode'],
-                            "Quantity"      =>  (string)$value['Quantity']
+                            "Quantity"      =>  (string)$value['Quantity'],
+                            "AccountCode"   =>  (string)$value['AccountCode']
                         ]
                     ]
                 ]
