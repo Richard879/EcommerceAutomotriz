@@ -3896,68 +3896,58 @@
                     }
                 });
             },
-            /*generaSapActividadMercancia(objCompra){
+            generaSapActividadMercancia(objCompra){
                 let me = this;
-                //Verifico Si No existe Actividad De EXCEL
-                if(objCompra.nActivityCode== 0){
-                    //==============================================================
-                    //================== REGISTRO ACTIVIDAD EN SAP ===============
-                    var sapUrl = me.ruta + '/actividad/SapSetActividad';
-                    axios.post(sapUrl, {
-                        'data': me.arraySapActividad
-                    }).then(response => {
-                        me.arraySapRespuesta = [];
-                        me.arraySapUpdSgc = [];
+                //==============================================================
+                //================== REGISTRO ACTIVIDAD EN SAP ===============
+                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapActividad
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
 
-                        me.arraySapRespuesta = response.data;
-                        me.arraySapRespuesta.map(function(x){
-                            me.jsonRespuesta = '';
-                            me.jsonRespuesta= JSON.parse(x);
-                            //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){
-                                me.arraySapUpdSgc.push({
-                                    'nActivityCode': parseInt(me.jsonRespuesta.ActivityCode),
-                                    'nActividadTipo': 22,
-                                    'cActividadTipo': 'OrdenCompra',
-                                    'cCardCode': me.jsonRespuesta.CardCode.toString(),
-                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                    'cLogRespuesta': response.data.toString()
-                                });
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo': 22,
+                                'cActividadTipo': 'OrdenCompra',
+                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                'cLogRespuesta' : response.data.toString()
+                            });
 
-                                me.arraySapLlamadaServicio = [];
-                                me.arraySapLlamadaServicio.push({
-                                    'nActivityCode': me.jsonRespuesta.ActivityCode,
-                                    'cCustomerCode': objCompra.cCustomerCode,
-                                    'cInternalSerialNum': objCompra.cNumeroVin,
-                                    'cItemCode': objCompra.cNumeroVin,
-                                    'cSubject': objCompra.cSubject
-                                });
+                            /*me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode': me.jsonRespuesta.ActivityCode,
+                                'cCustomerCode': objCompra.cCustomerCode,
+                                'cInternalSerialNum': objCompra.cNumeroVin,
+                                'cItemCode': objCompra.cNumeroVin,
+                                'cSubject': objCompra.cSubject
+                            });*/
 
-                                //================================================================
-                                //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                                setTimeout(function() {
-                                    me.generaActualizarActividadMercancia(objCompra);
-                                }, 1600);
-                            }
-                        });
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaActualizarActividadMercancia(objCompra);
+                            }, 1600);
                         }
                     });
-                }
-                else{
-                    //==============================================================
-                    //============= REGISTRO LLAMADA DE SERVICIO EN SAP ============
-                    setTimeout(function() {
-                            me.generaSapLlamadaServicioMercancia(objCompra);
-                    }, 1600);
-                }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             generaActualizarActividadMercancia(objCompra){
                 let me = this;
@@ -3993,7 +3983,7 @@
                         }
                     }
                 });
-            },*/
+            },/**/
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
                 if(this.validarActualizar()){

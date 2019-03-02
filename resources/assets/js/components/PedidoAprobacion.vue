@@ -1614,6 +1614,7 @@
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
                     //console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
                     this.obtenerEVById();
+                    this.obtenerObsequiosCampaniasByIdPedido();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
