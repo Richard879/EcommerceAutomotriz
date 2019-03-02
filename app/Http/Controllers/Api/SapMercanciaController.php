@@ -102,4 +102,35 @@ class SapMercanciaController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapSetMercanciaExit(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            $json = [
+                'json' => [
+                    "DocumentLines" => [
+                        [
+                            "ItemCode"      =>  (string)$value['ItemCode'],
+                            "WarehouseCode" =>  (string)$value['WarehouseCode'],
+                            "Quantity"      =>  (string)$value['Quantity']
+                        ]
+                    ]
+                ]
+            ];
+
+            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaExit/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
 }
