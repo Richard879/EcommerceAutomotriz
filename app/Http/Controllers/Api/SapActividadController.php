@@ -162,6 +162,8 @@ class SapActividadController extends Controller
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],
                     "Notes"             => $value['cNotes'],
+                    "DocEntry"          => ($value['nDocEntry'] == NULL) ? ($value['nDocEntry'] = '') : $value['nDocEntry'],
+                    "DocNum"            => ($value['nDocNum'] == NULL) ? ($value['nDocNum'] = '') : $value['nDocNum'],
                     "ActivityProperty"  => "cn_Task",
                     "Duration"          => $value['nDuration'],
                     "DurationType"      => $value['cDurationType'],

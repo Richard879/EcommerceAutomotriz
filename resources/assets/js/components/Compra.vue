@@ -3826,11 +3826,11 @@
                                 console.log("Integración SAP Mercancia : OK");
 
                                 me.arraySapUpdSgc.push({
-                                    'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                    'cDocType': me.jsonRespuesta.DocType.toString(),
-                                    'cLogRespuesta': response.data.toString(),
-                                    'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                    'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'      : me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta' : response.data.toString(),
+                                    'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                                 });
 
                                 me.arraySapActividad.push({
