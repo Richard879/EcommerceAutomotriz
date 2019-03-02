@@ -47,13 +47,13 @@ class SapPedidoController extends Controller
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
                         [
-                            "ItemCode"    => $value['cNumeroVin'],
-                            "Quantity"    => "1",
-                            "TaxCode"     => "IGV",
-                            "UnitPrice"   => (string)$SubTotal,
-                            "Currency"    => "US$",
-                            "WarehouseCode" =>(string)$request->WarehouseCode
-
+                            "ItemCode"      =>  $value['cNumeroVin'],
+                            "Quantity"      =>  "1",
+                            "TaxCode"       =>  "IGV",
+                            "UnitPrice"     =>  (string)$SubTotal,
+                            "Currency"      =>  "US$",
+                            "WarehouseCode" =>  (string)$request->WarehouseCode,
+                            'SerialNumbers' =>  array()
                             /*IF(NDOCENTRMERCANCIA<>0)
                             [
                                 [
@@ -65,11 +65,21 @@ class SapPedidoController extends Controller
                                     ]
                                 ]
                             ],*/
-
                         ]
                     ]
                 ]
             ];
+
+            //Verificar la Entrada De Mercancia
+            if($value['nDocEntryMercancia']) {
+                //Agrgar informacion en el Array correspondiente
+                $json['json']['DocumentLines'][0]['SerialNumbers'] = [
+                    "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                    "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
+                ];
+            } else {
+                $json['json']['DocumentLines'][0]['SerialNumbers'] = [];
+            }
 
             $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
