@@ -12,13 +12,13 @@ class PdiProcesoController extends Controller
     public function GetListSolicitudByEstado(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa  = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdEstadoSolicitud = $request->nidestadosolicitud;
-                
-        $arraySolicitud = DB::select('exec [usp_Pdi_GetListSolicitudByEstado] ?, ?, ?', 
-                                                                    [   $nIdEmpresa, 
+
+        $arraySolicitud = DB::select('exec [usp_Pdi_GetListSolicitudByEstado] ?, ?, ?',
+                                                                    [   $nIdEmpresa,
                                                                         $nIdSucursal,
                                                                         $nIdEstadoSolicitud
                                                                     ]);
@@ -30,7 +30,7 @@ class PdiProcesoController extends Controller
     public function GetListCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $dFechaInicio = $request->dfechainicio;
@@ -62,14 +62,14 @@ class PdiProcesoController extends Controller
     public function GetListSeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
         $nIdFlag = ($nIdFlag == NULL) ? ($nIdFlag = 0) : $nIdFlag;
 
-        $arraySeccion = DB::select('exec [usp_Pdi_GetListSeccion] ?, ?, ?', 
-                                                                    [   $nIdEmpresa, 
+        $arraySeccion = DB::select('exec [usp_Pdi_GetListSeccion] ?, ?, ?',
+                                                                    [   $nIdEmpresa,
                                                                         $nIdTipoInspeccion,
                                                                         $nIdFlag
                                                                     ]);
@@ -79,14 +79,14 @@ class PdiProcesoController extends Controller
     public function GetListItem(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
         $nIdFlag = ($nIdFlag == NULL) ? ($nIdFlag = 0) : $nIdFlag;
 
-        $arrayItems = DB::select('exec [usp_Pdi_GetListItem] ?, ?, ?', 
-                                                                    [   $nIdEmpresa, 
+        $arrayItems = DB::select('exec [usp_Pdi_GetListItem] ?, ?, ?',
+                                                                    [   $nIdEmpresa,
                                                                         $nIdTipoInspeccion,
                                                                         $nIdFlag
                                                                     ]);
@@ -167,7 +167,7 @@ class PdiProcesoController extends Controller
     public function GetListPdi(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nCriterio  = $request->ncriterio;
@@ -175,7 +175,7 @@ class PdiProcesoController extends Controller
         $dFechaInicio = $request->dfechainicio;
         $dFechaFin = $request->dfechafin;
         $nIdEstadoPdi = $request->nidestadopdi;
-        
+
         $nIdEstadoPdi = ($nIdEstadoPdi == NULL) ? ($nIdEstadoPdi = 0) : $nIdEstadoPdi;
 
         $arrayPdi = DB::select('exec [usp_Pdi_GetListPdi] ?, ?, ?, ?, ?, ?, ?',
@@ -195,12 +195,12 @@ class PdiProcesoController extends Controller
     public function GetDetalleTipoInspeccionById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
-                
-        $arrayTipoInspeccion = DB::select('exec [usp_Pdi_GetDetalleTipoInspeccionById] ?, ?', 
-                                                                    [   $nIdEmpresa, 
+
+        $arrayTipoInspeccion = DB::select('exec [usp_Pdi_GetDetalleTipoInspeccionById] ?, ?',
+                                                                    [   $nIdEmpresa,
                                                                         $nIdTipoInspeccion
                                                                     ]);
 
@@ -210,15 +210,15 @@ class PdiProcesoController extends Controller
     public function GetListPuntoInspeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa  = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $cNombrePuntoInspeccion = $request->cnombre;
 
         $cNombrePuntoInspeccion = ($cNombrePuntoInspeccion == NULL) ? ($cNombrePuntoInspeccion = '') : $cNombrePuntoInspeccion;
-                
-        $arrayPuntoInspeccion = DB::select('exec [usp_Pdi_GetListPuntoInspeccion] ?, ?, ?', 
-                                                                                    [   $nIdEmpresa, 
+
+        $arrayPuntoInspeccion = DB::select('exec [usp_Pdi_GetListPuntoInspeccion] ?, ?, ?',
+                                                                                    [   $nIdEmpresa,
                                                                                         $nIdSucursal,
                                                                                         $cNombrePuntoInspeccion
                                                                                     ]);
@@ -230,36 +230,36 @@ class PdiProcesoController extends Controller
     public function SetPlantillaPdi(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
-        
+
             $detalles = $request->data;
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_Pdi_SetDetallePlantillaPdi] ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_Pdi_SetDetallePlantillaPdi] ?, ?, ?, ?, ?',
                                                     [   $request->nIdCabeceraInspeccion,
                                                         $det['nIdPlantillaInspeccionSeccionItem'],
                                                         $det['cFlagMarca'],
                                                         $det['cDescripcionNoConformidad'],
                                                         Auth::user()->id
                                                     ]);
-            }  
+            }
 
-            DB::commit(); 
+            DB::commit();
         } catch (Exception $e){
             DB::rollBack();
-        }   
+        }
     }
 
     public function SetAccesorioPdi(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
-        
+
             $detalles = $request->data;
 
             foreach($detalles as $ep=>$det)
@@ -272,12 +272,12 @@ class PdiProcesoController extends Controller
                                                         $det['cDescripcionNoConformidad'],
                                                         Auth::user()->id
                                                     ]);
-            }  
+            }
 
-            DB::commit(); 
+            DB::commit();
         } catch (Exception $e){
             DB::rollBack();
-        }   
+        }
     }
 
     public function SetCabeceraInspeccionDocumento(Request $request)
