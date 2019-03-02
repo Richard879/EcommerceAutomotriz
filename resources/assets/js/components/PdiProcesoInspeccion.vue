@@ -2494,12 +2494,13 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //==============================================================
-                        //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        //================================================================================
+                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
                         setTimeout(function() {
                             me.generaSapActividadServiceCall();
                         }, 1600);
-
+                        //==============================================================
+                        //================== REGISTRO LLAMADA DE SERVICIO EN SAP ===============
                         /*setTimeout(function() {
                             me.generaSapLlamadaServicioEntrada();
                         }, 1600);*/
