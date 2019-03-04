@@ -168,15 +168,15 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nCriterio  = $request->ncriterio;
-        $cDescripcionCiterio = $request->cdescripcioncriterio;
-        $dFechaInicio = $request->dfechainicio;
-        $dFechaFin = $request->dfechafin;
-        $nIdEstadoPdi = $request->nidestadopdi;
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nCriterio              =   $request->ncriterio;
+        $cDescripcionCiterio    =   $request->cdescripcioncriterio;
+        $dFechaInicio           =   $request->dfechainicio;
+        $dFechaFin              =   $request->dfechafin;
+        $nIdEstadoPdi           =   $request->nidestadopdi;
 
-        $nIdEstadoPdi = ($nIdEstadoPdi == NULL) ? ($nIdEstadoPdi = 0) : $nIdEstadoPdi;
+        $nIdEstadoPdi   = ($nIdEstadoPdi == NULL) ? ($nIdEstadoPdi = 0) : $nIdEstadoPdi;
 
         $arrayPdi = DB::select('exec [usp_Pdi_GetListPdi] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
@@ -314,4 +314,23 @@ class PdiProcesoController extends Controller
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 
+    public function GetDetallePDI(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdCabeceraInspeccion  =   $request->nIdCabeceraInspeccion;
+        $nCriterio              =   $request->ncriterio;
+
+        $arrayPdi = DB::select('exec [usp_Pdi_GetDetallePDI] ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraInspeccion,
+                                                                $nCriterio
+                                                            ]);
+
+        $arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
+        return ['arrayPdi'=>$arrayPdi];
+    }
 }
