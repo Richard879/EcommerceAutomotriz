@@ -217,12 +217,12 @@
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <template v-if="compra.nDocEntryMercanciaValida==0">
+                                                                                    <!--<template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="generaSapEntradaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
+                                                                                    </template>-->
                                                                                 </td>
                                                                                 <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
@@ -2271,7 +2271,7 @@
                    //==============================================================
                     //================== REGITRO DE PROYECTO EN SAP ===============
                     setTimeout(function() {
-                        me.generarSerieSap();
+                        me.registroSapBusinessProyecto();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2283,7 +2283,7 @@
                     }
                 });
             },
-            generarSerieSap(){                
+            /*generarSerieSap(){                
                 let me = this;
                 var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
                 axios.post(sapUrl, {
@@ -2302,7 +2302,7 @@
                         }
                     }
                 });
-            },
+            },*/
             registroSapBusinessProyecto(){
                 let me = this;
                 //Depurar Array para registrar en SAP
@@ -2854,67 +2854,6 @@
                     }
                 });
             },
-            /*registroSapBusinessMercancia(){
-                let me = this;
-                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
-
-                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
-                axios.post(sapUrl, {
-                    'cCardCode': me.formCompra.ccarcode,
-                    'data': me.arraySapUpdCompra
-                }).then(response => {
-                    me.arraySapUpdSgc = [];
-                    me.arraySapItemCode = [];
-                    me.arraySapRespuesta = [];
-                    me.jsonRespuesta = '';
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración SAP Mercancia : OK");
-                            me.arraySapUpdSgc.push({
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': jsonRespuesta.data.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.registroSgcMercancia();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSgcMercancia(){
-                let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.verResultados();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             verResultados(){
                 let me = this;
                 me.loading.close();
@@ -3167,7 +3106,7 @@
                     }
                 });
             },
-            generarSerieSap(objCompra){
+            /*generarSerieSap(objCompra){
                 let me = this;
                 var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
                 axios.post(sapUrl, {
@@ -3186,7 +3125,7 @@
                         }
                     }
                 });
-            },
+            },*/
             generarSapProyecto(objCompra){
                 let me = this;
                 //Verifico Si NO existe Proyecto De EXCEL

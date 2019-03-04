@@ -54,21 +54,9 @@ class SapCompraController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
         $ReceptionDate              =   date('Y-m-d');
-        //$DocEntry   = [];
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            /*$dataArray = [
-                    "ItemCode"    => $value['cNumeroVin'],
-                    "Quantity"    => "1",
-                    "TaxCode"     => "IGV",
-                    "UnitPrice"   => (string)$value['fTotalCompra']
-                ];*/
-
-            /*foreach ($dataArray as $keyArray => $valueArray) {
-                    $arrayResult[$keyArray] = $valueArray;
-                }*/
-
             $SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
 
             $json = [
@@ -86,26 +74,7 @@ class SapCompraController extends Controller
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
                                 "Currency"    => "US$",
-                                "WarehouseCode" =>(string)$request->WarehouseCode,
-                                "SerialNumbers" => [
-                                    [
-                                        "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
-                                        "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
-                                        "ExpiryDate"                =>  null,
-                                        "ManufactureDate"           =>  null,
-                                        "ReceptionDate"             =>  $ReceptionDate,
-                                        "WarrantyStart"             =>  null,
-                                        "WarrantyEnd"               =>  null,
-                                        "Location"                  =>  null,
-                                        "Notes"                     =>  null,
-                                        "BatchID"                   =>  null,
-                                        "SystemSerialNumber"        =>  1,
-                                        "BaseLineNumber"            =>  0,
-                                        "Quantity"                  =>  1,
-                                        "TrackingNote"              =>  null,
-                                        "TrackingNoteLine"          =>  null
-                                    ]
-                                ]
+                                "WarehouseCode" =>(string)$request->WarehouseCode
                             ]
                         ]
                     ]
@@ -114,8 +83,6 @@ class SapCompraController extends Controller
             $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
-            /*$DocEntry = json_decode($response->getBody());
-            array_push($array_rpta, $DocEntry);*/
         }
         return $array_rpta;
     }
