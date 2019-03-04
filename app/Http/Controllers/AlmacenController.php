@@ -11,18 +11,21 @@ class AlmacenController extends Controller
 {
     public function GetListAlmacen(Request $request)
     {
-        $nIdLocalidad  = $request->nIdLocalidad;
-        $nIdAlmacen    = $request->nIdAlmacen;
-        $nCodigoCuenta = $request->nCodigoCuenta;
+        $nIdLocalidad           = $request->nIdLocalidad;
+        $nIdAlmacen             = $request->nIdAlmacen;
+        $nCodigoCuentaEntrada   = $request->nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = $request->nCodigoCuentaSalida;
 
-        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
-        $nIdAlmacen     = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
-        $nCodigoCuenta  = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
+        $nIdLocalidad           = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen             = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuentaEntrada   = ($nCodigoCuentaEntrada == NULL) ? ($nCodigoCuentaEntrada = ' ') : $nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = ($nCodigoCuentaSalida == NULL) ? ($nCodigoCuentaSalida = ' ') : $nCodigoCuentaSalida;
 
-        $data = DB::select('exec [usp_Almacen_GetListAlmacen] ?, ?, ?',
+        $data = DB::select('exec [usp_Almacen_GetListAlmacen] ?, ?, ?, ?',
                                                 [   $nIdLocalidad,
                                                     $nIdAlmacen,
-                                                    $nCodigoCuenta
+                                                    $nCodigoCuentaEntrada,
+                                                    $nCodigoCuentaSalida
                                                 ]);
 
         $arrayAlmacen = ParametroController::arrayPaginator($data, $request);
@@ -71,18 +74,21 @@ class AlmacenController extends Controller
 
     public function SetRegistrarAlmacen(Request $request)
     {
-        $nIdLocalidad  = $request->nIdLocalidad;
-        $nIdAlmacen    = $request->nIdAlmacen;
-        $nCodigoCuenta = $request->nCodigoCuenta;
+        $nIdLocalidad           = $request->nIdLocalidad;
+        $nIdAlmacen             = $request->nIdAlmacen;
+        $nCodigoCuentaEntrada   = $request->nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = $request->nCodigoCuentaSalida;
 
-        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
-        $nIdAlmacen     = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
-        $nCodigoCuenta  = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
+        $nIdLocalidad           = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen             = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuentaEntrada   = ($nCodigoCuentaEntrada == NULL) ? ($nCodigoCuentaEntrada = ' ') : $nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = ($nCodigoCuentaSalida == NULL) ? ($nCodigoCuentaSalida = ' ') : $nCodigoCuentaSalida;
 
-        $data = DB::select('exec [usp_Almacen_SetRegistrarAlmacen] ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Almacen_SetRegistrarAlmacen] ?, ?, ?, ?, ?',
                                                 [   $nIdLocalidad,
                                                     $nIdAlmacen,
-                                                    $nCodigoCuenta,
+                                                    $nCodigoCuentaEntrada,
+                                                    $nCodigoCuentaSalida,
                                                     Auth::user()->id
                                                 ]);
 
@@ -113,21 +119,25 @@ class AlmacenController extends Controller
 
     public function SetActualizarAlmacen(Request $request)
     {
-        $nIdLocalidad       = $request->nIdLocalidad;
-        $nIdAlmacen         = $request->nIdAlmacen;
-        $nCodigoCuenta      = $request->nCodigoCuenta;
-        $nIdAlmacenAntiguo  = $request->nIdAlmacenAntiguo;
+        $nId                    = $request->nId;
+        $nIdLocalidad           = $request->nIdLocalidad;
+        $nIdAlmacen             = $request->nIdAlmacen;
+        $nCodigoCuentaEntrada   = $request->nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = $request->nCodigoCuentaSalida;
 
-        $nIdLocalidad       = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
-        $nIdAlmacen         = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
-        $nCodigoCuenta      = ($nCodigoCuenta == NULL) ? ($nCodigoCuenta = ' ') : $nCodigoCuenta;
-        $nIdAlmacenAntiguo  = ($nIdAlmacenAntiguo == NULL) ? ($nIdAlmacenAntiguo = 0) : $nIdAlmacenAntiguo;
+        $nId                    = ($nId == NULL) ? ($nId = 0) : $nId;
+        $nIdLocalidad           = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdAlmacen             = ($nIdAlmacen == NULL) ? ($nIdAlmacen = 0) : $nIdAlmacen;
+        $nCodigoCuentaEntrada   = ($nCodigoCuentaEntrada == NULL) ? ($nCodigoCuentaEntrada = ' ') : $nCodigoCuentaEntrada;
+        $nCodigoCuentaSalida    = ($nCodigoCuentaSalida == NULL) ? ($nCodigoCuentaSalida = ' ') : $nCodigoCuentaSalida;
 
-        $data = DB::select('exec [usp_Almacen_SetActualizarAlmacen] ?, ?, ?, ?, ?',
-                                                [   $nIdLocalidad,
+        $data = DB::select('exec [usp_Almacen_SetActualizarAlmacen] ?, ?, ?, ?, ?, ?',
+                                                [
+                                                    $nId,
+                                                    $nIdLocalidad,
                                                     $nIdAlmacen,
-                                                    $nCodigoCuenta,
-                                                    $nIdAlmacenAntiguo,
+                                                    $nCodigoCuentaEntrada,
+                                                    $nCodigoCuentaSalida,
                                                     Auth::user()->id
                                                 ]);
 
