@@ -726,7 +726,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -734,7 +734,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1252,7 +1252,8 @@
         data(){
             return {
                 ccustomercode: '',
-                nservicecallid: 0,
+                nservicecallidcompra: 0,
+                nservicecallidventa: 0,
                 nactivitycode: 0,
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
@@ -1798,7 +1799,8 @@
                 this.formPdi.cvinplacanombre = objCompra.cNumeroVin;
                 this.formPdi.cnumerovin = objCompra.cNumeroVin;
                 this.ccustomercode = objCompra.cCustomerCode;
-                this.nservicecallid = objCompra.nServiceCallID;
+                this.nservicecallidcompra = objCompra.nServiceCallIDCompra;
+                this.nservicecallidventa = objCompra.nServiceCallIDVenta;
                 this.formPdi.nidvehiculoplaca = 0;
                 this.cerrarModal();
             },
@@ -2317,9 +2319,14 @@
                     'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
                     'data': me.arrayTempAccesorio
                 }).then(response => {
-                    if(me.formPdi.nidtipoinspeccion == 6){
+                    if(me.formPdi.nidtipoinspeccion == 4){
                         setTimeout(function() {
-                            me.generaSapMercancia();
+                            me.generaSapMercanciaEntry();
+                        }, 1600);
+                    }
+                    else if(me.formPdi.nidtipoinspeccion == 6){
+                        setTimeout(function() {
+                            me.generaSapMercanciaExit();
                         }, 1600);
                     }
                     else{
@@ -2336,7 +2343,7 @@
                 });
             },
             //Generar Sap Entrada Mercancia
-            generaSapMercancia(){
+            generaSapMercanciaEntry(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -2383,7 +2390,7 @@
                     //==============================================================
                     //================== ACTUALIZAR DOCENTRY ===============
                     setTimeout(function() {
-                        me.generaActualizarMercancia();
+                        me.generaActualizarMercanciaEntry();
                     }, 1600);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
@@ -2396,7 +2403,7 @@
                     }
                 });
             },
-            generaActualizarMercancia(){
+            generaActualizarMercanciaEntry(){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SetIntegraMercanciaEntry';
                 axios.post(sapUrl, {
@@ -2418,7 +2425,7 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
                     setTimeout(function() {
-                        me.generaSapActividadEntradaMercancia();
+                        me.generaSapActividadMercanciaEntry();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2430,7 +2437,7 @@
                     }
                 });
             },
-            generaSapActividadEntradaMercancia(){
+            generaSapActividadMercanciaEntry(){
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -2448,7 +2455,7 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.nservicecallid,
+                                'nServiceCallID'    : me.nservicecallidcompra,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo'    : 4,
                                 'cActividadTipo'    : 'PdiEntrada',
@@ -2471,7 +2478,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
-                                me.generaSgcActividadEntradaMercancia();
+                                me.generaSgcActividadMercanciaEntry();
                             }, 1600);
                         }
                     });
@@ -2486,7 +2493,7 @@
                     }
                 });
             },
-            generaSgcActividadEntradaMercancia(){
+            generaSgcActividadMercanciaEntry(){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
@@ -2497,7 +2504,7 @@
                         //================================================================================
                         //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
                         setTimeout(function() {
-                            me.generaSapActividadServiceCall();
+                            me.generaSapActividadServiceCallEntry();
                         }, 1600);
                         //==============================================================
                         //================== REGISTRO LLAMADA DE SERVICIO EN SAP ===============
@@ -2515,13 +2522,13 @@
                     }
                 });
             },
-            generaSapActividadServiceCall(){
+            generaSapActividadServiceCallEntry(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
                 axios.post(sapUrl, {
                     'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : me.nservicecallid,
+                    'nServiceCallID'    : me.nservicecallidcompra,
                     'nLine'             : 0
                 }).then(response => {
                     me.loading.close();
@@ -2600,6 +2607,202 @@
                     }
                 });
             },*/
+            generaSapMercanciaExit(){
+                let me = this;
+
+                me.arrayTempAccesorio.map(function(value, key) {
+                    me.arraySapMercancia.push({
+                        'ItemCode'       : value.cCodigoERP,
+                        'WarehouseCode'  : me.formAlmacen.cwhscode,
+                        'Quantity'       : me.arrayAccesorioCantidad[key],
+                        'AccountCode'    : me.formAlmacen.cacctcode
+                    });
+                });
+                //==============================================================
+                //================== REGISTRO MERCANCIA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO SALIDA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaExit';
+                axios.post(sapUrl, {
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data'          : me.arraySapMercancia
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+                    me.arraySapActividad= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Mercancia : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+                        }
+                    });
+
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.generaActualizarMercanciaExit();
+                    }, 1600);
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarMercanciaExit(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaExit';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.arraySapActividad.push({
+                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                        'hActivityTime' :   moment().format('HH:mm:ss'),
+                        'cCardCode'     :   me.ccustomercode,
+                        'cNotes'        :   'PdiSalida',
+                        'nDuration'     :   '15',
+                        'cDurationType' :   'du_Minuts',
+                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                        'cReminder'     :   'tYES',
+                        'nReminderPeriod':  '15',
+                        'cReminderType' :   'du_Minuts',
+                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                        'hStartTime'    :   moment().format('HH:mm:ss')
+                    });
+                    setTimeout(function() {
+                        me.generaSapActividadMercanciaExit();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapActividadMercanciaExit(){
+                let me = this;
+                //==============================================================
+                //================== REGISTRO ACTIVIDAD EN SAP ===============
+                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapActividad
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.nservicecallidventa,
+                                'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo'    : 6,
+                                'cActividadTipo'    : 'PdiSalida',
+                                'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'         : 0,
+                                'nDocNum'           : 0,
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
+                                'cCustomerCode'     : me.ccustomercode,
+                                'cInternalSerialNum': me.formPdi.cnumerovin,
+                                'cItemCode'         : me.formPdi.cnumerovin,
+                                'cSubject'          : 'PDI SALIDA'
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            setTimeout(function() {
+                                me.generaSgcActividadMercanciaExit();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Actividad SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcActividadMercanciaExit(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //================================================================================
+                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
+                        setTimeout(function() {
+                            me.generaSapActividadServiceCallExit();
+                        }, 1600);
+
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapActividadServiceCallExit(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
+                axios.post(sapUrl, {
+                    'nActivityCode'     : me.nactivitycode,
+                    'nServiceCallID'    : me.nservicecallidventa,
+                    'nLine'             : 0
+                }).then(response => {
+                    me.loading.close();
+                    me.confirmaPdi();
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
@@ -2807,7 +3010,10 @@
                 this.arraySapUpdSgc= [],
                 this.arraySapMercancia= [],
                 this.arraySapLlamadaServicio= [],
-                this.arraySapActividad= []
+                this.arraySapActividad= [],
+                this.nactivitycode= 0,
+                this.nservicecallidcompra= 0,
+                this.nservicecallidventa= 0
             },
             limpiarPorError(cDescripcion){
                 $("#myBar").hide();

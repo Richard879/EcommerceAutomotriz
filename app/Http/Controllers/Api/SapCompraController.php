@@ -53,24 +53,10 @@ class SapCompraController extends Controller
 
         $array_rpta = [];
         $rptaSap   = [];
-        //$DocEntry   = [];
-
-        /*$User       =   Auth::user()->id;
-        $cCardCode   =   'C'.$User;*/
+        $ReceptionDate              =   date('Y-m-d');
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            /*$dataArray = [
-                    "ItemCode"    => $value['cNumeroVin'],
-                    "Quantity"    => "1",
-                    "TaxCode"     => "IGV",
-                    "UnitPrice"   => (string)$value['fTotalCompra']
-                ];*/
-
-            /*foreach ($dataArray as $keyArray => $valueArray) {
-                    $arrayResult[$keyArray] = $valueArray;
-                }*/
-
             $SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
 
             $json = [
@@ -98,8 +84,6 @@ class SapCompraController extends Controller
             $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
-            /*$DocEntry = json_decode($response->getBody());
-            array_push($array_rpta, $DocEntry);*/
         }
         return $array_rpta;
     }
