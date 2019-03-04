@@ -1166,10 +1166,6 @@
                     {
                         //==============================================================
                         //================== REGISTRO ACTIVIDAD EN SAP ===============
-                        /*setTimeout(function() {
-                            me.generaSapLlamadaServicioEntregaVeh();
-                        }, 1600);*/
-
                         setTimeout(function() {
                             me.generaSapActividadServiceCall();
                         }, 1600);
