@@ -31,6 +31,7 @@ class SapPedidoController extends Controller
         //Setear arreglos para Pedido (Vehiculo)
         $arrayVehiculo  = [];
         $rptaSap        = [];
+        $ReceptionDate              =   date('Y-m-d');
 
         $arraySapPedido = $request->arraySapPedido;
         foreach ($arraySapPedido as $key => $value) {
@@ -54,17 +55,6 @@ class SapPedidoController extends Controller
                             "Currency"      =>  "US$",
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
                             'SerialNumbers' =>  array()
-                            /*IF(NDOCENTRMERCANCIA<>0)
-                            [
-                                [
-                                    "SerialNumbers" => [
-                                        [
-                                            "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
-                                            "InternalSerialNumber"      =>  (string)$value['cNumeroVin']
-                                        ]
-                                    ]
-                                ]
-                            ],*/
                         ]
                     ]
                 ]
@@ -76,6 +66,19 @@ class SapPedidoController extends Controller
                 $json['json']['DocumentLines'][0]['SerialNumbers'] = [
                     "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
                     "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
+                    "ExpiryDate"                =>  null,
+                    "ManufactureDate"           =>  null,
+                    "ReceptionDate"             =>  $ReceptionDate,
+                    "WarrantyStart"             =>  null,
+                    "WarrantyEnd"               =>  null,
+                    "Location"                  =>  null,
+                    "Notes"                     =>  null,
+                    "BatchID"                   =>  null,
+                    "SystemSerialNumber"        =>  1,
+                    "BaseLineNumber"            =>  0,
+                    "Quantity"                  =>  1,
+                    "TrackingNote"              =>  null,
+                    "TrackingNoteLine"          =>  null
                 ];
             } else {
                 $json['json']['DocumentLines'][0]['SerialNumbers'] = [];

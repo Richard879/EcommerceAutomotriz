@@ -220,7 +220,7 @@
                                                                                     <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="generarSerieSap(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
+                                                                                            <i @click="generaSapEntradaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -2128,7 +2128,8 @@
                 this.$delete(this.arrayExcel, index);
                 this.contadorArrayExcel = this.arrayExcel.length;
             },
-            //Registrar Excel Compra
+            //====================================================================
+            //======================  Registrar Excel Compra =====================
             registrar(){
                 if(this.validarRegistro()){
                     this.accionmodal=1;
@@ -2270,9 +2271,29 @@
                    //==============================================================
                     //================== REGITRO DE PROYECTO EN SAP ===============
                     setTimeout(function() {
+                        me.generarSerieSap();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generarSerieSap(){                
+                let me = this;
+                var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
+                axios.post(sapUrl, {
+                    'data'  : arraySapArticulo
+                }).then(response => {
+                    setTimeout(function() {
                         me.registroSapBusinessProyecto();
                     }, 1600);
                 }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3146,6 +3167,26 @@
                     }
                 });
             },
+            generarSerieSap(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
+                axios.post(sapUrl, {
+                    'data'  : arraySapCompra
+                }).then(response => {
+                    setTimeout(function() {
+                        me.generarSapProyecto(objCompra);
+                    }, 1600);
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             generarSapProyecto(objCompra){
                 let me = this;
                 //Verifico Si NO existe Proyecto De EXCEL
@@ -3761,29 +3802,6 @@
                 });
             },
             //=================== Generar Entrada Mercancia ==============
-            generarSerieSap(objCompra){
-                this.mostrarProgressBar();
-                
-                let me = this;
-
-                var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
-                axios.post(sapUrl, {
-                    'cItemCode'     : objCompra.cNumeroVin
-                }).then(response => {
-                    setTimeout(function() {
-                        me.generaSapEntradaMercancia(objCompra);
-                    }, 1600);
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             generaSapEntradaMercancia(objCompra){
                 let me = this;
                 //Verifico Si No existe OrdenCompra De EXCEL

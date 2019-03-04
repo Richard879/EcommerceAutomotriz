@@ -103,11 +103,21 @@ class SapArticuloController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $cItemCode    = $request->cItemCode;
+        $array_rpta = [];
+        $rptaSap   = [];
 
-        $response = $client->request('POST', "/api/Articulo/SapSetSerialNumber/", [
-                                                                        'query' => ['cItemCode' => $cItemCode]
-                                                                      ]);
-        return $response->getBody();
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+
+            $response = $client->request('POST', "/api/Articulo/SapSetSerialNumber/", [
+                                                                    'query' => ['cItemCode' => (string)$value['cNumeroVin'],
+                                                                                'cItemName' => (string)$value['cNombreComercial']
+                                                                                ]
+                                                                            ]);
+
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
     }
 }

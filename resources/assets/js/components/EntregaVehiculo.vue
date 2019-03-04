@@ -1118,6 +1118,7 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
+                                'nServiceCallID': me.nservicecallidventa,
                                 'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo': 5,
                                 'cActividadTipo': 'EntregaVehiculo',

@@ -53,10 +53,8 @@ class SapCompraController extends Controller
 
         $array_rpta = [];
         $rptaSap   = [];
+        $ReceptionDate              =   date('Y-m-d');
         //$DocEntry   = [];
-
-        /*$User       =   Auth::user()->id;
-        $cCardCode   =   'C'.$User;*/
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -88,7 +86,26 @@ class SapCompraController extends Controller
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
                                 "Currency"    => "US$",
-                                "WarehouseCode" =>(string)$request->WarehouseCode
+                                "WarehouseCode" =>(string)$request->WarehouseCode,
+                                "SerialNumbers" => [
+                                    [
+                                        "ManufacturerSerialNumber"  =>  (string)$value['cNumeroVin'],
+                                        "InternalSerialNumber"      =>  (string)$value['cNumeroVin'],
+                                        "ExpiryDate"                =>  null,
+                                        "ManufactureDate"           =>  null,
+                                        "ReceptionDate"             =>  $ReceptionDate,
+                                        "WarrantyStart"             =>  null,
+                                        "WarrantyEnd"               =>  null,
+                                        "Location"                  =>  null,
+                                        "Notes"                     =>  null,
+                                        "BatchID"                   =>  null,
+                                        "SystemSerialNumber"        =>  1,
+                                        "BaseLineNumber"            =>  0,
+                                        "Quantity"                  =>  1,
+                                        "TrackingNote"              =>  null,
+                                        "TrackingNoteLine"          =>  null
+                                    ]
+                                ]
                             ]
                         ]
                     ]
