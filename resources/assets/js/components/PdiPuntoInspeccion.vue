@@ -371,7 +371,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -427,7 +426,7 @@
                 vistaFormulario: 1
             }
         },
-         mounted(){
+        mounted(){
             this.llenarComboTipoInspeccion();
             this.llenarFlag();
         },
@@ -794,6 +793,7 @@
         }
     }
 </script>
+
 <style>
         .mostrar{
             display: list-item !important;

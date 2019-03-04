@@ -67,6 +67,7 @@ class SapCompraController extends Controller
                     "DocCurrency"       =>  "US$",
                     "DocTotal"          =>  (string)$value['fTotalCompra'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    'U_SYP_TCOMPRA '    =>  '*',
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => (string)$value['cNumeroVin'],

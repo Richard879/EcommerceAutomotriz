@@ -79,9 +79,17 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta Entrada</label>
                                                                                 <div class="col-md-8 widthFull">
-                                                                                    <input type="text" v-model="fillBsqAlmacen.nCodigoCuenta" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillBsqAlmacen.nCodigoCuentaEntrada" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta Salida</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <input type="text" v-model="fillBsqAlmacen.nCodigoCuentaSalida" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -112,7 +120,8 @@
                                                                                         <th>Acción</th>
                                                                                         <th>Localidad</th>
                                                                                         <th>Almacen</th>
-                                                                                        <th>Codigo Almacen</th>
+                                                                                        <th>Codigo Almacen Entrada</th>
+                                                                                        <th>Codigo Almacen Salida</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -129,6 +138,7 @@
                                                                                         <td v-text="almacen.cNombreLocalidad"></td>
                                                                                         <td v-text="almacen.cWhsName"></td>
                                                                                         <td v-text="almacen.cAcctCode"></td>
+                                                                                        <td v-text="almacen.cAcctCodeSalida"></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -242,17 +252,34 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta</label>
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta Entrada</label>
                                                                                 <div class="col-md-8 widthFull">
                                                                                     <input type="text"
-                                                                                            v-model.number="fillAlmacen.nCodigoCuenta"
+                                                                                            v-model.number="fillAlmacen.nCodigoCuentaEntrada"
                                                                                             class="form-control form-control-sm"
                                                                                             v-validate="'required|numeric|digits:6|max:6'"
-                                                                                            data-vv-as="Codigo de Cuenta"
-                                                                                            name="nCodigoCuenta"
-                                                                                            :class="{'has-error': vErrors.has('nCodigoCuenta')}">
-                                                                                    <span v-show="vErrors.has('nCodigoCuenta')" class="alert-danger">
-                                                                                        {{ vErrors.first('nCodigoCuenta') }}
+                                                                                            data-vv-as="Codigo de Cuenta Entrada"
+                                                                                            name="nCodigoCuentaEntrada"
+                                                                                            :class="{'has-error': vErrors.has('nCodigoCuentaEntrada')}">
+                                                                                    <span v-show="vErrors.has('nCodigoCuentaEntrada')" class="alert-danger">
+                                                                                        {{ vErrors.first('nCodigoCuentaEntrada') }}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Codigo Cuenta Salida</label>
+                                                                                <div class="col-md-8 widthFull">
+                                                                                    <input type="text"
+                                                                                            v-model.number="fillAlmacen.nCodigoCuentaSalida"
+                                                                                            class="form-control form-control-sm"
+                                                                                            v-validate="'required|numeric|digits:6|max:6'"
+                                                                                            data-vv-as="Codigo de Cuenta Salida"
+                                                                                            name="nCodigoCuentaSalida"
+                                                                                            :class="{'has-error': vErrors.has('nCodigoCuentaSalida')}">
+                                                                                    <span v-show="vErrors.has('nCodigoCuentaSalida')" class="alert-danger">
+                                                                                        {{ vErrors.first('nCodigoCuentaSalida') }}
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -372,7 +399,8 @@
                 fillBsqAlmacen: {
                     nIdLocalidad: '',
                     nIdAlmacen: '',
-                    nCodigoCuenta: ''
+                    nCodigoCuentaEntrada: '',
+                    nCodigoCuentaSalida: ''
                 },
                 arrayLocalidad: [],
                 arrayAlmacen: [],
@@ -383,8 +411,9 @@
                 fillAlmacen: {
                     nIdLocalidad: '',
                     nIdAlmacen: '',
-                    nCodigoCuenta: '',
-                    nIdAlmacenAntiguo: '' //Almacen cargado antes de actualizar
+                    nCodigoCuentaEntrada: '',
+                    nCodigoCuentaSalida: '',
+                    nId: ''
                 },
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -537,16 +566,18 @@
             limpiarTabBsqAlmacenes(){
                 this.fillBsqAlmacen.nIdLocalidad = '';
                 this.fillBsqAlmacen.nIdAlmacen = '';
-                this.fillBsqAlmacen.nCodigoCuenta = '';
+                this.fillBsqAlmacen.nCodigoCuentaEntrada = '';
+                this.fillBsqAlmacen.nCodigoCuentaSalida = '';
                 this.arrayListAlmacenes = [];
             },
             listarAlmacenes(page){
                 var url = this.ruta + '/almacen/GetListAlmacen';
                 axios.get(url, {
                     params: {
-                        'nIdLocalidad'  :   this.fillBsqAlmacen.nIdLocalidad,
-                        'nIdAlmacen'    :   this.fillBsqAlmacen.nIdAlmacen,
-                        'nCodigoCuenta' :   this.fillBsqAlmacen.nCodigoCuenta,
+                        'nIdLocalidad'          :   this.fillBsqAlmacen.nIdLocalidad,
+                        'nIdAlmacen'            :   this.fillBsqAlmacen.nIdAlmacen,
+                        'nCodigoCuentaEntrada'  :   this.fillBsqAlmacen.nCodigoCuentaEntrada,
+                        'nCodigoCuentaSalida'   :   this.fillBsqAlmacen.nCodigoCuentaSalida,
                         'page' : page
                     }
                 }).then(response => {
@@ -614,10 +645,12 @@
             cambiarVista(op, almacen){
                 this.vistaFormulario = op;
                 this.flagGuardar = 0;
-                this.fillAlmacen.nIdLocalidad       = almacen.cIdLocalidad;
-                this.fillAlmacen.nIdAlmacen         = (almacen.cWhsCode).toString();
-                this.fillAlmacen.nCodigoCuenta      = almacen.cAcctCode;
-                this.fillAlmacen.nIdAlmacenAntiguo  = (almacen.cWhsCode).toString();
+                //Set Data for Update
+                this.fillAlmacen.nId                    = almacen.id;
+                this.fillAlmacen.nIdLocalidad           = almacen.cIdLocalidad;
+                this.fillAlmacen.nIdAlmacen             = (almacen.cWhsCode).toString();
+                this.fillAlmacen.nCodigoCuentaEntrada   = almacen.cAcctCode;
+                this.fillAlmacen.nCodigoCuentaSalida    = almacen.cAcctCodeSalida;
             },
             actualizarAlmacen(){
                 if(this.validarRegistrarAlmacen()){
@@ -631,10 +664,11 @@
                     if(result) {
                         var url = this.ruta + '/almacen/SetActualizarAlmacen';
                         axios.put(url, {
-                            nIdLocalidad        :   this.fillAlmacen.nIdLocalidad,
-                            nIdAlmacen          :   (this.fillAlmacen.nIdAlmacen).toString(),
-                            nCodigoCuenta       :   this.fillAlmacen.nCodigoCuenta,
-                            nIdAlmacenAntiguo   :   (this.fillAlmacen.nIdAlmacenAntiguo).toString(),
+                            nId                     :   this.fillAlmacen.nId,
+                            nIdLocalidad            :   this.fillAlmacen.nIdLocalidad,
+                            nIdAlmacen              :   (this.fillAlmacen.nIdAlmacen).toString(),
+                            nCodigoCuentaEntrada    :   this.fillAlmacen.nCodigoCuentaEntrada,
+                            nCodigoCuentaSalida     :   this.fillAlmacen.nCodigoCuentaSalida
                         }).then(response => {
                             if (response.data[0].nFlagMsje == 1) {
                                 swal(response.data[0].cMensaje);
@@ -672,7 +706,8 @@
             limpiarTabBsqConfigurarAlmacenes(){
                 this.fillAlmacen.nIdLocalidad = '';
                 this.fillAlmacen.nIdAlmacen = '';
-                this.fillAlmacen.nCodigoCuenta = '';
+                this.fillAlmacen.nCodigoCuentaEntrada = '';
+                this.fillAlmacen.nCodigoCuentaSalida = '';
             },
             guardarAlmacen(){
                 (this.flagGuardar == 1) ? this.registrarAlmacen() : this.actualizarAlmacen();
@@ -687,8 +722,11 @@
                 if(this.fillAlmacen.nIdAlmacen == ''){
                     this.mensajeError.push('Debe seleccionar un Almacen');
                 }
-                if(this.fillAlmacen.nCodigoCuenta == ''){
-                    this.mensajeError.push('Debe digitar un código de cuenta');
+                if(this.fillAlmacen.nCodigoCuentaEntrada == ''){
+                    this.mensajeError.push('Debe digitar un código de cuenta de entrada');
+                }
+                if(this.fillAlmacen.nCodigoCuentaSalida == ''){
+                    this.mensajeError.push('Debe digitar un código de cuenta de salida');
                 }
 
                 if(this.mensajeError.length){
@@ -708,9 +746,10 @@
                     if(result) {
                         var url = this.ruta + '/almacen/SetRegistrarAlmacen';
                         axios.post(url, {
-                            'nIdLocalidad'  :   this.fillAlmacen.nIdLocalidad,
-                            'nIdAlmacen'    :   (this.fillAlmacen.nIdAlmacen).toString(),
-                            'nCodigoCuenta' :   this.fillAlmacen.nCodigoCuenta,
+                            'nIdLocalidad'          :   this.fillAlmacen.nIdLocalidad,
+                            'nIdAlmacen'            :   (this.fillAlmacen.nIdAlmacen).toString(),
+                            'nCodigoCuentaEntrada'  :   this.fillAlmacen.nCodigoCuentaEntrada,
+                            'nCodigoCuentaSalida'   :   this.fillAlmacen.nCodigoCuentaSalida,
                         }).then(response => {
                             if (response.data[0].nFlagMsje == 1) {
                                 swal(response.data[0].cMensaje);

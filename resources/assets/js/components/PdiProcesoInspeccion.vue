@@ -79,14 +79,14 @@
                                             </div>-->
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Estado Pdi</label>
+                                                    <label class="col-sm-4 form-control-label">Estado PDI</label>
                                                     <div class="col-sm-8">
                                                         <el-select v-model="fillPdi.nidestadopdi" filterable clearable placeholder="SELECCIONE">
                                                             <el-option
-                                                            v-for="item in arrayEstatoPdi"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arrayEstatoPdi"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -144,6 +144,10 @@
                                                                     <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>&nbsp;
                                                             </template>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                <i @click="generarPDF(pdi.nIdCabeceraInspeccion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                            </el-tooltip>&nbsp;
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -209,12 +213,14 @@
                                                         <el-select v-model="formPdi.nidtipoinspeccion"
                                                                     filterable
                                                                     clearable
-                                                                    placeholder="SELECCIONE" v-on:change="changeTipoInspeccion()" :class="[this.accion==1 ? '' : 'disabled']" >
+                                                                    placeholder="SELECCIONE"
+                                                                    @change="changeTipoInspeccion()"
+                                                                    :class="[this.accion==1 ? '' : 'disabled']" >
                                                             <el-option
-                                                            v-for="item in arrayTipoInspeccion"
-                                                            :key="item.nIdTipoInspeccion"
-                                                            :label="item.cNombreTipoInspeccion"
-                                                            :value="item.nIdTipoInspeccion">
+                                                                v-for="item in arrayTipoInspeccion"
+                                                                :key="item.nIdTipoInspeccion"
+                                                                :label="item.cNombreTipoInspeccion"
+                                                                :value="item.nIdTipoInspeccion">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -457,9 +463,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="text-center">
-                                <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                                </div>
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -1091,8 +1095,7 @@
                                                                     :fetch-suggestions="querySearch"
                                                                     placeholder=""
                                                                     :trigger-on-focus="false"
-                                                                    @select="asignarAccesorio"
-                                                                    >
+                                                                    @select="asignarAccesorio">
                                                             </el-autocomplete>
                                                         </div>
                                                     </div>
@@ -1532,6 +1535,37 @@
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.listarPdi(page);
+            },
+            generarPDF(nIdCabeceraInspeccion){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pdi/GetDetallePDI';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraInspeccion' :   parseInt(nIdCabeceraInspeccion),
+                    'ncriterio'             :   this.fillPdi.ncriterio
+                }, config).then(response => {
+                    console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //=============================================================
             //==================== NUEVA INSPECCION =======================
@@ -3361,6 +3395,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;

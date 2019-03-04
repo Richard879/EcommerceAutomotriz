@@ -238,6 +238,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pdi/SetPlantillaPdi', 'PdiProcesoController@SetPlantillaPdi');
     Route::post('/pdi/SetAccesorioPdi', 'PdiProcesoController@SetAccesorioPdi');
     Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
+    Route::post('/pdi/GetDetallePDI', 'PdiProcesoController@GetDetallePDI');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
 
@@ -455,7 +456,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
-    //Actividad  
+    //Actividad
     Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');
     Route::post('/actividad/SapSetActividadMercancia', 'Api\SapActividadController@SapSetActividadMercancia');
     Route::post('/actividad/SapSetActividadVenta', 'Api\SapActividadController@SapSetActividadVenta');
