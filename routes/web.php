@@ -12,11 +12,21 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     //Dashboard
     Route::get('/dashboard/GetEmpleadosByRol', 'DashboardController@GetEmpleadosByRol');
+    //====
+    Route::get('/dashboard/GetCotizacionMontoByMes', 'DashboardController@GetCotizacionMontoByMes');
+    Route::get('/dashboard/GetCotizacionMontoTotal', 'DashboardController@GetCotizacionMontoTotal');
+    Route::get('/dashboard/GetCotizacionCantidadTotal', 'DashboardController@GetCotizacionCantidadTotal');
     Route::get('/dashboard/GetCotizacionesByUsuario', 'DashboardController@GetCotizacionesByUsuario');
     Route::get('/dashboard/GetCotizacionesByRol', 'DashboardController@GetCotizacionesByRol');
-    Route::get('/dashboard/GetAsesoresByRol', 'DashboardController@GetAsesoresByRol');
+    //====
     Route::get('/dashboard/GetAsesoresByJV', 'DashboardController@GetAsesoresByJV');
-    Route::post('/dashboard/GetCotizacionesPorAsesorComercialDeJVEspecifico', 'DashboardController@GetCotizacionesPorAsesorComercialDeJVEspecifico');
+    // Route::post('/dashboard/GetCotizacionesPorAsesorComercialDeJVEspecifico', 'DashboardController@GetCotizacionesPorAsesorComercialDeJVEspecifico');
+    //====
+    Route::get('/dashboard/GetPedidoMontoByMes', 'DashboardController@GetPedidoMontoByMes');
+    Route::get('/dashboard/GetPedidoMontoTotal', 'DashboardController@GetPedidoMontoTotal');
+    Route::get('/dashboard/GetPedidoCantidadTotal', 'DashboardController@GetPedidoCantidadTotal');
+    Route::get('/dashboard/GetPedidosByUsuario', 'DashboardController@GetPedidosByUsuario');
+    Route::get('/dashboard/GetPedidosByRol', 'DashboardController@GetPedidosByRol');
 
     Route::get('/perrelacion/GetLstEmpresaByUsuario', 'PerRelacionController@GetLstEmpresaByUsuario');
     Route::get('/perrelacion/GetLstSucursalByEmpresa', 'PerRelacionController@GetLstSucursalByEmpresa');

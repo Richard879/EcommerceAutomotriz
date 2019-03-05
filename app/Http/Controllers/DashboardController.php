@@ -23,6 +23,51 @@ class DashboardController extends Controller
     }
 
     // ======================================================================
+    // OBTENER EL MONTO TOTAL DE PEDIDOS POR MES
+    // ======================================================================
+    publiC function GetCotizacionMontoByMes(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotalByMes ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER EL MONTO TOTAL DE COTIZACIONES POR AÑO
+    // ======================================================================
+    public function GetCotizacionMontoTotal(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotal ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER LA CANTIDAD TOTAL DE COTIZACIONES POR AÑO
+    // ======================================================================
+    public function GetCotizacionCantidadTotal(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionCantidadTotal ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
     // OBTENER EL NÚMERO DE COTIZACIONES POR USUARIO AUTENTICADO/POR MES
     // ======================================================================
     public function GetCotizacionesByUsuario(Request $request)
@@ -106,5 +151,86 @@ class DashboardController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    // ======================================================================
+    // OBTENER EL MONTO TOTAL DE PEDIDOS POR MES
+    // ======================================================================
+    publiC function GetPedidoMontoByMes(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotalByMes ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER EL MONTO TOTAL DE PEDIDOS POR AÑO
+    // ======================================================================
+    public function GetPedidoMontoTotal(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotal ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER LA CANTIDAD TOTAL DE PEDIDOS POR AÑO
+    // ======================================================================
+    public function GetPedidoCantidadTotal(Request $request)
+    {
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosCantidadTotal ?',
+                                                        [
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER EL NÚMERO DE PEDIDOS POR USUARIO AUTENTICADO/POR MES
+    // ======================================================================
+    public function GetPedidosByUsuario(Request $request)
+    {
+        $nIdUsuario = $request->nIdUsuario;
+        $dfecha     = $request->dfecha;
+
+        $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByUsuario ?, ?',
+                                                        [
+                                                            $nIdUsuario,
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
+    }
+
+    // ======================================================================
+    // OBTENER EL NÚMERO DE PEDIDOS POR ROL AUTENTICADO/POR MES
+    // ======================================================================
+    public function GetPedidosByRol(Request $request)
+    {
+        $nIdRol     = $request->nIdRol;
+        $dfecha     = $request->dfecha;
+
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByRol ?, ?',
+                                                        [
+                                                            $nIdRol,
+                                                            $dfecha
+                                                        ]);
+
+        return response()->json($dashboard);
     }
 }
