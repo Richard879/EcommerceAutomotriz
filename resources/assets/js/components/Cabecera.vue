@@ -147,12 +147,16 @@
     }
 </script>
 
-<style lang="">
+<style>
     .tcc{
         display: flex;
         background: brown;
         padding: .4rem;
+        border: .2rem dotted #1b171b;
         border-radius: .2rem;
+        box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+        -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+        -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
     }
     .tcc span{
         font-weight: bold;

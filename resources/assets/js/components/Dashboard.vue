@@ -258,7 +258,7 @@
                                         <div class="left-col col-lg-12 d-flex align-items-center justify-content-between">
                                             <div class="project-title d-flex align-items-center">
                                                 <div class="text">
-                                                    <h3 class="h4">Monto Total Cotizaciones</h3>
+                                                    <h3 class="h4">Monto Total Pedidos</h3>
                                                 </div>
                                             </div>
                                             <div class="project-date">
@@ -275,7 +275,7 @@
                                         <div class="left-col col-lg-12 d-flex align-items-center justify-content-between">
                                             <div class="project-title d-flex align-items-center">
                                                 <div class="text">
-                                                    <h3 class="h4">Cantidad Total Cotizaciones</h3>
+                                                    <h3 class="h4">Cantidad Total Pedidos</h3>
                                                 </div>
                                             </div>
                                             <div class="project-date">
