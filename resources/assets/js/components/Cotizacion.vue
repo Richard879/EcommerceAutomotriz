@@ -4777,7 +4777,7 @@
     .flex-rigth-margin{
         display: flex;
         justify-content: space-around;
-        /* align-content: space-around; */
+        align-content: flex-end;
         flex-direction: column;
         align-items: flex-end;
         margin-right: 2rem;

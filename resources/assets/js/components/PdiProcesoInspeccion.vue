@@ -2419,7 +2419,7 @@
                                 'cCustomerCode'     : me.ccustomercode,
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI ENTRADA'
+                                'cSubject'          : 'PDI SERVICIOS'
                             });
 
                             //================================================================
@@ -2532,7 +2532,7 @@
                 this.vistaFormulario = 1;
                 this.listarPdi(1);
             },
-            generaSapActividadPdiSalida(){
+            /*generaSapActividadPdiSalida(){
                 let me = this;
 
                 me.arraySapActividad = [];
@@ -2689,7 +2689,7 @@
                         }
                     }
                 });
-            },
+            },*/
             //Generar Sap Entrada Mercancia
             /*generaSapMercanciaEntry(){
                 let me = this;
