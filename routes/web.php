@@ -28,6 +28,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/dashboard/GetPedidosByUsuario', 'DashboardController@GetPedidosByUsuario');
     Route::get('/dashboard/GetPedidosByRol', 'DashboardController@GetPedidosByRol');
 
+    //Notificaciones
+    Route::post('/notification/get', 'NotificationController@get');
+
     Route::get('/perrelacion/GetLstEmpresaByUsuario', 'PerRelacionController@GetLstEmpresaByUsuario');
     Route::get('/perrelacion/GetLstSucursalByEmpresa', 'PerRelacionController@GetLstSucursalByEmpresa');
 

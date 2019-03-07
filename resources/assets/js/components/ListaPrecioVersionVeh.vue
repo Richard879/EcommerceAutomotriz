@@ -14,7 +14,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="tabBuscaListaPrecioVh()" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="tabBuscaListaPrecioVh" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR LISTA PRECIO
                                         </a>
                                     </li>
@@ -111,7 +111,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                        <div class="col-sm-7 offset-sm-5">
                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarListaPrecioVh(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
@@ -140,7 +140,7 @@
                                                                                     <th>Periodo</th>
                                                                                     <th>Nro Lista</th>
                                                                                     <th>Tipo Lista</th>
-                                                                                    <th>Fecha Inicio<nav></nav></th>
+                                                                                    <th>Fecha Inicio</th>
                                                                                     <th>Fecha Fin</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
@@ -296,7 +296,6 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
                                                                                     <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
@@ -334,7 +333,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                        <div class="col-sm-7 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar();">
                                                                                 <i class="fa fa-save"></i> Registrar
                                                                             </button>
@@ -619,12 +618,16 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formListaPrecioVh.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                <el-select  v-model="formListaPrecioVh.nidmarca"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE MARCa"
+                                                                                            @change="llenarComboModelo">
                                                                                     <el-option
-                                                                                    v-for="item in arrayMarca"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayMarca"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -634,7 +637,10 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formListaPrecioVh.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                <el-select  v-model="formListaPrecioVh.nidmodelo"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE MODELO">
                                                                                     <el-option
                                                                                         v-for="item in arrayModelo"
                                                                                         :key="item.nIdModelo"
@@ -932,7 +938,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -1142,13 +1147,13 @@
                         'page': page
                     }
                 }).then(response => {
-                    this.arrayListaPrecioVh = response.data.arrayListaPrecioVh.data;
-                    this.pagination.current_page =  response.data.arrayListaPrecioVh.current_page;
-                    this.pagination.total = response.data.arrayListaPrecioVh.total;
-                    this.pagination.per_page    = response.data.arrayListaPrecioVh.per_page;
-                    this.pagination.last_page   = response.data.arrayListaPrecioVh.last_page;
-                    this.pagination.from        = response.data.arrayListaPrecioVh.from;
-                    this.pagination.to           = response.data.arrayListaPrecioVh.to;
+                    this.arrayListaPrecioVh         = response.data.arrayListaPrecioVh.data;
+                    this.pagination.current_page    =  response.data.arrayListaPrecioVh.current_page;
+                    this.pagination.total           = response.data.arrayListaPrecioVh.total;
+                    this.pagination.per_page        = response.data.arrayListaPrecioVh.per_page;
+                    this.pagination.last_page       = response.data.arrayListaPrecioVh.last_page;
+                    this.pagination.from            = response.data.arrayListaPrecioVh.from;
+                    this.pagination.to              = response.data.arrayListaPrecioVh.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1173,19 +1178,18 @@
 
                 var url = this.ruta + '/listapreciovh/SetListaVh';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor: parseInt(this.formListaPrecioVh.nidproveedor),
-                    nIdCronograma: parseInt(this.nidcronograma),
-                    nNroListaPrecio: parseInt(this.formListaPrecioVh.nnrolistaprecio),
-                    dFechaInicio: this.formListaPrecioVh.dfechainicio,
-                    nIdTipoLista: this.formListaPrecioVh.nidtipolista
+                    nIdEmpresa      : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal     : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    nIdProveedor    : parseInt(this.formListaPrecioVh.nidproveedor),
+                    nIdCronograma   : parseInt(this.nidcronograma),
+                    nNroListaPrecio : parseInt(this.formListaPrecioVh.nnrolistaprecio),
+                    dFechaInicio    : this.formListaPrecioVh.dfechainicio,
+                    nIdTipoLista    : this.formListaPrecioVh.nidtipolista
                 }).then(response => {
                     swal('Lista de Precio registrada'),
-                    this.limpiarFormulario(),
-                    this.formListaPrecioVh.dfechainicio = '',
-                    this.formListaPrecioVh.dfechafin = '',
-                    this.listarListaPrecioVh(1),
+                    this.limpiarFormulario();
+                    this.limpiarRegistrar();
+                    this.listarListaPrecioVh(1);
                     this.vistaFormTab1 = 1;
                 }).catch(error => {
                     console.log(error);
@@ -1202,7 +1206,7 @@
                 this.mensajeError =[];
 
                 if(!this.formListaPrecioVh.nidproveedor || this.formListaPrecioVh.nidproveedor == 0){
-                    this.mensajeError.push('Debes Ingresar Proveedor');
+                    this.mensajeError.push('Debe Ingresar Proveedor');
                 };
                 if(!this.formListaPrecioVh.dfechainicio){
                     this.mensajeError.push('Debes Ingresar Fecha Inicio');
@@ -1217,6 +1221,13 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            limpiarRegistrar(){
+                this.formListaPrecioVh.nidproveedor = '',
+                this.formListaPrecioVh.cproveedornombre = '',
+                this.formListaPrecioVh.dfechainicio = '',
+                this.formListaPrecioVh.dfechafin = '',
+                this.formListaPrecioVh.nidtipolista = ''
             },
             /*actualizar(){
                 var url = this.ruta + '//categoria/actualizar';
@@ -1250,39 +1261,39 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/listapreciovh/activar';
-                            axios.put(url, {
-                                nIdListaPrecioVersionVeh: lista.nIdListaPrecioVh,
-                                nIdProveedor: lista.nIdProveedor,
-                                nIdTipoLista: lista.nIdTipoLista
-                            }).then(response =>{
-                                if(response.data[0].nFlagMsje == 1)
-                                {
-                                    swal(
-                                    'Activado!',
-                                    'El registro fue activado.'
-                                    );
-                                    this.listarListaPrecioVh(1);
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/listapreciovh/activar';
+                        axios.put(url, {
+                            nIdListaPrecioVersionVeh: lista.nIdListaPrecioVh,
+                            nIdProveedor: lista.nIdProveedor,
+                            nIdTipoLista: lista.nIdTipoLista
+                        }).then(response =>{
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal(
+                                'Activado!',
+                                'El registro fue activado.'
+                                );
+                                this.listarListaPrecioVh(1);
+                            }
+                            else{
+                                swal('Ya existe Lista activa');
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                                else{
-                                    swal('Ya existe Lista activa');
-                                }
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             desactivar(nIdListaPrecioVersionVeh){
                 swal({
@@ -1300,8 +1311,8 @@
                                 nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh
                             }).then(response =>{
                                 swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
+                                    'Desactivado!',
+                                    'El registro fue desactivado.'
                                 );
                                 this.listarListaPrecioVh(1);
                             })
@@ -1321,6 +1332,7 @@
             },
             cambiarVistaFormulario(){
                 this.limpiarFormulario();
+                this.limpiarRegistrar();
                 this.vistaFormTab1 = 1;
             },
             abrirFormulario(modelo, accion, data =[]){
@@ -1334,6 +1346,7 @@
                                 this.tituloFormulario = 'NUEVA LISTA PRECIO';
                                 this.obtenerCronogramaVentaActivo();
                                 this.limpiarFormulario();
+                                this.limpiarRegistrar();
                                 this.listarTipoLista();
                                 this.formListaPrecioVh.nnrolistaprecio = '';
                                 break;
@@ -1569,10 +1582,10 @@
             activarTab3(lista){
                 this.formListaPrecioVh.nidlistaprecioversionVeh = lista.nIdListaPrecioVh;
                 this.canio  = lista.cAnio;
-                this.cmes = lista.cMes
-                this.formListaPrecioVh.nidproveedor = lista.nIdProveedor;
+                this.cmes   = lista.cMes
+                this.formListaPrecioVh.nidproveedor     = lista.nIdProveedor;
                 this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
-                this.formListaPrecioVh.nnrolistaprecio = lista.nNroListaPrecio;
+                this.formListaPrecioVh.nnrolistaprecio  = lista.nNroListaPrecio;
                 this.llenarComboMarca();
                 this.listarListaPrecioVhDetalle(1);
                 $('#Tab1').removeClass('nav-link active');
@@ -1627,9 +1640,9 @@
                 axios.get(url, {
                     params: {
                         'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
-                        'nidmarca': this.formListaPrecioVh.nidmarca,
-                        'nidmodelo': this.formListaPrecioVh.nidmodelo,
-                        'cnombrecomercial': this.formListaPrecioVh.cnombrecomercial,
+                        'nidmarca'          : this.formListaPrecioVh.nidmarca,
+                        'nidmodelo'         : this.formListaPrecioVh.nidmodelo,
+                        'cnombrecomercial'  : this.formListaPrecioVh.cnombrecomercial,
                         'page' : page
                     }
                 }).then(response => {
@@ -1743,6 +1756,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;

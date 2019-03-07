@@ -6,6 +6,8 @@ use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NotifyDashboard;
+use App\User;
 
 class CotizacionController extends Controller
 {
@@ -359,12 +361,27 @@ class CotizacionController extends Controller
 
         if (!$request->ajax()) return redirect('/');
 
+        if($request->opcion == 1) {
+            $nIdUsuario = Auth::user()->id;
+            $dfecha     = date('Y-m-d');;
+
+            $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
+
+            $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByUsuario ?, ?',
+                                                            [
+                                                                $nIdUsuario,
+                                                                $dfecha
+                                                            ]);
+
+            // User::findOrFail($nIdUsuario)->notify(new NotifyDashboard($dashboard));
+        }
+
         $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?',
                                                                 [   $request->nIdCabeceraCotizacion,
                                                                     $request->opcion,
                                                                     // $request->nIdEstadoCotizacion,
                                                                     // $request->cFlagEstadoCotizacion,
-                                                                    Auth::user()->id
+                                                                    $nIdUsuario
                                                                 ]);
 
         return response()->json($arrayCabeceraCotizacion);

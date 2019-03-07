@@ -1,7 +1,7 @@
 @extends('principal')
 @section('contenido')
     <template v-if="menu==1300362">
-        <dashBoard :ruta="ruta" :usuario="{{ auth()->user() }}"></dashBoard>
+        <dashBoard :ruta="ruta" :usuario="{{ auth()->user() }}" :notifications="notifications"></dashBoard>
     </template>
     <template v-if="menu==1300298">
         <permisos :ruta="ruta" :usuario="{{ auth()->user() }}" @cabecera="reiniciaMenu"></permisos>
