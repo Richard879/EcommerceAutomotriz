@@ -635,6 +635,7 @@
             cambiarEstado(op, usuario){
                 swal({
                     title: '¿Esta seguro de ' + ((op == 0) ? 'Desactivar' : ' Activar ') + ' Al Usuario ' + usuario.cParNombre + '?',
+                    text: 'Se Cerrarán las Sesiones en todos sus dispositivos!',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

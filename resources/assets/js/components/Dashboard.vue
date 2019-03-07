@@ -306,7 +306,7 @@
                 </div>
             </section>
 
-            <!-- Dashboard 06 - ESTADISTICAS DE COTIZACIONES POR ASESOR COMERCIAL ASGINADO    -->
+            <!-- Dashboard 06 - ESTADISTICAS DE PEDIDOS POR ASESOR COMERCIAL ASGINADO    -->
             <section class="dashboard-header" v-if="formLogin.nIdRol == 110025">
                 <div class="container-fluid">
                     <div class="row">
@@ -348,7 +348,7 @@
                 </div>
             </section>
 
-            <!-- Dashboard 07 - ESTADISTICAS DE COTIZACIONES POR TODOS LOS ASESORES COMERCIALES   -->
+            <!-- Dashboard 07 - ESTADISTICAS DE PEDIDOS POR TODOS LOS ASESORES COMERCIALES   -->
             <section class="dashboard-header" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row">
@@ -419,7 +419,7 @@
 
 <script>
     export default {
-        props:['ruta', 'usuario'],
+        props:['ruta', 'usuario', 'notifications'],
         data(){
             return {
                 formLogin:{
@@ -1227,7 +1227,7 @@
                 }).then(response => {
                     this.cDashboard04.fillPedidoInfoUsuario.cNombreUsuario = '';
                     this.cDashboard04.fillPedidoInfoUsuario.cNombreRol = '';
-                    this.cDashboard04.arrayDashboardAsesoresByAll = [];
+                    this.cDashboard04.arrayDashboardPedidoAsesoresByAll = [];
 
                     if(response.data.length) {
                         this.cDashboard04.fillPedidoInfoUsuario.cNombreUsuario  = response.data[0].cNombreUsuario;
@@ -1257,7 +1257,7 @@
                 if(me.cDashboard04.arrayDashboardPedidoAsesoresByAll.length > 0) {
                     me.cDashboard04.arrayDashboardPedidoAsesoresByAll.map(function(x) {
                         me.cDashboard04.arrayInfoAsesorPedidoComercialNombre.push(x.cNombreMes);
-                        me.cDashboard04.arrayInfoAsesorPedidoComercialCantidad.push(x.nCantidaCotizaciones);
+                        me.cDashboard04.arrayInfoAsesorPedidoComercialCantidad.push(x.nCantidaPedidos);
                     });
                 }
 

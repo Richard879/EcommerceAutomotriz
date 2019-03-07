@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Events\LogoutFromEveryWhere;
 
 class GestionUsuariosController extends Controller
 {
@@ -213,12 +215,27 @@ class GestionUsuariosController extends Controller
         $condicion  = ($request->opcion == 0) ? ($condicion = '0') : ($condicion = '1');
         $estado     = ($request->opcion == 0) ? ($estado = 'D') : ($estado = 'A');
 
-        $usuario = DB::select('exec usp_Usuario_SetCambiarEstadoUsuario ?, ?, ?',
+        $usuario = DB::select('exec usp_Usuario_SetCambiarEstadoUsuario ?, ?, ?, ?',
                                                     [
                                                         $nIdUsuario,
                                                         $condicion,
-                                                        $estado
+                                                        $estado,
+                                                        $currentUser
                                                     ]);
+
+        // Si el Usuario ha sido desactivado
+        if($request->opcion == 0) {
+            // remueve todas las sesiones realacionas al usuario actual
+            app('db')->table('sessions')
+                    ->where('user_id', $nIdUsuario)
+                    ->delete();
+
+            //Obtener el Objeto del Usuario a desactivar
+            $userToLogout = User::find($nIdUsuario);
+
+            broadcast(new LogoutFromEveryWhere($userToLogout));
+            // event(new LogoutFromEveryWhere($userToLogout));
+        }
 
         return response()->json($usuario);
     }
