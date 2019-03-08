@@ -2,9 +2,9 @@
      <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">FLETE</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">FLETE</h2>
+                </div>
             </header>
 
             <section>
@@ -1157,7 +1157,7 @@
                     'cSerieComprobante': this.formmFlete.cseriecomprobante,
                     'cNumeroComprobante': this.formmFlete.cnumerocomprobante,
                     'data': this.arrayFlete
-                }).then(response => { 
+                }).then(response => {
                     this.obtenerFleteTblCosto();
                 }).catch(error => {
                     console.log(error);

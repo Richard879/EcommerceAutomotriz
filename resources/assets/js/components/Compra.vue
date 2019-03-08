@@ -2283,7 +2283,7 @@
                     }
                 });
             },
-            /*generarSerieSap(){                
+            /*generarSerieSap(){
                 let me = this;
                 var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
                 axios.post(sapUrl, {
@@ -4333,7 +4333,7 @@
             },
             asignarAlmacen(objAlmacen){
                 this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
-                this.formAlmacen.cwhsname = objAlmacen.cWhsName;              
+                this.formAlmacen.cwhsname = objAlmacen.cWhsName;
                 this.cerrarModal();
             },
             // =============================================
