@@ -4184,7 +4184,7 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/compra/readFileForum';
                 axios.post(url, {
-                    nameFile: nameFile
+                    'nameFile': nameFile
                 }).then(response => {
                     /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
@@ -4267,9 +4267,9 @@
 
                 var url = this.ruta + '/compra/SetForum';
                 axios.post(url, {
-                    nIdProveedor: this.formForum.nidproveedor,
-                    dFechaInicio: '',
-                    data: this.arrayForum
+                    'nIdProveedor'  : this.formForum.nidproveedor,
+                    'dFechaInicio'  : '',
+                    'data'          : this.arrayForum
                 }).then(response => {
                     swal('Warrant Operativo registrado');
                     this.arrayForum = [];
