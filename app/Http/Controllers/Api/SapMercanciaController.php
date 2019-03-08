@@ -95,11 +95,11 @@ class SapMercanciaController extends Controller
                     ]
                 ]
             ];
-
-            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaEntry/", $json);
-            $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
         }
+
+        $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaEntry/", $json);
+        $rptaSap = json_decode($response->getBody());
+        array_push($array_rpta, $rptaSap);
         return $array_rpta;
     }
 

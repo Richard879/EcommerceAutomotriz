@@ -1403,7 +1403,7 @@
                 if (me.cDashboard05.arrayMisPedidos.length > 0) {
                     me.cDashboard05.arrayMisPedidos.map(function(x) {
                         me.cDashboard05.arrayInfoMisPedidosNombre.push(x.cNombreMes);
-                        me.cDashboard05.arrayInfoMisPedidosCantidad.push(x.nCantidaCotizaciones);
+                        me.cDashboard05.arrayInfoMisPedidosCantidad.push(x.nCantidaPedidos);
                     });
                 }
 

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use App\Events\LogoutFromEveryWhere;
+// use App\Events\LogoutFromEveryWhere;
 
 class LoginController extends Controller
 {
