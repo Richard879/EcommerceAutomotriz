@@ -55,14 +55,14 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
+                                                                    <!--<div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Warrant</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillWOperativo.cnrowarrant" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div>-->
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado</label>
@@ -100,26 +100,24 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Código</th>
-                                                                                <th>Nro Warrant</th>
                                                                                 <th>Proveedor</th>
-                                                                                <th>Fecha Registro</th>
-                                                                                <th>Fecha Venc.</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Valor Total</th>
+                                                                                <th>Total Comision Dolar</th>
+                                                                                <th>Total Comision Sol</th>
                                                                                 <th>Estado</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">
-                                                                                <td>{{ operativo.nIdWarrantOperativo }}</td>
-                                                                                <td>{{ operativo.cNumeroWarrant }}</td>
-                                                                                <td>{{ operativo.cProveedorNombre }}</td>
-                                                                                <td>{{ operativo.dFechaInicioWarrant }}</td>
-                                                                                <td>{{ operativo.dFechaVencimientoWarrant }}</td>
-                                                                                <td>{{ operativo.cSimboloMoneda }}</td>
-                                                                                <td>{{ operativo.fValorTotal }}</td>
-                                                                                <td>{{ operativo.cParNombre }}</td>
+                                                                                <td v-text="operativo.nIdWarrantOperativo"></td>
+                                                                                <td v-text="operativo.cProveedorNombre"></td>
+                                                                                <td v-text="operativo.cSimboloMoneda"></td>
+                                                                                <td v-text="operativo.fValorTotal"></td>
+                                                                                <td v-text="operativo.fTotalComisionDolar"></td>
+                                                                                <td v-text="operativo.fTotalComisionSol"></td>
+                                                                                <td v-text="operativo.cParNombre"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
@@ -243,6 +241,8 @@
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Valor Warrant</th>
+                                                                                <th>Comisión Dolar</th>
+                                                                                <th>Comisión Sol</th>
                                                                                 <th>Estado</th>
                                                                             </tr>
                                                                         </thead>
@@ -254,6 +254,8 @@
                                                                                 <td>{{ odetalle.cNumeroVin }}</td>
                                                                                 <td>{{ odetalle.cSimboloMoneda }}</td>
                                                                                 <td>{{ odetalle.fValorWarrant }}</td>
+                                                                                <td v-text="odetalle.fComisionDolar"></td>
+                                                                                <td v-text="odetalle.fComisionSol"></td>
                                                                                 <td>{{ odetalle.cParNombre }}</td>
                                                                             </tr>
                                                                         </tbody>
