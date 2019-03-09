@@ -345,30 +345,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <!--<div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nro Warranat</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="formWOperativo.cnrowarrant" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Registro</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="formWOperativo.dfechainicio"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -986,12 +970,14 @@
 
                 var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    nIdProveedor: this.formWOperativo.nidbanco,
-                    dFechaInicio: this.formWOperativo.dfechainicio,
-                    data: this.arrayTemporal
+                    'nIdProveedor'      : this.formWOperativo.nidbanco,
+                    'fTotalValor'       : this.fTotalValor,
+                    'fTotalComisionDolar': this.fTotalComisionDolar,
+                    'fTotalComisionSol' : this.fTotalComisionSol,
+                    'data'              : this.arrayTemporal
                 }).then(response => {
                     swal('Warrant Operativo registrado');
-                    this.arrayTemporal = [];
+                    this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1023,6 +1009,7 @@
                 this.formWOperativo.dfechainicio = '',
                 this.arrayCompra = [],
                 this.arrayWOperativo = [],
+                this.arrayTemporal = [];
                 this.limpiarPaginacion()
             },
             limpiarPaginacion(){
