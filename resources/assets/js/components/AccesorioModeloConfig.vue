@@ -201,7 +201,7 @@
                                     </template>
 
                                     <template v-else>
-                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}"  id="TabConfiguradorAlmacenes">
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}">
                                             <section class="forms">
                                                 <div class="container-fluid">
                                                     <div class="col-lg-12">
@@ -213,10 +213,31 @@
                                                                 <form class="form-horizontal">
                                                                     <div class="col-lg-10"  style="max-height: 515px; overflow-x: auto;">
                                                                         <div id="lsttreegrupo">
-                                                                            <ul class="styleElementos" v-for="(elemento, index) in arrayElementoVenta" :key="index">
-                                                                                <label> {{ elemento.cElementoNombre + ' - ' + elemento.fElementValorCosto }} </label>
-                                                                                <input type="checkbox" v-model="arrayCheckElementoVenta[index]" class="checkbox-template">
-                                                                            </ul>
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Acción</th>
+                                                                                            <th>Accesorios</th>
+                                                                                            <th>Costo</th>
+                                                                                            <th>Cantidad</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="(elemento, index) in arrayElementoVentaFlag" :key="index">
+                                                                                            <td>
+                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                    <div slot="content">Asignar  {{ elemento.cElementoNombre }}</div>
+                                                                                                    <input type="checkbox" v-model="arrayCheckElementoVenta[index]" class="checkbox-template">
+                                                                                                </el-tooltip>
+                                                                                            </td>
+                                                                                            <td v-text="elemento.cElementoNombre"></td>
+                                                                                            <td v-text="elemento.fElementValorCosto"></td>
+                                                                                            <td><input type="number" v-model="elemento.cantidad" class="form-control form-control-sm"/></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
@@ -369,7 +390,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Proveedores -->
+            <!-- Modal Show Accecsorios -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -458,6 +479,7 @@
                     cnombrevehiculo: ''
                 },
                 arrayElementoVenta: [],
+                arrayElementoVentaFlag: [],
                 arrayCheckElementoVenta: [],
                 pagination: {
                     'total': 0,
@@ -774,7 +796,7 @@
                     }
                 }).then(response => {
                     this.arrayElementoVenta = response.data;
-                    this.llenarCheckBox();
+                    this.llenarInfo();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -785,9 +807,22 @@
                     }
                 });
             },
-            llenarCheckBox(){
+            llenarInfo(){
                 let me = this;
                 me.arrayElementoVenta.map(function(value, key){
+                    me.arrayElementoVentaFlag.push({
+                        nIdElemento         :   value.nIdElemento,
+                        cElementoNombre     :   value.cElementoNombre,
+                        fElementValorCosto  :   value.fElementValorCosto,
+                        cFlagVerifica       :   value.cFlagVerifica,
+                        cantidad            :   0
+                    });
+                });
+                this.llenarCheckBox();
+            },
+            llenarCheckBox(){
+                let me = this;
+                me.arrayElementoVentaFlag.map(function(value, key){
                     me.arrayCheckElementoVenta[key] = value.cFlagVerifica == 0 ? false : true;
                 });
 
@@ -802,11 +837,12 @@
 
                 me.arrayTemproralEV = [];
 
-                me.arrayElementoVenta.map(function(value, key) {
+                me.arrayElementoVentaFlag.map(function(value, key) {
                     //Recorre los elementos activos que esten activos
                     if(me.arrayCheckElementoVenta[key] == true) {
                         me.arrayTemproralEV.push({
-                            nIdElemento: value.nIdElemento
+                            nIdElemento : value.nIdElemento,
+                            cantidad    : value.cantidad
                         });
                     }
                 });
@@ -818,7 +854,6 @@
                     'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'cnombrevehiculo'   : this.formConfigVehiculo.cnombrevehiculo
                 }).then(response => {
-                    console.log(response.data);
                     this.registrarEleVenta();
                 }).catch(error => {
                     this.errors = error

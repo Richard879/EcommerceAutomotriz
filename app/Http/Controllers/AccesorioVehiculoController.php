@@ -70,11 +70,12 @@ class AccesorioVehiculoController extends Controller
             $detalles = $request->arrayData;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_AccesorioVehiculo_SetElementosByVehiculo] ?, ?, ?, ?',
+                DB::select('exec [usp_AccesorioVehiculo_SetElementosByVehiculo] ?, ?, ?, ?, ?',
                                                             [
                                                                 $request->nIdEmpresa,
                                                                 $request->cnombrevehiculo,
                                                                 $det['nIdElemento'],
+                                                                $det['cantidad'],
                                                                 Auth::user()->id
                                                             ]);
             }
