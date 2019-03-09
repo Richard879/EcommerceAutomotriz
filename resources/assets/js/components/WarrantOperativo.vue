@@ -55,14 +55,14 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
+                                                                    <!--<div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Warrant</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillWOperativo.cnrowarrant" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div>-->
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado</label>
@@ -100,26 +100,24 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Código</th>
-                                                                                <th>Nro Warrant</th>
                                                                                 <th>Proveedor</th>
-                                                                                <th>Fecha Registro</th>
-                                                                                <th>Fecha Venc.</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Valor Total</th>
+                                                                                <th>Total Comision Dolar</th>
+                                                                                <th>Total Comision Sol</th>
                                                                                 <th>Estado</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">
-                                                                                <td>{{ operativo.nIdWarrantOperativo }}</td>
-                                                                                <td>{{ operativo.cNumeroWarrant }}</td>
-                                                                                <td>{{ operativo.cProveedorNombre }}</td>
-                                                                                <td>{{ operativo.dFechaInicioWarrant }}</td>
-                                                                                <td>{{ operativo.dFechaVencimientoWarrant }}</td>
-                                                                                <td>{{ operativo.cSimboloMoneda }}</td>
-                                                                                <td>{{ operativo.fValorTotal }}</td>
-                                                                                <td>{{ operativo.cParNombre }}</td>
+                                                                                <td v-text="operativo.nIdWarrantOperativo"></td>
+                                                                                <td v-text="operativo.cProveedorNombre"></td>
+                                                                                <td v-text="operativo.cSimboloMoneda"></td>
+                                                                                <td v-text="operativo.fValorTotal"></td>
+                                                                                <td v-text="operativo.fTotalComisionDolar"></td>
+                                                                                <td v-text="operativo.fTotalComisionSol"></td>
+                                                                                <td v-text="operativo.cParNombre"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
@@ -243,6 +241,8 @@
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Valor Warrant</th>
+                                                                                <th>Comisión Dolar</th>
+                                                                                <th>Comisión Sol</th>
                                                                                 <th>Estado</th>
                                                                             </tr>
                                                                         </thead>
@@ -254,6 +254,8 @@
                                                                                 <td>{{ odetalle.cNumeroVin }}</td>
                                                                                 <td>{{ odetalle.cSimboloMoneda }}</td>
                                                                                 <td>{{ odetalle.fValorWarrant }}</td>
+                                                                                <td v-text="odetalle.fComisionDolar"></td>
+                                                                                <td v-text="odetalle.fComisionSol"></td>
                                                                                 <td>{{ odetalle.cParNombre }}</td>
                                                                             </tr>
                                                                         </tbody>
@@ -345,30 +347,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <!--<div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nro Warranat</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="formWOperativo.cnrowarrant" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Registro</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="formWOperativo.dfechainicio"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -415,6 +401,8 @@
                                                                             <th>Moneda</th>
                                                                             <th>Total</th>
                                                                             <th>Nro Factura</th>
+                                                                            <th>Comisión Dolares</th>
+                                                                            <th>Comisión Soles</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -423,15 +411,17 @@
                                                                                 <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
                                                                                 <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                             </td>
-                                                                            <td>{{ temporal.nOrdenCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroVin }}</td>
-                                                                            <td>{{ temporal.cNombreComercial }}</td>
-                                                                            <td>{{ temporal.nAnioFabricacion }}</td>
-                                                                            <td>{{ temporal.nAnioVersion }}</td>
-                                                                            <td>{{ temporal.cFormaPago }}</td>
-                                                                            <td>{{ temporal.cSimboloMoneda }}</td>
-                                                                            <td>{{ temporal.fTotalCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroFactura }}</td>
+                                                                            <td v-text="temporal.nOrdenCompra"></td>
+                                                                            <td v-text="temporal.cNumeroVin"></td>
+                                                                            <td v-text="temporal.cNombreComercial"></td>
+                                                                            <td v-text="temporal.nAnioFabricacion"></td>
+                                                                            <td v-text="temporal.nAnioVersion"></td>
+                                                                            <td v-text="temporal.cFormaPago"></td>
+                                                                            <td v-text="temporal.cSimboloMoneda"></td>
+                                                                            <td v-text="temporal.fTotalCompra"></td>
+                                                                            <td v-text="temporal.cNumeroFactura"></td>
+                                                                            <td v-text="temporal.fComisionDolar"></td>
+                                                                            <td v-text="temporal.fComisionSol"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -441,7 +431,9 @@
                                                                     <div class="col-lg-7">
                                                                     </div>
                                                                     <div class="col-lg-5">
-                                                                        <div class="datatable-info">Valor Total: USD <strong>{{ fTotalWarrant }}</strong></div>
+                                                                        <div class="datatable-info">Total: USD <strong>{{ fTotalValor }}</strong></div>
+                                                                        <div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
+                                                                        <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -646,7 +638,9 @@
                 arrayTemporal: [],
                 arrayVersionVehiculo: [],
                 arrayCompra: [],
-                fTotalWarrant: 0,
+                fTotalValor: 0,
+                fTotalComisionSol: 0,
+                fTotalComisionDolar: 0,
                 fillWOperativo:{
                     nidestadowarrant: '',
                     cnrowarrant: ''
@@ -928,8 +922,8 @@
                 this.paginationModal.current_page=page;
                 this.listarVersionVehiculo(page);
             },
-            asignarVehiculo(data =[]){
-                if(this.encuentra(data['nIdCompra'])){
+            asignarVehiculo(data){
+                if(this.encuentra(data.nIdCompra)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -937,19 +931,7 @@
                             })
                 }
                 else{
-                    this.arrayTemporal.push({
-                                nIdCompra: data['nIdCompra'],
-                                nOrdenCompra: data['nOrdenCompra'],
-                                cNumeroVin: data['cNumeroVin'],
-                                cNombreComercial: data['cNombreComercial'],
-                                nAnioFabricacion: data['nAnioFabricacion'],
-                                nAnioFabricacion: data['nAnioFabricacion'],
-                                nAnioVersion: data['nAnioVersion'],
-                                cFormaPago: data['cFormaPago'],
-                                cSimboloMoneda: data['cSimboloMoneda'],
-                                fTotalCompra: data['fTotalCompra'],
-                                cNumeroFactura: data['cNumeroFactura']
-                    });
+                    this.arrayTemporal.push(data);
                     this.sumarWarrant();
                     toastr.success('Se Agregó Vehículo');
                 }
@@ -960,11 +942,15 @@
                 toastr.success('Se Eliminó Item Vehículo');
             },
             sumarWarrant(){
-                var sumatoria=0;
-                this.arrayTemporal.map(function(value, key) {
-                    sumatoria = parseFloat(sumatoria) + parseFloat(value.fTotalCompra);
+                let me = this;
+                me.fTotalValor = 0;
+                me.fTotalComisionDolar = 0;
+                me.fTotalComisionSol = 0;
+                me.arrayTemporal.map(function(value, key) {
+                    me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
+                    me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
+                    me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
                 });
-                this.fTotalWarrant = sumatoria.toFixed(2);
             },
             encuentra(nIdCompra){
                 var sw=0;
@@ -986,12 +972,14 @@
 
                 var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    nIdProveedor: this.formWOperativo.nidbanco,
-                    dFechaInicio: this.formWOperativo.dfechainicio,
-                    data: this.arrayTemporal
+                    'nIdProveedor'      : this.formWOperativo.nidbanco,
+                    'fTotalValor'       : this.fTotalValor,
+                    'fTotalComisionDolar': this.fTotalComisionDolar,
+                    'fTotalComisionSol' : this.fTotalComisionSol,
+                    'data'              : this.arrayTemporal
                 }).then(response => {
                     swal('Warrant Operativo registrado');
-                    this.arrayTemporal = [];
+                    this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1009,9 +997,6 @@
                 if(this.formWOperativo.nidbanco == 0 || !this.formWOperativo.nidbanco){
                     this.mensajeError.push('Debes Seleecionar un Proveedor');
                 };
-                if(this.formWOperativo.dfechainicio == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Registro');
-                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1023,6 +1008,7 @@
                 this.formWOperativo.dfechainicio = '',
                 this.arrayCompra = [],
                 this.arrayWOperativo = [],
+                this.arrayTemporal = [];
                 this.limpiarPaginacion()
             },
             limpiarPaginacion(){

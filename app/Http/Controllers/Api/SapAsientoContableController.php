@@ -7,5 +7,5 @@ use App\Http\Controllers\Controller;
 
 class SapAsientoContableController extends Controller
 {
-    //
+    //[Route("api/AsientoContable/SapSetAsientoContable")]
 }
