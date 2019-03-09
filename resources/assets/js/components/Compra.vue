@@ -776,6 +776,7 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Monto</th>
                                                                                     <th>Fecha</th>
+                                                                                    <th>Valor</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -791,6 +792,7 @@
                                                                                     <td v-text="forum.cMoneda"></td>
                                                                                     <td v-text="forum.fMonto"></td>
                                                                                     <td v-text="forum.dFecha"></td>
+                                                                                    <td v-text="forum.fvalor"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
