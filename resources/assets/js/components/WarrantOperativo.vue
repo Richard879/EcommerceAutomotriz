@@ -957,7 +957,9 @@
             },
             sumarWarrant(){
                 let me = this;
-                alert(me.arrayTemporal.length);
+                me.fTotalWarrant = 0;
+                me.fTotalComisionDolar = 0;
+                me.fTotalComisionSol = 0;
                 me.arrayTemporal.map(function(value, key) {
                     me.fTotalWarrant = parseFloat(me.fTotalWarrant) + parseFloat(value.fTotalCompra);
                     me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
