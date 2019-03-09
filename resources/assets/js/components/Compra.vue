@@ -4265,7 +4265,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/compra/SetForum';
+                var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
                     'nIdProveedor'  : this.formForum.nidproveedor,
                     'dFechaInicio'  : '',

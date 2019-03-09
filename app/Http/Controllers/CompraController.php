@@ -189,7 +189,7 @@ class CompraController extends Controller
         return response()->json($objCompra);
     }
 
-    public function SetForum(Request $request)
+    /*public function SetForum(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -224,7 +224,7 @@ class CompraController extends Controller
             DB::rollBack();
         }
 
-    }
+    }*/
 
     public function UpdCompraById(Request $request)
     {

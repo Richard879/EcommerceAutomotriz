@@ -417,4 +417,29 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($parametro);
     }
+
+    public function SetTipoParametro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdPar                 = $request->nIdPar;
+        $cTipoParametro         = $request->cTipoParametro;
+        $cDatoParDescripcion    = $request->cDatoParDescripcion;
+        $nDatoParNumerico       = $request->nDatoParNumerico;
+        $fDatoParPorcentual     = $request->fDatoParPorcentual;
+
+        $cDatoParDescripcion = ($cDatoParDescripcion == NULL) ? ($cDatoParDescripcion = '') : $cDatoParDescripcion;
+        $nDatoParNumerico = ($nDatoParNumerico == NULL) ? ($nDatoParNumerico = 0) : $nDatoParNumerico;
+        $fDatoParPorcentual = ($fDatoParPorcentual == NULL) ? ($fDatoParPorcentual = 0) : $fDatoParPorcentual;
+
+        $parametro = DB::select('exec [usp_TipoPar_SetTipoParametro] ?, ?, ?, ?, ?, ?',
+                                                        [   $request->nIdPar,
+                                                            $request->cTipoParametro,
+                                                            $cDatoParDescripcion,
+                                                            $nDatoParNumerico,
+                                                            $fDatoParPorcentual,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($parametro);
+    }
 }

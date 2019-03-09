@@ -242,6 +242,55 @@
                                         <h3 class="h4">CONFIGURACIONES</h3>
                                     </div>
                                     <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Descripción</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formTipoParametro.cdescripcion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Parámetro</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formTipoParametro.ctipoparametro" filterable clearable placeholder="SELECCIONE">
+                                                                <el-option
+                                                                v-for="item in lstTipoParametro"
+                                                                :key="item.value"
+                                                                :label="item.text"
+                                                                :value="item.value">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Valor</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formTipoParametro.cvalor" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarTipoParametro()">
+                                                        <i class="fa fa-save"></i> Registrar
+                                                    </button>
+                                                    <!--<button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
+                                                        <i class="fa fa-save"></i> Actualizar
+                                                    </button>-->
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-body">
                                         <template v-if="arrayTipoParametro.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
@@ -350,7 +399,21 @@
                 },
                 arrayGrupoParametro: [],
                 arrayParametro: [],
+                // =============================================================
+                // =========== VARIABLES TIPO PARAMETRO ===========
+                formTipoParametro:{
+                    nidtipopar: '',
+                    nidpar: '',
+                    ctipoparametro: '',
+                    cdescripcion: '',
+                    cvalor: ''
+                },
                 arrayTipoParametro: [],
+                lstTipoParametro:[
+                    { value: 'D', text: 'DESCRIPTIVO'},
+                    { value: 'N', text: 'NUMERICO'},
+                    { value: 'P', text: 'PORCENTUAL'}
+                ],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -775,7 +838,7 @@
                             }).then(response => {
                                 swal(
                                 'Actualizado!',
-                                'El registro fue actulizado.'
+                                'El registro fue actualizado.'
                                 );
                                 this.listarTipoParametro(1);
                             })
@@ -792,6 +855,31 @@
                         {
                         }
                     })
+            },
+            registrarTipoParametro(){
+                var url = this.ruta + '/tipoparametro/SetTipoParametro';
+                axios.post(url, {
+                    'nIdPar'                : parseInt(this.formParametro.nidpar),
+                    'cTipoParametro'        : this.formTipoParametro.ctipoparametro,
+                    'cDatoParDescripcion'   : this.formTipoParametro.ctipoparametro == 'D' ? this.formTipoParametro.cvalor : '',
+                    'nDatoParNumerico'      : this.formTipoParametro.ctipoparametro == 'N' ? this.formTipoParametro.cvalor : 0,
+                    'fDatoParPorcentual'    : this.formTipoParametro.ctipoparametro == 'P' ? this.formTipoParametro.cvalor : 0
+                }).then(response => {
+                    swal(
+                        'Registrado!',
+                        'El registro fue registrado.'
+                    );
+                    this.listarTipoParametro(1);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //==============================================
             cerrarModal(){
@@ -810,10 +898,11 @@
                         switch(accion){
                             case 'configurar':
                             {
+                                this.formParametro.nidpar = data.nIdPar;
+                                this.formTipoParametro.cdescripcion = data.cParNombre;
+                                this.listarTipoParametro(1);
                                 this.accionmodal=2;
                                 this.modal = 1;
-                                this.formParametro.nidpar = data.nIdPar;
-                                this.listarTipoParametro(1);
                                 break;
                             }
                         }
