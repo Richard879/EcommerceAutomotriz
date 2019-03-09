@@ -776,6 +776,7 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Monto</th>
                                                                                     <th>Fecha</th>
+                                                                                    <th>Valor</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -791,6 +792,7 @@
                                                                                     <td v-text="forum.cMoneda"></td>
                                                                                     <td v-text="forum.fMonto"></td>
                                                                                     <td v-text="forum.dFecha"></td>
+                                                                                    <td v-text="forum.fvalor"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -4184,7 +4186,7 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/compra/readFileForum';
                 axios.post(url, {
-                    nameFile: nameFile
+                    'nameFile': nameFile
                 }).then(response => {
                     /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
@@ -4265,11 +4267,11 @@
                     return;
                 }
 
-                var url = this.ruta + '/compra/SetForum';
+                var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    nIdProveedor: this.formForum.nidproveedor,
-                    dFechaInicio: '',
-                    data: this.arrayForum
+                    'nIdProveedor'  : this.formForum.nidproveedor,
+                    'dFechaInicio'  : '',
+                    'data'          : this.arrayForum
                 }).then(response => {
                     swal('Warrant Operativo registrado');
                     this.arrayForum = [];
