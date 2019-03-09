@@ -1097,25 +1097,14 @@
                         text: 'La compra ya se encuentra agregada!',
                     })
                 } else {
-                    me.arrayTempFlete.push({
-                            nIdCompra: compra.nIdCompra,
-                            cNumeroVin: compra.cNumeroVin,
-                            cNumeroMes: compra.cNumeroMes,
-                            cAnio: compra.cAnio,
-                            nOrdenCompra: compra.nOrdenCompra,
-                            cNumeroVin: compra.cNumeroVin,
-                            cNombreComercial: compra.cNombreComercial,
-                            nAnioFabricacion: compra.nAnioFabricacion,
-                            nAnioVersion: compra.nAnioVersion
-                    });
-
+                    me.arrayTempFlete.push(compra);
                     toastr.success('Se Agregó "'+ compra.cNumeroVin +'" ');
                 }
             },
-            encontrarCompraFlete(compra){
+            encontrarCompraFlete(nIdCompra){
                 var sw=0;
                 this.arrayTempFlete.map(function (x) {
-                    if(x.nIdCompra == compra){
+                    if(x.nIdCompra == nIdCompra){
                         sw = true;
                     }
                 });

@@ -415,6 +415,8 @@
                                                                             <th>Moneda</th>
                                                                             <th>Total</th>
                                                                             <th>Nro Factura</th>
+                                                                            <th>Comisión Dolares</th>
+                                                                            <th>Comisión Soles</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -423,15 +425,17 @@
                                                                                 <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
                                                                                 <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                             </td>
-                                                                            <td>{{ temporal.nOrdenCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroVin }}</td>
-                                                                            <td>{{ temporal.cNombreComercial }}</td>
-                                                                            <td>{{ temporal.nAnioFabricacion }}</td>
-                                                                            <td>{{ temporal.nAnioVersion }}</td>
-                                                                            <td>{{ temporal.cFormaPago }}</td>
-                                                                            <td>{{ temporal.cSimboloMoneda }}</td>
-                                                                            <td>{{ temporal.fTotalCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroFactura }}</td>
+                                                                            <td v-text="temporal.nOrdenCompra"></td>
+                                                                            <td v-text="temporal.cNumeroVin"></td>
+                                                                            <td v-text="temporal.cNombreComercial"></td>
+                                                                            <td v-text="temporal.nAnioFabricacion"></td>
+                                                                            <td v-text="temporal.nAnioVersion"></td>
+                                                                            <td v-text="temporal.cFormaPago"></td>
+                                                                            <td v-text="temporal.cSimboloMoneda"></td>
+                                                                            <td v-text="temporal.fTotalCompra"></td>
+                                                                            <td v-text="temporal.cNumeroFactura"></td>
+                                                                            <td v-text="temporal.fComisionDolar"></td>
+                                                                            <td v-text="temporal.fComisionSol"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -441,7 +445,9 @@
                                                                     <div class="col-lg-7">
                                                                     </div>
                                                                     <div class="col-lg-5">
-                                                                        <div class="datatable-info">Valor Total: USD <strong>{{ fTotalWarrant }}</strong></div>
+                                                                        <div class="datatable-info">Total: USD <strong>{{ fTotalWarrant }}</strong></div>
+                                                                        <div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
+                                                                        <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -647,6 +653,8 @@
                 arrayVersionVehiculo: [],
                 arrayCompra: [],
                 fTotalWarrant: 0,
+                fTotalComisionSol: 0,
+                fTotalComisionDolar: 0,
                 fillWOperativo:{
                     nidestadowarrant: '',
                     cnrowarrant: ''
@@ -928,8 +936,8 @@
                 this.paginationModal.current_page=page;
                 this.listarVersionVehiculo(page);
             },
-            asignarVehiculo(data =[]){
-                if(this.encuentra(data['nIdCompra'])){
+            asignarVehiculo(data){
+                if(this.encuentra(data.nIdCompra)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -937,19 +945,7 @@
                             })
                 }
                 else{
-                    this.arrayTemporal.push({
-                                nIdCompra: data['nIdCompra'],
-                                nOrdenCompra: data['nOrdenCompra'],
-                                cNumeroVin: data['cNumeroVin'],
-                                cNombreComercial: data['cNombreComercial'],
-                                nAnioFabricacion: data['nAnioFabricacion'],
-                                nAnioFabricacion: data['nAnioFabricacion'],
-                                nAnioVersion: data['nAnioVersion'],
-                                cFormaPago: data['cFormaPago'],
-                                cSimboloMoneda: data['cSimboloMoneda'],
-                                fTotalCompra: data['fTotalCompra'],
-                                cNumeroFactura: data['cNumeroFactura']
-                    });
+                    this.arrayTemporal.push(data);
                     this.sumarWarrant();
                     toastr.success('Se Agregó Vehículo');
                 }
@@ -960,11 +956,13 @@
                 toastr.success('Se Eliminó Item Vehículo');
             },
             sumarWarrant(){
-                var sumatoria=0;
-                this.arrayTemporal.map(function(value, key) {
-                    sumatoria = parseFloat(sumatoria) + parseFloat(value.fTotalCompra);
+                let me = this;
+                alert(me.arrayTemporal.length);
+                me.arrayTemporal.map(function(value, key) {
+                    me.fTotalWarrant = parseFloat(me.fTotalWarrant) + parseFloat(value.fTotalCompra);
+                    me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
+                    me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
                 });
-                this.fTotalWarrant = sumatoria.toFixed(2);
             },
             encuentra(nIdCompra){
                 var sw=0;

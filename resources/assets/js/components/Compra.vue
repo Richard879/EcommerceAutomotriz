@@ -776,7 +776,7 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Monto</th>
                                                                                     <th>Fecha</th>
-                                                                                    <th>Valor</th>
+                                                                                    <th>Valor Interés</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -792,7 +792,7 @@
                                                                                     <td v-text="forum.cMoneda"></td>
                                                                                     <td v-text="forum.fMonto"></td>
                                                                                     <td v-text="forum.dFecha"></td>
-                                                                                    <td v-text="forum.fvalor"></td>
+                                                                                    <td><input type="text" v-model="arrayValorInteres[index]" class="form-control form-control-sm"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -1605,6 +1605,7 @@
                 arrayProveedorForum: [],
                 arrayForum: [],
                 contadorArrayForum: 0,
+                arrayValorInteres: [],
                 // ==========================================================
                 // =============  BUSCAR PROVEEDORES ========================
                 fillProveedor:{
