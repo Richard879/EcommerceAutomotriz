@@ -429,7 +429,7 @@
                                                                     <div class="col-lg-7">
                                                                     </div>
                                                                     <div class="col-lg-5">
-                                                                        <div class="datatable-info">Total: USD <strong>{{ fTotalWarrant }}</strong></div>
+                                                                        <div class="datatable-info">Total: USD <strong>{{ fTotalValor }}</strong></div>
                                                                         <div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
                                                                         <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>
                                                                     </div>
@@ -636,7 +636,7 @@
                 arrayTemporal: [],
                 arrayVersionVehiculo: [],
                 arrayCompra: [],
-                fTotalWarrant: 0,
+                fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
                 fillWOperativo:{
@@ -941,11 +941,11 @@
             },
             sumarWarrant(){
                 let me = this;
-                me.fTotalWarrant = 0;
+                me.fTotalValor = 0;
                 me.fTotalComisionDolar = 0;
                 me.fTotalComisionSol = 0;
                 me.arrayTemporal.map(function(value, key) {
-                    me.fTotalWarrant = parseFloat(me.fTotalWarrant) + parseFloat(value.fTotalCompra);
+                    me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
                     me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
                     me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
                 });
@@ -994,9 +994,6 @@
 
                 if(this.formWOperativo.nidbanco == 0 || !this.formWOperativo.nidbanco){
                     this.mensajeError.push('Debes Seleecionar un Proveedor');
-                };
-                if(this.formWOperativo.dfechainicio == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Registro');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
