@@ -102,9 +102,9 @@
                                                                                 <el-select v-model="fillMisCotizaciones.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarSoloComboModelo()">
                                                                                     <el-option
                                                                                         v-for="marca in arrayMarca"
-                                                                                        :key="marca.nIdMarca"
-                                                                                        :label="marca.cMarcaNombre"
-                                                                                        :value="marca.nIdMarca">
+                                                                                        :key="marca.nIdPar"
+                                                                                        :label="marca.cParNombre"
+                                                                                        :value="marca.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
