@@ -977,6 +977,8 @@
                     return;
                 }
 
+                me.mostrarProgressBar();
+
                 var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
                     'nIdProveedor'      : me.formWOperativo.nidbanco,
@@ -1002,12 +1004,15 @@
             },
             generaSapWO(){
                 let me = this;
+                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
                 me.arrayTemporal.map(function(value, key) {
                     me.arrayAsiento.push({
                         'ProjectCode'   : value.cNumeroVin,
+                        'fCredit'       : "0",
                         'fDebit'        : value.fComisionSol,
-                        'Credit'        : value.fComisionSol
+                        'fCredit1'      : value.fComisionSol,
+                        'fDebit1'       : "0"
                     })
                 });
 
@@ -1095,6 +1100,29 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarCompras(1);
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

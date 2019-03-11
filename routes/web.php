@@ -425,6 +425,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
     Route::post('/empleado/SetIntegraEmpleado','IntEmpleadoController@SetIntegraEmpleado');
+    Route::post('/woperativo/SetIntegraAsientoContableWO','WarrantOperativoController@SetIntegraAsientoContableWO');
 
     Route::get('/accesoriovehiculo/GetListVehiculos','AccesorioVehiculoController@GetListVehiculos');
     Route::get('/accesoriovehiculo/GetListElemetosByVehiculo','AccesorioVehiculoController@GetListElemetosByVehiculo');
@@ -491,6 +492,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     //Vendedor
     Route::post('/empleado/SapSetEmpleado', 'Api\SapEmpleadoController@SapSetEmpleado');
+    //Asiento Contable
+    Route::post('/asiento/SapSetAsientoContableWO', 'Api\SapAsientoContableController@SapSetAsientoContableWO');
+    
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
