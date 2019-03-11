@@ -1031,6 +1031,7 @@
                         if(me.jsonRespuesta.ProjectCode){
                             me.arraySapUpdSgc.push({
                                 'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'cTipo'         : 'WO',
                                 'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
                                 'nNumber'       : parseInt(me.jsonRespuesta.Number),
                                 'cLogRespuesta' : response.data.toString()
@@ -1062,6 +1063,7 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         me.loading.close();
+                        $("#myBar").hide();
                         swal('Warrant Operativo registrado');
                         me.limpiarFormulario();
                     }
