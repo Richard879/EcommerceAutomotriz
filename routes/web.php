@@ -426,6 +426,12 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
     Route::post('/empleado/SetIntegraEmpleado','IntEmpleadoController@SetIntegraEmpleado');
 
+    Route::get('/accesoriovehiculo/GetListVehiculos','AccesorioVehiculoController@GetListVehiculos');
+    Route::get('/accesoriovehiculo/GetListElemetosByVehiculo','AccesorioVehiculoController@GetListElemetosByVehiculo');
+    Route::post('/accesoriovehiculo/DeleteElementosByVehiculo', 'AccesorioVehiculoController@DeleteElementosByVehiculo');
+    Route::post('/accesoriovehiculo/SetElementosByVehiculo', 'AccesorioVehiculoController@SetElementosByVehiculo');
+    Route::get('/accesoriovehiculo/GetListAccesoriosByVehiculo','AccesorioVehiculoController@GetListAccesoriosByVehiculo');
+
     ///========================================
     /////=================  ROUTES SAP
     //
