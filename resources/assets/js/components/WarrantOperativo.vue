@@ -660,6 +660,13 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
+                arrayAsiento: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+                //===========================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -962,24 +969,94 @@
                 return sw;
             },
             registrar(){
-                this.arrayTemporal;
+                let me = this;
 
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                if(me.validar()){
+                    me.accionmodal=1;
+                    me.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/woperativo/SetWOperativo';
+                var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'      : this.formWOperativo.nidbanco,
-                    'fTotalValor'       : this.fTotalValor,
-                    'fTotalComisionDolar': this.fTotalComisionDolar,
-                    'fTotalComisionSol' : this.fTotalComisionSol,
-                    'data'              : this.arrayTemporal
+                    'nIdProveedor'      : me.formWOperativo.nidbanco,
+                    'fTotalValor'       : me.fTotalValor,
+                    'fTotalComisionDolar': me.fTotalComisionDolar,
+                    'fTotalComisionSol' : me.fTotalComisionSol,
+                    'data'              : me.arrayTemporal
                 }).then(response => {
-                    swal('Warrant Operativo registrado');
-                    this.limpiarFormulario();
+                    //==============================================================
+                    //================== GENERAR ASIENTO CONTABLE SAP ===============
+                    setTimeout(function() {
+                        me.generaSapWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapWO(){
+                let me = this;
+
+                me.arrayTemporal.map(function(value, key) {
+                    me.arrayAsiento.push({
+                        'ProjectCode'   : value.cNumeroVin,
+                        'fDebit'        : value.fComisionSol,
+                        'Credit'        : value.fComisionSol
+                    })
+                });
+
+                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
+                axios.post(url, {
+                    'data' : me.arrayAsiento
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ProjectCode){
+                            me.arraySapUpdSgc.push({
+                                'cProjectCode'   : me.jsonRespuesta.ProjectCode.toString(),
+                                'cLogRespuesta' : response.data.toString()
+                            });
+                        }
+                    });
+
+                    //==============================================================================
+                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                    setTimeout(function() {
+                        me.generaActualizaWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizaWO(){
+                let me = this;
+                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Warrant Operativo registrado');
+                        this.limpiarFormulario();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

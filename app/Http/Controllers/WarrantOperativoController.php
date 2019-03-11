@@ -108,4 +108,26 @@ class WarrantOperativoController extends Controller
             DB::rollBack();
         }   
     }
+
+    public function SetIntegraAsientoContableWO(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objArticulo = DB::select('exec [usp_Integra_SetIntegraAsiento] ?, ?, ?',
+                                                            [   $det['cProjectCode'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objArticulo);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
