@@ -10,31 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapAsientoContableController extends Controller
 {
-    // ""Memo"": ""Creado desde SL"",  //Comentario
-    //""JournalEntryLines"": [
-                                                /*{   
-                                                    ""AccountCode"": ""2011101"", //CUENTA CONTABLE
-                                                    ""ContraAccountCode"": ""6911001"",
-                                                    ""Credit"": 200, 
-                                                    ""Debit"" : 0 
-                                                },
-                                                {
-                                                    ""AccountCode"": ""2011102"",
-                                                    ""ContraAccountCode"": ""6911001"",
-                                                    ""Credit"": 0,
-                                                    ""Debit"" : 20
-                                                },
-                                                {
-                                                    ""AccountCode"": ""6911001"",
-                                                    ""Credit"": 0,
-                                                    ""Debit"" : 120
-                                                }*/
-
     public function SapSetAsientoContableWO(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         $array_rpta = [];

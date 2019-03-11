@@ -1061,8 +1061,9 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
+                        me.loading.close();
                         swal('Warrant Operativo registrado');
-                        this.limpiarFormulario();
+                        me.limpiarFormulario();
                     }
                 }).catch(error => {
                     console.log(error);
