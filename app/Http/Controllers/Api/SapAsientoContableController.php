@@ -34,7 +34,7 @@ class SapAsientoContableController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $array_rpta = [];
@@ -45,40 +45,25 @@ class SapAsientoContableController extends Controller
 
             $json = [
                 'json' => [
-                    //"Memo"                  =>  $value['ProjectCode'],
+                    "Memo"                  =>  $value['ProjectCode'],
                     "ProjectCode"           =>  $value['ProjectCode'],
-                    "JournalEntryLines"     =>  
+                    "JournalEntryLines"    => 
                         [
                             [
                                 "AccountCode"           =>  "421111", //012110
                                 "ProjectCode"           =>  $value['ProjectCode'],
-                                "Credit"                =>  $value['fCredit'],
-                                "Debit"                 =>  $value['fDebit']                          
+                                "Credit"                =>  (string)$value['fCredit'],
+                                "Debit"                 =>  (string)$value['fDebit']
                             ],
                             [
                                 "AccountCode"           =>  "201113", //099111
                                 "ProjectCode"           =>  $value['ProjectCode'],
-                                "Credit"                =>  $value['fCredit1'],
-                                "Debit"                 =>  $value['fDebit1']
+                                "Credit"                =>  (string)$value['fCredit1'],
+                                "Debit"                 =>  (string)$value['fDebit1']
                             ]
                         ]
                 ]
             ];
-
-
-            /*$json['json']['JournalEntryLines'][] = [
-                "AccountCode"           =>  "421111", //012110
-                "ProjectCode"           =>  $value['ProjectCode'],
-                "Credit"                =>  (string)($value['fCredit0'] == NULL) ? ($value['fCredit0'] = '1') : $value['fCredit0'],
-                "Debit"                 =>  (string)($value['fDebit0'] == NULL) ? ($value['fDebit0'] = '1') : $value['fDebit0']
-            ];
-
-            $json['json']['JournalEntryLines'][] = [
-                "AccountCode"           =>  "201113", //012110
-                "ProjectCode"           =>  $value['ProjectCode'],
-                "Credit"                =>  (string)($value['fCredit1'] == NULL) ? ($value['fCredit1'] = '1') : $value['fCredit1'],
-                "Debit"                 =>  (string)($value['fDebit1'] == NULL) ? ($value['fDebit1'] = '1') : $value['fDebit1']
-            ];*/
 
             $response = $client->request('POST', "/api/AsientoContable/SapSetAsientoContable/", $json);
             $rptaSap = json_decode($response->getBody());

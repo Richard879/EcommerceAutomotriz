@@ -987,6 +987,15 @@
                     'fTotalComisionSol' : me.fTotalComisionSol,
                     'data'              : me.arrayTemporal
                 }).then(response => {
+                    me.arrayTemporal.map(function(value, key) {
+                        me.arrayAsiento.push({
+                            'ProjectCode'   : value.cNumeroVin,
+                            'fCredit'       : "0",
+                            'fDebit'        : value.fComisionSol,
+                            'fCredit1'      : value.fComisionSol,
+                            'fDebit1'       : "0"
+                        })
+                    });
                     //==============================================================
                     //================== GENERAR ASIENTO CONTABLE SAP ===============
                     setTimeout(function() {
@@ -1006,20 +1015,11 @@
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
-                me.arrayTemporal.map(function(value, key) {
-                    me.arrayAsiento.push({
-                        'ProjectCode'   : value.cNumeroVin,
-                        'fCredit'       : "0",
-                        'fDebit'        : value.fComisionSol,
-                        'fCredit1'      : value.fComisionSol,
-                        'fDebit1'       : "0"
-                    })
-                });
-
                 var url = me.ruta + '/asiento/SapSetAsientoContableWO';
                 axios.post(url, {
                     'data' : me.arrayAsiento
                 }).then(response => {
+                    //console.log(response);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 
