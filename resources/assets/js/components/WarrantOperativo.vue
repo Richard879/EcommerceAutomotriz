@@ -1030,7 +1030,9 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ProjectCode){
                             me.arraySapUpdSgc.push({
-                                'cProjectCode'   : me.jsonRespuesta.ProjectCode.toString(),
+                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
                                 'cLogRespuesta' : response.data.toString()
                             });
                         }
