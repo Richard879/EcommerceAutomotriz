@@ -25,21 +25,27 @@ class SapAsientoContableController extends Controller
 
             $json = [
                 'json' => [
-                    "Memo"                  =>  $value['ProjectCode'],
+                    "Memo"                  =>  "WO-".$value['ProjectCode'],
                     "ProjectCode"           =>  $value['ProjectCode'],
                     "JournalEntryLines"    => 
                         [
                             [
-                                "AccountCode"           =>  "421111", //012110
-                                "ProjectCode"           =>  $value['ProjectCode'],
-                                "Credit"                =>  (string)$value['fCredit'],
-                                "Debit"                 =>  (string)$value['fDebit']
+                                "AccountCode"       =>  "421111", //012110
+                                "ProjectCode"       =>  $value['ProjectCode'],
+                                /*"Credit"          =>  (string)$value['fCredit'],
+                                "Debit"             =>  (string)$value['fDebit']*/
+                                "FCDebit"           => (string)$value['fCredit'],
+                                "FCCredit"          => (string)$value['fDebit'],
+                                "FCCurrency"        => "US$"
                             ],
                             [
-                                "AccountCode"           =>  "201113", //099111
-                                "ProjectCode"           =>  $value['ProjectCode'],
-                                "Credit"                =>  (string)$value['fCredit1'],
-                                "Debit"                 =>  (string)$value['fDebit1']
+                                "AccountCode"       =>  "201113", //099111
+                                "ProjectCode"       =>  $value['ProjectCode'],
+                                /*"Credit"            =>  (string)$value['fCredit1'],
+                                "Debit"             =>  (string)$value['fDebit1'],*/
+                                "FCDebit"           => (string)$value['fCredit1'],
+                                "FCCredit"          => (string)$value['fDebit1'],
+                                "FCCurrency"        => "US$"
                             ]
                         ]
                 ]

@@ -991,8 +991,9 @@
                         me.arrayAsiento.push({
                             'ProjectCode'   : value.cNumeroVin,
                             'fCredit'       : "0",
-                            'fDebit'        : value.fComisionSol,
-                            'fCredit1'      : value.fComisionSol,
+                            'fDebit'        : value.fTotalCompra,
+                            'fCredit1'      : value.fTotalCompra,
+                            'fComisionSol'  : value.fComisionSol,
                             'fDebit1'       : "0"
                         })
                     });
