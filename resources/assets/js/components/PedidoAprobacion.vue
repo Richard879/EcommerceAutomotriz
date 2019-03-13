@@ -819,6 +819,7 @@
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
                 fAvgPrice: 0,
+                fImporte: 0,
                 //===========================================================
                 // =============  VARIABLES ALMACEN ========================
                 formAlmacen:{
@@ -1661,19 +1662,20 @@
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
                     me.arraySapElementoVenta.map(function(value, key) {
-                        //if(value.nIdTipoElementoVenta != 1300025){
+                        //Si son diferente de Servicios
+                        if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
                                 'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
-                        //}
-                        /*else{
+                        }
+                        else{
                             me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  :  parseInt('01'),
-                                'cItemCode' :  value.cCodigoERP,
+                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                'cItemCode' : value.cCodigoERP,
                                 'fImporte'  : value.fImporte
                             });
-                        }*/
+                        }
                     });
                 }).catch(error => {
                     console.log(error);
@@ -2144,15 +2146,9 @@
                             me.registroSapBusinessTblCostoEV();
                         }, 1600);
                     }else{
-                        me.limpiarFormulario();
-                        me.listarPedidos(1);
-                        swal(
-                            'Aprobado!',
-                            'El pedido ha sido APROBADO con éxito.',
-                            'success'
-                        );
-                        $("#myBar").hide();
-                        me.loading.close();
+                        setTimeout(function() {
+                            me.obtenerSapCostoServicio();
+                        }, 1600);
                     }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Costos SapB1!");
@@ -2172,15 +2168,9 @@
                 axios.post(url, {
                     'data'  : me.arraySapCostoEV
                 }).then(response => {
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    swal(
-                        'Aprobado!',
-                        'El pedido ha sido APROBADO con éxito.',
-                        'success'
-                    );
-                    $("#myBar").hide();
-                    me.loading.close();
+                    setTimeout(function() {
+                        me.obtenerSapCostoServicio();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2210,6 +2200,17 @@
                     U_SYP_COSTO         :   'Si',
                     U_SYP_ESTADO        :   'Pendiente'
                 });
+
+                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoServicios();
+                    }, 1600);
+                }else{
+                    setTimeout(function() {
+                        me.confirmaPedido();
+                    }, 1600);
+                }
+
             },
             registroSapBusinessTblCostoServicios(){
                 let me = this;
@@ -2218,15 +2219,7 @@
                 axios.post(url, {
                     'data'  : me.arraySapCostoServicio
                 }).then(response => {
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    swal(
-                        'Aprobado!',
-                        'El pedido ha sido APROBADO con éxito.',
-                        'success'
-                    );
-                    $("#myBar").hide();
-                    me.loading.close();
+                    me.confirmaPedido();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2236,6 +2229,18 @@
                         }
                     }
                 });
+            },
+            confirmaPedido(){
+                let me = this;
+                me.limpiarFormulario();
+                me.listarPedidos(1);
+                swal(
+                    'Aprobado!',
+                    'El pedido ha sido APROBADO con éxito.',
+                    'success'
+                );
+                $("#myBar").hide();
+                me.loading.close();
             },
             //REGISTRA COMPROBANTE SAP
             /*registroSapComprobante(){
