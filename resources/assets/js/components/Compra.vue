@@ -2144,13 +2144,13 @@
 
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCronograma: parseInt(this.nidcronograma),
-                    nIdProveedor: parseInt(this.formCompra.nidproveedor),
-                    nIdTipoLista: parseInt(this.formCompra.nidtipolista),
-                    nIdListaPrecioVeh: parseInt(this.formCompra.nidlistaprecio),
-                    data: this.arrayExcel
+                    'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'     : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCronograma'   : parseInt(this.nidcronograma),
+                    'nIdProveedor'    : parseInt(this.formCompra.nidproveedor),
+                    'nIdTipoLista'    : parseInt(this.formCompra.nidtipolista),
+                    'nIdListaPrecioVeh': parseInt(this.formCompra.nidlistaprecio),
+                    'data'            : this.arrayExcel
                 }).then(response => {
                     let me = this;
 
@@ -3089,7 +3089,7 @@
                 let me = this;
                 var sapUrl = me.ruta + '/articulo/SetIntegraArticulo';
                 axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
+                    'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -3305,12 +3305,12 @@
 
                     var sapUrl = me.ruta + '/compra/SapSetCompra';
                     axios.post(sapUrl, {
-                        'cCardCode': me.formCompra.ccarcode,
-                        'fDocDate': moment().format('YYYY-MM-DD'),
-                        'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode': me.formAlmacen.cwhscode,
-                        'Igv': 1 + parseFloat((me.formCompra.igv)),
-                        'data': me.arraySapCompra
+                        'cCardCode'     : me.formCompra.ccarcode,
+                        'fDocDate'      : moment().format('YYYY-MM-DD'),
+                        'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'WarehouseCode' : me.formAlmacen.cwhscode,
+                        'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                        'data'          : me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -3481,12 +3481,6 @@
                         }
                         else{
                             //==============================================================
-                            //================== FIN ===============
-                            /*me.loading.close();
-                            swal('Compra registrada correctamente');
-                            me.limpiarFormulario();
-                            me.listarCompras(1);*/
-                            //==============================================================
                             //================== REGISTRO TABLA COSTO EN SAP ===============
                             setTimeout(function() {
                                 me.generaSapTblCostoCabecera(objCompra);
@@ -3556,21 +3550,11 @@
                 }).then(response => {
                     ////////////////////////////////////////if()
                      ////////////////////////////////////////if()
-                      ////////////////////////////////////////if()
-                       ////////////////////////////////////////if()
-                        ////////////////////////////////////////if()
-                         ////////////////////////////////////////if()
                     //==============================================================
                     //================== REGISTRO TABLA COSTO EN SAP ===============
                     setTimeout(function() {
                         me.generaSapTblCostoCabecera(objCompra);
                     }, 1600);
-                    //==============================================================
-                    //================== FIN ===============
-                    /*me.loading.close();
-                    swal('Compra registrada correctamente');
-                    me.limpiarFormulario();
-                    me.listarCompras(1);*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3592,7 +3576,6 @@
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta = [];
-                    //me.arraySapItemCode = [];
                     me.arraySapUpdSgc = [];
                     me.arraySapCosto = [];
 
@@ -3602,9 +3585,6 @@
                         me.jsonRespuesta= JSON.parse(x);
                         //==== Si devuelve Json ItemCode
                         if(me.jsonRespuesta.DocEntry){
-                            //Guardo los VINES Y DocEntry de la Cabecera de la Tabla Costos
-                            //me.arraySapItemCode.push(me.jsonRespuesta.U_SYP_VIN);
-
                             me.arraySapCosto.push({
                                 'DocEntry' : me.jsonRespuesta.DocEntry,
                                 'U_SYP_VIN': me.jsonRespuesta.U_SYP_VIN
