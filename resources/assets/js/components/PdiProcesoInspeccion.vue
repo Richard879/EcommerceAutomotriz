@@ -2868,8 +2868,8 @@
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
                                 'cCardCode'     :   me.ccustomercode,
                                 'cNotes'        :   'PDIEntrada',
-                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
                                 'nDocType'      :   '59',
                                 'nDuration'     :   '15',
                                 'cDurationType' :   'du_Minuts',
@@ -2950,8 +2950,8 @@
                                 'nActividadTipo'    : 4,
                                 'cActividadTipo'    : 'PDIEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'         : 0,
-                                'nDocNum'           : 0,
+                                'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
