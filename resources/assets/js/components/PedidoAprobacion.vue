@@ -1848,7 +1848,6 @@
                     'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
-                        me.loading.close();
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
                         }, 1000);
@@ -2241,95 +2240,6 @@
                 $("#myBar").hide();
                 me.loading.close();
             },
-            //REGISTRA COMPROBANTE SAP
-            /*registroSapComprobante(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/comprobante/SapSetFactura';
-                axios.post(sapUrl, {
-                    'cCardCode': me.formSap.ccardcode.toString(),
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta = JSON.parse(value);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración Factura SAP : OK");
-                            console.log(me.jsonRespuesta.DocEntry);
-                            me.arraySapUpdSgc.push({
-                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                            setTimeout(function() {
-                                me.registroDocEntryComprobante();
-                            }, 3800);
-                        }
-                    });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Comprobante SapB1!',
-                    });
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
-            registroDocEntryComprobante(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/pedido/SapUpdFacturaByDocEntry';
-                axios.post(sapUrl, {
-                    data: me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        me.limpiarFormulario();
-                        me.listarPedidos(1);
-                        swal(
-                            'Aprobado!',
-                            'El pedido ha sido APROBADO con éxito.',
-                            'success'
-                        );
-                        $("#myBar").hide();
-                        me.loading.close();
-                    }else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
-                        })
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             anularPedido(pedido){
                 swal({
                     title: '¿Esta seguro de ANULAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
