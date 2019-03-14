@@ -842,7 +842,7 @@
                 this.fillWOperativoDetalle.nidwarrantoperativo= objWO.nIdWarrantOperativo;
                 this.listarDetalleWOperativo(1);
             },
-            listarDetalleWOperativo(page){                
+            listarDetalleWOperativo(page){
                 var url = this.ruta + '/woperativo/GetWOperativoDetalle';
 
                 axios.get(url, {

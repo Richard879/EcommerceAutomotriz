@@ -532,13 +532,13 @@
                                                 </tbody>
                                             </table>
                                         </template>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="aprobarPedidoModal()">
                                                     <i class="fa fa-save"></i> Aprobar
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -1606,10 +1606,10 @@
                 var url = this.ruta + '/pedido/GetPedidoById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
                         //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
-                        'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
@@ -1648,15 +1648,16 @@
                     }
                 });
             },
-            obtenerObsequiosCampaniasByIdPedido(objPedido){
+            obtenerObsequiosCampaniasByIdPedido(){
                 let me = this;
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': objPedido.nIdCabeceraPedido,
-                        'opcion': 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido,
+                        'opcion'            : 1
                     }
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
