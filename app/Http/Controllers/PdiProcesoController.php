@@ -145,10 +145,10 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa  = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $cNumeroVehiculo  = $request->cnrovehiculo;
-        $nCriterio  = $request->criterio;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $cNumeroVehiculo    = $request->cnrovehiculo;
+        $nCriterio          = $request->criterio;
 
         $cNumeroVehiculo  = ($cNumeroVehiculo == NULL) ? ($cNumeroVehiculo = ' ') : $cNumeroVehiculo;
 
@@ -298,11 +298,11 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa   = $request->nidempresa;
-        $nIdTipoElemento = $request->nidtipoelemen;
-        $cElemenNombre = $request->celementonombre;
-        $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
-        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdTipoElemento    = $request->nidtipoelemen;
+        $cElemenNombre      = $request->celementonombre;
+        $nIdTipoElemento    = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
+        $cElemenNombre      = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
 
         $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipo] ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -311,6 +311,27 @@ class PdiProcesoController extends Controller
                                                                 ]);
 
         //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
+    }
+
+    public function GetElementoByTipoBsq(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa     =   $request->nidempresa;
+        $tipoBsq        =   $request->nidtipoelemen;
+        $codVehiculo    =   $request->codVehiculo;
+
+        $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
+        $codVehiculo    =   ($codVehiculo == NULL) ? ($codVehiculo = '') : $codVehiculo;
+
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipoBsq] ?, ?, ?',
+                                                                [   $nidempresa,
+                                                                    $tipoBsq,
+                                                                    $codVehiculo
+                                                                ]);
+
+        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 

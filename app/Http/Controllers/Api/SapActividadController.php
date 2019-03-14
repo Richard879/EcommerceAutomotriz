@@ -234,7 +234,7 @@ class SapActividadController extends Controller
         $nServiceCallID    = $request->nServiceCallID;
         $nLine             = $request->nLine;
         $nActivityCode     = $request->nActivityCode;
-        
+
         $nLine = ($nLine == NULL) ? ($nLine = 0) : $nLine;
 
         $response = $client->request('POST', "/api/Actividad/SapSetActividadByServiceCallId/", [

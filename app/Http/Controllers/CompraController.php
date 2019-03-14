@@ -345,8 +345,10 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercanciaEntry] ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cItemCode'],
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercanciaEntry] ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $det['nIdCabeceraInspec'],
+                                                                $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],

@@ -809,13 +809,14 @@
             },
             llenarInfo(){
                 let me = this;
+                me.arrayElementoVentaFlag = [];
                 me.arrayElementoVenta.map(function(value, key){
                     me.arrayElementoVentaFlag.push({
                         nIdElemento         :   value.nIdElemento,
                         cElementoNombre     :   value.cElementoNombre,
                         fElementValorCosto  :   value.fElementValorCosto,
                         cFlagVerifica       :   value.cFlagVerifica,
-                        cantidad            :   0
+                        cantidad            :   value.nCantidad
                     });
                 });
                 this.llenarCheckBox();
