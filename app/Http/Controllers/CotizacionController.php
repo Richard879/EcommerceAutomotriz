@@ -361,8 +361,9 @@ class CotizacionController extends Controller
 
         if (!$request->ajax()) return redirect('/');
 
+        $nIdUsuario = Auth::user()->id;
+        
         if($request->opcion == 1) {
-            $nIdUsuario = Auth::user()->id;
             $dfecha     = date('Y-m-d');;
 
             $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
