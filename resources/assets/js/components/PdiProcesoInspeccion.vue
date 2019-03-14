@@ -2948,7 +2948,7 @@
                                 'nServiceCallID'    : me.nservicecallidcompra,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo'    : 4,
-                                'cActividadTipo'    : 'PdiEntrada',
+                                'cActividadTipo'    : 'PDIEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : 0,
                                 'nDocNum'           : 0,
@@ -2983,7 +2983,6 @@
                     }
                 });
             },
-            /*
             generaSgcActividadMercanciaEntry(){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
@@ -2994,9 +2993,11 @@
                     {
                         //================================================================================
                         //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        setTimeout(function() {
-                            me.generaSapActividadServiceCallEntry();
-                        }, 1600);
+                        // setTimeout(function() {
+                        //     me.generaSapActividadServiceCallEntry();
+                        // }, 1600);
+                        me.loading.close();
+                        me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3008,6 +3009,7 @@
                     }
                 });
             },
+            /*
             generaSapActividadServiceCallEntry(){
                 let me = this;
 

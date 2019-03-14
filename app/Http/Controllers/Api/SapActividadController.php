@@ -67,23 +67,23 @@ class SapActividadController extends Controller
 
             $json = [
                 'json' => [
-                    "ActivityDate"      => (string)$value['dActivityDate'],
-                    "ActivityTime"      => $value['hActivityTime'],
-                    "CardCode"          => $value['cCardCode'],
-                    "Notes"             => $value['cNotes'],
-                    "DocEntry"          => $value['nDocEntry'],
-                    "DocNum"            => $value['nDocNum'],
-                    "DocType"           => $value['nDocType'],
-                    "ActivityProperty"  => "cn_Task",
-                    "Duration"          => $value['nDuration'],
-                    "DurationType"      => $value['cDurationType'],
-                    "EndDueDate"        => (string)$value['dEndDueDate'],
-                    "EndTime"           => $value['hEndTime'],
-                    "Reminder"          => $value['cReminder'],
-                    "ReminderPeriod"    => $value['nReminderPeriod'],
-                    "ReminderType"      => $value['cReminderType'],
-                    "StartDate"         => (string)$value['dStartDate'],
-                    "StartTime"         => $value['hStartTime']
+                    "ActivityDate"      =>  (string)$value['dActivityDate'],
+                    "ActivityTime"      =>  $value['hActivityTime'],
+                    "CardCode"          =>  $value['cCardCode'],
+                    "Notes"             =>  $value['cNotes'],
+                    "DocEntry"          =>  $value['nDocEntry'],
+                    "DocNum"            =>  $value['nDocNum'],
+                    "DocType"           =>  $value['nDocType'],
+                    "ActivityProperty"  =>  "cn_Task",
+                    "Duration"          =>  $value['nDuration'],
+                    "DurationType"      =>  $value['cDurationType'],
+                    "EndDueDate"        =>  (string)$value['dEndDueDate'],
+                    "EndTime"           =>  $value['hEndTime'],
+                    "Reminder"          =>  $value['cReminder'],
+                    "ReminderPeriod"    =>  $value['nReminderPeriod'],
+                    "ReminderType"      =>  $value['cReminderType'],
+                    "StartDate"         =>  (string)$value['dStartDate'],
+                    "StartTime"         =>  $value['hStartTime']
                 ]
             ];
 
