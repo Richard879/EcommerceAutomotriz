@@ -2859,10 +2859,8 @@
             },
             verResultados(){
                 let me = this;
-                me.loading.close();
-                $("#myBar").hide();
                 me.attachment = [];
-                me.limpiarFormulario();
+                me.confirmaCompra();
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                     me.accionmodal=3;
@@ -3681,15 +3679,7 @@
                         me.generaSapTblCostoDetallePorVin();
                     }, 1600);
                 }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
-                    });
-                    me.loading.close();
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
+                    me.limpiarPorError("Error en la Integración Costos Servicio SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3708,10 +3698,7 @@
                     'dataTipoBeneficio' : me.arrayTCTipoBeneficio/*,
                     'dataCostoVehiculo' : me.arrayTCCostoVehiculo*/
                 }).then(response => {
-                    me.loading.close();
-                    swal('Compra registrada correctamente');
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
+                    me.confirmaCompra();
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Tabla Costo Detalle SapB1!");
                     console.log(error);
@@ -3722,6 +3709,14 @@
                         }
                     }
                 });
+            },
+            confirmaCompra(){
+                let me = this;
+                $("#myBar").hide();
+                me.loading.close();
+                swal('Compra registrada correctamente');
+                me.limpiarFormulario();
+                me.listarCompras(1);
             },
             //=================== Generar Entrada Mercancia ==============
             generaSapEntradaMercancia(objCompra){
@@ -3914,30 +3909,6 @@
                     }
                 });
             },
-            /*generaSapActividadServiceCall(objCompra){
-                let me = this;
-
-                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
-                axios.post(sapUrl, {
-                    'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : objCompra.nServiceCallID,
-                    'nLine'             : 0
-                }).then(response => {
-                    me.loading.close();
-                    swal('Entrada Mercancia registrada correctamente');
-                    me.limpiarFormulario();
-                    me.listarCompras(1);
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
                 if(this.validarActualizar()){
