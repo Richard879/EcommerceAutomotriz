@@ -1872,8 +1872,6 @@
             registroSapBusinessActividad(){
                 let me = this;
 
-                me.loadingProgressBar("INTEGRANDO ACTIVIDAD DEL PEDIDO CON SAP BUSINESS ONE...");
-
                 var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
                 axios.post(sapUrl, {
                     'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
@@ -2029,8 +2027,6 @@
             registroSapBusinessLlamadaServicio(){
                 let me = this;
 
-                me.loadingProgressBar("INTEGRANDO LA LLAMADA DE SERVICIOS CON SAP BUSINESS ONE...");
-
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
                     'arraySapLlamadaServicio'   : me.arraySapLlamadaServicio,
@@ -2109,6 +2105,7 @@
             },
             obtenerSapCostoPromedio(){
                 let me = this;
+                me.loading.close();
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
