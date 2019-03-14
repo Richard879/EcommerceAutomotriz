@@ -174,7 +174,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR WARRANT OPERATIVO</h3>
+                                                            <h3 class="h4">DETALLE</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -1085,7 +1085,6 @@
             },
             obtenerWOTblCosto(){
                 let me = this;
-
                 var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
                 axios.post(url, {
                         'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -1094,7 +1093,7 @@
                 }).then(response => {
                     me.arraySapWO = [];
                     // ====================== CONCEPTO =========================
-                    // ======================== FLETE ==========================
+                    // ======================== COMISION WO ====================
                     let arrayCostoWO = response.data.array_infoWO;
                     arrayCostoWO.map(function (x) {
                         me.arraySapWO.push({
@@ -1125,7 +1124,7 @@
             },
             registroSapBusinessTblCostoWO(){
                 let me = this;
-
+                me.loading.close();
                 me.loadingProgressBar("INTEGRANDO COSTO WO CON SAP BUSINESS ONE...");
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
