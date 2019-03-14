@@ -2183,6 +2183,7 @@
                 });
             },
             obtenerSgcCostoServicio(){
+                let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
                         me.fImporte = me.fImporte + value.fImporte;
                     });
