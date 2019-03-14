@@ -4770,10 +4770,6 @@
         align-items: flex-end;
         flex-direction: column;
     }
-    .centrarbtn{
-        display: flex;
-        justify-content: center;
-    }
     .flex-rigth-margin{
         display: flex;
         justify-content: space-around;
@@ -4782,16 +4778,10 @@
         align-items: flex-end;
         margin-right: 2rem;
     }
-    .widthFull>.el-select>.el-input {
-        width: 100%;
-    }
     .disabled{
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events:none;
-    }
-    .table-sm th, .table-sm td{
-        text-align: center;
     }
 </style>
 

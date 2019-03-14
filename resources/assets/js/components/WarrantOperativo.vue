@@ -119,7 +119,7 @@
                                                                                 <td v-text="operativo.fTotalComisionSol"></td>
                                                                                 <td v-text="operativo.cParNombre"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
+                                                                                    <a href="#" @click="asignaIdWOperativo(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -174,7 +174,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR WARRANT OPERATIVO</h3>
+                                                            <h3 class="h4">DETALLE</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -184,11 +184,11 @@
                                                                             <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="buscarWOperativoDetalle" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="listarDetalleWOperativo(1)" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Buscar Warrant </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWOperativoDetalle">
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarDetalleWOperativo(1)">
                                                                                                 <i class="fa-lg fa fa-search"></i>
                                                                                             </button>
                                                                                         </el-tooltip>
@@ -217,7 +217,12 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativoDetalle()"><i class="fa fa-search"></i> Buscar</button>
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleWOperativo(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                                            <i class="fa fa-close"></i> Regresar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -660,6 +665,14 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
+                arrayAsiento: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapRespuesta: [],
+                jsonRespuesta: '',
+                arraySapUpdSgc: [],
+                arraySapWO: [],
+                //===========================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -821,15 +834,15 @@
                 this.pagination.current_page=page;
                 this.listarWOperativos(page);
             },
-            asignaIdWOperativo(nIdWarrantOperativo){
-                this.fillWOperativoDetalle.nidwarrantoperativo= nIdWarrantOperativo;
-                this.buscarWOperativoDetalle();
+            cambiarVistaFormulario(){
+                this.vistaFormularioTabBuscar = 1;
             },
-            buscarWOperativoDetalle(){
+            asignaIdWOperativo(objWO){
+                this.vistaFormularioTabBuscar = 0;
+                this.fillWOperativoDetalle.nidwarrantoperativo= objWO.nIdWarrantOperativo;
                 this.listarDetalleWOperativo(1);
             },
             listarDetalleWOperativo(page){
-                this.vistaFormularioTabBuscar = 0;
                 var url = this.ruta + '/woperativo/GetWOperativoDetalle';
 
                 axios.get(url, {
@@ -962,24 +975,244 @@
                 return sw;
             },
             registrar(){
-                this.arrayTemporal;
+                let me = this;
 
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                if(me.validar()){
+                    me.accionmodal=1;
+                    me.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/woperativo/SetWOperativo';
+                me.mostrarProgressBar();
+
+                var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'      : this.formWOperativo.nidbanco,
-                    'fTotalValor'       : this.fTotalValor,
-                    'fTotalComisionDolar': this.fTotalComisionDolar,
-                    'fTotalComisionSol' : this.fTotalComisionSol,
-                    'data'              : this.arrayTemporal
+                    'nIdProveedor'      : me.formWOperativo.nidbanco,
+                    'fTotalValor'       : me.fTotalValor,
+                    'fTotalComisionDolar': me.fTotalComisionDolar,
+                    'fTotalComisionSol' : me.fTotalComisionSol,
+                    'data'              : me.arrayTemporal
                 }).then(response => {
-                    swal('Warrant Operativo registrado');
-                    this.limpiarFormulario();
+                    me.arrayTemporal.map(function(value, key) {
+                        me.arrayAsiento.push({
+                            'ProjectCode'   : value.cNumeroVin,
+                            'fCredit'       : "0",
+                            'fDebit'        : value.fTotalCompra,
+                            'fCredit1'      : value.fTotalCompra,
+                            'fComisionSol'  : value.fComisionSol,
+                            'fDebit1'       : "0"
+                        })
+                    });
+                    //==============================================================
+                    //================== GENERAR ASIENTO CONTABLE SAP ===============
+                    setTimeout(function() {
+                        me.generaSapWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapWO(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
+                axios.post(url, {
+                    'data' : me.arrayAsiento
+                }).then(response => {
+                    //console.log(response);
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ProjectCode){
+                            me.arraySapUpdSgc.push({
+                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'cTipo'         : 'WO',
+                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cLogRespuesta' : response.data.toString()
+                            });
+                        }
+                    });
+
+                    //==============================================================================
+                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                    setTimeout(function() {
+                        me.generaActualizaWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizaWO(){
+                let me = this;
+                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                         setTimeout(function() {
+                            me.obtenerWOTblCosto();
+                        }, 1600);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerWOTblCosto(){
+                let me = this;
+                var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
+                axios.post(url, {
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'data'          : me.arrayAsiento
+                }).then(response => {
+                    me.arraySapWO = [];
+                    // ====================== CONCEPTO =========================
+                    // ======================== COMISION WO ====================
+                    let arrayCostoWO = response.data.array_infoWO;
+                    arrayCostoWO.map(function (x) {
+                        me.arraySapWO.push({
+                            'U_SYP_VIN'           :   x.U_SYP_VIN,
+                            'DocEntry'            :   x.DocEntry,
+                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
+                        });
+                    });
+
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoWO(){
+                let me = this;
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO COSTO WO CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapWO
+                }).then(response => {
+                    me.confirmarWO();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            confirmarWO(){
+                let me = this;
+                me.loading.close();
+                $("#myBar").hide();
+                swal('Warrant Operativo registrado');
+                me.limpiarFormulario();
+            },
+            generaSapCompraWO(objCompra){
+                let me = this;
+
+                //==============================================================
+                //================== REGISTRO COMPRA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
+
+                var sapUrl = me.ruta + '/compra/SapSetCompra';
+                axios.post(sapUrl, {
+                    'cCardCode'     : me.formCompra.ccarcode,
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode' : me.formAlmacen.cwhscode,
+                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                    'data'          : me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+                    me.arraySapActividad= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                me.generaActualizarDocEntryWO(objCompra);
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Compra SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryWO(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SetIntegraCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1009,7 +1242,14 @@
                 this.arrayCompra = [],
                 this.arrayWOperativo = [],
                 this.arrayTemporal = [];
-                this.limpiarPaginacion()
+                this.limpiarPaginacion();
+
+                //========= VARIABLES SAP =============
+                //Limpiar variables Sap Articulo
+                this.arraySapRespuesta= [],
+                this.jsonRespuesta= '',
+                this.arraySapUpdSgc= [],
+                this.arraySapWO= [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1018,6 +1258,29 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarCompras(1);
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

@@ -1093,7 +1093,6 @@
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
-
             },
             limpiarFormulario(){
                 //this.formVersion.nidproveedor= 0,

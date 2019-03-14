@@ -175,7 +175,7 @@ class IntTablaCostoController extends Controller
         $nIdEmpresa     = $request->nIdEmpresa;
         $nIdSucursal    = $request->nIdSucursal;
 
-        $array_infoFlete            =   [];
+        $array_infoFlete   =   [];
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -220,4 +220,59 @@ class IntTablaCostoController extends Controller
 
         return response()->json($tblCostos);
     }
+
+    public function GetWOComisionTblCosto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdSucursal    = $request->nIdSucursal;
+
+        $array_infoWO  =   [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            // ==================================================================================
+            // =============================  COMISION WO =======================================
+            $data = DB::select('exec [usp_TablaCosto_GetWOComision] ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $value['cNumeroVin']
+                                                    ]);
+
+            if ($data) {
+                $flete = $data[0];
+                $U_SYP_VIN          =   $flete->cNumeroVin;
+                $DocEntry           =   $flete->nDocEntry;
+                $U_SYP_CCONCEPTO    =   $flete->U_SYP_CCONCEPTO;
+                $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
+                $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
+                $U_SYP_DDOCUMENTO   =   $flete->U_SYP_DDOCUMENTO;
+                $U_SYP_IMPORTE      =   $flete->fComisionSol;
+                $U_SYP_COSTO        =   $flete->U_SYP_COSTO;
+                $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
+
+                $infoWO = [
+                    'U_SYP_VIN'         =>  $U_SYP_VIN,
+                    'DocEntry'          =>  $DocEntry,
+                    'U_SYP_CCONCEPTO'   =>  $U_SYP_CCONCEPTO,
+                    'U_SYP_DCONCEPTO'   =>  $U_SYP_DCONCEPTO,
+                    'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
+                    'U_SYP_DDOCUMENTO'  =>  $U_SYP_DDOCUMENTO,
+                    'U_SYP_IMPORTE'     =>  $U_SYP_IMPORTE,
+                    'U_SYP_COSTO'       =>  $U_SYP_COSTO,
+                    'U_SYP_ESTADO'      =>  $U_SYP_ESTADO
+                ];
+                array_push($array_infoWO, $infoWO);
+            }
+        }
+
+        $tblCostos = [
+            'array_infoWO'         =>  $array_infoWO
+        ];
+
+        return response()->json($tblCostos);
+    }
+
+
 }

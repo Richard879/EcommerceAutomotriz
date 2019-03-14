@@ -532,13 +532,13 @@
                                                 </tbody>
                                             </table>
                                         </template>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="aprobarPedidoModal()">
                                                     <i class="fa fa-save"></i> Aprobar
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -819,6 +819,7 @@
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
                 fAvgPrice: 0,
+                fImporte: 0,
                 //===========================================================
                 // =============  VARIABLES ALMACEN ========================
                 formAlmacen:{
@@ -1605,10 +1606,10 @@
                 var url = this.ruta + '/pedido/GetPedidoById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
                         //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
-                        'nidcabecerapedido': (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
@@ -1647,33 +1648,36 @@
                     }
                 });
             },
-            obtenerObsequiosCampaniasByIdPedido(objPedido){
+            obtenerObsequiosCampaniasByIdPedido(){
                 let me = this;
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': objPedido.nIdCabeceraPedido,
-                        'opcion': 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido,
+                        'opcion'            : 1
                     }
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
                     me.arraySapElementoVenta.map(function(value, key) {
-                        //if(value.nIdTipoElementoVenta != 1300025){
+                        //Amaceno Solo Articulos para Costo Promedio
+                        if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
                                 'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
-                        //}
-                        /*else{
+                        }
+                        //Almaceno Servicios para envar el Costo de Sgc
+                        else{
                             me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  :  parseInt('01'),
-                                'cItemCode' :  value.cCodigoERP,
+                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                'cItemCode' : value.cCodigoERP,
                                 'fImporte'  : value.fImporte
                             });
-                        }*/
+                        }
                     });
                 }).catch(error => {
                     console.log(error);
@@ -1845,7 +1849,6 @@
                     'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
-                        me.loading.close();
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
                         }, 1000);
@@ -1868,8 +1871,6 @@
             },
             registroSapBusinessActividad(){
                 let me = this;
-
-                me.loadingProgressBar("INTEGRANDO ACTIVIDAD DEL PEDIDO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
                 axios.post(sapUrl, {
@@ -2026,8 +2027,6 @@
             registroSapBusinessLlamadaServicio(){
                 let me = this;
 
-                me.loadingProgressBar("INTEGRANDO LA LLAMADA DE SERVICIOS CON SAP BUSINESS ONE...");
-
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
                     'arraySapLlamadaServicio'   : me.arraySapLlamadaServicio,
@@ -2106,6 +2105,7 @@
             },
             obtenerSapCostoPromedio(){
                 let me = this;
+                me.loading.close();
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
@@ -2132,8 +2132,8 @@
                         DocEntry            :   me.formSap.ndocentry,
                         U_SYP_CCONCEPTO     :   '06',
                         U_SYP_DCONCEPTO     :   'Accesorios',
-                        U_SYP_CDOCUMENTO    :   '02',
-                        U_SYP_DDOCUMENTO    :   'Factura Proveedor',
+                        U_SYP_CDOCUMENTO    :   '03',
+                        U_SYP_DDOCUMENTO    :   'Salida de Almacén',
                         U_SYP_IMPORTE       :   me.fAvgPrice,
                         U_SYP_COSTO         :   'Si',
                         U_SYP_ESTADO        :   'Pendiente'
@@ -2144,15 +2144,9 @@
                             me.registroSapBusinessTblCostoEV();
                         }, 1600);
                     }else{
-                        me.limpiarFormulario();
-                        me.listarPedidos(1);
-                        swal(
-                            'Aprobado!',
-                            'El pedido ha sido APROBADO con éxito.',
-                            'success'
-                        );
-                        $("#myBar").hide();
-                        me.loading.close();
+                        setTimeout(function() {
+                            me.obtenerSgcCostoServicio();
+                        }, 1600);
                     }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Costos SapB1!");
@@ -2172,15 +2166,9 @@
                 axios.post(url, {
                     'data'  : me.arraySapCostoEV
                 }).then(response => {
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    swal(
-                        'Aprobado!',
-                        'El pedido ha sido APROBADO con éxito.',
-                        'success'
-                    );
-                    $("#myBar").hide();
-                    me.loading.close();
+                    setTimeout(function() {
+                        me.obtenerSgcCostoServicio();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2191,7 +2179,8 @@
                     }
                 });
             },
-            obtenerSapCostoServicio(){
+            obtenerSgcCostoServicio(){
+                let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
                         me.fImporte = me.fImporte + value.fImporte;
                     });
@@ -2202,14 +2191,25 @@
                 me.arraySapCostoServicio.push({
                     U_SYP_VIN           :   me.formSap.cnumerovin,
                     DocEntry            :   me.formSap.ndocentry,
-                    U_SYP_CCONCEPTO     :   '06',
-                    U_SYP_DCONCEPTO     :   'Accesorios',
+                    U_SYP_CCONCEPTO     :   '07',
+                    U_SYP_DCONCEPTO     :   'Servicios',
                     U_SYP_CDOCUMENTO    :   '02',
                     U_SYP_DDOCUMENTO    :   'Factura Proveedor',
                     U_SYP_IMPORTE       :   me.fImporte,
                     U_SYP_COSTO         :   'Si',
                     U_SYP_ESTADO        :   'Pendiente'
                 });
+
+                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoServicios();
+                    }, 1600);
+                }else{
+                    setTimeout(function() {
+                        me.confirmaPedido();
+                    }, 1600);
+                }
+
             },
             registroSapBusinessTblCostoServicios(){
                 let me = this;
@@ -2218,15 +2218,7 @@
                 axios.post(url, {
                     'data'  : me.arraySapCostoServicio
                 }).then(response => {
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    swal(
-                        'Aprobado!',
-                        'El pedido ha sido APROBADO con éxito.',
-                        'success'
-                    );
-                    $("#myBar").hide();
-                    me.loading.close();
+                    me.confirmaPedido();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2237,95 +2229,18 @@
                     }
                 });
             },
-            //REGISTRA COMPROBANTE SAP
-            /*registroSapComprobante(){
+            confirmaPedido(){
                 let me = this;
-
-                var sapUrl = me.ruta + '/comprobante/SapSetFactura';
-                axios.post(sapUrl, {
-                    'cCardCode': me.formSap.ccardcode.toString(),
-                    'fDocDate': moment().format('YYYY-MM-DD'),
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta = JSON.parse(value);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración Factura SAP : OK");
-                            console.log(me.jsonRespuesta.DocEntry);
-                            me.arraySapUpdSgc.push({
-                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': me.arraySapRespuesta.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                            setTimeout(function() {
-                                me.registroDocEntryComprobante();
-                            }, 3800);
-                        }
-                    });
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en la Integración de Comprobante SapB1!',
-                    });
-                    me.limpiarFormulario();
-                    me.listarPedidos(1);
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                me.limpiarFormulario();
+                me.listarPedidos(1);
+                swal(
+                    'Aprobado!',
+                    'El pedido ha sido APROBADO con éxito.',
+                    'success'
+                );
+                $("#myBar").hide();
+                me.loading.close();
             },
-            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
-            registroDocEntryComprobante(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/pedido/SapUpdFacturaByDocEntry';
-                axios.post(sapUrl, {
-                    data: me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        me.limpiarFormulario();
-                        me.listarPedidos(1);
-                        swal(
-                            'Aprobado!',
-                            'El pedido ha sido APROBADO con éxito.',
-                            'success'
-                        );
-                        $("#myBar").hide();
-                        me.loading.close();
-                    }else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
-                        })
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             anularPedido(pedido){
                 swal({
                     title: '¿Esta seguro de ANULAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
