@@ -3219,9 +3219,9 @@
                     me.loadingProgressBar("INTEGRANDO TARJETA EQUIPO CON SAP BUSINESS ONE...");
 
                     me.arraySapTarjetaEquipo.push({
-                        cCustomerCode: objCompra.cCustomerCode,
-                        cInternalSerialNum: objCompra.cNumeroVin,
-                        cItemCode: objCompra.cNumeroVin
+                        'cCustomerCode'     : objCompra.cCustomerCode,
+                        'cInternalSerialNum': objCompra.cNumeroVin,
+                        'cItemCode'         : objCompra.cNumeroVin
                     });
 
                     var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
