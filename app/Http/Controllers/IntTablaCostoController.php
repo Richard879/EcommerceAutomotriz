@@ -248,7 +248,7 @@ class IntTablaCostoController extends Controller
                 $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
                 $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
                 $U_SYP_DDOCUMENTO   =   $flete->U_SYP_DDOCUMENTO;
-                $U_SYP_IMPORTE      =   $flete->fImporteFleteSinIgv;
+                $U_SYP_IMPORTE      =   $flete->fComisionSol;
                 $U_SYP_COSTO        =   $flete->U_SYP_COSTO;
                 $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
 

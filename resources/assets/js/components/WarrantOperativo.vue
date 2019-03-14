@@ -119,7 +119,7 @@
                                                                                 <td v-text="operativo.fTotalComisionSol"></td>
                                                                                 <td v-text="operativo.cParNombre"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
+                                                                                    <a href="#" @click="asignaIdWOperativo(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -184,11 +184,11 @@
                                                                             <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="buscarWOperativoDetalle" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="listarDetalleWOperativo(1)" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Buscar Warrant </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWOperativoDetalle">
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarDetalleWOperativo(1)">
                                                                                                 <i class="fa-lg fa fa-search"></i>
                                                                                             </button>
                                                                                         </el-tooltip>
@@ -217,7 +217,12 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativoDetalle()"><i class="fa fa-search"></i> Buscar</button>
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleWOperativo(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                                            <i class="fa fa-close"></i> Regresar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -829,15 +834,15 @@
                 this.pagination.current_page=page;
                 this.listarWOperativos(page);
             },
-            asignaIdWOperativo(nIdWarrantOperativo){
-                this.fillWOperativoDetalle.nidwarrantoperativo= nIdWarrantOperativo;
-                this.buscarWOperativoDetalle();
+            cambiarVistaFormulario(){
+                this.vistaFormularioTabBuscar = 1;
             },
-            buscarWOperativoDetalle(){
+            asignaIdWOperativo(objWO){
+                this.vistaFormularioTabBuscar = 0;
+                this.fillWOperativoDetalle.nidwarrantoperativo= objWO.nIdWarrantOperativo;
                 this.listarDetalleWOperativo(1);
             },
-            listarDetalleWOperativo(page){
-                this.vistaFormularioTabBuscar = 0;
+            listarDetalleWOperativo(page){                
                 var url = this.ruta + '/woperativo/GetWOperativoDetalle';
 
                 axios.get(url, {
