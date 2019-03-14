@@ -8,7 +8,7 @@
             <a class="dropdown-item">
                 <i class="fa fa-user bg-orange"></i> {{ formLogin.cRol }}
             </a>
-            <a class="dropdown-item" @click.prevent="logout">
+            <a href="#" class="dropdown-item" @click.prevent="logout">
                 <i class="fa fa-lock"></i> Cerrar sesión
             </a>
         </div>
