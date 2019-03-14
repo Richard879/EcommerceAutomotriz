@@ -1662,13 +1662,14 @@
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
                     me.arraySapElementoVenta.map(function(value, key) {
-                        //Si son diferente de Servicios
+                        //Amaceno Solo Articulos para Costo Promedio
                         if(value.nIdTipoElementoVenta != 1300025){
                             me.arraySapEVArticulosEnvia.push({
                                 'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
                                 'cItemCode' :  value.cCodigoERP
                             });
                         }
+                        //Almaceno Servicios para envar el Costo de Sgc
                         else{
                             me.arraySapEVServiciosEnvia.push({
                                 'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
@@ -2147,7 +2148,7 @@
                         }, 1600);
                     }else{
                         setTimeout(function() {
-                            me.obtenerSapCostoServicio();
+                            me.obtenerSgcCostoServicio();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -2169,7 +2170,7 @@
                     'data'  : me.arraySapCostoEV
                 }).then(response => {
                     setTimeout(function() {
-                        me.obtenerSapCostoServicio();
+                        me.obtenerSgcCostoServicio();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2181,7 +2182,7 @@
                     }
                 });
             },
-            obtenerSapCostoServicio(){
+            obtenerSgcCostoServicio(){
                 me.arraySapEVServiciosEnvia.map(function(value, key){
                         me.fImporte = me.fImporte + value.fImporte;
                     });
