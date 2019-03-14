@@ -1137,17 +1137,17 @@
                     }
                 });
 
-                var url = this.ruta + '/flete/SetFlete';
+                var url = me.ruta + '/flete/SetFlete';
                 axios.post(url, {
-                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'cNumeroRuc': this.formmFlete.cnumeroruc,
-                    'cTipoComprobante': 'F',
-                    'cSerieComprobante': this.formmFlete.cseriecomprobante,
-                    'cNumeroComprobante': this.formmFlete.cnumerocomprobante,
-                    'data': this.arrayFlete
+                    'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'cNumeroRuc'        : me.formmFlete.cnumeroruc,
+                    'cTipoComprobante'  : 'F',
+                    'cSerieComprobante' : me.formmFlete.cseriecomprobante,
+                    'cNumeroComprobante': me.formmFlete.cnumerocomprobante,
+                    'data'              : me.arrayFlete
                 }).then(response => {
-                    this.obtenerFleteTblCosto();
+                    me.obtenerFleteTblCosto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1184,9 +1184,9 @@
 
                 var url = me.ruta + '/tablacosto/GetCompraFleteTblCosto';
                 axios.post(url, {
-                        'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'data': me.arrayFlete
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'data'          : me.arrayFlete
                 }).then(response => {
                     me.arrayTCFlete = [];
                     // ====================== CONCEPTO =========================
@@ -1194,15 +1194,15 @@
                     let arrayFlete = response.data.array_infoFlete;
                     arrayFlete.map(function (x) {
                         me.arrayTCFlete.push({
-                            U_SYP_VIN           :   x.U_SYP_VIN,
-                            DocEntry            :   x.DocEntry,
-                            U_SYP_CCONCEPTO     :   x.U_SYP_CCONCEPTO,
-                            U_SYP_DCONCEPTO     :   x.U_SYP_DCONCEPTO,
-                            U_SYP_CDOCUMENTO    :   x.U_SYP_CDOCUMENTO,
-                            U_SYP_DDOCUMENTO    :   x.U_SYP_DDOCUMENTO,
-                            U_SYP_IMPORTE       :   x.U_SYP_IMPORTE,
-                            U_SYP_COSTO         :   x.U_SYP_COSTO,
-                            U_SYP_ESTADO        :   x.U_SYP_ESTADO
+                            'U_SYP_VIN'           :   x.U_SYP_VIN,
+                            'DocEntry'            :   x.DocEntry,
+                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
                     });
 

@@ -666,6 +666,7 @@
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
+                arraySapWO: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1063,10 +1064,9 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        me.loading.close();
-                        $("#myBar").hide();
-                        swal('Warrant Operativo registrado');
-                        me.limpiarFormulario();
+                         setTimeout(function() {
+                            me.obtenerWOTblCosto();
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1077,6 +1077,73 @@
                         }
                     }
                 });
+            },
+            obtenerWOTblCosto(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
+                axios.post(url, {
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'data'          : me.arrayAsiento
+                }).then(response => {
+                    me.arraySapWO = [];
+                    // ====================== CONCEPTO =========================
+                    // ======================== FLETE ==========================
+                    let arrayCostoWO = response.data.array_infoWO;
+                    arrayCostoWO.map(function (x) {
+                        me.arraySapWO.push({
+                            'U_SYP_VIN'           :   x.U_SYP_VIN,
+                            'DocEntry'            :   x.DocEntry,
+                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
+                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
+                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
+                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
+                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
+                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
+                        });
+                    });
+
+                    setTimeout(function() {
+                        me.registroSapBusinessTblCostoWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessTblCostoWO(){
+                let me = this;
+
+                me.loadingProgressBar("INTEGRANDO COSTO WO CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapWO
+                }).then(response => {
+                    me.confirmarWO();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            confirmarWO(){
+                let me = this;
+                me.loading.close();
+                $("#myBar").hide();
+                swal('Warrant Operativo registrado');
+                me.limpiarFormulario();
             },
             validar(){
                 this.error = 0;
@@ -1097,7 +1164,14 @@
                 this.arrayCompra = [],
                 this.arrayWOperativo = [],
                 this.arrayTemporal = [];
-                this.limpiarPaginacion()
+                this.limpiarPaginacion();
+
+                //========= VARIABLES SAP =============
+                //Limpiar variables Sap Articulo
+                this.arraySapRespuesta= [],
+                this.jsonRespuesta= '',
+                this.arraySapUpdSgc= [],
+                this.arraySapWO= [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
