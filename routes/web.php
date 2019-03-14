@@ -424,6 +424,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');
+    Route::post('/tablacosto/GetWOComisionTblCosto','IntTablaCostoController@GetWOComisionTblCosto');
     Route::post('/empleado/SetIntegraEmpleado','IntEmpleadoController@SetIntegraEmpleado');
     Route::post('/woperativo/SetIntegraAsientoContableWO','WarrantOperativoController@SetIntegraAsientoContableWO');
 

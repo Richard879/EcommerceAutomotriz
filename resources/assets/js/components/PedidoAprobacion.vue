@@ -2135,8 +2135,8 @@
                         DocEntry            :   me.formSap.ndocentry,
                         U_SYP_CCONCEPTO     :   '06',
                         U_SYP_DCONCEPTO     :   'Accesorios',
-                        U_SYP_CDOCUMENTO    :   '02',
-                        U_SYP_DDOCUMENTO    :   'Factura Proveedor',
+                        U_SYP_CDOCUMENTO    :   '03',
+                        U_SYP_DDOCUMENTO    :   'Salida de Almacén',
                         U_SYP_IMPORTE       :   me.fAvgPrice,
                         U_SYP_COSTO         :   'Si',
                         U_SYP_ESTADO        :   'Pendiente'
@@ -2193,8 +2193,8 @@
                 me.arraySapCostoServicio.push({
                     U_SYP_VIN           :   me.formSap.cnumerovin,
                     DocEntry            :   me.formSap.ndocentry,
-                    U_SYP_CCONCEPTO     :   '06',
-                    U_SYP_DCONCEPTO     :   'Accesorios',
+                    U_SYP_CCONCEPTO     :   '07',
+                    U_SYP_DCONCEPTO     :   'Servicios',
                     U_SYP_CDOCUMENTO    :   '02',
                     U_SYP_DDOCUMENTO    :   'Factura Proveedor',
                     U_SYP_IMPORTE       :   me.fImporte,
