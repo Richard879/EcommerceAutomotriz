@@ -3934,7 +3934,7 @@
                     }
                 });
             },
-            generaSapActividadServiceCall(objCompra){
+            /*generaSapActividadServiceCall(objCompra){
                 let me = this;
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
@@ -3957,7 +3957,7 @@
                         }
                     }
                 });
-            },
+            },*/
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
                 if(this.validarActualizar()){
