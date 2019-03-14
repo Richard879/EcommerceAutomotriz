@@ -34,7 +34,8 @@ class DocumentoAdjuntoController extends Controller
         $ruta = Storage::putFileAs('public/PDI', $file, $bandera .'_'. $file->getClientOriginalName());
 
         $arrayDocumento = DB::select('exec usp_DocumentoAdjunto_SetArchivo ?, ?, ?',
-                                                        [  asset($ruta),
+                                                        [
+                                                            asset($ruta),
                                                             $file->getClientOriginalName(),
                                                             Auth::user()->id
                                                         ]);

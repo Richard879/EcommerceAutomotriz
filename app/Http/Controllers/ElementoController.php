@@ -13,23 +13,23 @@ class ElementoController extends Controller
     public function GetElementoByTipo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
-        $nIdEmpresa   = $request->nidempresa;
-        $nIdTipoElemento = $request->nidtipoelemen;
-        $cElemenNombre = $request->celementonombre;
-        $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
-        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
-                
-        $arrayElementoVenta = DB::select('exec [usp_Elemen_GetElementoByTipo] ?, ?, ?', 
-                                                                [   $nIdEmpresa, 
-                                                                    $nIdTipoElemento, 
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdTipoElemento    =   $request->nidtipoelemen;
+        $cElemenNombre      =   $request->celementonombre;
+        $nIdTipoElemento    =   ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
+        $cElemenNombre      =   ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipo] ?, ?, ?',
+                                                                [   $nIdEmpresa,
+                                                                    $nIdTipoElemento,
                                                                     $cElemenNombre
                                                                 ]);
 
         $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
 
-        /*$data = $this->paginateArray($element = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?', 
+        /*$data = $this->paginateArray($element = DB::select('exec usp_Pdi_GetElementoByTipo ?, ?',
                                                     array($nIdEmpresa, $nIdTipoElemento)));*/
 
         /*return ['pagination'=>[
@@ -39,17 +39,38 @@ class ElementoController extends Controller
                 'last_page'    => $pagination->lastPage(),
                 'from'         => $pagination->firstItem(),
                 'to'           => $pagination->lastItem(),
-         ],'elementos'=>$element];*/   
+         ],'elementos'=>$element];*/
+    }
+
+    public function GetElementoByTipoBsq(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa     =   $request->nidempresa;
+        $tipoBsq        =   $request->nidtipoelemen;
+        $codVehiculo    =   $request->codVehiculo;
+
+        $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
+        $codVehiculo    =   ($codVehiculo == NULL) ? ($codVehiculo = '') : $codVehiculo;
+
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipoBsq] ?, ?, ?',
+                                                                [   $nidempresa,
+                                                                    $tipoBsq,
+                                                                    $codVehiculo
+                                                                ]);
+
+        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
-        $element = DB::select('exec [usp_Elemen_SetElemento] ?, ?, ? ,? ,?, ?, ?, ?, ?, ?', 
+
+        $element = DB::select('exec [usp_Elemen_SetElemento] ?, ?, ? ,? ,?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdProveedor,
-                                                                $request->nIdTipoElemento, 
+                                                                $request->nIdTipoElemento,
                                                                 $request->nIdMoneda,
                                                                 $request->cElemenNombre,
                                                                 $request->fElemenValorVenta,
@@ -58,40 +79,40 @@ class ElementoController extends Controller
                                                                 $request->fElemenValorCosto,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($element);         
+        return response()->json($element);
     }
 
     public function desactivar (Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec [usp_Element_DesactivaById] ?, ?', 
+        $elementoVenta = DB::select('exec [usp_Element_DesactivaById] ?, ?',
                                                     [   $request->nIdElementoVenta,
                                                     Auth::user()->id
                                                     ]);
-        return response()->json($elementoVenta);   
+        return response()->json($elementoVenta);
     }
 
     public function activar (Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec [usp_Element_ActivaById] ?, ?', 
+        $elementoVenta = DB::select('exec [usp_Element_ActivaById] ?, ?',
                                                         [   $request->nIdElementoVenta,
                                                             Auth::user()->id
                                                         ]);
-        return response()->json($elementoVenta);   
+        return response()->json($elementoVenta);
     }
-    
+
     public function UpdElementoById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
-        $element = DB::select('exec [usp_Elemen_UpdElementoById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+
+        $element = DB::select('exec [usp_Elemen_UpdElementoById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdProveedor,
                                                                 $request->nIdElementoVenta,
-                                                                $request->nIdTipoElemento, 
+                                                                $request->nIdTipoElemento,
                                                                 $request->nIdMoneda,
                                                                 $request->cElemenNombre,
                                                                 $request->fElemenValorVenta,
@@ -100,6 +121,6 @@ class ElementoController extends Controller
                                                                 $request->fElemenValorCosto,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($element);         
+        return response()->json($element);
     }
 }

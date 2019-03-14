@@ -67,6 +67,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
 
     Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo');
+    Route::get('/elemento/GetElementoByTipoBsq', 'ElementoController@GetElementoByTipoBsq');
     Route::post('/elemento/SetElemento', 'ElementoController@store');
     Route::put('/elemento/desactivar','ElementoController@desactivar');
     Route::put('/elemento/activar','ElementoController@activar');
@@ -244,6 +245,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pdi/GetListSeccion', 'PdiProcesoController@GetListSeccion');
     Route::get('/pdi/GetListItem', 'PdiProcesoController@GetListItem');
     Route::get('/pdi/GetElementoByTipo', 'PdiProcesoController@GetElementoByTipo');
+    Route::get('/pdi/GetElementoByTipoBsq', 'PdiProcesoController@GetElementoByTipoBsq');
     Route::post('/pdi/SetCabeceraInspeccion', 'PdiProcesoController@SetCabeceraInspeccion');
     Route::get('/pdi/GetListPdi', 'PdiProcesoController@GetListPdi');
     Route::get('/pdi/GetDetalleTipoInspeccionById', 'PdiProcesoController@GetDetalleTipoInspeccionById');
@@ -255,6 +257,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pdi/GetDetallePDI', 'PdiProcesoController@GetDetallePDI');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
+    Route::post('/documentoadjunto/subirArchivoPDI', 'DocumentoAdjuntoController@subirArchivoPDI');
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
     Route::get('/gescotizacion/GetTipoLista', 'CotizacionController@GetTipoLista');
@@ -421,6 +424,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
+    Route::post('/actividad/SetIntegraActividadServicio','IntActividadController@SetIntegraActividadServicio');
+
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
     Route::post('/tablacosto/GetCompraFleteTblCosto','IntTablaCostoController@GetCompraFleteTblCosto');

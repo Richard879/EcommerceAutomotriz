@@ -77,25 +77,36 @@ class SapMercanciaController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $json = [
+            'json' => [
+                'DocDate'       =>  (string)$request->fDocDate,
+                'DocDueDate'    =>  (string)$request->fDocDueDate,
+                "DocumentLines" =>  array()
+            ]
+        ];
+
+        //Inicializo el contador de la linea
+        $cont = 0;
+
+        $dataLength = sizeof($request->data);
+        if($dataLength > 0) {
+            $data = $request->data;
+            foreach ($data as $key => $value) {
+                $json['json']['DocumentLines'][] = [
+                    'LineNum'           =>  $cont,
+                    "ItemCode"          =>  (string)$value['ItemCode'],
+                    "ItemDescription"   =>  (string)$value['ItemDescription'],
+                    "WarehouseCode"     =>  (string)$value['WarehouseCode'],
+                    "Quantity"          =>  (string)$value['Quantity'],
+                    "UnitPrice"         =>  (string)$value['UnitPrice'],
+                    "AccountCode"       =>  (string)$value['AccountCode']
+                ];
+                $cont++;//Aumento Linea
+            }
+        }
+
         $array_rpta = [];
         $rptaSap   = [];
-
-        $data = $request->data;
-        foreach ($data as $key => $value) {
-            $json = [
-                'json' => [
-                    "DocumentLines" => [
-                        [
-                            "ItemCode"      =>  (string)$value['ItemCode'],
-                            "WarehouseCode" =>  (string)$value['WarehouseCode'],
-                            "Quantity"      =>  (string)$value['Quantity'],
-                            "UnitPrice"     =>  (string)$value['UnitPrice'],
-                            "AccountCode"   =>  (string)$value['AccountCode']
-                        ]
-                    ]
-                ]
-            ];
-        }
 
         $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaEntry/", $json);
         $rptaSap = json_decode($response->getBody());

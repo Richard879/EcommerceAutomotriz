@@ -30,13 +30,13 @@ class SapLlamadaServicioController extends Controller
                     "ItemCode"             => $value['cItemCode'],
                     "Subject"              => $value['cSubject'],
                     "ServiceCallActivities" => [
-                            [
-                                "LineNum" => 0,
-                                "ActivityCode"=> (string)$value['nActivityCode']
-                            ]
+                        [
+                            "LineNum" => 0,
+                            "ActivityCode"=> (string)$value['nActivityCode']
                         ]
                     ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
             $rptaSap = json_decode($response->getBody());

@@ -145,7 +145,7 @@ class IntActividadController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
-    } 
+    }
 
     public function GetIntegraActividadByItemCode(Request $request)
     {
