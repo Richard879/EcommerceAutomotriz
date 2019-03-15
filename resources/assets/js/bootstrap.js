@@ -52,5 +52,5 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '6a74a7a6dbeacdf97fd0',
     cluster: 'ap2',
-    encrypted: true
+    encrypted: false
 });
