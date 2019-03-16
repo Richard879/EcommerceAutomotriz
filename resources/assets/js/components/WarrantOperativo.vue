@@ -1087,10 +1087,9 @@
                     'fTotalComisionSol' : me.fTotalComisionSol,
                     'data'              : me.arrayTemporal
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
+                    me.fillWOperativo.nidwarrantoperativo = response.data;
 
-                        me.fillWOperativo.nidwarrantoperativo = response.data[0].nIdWarrantOperativo;
-
+                    if(me.fillWOperativo.nidwarrantoperativo > 0){
                         me.arrayTemporal.map(function(value, key) {
                             me.arrayAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
@@ -1102,6 +1101,7 @@
                                 'fDebit1'       : "0"
                             })
                         });
+
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
