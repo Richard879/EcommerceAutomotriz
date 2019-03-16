@@ -78,7 +78,6 @@ Vue.component('tramite', require('./components/Tramite.vue'));
 Vue.component('asigvendedorcuota', require('./components/AsigVendedorCuota.vue'));
 Vue.component('entregavehiculo', require('./components/EntregaVehiculo.vue'));
 Vue.component('permisos', require('./components/AdmPermisos.vue'));
-// Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('cotizacionaprobar', require('./components/CotizacionAprobar.vue'));
 Vue.component('exhibiciones', require('./components/Exhibiciones.vue'));
 Vue.component('flete', require('./components/Flete.vue'));
