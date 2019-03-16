@@ -31,7 +31,7 @@ class SapAsientoContableController extends Controller
                         [
                             [
                                 "AccountCode"       =>  "421111", //012110
-                                "ProjectCode"       =>  $value['ProjectCode'],
+                                "ProjectCode"       =>  $value['cProjectCode'],
                                 /*"Credit"          =>  (string)$value['fCredit'],
                                 "Debit"             =>  (string)$value['fDebit']*/
                                 "FCDebit"           => (string)$value['fCredit'],

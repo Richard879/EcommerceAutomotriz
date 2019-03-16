@@ -647,6 +647,7 @@
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
                 fillWOperativo:{
+                    nidwarrantoperativo: 0,
                     nidestadowarrant: '',
                     cnrowarrant: ''
                 },
@@ -1086,21 +1087,27 @@
                     'fTotalComisionSol' : me.fTotalComisionSol,
                     'data'              : me.arrayTemporal
                 }).then(response => {
-                    me.arrayTemporal.map(function(value, key) {
-                        me.arrayAsiento.push({
-                            'ProjectCode'   : value.cNumeroVin,
-                            'fCredit'       : "0",
-                            'fDebit'        : value.fTotalCompra,
-                            'fCredit1'      : value.fTotalCompra,
-                            'fComisionSol'  : value.fComisionSol,
-                            'fDebit1'       : "0"
-                        })
-                    });
-                    //==============================================================
-                    //================== GENERAR ASIENTO CONTABLE SAP ===============
-                    setTimeout(function() {
-                        me.generaSapCompraWO();
-                    }, 1600);
+                    if(response.data[0].nFlagMsje == 1){
+
+                        me.fillWOperativo.nidwarrantoperativo = response.data[0].nIdWarrantOperativo;
+
+                        me.arrayTemporal.map(function(value, key) {
+                            me.arrayAsiento.push({
+                                'cNumeroVin'    : value.cNumeroVin,
+                                'cProjectCode'  : value.cNumeroVin,
+                                'fCredit'       : "0",
+                                'fDebit'        : value.fTotalCompra,
+                                'fCredit1'      : value.fTotalCompra,
+                                'fComisionSol'  : value.fComisionSol,
+                                'fDebit1'       : "0"
+                            })
+                        });
+                        //==============================================================
+                        //================== GENERAR ASIENTO CONTABLE SAP ===============
+                        setTimeout(function() {
+                            me.generaSapCompraWO();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1111,7 +1118,7 @@
                     }
                 });
             },
-            generaSapCompraWO(objCompra){
+            generaSapCompraWO(){
                 let me = this;
 
                 //==============================================================
@@ -1148,13 +1155,14 @@
                                 'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
                                 'cDocType'      : me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta' : response.data.toString(),
-                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString(),
+                                'nIdWarrantOperativo' : me.fillWOperativo.nidwarrantoperativo
                             });
 
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY ===============
                             setTimeout(function() {
-                                me.generaActualizarDocEntryWO(objCompra);
+                                me.generaActualizarDocEntryWO();
                             }, 1600);
                         }
                     });
@@ -1169,7 +1177,7 @@
                     }
                 });
             },
-            generaActualizarDocEntryWO(objCompra){
+            generaActualizarDocEntryWO(){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SetIntegraCompraWO';
                 axios.post(sapUrl, {
@@ -1335,6 +1343,7 @@
                 return this.error;
             },
             limpiarFormulario(){
+                this.fillWOperativo.nidwarrantoperativo= 0,
                 this.fillWOperativo.nordencompra= '',
                 this.fillWOperativo.cnumerovin=  '',
                 this.formWOperativo.dfechainicio = '',
