@@ -192,7 +192,7 @@ class PedidoDepositoController extends Controller
         $CardCode           =   $request->CardCode;
         $CardName           =   $request->CardName;
         $Type               =   $request->Type;
-        $nIdTipoPago        =   $request->nIdTipoPago;//Tipo Financiado
+        // $nIdTipoPago        =   $request->nIdTipoPago;//Tipo Financiado
         $TransRef           =   $request->TransRef;
         $DocDate            =   $request->DocDate;
         $DocTotal           =   $request->DocTotal;

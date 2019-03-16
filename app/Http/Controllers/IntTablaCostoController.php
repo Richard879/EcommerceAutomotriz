@@ -274,5 +274,4 @@ class IntTablaCostoController extends Controller
         return response()->json($tblCostos);
     }
 
-
 }
