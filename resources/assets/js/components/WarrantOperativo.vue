@@ -106,6 +106,7 @@
                                                                                 <th>Total Comision Dolar</th>
                                                                                 <th>Total Comision Sol</th>
                                                                                 <th>Estado</th>
+                                                                                <th>Doc Sap</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
                                                                         </thead>
@@ -118,6 +119,7 @@
                                                                                 <td v-text="operativo.fTotalComisionDolar"></td>
                                                                                 <td v-text="operativo.fTotalComisionSol"></td>
                                                                                 <td v-text="operativo.cParNombre"></td>
+                                                                                <td v-text="operativo.nDocNum"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="asignaIdWOperativo(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
