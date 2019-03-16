@@ -1171,7 +1171,7 @@
             },
             generaActualizarDocEntryWO(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraPurchaseOrder';
+                var sapUrl = me.ruta + '/compra/SetIntegraCompraWO';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
