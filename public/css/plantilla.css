@@ -13190,7 +13190,7 @@ footer.main-footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: #2f333e;
+    background: #273a4c !important;
     color: #fff;
     padding: 20px 10px;
 }
