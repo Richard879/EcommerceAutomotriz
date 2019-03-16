@@ -311,6 +311,31 @@ class CompraController extends Controller
         }
     }
 
+    public function SetIntegraPurchaseOrder(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraPurchaseOrder] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cItemCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cDocType'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objCompra);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
     public function SetIntegraMercancia(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

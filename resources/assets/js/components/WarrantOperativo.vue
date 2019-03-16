@@ -1099,8 +1099,88 @@
                     //==============================================================
                     //================== GENERAR ASIENTO CONTABLE SAP ===============
                     setTimeout(function() {
-                        me.generaSapWO();
+                        me.generaSapCompraWO();
                     }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapCompraWO(objCompra){
+                let me = this;
+
+                //==============================================================
+                //================== REGISTRO COMPRA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO WARRANT OPERATIVO CON SAP BUSINESS ONE...");
+
+                me.arraySapCompra.push({
+                    'cItemCode'        : "SCMEGEGEGEN00465", //CODIGO SERVICIO WO
+                    'fTotalCompra'     : me.fTotalValor
+                });
+
+                var sapUrl = me.ruta + '/compra/SapSetCompraWO';
+                axios.post(sapUrl, {
+                    'cCardCode'     : "P20544637313",// me.formCompra.ccarcode,
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode' : me.formAlmacen.cwhscode,
+                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                    'data'          : me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'      : me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta' : response.data.toString(),
+                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                me.generaActualizarDocEntryWO(objCompra);
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Compra SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryWO(objCompra){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SetIntegraPurchaseOrder';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        setTimeout(function() {
+                            me.generaSapWO();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1241,84 +1321,6 @@
                 $("#myBar").hide();
                 swal('Warrant Operativo registrado');
                 me.limpiarFormulario();
-            },
-            generaSapCompraWO(objCompra){
-                let me = this;
-
-                //==============================================================
-                //================== REGISTRO COMPRA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
-
-                me.arraySapCompra.push({
-                    'cItemCode'        : "SCMEGEGEGEN00465", //CODIGO SERVICIO WO
-                    'fTotalCompra'     : me.fTotalValor
-                });
-
-                var sapUrl = me.ruta + '/compra/SapSetCompraWO';
-                axios.post(sapUrl, {
-                    'cCardCode'     : "P20544637313",// me.formCompra.ccarcode,
-                    'fDocDate'      : moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' : me.formAlmacen.cwhscode,
-                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
-                    'data'          : me.arraySapCompra
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración SAP Compra : OK");
-
-                            me.arraySapUpdSgc.push({
-                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'      : me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta' : response.data.toString(),
-                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
-                            });
-
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarDocEntryWO(objCompra);
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Compra SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaActualizarDocEntryWO(objCompra){
-                let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraCompra';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
             },
             validar(){
                 this.error = 0;
