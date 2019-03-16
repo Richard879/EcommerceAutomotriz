@@ -25,8 +25,8 @@ class SapAsientoContableController extends Controller
 
             $json = [
                 'json' => [
-                    "Memo"                  =>  "WO-".$value['ProjectCode'],
-                    "ProjectCode"           =>  $value['ProjectCode'],
+                    "Memo"                  =>  "WO-".$value['cProjectCode'],
+                    "ProjectCode"           =>  $value['cProjectCode'],
                     "JournalEntryLines"    => 
                         [
                             [
@@ -40,7 +40,7 @@ class SapAsientoContableController extends Controller
                             ],
                             [
                                 "AccountCode"       =>  "201113", //099111
-                                "ProjectCode"       =>  $value['ProjectCode'],
+                                "ProjectCode"       =>  $value['cProjectCode'],
                                 /*"Credit"            =>  (string)$value['fCredit1'],
                                 "Debit"             =>  (string)$value['fDebit1'],*/
                                 "FCDebit"           => (string)$value['fCredit1'],
