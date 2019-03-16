@@ -494,13 +494,14 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tablacosto/SapPachTablaCostoDetalle','Api\SapTablaCostoController@SapPachTablaCostoDetalle');
     Route::post('/tablacosto/SapPachTablaCosto','Api\SapTablaCostoController@SapPachTablaCosto');
     Route::post('/tablacosto/SapPachTablaCostoDscto','Api\SapTablaCostoController@SapPachTablaCostoDscto');
+    Route::post('/tablacosto/SapPachTablaCostoDsctoPedidoDscto','Api\SapTablaCostoController@SapPachTablaCostoDsctoPedidoDscto');
     //Tipo Cambio
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     //Vendedor
     Route::post('/empleado/SapSetEmpleado', 'Api\SapEmpleadoController@SapSetEmpleado');
     //Asiento Contable
     Route::post('/asiento/SapSetAsientoContableWO', 'Api\SapAsientoContableController@SapSetAsientoContableWO');
-    
+
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

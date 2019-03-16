@@ -1201,7 +1201,7 @@
             registrarTblCostoSAP(){
                 let me = this;
 
-                var url = this.ruta + '/tablacosto/SapPachTablaCostoDscto';
+                var url = this.ruta + '/tablacosto/SapPachTablaCostoDsctoPedidoDscto';
                 axios.post(url, {
                     U_SYP_VIN           :   this.fillPedidoDscto.cItemCode,
                     DocEntry            :   this.fillPedidoDscto.nDocEntryTblCosto,

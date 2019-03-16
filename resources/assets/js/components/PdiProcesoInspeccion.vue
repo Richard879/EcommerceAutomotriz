@@ -1257,6 +1257,7 @@
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
@@ -1760,9 +1761,9 @@
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
-                        this.formAlmacen.cacctcode = response.data[0].cAcctCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
+                        // this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        // this.formAlmacen.cacctcode = response.data[0].cAcctCode;
+                        // this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
                         this.formAlmacen.cwhscode = '';

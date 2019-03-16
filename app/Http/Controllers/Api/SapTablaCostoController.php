@@ -200,4 +200,40 @@ class SapTablaCostoController extends Controller
         $response = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
         return $response->getBody();
     }
+
+    public function SapPachTablaCostoDsctoPedidoDscto(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        // =====================================================================================================
+        // ===============  REGISTRAR DETALLE CABECERA TBL COST - NOTA DE CREDITO - PEDIDO DSCTO ===============
+        //Redondea el número a 2 decimales
+        $U_SYP_IMPORTE  =   round($request->U_SYP_IMPORTE, 2);
+        //Convierte en negativo el número
+        $U_SYP_IMPORTE  =   gmp_neg($U_SYP_IMPORTE);
+
+        $json = [
+            'json' => [
+                "U_SYP_VIN"         => (string)$request->U_SYP_VIN,
+                "DocEntry"          => (string)$request->DocEntry,
+                "SYP_COSTODETCollection" => [
+                    [
+                        "U_SYP_CCONCEPTO"   => (string)$request->U_SYP_CCONCEPTO,
+                        "U_SYP_DCONCEPTO"   => (string)$request->U_SYP_DCONCEPTO,
+                        "U_SYP_CDOCUMENTO"  => (string)$request->U_SYP_CDOCUMENTO,
+                        "U_SYP_DDOCUMENTO"  => (string)$request->U_SYP_DDOCUMENTO,
+                        "U_SYP_IMPORTE"     => (string)$U_SYP_IMPORTE,
+                        "U_SYP_COSTO"       => (string)$request->U_SYP_COSTO,
+                        "U_SYP_ESTADO"      => (string)$request->U_SYP_ESTADO
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+        return $response->getBody();
+    }
 }
