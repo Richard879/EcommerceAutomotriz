@@ -672,6 +672,7 @@
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
                 arraySapWO: [],
+                arraySapCompra: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1156,7 +1157,15 @@
                 //================== REGISTRO COMPRA EN SAP ===============
                 me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
 
-                var sapUrl = me.ruta + '/compra/SapSetCompra';
+                me.arrayTemporal.map(function(value, key) {
+                    me.arraySapCompra.push({
+                        'cItemCode'        : "0000001111",
+                        'fTotalCompra'     : value.fTotalCompra,
+                        'ProjectCode'      : value.cNumeroVin
+                    });
+                });
+
+                var sapUrl = me.ruta + '/compra/SapSetCompraWO';
                 axios.post(sapUrl, {
                     'cCardCode'     : me.formCompra.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
@@ -1249,7 +1258,8 @@
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
-                this.arraySapWO= [];
+                this.arraySapWO= [],
+                this.arraySapCompra= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
