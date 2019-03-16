@@ -158,9 +158,9 @@
             </section>
 
             <!-- Dashboard 03 - ESTADISTICAS DE COTIZACIONES POR ASESOR COMERCIAL ASGINADO    -->
-            <section class="dashboard-header" v-if="formLogin.nIdRol == 110025">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row bg-white has-shadow">
                         <div class="chart col-lg-3 col-12">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -200,9 +200,9 @@
             </section>
 
             <!-- Dashboard 04 - ESTADISTICAS DE COTIZACIONES POR TODOS LOS ASESORES COMERCIALES   -->
-            <section class="dashboard-header" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row bg-white has-shadow">
                         <div class="chart col-lg-3 col-12">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -307,9 +307,9 @@
             </section>
 
             <!-- Dashboard 06 - ESTADISTICAS DE PEDIDOS POR ASESOR COMERCIAL ASGINADO    -->
-            <section class="dashboard-header" v-if="formLogin.nIdRol == 110025">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row bg-white has-shadow">
                         <div class="chart col-lg-3 col-12">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -349,9 +349,9 @@
             </section>
 
             <!-- Dashboard 07 - ESTADISTICAS DE PEDIDOS POR TODOS LOS ASESORES COMERCIALES   -->
-            <section class="dashboard-header" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row bg-white has-shadow">
                         <div class="chart col-lg-3 col-12">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -1548,5 +1548,8 @@
         width: 100%;
         padding: .5rem;
         margin-top: .4rem;
+    }
+    .no-padding-bottom{
+        margin: .8rem !important;
     }
 </style>
