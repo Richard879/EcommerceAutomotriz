@@ -127,8 +127,7 @@ class SapCompraController extends Controller
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
                                 "Currency"    => "US$",
-                                "WarehouseCode" =>(string)$request->WarehouseCode,
-                                "ProjectCode"  => (string)$value['ProjectCode']
+                                "WarehouseCode" =>(string)$request->WarehouseCode
                             ]
                         ]
                     ]

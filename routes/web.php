@@ -460,6 +460,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/gescontacto/SapSetUpdDireccionesContacto', 'Api\SapContactoController@SapSetUpdDireccionesContacto');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+    Route::post('/compra/SapSetCompraWO', 'Api\SapCompraController@SapSetCompraWO');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
     Route::post('/mercancia/SapSetMercanciaEntry', 'Api\SapMercanciaController@SapSetMercanciaEntry');

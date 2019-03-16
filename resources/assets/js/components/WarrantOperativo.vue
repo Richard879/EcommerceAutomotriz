@@ -667,6 +667,26 @@
                 },
                 arrayAsiento: [],
                 //===========================================================
+                // =============  VARIABLES COMPRA ========================
+                formCompra:{
+                    nformapago: 0,
+                    nidtipolista: '',
+                    nidproveedor: 0,
+                    cproveedornombre: '',
+                    nnumerolista: '',
+                    nidlistaprecio: 0,
+                    ccarcode: '',
+                    igv: 0
+                },
+                //===========================================================
+                // =============  VARIABLES ALMACEN ========================
+                formAlmacen:{
+                    nidlocalidad: 0,
+                    cwhscode: '',
+                    cwhsname: ''
+                },
+                arrayAlmacen: [],
+                //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
@@ -755,6 +775,78 @@
             }
         },
         methods:{
+            obtenerIgv(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar': 1300477,
+                        'ctipoparametro': 'P',
+                        'nidtipopar': 51
+                    }
+                }).then(response => {
+                    this.formCompra.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerLocalidadBySucursal(){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo': 0,
+                        'nparsrcgrupoarametro': 110102,
+                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro': 110022,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    if(response.data.arrayParParametro.length){
+                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.obtenerAlmacenByLocalidad();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerAlmacenByLocalidad(){
+                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formAlmacen.nidlocalidad,
+                        'nidgrupopar': 110102
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
+                    }
+                    else{
+                        this.formAlmacen.cwhscode = '';
+                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             llenarComboProvFinanciero(){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 
@@ -1157,17 +1249,14 @@
                 //================== REGISTRO COMPRA EN SAP ===============
                 me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
 
-                me.arrayTemporal.map(function(value, key) {
-                    me.arraySapCompra.push({
-                        'cItemCode'        : "0000001111",
-                        'fTotalCompra'     : value.fTotalCompra,
-                        'ProjectCode'      : value.cNumeroVin
-                    });
+                me.arraySapCompra.push({
+                    'cItemCode'        : "SCMEGEGEGEN00465", //CODIGO SERVICIO WO
+                    'fTotalCompra'     : me.fTotalValor
                 });
 
                 var sapUrl = me.ruta + '/compra/SapSetCompraWO';
                 axios.post(sapUrl, {
-                    'cCardCode'     : me.formCompra.ccarcode,
+                    'cCardCode'     : "P20544637313",// me.formCompra.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode' : me.formAlmacen.cwhscode,
@@ -1176,7 +1265,6 @@
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
-                    me.arraySapActividad= [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
@@ -1187,11 +1275,11 @@
                             console.log("Integración SAP Compra : OK");
 
                             me.arraySapUpdSgc.push({
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'      : me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta' : response.data.toString(),
+                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
                             });
 
                             //==============================================================
@@ -1295,6 +1383,8 @@
         },
         mounted(){
             this.tabBuscarWOperativo();
+            this.obtenerLocalidadBySucursal();
+            this.obtenerIgv();
         }
     }
 </script>
