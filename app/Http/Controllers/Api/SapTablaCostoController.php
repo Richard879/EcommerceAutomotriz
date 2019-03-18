@@ -69,7 +69,7 @@ class SapTablaCostoController extends Controller
                                         "U_SYP_CCONCEPTO"   => (string)$beneficio['U_SYP_CCONCEPTO'],
                                         "U_SYP_DCONCEPTO"   => (string)$beneficio['U_SYP_DCONCEPTO'],
                                         "U_SYP_CDOCUMENTO"  => (string)$beneficio['U_SYP_CDOCUMENTO'],
-                                        "U_SYP_DDOCUMENTO"  => (string)$beneficio['U_SYP_DDOCUMENTO'],
+                                        "U_SYP_DSDOCUMENTO"  => (string)$beneficio['U_SYP_DDOCUMENTO'],
                                         "U_SYP_IMPORTE"     => (string)$beneficio['U_SYP_IMPORTE'],
                                         "U_SYP_COSTO"       => (string)$beneficio['U_SYP_COSTO'],
                                         "U_SYP_ESTADO"      => (string)$beneficio['U_SYP_ESTADO']
@@ -147,7 +147,7 @@ class SapTablaCostoController extends Controller
                             "U_SYP_CCONCEPTO"   => (string)$value['U_SYP_CCONCEPTO'],
                             "U_SYP_DCONCEPTO"   => (string)$value['U_SYP_DCONCEPTO'],
                             "U_SYP_CDOCUMENTO"  => (string)$value['U_SYP_CDOCUMENTO'],
-                            "U_SYP_DDOCUMENTO"  => (string)$value['U_SYP_DDOCUMENTO'],
+                            "U_SYP_DSDOCUMENTO"  => (string)$value['U_SYP_DDOCUMENTO'],
                             "U_SYP_IMPORTE"     => (string)$value['U_SYP_IMPORTE'],
                             "U_SYP_COSTO"       => (string)$value['U_SYP_COSTO'],
                             "U_SYP_ESTADO"      => (string)$value['U_SYP_ESTADO']
@@ -188,7 +188,7 @@ class SapTablaCostoController extends Controller
                         "U_SYP_CCONCEPTO"   => (string)$request->U_SYP_CCONCEPTO,
                         "U_SYP_DCONCEPTO"   => (string)$request->U_SYP_DCONCEPTO,
                         "U_SYP_CDOCUMENTO"  => (string)$request->U_SYP_CDOCUMENTO,
-                        "U_SYP_DDOCUMENTO"  => (string)$request->U_SYP_DDOCUMENTO,
+                        "U_SYP_DSDOCUMENTO"  => (string)$request->U_SYP_DDOCUMENTO,
                         "U_SYP_IMPORTE"     => (string)$U_SYP_IMPORTE,
                         "U_SYP_COSTO"       => (string)$request->U_SYP_COSTO,
                         "U_SYP_ESTADO"      => (string)$request->U_SYP_ESTADO
@@ -224,7 +224,7 @@ class SapTablaCostoController extends Controller
                         "U_SYP_CCONCEPTO"   => (string)$request->U_SYP_CCONCEPTO,
                         "U_SYP_DCONCEPTO"   => (string)$request->U_SYP_DCONCEPTO,
                         "U_SYP_CDOCUMENTO"  => (string)$request->U_SYP_CDOCUMENTO,
-                        "U_SYP_DDOCUMENTO"  => (string)$request->U_SYP_DDOCUMENTO,
+                        "U_SYP_DSDOCUMENTO"  => (string)$request->U_SYP_DDOCUMENTO,
                         "U_SYP_IMPORTE"     => (string)$U_SYP_IMPORTE,
                         "U_SYP_COSTO"       => (string)$request->U_SYP_COSTO,
                         "U_SYP_ESTADO"      => (string)$request->U_SYP_ESTADO

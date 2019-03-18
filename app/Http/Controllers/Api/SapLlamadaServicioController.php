@@ -31,7 +31,6 @@ class SapLlamadaServicioController extends Controller
                     "Subject"              => $value['cSubject'],
                     "ServiceCallActivities" => [
                         [
-                            "LineNum" => 0,
                             "ActivityCode"=> (string)$value['nActivityCode']
                         ]
                     ]
