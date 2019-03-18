@@ -111,6 +111,16 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Vehículo</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formBsqVehiculo.cnombrevehiculo" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
                                                                         <div class="col-md-9 offset-md-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarVehiculos(1)">
                                                                                 <i class="fa fa-search"></i> BUSCAR
@@ -464,7 +474,8 @@
                     cproveedornombre: '',
                     nidlinea: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    cnombrevehiculo: ''
                 },
                 arrayLinea: [],
                 arrayMarca: [],
@@ -604,11 +615,12 @@
                 var url = this.ruta + '/accesoriovehiculo/GetListVehiculos';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdProveedor'  :   this.formBsqVehiculo.nidproveedor,
-                        'nIdLinea'      :   this.formBsqVehiculo.nidlinea,
-                        'nIdMarca'      :   this.formBsqVehiculo.nidmarca,
-                        'nIdModelo'     :   this.formBsqVehiculo.nidmodelo,
+                        'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdProveedor'      :   this.formBsqVehiculo.nidproveedor,
+                        'nIdLinea'          :   this.formBsqVehiculo.nidlinea,
+                        'nIdMarca'          :   this.formBsqVehiculo.nidmarca,
+                        'nIdModelo'         :   this.formBsqVehiculo.nidmodelo,
+                        'cNombreVehiculo'   :   this.formBsqVehiculo.cnombrevehiculo,
                         'page' : page
                     }
                 }).then(response => {

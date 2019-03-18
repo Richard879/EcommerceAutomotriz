@@ -192,6 +192,7 @@ class PedidoDepositoController extends Controller
         $CardCode           =   $request->CardCode;
         $CardName           =   $request->CardName;
         $Type               =   $request->Type;
+        // $nIdTipoPago        =   $request->nIdTipoPago;//Tipo Financiado
         $TransRef           =   $request->TransRef;
         $DocDate            =   $request->DocDate;
         $DocTotal           =   $request->DocTotal;
@@ -204,9 +205,9 @@ class PedidoDepositoController extends Controller
         $DocRate            =   $request->DocRate;
         $Migrado            =   $request->Migrado;
 
-        //Verificar el tipo de movimiento
+        //Verificar si el Tipo de Movimiento es Leasing
         if ($Type == '1300457') {
-            # Si es Tipo Leasing
+            # Setear a Tipo 2 para Addon
             $Type = 2;
         }
 

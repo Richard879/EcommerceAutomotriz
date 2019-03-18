@@ -11,24 +11,27 @@ class AccesorioVehiculoController extends Controller
 {
     public function GetListVehiculos(Request $request)
     {
-        $nIdEmpresa     = $request->nIdEmpresa;
-        $nIdProveedor   = $request->nIdProveedor;
-        $nIdLinea       = $request->nIdLinea;
-        $nIdMarca       = $request->nIdMarca;
-        $nIdModelo      = $request->nIdModelo;
+        $nIdEmpresa         = $request->nIdEmpresa;
+        $nIdProveedor       = $request->nIdProveedor;
+        $nIdLinea           = $request->nIdLinea;
+        $nIdMarca           = $request->nIdMarca;
+        $nIdModelo          = $request->nIdModelo;
+        $cNombreVehiculo    = $request->cNombreVehiculo;
 
-        $nIdEmpresa     = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
-        $nIdProveedor   = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
-        $nIdLinea       = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
-        $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdMarca;
+        $nIdEmpresa         = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
+        $nIdProveedor       = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
+        $nIdLinea           = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdMarca;
+        $cNombreVehiculo    = ($cNombreVehiculo == NULL) ? ($cNombreVehiculo = '') : $cNombreVehiculo;
 
-        $data = DB::select('exec [usp_AccesorioVehiculo_GetListVehiculos] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_AccesorioVehiculo_GetListVehiculos] ?, ?, ?, ?, ?, ?',
                                                 [   $nIdEmpresa,
                                                     $nIdProveedor,
                                                     $nIdLinea,
                                                     $nIdMarca,
-                                                    $nIdModelo
+                                                    $nIdModelo,
+                                                    $cNombreVehiculo
                                                 ]);
 
         $arrayListVehiculos = ParametroController::arrayPaginator($data, $request);
