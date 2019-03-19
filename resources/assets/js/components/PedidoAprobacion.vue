@@ -1316,9 +1316,9 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/SetRegistrarDireccionPersona';
                 axios.post(url, {
-                    'nIdPersona': this.fillDirecciones.nIdPersona,
-                    'arrayDireccionesFiscales': this.arrayDireccionesFiscales,
-                    'arrayDireccionesDespacho': this.arrayDireccionesDespacho
+                    'nIdPersona'                : this.fillDirecciones.nIdPersona,
+                    'arrayDireccionesFiscales'  : this.arrayDireccionesFiscales,
+                    'arrayDireccionesDespacho'  : this.arrayDireccionesDespacho
                 }).then(response => {
                     console.log(response.data);
                     //VERIFICA SI ES DESDE EL CASO 01 (1) O SI ES DESDE EL CASO 03 (2)
@@ -1339,11 +1339,11 @@
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO DIRECCIONES DEL CLIENTE...");
 
-                var url = this.ruta + '/pedido/SapSetUpdDireccionesContacto';
+                var url = this.ruta + '/gescontacto/SapSetUpdDireccionesContacto';
                 axios.post(url, {
-                    'nIdPersona': this.fillDirecciones.nIdPersona,
-                    'cTipoPersona': this.fillDirecciones.cTipoPersona,
-                    'cCardCode': this.fillDirecciones.cCardCode
+                    'nIdPersona'    : this.fillDirecciones.nIdPersona,
+                    'cTipoPersona'  : this.fillDirecciones.cTipoPersona,
+                    'cCardCode'     : this.fillDirecciones.cCardCode
                 }).then(response => {
                     console.log(response.data);
                     this.aprobarPedido2();

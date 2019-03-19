@@ -231,10 +231,10 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/tipocambio/SetRegistrarTipoCambio';
                 axios.post(url, {
-                    'dFechaTipoCambio': this.fillTipoCambio.dFechaTipoCambio,
-                    'fTipoCambioComercial': this.fillTipoCambio.fTipoCambioComercial,
-                    'fTipoCambioCompra': this.fillTipoCambio.fTipoCambioCompra,
-                    'fTipoCambioVenta': this.fillTipoCambio.fTipoCambioVenta
+                    'dFechaTipoCambio'      : this.fillTipoCambio.dFechaTipoCambio,
+                    'fTipoCambioComercial'  : this.fillTipoCambio.fTipoCambioComercial,
+                    'fTipoCambioCompra'     : this.fillTipoCambio.fTipoCambioCompra,
+                    'fTipoCambioVenta'      : this.fillTipoCambio.fTipoCambioVenta
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
@@ -264,10 +264,10 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/tipocambio/SetActualizarTipoCambio';
                 axios.post(url, {
-                    'dFechaTipoCambio': this.fillTipoCambio.dFechaTipoCambio,
-                    'fTipoCambioComercial': this.fillTipoCambio.fTipoCambioComercial,
-                    'fTipoCambioCompra': this.fillTipoCambio.fTipoCambioCompra,
-                    'fTipoCambioVenta': this.fillTipoCambio.fTipoCambioVenta
+                    'dFechaTipoCambio'      : this.fillTipoCambio.dFechaTipoCambio,
+                    'fTipoCambioComercial'  : this.fillTipoCambio.fTipoCambioComercial,
+                    'fTipoCambioCompra'     : this.fillTipoCambio.fTipoCambioCompra,
+                    'fTipoCambioVenta'      : this.fillTipoCambio.fTipoCambioVenta
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);

@@ -76,7 +76,6 @@ class SapLlamadaServicioController extends Controller
             $data = $request->arraySapLlamadaServicio;
             foreach ($data as $key => $value) {
                 $json['json']['ServiceCallActivities'][] = [
-                    "LineNum"       =>  $cont,
                     "ActivityCode"  =>  (string)$value['nActivityCode'],
                 ];
                 $cont++;//Aumento Linea
