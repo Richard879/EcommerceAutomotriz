@@ -122,6 +122,7 @@ class SapActividadController extends Controller
                         "DocEntry"          => $value['nDocEntry'],
                         "DocNum"            => $value['nDocNum'],
                         "DocType"           => $value['nDocType'],
+                        "ActivityProperty"  => "cn_Task",
                         "Duration"          => $value['nDuration'],
                         "DurationType"      => $value['cDurationType'],
                         "EndDueDate"        => (string)$value['dEndDueDate'],
@@ -161,6 +162,7 @@ class SapActividadController extends Controller
                         "DocEntry"          => $value['nDocEntry'],
                         "DocNum"            => $value['nDocNum'],
                         "DocType"           => $value['nDocType'],
+                        "ActivityProperty"  => "cn_Task",
                         "Duration"          => $value['nDuration'],
                         "DurationType"      => $value['cDurationType'],
                         "EndDueDate"        => (string)$value['dEndDueDate'],
@@ -224,7 +226,7 @@ class SapActividadController extends Controller
         return $array_rpta;
     }
 
-    public function SapSetActividadByServiceCallId(Request $request)
+    /*public function SapSetActividadByServiceCallId(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -243,5 +245,5 @@ class SapActividadController extends Controller
                                                                                     'nActivityCode' => $nActivityCode]
                                                                       ]);
         return $response->getBody();
-    }
+    }*/
 }
