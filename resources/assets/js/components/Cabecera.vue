@@ -139,7 +139,7 @@
                     if(value.nIdPar == me.formCabecera.nidsucursal){
                         //CAPTURO NUEVA SESIÓN DEL cNombreSucursal SELECCIONADO
                         sessionStorage.setItem("cNombreSucursal", value.cParNombre);
-                        sessionStorage.setItem("nIdSapSucursal", response.data[0].cParJerarquia);
+                        sessionStorage.setItem("nIdSapSucursal", value.cParJerarquia);
                     }
                 });
                 me.$emit('cabecera', me.formCabecera.nidsucursal);
