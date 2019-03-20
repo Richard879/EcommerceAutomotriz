@@ -1264,9 +1264,11 @@
         data(){
             return {
                 ccustomercode: '',
-                nservicecallidcompra: 0,
-                nservicecallidventa: 0,
+                nIdServiceCallCompra: 0,
+                nIdServiceCallVenta: 0,
                 nactivitycode: 0,
+                nDocEntryOrdenVenta: 0,
+                nDocNumOrdenVenta: 0,
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // ============================================
@@ -1860,9 +1862,10 @@
                 this.formPdi.cvinplacanombre    = objCompra.cNumeroVin;
                 this.formPdi.cnumerovin         = objCompra.cNumeroVin;
                 this.ccustomercode              = objCompra.cCustomerCode;
-                this.nservicecallidcompra       = objCompra.nServiceCallIDCompra;
-                this.nservicecallidventa        = objCompra.nServiceCallIDVenta;
+                this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
+                this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
                 this.formPdi.nidvehiculoplaca   = 0;
+                this.obtenerOrdenVenta();
                 this.cerrarModal();
             },
             llenarComboMarca(){
@@ -1910,8 +1913,8 @@
                 this.formPdi.cvinplacanombre    = '';
                 this.formPdi.cnumerovin         = '';
                 this.ccustomercode              = '';
-                this.nservicecallidcompra       = '';
-                this.nservicecallidventa        = '';
+                this.nIdServiceCallCompra       = '';
+                this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
             },
             //=============== LISTAR MODAL POR PLACA ===================
@@ -1953,6 +1956,30 @@
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.cerrarModal();
+            },
+            //===========
+            obtenerOrdenVenta(){
+                var url = this.ruta + '/pedido/GetOrdenVentaByPedido';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoelemen'     :   0,
+                        'celementonombre'   :   ''
+                    }
+                }).then(response => {
+                    let me = this;
+                    me.nDocEntryOrdenVenta = response.data.arrayElementoVenta;
+                    me.nDocNumOrdenVenta = response.data.arrayElementoVenta;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //=============== LISTAR MODAL PLANTILLA ===================
             listarSeccion(){
@@ -2251,8 +2278,8 @@
                             }
                         }
 
-                        // this.generaSapActividadPdiEntrada();
-                        this.generaSapMercanciaEntry();
+                        //this.generaSapActividadPdiEntrada();
+                        //this.generaSapMercanciaEntry();
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2459,19 +2486,22 @@
                     'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
                     'data': me.arrayTempAccesorio
                 }).then(response => {
-                    /*if(me.formPdi.nidtipoinspeccion == 4){
+                    //Si es Pdi Entrada
+                    if(me.formPdi.nidtipoinspeccion == 4){
                         setTimeout(function() {
                             me.generaSapMercanciaEntry();
                         }, 1600);
                     }
-                    else if(me.formPdi.nidtipoinspeccion == 6){
+                    //Si es Pdi Entrega Vehiculo
+                    else if(me.formPdi.nidtipoinspeccion == 5){
                         setTimeout(function() {
-                            me.generaSapMercanciaExit();
+                            me.generaSapActividadPdiEntrega();
+                            //me.generaSapMercanciaExit();
                         }, 1600);
                     }
                     else{
                         me.confirmaPdi();
-                    }*/
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2483,8 +2513,6 @@
                 });
             },
             /*
-            generaSgcEntradaMercancia(){
-            },
             generaSapActividadPdiEntrada(){
                 let me = this;
 
@@ -2745,68 +2773,6 @@
                         }
                     }
                 });
-            },
-            generaSapLlamadaServicioPdiSalida(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI SERVICIOS
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
-
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaSgcLlamadaServicioPdiSalida();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcLlamadaServicioPdiSalida(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.confirmaPdi();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
             },*/
             //Generar Sap Entrada Mercancia
             generaSapMercanciaEntry(){
@@ -2946,9 +2912,9 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.nservicecallidcompra,
+                                'nServiceCallID'    : me.nIdServiceCallCompra,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo'    : 4,
+                                'nActividadTipo'    : 59,
                                 'cActividadTipo'    : 'PDIEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
@@ -3010,29 +2976,6 @@
                     }
                 });
             },
-            /*
-            generaSapActividadServiceCallEntry(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
-                axios.post(sapUrl, {
-                    'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : me.nservicecallidcompra,
-                    'nLine'             : 0
-                }).then(response => {
-                    me.loading.close();
-                    me.confirmaPdi();
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             /*generaSapLlamadaServicioEntrada(){
                 let me = this;
 
@@ -3096,7 +3039,7 @@
                     }
                 });
             },*/
-            /*generaSapMercanciaExit(){
+            generaSapMercanciaExit(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -3193,7 +3136,7 @@
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
+                var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
                 axios.post(sapUrl, {
                     'data': me.arraySapActividad
                 }).then(response => {
@@ -3207,9 +3150,9 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ActivityCode){
                             me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.nservicecallidventa,
+                                'nServiceCallID'    : me.nIdServiceCallVenta,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo'    : 6,
+                                'nActividadTipo'    : 60,
                                 'cActividadTipo'    : 'PdiSalida',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : 0,
@@ -3270,19 +3213,64 @@
                     }
                 });
             },
-            generaSapActividadServiceCallExit(){
+            generaSapActividadPdiEntrega(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/actividad/SapSetActividadByServiceCallId';
+                me.arraySapActividad = [];
+                me.arraySapActividad.push({
+                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                    'hActivityTime' :   moment().format('HH:mm:ss'),
+                    'cCardCode'     :   me.ccustomercode,
+                    'cNotes'        :   'PdiEntregaVehiculo',
+                    'nDocEntry'     :   me.nDocEntryOrdenVenta,
+                    'nDocNum'       :   me.nDocNumOrdenVenta,
+                    'nDocType'      :   '17',
+                    'nDuration'     :   '15',
+                    'cDurationType' :   'du_Minuts',
+                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                    'cReminder'     :   'tYES',
+                    'nReminderPeriod':  '15',
+                    'cReminderType' :   'du_Minuts',
+                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                    'hStartTime'    :   moment().format('HH:mm:ss')
+                });
+
+                //==============================================================
+                //================== REGISTRO ACTIVIDAD EN SAP ===============
+                var sapUrl = me.ruta + '/actividad/SapSetActividad';
                 axios.post(sapUrl, {
-                    'nActivityCode'     : me.nactivitycode,
-                    'nServiceCallID'    : me.nservicecallidventa,
-                    'nLine'             : 0
+                    'data': me.arraySapActividad
                 }).then(response => {
-                    me.loading.close();
-                    me.confirmaPdi();
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ActivityCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.nIdServiceCallVenta,
+                                'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
+                                'nActividadTipo'    : 5,
+                                'cActividadTipo'    : 'PDIEntregaVehiculo',
+                                'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
+                                'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaSgcActividadPdiEntrega();
+                            }, 1600);
+                        }
+                    });
                 }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    me.limpiarPorError("Error en la Integración Actividad SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3291,7 +3279,28 @@
                         }
                     }
                 });
-            },*/
+            },
+            generaSgcActividadPdiEntrega(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        me.loading.close();
+                        me.confirmaPdi();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
@@ -3430,7 +3439,11 @@
                                 //Solo si es Entrada
                                 if(this.formPdi.nidtipoinspeccion == 4 && !this.arrayAccesorio.length) {
                                     this.listarAccesorioByCod();
-                                }
+                                };
+                                //Si es Entrega Vehiculo
+                                if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){
+                                    //this.listarAccesorioByCod();
+                                };
                                 break;
                             }
                         }
@@ -3516,8 +3529,8 @@
                 this.arraySapLlamadaServicio= [],
                 this.arraySapActividad= [],
                 this.nactivitycode= 0,
-                this.nservicecallidcompra= 0,
-                this.nservicecallidventa= 0
+                this.nIdServiceCallCompra= 0,
+                this.nIdServiceCallVenta= 0
             },
             limpiarPorError(cDescripcion){
                 $("#myBar").hide();
