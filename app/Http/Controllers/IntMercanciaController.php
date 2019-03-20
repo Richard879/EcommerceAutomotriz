@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IntMercanciaController extends Controller
 {
-    public function SetIntegraMercancia(Request $request)
+    public function SetIntegraMercanciaCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -18,7 +18,7 @@ class IntMercanciaController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercancia] ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercanciaCompra] ?, ?, ?, ?, ?, ?',
                                                             [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
@@ -34,7 +34,7 @@ class IntMercanciaController extends Controller
         }
     }
 
-    public function SetIntegraMercanciaEntry(Request $request)
+    public function SetIntegraMercancia(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -43,35 +43,10 @@ class IntMercanciaController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercanciaEntry] ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercancia] ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $det['nIdCabeceraInspec'],
                                                                 $det['cItemCode'],
-                                                                $det['nDocEntry'],
-                                                                $det['nDocNum'],
-                                                                $det['cDocType'],
-                                                                $det['cLogRespuesta'],
-                                                                Auth::user()->id
-                                                            ]);
-            }
-            DB::commit();
-            return response()->json($objCompra);
-        } catch (Exception $e){
-            DB::rollBack();
-        }
-    }
-
-    public function SetIntegraMercanciaExit(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        try{
-            DB::beginTransaction();
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercanciaEntry] ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['nIdCabeceraInspec'],
                                                                 $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],

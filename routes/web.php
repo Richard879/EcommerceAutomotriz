@@ -419,7 +419,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');
     Route::post('/mercancia/SetIntegraMercancia', 'IntMercanciaController@SetIntegraMercancia');
-    Route::post('/mercancia/SetIntegraMercanciaEntry', 'IntMercanciaController@SetIntegraMercanciaEntry');
+    Route::post('/mercancia/SetIntegraMercanciaCompra', 'IntMercanciaController@SetIntegraMercanciaCompra');
     Route::post('/mercancia/SetIntegraMercanciaExit', 'IntMercanciaController@SetIntegraMercanciaExit');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::post('/actividad/SetIntegraActividadCompra','IntActividadController@SetIntegraActividadCompra');

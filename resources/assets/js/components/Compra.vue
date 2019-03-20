@@ -3804,7 +3804,7 @@
             },
             generaActualizarMercancia(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
+                var sapUrl = me.ruta + '/mercancia/SetIntegraMercanciaCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
