@@ -1810,23 +1810,7 @@
                 this.listarCompras(page);
             },
             obtenerCodigoSapEmpresa(){
-                var url = this.ruta + '/parametro/GetParametroById';
-                axios.get(url, {
-                    params: {
-                        'nidpar'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar'   : 110021
-                    }
-                }).then(response => {
-                    this.ccustomercode = response.data[0].cParJerarquia;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================

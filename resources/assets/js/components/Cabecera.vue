@@ -130,6 +130,7 @@
                     if(value.nIdPar == me.formCabecera.nidempresa){
                         //CAPTURO NUEVA SESIÓN DEL cNombreEmpresa SELECCIONADO
                         sessionStorage.setItem("cNombreEmpresa", value.cParAbreviatura);
+                        sessionStorage.setItem("cCustomerCode", value.cParJerarquia);
                     }
                 });
                 //CAPTURO NUEVA SESIÓN nIdSucursal DE LA SUCURSAL SELECCIONADA
@@ -138,34 +139,12 @@
                     if(value.nIdPar == me.formCabecera.nidsucursal){
                         //CAPTURO NUEVA SESIÓN DEL cNombreSucursal SELECCIONADO
                         sessionStorage.setItem("cNombreSucursal", value.cParNombre);
+                        sessionStorage.setItem("nIdUnidadNegocio", response.data[0].cParJerarquia);
                     }
                 });
                 me.$emit('cabecera', me.formCabecera.nidsucursal);
                 me.$bus.$emit('event', me.formCabecera);
-                
-                if(parseInt(sessionStorage.getItem("nIdSucursal"))){
-                    me.obtenerDatosSucursal();
-                }
             },
-            obtenerDatosSucursal(){
-                var url = this.ruta + '/parametro/GetParametroById';
-                axios.get(url, {
-                    params: {
-                        'nidpar'        : !parseInt(sessionStorage.getItem("nIdSucursal")) ? 0 : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidgrupopar'   : 110022
-                    }
-                }).then(response => {
-                    sessionStorage.setItem("nIdUnidadNegocio", response.data[0].cParJerarquia);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            }
         },
     }
 </script>
