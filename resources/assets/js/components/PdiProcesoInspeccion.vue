@@ -2659,7 +2659,7 @@
             },
             generaSgcMercanciaEntry(){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaEntry';
+                var sapUrl = me.ruta + '/mercancia/SetIntegraMercanciaEntry';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -2860,7 +2860,7 @@
             },
             generaActualizarMercanciaExit(){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercanciaExit';
+                var sapUrl = me.ruta + '/mercancia/SetIntegraMercanciaExit';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
