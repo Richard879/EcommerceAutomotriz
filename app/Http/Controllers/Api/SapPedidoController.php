@@ -46,6 +46,7 @@ class SapPedidoController extends Controller
                     "DocCurrency"       =>  "US$",
                     //"DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    'U_SYP_MDMT'        =>  "01",
                     "DocumentLines" => [
                         [
                             "ItemCode"      =>  (string)$value['cNumeroVin'],
@@ -113,6 +114,7 @@ class SapPedidoController extends Controller
                     "DocCurrency"       =>  "US$",
                     //"DocTotal"          =>  '',
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    'U_SYP_MDMT'        =>  "01",
                     "DocumentLines"     =>  array()
                 ]
             ];
