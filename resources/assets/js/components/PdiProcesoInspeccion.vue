@@ -2642,7 +2642,7 @@
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
                                 'cCardCode'     :   me.ccustomercode,
-                                'cNotes'        :   'PDIEntrada',
+                                'cNotes'        :   'PdiEntrada',
                                 'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
                                 'nDocType'      :   '59',
@@ -2961,7 +2961,7 @@
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.nIdServiceCallVenta,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo'    : 60,
+                                'nActividadTipo'    : 6,
                                 'cActividadTipo'    : 'PdiSalida',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : 0,
