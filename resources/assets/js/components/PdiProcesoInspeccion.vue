@@ -3216,9 +3216,7 @@
             },
             generaSapActividadPdiEntrega(){
                 let me = this;
-                me.loadingProgressBar("INTEGRANDO ENTREGA VEHICULO CON SAP BUSINESS ONE...");
 
-                alert(me.nDocNumOrdenVenta);
                 me.arraySapActividad = [];
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
