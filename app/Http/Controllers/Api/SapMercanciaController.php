@@ -93,9 +93,9 @@ class SapMercanciaController extends Controller
             $data = $request->data;
             foreach ($data as $key => $value) {
                 $json['json']['DocumentLines'][] = [
-                    'LineNum'           =>  $cont,
+                    //'LineNum'           =>  $cont,
                     "ItemCode"          =>  (string)$value['ItemCode'],
-                    "ItemDescription"   =>  (string)$value['ItemDescription'],
+                    //"ItemDescription"   =>  (string)$value['ItemDescription'],
                     "WarehouseCode"     =>  (string)$value['WarehouseCode'],
                     "Quantity"          =>  (string)$value['Quantity'],
                     "UnitPrice"         =>  (string)$value['UnitPrice'],
@@ -124,25 +124,36 @@ class SapMercanciaController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $data = $request->data;
-        foreach ($data as $key => $value) {
-            $json = [
-                'json' => [
-                    "DocumentLines" => [
-                        [
-                            "ItemCode"      =>  (string)$value['ItemCode'],
-                            "WarehouseCode" =>  (string)$value['WarehouseCode'],
-                            "Quantity"      =>  (string)$value['Quantity'],
-                            "AccountCode"   =>  (string)$value['AccountCode']
-                        ]
-                    ]
-                ]
-            ];
+        $json = [
+            'json' => [
+                'DocDate'       =>  (string)$request->fDocDate,
+                'DocDueDate'    =>  (string)$request->fDocDueDate,
+                "DocumentLines" =>  array()
+            ]
+        ];
 
-            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaExit/", $json);
-            $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
+        //Inicializo el contador de la linea
+        $cont = 0;
+
+        $dataLength = sizeof($request->data);
+        if($dataLength > 0) {
+            $data = $request->data;
+            foreach ($data as $key => $value) {
+                $json['json']['DocumentLines'][] = [
+                    //'LineNum'           =>  $cont,
+                    "ItemCode"          =>  (string)$value['ItemCode'],
+                    //"ItemDescription"   =>  (string)$value['ItemDescription'],
+                    "WarehouseCode"     =>  (string)$value['WarehouseCode'],
+                    "Quantity"          =>  (string)$value['Quantity'],
+                    "AccountCode"       =>  (string)$value['AccountCode']
+                ];
+                $cont++;//Aumento Linea
+            }
         }
+
+        $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaExit/", $json);
+        $rptaSap = json_decode($response->getBody());
+        array_push($array_rpta, $rptaSap);
         return $array_rpta;
     }
 }

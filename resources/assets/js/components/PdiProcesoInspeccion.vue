@@ -2608,6 +2608,7 @@
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc    = [];
+                    me.arraySapActividad = [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
@@ -2723,7 +2724,7 @@
                                 'nServiceCallID'    : me.nIdServiceCallCompra,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo'    : 4,
-                                'cActividadTipo'    : 'PDIEntrada',
+                                'cActividadTipo'    : 'PdiEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
@@ -2784,69 +2785,6 @@
                     }
                 });
             },
-            /*generaSapLlamadaServicioEntrada(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'I',
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
-
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaSgcLlamadaServicioEntrada();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcLlamadaServicioEntrada(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.loading.close();
-                    me.confirmaPdi();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             //================Generar Sap Entrega Vehiculo
             generaSapMercanciaExit(){
                 let me = this;
@@ -2869,9 +2807,9 @@
                     'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data'          : me.arraySapMercancia
                 }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-                    me.arraySapActividad= [];
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc    = [];
+                    me.arraySapActividad = [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(x){
@@ -2881,12 +2819,44 @@
                         if(me.jsonRespuesta.DocEntry){
                             console.log("Integración SAP Mercancia : OK");
 
-                            me.arraySapUpdSgc.push({
-                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType': me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            //Generar varias lineas de la misma Entrada Mercancia para actualizar DOCENTRY en cada detalle de la Entrada Mercancia en SQL SERVER
+                            let arrayDocumentLines = me.jsonRespuesta.DocumentLines;
+
+                            arrayDocumentLines.map(function(linea) {
+                                //console.log(linea);
+                                //Guardo el Codigo SAP de los Elemento Venta
+                                me.arrayCodSAPPDI.push({
+                                    'nDocEntry' :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'cItemCode' :   linea.ItemCode.toString()
+                                });
+
+                                me.arraySapUpdSgc.push({
+                                    'nIdCabeceraInspec' :   me.formPdi.nidcabecerainspeccion,
+                                    'cItemCode'         :   linea.ItemCode.toString(),
+                                    'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta'     :   response.data.toString(),
+                                });
+                            });
+
+                            me.arraySapActividad.push({
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                                'hActivityTime' :   moment().format('HH:mm:ss'),
+                                'cCardCode'     :   me.ccustomercode,
+                                'cNotes'        :   'PdiSalida',
+                                'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
+                                'nDocType'      :   '60',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                                'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                                'hStartTime'    :   moment().format('HH:mm:ss')
                             });
                         }
                     });
@@ -2913,21 +2883,6 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.arraySapActividad.push({
-                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
-                        'hActivityTime' :   moment().format('HH:mm:ss'),
-                        'cCardCode'     :   me.ccustomercode,
-                        'cNotes'        :   'PdiSalida',
-                        'nDuration'     :   '15',
-                        'cDurationType' :   'du_Minuts',
-                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
-                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
-                        'cReminder'     :   'tYES',
-                        'nReminderPeriod':  '15',
-                        'cReminderType' :   'du_Minuts',
-                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
-                        'hStartTime'    :   moment().format('HH:mm:ss')
-                    });
                     setTimeout(function() {
                         me.generaSapActividadPdiSalida();
                     }, 1600);
@@ -2964,8 +2919,8 @@
                                 'nActividadTipo'    : 6,
                                 'cActividadTipo'    : 'PdiSalida',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'         : 0,
-                                'nDocNum'           : 0,
+                                'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
                                 'cLogRespuesta'     : response.data.toString()
                             });
 

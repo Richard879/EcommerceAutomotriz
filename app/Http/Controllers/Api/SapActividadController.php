@@ -228,25 +228,4 @@ class SapActividadController extends Controller
         }
         return $array_rpta;
     }
-
-    /*public function SapSetActividadByServiceCallId(Request $request)
-    {
-        $client = new Client([
-            'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
-        ]);
-
-        $nServiceCallID    = $request->nServiceCallID;
-        $nLine             = $request->nLine;
-        $nActivityCode     = $request->nActivityCode;
-
-        $nLine = ($nLine == NULL) ? ($nLine = 0) : $nLine;
-
-        $response = $client->request('POST', "/api/Actividad/SapSetActividadByServiceCallId/", [
-                                                                        'query' => ['nServiceCallID' => $nServiceCallID,
-                                                                                    'nLine' => $nLine,
-                                                                                    'nActivityCode' => $nActivityCode]
-                                                                      ]);
-        return $response->getBody();
-    }*/
 }
