@@ -2611,6 +2611,8 @@
                                 });
 
                                 me.arraySapUpdSgc.push({
+                                    'nTipo'             :   "59",
+                                    'cTipoDescripcion'  :   "EntradaMercancia",
                                     'nIdCabeceraInspec' :   me.formPdi.nidcabecerainspeccion,
                                     'cItemCode'         :   linea.ItemCode.toString(),
                                     'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
@@ -2812,6 +2814,8 @@
                                 });
 
                                 me.arraySapUpdSgc.push({
+                                    'nTipo'             :   "60",
+                                    'cTipoDescripcion'  :   "SalidaMercancia",
                                     'nIdCabeceraInspec' :   me.formPdi.nidcabecerainspeccion,
                                     'cItemCode'         :   linea.ItemCode.toString(),
                                     'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),

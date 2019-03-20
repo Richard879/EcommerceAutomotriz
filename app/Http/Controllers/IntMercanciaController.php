@@ -43,10 +43,11 @@ class IntMercanciaController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercancia] ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraMercancia] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [
+                                                                $det['nTipo'],
+                                                                $det['cTipoDescripcion'],
                                                                 $det['nIdCabeceraInspec'],
-                                                                $det['cItemCode'],
                                                                 $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
