@@ -40,15 +40,20 @@ class SapArticuloController extends Controller
         $data = $request->data;
         foreach ($data as $key => $value) {
 
-            $cItemCode  =   $value['cNombreComercial'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'];
+            $cItemCode  =   $value['cNombreComercial'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'].' '.$value['cNombreColor'];
             $ItemType   =   $value['cItemType'];
             $ItemType   =   ($ItemType == NULL) ? ($ItemType = 'itItems') : $ItemType;
 
             $json = [
                 'json' => [
-                    "ItemCode"              =>  $value['cNumeroVin'],
-                    "ItemName"              =>  $cItemCode,
-                    "ItemType"              =>  $ItemType,
+                    'U_SYP_FAMILIA'         =>  (string)$value['cNombreLinea'],
+                    'U_SYP_SUBFAMILIA'      =>  "TP",
+                    'U_SYP_VERSION'         =>  (string)$value['cNombreComercial'],
+                    'U_SYP_AFAB'            =>  (string)$value['nAnioFabricacion'],
+                    'U_SYP_AMOD'            =>  (string)$value['nAnioVersion'],
+                    "ItemCode"              =>  (string)$value['cNumeroVin'],
+                    "ItemName"              =>  (string)$cItemCode,
+                    "ItemType"              =>  (string)$ItemType,
                     "ItemsGroupCode"        =>  "107",
                     "IndirectTax"           =>  "tYES", //General           =>  Impuesto Directo
                     "ManageSerialNumbers"   =>  "tYES", //General           =>  Articulo Gestiano Por
