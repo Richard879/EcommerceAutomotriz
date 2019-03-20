@@ -1970,7 +1970,6 @@
                     }
                 }).then(response => {
                     let me = this;
-                    alert(response.data[0].nDocEntryOrdenVenta);
                     me.nDocEntryOrdenVenta = response.data[0].nDocEntryOrdenVenta;
                     me.nDocNumOrdenVenta = response.data[0].nDocNumOrdenVenta;
                 }).catch(error => {
