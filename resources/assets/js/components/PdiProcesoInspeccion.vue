@@ -320,14 +320,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Inspección</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text" v-model="formPdi.cnumeroinspeccion" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
@@ -377,20 +370,6 @@
                                                                         </el-tooltip>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Fecha Mov. Almacén</label>
-                                                            <div class="col-sm-8">
-                                                                <el-date-picker
-                                                                    v-model="formPdi.dfechamovimientoalmacen"
-                                                                    type="date"
-                                                                    value-format="yyyy-MM-dd"
-                                                                    format="dd/MM/yyyy"
-                                                                    placeholder="dd/mm/aaaa">
-                                                                </el-date-picker>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1743,7 +1722,7 @@
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
                         this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
-                        this.obtenerAlmacenByLocalidad();
+                        //this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1755,7 +1734,7 @@
                     }
                 });
             },
-            obtenerAlmacenByLocalidad(){
+            /*obtenerAlmacenByLocalidad(){
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
@@ -1782,7 +1761,7 @@
                         }
                     }
                 });
-            },
+            },*/
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
                 var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
@@ -2318,9 +2297,9 @@
                 if(this.formPdi.nidflagmovimiento == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Movimiento');
                 };
-                if(this.formPdi.cnumeroinspeccion ==''){
+                /*if(this.formPdi.cnumeroinspeccion ==''){
                     this.mensajeError.push('Debes Ingresar Número Inspección');
-                };
+                };*/
                 if(this.formPdi.dfechainspeccion ==''){
                     this.mensajeError.push('Debes Ingresar Fecha Inspección');
                 };
