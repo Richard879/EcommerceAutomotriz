@@ -1965,7 +1965,7 @@
                     params: {
                         'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'ncriterio'         : this.formPdi.nidcompra == 0 ? '1' : '2',
+                        'ncriterio'         : this.formPdi.nidcompra == 0 ? '2' : '1',
                         'cvinplacanombre'   : this.formPdi.cvinplacanombre
                     }
                 }).then(response => {

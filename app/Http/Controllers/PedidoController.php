@@ -777,7 +777,7 @@ class PedidoController extends Controller
         }
     }
 
-    public function GetOrdenVenta()
+    public function GetOrdenVenta(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -785,8 +785,6 @@ class PedidoController extends Controller
         $nIdSucursal        =   $request->nidsucursal;
         $nCriterio          =   $request->ncriterio;
         $cDescripcionCiterio=   $request->cvinplacanombre;
-
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $data = DB::select('exec [usp_Pedido_GetOrdenVenta] ?, ?, ?, ?',
                                                             [
