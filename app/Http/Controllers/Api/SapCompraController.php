@@ -69,6 +69,7 @@ class SapCompraController extends Controller
                     'U_SYP_MDMT'        =>  "01",
                     'U_SYP_TCOMPRA'     =>  "01",
                     'OcrCode2'          =>  "01", //UnidadDeNegocio
+                    'OcrCode3'          =>  (string)$request->nIdSapSucursal, //Codigo Sap Erp
                     "DocumentLines" => [
                             [
                                 "ItemCode"          => (string)$value['cNumeroVin'],
@@ -76,7 +77,7 @@ class SapCompraController extends Controller
                                 "TaxCode"           => "IGV",
                                 "PriceAfterVAT"     => (string)$value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "WarehouseCode"     => (string)$request->WarehouseCode,
+                                "WarehouseCode"     => (string)$request->cWarehouseCode,
                                 "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]

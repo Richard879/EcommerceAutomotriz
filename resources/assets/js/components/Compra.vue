@@ -2473,12 +2473,13 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    'cCardCode'     :   me.formCompra.ccarcode,
-                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' :   me.formAlmacen.cwhscode,
-                    'Igv'           :   1 + parseFloat((me.formCompra.igv)),
-                    'data'          :   me.arraySapCompra
+                    'cCardCode'     : me.formCompra.ccarcode,
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'cWarehouseCode': me.formAlmacen.cwhscode,
+                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                    'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                    'data'          : me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3310,8 +3311,9 @@
                         'cCardCode'     : me.formCompra.ccarcode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode' : me.formAlmacen.cwhscode,
+                        'cWarehouseCode': me.formAlmacen.cwhscode,
                         'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                        'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
                         'data'          : me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
