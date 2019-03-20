@@ -1385,7 +1385,8 @@
                     nidlocalidad: 0,
                     cwhscode: '',
                     cwhsname: '',
-                    cacctcode: ''
+                    cacctcodeentrada: '',
+                    cacctcodesalida: ''
                 },
                 arrayAlmacen: [],
                 //===========================================================
@@ -1764,12 +1765,12 @@
                 }).then(response => {
                     if(response.data.length){
                         // this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
-                        // this.formAlmacen.cacctcode = response.data[0].cAcctCode;
+                        // this.formAlmacen.cacctcodeentrada = response.data[0].cAcctCode;
                         // this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
                         this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cacctcode = '';
+                        this.formAlmacen.cacctcodeentrada = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
@@ -1816,7 +1817,8 @@
             asignarAlmacen(objAlmacen){
                 this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
                 this.formAlmacen.cwhsname = objAlmacen.cWhsName;
-                this.formAlmacen.cacctcode = objAlmacen.cAcctCode;
+                this.formAlmacen.cacctcodeentrada = objAlmacen.cAcctCode;
+                this.formAlmacen.cacctcodesalida = objAlmacen.cAcctCodeSalida;
                 this.cerrarModal();
             },
             //=============== LISTAR MODAL POR VIN ===================
@@ -2593,7 +2595,7 @@
                         'WarehouseCode'     :   me.formAlmacen.cwhscode,
                         'Quantity'          :   value.nCantidad,
                         'UnitPrice'         :   0.01,
-                        'AccountCode'       :   me.formAlmacen.cacctcode
+                        'AccountCode'       :   me.formAlmacen.cacctcodeentrada
                     });
                 });
                 //==============================================================
@@ -2793,8 +2795,8 @@
                     me.arraySapMercancia.push({
                         'ItemCode'       : value.cCodigoERP,
                         'WarehouseCode'  : me.formAlmacen.cwhscode,
-                        'Quantity'       : me.arrayAccesorioCantidad[key],
-                        'AccountCode'    : me.formAlmacen.cacctcode
+                        'Quantity'       : value.nCantidad,
+                        'AccountCode'    : me.formAlmacen.cacctcodesalida
                     });
                 });
                 //==============================================================
@@ -3276,7 +3278,7 @@
                 this.arrayPlantilla =[],
                 this.arrayAccesorio =[],
                 this.arrayTempAccesorio =[],
-                this.arrayAccesorioCantidad=[],
+                //this.arrayAccesorioCantidad=[],
                 this.formAlmacen.nidlocalidad = '';
                 this.formAlmacen.cwhscode = '';
                 this.formAlmacen.cwhsname = '';

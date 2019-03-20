@@ -95,7 +95,6 @@ class SapMercanciaController extends Controller
                 $json['json']['DocumentLines'][] = [
                     //'LineNum'           =>  $cont,
                     "ItemCode"          =>  (string)$value['ItemCode'],
-                    //"ItemDescription"   =>  (string)$value['ItemDescription'],
                     "WarehouseCode"     =>  (string)$value['WarehouseCode'],
                     "Quantity"          =>  (string)$value['Quantity'],
                     "UnitPrice"         =>  (string)$value['UnitPrice'],
@@ -142,7 +141,6 @@ class SapMercanciaController extends Controller
                 $json['json']['DocumentLines'][] = [
                     //'LineNum'           =>  $cont,
                     "ItemCode"          =>  (string)$value['ItemCode'],
-                    //"ItemDescription"   =>  (string)$value['ItemDescription'],
                     "WarehouseCode"     =>  (string)$value['WarehouseCode'],
                     "Quantity"          =>  (string)$value['Quantity'],
                     "AccountCode"       =>  (string)$value['AccountCode']
