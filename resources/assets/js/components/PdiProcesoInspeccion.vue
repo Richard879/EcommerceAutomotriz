@@ -2929,7 +2929,7 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
                     setTimeout(function() {
-                        me.generaSapActividadMercanciaExit();
+                        me.generaSapActividadPdiSalida();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2941,7 +2941,7 @@
                     }
                 });
             },
-            generaSapActividadMercanciaExit(){
+            generaSapActividadPdiSalida(){
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -2982,7 +2982,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
-                                me.generaSgcActividadMercanciaExit();
+                                me.generaSgcActividadPdiSalida();
                             }, 1600);
                         }
                     });
@@ -2997,7 +2997,7 @@
                     }
                 });
             },
-            generaSgcActividadMercanciaExit(){
+            generaSgcActividadPdiSalida(){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
@@ -3006,11 +3006,10 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         //================================================================================
-                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
+                        //=========== GENERAR ACTIVIDAD ENTREGA VINCULADA A ORDEN DE VENTA ===============
                         setTimeout(function() {
-                            me.generaSapActividadServiceCallExit();
+                            me.generaSapActividadPdiEntrega();
                         }, 1600);
-
                     }
                 }).catch(error => {
                     console.log(error);
