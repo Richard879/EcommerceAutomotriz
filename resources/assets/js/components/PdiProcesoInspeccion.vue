@@ -2712,18 +2712,18 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            me.arraySapLlamadaServicio = [];
+                            /*me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.jsonRespuesta.ActivityCode,
                                 'cCustomerCode'     : me.ccustomercode,
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'cSubject'          : 'PDI ENTRADA'
-                            });
+                            });*/
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrada();
                             }, 1600);
@@ -2905,18 +2905,18 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            me.arraySapLlamadaServicio = [];
+                            /*me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.jsonRespuesta.ActivityCode,
                                 'cCustomerCode'     : me.ccustomercode,
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'cSubject'          : 'PDI SALIDA'
-                            });
+                            });*/
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiSalida();
                             }, 1600);
@@ -3275,7 +3275,8 @@
                 this.arraySapActividad= [],
                 this.nactivitycode= 0,
                 this.nIdServiceCallCompra= 0,
-                this.nIdServiceCallVenta= 0
+                this.nIdServiceCallVenta= 0,
+                this.arrayCodSAPPDI= []
             },
             limpiarPorError(cDescripcion){
                 $("#myBar").hide();
