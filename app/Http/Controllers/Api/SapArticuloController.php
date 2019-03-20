@@ -48,6 +48,7 @@ class SapArticuloController extends Controller
                 'json' => [
                     'U_SYP_FAMILIA'         =>  (string)$value['cNombreLinea'],
                     'U_SYP_SUBFAMILIA'      =>  "TP",
+                    'U_SYP_MODELO'          =>  (string)$value['cNombreModelo'],
                     'U_SYP_VERSION'         =>  (string)$value['cNombreComercial'],
                     'U_SYP_AFAB'            =>  (string)$value['nAnioFabricacion'],
                     'U_SYP_AMOD'            =>  (string)$value['nAnioVersion'],

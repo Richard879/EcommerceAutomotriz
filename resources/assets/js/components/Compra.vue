@@ -1664,7 +1664,7 @@
             this.llenarComboMarca();
             this.llenarComboModelo();
             this.obtenerLocalidadBySucursal();
-            this.obtenerIgv();
+            //this.obtenerIgv();
             this.obtenerCodigoSapEmpresa();
         },
         computed:{
@@ -1982,10 +1982,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nparsrccodigo': 0,
-                        'nparsrcgrupoarametro': 110102,
-                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'npardstgrupoarametro': 110022,
+                        'nparsrccodigo'         : 0,
+                        'nparsrcgrupoarametro'  : 110102,
+                        'npardstcodigo'         : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro'  : 110022,
                         'opcion': 1
                     }
                 }).then(response => {
@@ -2029,7 +2029,7 @@
                     }
                 });
             },
-            obtenerIgv(){
+            /*obtenerIgv(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
@@ -2048,7 +2048,7 @@
                         }
                     }
                 });
-            },
+            },*/
             //Proceso Carga de Formato Compra Excel
             getFile(e){
                 //console.log(e);

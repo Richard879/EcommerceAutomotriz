@@ -66,7 +66,9 @@ class SapCompraController extends Controller
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
-                    'U_SYP_TCOMPRA '    =>  '01',
+                    'U_SYP_MDMT'        =>  "01",
+                    'U_SYP_TCOMPRA'     =>  "01",
+                    'OcrCode2'          =>  "01", //UnidadDeNegocio
                     "DocumentLines" => [
                             [
                                 "ItemCode"          => (string)$value['cNumeroVin'],
