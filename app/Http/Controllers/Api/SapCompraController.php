@@ -68,8 +68,8 @@ class SapCompraController extends Controller
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     'U_SYP_MDMT'        =>  "01",
                     'U_SYP_TCOMPRA'     =>  "01",
-                    'OcrCode2'          =>  "01", //UnidadDeNegocio
-                    'OcrCode3'          =>  (string)$request->nIdSapSucursal, //Codigo Sap Erp
+                    'CostingCode2'      =>  "01", //UnidadDeNegocio
+                    'CostingCode3'      =>  (string)$request->nIdSapSucursal, //Codigo Sap Sucursal
                     "DocumentLines" => [
                             [
                                 "ItemCode"          => (string)$value['cNumeroVin'],

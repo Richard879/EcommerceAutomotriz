@@ -355,16 +355,6 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Igv</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.igv" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
@@ -381,6 +371,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row" v-if="formCompra.nidproveedor>0">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
@@ -400,8 +392,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row" v-if="formCompra.nidtipolista">
                                                                             <label class="col-sm-4 form-control-label">* Nro Lista</label>
