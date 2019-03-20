@@ -40,20 +40,22 @@ class SapPedidoController extends Controller
 
             $json = [
                 'json' => [
-                    "CardCode"          =>  $value['cCardCode'],
+                    "CardCode"          =>  (string)$value['cCardCode'],
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    "DocTotal"          =>  (string)$value['fSubTotalDolares'],
+                    //"DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines" => [
                         [
-                            "ItemCode"      =>  $value['cNumeroVin'],
+                            "ItemCode"      =>  (string)$value['cNumeroVin'],
                             "Quantity"      =>  "1",
                             "TaxCode"       =>  "IGV",
-                            "UnitPrice"     =>  (string)$SubTotal,
+                            "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
+                            //"UnitPrice"     =>  (string)$SubTotal,
                             "Currency"      =>  "US$",
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
+                            "ProjectCode"   =>  (string)$value['cNumeroVin'],
                             'SerialNumbers' =>  array()
                         ]
                     ]
@@ -109,7 +111,7 @@ class SapPedidoController extends Controller
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    "DocTotal"          =>  '',
+                    //"DocTotal"          =>  '',
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "DocumentLines"     =>  array()
                 ]
@@ -124,23 +126,24 @@ class SapPedidoController extends Controller
                 $json['json']['CardCode'] = $value['cCardCode'];
 
                 // Obtener el Monto sin IGV
-                $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
+                //$SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
 
                 // Setear DocumentLines
                 $json['json']['DocumentLines'][] = [
-                    "ItemCode"  =>  $value['cCodigoERP'],
-                    "Quantity"  =>  $value['nCantidad'],
-                    "TaxCode"   =>  "IGV",
-                    "UnitPrice" =>  (string)$SubTotal,
-                    "Currency"  =>  "US$"
+                    "ItemCode"      =>  $value['cCodigoERP'],
+                    "Quantity"      =>  $value['nCantidad'],
+                    "TaxCode"       =>  "IGV",
+                    "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
+                    //"UnitPrice" =>  (string)$SubTotal,
+                    "Currency"      =>  "US$"
                 ];
 
                 //Acumulador para setear en el DocTotal
-                $fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
+                //$fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
             }
 
             // Setear DocTotal
-            $json['json']['DocTotal'] = (string)$fMontoTotal;
+            //$json['json']['DocTotal'] = (string)$fMontoTotal;
 
             $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());

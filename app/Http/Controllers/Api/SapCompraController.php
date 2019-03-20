@@ -57,7 +57,7 @@ class SapCompraController extends Controller
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            $SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
+            //$SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
 
             $json = [
                 'json' => [
@@ -65,18 +65,17 @@ class SapCompraController extends Controller
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    "DocTotal"          =>  (string)$value['fTotalCompra'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     'U_SYP_TCOMPRA '    =>  '01',
                     "DocumentLines" => [
                             [
-                                "ItemCode"    => (string)$value['cNumeroVin'],
-                                "Quantity"    => "1",
-                                "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$SubTotal,
-                                "Currency"    => "US$",
-                                "WarehouseCode" =>(string)$request->WarehouseCode,
-                                "ProjectCode"  => (string)$value['cNumeroVin']
+                                "ItemCode"          => (string)$value['cNumeroVin'],
+                                "Quantity"          => "1",
+                                "TaxCode"           => "IGV",
+                                "PriceAfterVAT"     => (string)$value['fTotalCompra'],
+                                "Currency"          => "US$",
+                                "WarehouseCode"     => (string)$request->WarehouseCode,
+                                "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]
                     ]
