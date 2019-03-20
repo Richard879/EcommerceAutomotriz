@@ -1843,11 +1843,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 0,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion'            : 0,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
@@ -1986,7 +1986,7 @@
                         'nparsrcgrupoarametro'  : 110102,
                         'npardstcodigo'         : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'npardstgrupoarametro'  : 110022,
-                        'opcion': 1
+                        'opcion'                : 1
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
@@ -2007,8 +2007,8 @@
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formAlmacen.nidlocalidad,
-                        'nidgrupopar': 110102
+                        'nidpar'        : this.formAlmacen.nidlocalidad,
+                        'nidgrupopar'   : 110102
                     }
                 }).then(response => {
                     if(response.data.length){
