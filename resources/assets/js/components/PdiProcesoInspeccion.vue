@@ -1846,7 +1846,6 @@
                 this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
                 this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
                 this.formPdi.nidvehiculoplaca   = 0;
-                this.obtenerOrdenVenta();
                 this.cerrarModal();
             },
             llenarComboMarca(){
@@ -3115,6 +3114,7 @@
                                 this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
                                 this.formPdi.nidcompra = data['nIdCompra'];
                                 //this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
+                                this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
                             }
