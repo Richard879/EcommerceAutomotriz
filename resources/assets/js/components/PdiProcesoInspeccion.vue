@@ -3216,15 +3216,17 @@
             },
             generaSapActividadPdiEntrega(){
                 let me = this;
+                me.loadingProgressBar("INTEGRANDO ENTREGA VEHICULO CON SAP BUSINESS ONE...");
 
+                alert(me.nDocNumOrdenVenta);
                 me.arraySapActividad = [];
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
                     'hActivityTime' :   moment().format('HH:mm:ss'),
                     'cCardCode'     :   me.ccustomercode,
-                    'cNotes'        :   'PdiEntregaVehiculo',
-                    'nDocEntry'     :   me.nDocEntryOrdenVenta,
-                    'nDocNum'       :   me.nDocNumOrdenVenta,
+                    'cNotes'        :   'EntregaVehiculo',
+                    'nDocEntry'     :   me.nDocEntryOrdenVenta.toString(),
+                    'nDocNum'       :   me.nDocNumOrdenVenta.toString(),
                     'nDocType'      :   '17',
                     'nDuration'     :   '15',
                     'cDurationType' :   'du_Minuts',

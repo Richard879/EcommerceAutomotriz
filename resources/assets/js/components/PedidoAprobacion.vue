@@ -1738,22 +1738,21 @@
                                 });
 
                                 me.arraySapActividadVehiculo.push({
-                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                     'hActivityTime' :   moment().format('HH:mm:ss'),
                                     'cCardCode'     :   me.ccustomercode,
                                     'cNotes'        :   'OrdenVenta',
-                                    //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
                                     'nDocNum'       :   me.jsonRespuestaVehiculo.DocNum.toString(),
                                     'nDocType'      :   '17',
                                     'nDuration'     :   '15',
                                     'cDurationType' :   'du_Minuts',
-                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
                                     'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
                                     'cReminder'     :   'tYES',
                                     'nReminderPeriod':  '15',
                                     'cReminderType' :   'du_Minuts',
-                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
                                     'hStartTime'    :   moment().format('HH:mm:ss')
                                 });
                             }
