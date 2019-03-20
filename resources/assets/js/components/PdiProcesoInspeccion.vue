@@ -2496,8 +2496,7 @@
                     //Si es Pdi Entrega Vehiculo
                     else if(me.formPdi.nidtipoinspeccion == 5){
                         setTimeout(function() {
-                            me.generaSapActividadPdiEntrega();
-                            //me.generaSapMercanciaExit();
+                            me.generaSapMercanciaExit();
                         }, 1600);
                     }
                     else{
@@ -2514,102 +2513,6 @@
                 });
             },
             /*
-            generaSapActividadPdiEntrada(){
-                let me = this;
-
-                me.arraySapActividad = [];
-                me.arraySapActividad.push({
-                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
-                    'hActivityTime' :   moment().format('HH:mm:ss'),
-                    'cCardCode'     :   me.ccustomercode,
-                    'cNotes'        :   'PdiEntrada',
-                    'nDuration'     :   '4',
-                    'cDurationType' :   'du_Minuts',
-                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
-                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
-                    'cReminder'     :   'tYES',
-                    'nReminderPeriod':  '15',
-                    'cReminderType' :   'du_Minuts',
-                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
-                    'hStartTime'    :   moment().format('HH:mm:ss')
-                });
-
-                //==============================================================
-                //================== REGISTRO ACTIVIDAD EN SAP ===============
-                var sapUrl = me.ruta + '/actividad/SapSetActividad';
-                axios.post(sapUrl, {
-                    'data': me.arraySapActividad
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ActivityCode){
-                            me.arraySapUpdSgc.push({
-                                'nActivityCode' : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo': 4,
-                                'cActividadTipo': 'PdiEntrada',
-                                'cCardCode'     : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'     : 0,
-                                'nDocNum'       : 0,
-                                'cLogRespuesta' : response.data.toString()
-                            });
-
-                            me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccustomercode,
-                                'cInternalSerialNum': me.formPdi.cnumerovin,
-                                'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI SERVICIOS'
-                            });
-
-                            //================================================================
-                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            setTimeout(function() {
-                                me.generaSgcActividadPdiEntrada();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Actividad SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcActividadPdiEntrada(){
-                let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividadServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        //======================================================================
-                        //================== REGISTRO LLAMADA DE SERVICIO EN SAP ===============
-                        setTimeout(function() {
-                            me.generaSapLlamadaServicioPdiEntrada();
-                        }, 1600);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             generaSapLlamadaServicioPdiEntrada(){
                 let me = this;
 
@@ -2876,7 +2779,7 @@
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
                         setTimeout(function() {
-                            me.generaSapActividadMercanciaEntry();
+                            me.generaSapActividadPdiEntrada();
                         }, 1200);
                     } else {
                         swal({
@@ -2895,7 +2798,7 @@
                     }
                 });
             },
-            generaSapActividadMercanciaEntry(){
+            generaSapActividadPdiEntrada(){
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -2915,7 +2818,7 @@
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.nIdServiceCallCompra,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
-                                'nActividadTipo'    : 59,
+                                'nActividadTipo'    : 4,
                                 'cActividadTipo'    : 'PDIEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
@@ -2936,7 +2839,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
-                                me.generaSgcActividadMercanciaEntry();
+                                me.generaSgcActividadPdiEntrada();
                             }, 1600);
                         }
                     });
@@ -2951,7 +2854,7 @@
                     }
                 });
             },
-            generaSgcActividadMercanciaEntry(){
+            generaSgcActividadPdiEntrada(){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
