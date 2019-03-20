@@ -196,6 +196,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pedido/GetCampaniaObsequioByIdPedido', 'PedidoController@GetCampaniaObsequioByIdPedido');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
+    Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');

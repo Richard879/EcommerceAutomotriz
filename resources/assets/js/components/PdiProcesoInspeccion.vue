@@ -1959,18 +1959,20 @@
             },
             //===========
             obtenerOrdenVenta(){
-                var url = this.ruta + '/pedido/GetOrdenVentaByPedido';
+                var url = this.ruta + '/pedido/GetOrdenVenta';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipoelemen'     :   0,
-                        'celementonombre'   :   ''
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'ncriterio'         : this.formPdi.nidcompra == 0 ? '1' : '2',
+                        'cvinplacanombre'   : this.formPdi.cvinplacanombre
                     }
                 }).then(response => {
                     let me = this;
-                    me.nDocEntryOrdenVenta = response.data.arrayElementoVenta;
-                    me.nDocNumOrdenVenta = response.data.arrayElementoVenta;
+                    alert(response.data[0].nDocEntryOrdenVenta);
+                    me.nDocEntryOrdenVenta = response.data[0].nDocEntryOrdenVenta;
+                    me.nDocNumOrdenVenta = response.data[0].nDocNumOrdenVenta;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3255,7 +3257,7 @@
                                 'nServiceCallID'    : me.nIdServiceCallVenta,
                                 'nActivityCode'     : parseInt(me.jsonRespuesta.ActivityCode),
                                 'nActividadTipo'    : 5,
-                                'cActividadTipo'    : 'PDIEntregaVehiculo',
+                                'cActividadTipo'    : 'PdiEntregaVehiculo',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
                                 'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
@@ -3365,6 +3367,7 @@
                                 this.formPdi.cvinplacanombre = data['cVinPlaca'];
                                 this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
                                 this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
+                                this.formPdi.nidcompra = data['nIdCompra'];
                                 //this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;

@@ -776,4 +776,25 @@ class PedidoController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetOrdenVenta()
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nCriterio          =   $request->ncriterio;
+        $cDescripcionCiterio=   $request->cvinplacanombre;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $data = DB::select('exec [usp_Pedido_GetOrdenVenta] ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nCriterio,
+                                                                $cDescripcionCiterio
+                                                            ]);
+        return response()->json($data);
+    }
 }
