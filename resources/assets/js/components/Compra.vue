@@ -1813,8 +1813,8 @@
                 var url = this.ruta + '/parametro/GetParametroById';
                 axios.get(url, {
                     params: {
-                        'nidpar': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110021
+                        'nidpar'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'   : 110021
                     }
                 }).then(response => {
                     this.ccustomercode = response.data[0].cParJerarquia;
@@ -2049,7 +2049,7 @@
                     }
                 });
             },*/
-            //Proceso Carga de Formato Compra Excel
+            //=================== Proceso Carga de Formato Compra Excel
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
