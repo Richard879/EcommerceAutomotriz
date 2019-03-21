@@ -2634,7 +2634,8 @@
                         if(me.jsonRespuesta.SolutionCode){
                             me.arraySapUpdSgc.push({
                                 'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
-                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString()
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
                         }
                     });
