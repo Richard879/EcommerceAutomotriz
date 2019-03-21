@@ -3081,6 +3081,7 @@
                     'cNombreComercial'  : objCompra.cNombreComercial,
                     'nAnioFabricacion'  : objCompra.nAnioFabricacion,
                     'nAnioVersion'      : objCompra.nAnioVersion,
+                    'cNombreColor'      : objCompra.cNombreColor,
                     'cSimboloMoneda'    : objCompra.cSimboloMoneda,
                     'fTotalCompra'      : objCompra.fTotalCompra,
                     'cSerieComprobante' : objCompra.cSerieComprobante,
