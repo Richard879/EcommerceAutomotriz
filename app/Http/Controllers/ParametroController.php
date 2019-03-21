@@ -160,10 +160,10 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdPar = $request->nidpar;
+        $nIdPar         = $request->nidpar;
         $cTipoParametro = $request->ctipoparametro;
-        $nIdTipoPar = $request->nidtipopar;
-        $variable   = $request->opcion;
+        $nIdTipoPar     = $request->nidtipopar;
+        $variable       = $request->opcion;
 
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
         $nIdTipoPar = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;

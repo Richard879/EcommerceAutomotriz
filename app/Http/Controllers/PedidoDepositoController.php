@@ -64,15 +64,17 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdTipoPago    = $request->nIdTipoPago;
-        $nIdFormaPago   = $request->nIdFormaPago;
-        $nIdFormaPago2  = $request->nIdFormaPago2;
+        $nIdTipoPago            = $request->nIdTipoPago;
+        $nIdFormaPago           = $request->nIdFormaPago;
+        $nIdFormaPago2          = $request->nIdFormaPago2;
+        $fTipoCambioEspecial    = $request->fTipoCambioEspecial;
 
-        $nIdTipoPago    = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
-        $nIdFormaPago   = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
-        $nIdFormaPago2  = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
+        $nIdTipoPago            = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
+        $nIdFormaPago           = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
+        $nIdFormaPago2          = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
+        $fTipoCambioEspecial    = ($fTipoCambioEspecial == NULL) ? ($fTipoCambioEspecial = 0) : $fTipoCambioEspecial;
 
-        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -87,12 +89,14 @@ class PedidoDepositoController extends Controller
                                         $request->nIdCuentaBancariaEmpresa,
                                         $request->dFechaDeposito,
                                         $request->nNumeroOperacion,
-                                        $request->fTipoCambioDeposito,
+                                        $request->fTipoCambioSUNAT,
                                         $request->fTipoCambioComercial,
+                                        $fTipoCambioEspecial,
                                         $request->fMonto,
                                         $request->cTipoComprobante,
                                         $request->cGlosa,
                                         $request->cFlagTipoCambioEspecial,
+                                        $request->fTipoCambio,
                                         Auth::user()->id
                                     ]);
 
@@ -271,6 +275,27 @@ class PedidoDepositoController extends Controller
                                         $nIdDepositoPedido,
                                         $fMontoResultanteDolares,
                                         $fMontoResultanteSoles,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDepositosPorPedido);
+    }
+
+    public function SetCambiarEstadoIncidencia(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraPedido          =   $request->nIdCabeceraPedido;
+        $nIdDepositoPedido          =   $request->nIdDepositoPedido;
+        $cFlagEstadoAlerta          =   $request->cFlagEstadoAlerta;
+        $cComentario                =   $request->cComentario;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoIncidencia ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdCabeceraPedido,
+                                        $nIdDepositoPedido,
+                                        $cFlagEstadoAlerta,
+                                        $cComentario,
                                         Auth::user()->id
                                     ]);
 

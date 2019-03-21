@@ -107,7 +107,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos">
+                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelos">
                                                                                     <el-option
                                                                                         v-for="item in arrayMarca"
                                                                                         :key="item.nIdPar"
@@ -481,9 +481,9 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio SUNAT</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -523,20 +523,31 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- Mostrar Input solo si el Tipo Moneda es Soles -->
                                                                             <template v-if="formNuevoDeposito.verificarMonedaTCE">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-6 form-control-label"
-                                                                                            v-text="formNuevoDeposito.cflagtce ?
+                                                                                        <label  class="col-sm-6 form-control-label"
+                                                                                                v-text="formNuevoDeposito.cflagtce ?
                                                                                                             'Tipo Cambio Especial Activado' :
                                                                                                             'Tipo Cambio Especial Desactivado'">
                                                                                         </label>
                                                                                         <div class="col-sm-5 widthFull">
                                                                                             <el-switch
-                                                                                                v-model="formNuevoDeposito.cflagtce">
+                                                                                                v-model="formNuevoDeposito.cflagtce"
+                                                                                                @change="verificarTipoCambioEspecial">
                                                                                             </el-switch>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <br>
+                                                                                    <template v-if="formNuevoDeposito.cflagtce">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">* Tipo Cambio Especial</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="number" v-model="formNuevoDeposito.fmontoTCE" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
                                                                                 </div>
                                                                             </template>
                                                                         </div>
@@ -552,7 +563,10 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeBanco_Destino()">
+                                                                                        <el-select v-model="formNuevoDeposito.nidbanco_destino"
+                                                                                                    filterable
+                                                                                                    placeholder="SELECCIONE"
+                                                                                                    @change="onchangeBanco_Destino()">
                                                                                             <el-option
                                                                                             v-for="item in arrayBanco_Destino"
                                                                                             :key="item.nIdPar"
@@ -706,7 +720,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -765,20 +779,31 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
+                                                                            <!-- Mostrar Input solo si el Tipo Moneda es Soles -->
                                                                             <template v-if="formNuevoDeposito.verificarMonedaTCE">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-6 form-control-label"
-                                                                                            v-text="formNuevoDeposito.cflagtce ?
+                                                                                        <label  class="col-sm-6 form-control-label"
+                                                                                                v-text="formNuevoDeposito.cflagtce ?
                                                                                                             'Tipo Cambio Especial Activado' :
                                                                                                             'Tipo Cambio Especial Desactivado'">
                                                                                         </label>
                                                                                         <div class="col-sm-5 widthFull">
                                                                                             <el-switch
-                                                                                                v-model="formNuevoDeposito.cflagtce">
+                                                                                                v-model="formNuevoDeposito.cflagtce"
+                                                                                                @change="verificarTipoCambioEspecial">
                                                                                             </el-switch>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <br>
+                                                                                    <template v-if="formNuevoDeposito.cflagtce">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">* Tipo Cambio Especial</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="number" v-model="formNuevoDeposito.fmontoTCE" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
                                                                                 </div>
                                                                             </template>
                                                                         </div>
@@ -843,7 +868,7 @@
                                         <form class="form-horizontal">
                                             <div class="col-lg-12">
                                                 <template v-if="arrayDetalleDepositosPorPedido.length">
-                                                    <div class="table-responsive">
+                                                    <!-- <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
@@ -864,14 +889,43 @@
                                                                     <td v-text="depositos.nNumeroOperacion"></td>
                                                                     <td v-text="depositos.cNombreMoneda"></td>
                                                                     <td v-text="depositos.dFechaDeposito"></td>
-                                                                    <td v-text="depositos.fTipoCambioComercial"></td>
+                                                                    <td v-text="depositos.fTipoCambio"></td>
                                                                     <td v-text="Number((parseFloat(depositos.fMontoSoles)).toFixed(2))"></td>
                                                                     <td v-text="Number((parseFloat(depositos.fMontoDolares)).toFixed(2))"></td>
                                                                     <td v-text="depositos.cEstadoDeposito"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
+                                                    </div> -->
+
+                                                    <el-table
+                                                        :data="arrayDetalleDepositosPorPedido"
+                                                        style="width: 100%"
+                                                        :stripe="true"
+                                                        >
+                                                        <el-table-column type="expand">
+                                                            <template slot-scope="props">
+                                                                <p><strong> Estado :  {{ props.row.cEstadoAlerta }} </strong></p>
+                                                                <p><strong> Comentario :  {{ props.row.cComentario }} </strong></p>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column label="BANCO" prop="cNombreBanco"></el-table-column>
+                                                        <el-table-column label="N° OPERACIÓN" prop="nNumeroOperacion"></el-table-column>
+                                                        <el-table-column label="MONEDA" prop="cNombreMoneda"></el-table-column>
+                                                        <el-table-column label="FECHA" prop="dFechaDeposito"></el-table-column>
+                                                        <el-table-column label="TTPO CAMBIO" prop="fTipoCambio"></el-table-column>
+                                                        <el-table-column label="MONTO S/">
+                                                            <template slot-scope="props">
+                                                                <p>{{ Number((parseFloat(props.row.fMontoSoles)).toFixed(2)) }}</p>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column label="MONTO USD/">
+                                                            <template slot-scope="props">
+                                                                <p>{{ Number((parseFloat(props.row.fMontoDolares)).toFixed(2)) }}</p>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column label="ESTADO" prop="cEstadoDeposito"></el-table-column>
+                                                    </el-table>
                                                 </template>
                                                 <template v-else>
                                                     <table>
@@ -1039,12 +1093,13 @@
                     cnombrecontacto: '',
                     dfechadeposito: '',
                     nnumerooperacion: '',
-                    ftipocambiovoucher: '',
+                    ftipocambiosunat: '',
                     ftipocambiocomercial: '',
                     cTipoComprobante: '',
                     cglosa: '',
                     cflagtce: false,
-                    verificarMonedaTCE: false
+                    verificarMonedaTCE: false,
+                    fmontoTCE: ''
                 },
                 arrayBanco_Destino: [],
                 arrayMoneda_Destino: [],
@@ -1613,6 +1668,12 @@
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
             },
+            verificarTipoCambioEspecial(){
+                //Si el Switch esta desactivado setear input TCE
+                if (!this.formNuevoDeposito.cflagtce) {
+                    this.formNuevoDeposito.fmontoTCE = '';
+                }
+            },
             abrirFormularioDeposito(){
                 //SI NO ESTA SELECCIONADO
                 if(this.validaMostrarFormularioDeposito()){
@@ -1650,6 +1711,7 @@
                             me.arrayTipoMovimientoPermisos.push(x.nDatoParNumerico);
                         }
                     });
+                    //Verificar si el Tipo Deposito tiene permiso 01
                     (this.arrayTipoMovimientoPermisos[0] == '1') ? this.mostrarFormularioOtroDeposito() : this.mostrarFormularioDeposito();
                 }).catch(error => {
                     console.log(error);
@@ -1738,15 +1800,17 @@
                     'nIdCuentaBancariaEmpresa'  :   this.formNuevoDeposito.nidnumerocuenta_destino,
                     'dFechaDeposito'            :   this.formNuevoDeposito.dfechadeposito,
                     'nNumeroOperacion'          :   this.formNuevoDeposito.nnumerooperacion,
-                    'fTipoCambioDeposito'       :   this.formNuevoDeposito.ftipocambiovoucher,
+                    'fTipoCambioSUNAT'          :   this.formNuevoDeposito.ftipocambiosunat,
                     'fTipoCambioComercial'      :   this.formNuevoDeposito.ftipocambiocomercial,
+                    'fTipoCambioEspecial'       :   this.formNuevoDeposito.fmontoTCE,
                     'fMonto'                    :   this.formNuevoDeposito.fmonto,
                     'cTipoComprobante'          :   this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
+                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        swal('Deposito Registrado');
+                        swal('Deposito Registrado Exitosamente');
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
@@ -1768,31 +1832,39 @@
                 this.mensajeError =[];
 
                 if(this.formNuevoDeposito.nidbanco_destino == ''){
-                    this.mensajeError.push('Debes seleccionar Banco');
+                    this.mensajeError.push('Debe seleccionar Banco');
                 };
                 if(this.formNuevoDeposito.nidmoneda_destino == ''){
-                    this.mensajeError.push('Debes seleccionar Moneda');
+                    this.mensajeError.push('Debe seleccionar Moneda');
                 };
                 if(this.formNuevoDeposito.nidnumerocuenta_destino == ''){
-                    this.mensajeError.push('Debes seleccionar una Cuenta');
+                    this.mensajeError.push('Debe seleccionar una Cuenta');
                 };
                 if(this.formNuevoDeposito.dfechadeposito == ''){
-                    this.mensajeError.push('Debes ingresar Fecha Depósito');
+                    this.mensajeError.push('Debe ingresar Fecha Depósito');
                 };
                 if(this.formNuevoDeposito.nnumerooperacion == ''){
-                    this.mensajeError.push('Debes ingresar Nro Operación');
+                    this.mensajeError.push('Debe ingresar Nro Operación');
                 };
-                if(this.formNuevoDeposito.ftipocambiovoucher == ''){
-                    this.mensajeError.push('Debes ingresar Tipo Cambio Voucher');
+                if(this.formNuevoDeposito.ftipocambiosunat == ''){
+                    this.mensajeError.push('Debe ingresar Tipo Cambio SUNAT');
                 };
                 if(this.formNuevoDeposito.ftipocambiocomercial == 0){
                     this.mensajeError.push('No existe Tipo Cambio Comercial, Comuníquese con SAISACTI');
                 };
-                if(this.formNuevoDeposito.fmonto == '' > this.formNuevoDeposito.fmonto > 0){
-                    this.mensajeError.push('Debes ingresar Monto');
+                if(this.formNuevoDeposito.fmonto == '' || this.formNuevoDeposito.fmonto <= 0){
+                    this.mensajeError.push('Debe ingresar Monto');
                 };
                 if(!this.attachment){
-                    this.mensajeError.push('Debes seleccionar un Voucher');
+                    this.mensajeError.push('Debe seleccionar un Voucher');
+                };
+                if(this.formNuevoDeposito.cflagtce){
+                    if(this.formNuevoDeposito.fmontoTCE == '' || this.formNuevoDeposito.fmontoTCE <= 0) {
+                        this.mensajeError.push('Debe ingresar el Tipo Cambio Especial');
+                    }
+                    if(this.formNuevoDeposito.fmontoTCE < this.formNuevoDeposito.ftipocambiosunat) {
+                        this.mensajeError.push('El Tipo Cambio Especial no puede ser menor que el Tipo Cambio SUNAT');
+                    }
                 };
 
                 if(this.mensajeError.length){
@@ -1831,7 +1903,6 @@
                     if (error.response) {
                         if (error.response.status == 401) {
                             swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1853,18 +1924,20 @@
                     'nIdCuentaBancariaEmpresa'  :   this.formNuevoDeposito.nidnumerocuenta_destino,
                     'dFechaDeposito'            :   this.formNuevoDeposito.dfechadeposito,
                     'nNumeroOperacion'          :   this.formNuevoDeposito.nnumerooperacion,
-                    'fTipoCambioDeposito'       :   this.formNuevoDeposito.ftipocambiovoucher,
+                    'fTipoCambioSUNAT'          :   this.formNuevoDeposito.ftipocambiosunat,
                     'fTipoCambioComercial'      :   this.formNuevoDeposito.ftipocambiocomercial,
+                    'fTipoCambioEspecial'       :   this.formNuevoDeposito.fmontoTCE,
                     'fMonto'                    :   this.formNuevoDeposito.fmonto,
                     'cTipoComprobante'          :   this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
+                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
-                        swal('Deposito Registrado');
+                        swal('Deposito Registrado Exitosamente');
                     } else {
                         swal('El pedido ha sido Anulado o ya está Cancelado');
                     }
@@ -1916,10 +1989,10 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
-                        'cFlagEstadoAprobacion': 'A'
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCabeceraPedido'     : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion' : 'A'
                     }
                 }).then(response => {
                     this.fillDetalleDeposito.nidcabecerapedido          =   pedido.nIdCabeceraPedido;
@@ -2039,15 +2112,14 @@
                 this.formNuevoDeposito.nidmoneda_destino = '',
                 this.formNuevoDeposito.nidnumerocuenta_destino = '',
                 this.formNuevoDeposito.fmonto = 0,
-                // this.formNuevoDeposito.cnombrecontacto = '',
                 this.formNuevoDeposito.dfechadeposito = '',
                 this.formNuevoDeposito.nnumerooperacion = '',
-                this.formNuevoDeposito.ftipocambiovoucher = '',
+                this.formNuevoDeposito.ftipocambiosunat = '',
                 this.attachment = '';
-                //this.formNuevoDeposito.ftipocambiocomercial = '',
                 this.formNuevoDeposito.nidformapago = '';
                 this.formNuevoDeposito.verificarMonedaTCE = false;
                 this.formNuevoDeposito.cflagtce = false;
+                this.formNuevoDeposito.fmontoTCE = '';
                 this.formNuevoDeposito.cglosa = '';
             },
             limpiarBsqGeneracionDeposito(){

@@ -326,20 +326,24 @@
                                                                         <td>
                                                                             <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Aprobar Deposito {{ deposito.cNumeroPedido }}</div>
+                                                                                    <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                 </el-tooltip>
-                                                                            </template>
-                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Rechazar Deposito {{ deposito.cNumeroPedido }}</div>
+                                                                                    <div slot="content">Rechazar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>
-                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
+                                                                            <!-- <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Tipo Cambio Especial {{ deposito.cNumeroPedido }}</div>
+                                                                                    <div slot="content">Tipo Cambio Especial {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
+                                                                                </el-tooltip>
+                                                                            </template> -->
+                                                                            <template v-if="deposito.cFlagEstadoAlerta == 'P' || deposito.cFlagEstadoAlerta == 'E'">
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Incidencia del Deposito {{ deposito.nNumeroOperacion }}</div>
+                                                                                    <i @click="abrirModal('Incidencia','abrir', deposito)" :style="'color:#ffc107'" class="fa fa-exclamation-triangle"></i>
                                                                                 </el-tooltip>
                                                                             </template>
                                                                         </td>
@@ -347,7 +351,7 @@
                                                                         <td v-text="deposito.nNumeroOperacion"></td>
                                                                         <td v-text="deposito.cNombreMoneda"></td>
                                                                         <td v-text="deposito.dFechaDeposito"></td>
-                                                                        <td v-text="deposito.fTipoCambioComercial"></td>
+                                                                        <td v-text="deposito.fTipoCambio"></td>
                                                                         <td v-text="Number((parseFloat(deposito.fMontoSoles)).toFixed(2))"></td>
                                                                         <td v-text="Number((parseFloat(deposito.fMontoDolares)).toFixed(2))"></td>
                                                                         <td v-text="deposito.fTipoCambio"></td>
@@ -504,6 +508,75 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal CONFIGURAR EL TIPO CAMBIO ESPECIAL -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">INCIDENCIA </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">ESTADO DEPOSITO</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formIncidencia.cFlagEstadoAlerta"
+                                                                            filterable
+                                                                            placeholder="SELECCIONE INCIDENCIA">
+                                                                    <el-option
+                                                                        v-for="item in arrayEstadoDeposito"
+                                                                        :key="item.cParAbreviatura"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.cParAbreviatura">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">OBSERVACIÓN</label>
+                                                            <div class="col-sm-8">
+                                                                <el-input
+                                                                    type="textarea"
+                                                                    :rows="3"
+                                                                    placeholder="INGRESE UN COMENTARIO SOBRE LA INCIDENCIA"
+                                                                    v-model="formIncidencia.cComentario">
+                                                                </el-input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-3">
+                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="generarIncidencia">
+                                                            <i class="fa fa-save"></i> REGISRAR INCIDENCIA
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSinPaginacion">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -543,6 +616,16 @@
                     flagMontoTotalCancelarPendiente: 0
                 },
                 arrayDepositosPorPedido: [],
+                // =============================================================
+                // ============== VARIABLES GENERAR INCIDENCIA =================
+                formIncidencia: {
+                    nIdCabeceraPedido: '',
+                    nIdDepositoPedido: '',
+                    cFlagEstadoAlerta: '',
+                    cComentario: '',
+                    deposito: ''
+                },
+                arrayEstadoDeposito: [],
                 // =============================================================
                 // =========== VARIABLES TAB REALIZAR TCE ======================
                 fillDepositoTCEspecial: {
@@ -586,7 +669,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         mounted(){
@@ -887,6 +971,7 @@
                 });
             },
             aprobarDeposito(deposito){
+                let me = this;
                 swal({
                     title: 'Estas seguro de aprobar el Deposito',
                     type: 'warning',
@@ -897,6 +982,9 @@
                     cancelButtonText: 'No, Cerrar!'
                 }).then((result) => {
                     if (result.value) {
+                        me.mostrarProgressBar();
+                        me.loadingProgressBar("GENERANDO DEPOSITO CON SAP BUSINESS ONE...");
+
                         var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
                         axios.put(url , {
                             nIdDepositoPedido   : deposito.nIdDepositoPedido,
@@ -917,9 +1005,9 @@
                             DocCurr             : deposito.cAbreviaturaMoneda,
                             DocCurrBank         : deposito.cAbreviaturaMoneda,
                             cAcctCode           : deposito.cAcctCode,
-                            FacturaDocTotal     : deposito.FacturaDocTotal,
-                            FacturaDocTotalFC   : deposito.FacturaDocTotalFC,
-                            DocRate             : deposito.cTipoCambio,
+                            FacturaDocTotal     : deposito.fMontoSoles,
+                            FacturaDocTotalFC   : deposito.fMontoDolares,
+                            DocRate             : deposito.fTipoCambio,
                             Migrado             : 'N'
                         }).then(response => {
                             // console.log(response);
@@ -928,6 +1016,8 @@
                                 'El deposito fue aprobado exitosamente.'
                             );
                             this.tabBuscarPedido();
+                            $("#myBar").hide();
+                            me.loading.close();
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -1206,6 +1296,117 @@
                 this.fillDepositoTCEspecial.fMontoResultanteSoles = 0;
             },
             // =================================================================
+            // METODOS MODAL GENERAR INCIDENCIA
+            // =================================================================
+            listarEstadoIncidencia(){
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110109
+                    }
+                }).then(response => {
+                    this.arrayEstadoDeposito = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generarIncidencia(info){
+                let me = this;
+                me.mostrarProgressBar();
+                me.loadingProgressBar("GENERANDO DEPOSITO CON SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/deposito/SetCambiarEstadoIncidencia';
+                axios.put(url, {
+                    'nIdCabeceraPedido' : this.formIncidencia.nIdCabeceraPedido,
+                    'nIdDepositoPedido' : this.formIncidencia.nIdDepositoPedido,
+                    'cFlagEstadoAlerta' : this.formIncidencia.cFlagEstadoAlerta,
+                    'cComentario'       : this.formIncidencia.cComentario,
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        if(response.data[0].cFlagEstadoAlerta == 'P' || response.data[0].cFlagEstadoAlerta == 'E') {
+                            swal('Incidencia Generada Exitosamente');
+                            this.cerrarModalSinPaginacion();
+                            this.tabBuscarPedido();
+                            $("#myBar").hide();
+                            me.loading.close();
+                        }
+                        if(response.data[0].cFlagEstadoAlerta == 'A') {
+                            this.aprobarDeposito2(info)
+                            this.cerrarModalSinPaginacion();
+                        }
+                    }else{
+                        swal('Ocurrio un error al Generar la Incidencia');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            aprobarDeposito2(deposito){
+                let me = this;
+                var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                axios.put(url , {
+                    nIdDepositoPedido   : this.formIncidencia.deposito.nIdDepositoPedido,
+                    nIdCabeceraPedido   : this.formIncidencia.deposito.nIdCabeceraPedido,
+                    nIdMonedaOrigen     : this.formIncidencia.deposito.nIdMonedaOrigen,
+                    fTipoCambio         : this.formIncidencia.deposito.fTipoCambio,
+                    cFlagEstadoDeposito : 'A',
+                    //AddON
+                    CardCode            : this.formIncidencia.deposito.CardCode,
+                    CardName            : this.formIncidencia.deposito.cContacto,
+                    Type                : this.formIncidencia.deposito.nIdFormaPago,
+                    // nIdTipoPago         : this.formIncidencia.deposito.nIdTipoPago,
+                    TransRef            : this.formIncidencia.deposito.nNumeroOperacion,
+                    DocDate             : this.formIncidencia.deposito.dFechaDeposito,
+                    DocTotal            : this.formIncidencia.deposito.fMontoSoles,
+                    DocTotalFC          : this.formIncidencia.deposito.fMontoDolares,
+                    // DocNum              : this.formIncidencia.deposito.nDocNum,x
+                    DocCurr             : this.formIncidencia.deposito.cAbreviaturaMoneda,
+                    DocCurrBank         : this.formIncidencia.deposito.cAbreviaturaMoneda,
+                    cAcctCode           : this.formIncidencia.deposito.cAcctCode,
+                    FacturaDocTotal     : this.formIncidencia.deposito.fMontoSoles,
+                    FacturaDocTotalFC   : this.formIncidencia.deposito.fMontoDolares,
+                    DocRate             : this.formIncidencia.deposito.fTipoCambio,
+                    Migrado             : 'N'
+                }).then(response => {
+                    // console.log(response);
+                    swal(
+                        'Aprobado!',
+                        'El deposito fue aprobado exitosamente.'
+                    );
+                    this.tabBuscarPedido();
+                    this.limpiarIncidencia();
+                    $("#myBar").hide();
+                    me.loading.close();
+                }).catch(function (error) {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            limpiarIncidencia(){
+                this.formIncidencia.deposito = ''
+                this.formIncidencia.nIdCabeceraPedido   = '';
+                this.formIncidencia.nIdDepositoPedido   = '';
+                this.formIncidencia.cFlagEstadoAlerta   = '';
+                this.formIncidencia.cComentario         = '';
+            },
+            // =================================================================
             // METODOS GENERICOS
             // =================================================================
             abrirModal(modelo, accion, data =[]){
@@ -1218,6 +1419,25 @@
                                 this.limpiarDepositoTCEspecial();
                                 this.cargarTipoCambioEspecial(data);
                                 this.accionmodal=2;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case "Incidencia":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                console.log(data);
+                                this.listarEstadoIncidencia();
+                                this.formIncidencia.deposito   = data;
+                                this.formIncidencia.nIdCabeceraPedido   = data.nIdCabeceraPedido;
+                                this.formIncidencia.nIdDepositoPedido   = data.nIdDepositoPedido;
+                                this.formIncidencia.cFlagEstadoAlerta   = data.cFlagEstadoAlerta;
+                                this.formIncidencia.cComentario         = data.cComentario;
+                                this.accionmodal=3;
                                 this.modal = 1;
                                 break;
                             }
@@ -1270,6 +1490,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
@@ -1295,6 +1523,9 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .fa{
+        cursor: pointer;
     }
 </style>
 
