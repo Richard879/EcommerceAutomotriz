@@ -2633,7 +2633,7 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.SolutionCode){
                             me.arraySapUpdSgc.push({
-                                'nSltCode'      : parseInt(me.jsonRespuesta.SolutionCode),
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString()
                             });
                         }
