@@ -2694,7 +2694,7 @@
                                 'cCustomerCode'     : response.data[0].cCustomerCode,
                                 'cInternalSerialNum': response.data[0].cItemCode,
                                 'cItemCode'         : response.data[0].cItemCode,
-                                'nSltCode'          : response.data[0].nSltCode,
+                                'nSolutionCode'     : response.data[0].nSolutionCode,
                                 'cSubject'          : 'COMPRA'
                             });
                         }).catch(error => {
