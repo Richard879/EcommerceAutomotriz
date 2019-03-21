@@ -111,7 +111,7 @@ class IntLlamadaServicioController extends Controller
             foreach($detalles as $ep=>$det)
             {
                 $objSolucion = DB::select('exec [usp_Integra_SetIntegraSolucion] ?, ?, ?, ?',
-                                                            [   $det['nSltCode'],
+                                                            [   $det['nSolutionCode'],
                                                                 $det['cItemCode'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id

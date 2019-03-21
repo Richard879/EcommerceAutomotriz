@@ -2631,9 +2631,9 @@
                         me.jsonRespuesta = '';
                         me.jsonRespuesta= JSON.parse(value);
                         //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.SltCode){
+                        if(me.jsonRespuesta.SolutionCode){
                             me.arraySapUpdSgc.push({
-                                'nSltCode'      : parseInt(me.jsonRespuesta.SltCode),
+                                'nSltCode'      : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString()
                             });
                         }
