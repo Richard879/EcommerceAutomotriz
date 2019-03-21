@@ -3629,7 +3629,8 @@
             generaSapLlamadaServicioCompra(objCompra){
                 let me = this;
 
-                if(objCompra.nSolutionCode== 0){
+                //Validar que Solucion ya esta registrado
+                if(objCompra.nSolutionCode!= 0){
                     me.arraySapLlamadaServicio = [];
                     me.arraySapLlamadaServicio.push({
                         'nActivityCode'     : objCompra.nActivityCode,
