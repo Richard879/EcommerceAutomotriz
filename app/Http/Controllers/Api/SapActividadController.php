@@ -122,6 +122,7 @@ class SapActividadController extends Controller
                         "DocEntry"          => $value['nDocEntry'],
                         "DocNum"            => $value['nDocNum'],
                         "DocType"           => $value['nDocType'],
+                        "ActivityProperty"  => "cn_Task",
                         "Duration"          => $value['nDuration'],
                         "DurationType"      => $value['cDurationType'],
                         "EndDueDate"        => (string)$value['dEndDueDate'],
@@ -161,6 +162,7 @@ class SapActividadController extends Controller
                         "DocEntry"          => $value['nDocEntry'],
                         "DocNum"            => $value['nDocNum'],
                         "DocType"           => $value['nDocType'],
+                        "ActivityProperty"  => "cn_Task",
                         "Duration"          => $value['nDuration'],
                         "DurationType"      => $value['cDurationType'],
                         "EndDueDate"        => (string)$value['dEndDueDate'],
@@ -204,6 +206,9 @@ class SapActividadController extends Controller
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],
                     "Notes"             => $value['cNotes'],
+                    "DocEntry"          => $value['nDocEntry'],
+                    "DocNum"            => $value['nDocNum'],
+                    "DocType"           => $value['nDocType'],
                     "ActivityProperty"  => "cn_Task",
                     "Duration"          => $value['nDuration'],
                     "DurationType"      => $value['cDurationType'],
@@ -222,26 +227,5 @@ class SapActividadController extends Controller
             array_push($array_rpta, $rptaSap);
         }
         return $array_rpta;
-    }
-
-    public function SapSetActividadByServiceCallId(Request $request)
-    {
-        $client = new Client([
-            'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
-        ]);
-
-        $nServiceCallID    = $request->nServiceCallID;
-        $nLine             = $request->nLine;
-        $nActivityCode     = $request->nActivityCode;
-
-        $nLine = ($nLine == NULL) ? ($nLine = 0) : $nLine;
-
-        $response = $client->request('POST', "/api/Actividad/SapSetActividadByServiceCallId/", [
-                                                                        'query' => ['nServiceCallID' => $nServiceCallID,
-                                                                                    'nLine' => $nLine,
-                                                                                    'nActivityCode' => $nActivityCode]
-                                                                      ]);
-        return $response->getBody();
     }
 }

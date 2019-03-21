@@ -355,16 +355,6 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Igv</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formCompra.igv" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
@@ -381,6 +371,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row" v-if="formCompra.nidproveedor>0">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
@@ -400,8 +392,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row" v-if="formCompra.nidtipolista">
                                                                             <label class="col-sm-4 form-control-label">* Nro Lista</label>
@@ -1664,7 +1654,7 @@
             this.llenarComboMarca();
             this.llenarComboModelo();
             this.obtenerLocalidadBySucursal();
-            this.obtenerIgv();
+            //this.obtenerIgv();
             this.obtenerCodigoSapEmpresa();
         },
         computed:{
@@ -1810,23 +1800,7 @@
                 this.listarCompras(page);
             },
             obtenerCodigoSapEmpresa(){
-                var url = this.ruta + '/parametro/GetParametroById';
-                axios.get(url, {
-                    params: {
-                        'nidpar': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110021
-                    }
-                }).then(response => {
-                    this.ccustomercode = response.data[0].cParJerarquia;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
@@ -1843,11 +1817,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 0,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion'            : 0,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
@@ -1982,11 +1956,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nparsrccodigo': 0,
-                        'nparsrcgrupoarametro': 110102,
-                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'npardstgrupoarametro': 110022,
-                        'opcion': 1
+                        'nparsrccodigo'         : 0,
+                        'nparsrcgrupoarametro'  : 110102,
+                        'npardstcodigo'         : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro'  : 110022,
+                        'opcion'                : 1
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
@@ -2007,8 +1981,8 @@
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formAlmacen.nidlocalidad,
-                        'nidgrupopar': 110102
+                        'nidpar'        : this.formAlmacen.nidlocalidad,
+                        'nidgrupopar'   : 110102
                     }
                 }).then(response => {
                     if(response.data.length){
@@ -2029,7 +2003,7 @@
                     }
                 });
             },
-            obtenerIgv(){
+            /*obtenerIgv(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
@@ -2048,8 +2022,8 @@
                         }
                     }
                 });
-            },
-            //Proceso Carga de Formato Compra Excel
+            },*/
+            //=================== Proceso Carga de Formato Compra Excel
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -2489,12 +2463,13 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    'cCardCode'     :   me.formCompra.ccarcode,
-                    'fDocDate'      :   moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' :   me.formAlmacen.cwhscode,
-                    'Igv'           :   1 + parseFloat((me.formCompra.igv)),
-                    'data'          :   me.arraySapCompra
+                    'cCardCode'     : me.formCompra.ccarcode,
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'cWarehouseCode': me.formAlmacen.cwhscode,
+                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                    'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                    'data'          : me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3326,8 +3301,9 @@
                         'cCardCode'     : me.formCompra.ccarcode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode' : me.formAlmacen.cwhscode,
+                        'cWarehouseCode': me.formAlmacen.cwhscode,
                         'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                        'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
                         'data'          : me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
@@ -3828,7 +3804,7 @@
             },
             generaActualizarMercancia(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraMercancia';
+                var sapUrl = me.ruta + '/mercancia/SetIntegraMercanciaCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {

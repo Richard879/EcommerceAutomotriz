@@ -130,6 +130,7 @@
                     if(value.nIdPar == me.formCabecera.nidempresa){
                         //CAPTURO NUEVA SESIÓN DEL cNombreEmpresa SELECCIONADO
                         sessionStorage.setItem("cNombreEmpresa", value.cParAbreviatura);
+                        sessionStorage.setItem("cCustomerCode", value.cParJerarquia);
                     }
                 });
                 //CAPTURO NUEVA SESIÓN nIdSucursal DE LA SUCURSAL SELECCIONADA
@@ -138,11 +139,12 @@
                     if(value.nIdPar == me.formCabecera.nidsucursal){
                         //CAPTURO NUEVA SESIÓN DEL cNombreSucursal SELECCIONADO
                         sessionStorage.setItem("cNombreSucursal", value.cParNombre);
+                        sessionStorage.setItem("nIdSapSucursal", value.cParJerarquia);
                     }
                 });
                 me.$emit('cabecera', me.formCabecera.nidsucursal);
                 me.$bus.$emit('event', me.formCabecera);
-            }
+            },
         },
     }
 </script>

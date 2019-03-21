@@ -196,6 +196,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pedido/GetCampaniaObsequioByIdPedido', 'PedidoController@GetCampaniaObsequioByIdPedido');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
+    Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
@@ -418,9 +419,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');
-    Route::post('/compra/SetIntegraMercancia', 'CompraController@SetIntegraMercancia');
-    Route::post('/compra/SetIntegraMercanciaEntry', 'CompraController@SetIntegraMercanciaEntry');
-    Route::post('/compra/SetIntegraMercanciaExit', 'CompraController@SetIntegraMercanciaExit');
+    Route::post('/mercancia/SetIntegraMercancia', 'IntMercanciaController@SetIntegraMercancia');
+    Route::post('/mercancia/SetIntegraMercanciaCompra', 'IntMercanciaController@SetIntegraMercanciaCompra');
+    Route::post('/mercancia/SetIntegraMercanciaExit', 'IntMercanciaController@SetIntegraMercanciaExit');
     Route::post('/actividad/SetIntegraActividad','IntActividadController@SetIntegraActividad');
     Route::post('/actividad/SetIntegraActividadCompra','IntActividadController@SetIntegraActividadCompra');
     Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');

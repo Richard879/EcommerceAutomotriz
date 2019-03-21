@@ -1081,23 +1081,7 @@
                 });
             },
             obtenerCodigoSapEmpresa(){
-                var url = this.ruta + '/parametro/GetParametroById';
-                axios.get(url, {
-                    params: {
-                        'nidpar': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110021
-                    }
-                }).then(response => {
-                    this.ccustomercode = response.data[0].cParJerarquia;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             //METODOS ASIGNACIÓN DIRECCIONES
             obtenerDireccionesPorContacto(data){
@@ -1754,22 +1738,21 @@
                                 });
 
                                 me.arraySapActividadVehiculo.push({
-                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                     'hActivityTime' :   moment().format('HH:mm:ss'),
                                     'cCardCode'     :   me.ccustomercode,
                                     'cNotes'        :   'OrdenVenta',
-                                    //'cCardCode'   :   'P20506006024',
                                     'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
                                     'nDocNum'       :   me.jsonRespuestaVehiculo.DocNum.toString(),
                                     'nDocType'      :   '17',
                                     'nDuration'     :   '15',
                                     'cDurationType' :   'du_Minuts',
-                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
                                     'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
                                     'cReminder'     :   'tYES',
                                     'nReminderPeriod':  '15',
                                     'cReminderType' :   'du_Minuts',
-                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
                                     'hStartTime'    :   moment().format('HH:mm:ss')
                                 });
                             }
