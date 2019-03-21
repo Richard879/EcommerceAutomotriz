@@ -100,4 +100,28 @@ class IntLlamadaServicioController extends Controller
             DB::rollBack();
         }
     }
+
+    public function SetIntegraSolucion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objSolucion = DB::select('exec [usp_Integra_SetIntegraSolucion] ?, ?, ?, ?',
+                                                            [   $det['nSltCode'],
+                                                                $det['cItemCode'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objSolucion);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
 }

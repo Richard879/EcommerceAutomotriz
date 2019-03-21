@@ -33,6 +33,11 @@ class SapLlamadaServicioController extends Controller
                         [
                             "ActivityCode"=> (string)$value['nActivityCode']
                         ]
+                    ],
+                    "ServiceCallSolutions" => [
+                        [
+                            "SolutionID"=> (string)$value['nSolutionID']
+                        ]
                     ]
                 ]
             ];
@@ -64,7 +69,12 @@ class SapLlamadaServicioController extends Controller
                 "InternalSerialNum"     =>  $request->cInternalSerialNum,
                 "ItemCode"              =>  $request->cItemCode,
                 "Subject"               =>  $request->cSubject,
-                "ServiceCallActivities" =>  array()
+                "ServiceCallActivities" =>  array(),
+                "ServiceCallSolutions" => [
+                    [
+                        "SolutionID"=> (string)$value['nSolutionID']
+                    ]
+                ]
             ]
         ];
 
@@ -86,49 +96,12 @@ class SapLlamadaServicioController extends Controller
         $rptaSap = json_decode($response->getBody());
         array_push($arrayVehiculo, $rptaSap);
 
-        // ======================================================================
-        // GENERAR LLAMADA DE SERVICIO PARA LOS/EL ELEMENTO VENTA
-        // ======================================================================
-        //Setear arreglos para Pedido (Elemento Venta)
-        /*
-            $arrayEV    = [];
-            $rptaSap    = [];
-
-            $arraySapLlamadaServicioEVLength = sizeof($request->arraySapLlamadaServicioEV);
-            if($arraySapLlamadaServicioEVLength > 0) {
-                //Guardar Arreglo de Ele. Venta
-                $arraySapLlamadaServicioEV = $request->arraySapLlamadaServicioEV;
-
-                foreach ($arraySapLlamadaServicioEV as $key => $value) {
-                    $json = [
-                        'json' => [
-                            "CustomerCode"          => $value['cCustomerCode'],
-                            "InternalSerialNum"     => $value['cInternalSerialNum'],
-                            "ItemCode"              => $value['cItemCode'],
-                            "Subject"               => $value['cSubject'],
-                            "ServiceCallActivities" => [
-                                [
-                                    "LineNum"       => 0,
-                                    "ActivityCode"  => (string)$value['nActivityCode']
-                                ]
-                            ]
-                        ]
-                    ];
-
-                    $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
-                    $rptaSap = json_decode($response->getBody());
-                    array_push($arrayEV, $rptaSap);
-                }
-            }
-        */
-
         return [
             'arrayVehiculo' =>  $arrayVehiculo
-            // 'arrayEV'       =>  $arrayEV
         ];
     }
 
-    public function SapSetSolucion(Request $request)
+    public function SapPatchLlamadaServicio(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -155,7 +128,34 @@ class SapLlamadaServicioController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+            $response = $client->request('POST', "/api/LlamadaServicio/SapPatchLlamadaServicio/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
+
+    public function SapSetSolucion(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+
+            $json = [
+                'json' => [
+                    "ItemCode"             => $value['cItemCode'],
+                    "Solution"             => $value['cSubject']
+                ]
+            ];
+
+            $response = $client->request('POST', "/api/LlamadaServicio/SapSetSolucion/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

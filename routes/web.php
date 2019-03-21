@@ -417,6 +417,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
+    Route::post('/solucion/SetIntegraSolucion','IntLlamadaServicioController@SetIntegraSolucion');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');
     Route::post('/mercancia/SetIntegraMercancia', 'IntMercanciaController@SetIntegraMercancia');
@@ -487,6 +488,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
+    Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');
     //Actividad
     Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');
     Route::post('/actividad/SapSetActividadMercancia', 'Api\SapActividadController@SapSetActividadMercancia');
