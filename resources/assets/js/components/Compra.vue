@@ -3590,7 +3590,7 @@
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
-                                me.generaActualizarSolucion();
+                                me.generaActualizarSolucion(objCompra);
                             }, 1600);
                         }
                     });
