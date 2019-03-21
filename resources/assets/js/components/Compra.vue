@@ -3524,21 +3524,11 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe Solucion
-                        if(objCompra.nSolutionCode== 0){
-                            //==============================================================
-                            //================== REGISTRO ACTIVIDAD EN SAP ===============
-                            setTimeout(function() {
-                                me.generaSapSolucion(objCompra);
-                            }, 1600);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO TABLA COSTO EN SAP ===============
-                            setTimeout(function() {
-                                me.generaSapLlamadaServicioCompra(objCompra);
-                            }, 1600);
-                        }
+                        //==============================================================
+                        //================== REGISTRO ACTIVIDAD EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapSolucion(objCompra);
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3552,57 +3542,65 @@
             },
             generaSapSolucion(objCompra){
                 let me = this;
+                if(objCompra.nSolutionCode== 0){
+                    me.arraySolucion.push({
+                        'cItemCode' : objCompra.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
 
-                me.arraySolucion.push({
-                    'cItemCode' : objCompra.cNumeroVin,
-                    'cSubject'  : "Cierre De Servicio"
-                });
+                    var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                    axios.post(sapUrl, {
+                        'data': me.arraySolucion
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
 
-                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
-                axios.post(sapUrl, {
-                    'data': me.arraySolucion
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.SolutionCode){
+                                me.arraySapUpdSgc.push({
+                                    'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                    'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                    'cLogRespuesta' : response.data.toString()
+                                });
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.SolutionCode){
-                            me.arraySapUpdSgc.push({
-                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
-                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta' : response.data.toString()
-                            });
+                                me.arraySapLlamadaServicio = [];
+                                me.arraySapLlamadaServicio.push({
+                                    'nActivityCode'     : me.nactivitycode,
+                                    'cCustomerCode'     : objCompra.cCustomerCode,
+                                    'cInternalSerialNum': objCompra.cNumeroVin,
+                                    'cItemCode'         : objCompra.cNumeroVin,
+                                    'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
+                                    'cSubject'          : objCompra.cSubject
+                                });
 
-                            me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.nactivitycode,
-                                'cCustomerCode'     : objCompra.cCustomerCode,
-                                'cInternalSerialNum': objCompra.cNumeroVin,
-                                'cItemCode'         : objCompra.cNumeroVin,
-                                'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
-                                'cSubject'          : objCompra.cSubject
-                            });
-
-                            //================================================================
-                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            setTimeout(function() {
-                                me.generaActualizarSolucion(objCompra);
-                            }, 1600);
+                                //================================================================
+                                //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                                setTimeout(function() {
+                                    me.generaActualizarSolucion(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
+                    setTimeout(function() {
+                        me.generaSapLlamadaServicioCompra(objCompra);
+                    }, 1600);
+                }
             },
             generaActualizarSolucion(objCompra){
                 let me = this;
@@ -3612,21 +3610,11 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        //Verifico Si No existe LLamada de Servicio
-                        if(objCompra.nServiceCallID== 0){
-                            //==============================================================
-                            //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
-                            setTimeout(function() {
-                                me.generaSapLlamadaServicioCompra(objCompra);
-                            }, 1600);
-                        }
-                        else{
-                            //==============================================================
-                            //================== REGISTRO TABLA COSTO EN SAP ===============
-                            setTimeout(function() {
-                                me.generaSapTblCostoCabecera(objCompra);
-                            }, 1600);
-                        }
+                        //==============================================================
+                        //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioCompra(objCompra);
+                        }, 1600);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3641,47 +3629,68 @@
             generaSapLlamadaServicioCompra(objCompra){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                if(objCompra.nSolutionCode== 0){
+                    me.arraySapLlamadaServicio = [];
+                    me.arraySapLlamadaServicio.push({
+                        'nActivityCode'     : objCompra.nActivityCode,
+                        'cCustomerCode'     : objCompra.cCustomerCode,
+                        'cInternalSerialNum': objCompra.cNumeroVin,
+                        'cItemCode'         : objCompra.cNumeroVin,
+                        'nSolutionCode'     : objCompra.nSolutionCode,
+                        'cSubject'          : objCompra.cSubject
+                    });
+                }
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+                if(objCompra.nServiceCallID== 0){
+                    var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapLlamadaServicio
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
 
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'C',
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ItemCode){
+                                me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
 
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaActualizarLlamadaServicio(objCompra);
-                            }, 1600);
+                                me.arraySapUpdSgc.push({
+                                    'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                    'cFlagTipo'         : 'C',
+                                    'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                    'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                    'cLogRespuesta'     : response.data.toString()
+                                });
+
+                                //=========================================================================
+                                //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                                setTimeout(function() {
+                                    me.generaActualizarLlamadaServicio(objCompra);
+                                }, 1600);
+                            }
+                        });
+                    }).catch(error => {
+                        me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO TABLA COSTO EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapTblCostoCabecera(objCompra);
+                    }, 1600);
+                }
             },
             generaActualizarLlamadaServicio(objCompra){
                 let me = this;
