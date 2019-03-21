@@ -3631,6 +3631,9 @@
 
                 //Validar que Solucion ya esta registrado
                 if(objCompra.nSolutionCode!= 0){
+
+                    me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
+
                     me.arraySapLlamadaServicio = [];
                     me.arraySapLlamadaServicio.push({
                         'nActivityCode'     : objCompra.nActivityCode,
