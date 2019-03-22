@@ -85,63 +85,75 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayPedidosCancelados.length">
-                                                                        <div>
-                                                                            <el-table
-                                                                                v-loading="loading"
-                                                                                ref="multipleTable"
-                                                                                :data="arrayPedidosCancelados"
-                                                                                style="width: 100%"
-                                                                                @selection-change="handleSelectionChange">
-                                                                                <el-table-column :fixed="flagFixed" :type="flagType" :width="flagWidth">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="dFechaPedido" label="Fecha Pedido" width="120">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNumeroPedido" label="Nro Pedido" width="120">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNumeroVin" label="Nro VIN" width="160">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNombreComercial" label="Nombre Comercial" width="180">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="nAnioFabricacion" label="Año Fabricación" width="120">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cEstadoTramite" label="Estado" show-overflow-tooltip>
-                                                                                </el-table-column>
-                                                                            </el-table>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Fecha Pedido</th>
+                                                                                        <th>Nro Pedido</th>
+                                                                                        <th>Nro VIN</th>
+                                                                                        <th>Nombre Comercial</th>
+                                                                                        <th>Año Fabricación</th>
+                                                                                        <th>Año Año</th>
+                                                                                        <th>Estado</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(pedido, index) in arrayPedidosCancelados" :key="index">
+                                                                                        <td>
+                                                                                            <template v-if="pedido.cEstadoTramite == 'PENDIENTE'">
+                                                                                                <el-tooltip class="item" :content="'Generar Tramite ' + pedido.cNumeroPedido" effect="dark" placement="top-start">
+                                                                                                    <i @click="tabGenerarTramite(pedido)" :style="'color:green'" class="fa-md fa fa-check"></i>
+                                                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                                            </template>
+                                                                                        </td>
+                                                                                        <td v-text="pedido.dFechaPedido"></td>
+                                                                                        <td v-text="pedido.cNumeroPedido"></td>
+                                                                                        <td v-text="pedido.cNumeroVin"></td>
+                                                                                        <td v-text="pedido.cNombreComercial"></td>
+                                                                                        <td v-text="pedido.nAnioFabricacion"></td>
+                                                                                        <td v-text="pedido.nAnioModelo"></td>
+                                                                                        <td v-text="pedido.cEstadoTramite"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </template>
-                                                                    <br>
-                                                                    <div v-if="arrayPedidosChecked.length" class="form-group row">
-                                                                        <div class="col-md-9 offset-md-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabGenerarTramite">
-                                                                                <i class="fa fa-save"></i> Generar Tramite
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <template v-else>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </template>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -210,71 +222,217 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayPedidosChecked.length">
-                                                                        <div>
-                                                                            <el-table
-                                                                                :data="arrayPedidosChecked"
-                                                                                style="width: 100%">
-                                                                                <el-table-column label="Fecha Pedido" property="dFechaPedido" width="100">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNumeroPedido" label="Nro Pedido" width="120">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNumeroVin" label="Nro VIN" width="160">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cNombreComercial" label="Nombre Comercial" width="180">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="nAnioFabricacion" label="Año Fabricación" width="100">
-                                                                                </el-table-column>
-                                                                                <el-table-column property="cEstado" label="Estado" show-overflow-tooltip>
-                                                                                </el-table-column>
-                                                                                <el-table-column label="Total. T. Tarjeta" width="80">
-                                                                                    <template slot-scope="scope">
-                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalTramiteTarjeta }}</span>
-                                                                                    </template>
-                                                                                </el-table-column>
-                                                                                <el-table-column label="Total. T. Placa" width="80">
-                                                                                    <template slot-scope="scope">
-                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalTramitePlaca }}</span>
-                                                                                    </template>
-                                                                                </el-table-column>
-                                                                                <el-table-column label="Total. G. Adicional" width="80">
-                                                                                    <template slot-scope="scope">
-                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalGAdicional }}</span>
-                                                                                    </template>
-                                                                                </el-table-column>
-                                                                            </el-table>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Fecha Pedido</th>
+                                                                                        <th>Nro Pedido</th>
+                                                                                        <th>Nro VIN</th>
+                                                                                        <th>Nombre Comercial</th>
+                                                                                        <th>Año Fabricación</th>
+                                                                                        <th>Año Año</th>
+                                                                                        <th>Estado</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="(pedidos, index) in arrayPedidosChecked" :key="index">
+                                                                                        <td v-text="pedidos.dFechaPedido"></td>
+                                                                                        <td v-text="pedidos.cNumeroPedido"></td>
+                                                                                        <td v-text="pedidos.cNumeroVin"></td>
+                                                                                        <td v-text="pedidos.cNombreComercial"></td>
+                                                                                        <td v-text="pedidos.nAnioFabricacion"></td>
+                                                                                        <td v-text="pedidos.nAnioModelo"></td>
+                                                                                        <td v-text="pedidos.cEstadoTramite"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
                                                                         </div>
                                                                     </template>
                                                                     <br>
                                                                 </div>
                                                                 <div class="col-lg-12">
-                                                                    <el-row :gutter="10">
-                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total</div></el-col>
-                                                                        <el-col :span="8">
-                                                                            <div class="grid-content bg-purple">
-                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteTarjeta = totalTramiteTarjeta }}</div></el-col>
-                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramitePlaca = totalTramitePlaca }}</div></el-col>
-                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteAdicional = totalTramiteAdicional }}</div></el-col>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                Costo TYP
+                                                                            </vs-divider>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="limpiarFiltro">
+                                                                                        <i class="fa fa-clear"></i> Limpiar Filtros
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
-                                                                        </el-col>
-                                                                    </el-row>
-                                                                    <el-row :gutter="10">
-                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total General</div></el-col>
-                                                                        <el-col :span="8">
-                                                                            <div class="grid-content bg-purple">
-                                                                                S/. {{ montoTotalGeneralTramite = totalGeneral }}
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 01</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro01" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar FILTRO 01 </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 1)">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                        </el-col>
-                                                                    </el-row>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 02</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro02" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar FILTRO 02 </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 2)">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 03</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro03" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar FILTRO 03 </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 3)">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-row :gutter="10">
+                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total TYP</div></el-col>
+                                                                                        <el-col :span="8">
+                                                                                            <div class="grid-content bg-purple">
+                                                                                                S/. {{ montoSubTotalTramiteTarjeta }}
+                                                                                            </div>
+                                                                                        </el-col>
+                                                                                    </el-row>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <!-- DETALLE DOCUMENTOS -->
+                                                                            <template v-if="arrayPedidoDoumentoNew.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Documentos Asociados
+                                                                                </vs-divider>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th>Nombre</th>
+                                                                                                <th>Archivo</th>
+                                                                                                <th>Ver Documento</th>
+                                                                                                <th>Conformidad</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr v-for="(documento, index) in arrayPedidoDoumentoNew" :key="documento.nIdPar">
+                                                                                                <template v-if="documento.nValida==1">
+                                                                                                    <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
+                                                                                                    <td v-text="documento.cArchivo"></td>
+                                                                                                    <td>
+                                                                                                        <el-tooltip class="item" :content="'Ver Pdf ' + documento.cArchivo" effect="dark" placement="top-start">
+                                                                                                            <a :href="documento.cRutaDocumento" v-if="documento.cRutaDocumento !=''" target="_blank">
+                                                                                                                <i class='fa-md fa fa-file'></i>
+                                                                                                            </a>
+                                                                                                        </el-tooltip>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <span v-text="documento.cFlagDocumento ? 'CONFORME' : 'NO CONFORME'"></span>
+                                                                                                        <span class="switch">
+                                                                                                            <el-switch  v-model="documento.cFlagDocumento"
+                                                                                                                        @change="verificarConformidad">
+                                                                                                            </el-switch>
+                                                                                                        </span>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input  type="number"
+                                                                                                                v-if="documento.cFlagDocumento"
+                                                                                                                v-model="documento.fMontoDocumento"
+                                                                                                                @keyup="verificarMontoCero(documento.fMontoDocumento, index)"
+                                                                                                                class="form-control form-control-sm inputMonto">
+                                                                                                    </td>
+                                                                                                </template>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </template>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-row :gutter="10">
+                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
+                                                                                        <el-col :span="8">
+                                                                                            <div class="grid-content bg-purple">
+                                                                                                S/. {{ montoSubTotalTramiteAdicional }}
+                                                                                            </div>
+                                                                                        </el-col>
+                                                                                    </el-row>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-row :gutter="10">
+                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total General.</div></el-col>
+                                                                                        <el-col :span="8">
+                                                                                            <div class="grid-content bg-purple">
+                                                                                                S/. {{ montoTotalGeneralTramite = verificarMontoGeneral }}
+                                                                                            </div>
+                                                                                        </el-col>
+                                                                                    </el-row>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
-                                                                        <div v-if="arrayPedidosChecked.length" class="form-group row">
+                                                                        <div v-if="montoTotalGeneralTramite > 0 && verificarConformidadTramite" class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabRegistrarTramite">
                                                                                     <i class="fa fa-save"></i> Generar Tramite
                                                                                 </button>
                                                                             </div>
                                                                         </div>
+                                                                        <!-- <div v-else>
+                                                                            <div v-if="montoTotalGeneralTramite > 0 && !verificarConformidadTramite" class="form-group row">
+                                                                                <div class="col-md-9 offset-md-5">
+                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="tabRegistrarTramite">
+                                                                                        <i class="fa fa-save"></i> Tramite Pendiente
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> -->
                                                                     </form>
                                                                 </div>
                                                             </form>
@@ -929,6 +1087,61 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA FILTRO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayFiltros.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Concepto</th>
+                                                            <th>Monto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="filtro in arrayFiltros" :key="filtro.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ filtro.cParNombre }}</div>
+                                                                    <i @click="asignarFiltro(filtro)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="filtro.cParNombre"></td>
+                                                            <td v-text="filtro.nDatoParNumerico"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -938,10 +1151,6 @@
         props:['ruta'],
         data(){
             return {
-                loading: false,
-                flagFixed: false,
-                flagType: '',
-                flagWidth: '',
                 // =============================================================
                 // VARIABLES BUSCAR PEDIDOS
                 // =============================================================
@@ -950,7 +1159,6 @@
                     nidestadotramite: ''
                 },
                 arrayPedidosCancelados: [],
-                arrayPedidosChecked: [],
                 // =============================================================
                 // VARIABLES GENERAR TRAMITE
                 // =============================================================
@@ -959,8 +1167,26 @@
                     fechaFinRealTramite: '',
                     nroVehiculos: 0
                 },
+                arrayPedidosChecked: [],
+                arrayPedidoDoumento: [],
+                arrayPedidoDoumentoNew: [],
+                arrayFiltros: [],
+                fillConceptosDocumentos: {
+                    //PN/PJ
+                    nIdFiltro01: '',
+                    cDescripcionFiltro01: '',
+                    cMontoFiltro01: '',
+                    //COOPROPIETARIO
+                    nIdFiltro02: '',
+                    cDescripcionFiltro02: '',
+                    cMontoFiltro02: '',
+                    //CARROCERIA
+                    nIdFiltro03: '',
+                    cDescripcionFiltro03: '',
+                    cMontoFiltro03: ''
+                },
                 montoSubTotalTramiteTarjeta: 0,
-                montoSubTotalTramitePlaca: 0,
+                // montoSubTotalTramitePlaca: 0,
                 montoSubTotalTramiteAdicional: 0,
                 montoTotalGeneralTramite: 0,
                 // =============================================================
@@ -1029,7 +1255,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false,
             }
         },
         mounted() {
@@ -1086,33 +1313,39 @@
                 }
                 return pagesArray;
             },
-            //Calcula SubTotales y Total del Tramite de Tarjeta
-            totalTramiteTarjeta: function(){
+            verificarMontoGeneral: function(){
                 let me = this;
-                return me.arrayPedidosChecked.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.fTotalTramiteTarjeta);
-                }, 0);
+                if(me.montoSubTotalTramiteTarjeta > 0 || me.montoSubTotalTramiteAdicional > 0) {
+                    return parseFloat(me.montoSubTotalTramiteTarjeta) + parseFloat(me.montoSubTotalTramiteAdicional);
+                } else {
+                    return 0;
+                }
             },
-            //Calcula SubTotales y Total del Tramite de Placa
-            totalTramitePlaca: function(){
-                let me = this;
-                return me.arrayPedidosChecked.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.fTotalTramitePlaca);
-                }, 0);
-            },
-            //Calcula SubTotales y Total del Tramite de Adicional
-            totalTramiteAdicional: function(){
-                let me = this;
-                return me.arrayPedidosChecked.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.fTotalGAdicional);
-                }, 0);
-            },
-            totalGeneral: function(){
-                let me = this;
-                let montoTotalGeneral = me.montoSubTotalTramiteTarjeta + me.montoSubTotalTramitePlaca + me.montoSubTotalTramiteAdicional;
-                montoTotalGeneral = Number((montoTotalGeneral).toFixed(2));
-                return montoTotalGeneral;
-            },
+            //Verificar que se hayan marcado todas las conformidades de los docs
+            verificarConformidadTramite: {
+                // getter
+                get: function () {
+                    let me = this;
+                    let condicion = 0;
+
+                    if(me.arrayPedidoDoumentoNew.length > 0) {
+                        me.arrayPedidoDoumentoNew.map(function(value, key){
+                            if(value.cFlagDocumento == true){
+                                condicion = 1;
+                            } else {
+                                condicion = 0;
+                            }
+                        });
+                    } else {
+                        condicion = 0;
+                    }
+                    return condicion;
+                },
+                // setter
+                set: function (newValue) {
+                    var condicion = newValue;
+                }
+            }
         },
         methods: {
             // =================================================================
@@ -1156,7 +1389,6 @@
                 this.fillBusquedaPedidos.nidestadotramite = '';
             },
             buscarMisPedidos(page){
-                this.loading = true;
                 var url = this.ruta + '/tramite/GetPedidosCanceladosByEstadoTramite';
                 axios.get(url, {
                     params: {
@@ -1173,22 +1405,6 @@
                     this.pagination.last_page    = info.last_page;
                     this.pagination.from         = info.from;
                     this.pagination.to           = info.to;
-
-                    if (this.arrayPedidosCancelados.length > 0) {
-                        //Si la variable Estado es pendiente
-                        if (this.arrayPedidosCancelados[0].cEstadoTramite == "PENDIENTE"){
-                            this.flagFixed = true
-                            this.flagType  = 'selection'
-                            this.flagWidth = '55'
-                        } else {
-                            (this.arrayPedidosCancelados[0].cEstadoTramite == '') ? this.flagFixed = true : this.flagFixed = '';
-                            (this.arrayPedidosCancelados[0].cEstadoTramite == '') ? this.flagType = 'selection' : this.flagType = '';
-                            (this.arrayPedidosCancelados[0].cEstadoTramite == '') ? this.flagWidth = '55' : this.flagWidth = '0';
-                        }
-                    }
-                    //Setea el array a vacío
-                    this.arrayPedidosChecked = [];
-                    this.loading = false;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1203,25 +1419,7 @@
                 this.pagination.current_page=page;
                 this.buscarMisPedidos(page);
             },
-            handleSelectionChange(val){
-                let me = this;
-
-                //AGREGO PROPIEDADES ADICIONALES AL OBJETO (PORQUE NO TIENE LOS TOTALES, VIENE DE SAP)
-                val.map(function(value, key){
-                    val[key].fTotalTramiteTarjeta = 10;
-                    val[key].fTotalTramitePlaca = 5;
-                    val[key].fTotalGAdicional = 2;
-                })
-                //AGREGA AL ARRAY EL OBJETO SELECCIONADO
-                this.arrayPedidosChecked = val;
-            },
-            tabGenerarTramite(){
-                if(this.validaGenerarTramite()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
+            tabGenerarTramite(pedido){
                 $('#tab01').removeClass('nav-link active');
                 $('#tab01').addClass('nav-link');
                 $('#tab02').removeClass('nav-link disabled');
@@ -1232,25 +1430,12 @@
                 $('#TabBuscarPedido').removeClass('in active show');
                 $('#TabGenerarTramite').addClass('in active show');
                 $('#TabBandejaSolicitudes').removeClass('in active show');
-                this.subtabGenerarTramite();
-            },
-            validaGenerarTramite(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.arrayPedidosChecked.length < 0){
-                    this.mensajeError.push('Debe seleccionar un Pedido');
-                }
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
+                this.subtabGenerarTramite(pedido);
             },
             // =================================================================
             // METODOS TAB GENERAR TRAMITE
             // =================================================================
-            subtabGenerarTramite(){
+            subtabGenerarTramite(pedido){
                 $('#tab0201').removeClass('nav-link active');
                 $('#tab0201').addClass('nav-link active');
                 $('#tab0202').removeClass('nav-link active');
@@ -1261,12 +1446,18 @@
                 $('#SubTabGenerarTramite').addClass('in active show');
                 $('#SubTabBandejaSolicitudes').removeClass('in active show');
                 $('#SubTabTarjetaPlaca').removeClass('in active show');
-                this.cargarDatosBusquedaSubGenerarTramite();
+                this.cargarDatosBusquedaSubGenerarTramite(pedido);
             },
-            cargarDatosBusquedaSubGenerarTramite(){
+            cargarDatosBusquedaSubGenerarTramite(pedido){
+                this.obtenerPedidoSeleccionado(pedido);
+                this.obtenerDocumentosPedido(pedido);
                 this.obtenerFechaInicioTramite();
                 this.obtenerFechaFinTramite();
                 this.obtenerNroVehiculos();
+            },
+            obtenerPedidoSeleccionado(pedido){
+                let me = this;
+                me.arrayPedidosChecked.push(pedido)
             },
             obtenerFechaInicioTramite(){
                 this.fillBusquedaPedidosSeleccionados.fechaInicioTramite = moment().format('DD/MM/YYYY');
@@ -1293,7 +1484,139 @@
                 });
             },
             obtenerNroVehiculos(){
-                this.fillBusquedaPedidosSeleccionados.nroVehiculos = this.arrayPedidosChecked.length;
+                this.fillBusquedaPedidosSeleccionados.nroVehiculos = this.arrayPedidosCancelados.length;
+            },
+            //Sección 01
+            listarFiltros(page, jerarquia){
+                var url = this.ruta + '/tramite/GetListFiltro';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'   :   110110,
+                        'jerarquia'     :   jerarquia,
+                        'opcion'        :   1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayFiltros = response.data.arrayFiltros;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaFiltro(page){
+                this.paginationModal.current_page=page;
+                this.listarFiltros(page);
+            },
+            asignarFiltro(filtro){
+                if(filtro.cParJerarquia == 1){
+                    this.fillConceptosDocumentos.nIdFiltro01            = filtro.nIdPar;
+                    this.fillConceptosDocumentos.cDescripcionFiltro01   = filtro.cParNombre;
+                    this.fillConceptosDocumentos.cMontoFiltro01         = filtro.nDatoParNumerico;
+                    //Costo
+                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
+                }
+                if(filtro.cParJerarquia == 2){
+                    this.fillConceptosDocumentos.nIdFiltro02            = filtro.nIdPar;
+                    this.fillConceptosDocumentos.cDescripcionFiltro02   = filtro.cParNombre;
+                    this.fillConceptosDocumentos.cMontoFiltro02         = filtro.nDatoParNumerico;
+                    //Costo
+                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
+                }
+                if(filtro.cParJerarquia == 3){
+                    this.fillConceptosDocumentos.nIdFiltro03            = filtro.nIdPar;
+                    this.fillConceptosDocumentos.cDescripcionFiltro03   = filtro.cParNombre;
+                    this.fillConceptosDocumentos.cMontoFiltro03         = filtro.nDatoParNumerico;
+                    //Costo
+                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
+                }
+                this.cerrarModal();
+            },
+            limpiarFiltro(){
+                this.fillConceptosDocumentos.nIdFiltro01            = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro01   = '';
+                this.fillConceptosDocumentos.cMontoFiltro01         = '';
+                this.fillConceptosDocumentos.nIdFiltro02            = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro02   = '';
+                this.fillConceptosDocumentos.cMontoFiltro02         = '';
+                this.fillConceptosDocumentos.nIdFiltro03            = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro03   = '';
+                this.fillConceptosDocumentos.cMontoFiltro03         = '';
+                this.montoSubTotalTramiteTarjeta                       = '';
+            },
+            //Sección 02
+            obtenerDocumentosPedido(pedido){
+                var url = this.ruta + '/pedido/GetDocumentosById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
+                    this.llenarDocumentos();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarDocumentos(){
+                let me = this;
+                me.arrayPedidoDoumentoNew = [];
+                me.arrayPedidoDoumento.map(function(value, key){
+                    if(value.cCaracter == '*') {
+                        me.arrayPedidoDoumentoNew.push({
+                            'nIdDocumentoAdjuntoPedido' :   value.nIdDocumentoAdjuntoPedido,
+                            'nIdPar'                    :   value.nIdPar,
+                            'cParNombre'                :   value.cParNombre,
+                            'cArchivo'                  :   value.cArchivo,
+                            'cRutaDocumento'            :   value.cRutaDocumento,
+                            'cCaracter'                 :   value.cCaracter,
+                            'cFlagDocumento'            :   (value.cFlagDocumento == 0) ? false : true,
+                            'fMontoDocumento'           :   (value.fMontoDocumento == '.0000') ? 0 : value.fMontoDocumento,
+                            'nValida'                   :   value.nValida
+                        });
+                    }
+                });
+            },
+            verificarConformidad(){
+                let me = this;
+                me.arrayPedidoDoumentoNew.map(function(value, key){
+                    if(value.cFlagDocumento == false){
+                        value.fMontoDocumento = 0;
+                    }
+                });
+            },
+            verificarMontoCero(fmonto, index){
+                let me = this;
+                let acumulador = 0;
+
+                //Verifica que el Input no este vacío
+                if(fmonto == '') {
+                    //Si esta vacio setear a 0
+                    this.arrayPedidoDoumentoNew[index].fMontoDocumento = 0
+                }
+
+                //Recorrer y acumular monto
+                me.arrayPedidoDoumentoNew.map(function(value, key){
+                    if(value.cFlagDocumento == true){
+                        acumulador = acumulador + parseFloat(value.fMontoDocumento);
+                    }
+                });
+                me.montoSubTotalTramiteAdicional = acumulador;
             },
             tabRegistrarTramite(){
                 if(this.validarRegistrarTramite()){
@@ -1304,19 +1627,23 @@
 
                 var url = this.ruta + '/tramite/SetCabeceraTramite';
                 axios.post(url, {
-                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'dFechaInicioTramite'   :   this.fillBusquedaPedidosSeleccionados.fechaInicioTramite,
-                    'dFechaFinTramite'      :   this.fillBusquedaPedidosSeleccionados.fechaFinRealTramite,
-                    'nNroVehiculoTramite'   :   this.fillBusquedaPedidosSeleccionados.nroVehiculos,
-                    'fTotalConTramiteTarjeta'   :   this.montoSubTotalTramiteTarjeta,
-                    'fTotalConTramitePlaca' :   this.montoSubTotalTramitePlaca,
-                    'fTotalGastoAdicional'  :   this.montoSubTotalTramiteAdicional,
-                    'fTotalTramite'         :   this.montoTotalGeneralTramite,
-                    'nIdEstadoTramite'      :   1300304,
-                    'cFlagEstadoAprobacion' :   'P',
+                    'nIdEmpresa'                :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'               :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'dFechaInicioTramite'       :   this.fillBusquedaPedidosSeleccionados.fechaInicioTramite,
+                    'dFechaFinTramite'          :   this.fillBusquedaPedidosSeleccionados.fechaFinRealTramite,
+                    'nNroVehiculoTramite'       :   this.fillBusquedaPedidosSeleccionados.nroVehiculos,
+                    'fTotalTramiteTarjeta'     :   this.montoSubTotalTramiteTarjeta,
+                    // 'fTotalConTramitePlaca' :   this.montoSubTotalTramitePlaca,
+                    'fTotalTramiteAdicional'    :   this.montoSubTotalTramiteAdicional,
+                    'fTotalTramite'             :   this.montoTotalGeneralTramite,
+                    'fillConceptosDocumentos'   :   this.fillConceptosDocumentos,
+                    //Documentos
+                    'arrayPedidoDoumentoNew'    :   this.arrayPedidoDoumentoNew,
+                    'nIdCabeceraPedido'         :   this.arrayPedidosChecked[0].nIdCabeceraPedido,
+                    'nIdEstadoTramite'          :   1300304,
+                    'cFlagEstadoAprobacion'     :   'P',
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response);
                     this.setTramiteTarjeta(response.data);
                 }).catch(error => {
                     console.log(error);
@@ -1344,17 +1671,17 @@
                 if(!this.montoSubTotalTramiteTarjeta){
                     this.mensajeError.push('El SubTotal del Tramite de la Tarjeta es un campo obligatorio');
                 }
-                if(!this.montoSubTotalTramitePlaca){
-                    this.mensajeError.push('El SubTotal del Tramite de la Placa es un campo obligatorio');
-                }
+                // if(!this.montoSubTotalTramitePlaca){
+                //     this.mensajeError.push('El SubTotal del Tramite de la Placa es un campo obligatorio');
+                // }
                 if(!this.montoSubTotalTramiteAdicional){
                     this.mensajeError.push('El SubTotal del Gasto Adicional es un campo obligatorio');
                 }
                 if(!this.montoTotalGeneralTramite){
-                    this.mensajeError.push('El Totla General del Tramite es un campo obligatorio');
+                    this.mensajeError.push('El Total General del Tramite es un campo obligatorio');
                 }
                 if(this.arrayPedidosChecked.length == 0){
-                    this.mensajeError.push('Se debe asignar Pedidos a la bandeja');
+                    this.mensajeError.push('Debe Asignar un Pedido a la bandeja');
                 }
 
                 if(this.mensajeError.length){
@@ -1421,15 +1748,27 @@
                 this.fillBusquedaSolTramite.fechaInicioTramite = '';
                 this.fillBusquedaSolTramite.fechaFinRealTramite = '';
                 this.fillBusquedaSolTramite.nidestadotramite = '';
+                this.arrayPedidoDoumento = [];
+                this.arrayPedidoDoumentoNew = [];
+                this.arrayFiltros = [];
+                this.fillConceptosDocumentos.nIdFiltro01 = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro01 = '';
+                this.fillConceptosDocumentos.cMontoFiltro01 = '';
+                this.fillConceptosDocumentos.nIdFiltro02 = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro02 = '';
+                this.fillConceptosDocumentos.cMontoFiltro02 = '';
+                this.fillConceptosDocumentos.nIdFiltro03 = '';
+                this.fillConceptosDocumentos.cDescripcionFiltro03 = '';
+                this.fillConceptosDocumentos.cMontoFiltro03 = '';
             },
             buscarMisTramites(page){
                 this.loading = true;
                 var url = this.ruta + '/tramite/GetSolicitudesTramites';
                 axios.get(url, {
                     params: {
-                        'nIdEstadoTramite' : (this.fillBusquedaSolTramite.nidestadotramite == '') ? '0' : this.fillBusquedaSolTramite.nidestadotramite,
-                        'fechaInicioTramite' : this.fillBusquedaSolTramite.fechaInicioTramite,
-                        'fechaFinRealTramite' : this.fillBusquedaSolTramite.fechaFinRealTramite,
+                        'nIdEstadoTramite'      :   (this.fillBusquedaSolTramite.nidestadotramite == '') ? '0' : this.fillBusquedaSolTramite.nidestadotramite,
+                        'fechaInicioTramite'    :   this.fillBusquedaSolTramite.fechaInicioTramite,
+                        'fechaFinRealTramite'   :   this.fillBusquedaSolTramite.fechaFinRealTramite,
                         'page' : page
                     }
                 }).then(response => {
@@ -1697,6 +2036,19 @@
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
+                    case 'filtro':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                this.listarFiltros(1, data);
+                                break;
+                            }
+                        }
+                    }
+                    break;
                     case "solicitud-tramite":
                     {
                         switch(accion){
@@ -1735,13 +2087,13 @@
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 this.vistaEstado = 2;//Inputs Ocultos
-                                this.arrayListadoEstadosTarjetaPlaca = [];//Setear Listado de Estados Observados
-                                this.fillModalTarjetaPlaca.flagOpcion = 2;//Flag para bucar Listado de Observaciones de Placas
-                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta = data['nIdTramiteTarjeta'];
-                                this.fillModalTarjetaPlaca.nIdTramitePlaca = data['nIdTramitePlaca'];
-                                this.fillModalTarjetaPlaca.nIdCabeceraTramite = data['nIdCabeceraTramite'];
-                                this.fillModalTarjetaPlaca.dFechaInicioTramite = data['dFechaInicioTramite'];
-                                this.fillModalTarjetaPlaca.dFechaFinTramite = data['dFechaFinTramite'];
+                                this.arrayListadoEstadosTarjetaPlaca    = [];//Setear Listado de Estados Observados
+                                this.fillModalTarjetaPlaca.flagOpcion   = 2;//Flag para bucar Listado de Observaciones de Placas
+                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta    = data['nIdTramiteTarjeta'];
+                                this.fillModalTarjetaPlaca.nIdTramitePlaca      = data['nIdTramitePlaca'];
+                                this.fillModalTarjetaPlaca.nIdCabeceraTramite   = data['nIdCabeceraTramite'];
+                                this.fillModalTarjetaPlaca.dFechaInicioTramite  = data['dFechaInicioTramite'];
+                                this.fillModalTarjetaPlaca.dFechaFinTramite     = data['dFechaFinTramite'];
                                 this.llenarEstadosTramiteTarjetaPlaca();
                                 this.buscarMisObservaciones(1);
                                 break;
@@ -1879,6 +2231,10 @@
     }
     .flexLeft>h4{
         font-weight: bolder;
+    }
+    .inputMonto{
+        width: 100%;
+        min-width: 80px;
     }
 </style>
 

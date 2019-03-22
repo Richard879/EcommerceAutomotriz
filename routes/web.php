@@ -327,6 +327,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');
 
     Route::get('/tramite/GetPedidosCanceladosByEstadoTramite', 'TramiteController@GetPedidosCanceladosByEstadoTramite');
+    Route::get('/tramite/GetListFiltro', 'TramiteController@GetListFiltro');
     Route::post('/tramite/SetCabeceraTramite', 'TramiteController@SetCabeceraTramite');
     Route::post('/tramite/SetTramiteTarjeta', 'TramiteController@SetTramiteTarjeta');
     Route::get('/tramite/GetSolicitudesTramites', 'TramiteController@GetSolicitudesTramites');
