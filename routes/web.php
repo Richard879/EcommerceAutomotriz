@@ -195,7 +195,6 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pedido/GetPedidoEVById', 'PedidoController@GetPedidoEVById');
     Route::get('/pedido/GetCampaniaObsequioByIdPedido', 'PedidoController@GetCampaniaObsequioByIdPedido');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
-    Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
     Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
     Route::get('/pedido/GetLlamadasServiciosByPedido', 'PedidoController@GetLlamadasServiciosByPedido');
 
@@ -445,6 +444,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/accesoriovehiculo/SetElementosByVehiculo', 'AccesorioVehiculoController@SetElementosByVehiculo');
     Route::get('/accesoriovehiculo/GetListAccesoriosByVehiculo','AccesorioVehiculoController@GetListAccesoriosByVehiculo');
 
+    Route::post('/comprobante/SetIntegraComprobante', 'ComprobanteController@SetIntegraComprobante');
+
+
     ///========================================
     /////=================  ROUTES SAP
     //
@@ -483,6 +485,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pedido/SapSetPedidoDscto', 'Api\SapPedidoController@SapSetPedidoDscto');
     //Comprobante
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
+    Route::post('/comprobante/SapSetFacturaProveedorWO', 'Api\SapComprobanteController@SapSetFacturaProveedorWO');
     //Proyecto
     Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
     //TarjetaEquipo

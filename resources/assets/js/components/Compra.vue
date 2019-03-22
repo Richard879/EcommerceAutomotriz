@@ -1654,7 +1654,7 @@
         mounted(){
             this.llenarComboMarca();
             this.llenarComboModelo();
-            this.obtenerLocalidadBySucursal();
+            this.obtenerAlmacenPorDefecto();
             //this.obtenerIgv();
             this.obtenerCodigoSapEmpresa();
         },
@@ -1952,42 +1952,16 @@
                     }
                 });
             },
-            obtenerLocalidadBySucursal(){
-                var url = this.ruta + '/parparametro/GetParParametro';
-
-                axios.get(url, {
-                    params: {
-                        'nparsrccodigo'         : 0,
-                        'nparsrcgrupoarametro'  : 110102,
-                        'npardstcodigo'         : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'npardstgrupoarametro'  : 110022,
-                        'opcion'                : 1
-                    }
-                }).then(response => {
-                    if(response.data.arrayParParametro.length){
-                        this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
-                        this.obtenerAlmacenByLocalidad();
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            obtenerAlmacenByLocalidad(){
+            obtenerAlmacenPorDefecto(){
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar'        : this.formAlmacen.nidlocalidad,
-                        'nidgrupopar'   : 110102
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cflagtipo'     : 'VE'
                     }
                 }).then(response => {
                     if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
+                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
                         this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
@@ -4420,7 +4394,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'page' : page
                     }
                 }).then(response => {

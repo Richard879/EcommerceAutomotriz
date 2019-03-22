@@ -310,30 +310,4 @@ class CompraController extends Controller
             DB::rollBack();
         }
     }
-
-    public function SetIntegraCompraWO(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        try{
-            DB::beginTransaction();
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraCompraWO] ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cItemCode'],
-                                                                $det['nDocEntry'],
-                                                                $det['nDocNum'],
-                                                                $det['cDocType'],
-                                                                $det['cLogRespuesta'],
-                                                                $det['nIdWarrantOperativo'],
-                                                                Auth::user()->id
-                                                            ]);
-            }
-            DB::commit();
-            return response()->json($objCompra);
-        } catch (Exception $e){
-            DB::rollBack();
-        }
-    }
 }

@@ -121,6 +121,7 @@
                                                                                         <th>Código</th>
                                                                                         <th>Localidad</th>
                                                                                         <th>Almacen</th>
+                                                                                        <th>Tipo</th>
                                                                                         <th>Codigo Almacen Entrada</th>
                                                                                         <th>Codigo Almacen Salida</th>
                                                                                         <th>Activo por Defecto</th>
@@ -140,6 +141,7 @@
                                                                                         <td v-text="almacen.id"></td>
                                                                                         <td v-text="almacen.cNombreLocalidad"></td>
                                                                                         <td v-text="almacen.cWhsName"></td>
+                                                                                        <td v-text="almacen.cFlagTipo"></td>
                                                                                         <td v-text="almacen.cAcctCode"></td>
                                                                                         <td v-text="almacen.cAcctCodeSalida"></td>
                                                                                         <td v-text="almacen.cFlagPorDefecto"></td>
@@ -531,25 +533,6 @@
                 var url = this.ruta + '/almacen/GetAlmacen';
                 axios.get(url).then(response => {
                     this.arrayAlmacen = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            GetAlmacenByLocalidad(){
-                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
-                axios.get(url, {
-                    params: {
-                        'nidlocalidad'  :   this.fillAlmacen.nIdLocalidad,
-                        'opcion' : 1
-                    }
-                }).then(response => {
-                    this.arrayAlmacen = response.data.arrayAlmacen.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
