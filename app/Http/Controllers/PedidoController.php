@@ -795,4 +795,20 @@ class PedidoController extends Controller
                                                             ]);
         return response()->json($data);
     }
+
+    public function GetLlamadasServiciosByPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
+
+        $arrayLlamadaServicios = DB::select('exec [usp_Pedido_GetLlamadasServiciosByPedido] ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraPedido
+                                                            ]);
+        return ['arrayLlamadaServicios'=>$arrayLlamadaServicios];
+    }
 }

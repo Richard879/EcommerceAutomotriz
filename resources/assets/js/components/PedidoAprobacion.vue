@@ -119,9 +119,6 @@
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                 <i class="fa fa-search"></i> Buscar
                                             </button>
-                                            <!-- <button type="button" class="btn btn-primary btn-corner btn-sm" @click="obtenerIgv()">
-                                                <i class="fa fa-search"></i> prueba
-                                            </button> -->
                                         </div>
                                     </div>
                                 </form>
@@ -709,6 +706,7 @@
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 ccustomercode: 'C20480683839',
+                nSolutionCode:  0,
                 fillProveedor:{
                     nidproveedor: 0,
                     cproveedornombre: ''
@@ -818,6 +816,8 @@
                 arraySapElementoVenta: [],
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
+                arraySolucion: [],
+                arrayPatchLlamadaServicios: [],
                 fAvgPrice: 0,
                 fImporte: 0,
                 //===========================================================
@@ -1448,12 +1448,13 @@
                 let me = this;
                 var url = me.ruta + '/pedido/SetAprobarPedido';
                 axios.put(url,{
-                    'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nidcabecerapedido': parseInt(me.fillDirecciones.nIdCabeceraPedido)
+                    'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nidcabecerapedido' : parseInt(me.fillDirecciones.nIdCabeceraPedido)
                 }).then(function (response) {
                     if (response.data[0].nFlagMsje == 1) {
-                        me.obtenerIgv();
+                        me.obtenerPedidoById();
+                        //me.obtenerIgv();
                     } else {
                         swal(
                             'ERROR!',
@@ -1527,7 +1528,8 @@
                         }).then(function (response) {
                             if (response.data[0].nFlagMsje == 1) {
                                 me.mostrarProgressBar();
-                                me.obtenerIgv();
+                                me.obtenerPedidoById();
+                                //me.obtenerIgv();
                                 //me.obtenerPedidoById();
                             } else {
                                 swal(
@@ -1582,9 +1584,9 @@
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
-                        'nidpar': 1300477,
+                        'nidpar'        : 1300477,
                         'ctipoparametro': 'P',
-                        'nidtipopar': 51
+                        'nidtipopar'    : 51
                     }
                 }).then(response => {
                     this.formSap.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
@@ -1704,6 +1706,7 @@
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode'     :   me.formAlmacen.cwhscode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySapEVPedido'  :   me.arraySapEVPedido
                 }).then(response => {
@@ -1952,7 +1955,75 @@
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividadVenta';
                 axios.post(sapUrl, {
                     'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
-                    'arraySapUpdSgcEV': me.arraySapUpdSgcEV
+                    'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
+                }).then(response => {
+                    setTimeout(function() {
+                        me.registroSapBusinessSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessSolucion(){
+                let me = this;
+
+                //Depurar Array para registrar en SAP
+                me.arraySapPedido.map(function(value, key){
+                    me.arraySolucion.push({
+                        'cItemCode' : value.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'V',
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
+                            });
+
+                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                        }
+                    });
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
                         me.getOrdenVentaActividad();
@@ -1972,8 +2043,8 @@
                 var sapUrl = me.ruta + '/actividad/GetIntegraActividadVentaByItemCode';
                 axios.post(sapUrl, {
                     'arrayVINPedidoVehiculo': me.arrayVINPedidoVehiculo,
-                    'arrayCodSAPPedidoEV': me.arrayCodSAPPedidoEV,
-                    'nactividadtipo': 17
+                    'arrayCodSAPPedidoEV'   : me.arrayCodSAPPedidoEV,
+                    'nactividadtipo'        : 17
                 }).then(response => {
                     console.log(response.data);
                     // ======================================================================
@@ -2023,12 +2094,14 @@
                     }
                 });
                 setTimeout(function() {
-                    me.loading.close();
                     me.registroSapBusinessLlamadaServicio();
                 }, 1600);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
@@ -2036,7 +2109,8 @@
                     'cCustomerCode'             : me.fillLlamadaServicio.cCustomerCode,
                     'cInternalSerialNum'        : me.fillLlamadaServicio.cInternalSerialNum,
                     'cItemCode'                 : me.fillLlamadaServicio.cItemCode,
-                    'cSubject'                  : me.fillLlamadaServicio.cSubject
+                    'cSubject'                  : me.fillLlamadaServicio.cSubject,
+                    'nSolutionCode'             : me.nSolutionCode
                 }).then(response => {
                     // ======================================================================
                     // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL VEHICULO EN SQL SERVER
@@ -2092,6 +2166,71 @@
                 axios.post(sapUrl, {
                     'arraySapUpdSgcVehiculo'    : me.arraySapUpdSgcVehiculo,
                     'arrayServiceCallActivities': me.arrayServiceCallActivities
+                }).then(response => {
+                    setTimeout(function() {
+                        me.obtenerLlamadasServicios();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerLlamadasServicios(){
+                let me = this;
+                var url = me.ruta + '/pedido/GetLlamadasServiciosByPedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                    }
+                }).then(response => {
+                    me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios;
+                    setTimeout(function() {
+                        me.cerrarLlamadasServicios();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cerrarLlamadasServicios(){
+                let me = this;
+
+                var url = me.ruta + '/llamadaservicio/SapCloseLlamadaServicio';
+                axios.post(url, {
+                    'data'  : me.arrayPatchLlamadaServicios
+                }).then(response => {
+                    setTimeout(function() {
+                        me.actualizarTarjetaEquipo();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarTarjetaEquipo(){
+                let me = this;
+
+                var url = me.ruta + '/tarjetaequipo/SapUpdSocioNegocio';
+                axios.post(url, {
+                    'data'  : me.arraySapPedido
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerSapCostoPromedio();
@@ -2472,6 +2611,9 @@
                 this.arraySapElementoVenta= [];
                 this.arraySapEVArticulosEnvia= [];
                 this.arraySapEVServiciosEnvia= [];
+                this.arraySolucion= [];
+                this.arrayPatchLlamadaServicios= [];
+                this.nSolutionCode= 0;
 
                 //Direcciones
                 this.cerrarModal();

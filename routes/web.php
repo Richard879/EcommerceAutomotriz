@@ -197,6 +197,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
     Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
+    Route::get('/pedido/GetLlamadasServiciosByPedido', 'PedidoController@GetLlamadasServiciosByPedido');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
@@ -418,6 +419,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
+    Route::post('/solucion/SetIntegraSolucion','IntLlamadaServicioController@SetIntegraSolucion');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');
     Route::post('/mercancia/SetIntegraMercancia', 'IntMercanciaController@SetIntegraMercancia');
@@ -485,9 +487,12 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
     //TarjetaEquipo
     Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
+    Route::post('/tarjetaequipo/SapUpdSocioNegocio', 'Api\SapTarjetaEquipoController@SapUpdSocioNegocio');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
+    Route::post('/llamadaservicio/SapCloseLlamadaServicio', 'Api\SapLlamadaServicioController@SapCloseLlamadaServicio');
+    Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');
     //Actividad
     Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');
     Route::post('/actividad/SapSetActividadMercancia', 'Api\SapActividadController@SapSetActividadMercancia');
