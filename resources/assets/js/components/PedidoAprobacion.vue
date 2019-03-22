@@ -2181,7 +2181,7 @@
             },
             obtenerLlamadasServicios(){
                 let me = this;
-                var sapUrl = me.ruta + '/pedido/GetLlamadasServiciosByPedido';
+                var url = me.ruta + '/pedido/GetLlamadasServiciosByPedido';
                 axios.get(url, {
                     params: {
                         'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
