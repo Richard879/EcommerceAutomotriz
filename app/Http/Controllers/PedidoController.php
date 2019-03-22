@@ -751,32 +751,6 @@ class PedidoController extends Controller
         }
     }
 
-    public function SapUpdFacturaByDocEntry(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        try{
-            DB::beginTransaction();
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
-                $objFactura = DB::select('exec [usp_Pedido_SapUpdComprobanteByDocEntry] ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['nIdCabeceraPedido'],
-                                                                $det['cItemCode'],
-                                                                $det['nDocEntry'],
-                                                                $det['nDocNum'],
-                                                                $det['cDocType'],
-                                                                $det['cLogRespuesta'],
-                                                                Auth::user()->id
-                                                            ]);
-            }
-            DB::commit();
-            return response()->json($objFactura);
-        } catch (Exception $e){
-            DB::rollBack();
-        }
-    }
-
     public function GetOrdenVenta(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

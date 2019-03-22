@@ -408,8 +408,8 @@
                                                                             <th>Moneda</th>
                                                                             <th>Total</th>
                                                                             <th>Nro Factura</th>
-                                                                            <th>Comisión Dolares</th>
-                                                                            <th>Comisión Soles</th>
+                                                                            <!--<th>Comisión Dolares</th>
+                                                                            <th>Comisión Soles</th>-->
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -427,8 +427,8 @@
                                                                             <td v-text="temporal.cSimboloMoneda"></td>
                                                                             <td v-text="temporal.fTotalCompra"></td>
                                                                             <td v-text="temporal.cNumeroFactura"></td>
-                                                                            <td v-text="temporal.fComisionDolar"></td>
-                                                                            <td v-text="temporal.fComisionSol"></td>
+                                                                            <!--<td v-text="temporal.fComisionDolar"></td>
+                                                                            <td v-text="temporal.fComisionSol"></td>-->
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -1099,15 +1099,15 @@
                                 'fCredit'       : "0",
                                 'fDebit'        : value.fTotalCompra,
                                 'fCredit1'      : value.fTotalCompra,
-                                'fComisionSol'  : value.fComisionSol,
                                 'fDebit1'       : "0"
+                                /*'fComisionSol'  : value.fComisionSol,*/
                             })
                         });
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
-                            me.generaSapCompraWO();
+                            me.generaSapAsientoContable();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -1120,88 +1120,7 @@
                     }
                 });
             },
-            generaSapCompraWO(){
-                let me = this;
-
-                //==============================================================
-                //================== REGISTRO COMPRA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO WARRANT OPERATIVO CON SAP BUSINESS ONE...");
-
-                me.arraySapCompra.push({
-                    'cItemCode'        : "SCMEGEGEGEN00465", //CODIGO SERVICIO WO
-                    'fTotalCompra'     : me.fTotalValor
-                });
-
-                var sapUrl = me.ruta + '/compra/SapSetCompraWO';
-                axios.post(sapUrl, {
-                    'cCardCode'     : "P20544637313",// me.formCompra.ccarcode,
-                    'fDocDate'      : moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode' : me.formAlmacen.cwhscode,
-                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
-                    'data'          : me.arraySapCompra
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            console.log("Integración SAP Compra : OK");
-
-                            me.arraySapUpdSgc.push({
-                                'nDocEntry'     : parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'      : me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta' : response.data.toString(),
-                                'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString(),
-                                'nIdWarrantOperativo' : me.fillWOperativo.nidwarrantoperativo
-                            });
-
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY ===============
-                            setTimeout(function() {
-                                me.generaActualizarDocEntryWO();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Compra SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaActualizarDocEntryWO(){
-                let me = this;
-                var sapUrl = me.ruta + '/compra/SetIntegraCompraWO';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        setTimeout(function() {
-                            me.generaSapWO();
-                        }, 1600);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapWO(){
+            generaSapAsientoContable(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
@@ -1209,7 +1128,6 @@
                 axios.post(url, {
                     'data' : me.arrayAsiento
                 }).then(response => {
-                    //console.log(response);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 
@@ -1232,7 +1150,7 @@
                     //==============================================================================
                     //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
                     setTimeout(function() {
-                        me.generaActualizaWO();
+                        me.registroSgcAsientoContable();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1244,7 +1162,7 @@
                     }
                 });
             },
-            generaActualizaWO(){
+            registroSgcAsientoContable(){
                 let me = this;
                 var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
                 axios.post(sapUrl, {
@@ -1253,7 +1171,7 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                          setTimeout(function() {
-                            me.obtenerWOTblCosto();
+                            me.generaSapFacturaProveedor();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -1266,6 +1184,70 @@
                     }
                 });
             },
+            generaSapFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedor';
+                axios.post(sapUrl, {
+                    'cCardCode' : me.formSap.ccardcode.toString(),
+                    'fDocDate'  : moment().format('YYYY-MM-DD'),
+                    'data'      : me.arraySapUpdPedido
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            me.arraySapUpdSgc.push({
+                                'nIdCabeceraPedido' : me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          : me.jsonFactura.DocType.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroSgcFacturaProveedor();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
+            registroSgcFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.confirmarWO();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            /*
             obtenerWOTblCosto(){
                 let me = this;
                 var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
@@ -1324,7 +1306,7 @@
                         }
                     }
                 });
-            },
+            },*/
             confirmarWO(){
                 let me = this;
                 me.loading.close();

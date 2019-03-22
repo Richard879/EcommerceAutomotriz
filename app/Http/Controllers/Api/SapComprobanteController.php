@@ -43,4 +43,40 @@ class SapComprobanteController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapSetFacturaProveedor(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            $json = [
+                'json' => [
+                    "CardCode"      => $request->cCardCode,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocType"       => "dDocument_Service",
+                    "DocumentLines" => [
+                            [
+                                "ItemCode"      => "22",
+                                "Quantity"      => $value['Quantity'],
+                                "TaxCode"       => "EXE_IGV",
+                                "PriceAfterVAT" => $value['fTotal'],
+                                "AccountCode"   => $value['cAccountCode']
+                            ]
+                        ]
+                    ]
+                ];
+
+            $response = $client->request('POST', "/api/Factura/SapSetFacturaProveedor/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
 }

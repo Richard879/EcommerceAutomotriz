@@ -121,6 +121,7 @@
                                                                                         <th>Código</th>
                                                                                         <th>Localidad</th>
                                                                                         <th>Almacen</th>
+                                                                                        <th>Tipo</th>
                                                                                         <th>Codigo Almacen Entrada</th>
                                                                                         <th>Codigo Almacen Salida</th>
                                                                                         <th>Activo por Defecto</th>
@@ -140,6 +141,7 @@
                                                                                         <td v-text="almacen.id"></td>
                                                                                         <td v-text="almacen.cNombreLocalidad"></td>
                                                                                         <td v-text="almacen.cWhsName"></td>
+                                                                                        <td v-text="almacen.cFlagTipo"></td>
                                                                                         <td v-text="almacen.cAcctCode"></td>
                                                                                         <td v-text="almacen.cAcctCodeSalida"></td>
                                                                                         <td v-text="almacen.cFlagPorDefecto"></td>
