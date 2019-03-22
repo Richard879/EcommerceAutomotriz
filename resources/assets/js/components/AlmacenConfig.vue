@@ -541,25 +541,6 @@
                     }
                 });
             },
-            GetAlmacenByLocalidad(){
-                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
-                axios.get(url, {
-                    params: {
-                        'nidlocalidad'  :   this.fillAlmacen.nIdLocalidad,
-                        'opcion' : 1
-                    }
-                }).then(response => {
-                    this.arrayAlmacen = response.data.arrayAlmacen.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             // =================================================================
             // TAB BANDEJA DE ALMACENES
             // =================================================================
