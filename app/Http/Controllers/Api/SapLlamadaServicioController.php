@@ -72,7 +72,7 @@ class SapLlamadaServicioController extends Controller
                 "ServiceCallActivities" =>  array(),
                 "ServiceCallSolutions" => [
                     [
-                        "SolutionID"=> (string)$value['nSolutionCode']
+                        "SolutionID"=> (string)$request->nSolutionCode
                     ]
                 ]
             ]
