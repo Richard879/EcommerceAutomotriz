@@ -2093,12 +2093,14 @@
                     }
                 });
                 setTimeout(function() {
-                    me.loading.close();
                     me.registroSapBusinessLlamadaServicio();
                 }, 1600);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
