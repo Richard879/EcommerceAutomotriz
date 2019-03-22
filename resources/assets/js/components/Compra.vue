@@ -178,7 +178,7 @@
                                                                                 <th>OC</th>
                                                                                 <th>Línea</th>
                                                                                 <th>Almacén<nav></nav></th>
-                                                                                <th>Nro Reserva</th>
+                                                                                <th>Disponible</th>
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Nombre Comercial</th>
@@ -230,7 +230,7 @@
                                                                                 <td v-text="compra.nOrdenCompra"></td>
                                                                                 <td v-text="compra.cNombreLinea"></td>
                                                                                 <td v-text="compra.cNombreAlmacen"></td>
-                                                                                <td v-text="compra.nNumeroReserva"></td>
+                                                                                <td v-text="compra.cFlagVehiculoLibre"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
