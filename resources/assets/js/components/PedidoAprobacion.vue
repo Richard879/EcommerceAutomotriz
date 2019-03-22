@@ -2191,6 +2191,9 @@
                     }
                 }).then(response => {
                     me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios.data;
+                    setTimeout(function() {
+                        me.cerrarLlamadasServicios();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
