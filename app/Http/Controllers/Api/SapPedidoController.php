@@ -121,16 +121,10 @@ class SapPedidoController extends Controller
                 ]
             ];
 
-            //Setear el acumulador del DocTotal
-            $fMontoTotal = 0;
-
             //Recorrer todos los Elementos de Venta
             foreach ($arraySapEVPedido as $key => $value) {
                 // Setear CardCode
                 $json['json']['CardCode'] = $value['cCardCode'];
-
-                // Obtener el Monto sin IGV
-                //$SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
 
                 // Setear DocumentLines
                 $json['json']['DocumentLines'][] = [
@@ -140,17 +134,11 @@ class SapPedidoController extends Controller
                     "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
                     //"UnitPrice" =>  (string)$SubTotal,
                     "Currency"          =>  "US$",
-                    "WarehouseCode"     =>  (string)$request->WarehouseCode,
+                    "WarehouseCode"     =>  (string)$value['cWhsCode'],
                     "CostingCode2"      =>  "01", //UnidadDeNegocio
                     "CostingCode3"      =>  (string)$request->nIdSapSucursal
                 ];
-
-                //Acumulador para setear en el DocTotal
-                //$fMontoTotal = $fMontoTotal + floatval($value['fSubTotalDolares']);
             }
-
-            // Setear DocTotal
-            //$json['json']['DocTotal'] = (string)$fMontoTotal;
 
             $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
