@@ -17,7 +17,7 @@ class TramiteController extends Controller
         $nIdEstadoTramite   = $request->nIdEstadoTramite;
         $nIdTramitador      = Auth::user()->id;
 
-        $nIdEstadoTramite = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $nIdEstadoTramite   = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
 
         $arrayPedidosCancelados = DB::select('exec usp_Tramite_GetPedidosCanceladosByEstadoTramite ?, ?',
                                                             [
@@ -29,29 +29,106 @@ class TramiteController extends Controller
         return ['arrayPedidosCancelados'=>$arrayPedidosCancelados];
     }
 
+    public function GetListFiltro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdGrupoPar    = $request->nidgrupopar;
+        $nJerarquia     = $request->jerarquia;
+        $variable       = $request->opcion;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayFiltros = DB::select('exec [usp_Tramite_GetConceptosTramiteByTipo] ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdGrupoPar,
+                                                            $nJerarquia
+                                                        ]);
+        if($variable == "0"){
+            $arrayFiltros = $this->arrayPaginator($arrayFiltros, $request);
+        }
+        return ['arrayFiltros'=>$arrayFiltros];
+    }
+
     public function SetCabeceraTramite(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                                [   $request->nIdEmpresa,
-                                                                    $request->nIdSucursal,
-                                                                    $request->dFechaInicioTramite,
-                                                                    $request->dFechaFinTramite,
-                                                                    $request->nNroVehiculoTramite,
-                                                                    $request->fTotalConTramiteTarjeta,
-                                                                    $request->fTotalConTramitePlaca,
-                                                                    $request->fTotalGastoAdicional,
-                                                                    $request->fTotalTramite,
-                                                                    $request->nIdEstadoTramite,
-                                                                    $request->cFlagEstadoAprobacion,
-                                                                    Auth::user()->id
-                                                                ]);
+        try{
+            DB::beginTransaction();
 
-        //OBTENGO DATA DE LA SOLICITUD TRAMITE
-        $arrayCabeceraTramite =  $data[0];
+            $arrayPedidoDoumentoNew = $request->arrayPedidoDoumentoNew;
+            if(sizeof($arrayPedidoDoumentoNew) > 0) {
+                foreach($arrayPedidoDoumentoNew as $ep=>$det)
+                {
+                    $data = DB::select('exec usp_Tramite_SetActualizarDocumentoPedido ?, ?, ?, ?, ?',
+                                                                        [   $request->nIdCabeceraPedido,
+                                                                            $det['nIdDocumentoAdjuntoPedido'],
+                                                                            ($det['cFlagDocumento'] == false) ? 0 : 1,
+                                                                            floatval($det['fMontoDocumento']),
+                                                                            Auth::user()->id
+                                                                        ]);
+                }
+            }
 
-        return response()->json($arrayCabeceraTramite);
+            $nIdFiltro01            =   $request->fillConceptosDocumentos['nIdFiltro01'];
+            $cDescripcionFiltro01   =   $request->fillConceptosDocumentos['cDescripcionFiltro01'];
+            $cMontoFiltro01         =   $request->fillConceptosDocumentos['cMontoFiltro01'];
+            $nIdFiltro02            =   $request->fillConceptosDocumentos['nIdFiltro02'];
+            $cDescripcionFiltro02   =   $request->fillConceptosDocumentos['cDescripcionFiltro02'];
+            $cMontoFiltro02         =   $request->fillConceptosDocumentos['cMontoFiltro02'];
+            $nIdFiltro03            =   $request->fillConceptosDocumentos['nIdFiltro03'];
+            $cDescripcionFiltro03   =   $request->fillConceptosDocumentos['cDescripcionFiltro03'];
+            $cMontoFiltro03         =   $request->fillConceptosDocumentos['cMontoFiltro03'];
+
+            $nIdFiltro01            =   ($nIdFiltro01 == NULL) ? ($nIdFiltro01 = 0) : $nIdFiltro01;
+            $cDescripcionFiltro01   =   ($cDescripcionFiltro01 == NULL) ? ($cDescripcionFiltro01 = '') : $cDescripcionFiltro01;
+            $cMontoFiltro01         =   ($cMontoFiltro01 == NULL) ? ($cMontoFiltro01 = 0) : $cMontoFiltro01;
+            $nIdFiltro02            =   ($nIdFiltro02 == NULL) ? ($nIdFiltro02 = 0) : $nIdFiltro02;
+            $cDescripcionFiltro02   =   ($cDescripcionFiltro02 == NULL) ? ($cDescripcionFiltro02 = '') : $cDescripcionFiltro02;
+            $cMontoFiltro02         =   ($cMontoFiltro02 == NULL) ? ($cMontoFiltro02 = 0) : $cMontoFiltro02;
+            $nIdFiltro03            =   ($nIdFiltro03 == NULL) ? ($nIdFiltro03 = 0) : $nIdFiltro03;
+            $cDescripcionFiltro03   =   ($cDescripcionFiltro03 == NULL) ? ($cDescripcionFiltro03 = '') : $cDescripcionFiltro03;
+            $cMontoFiltro03         =   ($cMontoFiltro03 == NULL) ? ($cMontoFiltro03 = 0) : $cMontoFiltro03;
+
+
+
+            // REGISTRAR CABECERA DE TRAMITE Y COSTOS SEGUN SEA EL CASO
+            $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdEmpresa,
+                                                                        $request->nIdSucursal,
+                                                                        $request->dFechaInicioTramite,
+                                                                        $request->dFechaFinTramite,
+                                                                        $request->nNroVehiculoTramite,
+                                                                        $request->fTotalTramiteTarjeta,
+                                                                        // $request->fTotalConTramitePlaca,
+                                                                        $request->fTotalTramiteAdicional,
+                                                                        $request->fTotalTramite,
+                                                                        $request->nIdEstadoTramite,
+                                                                        $request->cFlagEstadoAprobacion,
+                                                                        //
+                                                                        $nIdFiltro01,
+                                                                        $cDescripcionFiltro01,
+                                                                        $cMontoFiltro01,
+                                                                        $nIdFiltro02,
+                                                                        $cDescripcionFiltro02,
+                                                                        $cMontoFiltro02,
+                                                                        $nIdFiltro03,
+                                                                        $cDescripcionFiltro03,
+                                                                        $cMontoFiltro03,
+                                                                        Auth::user()->id
+                                                                    ]);
+
+            DB::commit();
+
+            //OBTENGO DATA DE LA SOLICITUD TRAMITE
+            $arrayCabeceraTramite =  $data[0];
+            return response()->json($arrayCabeceraTramite);
+
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 
     public function SetTramiteTarjeta(Request $request)
@@ -119,14 +196,14 @@ class TramiteController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEstadoTramite   = $request->nIdEstadoTramite;
-        $fechaInicioTramite   = $request->fechaInicioTramite;
-        $fechaFinRealTramite   = $request->fechaFinRealTramite;
-        $nIdTramitador      = Auth::user()->id;
+        $nIdEstadoTramite       = $request->nIdEstadoTramite;
+        $fechaInicioTramite     = $request->fechaInicioTramite;
+        $fechaFinRealTramite    = $request->fechaFinRealTramite;
+        $nIdTramitador          = Auth::user()->id;
 
-        $nIdEstadoTramite = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
-        $fechaInicioTramite = ($fechaInicioTramite == NULL) ? ($fechaInicioTramite = '') : $fechaInicioTramite;
-        $fechaFinRealTramite = ($fechaFinRealTramite == NULL) ? ($fechaFinRealTramite = '') : $fechaFinRealTramite;
+        $nIdEstadoTramite       = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $fechaInicioTramite     = ($fechaInicioTramite == NULL) ? ($fechaInicioTramite = '') : $fechaInicioTramite;
+        $fechaFinRealTramite    = ($fechaFinRealTramite == NULL) ? ($fechaFinRealTramite = '') : $fechaFinRealTramite;
 
         $arraySolicitudesTramites = DB::select('exec usp_Tramite_GetSolicitudesTramites ?, ?, ?, ?',
                                                             [
@@ -223,31 +300,24 @@ class TramiteController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdTramitePlaca = $request->nIdTramitePlaca;
-        $nIdCabeceraTramite = $request->nIdCabeceraTramite;
-        $nIdTramiteTarjeta = $request->nIdTramiteTarjeta;
-        $dFechaInicioTramite = $request->dFechaInicioTramite;
-        $dFechaFinTramite = $request->dFechaFinTramite;
-        $nIdEstado = $request->nIdEstado;
-        $dFechaFinRealTramite = $request->dFechaFinRealTramite;
-        $cObservacion = $request->cObservacion;
-        $flagRegTramiteByEstado = $request->flagRegTramiteByEstado;
+        $nIdTramitePlaca        =   $request->nIdTramitePlaca;
+        $nIdCabeceraTramite     =   $request->nIdCabeceraTramite;
+        $nIdTramiteTarjeta      =   $request->nIdTramiteTarjeta;
+        $dFechaInicioTramite    =   $request->dFechaInicioTramite;
+        $dFechaFinTramite       =   $request->dFechaFinTramite;
+        $nIdEstado              =   $request->nIdEstado;
+        $dFechaFinRealTramite   =   $request->dFechaFinRealTramite;
+        $cObservacion           =   $request->cObservacion;
+        $flagRegTramiteByEstado =   $request->flagRegTramiteByEstado;
 
-        $nIdTramitePlaca = ($nIdTramitePlaca == NULL) ?
-                                    ($nIdTramitePlaca = '') : $nIdTramitePlaca;
-        $nIdCabeceraTramite = ($nIdCabeceraTramite == NULL) ?
-                                    ($nIdCabeceraTramite = '') : $nIdCabeceraTramite;
-        $nIdTramiteTarjeta = ($nIdTramiteTarjeta == NULL) ?
-                                    ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
-        $dFechaInicioTramite = ($dFechaInicioTramite == NULL) ?
-                                    ($dFechaInicioTramite = '') : $dFechaInicioTramite;
-        $dFechaFinTramite = ($dFechaFinTramite == NULL) ?
-                                    ($dFechaFinTramite = '') : $dFechaFinTramite;
-        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
-        $dFechaFinRealTramite = ($dFechaFinRealTramite == NULL) ?
-                                     ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
-
-        $cObservacion = ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
+        $nIdTramitePlaca        = ($nIdTramitePlaca == NULL) ? ($nIdTramitePlaca = '') : $nIdTramitePlaca;
+        $nIdCabeceraTramite     = ($nIdCabeceraTramite == NULL) ? ($nIdCabeceraTramite = '') : $nIdCabeceraTramite;
+        $nIdTramiteTarjeta      = ($nIdTramiteTarjeta == NULL) ? ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
+        $dFechaInicioTramite    = ($dFechaInicioTramite == NULL) ? ($dFechaInicioTramite = '') : $dFechaInicioTramite;
+        $dFechaFinTramite       = ($dFechaFinTramite == NULL) ? ($dFechaFinTramite = '') : $dFechaFinTramite;
+        $nIdEstado              = ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
+        $dFechaFinRealTramite   = ($dFechaFinRealTramite == NULL) ? ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
+        $cObservacion           = ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
 
         $data = DB::select('exec usp_Tramite_SetTramiteObservacionPlaca ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [

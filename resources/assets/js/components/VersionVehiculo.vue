@@ -505,8 +505,6 @@
                     </div>
                 </div>
             </div>
-
-
         </main>
     </transition>
 </template>
