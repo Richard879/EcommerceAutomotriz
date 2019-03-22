@@ -2635,6 +2635,7 @@
                             me.arraySapUpdSgc.push({
                                 'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'C',
                                 'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
                         }
@@ -3566,6 +3567,7 @@
                                 me.arraySapUpdSgc.push({
                                     'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                     'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                    'cFlagTipo'     : 'C',
                                     'cLogRespuesta' : response.data.toString()
                                 });
 
