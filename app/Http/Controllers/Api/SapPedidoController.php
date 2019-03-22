@@ -137,7 +137,8 @@ class SapPedidoController extends Controller
                     "TaxCode"       =>  "IGV",
                     "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
                     //"UnitPrice" =>  (string)$SubTotal,
-                    "Currency"      =>  "US$"
+                    "Currency"      =>  "US$",
+                    "WarehouseCode" =>  (string)$request->WarehouseCode
                 ];
 
                 //Acumulador para setear en el DocTotal
