@@ -1189,9 +1189,9 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
-                    'cCardCode' : me.formSap.ccardcode.toString(),
+                    'cCardCode' : "P20544637313", //CODIGO FORUM
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arraySapUpdPedido
+                    'data'      : me.arrayTemporal
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -1202,10 +1202,11 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
-                                'nIdCabeceraPedido' : me.formSap.nidcabecerapedido.toString(),
+                                'cFlagTipo'         : "FP",
+                                'cItemCode'         : "",
                                 'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          : me.jsonFactura.DocType.toString(),
+                                'cDocType'          : me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta'     : response.data.toString()
                             });
                             //==============================================================
@@ -1360,7 +1361,7 @@
                 });
                 this.loading.close();
                 this.limpiarFormulario();
-                this.listarCompras(1);
+                this.listarWOperativo(1);
             },
             mostrarProgressBar(){
                 $("#myBar").show();

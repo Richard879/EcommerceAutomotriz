@@ -37,7 +37,7 @@ class SapComprobanteController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Factura/SapSetFactura/", $json);
+            $response = $client->request('POST', "/api/Comprobante/SapSetFactura/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -63,17 +63,17 @@ class SapComprobanteController extends Controller
                     "DocType"       => "dDocument_Service",
                     "DocumentLines" => [
                             [
-                                "ItemDescription"   => "Servicio Warrant Operativo",
+                                "ItemDescription"   => "Servicio WO - ".$value['cNumeroVin'],
                                 "TaxCode"           => "EXE_IGV",
-                                "PriceAfterVAT"     => $value['fTotal'],
+                                "PriceAfterVAT"     => $value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "AccountCode"       => $value['cAccountCode']
+                                "AccountCode"       => (string)$value['cAccountCode']
                             ]
                         ]
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Factura/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', "/api/Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
