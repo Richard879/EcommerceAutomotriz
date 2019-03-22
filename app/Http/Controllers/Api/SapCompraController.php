@@ -66,8 +66,8 @@ class SapCompraController extends Controller
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
-                    'U_SYP_MDMT'        =>  "01",
-                    'U_SYP_TCOMPRA'     =>  "01",
+                    "U_SYP_MDMT"        =>  "01",
+                    "U_SYP_TCOMPRA"     =>  "01",
                     "DocumentLines" => [
                             [
                                 "ItemCode"          => (string)$value['cNumeroVin'],
@@ -77,8 +77,8 @@ class SapCompraController extends Controller
                                 "Currency"          => "US$",
                                 "WarehouseCode"     => (string)$request->cWarehouseCode,
                                 "ProjectCode"       => (string)$value['cNumeroVin'],
-                                'CostingCode2'      =>  "01", //UnidadDeNegocio
-                                'CostingCode3'      =>  (string)$request->nIdSapSucursal //Codigo Sap Sucursal
+                                "CostingCode2"      =>  "01", //UnidadDeNegocio
+                                "CostingCode3"      =>  (string)$request->nIdSapSucursal //Codigo Sap Sucursal
                             ]
                         ]
                     ]

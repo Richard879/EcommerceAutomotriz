@@ -46,7 +46,7 @@ class SapPedidoController extends Controller
                     "DocCurrency"       =>  "US$",
                     //"DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
-                    'U_SYP_MDMT'        =>  "01",
+                    "U_SYP_MDMT"        =>  "01",
                     "DocumentLines" => [
                         [
                             "ItemCode"      =>  (string)$value['cNumeroVin'],
@@ -57,6 +57,7 @@ class SapPedidoController extends Controller
                             "Currency"      =>  "US$",
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
                             "ProjectCode"   =>  (string)$value['cNumeroVin'],
+                            "CostingCode2"  =>  "01", //UnidadDeNegocio
                             'SerialNumbers' =>  array()
                         ]
                     ]
@@ -114,7 +115,7 @@ class SapPedidoController extends Controller
                     "DocCurrency"       =>  "US$",
                     //"DocTotal"          =>  '',
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
-                    'U_SYP_MDMT'        =>  "01",
+                    "U_SYP_MDMT"        =>  "01",
                     "DocumentLines"     =>  array()
                 ]
             ];
@@ -138,7 +139,8 @@ class SapPedidoController extends Controller
                     "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
                     //"UnitPrice" =>  (string)$SubTotal,
                     "Currency"      =>  "US$",
-                    "WarehouseCode" =>  (string)$request->WarehouseCode
+                    "WarehouseCode" =>  (string)$request->WarehouseCode,
+                    "CostingCode2"  =>  "01", //UnidadDeNegocio
                 ];
 
                 //Acumulador para setear en el DocTotal
