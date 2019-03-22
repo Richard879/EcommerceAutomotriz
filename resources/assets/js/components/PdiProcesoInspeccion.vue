@@ -1738,18 +1738,16 @@
                 var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
                 axios.get(url, {
                     params: {
-                        'nidpar': this.formAlmacen.nidlocalidad,
-                        'nidgrupopar': 110102
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cflagtipo'     : 'VE'
                     }
                 }).then(response => {
                     if(response.data.length){
-                        // this.formAlmacen.cwhscode = response.data[0].cParJerarquia;
-                        // this.formAlmacen.cacctcodeentrada = response.data[0].cAcctCode;
-                        // this.formAlmacen.cwhsname = response.data[0].cWhsName;
+                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
+                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
                     }
                     else{
                         this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cacctcodeentrada = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
                 }).catch(error => {
@@ -1768,7 +1766,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'page' : page
                     }
                 }).then(response => {
@@ -3093,7 +3091,6 @@
                                 this.accion = 1;
                                 this.tituloFormulario = 'NUEVO PROCESO DE INSPECCIÓN';
                                 this.llenarTipoInspeccion();
-                                this.obtenerLocalidadBySucursal();
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -3102,7 +3099,6 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
-                                this.obtenerLocalidadBySucursal();
                                 this.formPdi.nidcabecerainspeccion = data['nIdCabeceraInspeccion'];
                                 this.formPdi.nidtipoinspeccion = data['nIdTipoInspeccion'];
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
