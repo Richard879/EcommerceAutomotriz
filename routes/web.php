@@ -486,6 +486,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
     //TarjetaEquipo
     Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
+    Route::post('/tarjetaequipo/SapUpdSocioNegocio', 'Api\SapTarjetaEquipoController@SapUpdSocioNegocio');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');

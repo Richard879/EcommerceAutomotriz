@@ -2219,7 +2219,24 @@
                 });
             },
             actualizarTarjetaEquipo(){
+                let me = this;
 
+                var url = me.ruta + '/tarjetaequipo/SapUpdSocioNegocio';
+                axios.post(url, {
+                    'data'  : me.arraySapPedido
+                }).then(response => {
+                    setTimeout(function() {
+                        me.obtenerSapCostoPromedio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             obtenerSapCostoPromedio(){
                 let me = this;
