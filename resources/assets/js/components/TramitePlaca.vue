@@ -1230,6 +1230,7 @@
                 vistaEstado: 2,
                 arrayEstadoTramiteTarjetaPlaca: [],//Select de Estados
                 arrayListadoEstadosTarjetaPlaca: [],//Listado de Estados Observados
+                fillIntegracionTarjetaEquipo: '',
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1591,6 +1592,15 @@
                         });
                     }
                 });
+
+                let acumulador = 0;
+                //Recorrer y acumular monto
+                me.arrayPedidoDoumentoNew.map(function(value, key){
+                    if(value.cFlagDocumento == true){
+                        acumulador = acumulador + parseFloat(value.fMontoDocumento);
+                    }
+                });
+                me.montoSubTotalTramiteAdicional = acumulador;
             },
             verificarConformidad(){
                 let me = this;
@@ -1987,6 +1997,10 @@
                 if(this.validarTramitePlaca()){
                     return;
                 }
+
+                this.mostrarProgressBar();
+                me.loadingProgressBar("INTEGRANDO PLACA CON SAP BUSINESS ONE...");
+
                 var url = this.ruta + '/tramite/SetEstadoTramitePlaca';
                 axios.post(url, {
                     'nIdTramitePlaca'       : this.fillModalTarjetaPlaca.nIdTramitePlaca,
@@ -1999,10 +2013,32 @@
                     'cObservacion'          : this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    // console.log(response.data);
+                    console.log(response.data);
+                    this.fillIntegracionTarjetaEquipo = response.data;
+                    this.actualizarTarjetaEquipo();
                     // this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarTarjetaEquipo(){
+                let me = this;
+
+                var url = me.ruta + '/tarjetaequipo/SapUpdTarjetaPlaca';
+                axios.post(url, {
+                    'EquipmentCardNum'      : me.fillIntegracionTarjetaEquipo.nEquipmentCardNum,
+                    'ManufacturerSerialNum' : me.fillIntegracionTarjetaEquipo.cPlaca
+                }).then(response => {
                     this.tabBandejaSolicitudes();
                     this.cerrarModalTramiteTarjetaPlaca();
+                    $("#myBar").hide();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2149,6 +2185,18 @@
                 this.arrayListadoEstadosTarjetaPlaca = [];
                 this.fillModalTarjetaPlaca.flagOpcion = '';
                 this.vistaEstado = 2;
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }

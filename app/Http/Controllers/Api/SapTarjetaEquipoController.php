@@ -64,4 +64,23 @@ class SapTarjetaEquipoController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapUpdTarjetaPlaca(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $json = [
+            'json' => [
+                "EquipmentCardNum"      => $request->EquipmentCardNum,
+                "ManufacturerSerialNum" => (string)$request->ManufacturerSerialNum
+            ]
+        ];
+
+        $response   =   $client->request('POST', "/api/TarjetaEquipo/SapPatchTarjetaEquipo/", $json);
+        $rptaSap    =   json_decode($response->getBody());
+        return $rptaSap;
+    }
 }
