@@ -1453,6 +1453,7 @@
                     'nidcabecerapedido' : parseInt(me.fillDirecciones.nIdCabeceraPedido)
                 }).then(function (response) {
                     if (response.data[0].nFlagMsje == 1) {
+                        me.obtenerPedidoById();
                         //me.obtenerIgv();
                     } else {
                         swal(
