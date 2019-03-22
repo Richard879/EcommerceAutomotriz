@@ -796,7 +796,7 @@ class PedidoController extends Controller
         return response()->json($data);
     }
 
-    public function GetLlamadasServiciosByPedido()
+    public function GetLlamadasServiciosByPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
