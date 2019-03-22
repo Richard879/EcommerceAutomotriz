@@ -444,7 +444,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/accesoriovehiculo/SetElementosByVehiculo', 'AccesorioVehiculoController@SetElementosByVehiculo');
     Route::get('/accesoriovehiculo/GetListAccesoriosByVehiculo','AccesorioVehiculoController@GetListAccesoriosByVehiculo');
 
-    Route::post('/comprobante/SetIntegraComprobante', 'ComprobanteController@SetIntegraComprobante');
+    Route::post('/comprobante/SetIntegraComprobante', 'IntComprobanteController@SetIntegraComprobante');
 
 
     ///========================================
