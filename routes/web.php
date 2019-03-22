@@ -489,7 +489,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
-    Route::post('/llamadaservicio/SapPatchLlamadaServicio', 'Api\SapLlamadaServicioController@SapPatchLlamadaServicio');
+    Route::post('/llamadaservicio/SapCloseLlamadaServicio', 'Api\SapLlamadaServicioController@SapCloseLlamadaServicio');
     Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');
     //Actividad
     Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');

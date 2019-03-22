@@ -2201,12 +2201,12 @@
             cerrarLlamadasServicios(){
                 let me = this;
 
-                var url = me.ruta + '/llamadaservicio/SapPatchLlamadaServicio';
+                var url = me.ruta + '/llamadaservicio/SapCloseLlamadaServicio';
                 axios.post(url, {
                     'data'  : me.arrayPatchLlamadaServicios
                 }).then(response => {
                     setTimeout(function() {
-                        me.obtenerSapCostoPromedio();
+                        me.actualizarTarjetaEquipo();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -2217,6 +2217,9 @@
                         }
                     }
                 });
+            },
+            actualizarTarjetaEquipo(){
+
             },
             obtenerSapCostoPromedio(){
                 let me = this;

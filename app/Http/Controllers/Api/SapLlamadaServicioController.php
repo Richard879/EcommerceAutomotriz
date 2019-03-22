@@ -101,7 +101,7 @@ class SapLlamadaServicioController extends Controller
         ];
     }
 
-    public function SapPatchLlamadaServicio(Request $request)
+    public function SapCloseLlamadaServicio(Request $request)
     {
         $client = new Client([
             'verify'    => false,
