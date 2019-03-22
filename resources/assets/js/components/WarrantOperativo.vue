@@ -1247,8 +1247,7 @@
                     }
                 });
             },
-            /*
-            obtenerWOTblCosto(){
+            /*obtenerWOTblCosto(){
                 let me = this;
                 var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
                 axios.post(url, {
