@@ -18,9 +18,8 @@ class IntComprobanteController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobante] ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['nIdCabeceraPedido'],
-                                                                $det['cItemCode'],
+                $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobante] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],

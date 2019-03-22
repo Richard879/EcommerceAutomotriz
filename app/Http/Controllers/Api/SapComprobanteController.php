@@ -44,7 +44,7 @@ class SapComprobanteController extends Controller
         return $array_rpta;
     }
 
-    public function SapSetFacturaProveedor(Request $request)
+    public function SapSetFacturaProveedorWO(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -63,11 +63,11 @@ class SapComprobanteController extends Controller
                     "DocType"       => "dDocument_Service",
                     "DocumentLines" => [
                             [
-                                "ItemCode"      => "22",
-                                "Quantity"      => $value['Quantity'],
-                                "TaxCode"       => "EXE_IGV",
-                                "PriceAfterVAT" => $value['fTotal'],
-                                "AccountCode"   => $value['cAccountCode']
+                                "ItemDescription"   => "Servicio Warrant Operativo",
+                                "TaxCode"           => "EXE_IGV",
+                                "PriceAfterVAT"     => $value['fTotal'],
+                                "Currency"          => "US$",
+                                "AccountCode"       => $value['cAccountCode']
                             ]
                         ]
                     ]

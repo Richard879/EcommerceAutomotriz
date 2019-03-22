@@ -1187,7 +1187,7 @@
             generaSapFacturaProveedor(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedor';
+                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
                     'cCardCode' : me.formSap.ccardcode.toString(),
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
@@ -1226,7 +1226,6 @@
                     }
                 });
             },
-            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
             registroSgcFacturaProveedor(){
                 let me = this;
 
