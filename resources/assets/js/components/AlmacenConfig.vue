@@ -118,10 +118,12 @@
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>Acción</th>
+                                                                                        <th>Código</th>
                                                                                         <th>Localidad</th>
                                                                                         <th>Almacen</th>
                                                                                         <th>Codigo Almacen Entrada</th>
                                                                                         <th>Codigo Almacen Salida</th>
+                                                                                        <th>Activo por Defecto</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -135,10 +137,12 @@
                                                                                                 <a href="#" @click.prevent="cambiarEstado(1, almacen)"><i :style="'color:green'" class="fa-md fa fa-check"></i></a>
                                                                                             </template>
                                                                                         </td>
+                                                                                        <td v-text="almacen.id"></td>
                                                                                         <td v-text="almacen.cNombreLocalidad"></td>
                                                                                         <td v-text="almacen.cWhsName"></td>
                                                                                         <td v-text="almacen.cAcctCode"></td>
                                                                                         <td v-text="almacen.cAcctCodeSalida"></td>
+                                                                                        <td v-text="almacen.cFlagPorDefecto"></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
