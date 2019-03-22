@@ -2190,7 +2190,7 @@
                         'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
-                    me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios.data;
+                    me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios;
                     setTimeout(function() {
                         me.cerrarLlamadasServicios();
                     }, 1600);
