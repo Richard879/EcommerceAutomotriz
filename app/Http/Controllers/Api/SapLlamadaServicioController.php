@@ -116,15 +116,8 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
-                    "CustomerCode"         => $value['cCustomerCode'],
-                    "InternalSerialNum"    => $value['cInternalSerialNum'],
-                    "ItemCode"             => $value['cItemCode'],
-                    "Subject"              => $value['cSubject'],
-                    "ServiceCallActivities" => [
-                        [
-                            "ActivityCode"=> (string)$value['nActivityCode']
-                        ]
-                    ]
+                    "ServiceCallID"     => $value['nServiceCallID'],
+                    "Status"            => $value['nStatusClose']
                 ]
             ];
 

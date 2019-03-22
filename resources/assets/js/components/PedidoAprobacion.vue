@@ -817,6 +817,7 @@
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
                 arraySolucion: [],
+                arrayPatchLlamadaServicios: [],
                 fAvgPrice: 0,
                 fImporte: 0,
                 //===========================================================
@@ -2163,6 +2164,48 @@
                     'arrayServiceCallActivities': me.arrayServiceCallActivities
                 }).then(response => {
                     setTimeout(function() {
+                        me.obtenerLlamadasServicios();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerLlamadasServicios(){
+                let me = this;
+                var sapUrl = me.ruta + '/pedido/GetLlamadasServiciosByPedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
+                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                    }
+                }).then(response => {
+                    me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cerrarLlamadasServicios(){
+                let me = this;
+
+                var url = me.ruta + '/llamadaservicio/SapPatchLlamadaServicio';
+                axios.post(url, {
+                    'data'  : me.arrayPatchLlamadaServicios
+                }).then(response => {
+                    setTimeout(function() {
                         me.obtenerSapCostoPromedio();
                     }, 1600);
                 }).catch(error => {
@@ -2542,6 +2585,7 @@
                 this.arraySapEVArticulosEnvia= [];
                 this.arraySapEVServiciosEnvia= [];
                 this.arraySolucion= [];
+                this.arrayPatchLlamadaServicios= [];
                 this.nSolutionCode= 0;
 
                 //Direcciones

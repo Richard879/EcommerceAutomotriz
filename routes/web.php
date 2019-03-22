@@ -197,6 +197,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
     Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
+    Route::get('/pedido/GetLlamadasServiciosByPedido', 'PedidoController@GetLlamadasServiciosByPedido');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
@@ -488,6 +489,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
+    Route::post('/llamadaservicio/SapPatchLlamadaServicio', 'Api\SapLlamadaServicioController@SapPatchLlamadaServicio');
     Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');
     //Actividad
     Route::post('/actividad/SapSetActividadCompra', 'Api\SapActividadController@SapSetActividadCompra');
