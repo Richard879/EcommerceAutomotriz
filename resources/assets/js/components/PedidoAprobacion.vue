@@ -1706,6 +1706,7 @@
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode'     :   me.formAlmacen.cwhscode,
                     'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
                     'arraySapPedido'    :   me.arraySapPedido,
                     'arraySapEVPedido'  :   me.arraySapEVPedido
                 }).then(response => {

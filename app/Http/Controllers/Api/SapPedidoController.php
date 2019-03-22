@@ -58,6 +58,7 @@ class SapPedidoController extends Controller
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
                             "ProjectCode"   =>  (string)$value['cNumeroVin'],
                             "CostingCode2"  =>  "01", //UnidadDeNegocio
+                            "CostingCode3"      =>  (string)$request->nIdSapSucursal,
                             'SerialNumbers' =>  array()
                         ]
                     ]
@@ -133,14 +134,15 @@ class SapPedidoController extends Controller
 
                 // Setear DocumentLines
                 $json['json']['DocumentLines'][] = [
-                    "ItemCode"      =>  $value['cCodigoERP'],
-                    "Quantity"      =>  $value['nCantidad'],
-                    "TaxCode"       =>  "IGV",
-                    "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
+                    "ItemCode"          =>  $value['cCodigoERP'],
+                    "Quantity"          =>  $value['nCantidad'],
+                    "TaxCode"           =>  "IGV",
+                    "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
                     //"UnitPrice" =>  (string)$SubTotal,
-                    "Currency"      =>  "US$",
-                    "WarehouseCode" =>  (string)$request->WarehouseCode,
-                    "CostingCode2"  =>  "01", //UnidadDeNegocio
+                    "Currency"          =>  "US$",
+                    "WarehouseCode"     =>  (string)$request->WarehouseCode,
+                    "CostingCode2"      =>  "01", //UnidadDeNegocio
+                    "CostingCode3"      =>  (string)$request->nIdSapSucursal
                 ];
 
                 //Acumulador para setear en el DocTotal
