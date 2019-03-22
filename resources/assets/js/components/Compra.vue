@@ -4394,7 +4394,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlocalidad': this.formAlmacen.nidlocalidad,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'page' : page
                     }
                 }).then(response => {

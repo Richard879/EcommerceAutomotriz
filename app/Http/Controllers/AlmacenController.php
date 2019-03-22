@@ -56,14 +56,14 @@ class AlmacenController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdLocalidad   = $request->nidlocalidad;
+        $nIdSucursal   = $request->nidsucursal;
         $variable       = $request->opcion;
 
-        $nIdLocalidad   = ($nIdLocalidad == NULL) ? ($nIdLocalidad = 0) : $nIdLocalidad;
+        $nIdSucursal   = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
         $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayAlmacen = DB::select('exec [usp_Almacen_GetAlmacenByLocalidad] ?',
-                                                                [   $nIdLocalidad
+                                                                [   $nIdSucursal
                                                                 ]);
 
         if($variable == "0"){
