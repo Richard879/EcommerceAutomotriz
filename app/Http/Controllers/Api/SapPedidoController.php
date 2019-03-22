@@ -36,7 +36,7 @@ class SapPedidoController extends Controller
         $arraySapPedido = $request->arraySapPedido;
         foreach ($arraySapPedido as $key => $value) {
 
-            $SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
+            //$SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
 
             $json = [
                 'json' => [
