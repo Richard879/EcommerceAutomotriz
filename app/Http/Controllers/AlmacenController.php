@@ -41,12 +41,12 @@ class AlmacenController extends Controller
 
     public function GetAlmacenPorDefecto(Request $request)
     {
-        $nIdPar         = $request->nidpar;
-        $nIdGrupoPar    = $request->nidgrupopar;
+        $nIdSucursal    = $request->nidsucursal;
+        $cFlagTipo      = $request->cflagtipo;
 
         $data = DB::select('exec [usp_Almacen_GetAlmacenPorDefecto] ?, ?',
-                                                [   $nIdPar,
-                                                    $nIdGrupoPar
+                                                [   $nIdSucursal,
+                                                    $cFlagTipo
                                                 ]);
 
         return response()->json($data);
