@@ -331,7 +331,7 @@ class PdiProcesoController extends Controller
                                                                     $codVehiculo
                                                                 ]);
 
-        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 
@@ -353,5 +353,26 @@ class PdiProcesoController extends Controller
 
         $arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
         return ['arrayPdi'=>$arrayPdi];
+    }
+
+    public function GetAccesoriosPdiEntregaVehiculo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa     =   $request->nidempresa;
+        $tipoBsq        =   $request->nidtipoelemen;
+        $codVehiculo    =   $request->codVehiculo;
+
+        $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
+        $codVehiculo    =   ($codVehiculo == NULL) ? ($codVehiculo = '') : $codVehiculo;
+
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetAccesoriosPdiEntregaVehiculo] ?, ?, ?',
+                                                                [   $nidempresa,
+                                                                    $tipoBsq,
+                                                                    $codVehiculo
+                                                                ]);
+
+        //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 }

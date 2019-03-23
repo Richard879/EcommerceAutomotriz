@@ -2073,7 +2073,7 @@
                 }).then(response => {
                     let me = this;
                     me.arrayAccesorioFlag = [];
-                    me.arrayAccesorioFlag = response.data.arrayElementoVenta.data;
+                    me.arrayAccesorioFlag = response.data.arrayElementoVenta;
                     this.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
@@ -2085,8 +2085,8 @@
                     }
                 });
             },
-            listarAccesorioByPedido(){
-                var url = this.ruta + '/pdi/GetElementoByTipoBsq';
+            listarAccesoriosPdiEntregaVehiculo(){
+                var url = this.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
 
                 axios.get(url, {
                     params: {
@@ -2097,7 +2097,7 @@
                 }).then(response => {
                     let me = this;
                     me.arrayAccesorioFlag = [];
-                    me.arrayAccesorioFlag = response.data.arrayElementoVenta.data;
+                    me.arrayAccesorioFlag = response.data.arrayElementoVenta;
                     this.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
@@ -3211,7 +3211,7 @@
                                 };
                                 //Si es Entrega Vehiculo
                                 if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){
-                                    this.listarAccesorioByPedido();
+                                    this.listarAccesoriosPdiEntregaVehiculo();
                                 };
                                 break;
                             }
