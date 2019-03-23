@@ -235,7 +235,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
                                                     <div class="row">
-                                                        <label class="col-sm-3 form-control-label">Tipo Inspección</label>
+                                                        <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
                                                         <div class="col-sm-5">
                                                             <el-select  v-model="formPdi.nidtipoinspeccion"
                                                                         filterable
