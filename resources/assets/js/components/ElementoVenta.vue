@@ -66,12 +66,12 @@
                                                         <th>Código</th>
                                                         <th>Código SAP</th>
                                                         <th>Proveedor</th>
-                                                        <th>Tipo Elemento</th>
+                                                        <th>Tipo</th>
                                                         <th>Nombre Elemento</th>
                                                         <th>Moneda</th>
-                                                        <th>Precio Venta</th>
-                                                        <th>Precio Venta Mínimo</th>
-                                                        <th>Valor Costo</th>
+                                                        <th>Prec. Venta</th>
+                                                        <th>Prec. Venta Mínimo</th>
+                                                        <th>Costo</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
