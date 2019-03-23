@@ -929,10 +929,9 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(objProveedor){
-                this.formWOperativo.nidproveedor = objProveedor.nProveedorId;
-                this.formWOperativo.cproveedornombre = objProveedor.cProveedorNombre;
+                this.formWOperativo.nidproveedor = objProveedor.nIdPar;
+                this.formWOperativo.cproveedornombre = objProveedor.cParNombre;
                 this.formWOperativo.ccarcode = objProveedor.cParJerarquia;
-                alert(objProveedor.cParJerarquia);
                 this.cerrarModal();
             },
             llenarComboEstadoWarrant(){
