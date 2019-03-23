@@ -80,7 +80,7 @@ class WarrantOperativoController extends Controller
             }  
             DB::commit();
             return $nIdWarrantOperativo;
-        } catch (Exception $e){
+        }catch (Exception $e){
             DB::rollBack();
         }    
     }
