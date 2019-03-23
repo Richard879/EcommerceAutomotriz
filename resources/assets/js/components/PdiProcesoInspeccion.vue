@@ -2085,6 +2085,30 @@
                     }
                 });
             },
+            listarAccesorioByPedido(){
+                var url = this.ruta + '/pdi/GetElementoByTipoBsq';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                    }
+                }).then(response => {
+                    let me = this;
+                    me.arrayAccesorioFlag = [];
+                    me.arrayAccesorioFlag = response.data.arrayElementoVenta.data;
+                    this.llenarAccesorios();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             llenarAccesorios(){
                 let me = this;
                 me.arrayAccesorioFlag.map(function(value, key){
@@ -3187,7 +3211,7 @@
                                 };
                                 //Si es Entrega Vehiculo
                                 if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){
-                                    //this.listarAccesorioByCod();
+                                    this.listarAccesorioByPedido();
                                 };
                                 break;
                             }
