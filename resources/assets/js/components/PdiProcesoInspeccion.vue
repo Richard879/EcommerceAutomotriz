@@ -3253,10 +3253,10 @@
                 return this.error;
             },
             limpiarFormulario(){
-                this.formPdi.cnumerovin = ''
-                this.formPdi.nidcompra = ''
-                this.formPdi.nidflagmovimiento = 1
-                this.formPdi.nidflagvinplaca = 1
+                this.formPdi.cnumerovin = '',
+                this.formPdi.nidcompra = '',
+                this.formPdi.nidflagmovimiento = 1,
+                //this.formPdi.nidflagvinplaca = 1
                 this.formPdi.nidpuntoinspeccion = 0,
                 this.formPdi.cnombrepuntoinspeccion = '',
                 this.formPdi.nidsolicitud = 0,
