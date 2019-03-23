@@ -1097,6 +1097,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Acciones</th>
+                                                            <th>Tipo</th>
                                                             <th>Nombre</th>
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
@@ -1110,6 +1111,7 @@
                                                                     <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="a.cTipoElemenNombre"></td>
                                                             <td v-text="a.cElemenNombre"></td>
                                                             <td><input type="number" v-model="a.nCantidad" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
@@ -3168,6 +3170,8 @@
                             }
                             case 'vinplaca':
                             {
+                                this.changeFlagVinPlaca();
+                                this.limpiarFormulario();
                                 //Si es VIN
                                 if(this.formPdi.nidflagvinplaca == 1){
                                     this.accionmodal    = 5;
