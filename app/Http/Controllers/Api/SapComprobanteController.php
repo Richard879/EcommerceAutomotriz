@@ -60,7 +60,6 @@ class SapComprobanteController extends Controller
                 'json' => [
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
-                    "Reference2"    => $value['cNumeroVin'],
                     "DocCurrency"   =>  "US$",
                     "DocType"       => "dDocument_Service",
                     "DocumentLines" => [
@@ -69,7 +68,9 @@ class SapComprobanteController extends Controller
                                 "TaxCode"           => "EXE_IGV",
                                 "PriceAfterVAT"     => $value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "AccountCode"       => (string)$value['cAccountCode']
+                                "AccountCode"       => (string)$value['cAccountCode'],
+                                //"WarehouseCode"     => (string)$request->cWarehouseCode,
+                                "ProjectCode"       => (string)$value['cNumeroVin'],
                             ]
                         ]
                     ]
@@ -98,7 +99,6 @@ class SapComprobanteController extends Controller
                 'json' => [
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
-                    "Reference2"    => $value['cNumeroVin'],
                     "DocCurrency"   =>  "US$",
                     "DocType"       => "dDocument_Service",
                     "DocumentLines" => [

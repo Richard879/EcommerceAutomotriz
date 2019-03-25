@@ -27,6 +27,7 @@ class SapAsientoContableController extends Controller
                 'json' => [
                     "Memo"                  =>  "WO-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
+                    "Reference2"            =>  $value['cProjectCode'],
                     "JournalEntryLines"    => 
                         [
                             [
@@ -74,6 +75,7 @@ class SapAsientoContableController extends Controller
                 'json' => [
                     "Memo"                  =>  "WF-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
+                    "Reference2"            =>  $value['cProjectCode'],
                     "JournalEntryLines"    => 
                         [
                             [
