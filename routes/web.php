@@ -324,6 +324,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/autorizacion/GetRefVehiculoByContacto', 'AutorizacionController@GetRefVehiculoByContacto');
     Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
     Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');
+    Route::get('/autorizacion/GetListCantidadEntregaByDia', 'AutorizacionController@GetListCantidadEntregaByDia');
+    Route::get('/autorizacion/GetListHoraEntregaByDia', 'AutorizacionController@GetListHoraEntregaByDia');
+    Route::get('/autorizacion/GetListHorasLibresPorFecha', 'AutorizacionController@GetListHorasLibresPorFecha');
 
     Route::get('/tramite/GetPedidosCanceladosByEstadoTramite', 'TramiteController@GetPedidosCanceladosByEstadoTramite');
     Route::get('/tramite/GetListFiltro', 'TramiteController@GetListFiltro');
