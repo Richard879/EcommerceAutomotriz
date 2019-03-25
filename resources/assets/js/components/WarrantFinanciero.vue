@@ -342,24 +342,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Registro</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWFinanciero.dfechainicio" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Vencimiento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWFinanciero.dfechafin" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -739,7 +721,8 @@
                     cbanconombre: '',
                     cnrowarrant: '',
                     dfechainicio: '',
-                    dfechafin: ''
+                    dfechafin: '',
+                    ccarcode: ''
                 },
                 fillVersionVehiculo:{
                     cnumerovin: '',
@@ -865,6 +848,7 @@
             asignarBanco(objBanco){
                 this.formWFinanciero.nidbanco = objBanco.nIdPar;
                 this.formWFinanciero.cbanconombre = objBanco.cParNombre;
+                this.formWFinanciero.ccarcode = objProveedor.cParJerarquia;
                 this.cerrarModal();
             },
             llenarComboEstadoWarrant(){
@@ -1271,6 +1255,7 @@
                 this.fillWFinanciero.nidwarrantfinanciero= 0,
                 this.fillWFinanciero.nordencompra= '',
                 this.fillWFinanciero.cnumerovin=  '',
+                this.formWFinanciero.ccarcode= '',
                 this.arrayWFinanciero = [],
                 this.arrayTemporal= [],
                 this.limpiarPaginacion();
