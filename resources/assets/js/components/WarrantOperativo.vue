@@ -1276,7 +1276,7 @@
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
                                 'cFlagTipo'         : "FP",
-                                'cItemCode'         : "",
+                                'cItemCode'         : me.jsonRespuesta.Reference2.toString(),
                                 'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
                                 'cDocType'          : me.jsonRespuesta.DocType.toString(),

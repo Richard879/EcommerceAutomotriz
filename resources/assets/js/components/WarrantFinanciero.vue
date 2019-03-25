@@ -848,7 +848,7 @@
             asignarBanco(objBanco){
                 this.formWFinanciero.nidbanco = objBanco.nIdPar;
                 this.formWFinanciero.cbanconombre = objBanco.cParNombre;
-                this.formWFinanciero.ccarcode = objProveedor.cParJerarquia;
+                this.formWFinanciero.ccarcode = objBanco.cParJerarquia;
                 this.cerrarModal();
             },
             llenarComboEstadoWarrant(){
@@ -907,7 +907,7 @@
                 this.listarWFinancieros(page);
             },
             asignaIdWFinanciero(objWF){
-                this.fillWFinancieroDetalle.nidwarrantfinanciero= objWO.nIdWarrantFinanciero;
+                this.fillWFinancieroDetalle.nidwarrantfinanciero= objWF.nIdWarrantFinanciero;
                 this.buscarWFinancieroDetalle();
             },
             buscarWFinancieroDetalle(){
@@ -1191,7 +1191,7 @@
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
                                 'cFlagTipo'         : "FP",
-                                'cItemCode'         : "",
+                                'cItemCode'         : me.jsonRespuesta.Reference2.toString(),
                                 'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
                                 'cDocType'          : me.jsonRespuesta.DocType.toString(),
