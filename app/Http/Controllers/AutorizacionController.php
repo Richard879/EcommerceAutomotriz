@@ -278,4 +278,58 @@ class AutorizacionController extends Controller
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
+
+    public function GetListCantidadEntregaByDia(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $ngrupoparid    = $request->ngrupoparid;
+        $dFechaEntrega  = $request->dFechaEntrega;
+
+        $ngrupoparid    = ($ngrupoparid == NULL) ? ($ngrupoparid = 0) : $ngrupoparid;
+        $dFechaEntrega  = ($dFechaEntrega == NULL) ? ($dFechaEntrega = '') : $dFechaEntrega;
+
+        $data = DB::select('exec [usp_Autorizacion_GetListCantidadEntregaByDia] ?, ?',
+                                                            [   $ngrupoparid,
+                                                                $dFechaEntrega
+                                                            ]);
+
+        return response()->json($data);
+    }
+
+    public function GetListHoraEntregaByDia(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $dFechaEntrega  = $request->dFechaEntrega;
+        $choraEntrega   = $request->choraEntrega;
+
+        $dFechaEntrega  = ($dFechaEntrega == NULL) ? ($dFechaEntrega = '') : $dFechaEntrega;
+        $choraEntrega   = ($choraEntrega == NULL) ? ($choraEntrega = '') : $choraEntrega;
+
+        $data = DB::select('exec [usp_Autorizacion_GetListHoraEntregaByDia] ?, ?',
+                                                            [   $dFechaEntrega,
+                                                                $choraEntrega
+                                                            ]);
+
+        return response()->json($data);
+    }
+
+    public function GetListHorasLibresPorFecha(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $ngrupoparid    = $request->ngrupoparid;
+        $dFechaEntrega  = $request->dFechaEntrega;
+
+        $ngrupoparid    = ($ngrupoparid == NULL) ? ($ngrupoparid = 0) : $ngrupoparid;
+        $dFechaEntrega  = ($dFechaEntrega == NULL) ? ($dFechaEntrega = '') : $dFechaEntrega;
+
+        $data = DB::select('exec [usp_Autorizacion_GetListHorasLibresPorFecha] ?, ?',
+                                                            [   $ngrupoparid,
+                                                                $dFechaEntrega
+                                                            ]);
+
+        return response()->json($data);
+    }
 }
