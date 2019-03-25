@@ -100,7 +100,6 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>Proveedor</th>
                                                                                     <th>Moneda</th>
@@ -114,10 +113,6 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Cancelar {{ operativo.nIdWarrantOperativo }}</div>
-                                                                                        <i @click="cancelarWOperativo(operativo)" :style="'color:green'" class="fa-md fa fa-check-circle"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                     <td v-text="operativo.nIdWarrantOperativo"></td>
                                                                                     <td v-text="operativo.cProveedorNombre"></td>
                                                                                     <td v-text="operativo.cSimboloMoneda"></td>
@@ -248,6 +243,7 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>O/C</th>
                                                                                     <th>Nombre Comercial</th>
@@ -261,6 +257,10 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Cancelar {{ operativo.nIdDetalleWarrant }}</div>
+                                                                                        <i @click="cancelarWOperativoDetalle(operativo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                     <td>{{ odetalle.nIdDetalleWarrant }}</td>
                                                                                     <td>{{ odetalle.nOrdenCompra }}</td>
                                                                                     <td>{{ odetalle.cNombreComercial }}</td>
@@ -1036,7 +1036,7 @@
                 this.pagination.current_page=page;
                 this.listarDetalleWOperativo(page);
             },
-            cancelarWOperativo(objWarrant){
+            cancelarWOperativoDetalle(objWarrant){
                 swal({
                     title: 'Estas seguro de cancelar este warrant?',
                     type: 'warning',
@@ -1047,9 +1047,9 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            var url = this.ruta + '/woperativo/UpdEstadoWOperativo';
+                            var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
                             axios.put(url, {
-                                'nIdWarrantOperativo'   : parseInt(objWarrant.nIdWarrantOperativo),
+                                'nIdDetalleWarrant'   : parseInt(objWarrant.nIdDetalleWarrant),
                                 'nIdEstadoWarrant'      : 1300081
                             }).then(response => {
                                 if(response.data[0].nFlagMsje == 1){

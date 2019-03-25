@@ -135,12 +135,12 @@ class WarrantOperativoController extends Controller
         }
     }
 
-    public function UpdEstadoWOperativo(Request $request)
+    public function UpdEstadoWoDetalle(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayWO = DB::select('exec [usp_WO_UpdEstadoWOperativo] ?, ?, ?',
-                                                [   $request->nIdWarrantOperativo,
+        $arrayWO = DB::select('exec [usp_WO_UpdEstadoWoDetalle] ?, ?, ?',
+                                                [   $request->nIdDetalleWarrant,
                                                     $request->nIdEstadoWarrant,
                                                     Auth::user()->id
                                                 ]);
