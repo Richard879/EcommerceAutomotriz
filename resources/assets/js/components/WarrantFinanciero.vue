@@ -1,38 +1,299 @@
 <template>
-    <main>
-        <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">WARRANT FINANCIERO</h2>
-            </div>
-        </header>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">WARRANT FINANCIERO</h2>
+                </div>
+            </header>
 
-        <section>
-            <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaWFinanciero" @click="tabBuscarWFinanciero();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR W. FINANCIERO
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraWFinanciero" @click="tabGeneraWFinanciero();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-file-text-o"></i> GENERAR W. FINANCIERO
-                                    </a>
-                                </li>
-                            </ul>
+            <section>
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#TabBuscaWFinanciero" @click="tabBuscarWFinanciero();" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR W. FINANCIERO
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabGeneraWFinanciero" @click="tabGeneraWFinanciero();" role="tab" data-toggle="tab">
+                                            <i class="fa fa-file-text-o"></i> GENERAR W. FINANCIERO
+                                        </a>
+                                    </li>
+                                </ul>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active show" id="TabBuscaWFinanciero">
-                                    <template v-if="vistaFormularioTabBuscar">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active show" id="TabBuscaWFinanciero">
+                                        <template v-if="vistaFormularioTabBuscar">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Nro Warrant</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="fillWFinanciero.cnrowarrant" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Estado</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <select v-model="fillWFinanciero.nidestadowarrant" class="form-control form-control-sm">
+                                                                                        <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWFinanciero();"><i class="fa fa-search"></i> Buscar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayWFinanciero.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Nro Warrant</th>
+                                                                                    <th>Banco</th>
+                                                                                    <th>Fecha Registro</th>
+                                                                                    <th>Fecha Venc.</th>
+                                                                                    <th>Moneda</th>
+                                                                                    <th>Valor Total</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="operativo in arrayWFinanciero" :key="operativo.nIdWarrantFinanciero">
+                                                                                    <td>{{ operativo.nIdWarrantFinanciero }}</td>
+                                                                                    <td>{{ operativo.cNumeroWarrant }}</td>
+                                                                                    <td>{{ operativo.BancoNombre }}</td>
+                                                                                    <td>{{ operativo.dFechaInicioWarrant }}</td>
+                                                                                    <td>{{ operativo.dFechaVencimientoWarrant }}</td>
+                                                                                    <td>{{ operativo.cSimboloMoneda }}</td>
+                                                                                    <td>{{ operativo.fValorTotal }}</td>
+                                                                                    <td>{{ operativo.cParNombre }}</td>
+                                                                                    <td>
+                                                                                        <a href="#" @click="asignaIdWFinanciero(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
+                                                                                        <i class="fa-md fa fa-eye"></i></a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                        :class="[page==isActived?'active':'']">
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPagina(page)"
+                                                                                            v-text="page"></a>
+                                                                                        </li>
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-lg-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>
+                                        <template v-else>
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Nro VIN</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <input type="hidden" v-model="fillWFinancieroDetalle.nidwarrantfinanciero">
+                                                                                        <input type="text" v-model="fillWFinancieroDetalle.cnumerovin" @keyup.enter="buscarWFinancieroDetalle()" class="form-control form-control-sm">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Estado</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <select v-model="fillWFinancieroDetalle.nidestadowarrant" class="form-control form-control-sm">
+                                                                                            <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <span class="input-group-btn">
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayWFinancieroDetalle.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>O/C</th>
+                                                                                    <th>Nombre Comercial</th>
+                                                                                    <th>Nro VIN</th>
+                                                                                    <th>Moneda</th>
+                                                                                    <th>Valor Warrant</th>
+                                                                                    <th>Estado</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
+                                                                                    <td v-text="odetalle.nIdDetalleWarrant"></td>
+                                                                                    <td v-text="odetalle.nOrdenCompra"></td>
+                                                                                    <td v-text="odetalle.cNombreComercial"></td>
+                                                                                    <td v-text="odetalle.cNumeroVin"></td>
+                                                                                    <td v-text="odetalle.cSimboloMoneda"></td>
+                                                                                    <td v-text="odetalle.fValorWarrant"></td>
+                                                                                    <td v-text="odetalle.cParNombre"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                        :class="[page==isActived?'active':'']">
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPaginaDetalle(page)"
+                                                                                            v-text="page"></a>
+                                                                                        </li>
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-lg-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabGeneraWFinanciero">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
+                                                            <h3 class="h4">GENERAR WARRANT FINANCIERO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -57,152 +318,27 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Warrant</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillWFinanciero.cnrowarrant" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Estado</label>
-                                                                            <div class="col-sm-8">
-                                                                                <select v-model="fillWFinanciero.nidestadowarrant" class="form-control form-control-sm">
-                                                                                    <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWFinanciero();"><i class="fa fa-search"></i> Buscar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <template v-if="arrayWFinanciero.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Nro Warrant</th>
-                                                                                <th>Banco</th>
-                                                                                <th>Fecha Registro</th>
-                                                                                <th>Fecha Venc.</th>
-                                                                                <th>Moneda</th>
-                                                                                <th>Valor Total</th>
-                                                                                <th>Estado</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="operativo in arrayWFinanciero" :key="operativo.nIdWarrantFinanciero">
-                                                                                <td>{{ operativo.nIdWarrantFinanciero }}</td>
-                                                                                <td>{{ operativo.cNumeroWarrant }}</td>
-                                                                                <td>{{ operativo.BancoNombre }}</td>
-                                                                                <td>{{ operativo.dFechaInicioWarrant }}</td>
-                                                                                <td>{{ operativo.dFechaVencimientoWarrant }}</td>
-                                                                                <td>{{ operativo.cSimboloMoneda }}</td>
-                                                                                <td>{{ operativo.fValorTotal }}</td>
-                                                                                <td>{{ operativo.cParNombre }}</td>
-                                                                                <td>
-                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
-                                                                                    <i class="fa-md fa fa-eye"></i></a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPagina(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </template>
-                                    <template v-else>
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">* Banco</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="hidden" v-model="fillWFinancieroDetalle.nidwarrantfinanciero">
-                                                                                    <input type="text" v-model="fillWFinancieroDetalle.cnumerovin" @keyup.enter="buscarWFinancieroDetalle()" class="form-control form-control-sm">
-                                                                                    <span class="input-group-btn">
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                    </span>
+                                                                                    <input type="text" v-model="formWFinanciero.cbanconombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Banco </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('banco','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Estado</label>
+                                                                            <label class="col-sm-4 form-control-label">Nro Warranat</label>
                                                                             <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <select v-model="fillWFinancieroDetalle.nidestadowarrant" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <span class="input-group-btn">
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                    </span>
-                                                                                </div>
+                                                                                <input type="text" v-model="formWFinanciero.cnrowarrant" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -217,379 +353,244 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayWFinancieroDetalle.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>O/C</th>
-                                                                                <th>Nombre Comercial</th>
-                                                                                <th>Nro VIN</th>
-                                                                                <th>Moneda</th>
-                                                                                <th>Valor Warrant</th>
-                                                                                <th>Estado</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                <td v-text="odetalle.nIdDetalleWarrant"></td>
-                                                                                <td v-text="odetalle.nOrdenCompra"></td>
-                                                                                <td v-text="odetalle.cNombreComercial"></td>
-                                                                                <td v-text="odetalle.cNumeroVin"></td>
-                                                                                <td v-text="odetalle.cSimboloMoneda"></td>
-                                                                                <td v-text="odetalle.fValorWarrant"></td>
-                                                                                <td v-text="odetalle.cParNombre"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </template>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabGeneraWFinanciero">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">GENERAR WARRANT FINANCIERO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Banco</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <input type="text" v-model="formWFinanciero.cbanconombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Buscar Banco </div>
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('banco','buscar')">
-                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                        </button>
-                                                                                    </el-tooltip>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Warranat</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="formWFinanciero.cnrowarrant" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="col-sm-9">
-                                                            <div class="row">
-                                                                <label class="col-sm-3 form-control-label">* Buscar Vehiculos</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input-group">
-                                                                        <input type="text" value="VEHICULO MOTORIZADO" class="form-control form-control-sm" readonly>
-                                                                        <div class="input-group-prepend">
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Buscar Vehículos </div>
-                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
-                                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                                </button>
-                                                                            </el-tooltip>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayTemporal.length">
-                                                            <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                <table class="table table-striped table-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Acciones</th>
-                                                                            <th>OC</th>
-                                                                            <th>Nro VIN</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Moneda</th>
-                                                                            <th>Total</th>
-                                                                            <th>Nro Factura</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
-                                                                            <td>
-                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
-                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
-                                                                            </td>
-                                                                            <td v-text="temporal.nOrdenCompra"></td>
-                                                                            <td v-text="temporal.cNumeroVin"></td>
-                                                                            <td v-text="temporal.cNombreComercial"></td>
-                                                                            <td v-text="temporal.cSimboloMoneda"></td>
-                                                                            <td v-text="temporal.fTotalCompra"></td>
-                                                                            <td v-text="temporal.cNumeroFactura"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-lg-12">
+                                                            <div class="col-sm-9">
                                                                 <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
+                                                                    <label class="col-sm-3 form-control-label">* Buscar Vehiculos</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <input type="text" value="VEHICULO MOTORIZADO" class="form-control form-control-sm" readonly>
+                                                                            <div class="input-group-prepend">
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Buscar Vehículos </div>
+                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
+                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                    </button>
+                                                                                </el-tooltip>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                                        <i class="fa fa-save"></i> Registrar
-                                                                    </button>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayTemporal.length">
+                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>OC</th>
+                                                                                <th>Nro VIN</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Moneda</th>
+                                                                                <th>Total</th>
+                                                                                <th>Nro Factura</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
+                                                                                <td>
+                                                                                    <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                </td>
+                                                                                <td v-text="temporal.nOrdenCompra"></td>
+                                                                                <td v-text="temporal.cNumeroVin"></td>
+                                                                                <td v-text="temporal.cNombreComercial"></td>
+                                                                                <td v-text="temporal.cSimboloMoneda"></td>
+                                                                                <td v-text="temporal.fTotalCompra"></td>
+                                                                                <td v-text="temporal.cNumeroFactura"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <form class="form-horizontal">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="card-body">
-                                            <template v-if="arrayVersionVehiculo.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nro VIN</th>
-                                                                <th>Nombre Comercial</th>
-                                                                <th>Año Fab.</th>
-                                                                <th>Año Modelo</th>
-                                                                <th>Moneda</th>
-                                                                <th>Costo</th>
-                                                                <th>Nro Factura</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
-                                                                <td>
-                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" :title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td v-text="vehiculo.cNumeroVin"></td>
-                                                                <td v-text="vehiculo.cNombreComercial"></td>
-                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
-                                                                <td v-text="vehiculo.nAnioVersion"></td>
-                                                                <td v-text="vehiculo.cSimboloMoneda"></td>
-                                                                <td v-text="vehiculo.fTotalCompra"></td>
-                                                                <td v-text="vehiculo.cNumeroFactura"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaVehiculos(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                        </div>
+                                        </section>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                </div>
+            </section>
+
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <form class="form-horizontal">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group">
+                                                                        <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group">
+                                                                        <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="card-body">
+                                                <template v-if="arrayVersionVehiculo.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Seleccione</th>
+                                                                    <th>Nro VIN</th>
+                                                                    <th>Nombre Comercial</th>
+                                                                    <th>Año Fab.</th>
+                                                                    <th>Año Modelo</th>
+                                                                    <th>Moneda</th>
+                                                                    <th>Costo</th>
+                                                                    <th>Nro Factura</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
+                                                                    <td>
+                                                                        <a href="#" @click="asignarVehiculo(vehiculo)" :title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
+                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td v-text="vehiculo.cNumeroVin"></td>
+                                                                    <td v-text="vehiculo.cNombreComercial"></td>
+                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                    <td v-text="vehiculo.nAnioVersion"></td>
+                                                                    <td v-text="vehiculo.cSimboloMoneda"></td>
+                                                                    <td v-text="vehiculo.fTotalCompra"></td>
+                                                                    <td v-text="vehiculo.cNumeroFactura"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                        :class="[page==isActivedModal?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaVehiculos(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-lg-5">
+                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -628,6 +629,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>Código Sap</th>
                                                             <th>Nombre Banco</th>
                                                         </tr>
                                                     </thead>
@@ -639,6 +641,7 @@
                                                                     <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="banco.cParJerarquia"></td>
                                                             <td v-text="banco.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
@@ -690,7 +693,8 @@
                 </div>
             </div>
 
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {
