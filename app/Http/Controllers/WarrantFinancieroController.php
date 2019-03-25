@@ -58,7 +58,7 @@ class WarrantFinancieroController extends Controller
         try{
             DB::beginTransaction();
 
-            $wo = DB::select('exec [usp_WF_SetWFinanciero] ?, ?, ?, ?, ?', 
+            $wo = DB::select('exec [usp_WF_SetWFinanciero] ?, ?, ?, ?', 
                                                 [   $request->nIdBanco,
                                                     $request->cNumeroWarrant,
                                                     $request->fTotalValor,

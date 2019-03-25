@@ -1081,7 +1081,7 @@
                 axios.post(url, {
                     'nIdBanco'      : me.formWFinanciero.nidbanco,
                     'cNumeroWarrant': me.formWFinanciero.cnrowarrant,
-                    'dFechaInicio'  : me.formWFinanciero.dfechainicio,
+                    'fTotalValor'   : me.fTotalValor,
                     'data'          : me.arrayTemporal
                 }).then(response => {
                     me.fillWFinanciero.nidwarrantfinanciero = response.data;
@@ -1251,15 +1251,6 @@
 
                 if(this.formWFinanciero.nidbanco == 0){
                     this.mensajeError.push('Debes Seleccionar un Banco');
-                };
-                if(this.formWFinanciero.dfechainicio == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Registro');
-                };
-                if(this.formWFinanciero.dfechafin == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Vencimiento');
-                };
-                if(this.formWFinanciero.dfechainicio > this.formWFinanciero.dfechafin){
-                    this.mensajeError.push('La Fecha Registro debe ser menor a la Fecha Venc.');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
