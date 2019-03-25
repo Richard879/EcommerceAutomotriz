@@ -100,6 +100,7 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>Proveedor</th>
                                                                                     <th>Moneda</th>
@@ -113,6 +114,10 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Cancelar {{ operativo.nIdWarrantOperativo }}</div>
+                                                                                        <i @click="cancelarWOperativo(operativo)" :style="'color:green'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                     <td v-text="operativo.nIdWarrantOperativo"></td>
                                                                                     <td v-text="operativo.cProveedorNombre"></td>
                                                                                     <td v-text="operativo.cSimboloMoneda"></td>
@@ -1030,6 +1035,50 @@
             cambiarPaginaDetalle(page){
                 this.pagination.current_page=page;
                 this.listarDetalleWOperativo(page);
+            },
+            cancelarWOperativo(objWarrant){
+                swal({
+                    title: 'Estas seguro de cancelar este warrant?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/woperativo/UpdEstadoWOperativo';
+                            axios.put(url, {
+                                'nIdWarrantOperativo'   : parseInt(objWarrant.nIdWarrantOperativo),
+                                'nIdEstadoWarrant'      : 1300081
+                            }).then(response => {
+                                if(response.data[0].nFlagMsje == 1){
+                                    swal(
+                                        'Activado!',
+                                        response.data[0].cMensaje
+                                    );
+                                }
+                                else{
+                                    swal(
+                                        'Alerta!',
+                                        response.data[0].cMensaje
+                                    );
+                                }
+                                this.listarCompras(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                })
             },
             tabGeneraWOperativo(){
                 this.limpiarFormulario();

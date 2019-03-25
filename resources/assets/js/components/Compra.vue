@@ -2988,7 +2988,7 @@
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
-                    })
+                })
             },
             desactivar(compra){
                 swal({
