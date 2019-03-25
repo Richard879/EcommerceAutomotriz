@@ -117,7 +117,7 @@
                                                                                 <td>{{ operativo.fValorTotal }}</td>
                                                                                 <td>{{ operativo.cParNombre }}</td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo.nIdWarrantFinanciero);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
+                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -717,10 +717,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 arrayBanco: [],
                 arrayEstadoWarrant: [],
                 arrayWFinanciero: [],
@@ -738,6 +734,7 @@
                     nidestadowarrant: 0
                 },
                 formWFinanciero:{
+                    nidwarrantfinanciero: 0,
                     nidbanco: 0,
                     cbanconombre: '',
                     cnrowarrant: '',
@@ -894,10 +891,15 @@
                 this.listarWFinanciero(1);
             },
             listarWFinanciero(page){
-                var url = this.ruta + '/wfinanciero/GetWFinanciero?nidestadowarrant=' + this.fillWFinanciero.nidestadowarrant
-                                                                + '&cnrowarrant=' + this.fillWFinanciero.cnrowarrant
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/wfinanciero/GetWFinanciero';
+
+                axios.get(url, {
+                    params: {
+                        'nidestadowarrant'  : this.fillWFinanciero.nidestadowarrant,
+                        'cnrowarrant'       : this.fillWFinanciero.cnrowarrant,
+                        'page'              : page
+                    }
+                }).then(response => {
                     this.arrayWFinanciero = response.data.arrayWFinanciero.data;
                     this.pagination.current_page =  response.data.arrayWFinanciero.current_page;
                     this.pagination.total = response.data.arrayWFinanciero.total;
@@ -919,20 +921,25 @@
                 this.pagination.current_page=page;
                 this.listarWFinancieros(page);
             },
-            asignaIdWFinanciero(nIdWarrantFinanciero){
-                this.fillWFinancieroDetalle.nidwarrantfinanciero= nIdWarrantFinanciero;
+            asignaIdWFinanciero(objWF){
+                this.fillWFinancieroDetalle.nidwarrantfinanciero= objWO.nIdWarrantFinanciero;
                 this.buscarWFinancieroDetalle();
             },
             buscarWFinancieroDetalle(){
-                this.listarDetalleWFinanciero(this.fillWFinancieroDetalle.nidwarrantfinanciero, 1);
+                this.listarDetalleWFinanciero(1);
             },
-            listarDetalleWFinanciero(nIdWarrantFinanciero, page){
+            listarDetalleWFinanciero(page){
                 this.vistaFormularioTabBuscar = 0;
-                var url = this.ruta + '/wfinanciero/GetWFinancieroDetalle?nidwarrantfinanciero=' + nIdWarrantFinanciero
-                                                                    + '&cnumerovin=' + this.fillWFinancieroDetalle.cnumerovin
-                                                                    + '&nidestadowarrant=' + this.fillWFinancieroDetalle.nidestadowarrant
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/wfinanciero/GetWFinancieroDetalle';
+
+                axios.get(url, {
+                    params: {
+                        'nidwarrantfinanciero': this.fillWFinancieroDetalle.nidwarrantfinanciero,
+                        'cnumerovin': this.fillWFinancieroDetalle.cnumerovin,
+                        'nidestadowarrant': this.fillWFinancieroDetalle.nidestadowarrant,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayWFinancieroDetalle = response.data.arrayWFinancieroDetalle.data;
                     this.pagination.current_page =  response.data.arrayWFinancieroDetalle.current_page;
                     this.pagination.total = response.data.arrayWFinancieroDetalle.total;
@@ -994,15 +1001,17 @@
                 this.listarVersionVehiculo(1);
             },
             listarVersionVehiculo(page){
-                this.nidempresa = 1300011;
-                this.nidsucursal = sessionStorage.getItem("nIdSucursal");
+                var url = this.ruta + '/compra/GetCompraSinWFinanciero';
 
-                var url = this.ruta + '/compra/GetCompraSinWFinanciero?nidempresa=' + this.nidempresa
-                                                                    + '&nidsucursal=' + this.nidsucursal
-                                                                    + '&cnumerovin=' + this.fillVersionVehiculo.cnumerovin
-                                                                    + '&cnombrecomercial=' + this.fillVersionVehiculo.cnombrecomercial
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin'        : this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial'  : this.fillVersionVehiculo.cnombrecomercial,
+                        'page'              : page
+                    }
+                }).then(response => {
                     this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
                     this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
                     this.paginationModal.total = response.data.arrayVersionVehiculo.total;

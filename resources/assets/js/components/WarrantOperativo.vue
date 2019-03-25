@@ -965,9 +965,9 @@
 
                 axios.get(url, {
                     params: {
-                        'nidestadowarrant': this.fillWOperativo.nidestadowarrant,
-                        'cnrowarrant': this.fillWOperativo.cnrowarrant,
-                        'page': page
+                        'nidestadowarrant'  : this.fillWOperativo.nidestadowarrant,
+                        'cnrowarrant'       : this.fillWOperativo.cnrowarrant,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayWOperativo = response.data.arrayWOperativo.data;
@@ -1005,9 +1005,9 @@
                 axios.get(url, {
                     params: {
                         'nidwarrantoperativo': this.fillWOperativoDetalle.nidwarrantoperativo,
-                        'cnumerovin': this.fillWOperativoDetalle.cnumerovin,
-                        'nidestadowarrant': this.fillWOperativoDetalle.nidestadowarrant,
-                        'page': page
+                        'cnumerovin'        : this.fillWOperativoDetalle.cnumerovin,
+                        'nidestadowarrant'  : this.fillWOperativoDetalle.nidestadowarrant,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayWOperativoDetalle = response.data.arrayWOperativoDetalle.data;
@@ -1076,11 +1076,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnumerovin': this.fillVersionVehiculo.cnumerovin,
-                        'cnombrecomercial': this.fillVersionVehiculo.cnombrecomercial,
-                        'page': page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin'        : this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial'  : this.fillVersionVehiculo.cnombrecomercial,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
