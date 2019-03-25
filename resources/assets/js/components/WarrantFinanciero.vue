@@ -745,6 +745,7 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
+                arrayAsiento: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
