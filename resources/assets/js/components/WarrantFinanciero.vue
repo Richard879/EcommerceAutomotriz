@@ -1022,8 +1022,8 @@
                 this.paginationModal.current_page=page;
                 this.listarVersionVehiculo(page);
             },
-            asignarVehiculo(data =[]){
-                if(this.encuentra(data['nIdCompra'])){
+            asignarVehiculo(data){
+                if(this.encuentra(data.nIdCompra)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -1031,15 +1031,7 @@
                             })
                 }
                 else{
-                    this.arrayTemporal.push({
-                                nIdCompra: data['nIdCompra'],
-                                nOrdenCompra: data['nOrdenCompra'],
-                                cNumeroVin: data['cNumeroVin'],
-                                cNombreComercial: data['cNombreComercial'],
-                                cSimboloMoneda: data['cSimboloMoneda'],
-                                fTotalCompra: data['fTotalCompra'],
-                                cNumeroFactura: data['cNumeroFactura']
-                    });
+                    this.arrayTemporal.push(data);
                     this.sumarWarrant();
                     toastr.success('Se Agregó Vehículo');
                 }
@@ -1289,7 +1281,7 @@
                 });
                 this.loading.close();
                 this.limpiarFormulario();
-                this.listarWOperativo(1);
+                this.listarWFinanciero(1);
             },
             mostrarProgressBar(){
                 $("#myBar").show();
