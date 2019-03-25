@@ -104,8 +104,8 @@
                                                                                     <th>Proveedor</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Total</th>
-                                                                                    <th>Total Comision Dolar</th>
-                                                                                    <th>Total Comision Sol</th>
+                                                                                    <!--<th>Total Comision Dolar</th>
+                                                                                    <th>Total Comision Sol</th>-->
                                                                                     <th>Estado</th>
                                                                                     <th>Doc Sap</th>
                                                                                     <th>Acciones</th>
@@ -117,8 +117,8 @@
                                                                                     <td v-text="operativo.cProveedorNombre"></td>
                                                                                     <td v-text="operativo.cSimboloMoneda"></td>
                                                                                     <td v-text="operativo.fValorTotal"></td>
-                                                                                    <td v-text="operativo.fTotalComisionDolar"></td>
-                                                                                    <td v-text="operativo.fTotalComisionSol"></td>
+                                                                                    <!--<td v-text="operativo.fTotalComisionDolar"></td>
+                                                                                    <td v-text="operativo.fTotalComisionSol"></td>-->
                                                                                     <td v-text="operativo.cParNombre"></td>
                                                                                     <td v-text="operativo.nDocNum"></td>
                                                                                     <td>
@@ -249,8 +249,8 @@
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
-                                                                                    <th>Comisión Dolar</th>
-                                                                                    <th>Comisión Sol</th>
+                                                                                    <!--<th>Comisión Dolar</th>
+                                                                                    <th>Comisión Sol</th>-->
                                                                                     <th>Estado</th>
                                                                                 </tr>
                                                                             </thead>
@@ -262,8 +262,8 @@
                                                                                     <td>{{ odetalle.cNumeroVin }}</td>
                                                                                     <td>{{ odetalle.cSimboloMoneda }}</td>
                                                                                     <td>{{ odetalle.fValorWarrant }}</td>
-                                                                                    <td v-text="odetalle.fComisionDolar"></td>
-                                                                                    <td v-text="odetalle.fComisionSol"></td>
+                                                                                    <!--<td v-text="odetalle.fComisionDolar"></td>
+                                                                                    <td v-text="odetalle.fComisionSol"></td>-->
                                                                                     <td>{{ odetalle.cParNombre }}</td>
                                                                                 </tr>
                                                                             </tbody>
@@ -434,9 +434,9 @@
                                                                         <div class="col-lg-7">
                                                                         </div>
                                                                         <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: USD <strong>{{ fTotalValor }}</strong></div>
-                                                                            <div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
-                                                                            <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>
+                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
+                                                                            <!--<div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
+                                                                            <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -741,7 +741,6 @@
                 arrayWOperativoDetalle: [],
                 arrayTemporal: [],
                 arrayVersionVehiculo: [],
-                arrayCompra: [],
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
@@ -1126,13 +1125,13 @@
             },
             sumarWarrant(){
                 let me = this;
-                me.fTotalValor = 0;
-                me.fTotalComisionDolar = 0;
-                me.fTotalComisionSol = 0;
+                //me.fTotalValor = 0;
+                //me.fTotalComisionDolar = 0;
+                //me.fTotalComisionSol = 0;
                 me.arrayTemporal.map(function(value, key) {
                     me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
-                    me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
-                    me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
+                    //me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
+                    //me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
                 });
             },
             encuentra(nIdCompra){
@@ -1159,8 +1158,8 @@
                 axios.post(url, {
                     'nIdProveedor'      : me.formWOperativo.nidproveedor,
                     'fTotalValor'       : me.fTotalValor,
-                    'fTotalComisionDolar': me.fTotalComisionDolar,
-                    'fTotalComisionSol' : me.fTotalComisionSol,
+                    //'fTotalComisionDolar': me.fTotalComisionDolar,
+                    //'fTotalComisionSol' : me.fTotalComisionSol,
                     'data'              : me.arrayTemporal
                 }).then(response => {
                     me.fillWOperativo.nidwarrantoperativo = response.data;
@@ -1405,7 +1404,6 @@
                 this.fillWOperativo.cnumerovin=  '',
                 this.formWOperativo.dfechainicio = '',
                 this.formWOperativo.ccarcode= '',
-                this.arrayCompra = [],
                 this.arrayWOperativo = [],
                 this.arrayTemporal = [];
                 this.limpiarPaginacion();

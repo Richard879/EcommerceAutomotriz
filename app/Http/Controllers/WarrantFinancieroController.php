@@ -110,4 +110,29 @@ class WarrantFinancieroController extends Controller
             DB::rollBack();
         }   
     }
+
+    public function SetIntegraAsientoContableWF(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objArticulo = DB::select('exec [usp_Integra_SetIntegraAsiento] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cProjectCode'],
+                                                                $det['cTipo'],
+                                                                $det['nJdtNum'],
+                                                                $det['nNumber'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objArticulo);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
