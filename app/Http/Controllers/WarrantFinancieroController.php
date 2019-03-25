@@ -53,37 +53,37 @@ class WarrantFinancieroController extends Controller
 
     public function SetWFinanciero(Request $request)
     {
-        /*if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
  
-        try{*/
-           // DB::beginTransaction();
+        try{
+            DB::beginTransaction();
 
-            $wo = DB::select('exec usp_WF_SetWFinanciero ?, ?, ?, ?, ?', 
-                                                            array($request->nIdBanco,
-                                                                $request->cNumeroWarrant,
-                                                                $request->dFechaInicio,
-                                                                $request->dFechaVence,
-                                                                Auth::user()->id
-                                                            ));
+            $wo = DB::select('exec [usp_WF_SetWFinanciero] ?, ?, ?, ?', 
+                                                [   $request->nIdBanco,
+                                                    $request->cNumeroWarrant,
+                                                    $request->fTotalValor,
+                                                    Auth::user()->id
+                                                ]);
                                    
-            return response()->json($wo);
+            $nIdWarrantFinanciero =  $wo[0]->nIdWarrantFinanciero;
             
 
-            /*$detalles = $request->data;
+            $detalles = $request->data;
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_WF_SetWFinancieroDetalle ?, ?, ?, ?', 
-                                                            array(wo[0].nIdWarrantFinanciero,
-                                                                $det['nIdCompra'],
-                                                                $det['fValorWarrant'],
-                                                                Auth::user()->id
-                                                            ));
-            }  */
-           // DB::commit(); 
-        /*} catch (Exception $e){
+                DB::select('exec [usp_WF_SetWFinancieroDetalle] ?, ?, ?, ?', 
+                                                [   $nIdWarrantFinanciero,
+                                                    $det['nIdCompra'],
+                                                    $det['fTotalCompra'],
+                                                    Auth::user()->id
+                                                ]);
+            }  
+            DB::commit();
+            return $nIdWarrantFinanciero;
+        }catch (Exception $e){
             DB::rollBack();
-        }  */   
+        }  
     }
 
     public function SetWFinancieroDetalle(Request $request)
@@ -109,5 +109,30 @@ class WarrantFinancieroController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }   
+    }
+
+    public function SetIntegraAsientoContableWF(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objArticulo = DB::select('exec [usp_Integra_SetIntegraAsiento] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cProjectCode'],
+                                                                $det['cTipo'],
+                                                                $det['nJdtNum'],
+                                                                $det['nNumber'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objArticulo);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 }

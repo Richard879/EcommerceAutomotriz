@@ -117,7 +117,7 @@
                                                                                 <td>{{ operativo.fValorTotal }}</td>
                                                                                 <td>{{ operativo.cParNombre }}</td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo.nIdWarrantFinanciero);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
+                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -319,10 +319,17 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Banco</label>
                                                                         <div class="col-sm-8">
-                                                                            <select v-model="formWFinanciero.nidbanco" class="form-control form-control-sm">
-                                                                                <option v-for="item in arrayBanco" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <div class="input-group">
+                                                                                <input type="text" v-model="formWFinanciero.cbanconombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                <div class="input-group-prepend">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Buscar Banco </div>
+                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('banco','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </el-tooltip>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -331,24 +338,6 @@
                                                                         <label class="col-sm-4 form-control-label">Nro Warranat</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="formWFinanciero.cnrowarrant" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Registro</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWFinanciero.dfechainicio" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Vencimiento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWFinanciero.dfechafin" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -369,11 +358,14 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="input-group">
                                                                         <input type="text" value="VEHICULO MOTORIZADO" class="form-control form-control-sm" readonly>
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
-                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                            </button>
-                                                                        </span>
+                                                                        <div class="input-group-prepend">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Buscar Vehículos </div>
+                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
+                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                </button>
+                                                                            </el-tooltip>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -415,7 +407,7 @@
                                                                     <div class="col-lg-7">
                                                                     </div>
                                                                     <div class="col-lg-5">
-                                                                        <div class="datatable-info">Valor Total: USD <strong>{{ fTotalWarrant }}</strong></div>
+                                                                        <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -597,6 +589,107 @@
             </div>
         </div>
 
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE BANCOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarBancos(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Banco </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarBancos(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayBanco.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Banco</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
+                                                                    <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="banco.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaBanco(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaBanco(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaBanco(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </main>
 </template>
 <script>
@@ -606,18 +699,13 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 arrayBanco: [],
                 arrayEstadoWarrant: [],
                 arrayWFinanciero: [],
                 arrayWFinancieroDetalle: [],
                 arrayTemporal: [],
                 arrayVersionVehiculo: [],
-                arrayCompra: [],
-                fTotalWarrant: 0,
+                fTotalValor: 0,
                 fillWFinanciero:{
                     nidestadowarrant: 0,
                     cnrowarrant: ''
@@ -628,14 +716,21 @@
                     nidestadowarrant: 0
                 },
                 formWFinanciero:{
+                    nidwarrantfinanciero: 0,
                     nidbanco: 0,
+                    cbanconombre: '',
                     cnrowarrant: '',
                     dfechainicio: '',
-                    dfechafin: ''
+                    dfechafin: '',
+                    ccarcode: ''
                 },
                 fillVersionVehiculo:{
                     cnumerovin: '',
                     cnombrecomercial: ''
+                },
+                arrayAsiento: [],
+                fillProveedor:{
+                    cnombreproveedor: ''
                 },
                 pagination: {
                     'total': 0,
@@ -718,11 +813,24 @@
             }
         },
         methods:{
-            llenarComboBanco(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110042
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayBanco = response.data;
+            listarBancos(page){
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid'   : 110042,
+                        'cparnombre'    : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion'        : 0,
+                        'page'          : page
+                    }
+                }).then(response => {
+                    this.arrayBanco = response.data.arrayParametro.data;
+                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
+                    this.paginationModal.total = response.data.arrayParametro.total;
+                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
+                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
+                    this.paginationModal.from        = response.data.arrayParametro.from;
+                    this.paginationModal.to           = response.data.arrayParametro.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -732,6 +840,16 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaBanco(page){
+                this.paginationModal.current_page=page;
+                this.listarBancos(page);
+            },
+            asignarBanco(objBanco){
+                this.formWFinanciero.nidbanco = objBanco.nIdPar;
+                this.formWFinanciero.cbanconombre = objBanco.cParNombre;
+                this.formWFinanciero.ccarcode = objProveedor.cParJerarquia;
+                this.cerrarModal();
             },
             llenarComboEstadoWarrant(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110043
@@ -758,10 +876,15 @@
                 this.listarWFinanciero(1);
             },
             listarWFinanciero(page){
-                var url = this.ruta + '/wfinanciero/GetWFinanciero?nidestadowarrant=' + this.fillWFinanciero.nidestadowarrant
-                                                                + '&cnrowarrant=' + this.fillWFinanciero.cnrowarrant
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/wfinanciero/GetWFinanciero';
+
+                axios.get(url, {
+                    params: {
+                        'nidestadowarrant'  : this.fillWFinanciero.nidestadowarrant,
+                        'cnrowarrant'       : this.fillWFinanciero.cnrowarrant,
+                        'page'              : page
+                    }
+                }).then(response => {
                     this.arrayWFinanciero = response.data.arrayWFinanciero.data;
                     this.pagination.current_page =  response.data.arrayWFinanciero.current_page;
                     this.pagination.total = response.data.arrayWFinanciero.total;
@@ -783,20 +906,25 @@
                 this.pagination.current_page=page;
                 this.listarWFinancieros(page);
             },
-            asignaIdWFinanciero(nIdWarrantFinanciero){
-                this.fillWFinancieroDetalle.nidwarrantfinanciero= nIdWarrantFinanciero;
+            asignaIdWFinanciero(objWF){
+                this.fillWFinancieroDetalle.nidwarrantfinanciero= objWO.nIdWarrantFinanciero;
                 this.buscarWFinancieroDetalle();
             },
             buscarWFinancieroDetalle(){
-                this.listarDetalleWFinanciero(this.fillWFinancieroDetalle.nidwarrantfinanciero, 1);
+                this.listarDetalleWFinanciero(1);
             },
-            listarDetalleWFinanciero(nIdWarrantFinanciero, page){
+            listarDetalleWFinanciero(page){
                 this.vistaFormularioTabBuscar = 0;
-                var url = this.ruta + '/wfinanciero/GetWFinancieroDetalle?nidwarrantfinanciero=' + nIdWarrantFinanciero
-                                                                    + '&cnumerovin=' + this.fillWFinancieroDetalle.cnumerovin
-                                                                    + '&nidestadowarrant=' + this.fillWFinancieroDetalle.nidestadowarrant
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/wfinanciero/GetWFinancieroDetalle';
+
+                axios.get(url, {
+                    params: {
+                        'nidwarrantfinanciero': this.fillWFinancieroDetalle.nidwarrantfinanciero,
+                        'cnumerovin': this.fillWFinancieroDetalle.cnumerovin,
+                        'nidestadowarrant': this.fillWFinancieroDetalle.nidestadowarrant,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayWFinancieroDetalle = response.data.arrayWFinancieroDetalle.data;
                     this.pagination.current_page =  response.data.arrayWFinancieroDetalle.current_page;
                     this.pagination.total = response.data.arrayWFinancieroDetalle.total;
@@ -820,7 +948,6 @@
             },
             tabGeneraWFinanciero(){
                 this.limpiarFormulario();
-                this.llenarComboBanco();
             },
             cerrarModal(){
                 this.modal = 0,
@@ -840,22 +967,36 @@
                                 break;
                             }
                         }
-                    }
+                    }break;
+                    case 'banco':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.listarBancos(1);
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             buscarVersionVehiculo(){
                 this.listarVersionVehiculo(1);
             },
             listarVersionVehiculo(page){
-                this.nidempresa = 1300011;
-                this.nidsucursal = sessionStorage.getItem("nIdSucursal");
+                var url = this.ruta + '/compra/GetCompraSinWFinanciero';
 
-                var url = this.ruta + '/compra/GetCompraSinWFinanciero?nidempresa=' + this.nidempresa
-                                                                    + '&nidsucursal=' + this.nidsucursal
-                                                                    + '&cnumerovin=' + this.fillVersionVehiculo.cnumerovin
-                                                                    + '&cnombrecomercial=' + this.fillVersionVehiculo.cnombrecomercial
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin'        : this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial'  : this.fillVersionVehiculo.cnombrecomercial,
+                        'page'              : page
+                    }
+                }).then(response => {
                     this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
                     this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
                     this.paginationModal.total = response.data.arrayVersionVehiculo.total;
@@ -905,11 +1046,10 @@
                 toastr.success('Se Eliminó Item Vehículo');
             },
             sumarWarrant(){
-                var sumatoria=0;
-                this.arrayTemporal.map(function(value, key) {
-                    sumatoria = parseFloat(sumatoria) + parseFloat(value.fTotalCompra);
+                let me = this;
+                me.arrayTemporal.map(function(value, key) {
+                    me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
                 });
-                this.fTotalWarrant = sumatoria.toFixed(2);
             },
             encuentra(nIdCompra){
                 var sw=0;
@@ -921,28 +1061,43 @@
                 return sw;
             },
             registrar(){
-                this.arrayTemporal;
+                let me = this;
 
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                if(me.validar()){
+                    me.accionmodal=1;
+                    me.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/wfinanciero/SetWFinanciero';
+                me.mostrarProgressBar();
+
+                var url = me.ruta + '/wfinanciero/SetWFinanciero';
                 axios.post(url, {
-                    nIdBanco: this.formWFinanciero.nidbanco,
-                    cNumeroWarrant: this.formWFinanciero.cnrowarrant,
-                    dFechaInicio: this.formWFinanciero.dfechainicio,
-                    dFechaVence: this.formWFinanciero.dfechafin,
-                    //data: this.arrayTemporal,
-                    nIdUsuario: 190011
+                    'nIdBanco'      : me.formWFinanciero.nidbanco,
+                    'cNumeroWarrant': me.formWFinanciero.cnrowarrant,
+                    'fTotalValor'   : me.fTotalValor,
+                    'data'          : me.arrayTemporal
                 }).then(response => {
-                    /*swal('Warrant Operativo registrado');
-                    this.arrayTemporal = [];*/
-                    //console.log(response.data[0]);
-                    //alert(response.data[0].nIdWarrantFinanciero);
-                    this.registrarDetalle(response.data[0].nIdWarrantFinanciero);
+                    me.fillWFinanciero.nidwarrantfinanciero = response.data;
+
+                    if(me.fillWFinanciero.nidwarrantfinanciero > 0){
+                        me.arrayTemporal.map(function(value, key) {
+                            me.arrayAsiento.push({
+                                'cNumeroVin'    : value.cNumeroVin,
+                                'cProjectCode'  : value.cNumeroVin,
+                                'fCredit'       : "0",
+                                'fDebit'        : value.fTotalCompra,
+                                'fCredit1'      : value.fTotalCompra,
+                                'fDebit1'       : "0"
+                            })
+                        });
+
+                        //==============================================================
+                        //================== GENERAR ASIENTO CONTABLE SAP ===============
+                        setTimeout(function() {
+                            me.generaSapAsientoContable();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -953,15 +1108,38 @@
                     }
                 });
             },
-            registrarDetalle(nIdWarrantFinanciero){
-                var url = this.ruta + '/wfinanciero/SetWFinancieroDetalle';
+            generaSapAsientoContable(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/asiento/SapSetAsientoContableWF';
                 axios.post(url, {
-                    nIdWarrantFinanciero: nIdWarrantFinanciero,
-                    data: this.arrayTemporal,
-                    nIdUsuario: 190011
+                    'data' : me.arrayAsiento
                 }).then(response => {
-                    swal('Warrant Financiero registrado');
-                    this.arrayTemporal = [];
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ProjectCode){
+                            me.arraySapUpdSgc.push({
+                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'cTipo'         : 'WF',
+                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cLogRespuesta' : response.data.toString()
+                            });
+                        }
+                    });
+
+                    //==============================================================================
+                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                    setTimeout(function() {
+                        me.registroSgcAsientoContable();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -971,6 +1149,95 @@
                         }
                     }
                 });
+            },
+            registroSgcAsientoContable(){
+                let me = this;
+                var sapUrl = me.ruta + '/wfinaciero/SetIntegraAsientoContableWF';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                         setTimeout(function() {
+                            me.generaSapFacturaProveedor();
+                        }, 1600);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWF';
+                axios.post(sapUrl, {
+                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'fDocDate'  : moment().format('YYYY-MM-DD'),
+                    'data'      : me.arrayTemporal
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            me.arraySapUpdSgc.push({
+                                'cFlagTipo'         : "FP",
+                                'cItemCode'         : "",
+                                'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          : me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroSgcFacturaProveedor();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.confirmarWF();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            confirmarWF(){
+                this.limpiarFormulario();
+                swal('Warrant Financiero registrado');
             },
             validar(){
                 this.error = 0;
@@ -979,26 +1246,27 @@
                 if(this.formWFinanciero.nidbanco == 0){
                     this.mensajeError.push('Debes Seleccionar un Banco');
                 };
-                if(this.formWFinanciero.dfechainicio == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Registro');
-                };
-                if(this.formWFinanciero.dfechafin == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Vencimiento');
-                };
-                if(this.formWFinanciero.dfechainicio > this.formWFinanciero.dfechafin){
-                    this.mensajeError.push('La Fecha Registro debe ser menor a la Fecha Venc.');
-                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
             limpiarFormulario(){
+                this.fillWFinanciero.nidwarrantfinanciero= 0,
                 this.fillWFinanciero.nordencompra= '',
                 this.fillWFinanciero.cnumerovin=  '',
-                this.arrayCompra = [],
+                this.formWFinanciero.ccarcode= '',
                 this.arrayWFinanciero = [],
-                this.limpiarPaginacion()
+                this.arrayTemporal= [],
+                this.limpiarPaginacion();
+
+                //========= VARIABLES SAP =============
+                //Limpiar variables Sap Articulo
+                this.arraySapRespuesta= [],
+                this.jsonRespuesta= '',
+                this.arraySapUpdSgc= [],
+                this.arraySapWO= [],
+                this.arraySapCompra= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1007,6 +1275,29 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            limpiarPorError(cDescripcion){
+                $("#myBar").hide();
+                swal({
+                    type: 'error',
+                    title: 'Error...',
+                    text: cDescripcion,
+                });
+                this.loading.close();
+                this.limpiarFormulario();
+                this.listarWOperativo(1);
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){

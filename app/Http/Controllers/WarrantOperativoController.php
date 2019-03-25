@@ -59,8 +59,8 @@ class WarrantOperativoController extends Controller
             $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?', 
                                                     [   $request->nIdProveedor,
                                                         $request->fTotalValor,
-                                                        $request->fTotalComisionDolar,
-                                                        $request->fTotalComisionSol,
+                                                        0,
+                                                        0,
                                                         Auth::user()->id
                                                     ]);                 
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
@@ -72,15 +72,15 @@ class WarrantOperativoController extends Controller
                                                     [   $nIdWarrantOperativo,
                                                         $det['nIdCompra'],
                                                         $det['fTotalCompra'],
-                                                        $det['fComisionDolar'],
-                                                        $det['fComisionSol'],
-                                                        $det['fValorTipoCambio'],
+                                                        0,
+                                                        0,
+                                                        0,
                                                         Auth::user()->id
                                                     ]);
             }  
             DB::commit();
             return $nIdWarrantOperativo;
-        } catch (Exception $e){
+        }catch (Exception $e){
             DB::rollBack();
         }    
     }

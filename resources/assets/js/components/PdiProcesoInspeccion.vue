@@ -235,7 +235,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
                                                     <div class="row">
-                                                        <label class="col-sm-3 form-control-label">Tipo Inspección</label>
+                                                        <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
                                                         <div class="col-sm-5">
                                                             <el-select  v-model="formPdi.nidtipoinspeccion"
                                                                         filterable
@@ -1097,6 +1097,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Acciones</th>
+                                                            <th>Tipo</th>
                                                             <th>Nombre</th>
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
@@ -1110,6 +1111,7 @@
                                                                     <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="a.cTipoElemenNombre"></td>
                                                             <td v-text="a.cElemenNombre"></td>
                                                             <td><input type="number" v-model="a.nCantidad" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
@@ -2073,7 +2075,31 @@
                 }).then(response => {
                     let me = this;
                     me.arrayAccesorioFlag = [];
-                    me.arrayAccesorioFlag = response.data.arrayElementoVenta.data;
+                    me.arrayAccesorioFlag = response.data.arrayElementoVenta;
+                    this.llenarAccesorios();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarAccesoriosPdiEntregaVehiculo(){
+                var url = this.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                    }
+                }).then(response => {
+                    let me = this;
+                    me.arrayAccesorioFlag = [];
+                    me.arrayAccesorioFlag = response.data.arrayElementoVenta;
                     this.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
@@ -3144,6 +3170,8 @@
                             }
                             case 'vinplaca':
                             {
+                                this.changeFlagVinPlaca();
+                                this.limpiarFormulario();
                                 //Si es VIN
                                 if(this.formPdi.nidflagvinplaca == 1){
                                     this.accionmodal    = 5;
@@ -3187,7 +3215,7 @@
                                 };
                                 //Si es Entrega Vehiculo
                                 if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){
-                                    //this.listarAccesorioByCod();
+                                    this.listarAccesoriosPdiEntregaVehiculo();
                                 };
                                 break;
                             }
@@ -3225,10 +3253,10 @@
                 return this.error;
             },
             limpiarFormulario(){
-                this.formPdi.cnumerovin = ''
-                this.formPdi.nidcompra = ''
-                this.formPdi.nidflagmovimiento = 1
-                this.formPdi.nidflagvinplaca = 1
+                this.formPdi.cnumerovin = '',
+                this.formPdi.nidcompra = '',
+                this.formPdi.nidflagmovimiento = 1,
+                //this.formPdi.nidflagvinplaca = 1
                 this.formPdi.nidpuntoinspeccion = 0,
                 this.formPdi.cnombrepuntoinspeccion = '',
                 this.formPdi.nidsolicitud = 0,

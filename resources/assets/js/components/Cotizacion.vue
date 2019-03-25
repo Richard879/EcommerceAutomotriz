@@ -1785,11 +1785,11 @@
                                                             <th>Código</th>
                                                             <th>Código SAP</th>
                                                             <th>Proveedor</th>
-                                                            <th>Tipo Elemento</th>
+                                                            <th>Tipo</th>
                                                             <th>Nombre Elemento</th>
-                                                            <th>Tipo Moneda</th>
-                                                            <th>Precio de Venta</th>
-                                                            <th>Precio de Venta Mínimo</th>
+                                                            <th>Moneda</th>
+                                                            <th>Prec. de Venta</th>
+                                                            <th>Prec. de Venta Mínimo</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

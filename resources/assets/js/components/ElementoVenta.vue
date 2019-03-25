@@ -66,12 +66,12 @@
                                                         <th>Código</th>
                                                         <th>Código SAP</th>
                                                         <th>Proveedor</th>
-                                                        <th>Tipo Elemento</th>
+                                                        <th>Tipo</th>
                                                         <th>Nombre Elemento</th>
                                                         <th>Moneda</th>
-                                                        <th>Precio Venta</th>
-                                                        <th>Precio Venta Mínimo</th>
-                                                        <th>Valor Costo</th>
+                                                        <th>Prec. Venta</th>
+                                                        <th>Prec. Venta Mínimo</th>
+                                                        <th>Costo</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -177,7 +177,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                    <label class="col-sm-4 form-control-label">Proveedor</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
                                                             <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
@@ -688,9 +688,9 @@
                      this.mensajeError.push('Debes Seleccionar Elemento Venta');
                     };
                 };
-                if(this.formEle.nidproveedor == 0){
+                /*if(this.formEle.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
-                };
+                };*/
                 if(this.formEle.ntpoelemen == 0 || !this.formEle.ntpoelemen){
                     this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
                 };

@@ -257,6 +257,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pdi/SetAccesorioPdi', 'PdiProcesoController@SetAccesorioPdi');
     Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
     Route::post('/pdi/GetDetallePDI', 'PdiProcesoController@GetDetallePDI');
+    Route::get('/pdi/GetAccesoriosPdiEntregaVehiculo', 'PdiProcesoController@GetAccesoriosPdiEntregaVehiculo');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
     Route::post('/documentoadjunto/subirArchivoPDI', 'DocumentoAdjuntoController@subirArchivoPDI');
@@ -440,6 +441,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tablacosto/GetWOComisionTblCosto','IntTablaCostoController@GetWOComisionTblCosto');
     Route::post('/empleado/SetIntegraEmpleado','IntEmpleadoController@SetIntegraEmpleado');
     Route::post('/woperativo/SetIntegraAsientoContableWO','WarrantOperativoController@SetIntegraAsientoContableWO');
+    Route::post('/wfinaciero/SetIntegraAsientoContableWF','WarrantFinancieroController@SetIntegraAsientoContableWF');
 
     Route::get('/accesoriovehiculo/GetListVehiculos','AccesorioVehiculoController@GetListVehiculos');
     Route::get('/accesoriovehiculo/GetListElemetosByVehiculo','AccesorioVehiculoController@GetListElemetosByVehiculo');
@@ -447,7 +449,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/accesoriovehiculo/SetElementosByVehiculo', 'AccesorioVehiculoController@SetElementosByVehiculo');
     Route::get('/accesoriovehiculo/GetListAccesoriosByVehiculo','AccesorioVehiculoController@GetListAccesoriosByVehiculo');
 
-    Route::post('/comprobante/SetIntegraComprobante', 'ComprobanteController@SetIntegraComprobante');
+    Route::post('/comprobante/SetIntegraComprobante', 'IntComprobanteController@SetIntegraComprobante');
 
 
     ///========================================
@@ -489,6 +491,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //Comprobante
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
     Route::post('/comprobante/SapSetFacturaProveedorWO', 'Api\SapComprobanteController@SapSetFacturaProveedorWO');
+    Route::post('/comprobante/SapSetFacturaProveedorWF', 'Api\SapComprobanteController@SapSetFacturaProveedorWF');
     //Proyecto
     Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
     //TarjetaEquipo
@@ -518,6 +521,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/empleado/SapSetEmpleado', 'Api\SapEmpleadoController@SapSetEmpleado');
     //Asiento Contable
     Route::post('/asiento/SapSetAsientoContableWO', 'Api\SapAsientoContableController@SapSetAsientoContableWO');
+    Route::post('/asiento/SapSetAsientoContableWF', 'Api\SapAsientoContableController@SapSetAsientoContableWF');
 
     /// ============================================================
     /// METODOS ODBC

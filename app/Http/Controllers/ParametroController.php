@@ -280,11 +280,12 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $parametro = DB::select('exec [usp_Par_SetParametro] ?, ?, ?, ?, ?',
+        $parametro = DB::select('exec [usp_Par_SetParametro] ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdGrupoPar,
                                                                     $request->cParJerarquia,
                                                                     $request->cParAbreviatura,
                                                                     $request->cParNombre,
+                                                                    $request->nParTipo,
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($parametro);
@@ -294,12 +295,13 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $parametro = DB::select('exec [usp_Par_UpdParametroById] ?, ?, ?, ?, ?, ?',
+        $parametro = DB::select('exec [usp_Par_UpdParametroById] ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdPar,
                                                                     $request->nIdGrupoPar,
                                                                     $request->cParJerarquia,
                                                                     $request->cParAbreviatura,
                                                                     $request->cParNombre,
+                                                                    $request->nParTipo,
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($parametro);

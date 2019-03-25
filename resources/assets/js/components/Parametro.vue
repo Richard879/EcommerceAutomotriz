@@ -67,6 +67,7 @@
                                                         <th>Jerarquia</th>
                                                         <th>Nombre</th>
                                                         <th>Descripción</th>
+                                                        <th>Tipo</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -77,6 +78,7 @@
                                                         <td v-text="p.cParJerarquia"></td>
                                                         <td v-text="p.cParAbreviatura"></td>
                                                         <td v-text="p.cParNombre"></td>
+                                                        <td v-text="p.nParTipo"></td>
                                                         <td>
                                                             <el-tooltip class="item" :content="'Configurar Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
                                                                 <i @click="abrirModal('parametro', 'configurar', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
@@ -147,7 +149,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    <h3 class="h4">EDITAR PARAMETRO</h3>
                                 </div>
                                 <div class="card-body">
                                     <form v-on:submit.prevent class="form-horizontal">
@@ -183,6 +185,16 @@
                                                     <label class="col-sm-4 form-control-label">* Descripción</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formParametro.cparnombre" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formParametro.npartipo" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -395,7 +407,8 @@
                     nidgrupopar: '',
                     cparjerarquia: '',
                     cparabreviatura: '',
-                    cparnombre: ''
+                    cparnombre: '',
+                    npartipo: 0
                 },
                 arrayGrupoParametro: [],
                 arrayParametro: [],
@@ -621,10 +634,11 @@
 
                 var url = this.ruta + '/parametro/SetParametro';
                 axios.post(url, {
-                    nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
-                    cParJerarquia: this.formParametro.cparjerarquia,
-                    cParAbreviatura: this.formParametro.cparabreviatura,
-                    cParNombre: this.formParametro.cparnombre
+                    'nIdGrupoPar'       : parseInt(this.formParametro.nidgrupopar),
+                    'cParJerarquia'     : this.formParametro.cparjerarquia,
+                    'cParAbreviatura'   : this.formParametro.cparabreviatura,
+                    'cParNombre'        : this.formParametro.cparnombre,
+                    'nParTipo'          : !this.formParametro.npartipo ? 0 : this.formParametro.npartipo
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -675,11 +689,12 @@
                 }
 
                 axios.post(url, {
-                    nIdPar: parseInt(this.formParametro.nidpar),
-                    nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
-                    cParJerarquia: this.formParametro.cparjerarquia,
-                    cParAbreviatura: this.formParametro.cparabreviatura,
-                    cParNombre: this.formParametro.cparnombre
+                    'nIdPar'            : parseInt(this.formParametro.nidpar),
+                    'nIdGrupoPar'       : parseInt(this.formParametro.nidgrupopar),
+                    'cParJerarquia'     : this.formParametro.cparjerarquia,
+                    'cParAbreviatura'   : this.formParametro.cparabreviatura,
+                    'cParNombre'        : this.formParametro.cparnombre,
+                    'nParTipo'          : !this.formParametro.npartipo ? 0 : this.formParametro.npartipo
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -939,6 +954,7 @@
                                 this.formParametro.cparjerarquia = data.cParJerarquia;
                                 this.formParametro.cparnombre = data.cParNombre;
                                 this.formParametro.cparabreviatura = data.cParAbreviatura;
+                                this.formParametro.npartipo = data.nParTipo;
                                 this.tituloFormulario = 'ACTUALIZAR PARAMETRO';
                                 break;
                             }
