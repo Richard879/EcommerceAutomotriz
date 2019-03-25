@@ -532,8 +532,8 @@
                                                                 </td>
                                                                 <td v-text="vehiculo.cNumeroVin"></td>
                                                                 <td v-text="vehiculo.cNombreComercial"></td>
-                                                                <td v-text="vehiculo.cAnioFabricacion"></td>
-                                                                <td v-text="vehiculo.cAnioVersion"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
                                                                 <td v-text="vehiculo.cSimboloMoneda"></td>
                                                                 <td v-text="vehiculo.fTotalCompra"></td>
                                                                 <td v-text="vehiculo.cNumeroFactura"></td>
@@ -1177,7 +1177,7 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWF';
                 axios.post(sapUrl, {
-                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'cCardCode' : me.formWFinanciero.ccarcode, //CODIGO FORUM
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
                     'data'      : me.arrayTemporal
                 }).then(response => {
