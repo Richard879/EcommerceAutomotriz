@@ -335,11 +335,10 @@ class ParametroController extends Controller
         $nIdLinea = $request->nidlinea;
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
-        //$cModeloNombre = $request->cmodelonombre;
         $variable   = $request->opcion;
 
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        //$cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLineaMarcaModelo = DB::select('exec [usp_Par_GetLineaMarcaModelo] ?, ?, ?, ?',
