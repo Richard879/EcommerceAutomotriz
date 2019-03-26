@@ -1079,7 +1079,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         mounted() {
@@ -1421,6 +1422,7 @@
             },
             limpiarNuevaSolicitud(){
                 //datos solicitud
+                this.arrayVehiculosByCriterio = [];
                 this.fillNuevaSolicitud.dfechasolicitud = '';
                 this.fillNuevaSolicitud.nidtiposolicitud = '';
                 this.fillNuevaSolicitud.nidasigcontacto = '';
@@ -1672,6 +1674,10 @@
                     this.modal = 1;
                     return;
                 }
+                let me = this;
+                me.loadingProgressBar("REGISTRANDO AUTORIZACIÓN...");
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/autorizacion/SetRegistrarSolicitudAutorizacion';
                 axios.post(url, {
                     'nIdAsigContacto'       :   this.fillNuevaSolicitud.nidasigcontacto,
@@ -1696,6 +1702,8 @@
                     this.limpiarMisSolicitudes();
                     this.limpiarNuevaSolicitud();
                     this.tabVolverMisSolicitudes();
+                    $("#myBar").hide();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1883,6 +1891,18 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }

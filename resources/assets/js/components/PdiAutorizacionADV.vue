@@ -670,24 +670,49 @@
                                                                                                 value-format="yyyy-MM-dd"
                                                                                                 format="dd/MM/yyyy"
                                                                                                 type="date"
-                                                                                                placeholder="dd/mm/aaaa">
+                                                                                                placeholder="dd/mm/aaaa"
+                                                                                                @change="verificarCantidadPorDia">
                                                                                             </el-date-picker>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-6">
+                                                                                <div class="col-sm-6" v-if="fillProgramacion.nDiaVerificarHoraFlag">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Hora Movimiento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-time-picker
+                                                                                            <el-time-select
                                                                                                 v-model="fillNuevaSolicitud.choraMovimiento"
-                                                                                                value-format="HH:mm"
                                                                                                 :picker-options="{
-                                                                                                    format: 'AM/PM'
+                                                                                                    format: 'AM/PM',
+                                                                                                    start: fillProgramacion.nDiaHoraInicio,
+                                                                                                    step: '00:30',
+                                                                                                    end: fillProgramacion.nDiaHoraFin
                                                                                                 }"
-                                                                                                placeholder="Hora de Movimiento">
-                                                                                            </el-time-picker>
+                                                                                                placeholder="Hora de Movimiento"
+                                                                                                @change="verificarHoraPorDia">
+                                                                                            </el-time-select>
                                                                                         </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row" v-if="fillProgramacion.nDiaVerificar">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-alert
+                                                                                        :title="'Se encuentran ocupados los horarios de Entrega de Vehículo, Para la fecha seleccionada (' + fillNuevaSolicitud.dfechamovimiento +')' "
+                                                                                        type="warning">
+                                                                                    </el-alert>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row" v-if="fillProgramacion.nHoraVerificar">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-alert
+                                                                                        :title="'Se encuentra ocupada la hora de entrega (' +  fillProgramacion.nHoraHoraCapturada +'), Para la fecha seleccionada (' + fillNuevaSolicitud.dfechamovimiento +')' "
+                                                                                        type="warning">
+                                                                                    </el-alert>
+                                                                                </div>
+                                                                                <div class="col-sm-12 choras" v-if="fillProgramacion.arrayListHorasLibresByFecha">
+                                                                                    <div v-for="(item, index) in fillProgramacion.arrayListHorasLibresByFecha" :key="index">
+                                                                                        <span class="el-tag" v-text="item.cHora" @click="asignarNuevaHoraLibre(item.cHora)"></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1350,6 +1375,19 @@
                     cobservacion: '',
                     nidmovervehiculo: ''
                 },
+                fillProgramacion: {
+                    arrayDiaCantidadHoras: [],
+                    nDiaHoraInicio: '09:00',
+                    nDiaHoraFin: '19:00',
+                    nDiaVerificarHoraFlag: false,
+                    nDiaCantidadPermitida: '',
+                    nDiaCantidadProgramadoByFecha: '',
+                    nDiaVerificar: false,
+                    //
+                    nHoraHoraCapturada: '',
+                    nHoraVerificar: false,
+                    arrayListHorasLibresByFecha: []
+                },
                 checked: true,
                 arrayTipoSolicitudes: [],
                 arrayReferenciavehiculo: [],
@@ -1384,7 +1422,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         mounted() {
@@ -1640,6 +1679,11 @@
                 }
             },
             accionAprobadoNoAprobado(data, op){
+                let me = this;
+                let rpta = (data == 1) ? 'APROBACIÓN DE LA AUTORIZACIÓN' : 'RECHAZO DE LA AUTORIZACIÒN';
+                me.loadingProgressBar(rpta);
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/autorizacion/SetConformeNoConforme';
                 axios.put(url, {
                     'nIdSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion,
@@ -1656,6 +1700,8 @@
                     this.limpiarModalConformeNoConforme();
                     this.buscarMisSolicitudes(1);
                     this.buscarSolicitudesJefeVentas(1);
+                    $("#myBar").hide();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1847,6 +1893,7 @@
             },
             limpiarNuevaSolicitud(){
                 //datos solicitud
+                this.arrayVehiculosByCriterio = [];
                 this.fillNuevaSolicitud.dfechasolicitud = '';
                 this.fillNuevaSolicitud.nidtiposolicitud = '';
                 this.fillNuevaSolicitud.nidasigcontacto = '';
@@ -1860,7 +1907,16 @@
                 this.fillNuevaSolicitud.dfechamovimiento = '';
                 this.fillNuevaSolicitud.choraMovimiento = '';
                 this.fillNuevaSolicitud.cobservacion = '';
-                this.fillNuevaSolicitud.nidmovervehiculo = '';
+                this.fillProgramacion.arrayDiaCantidadHoras = '';
+                this.fillProgramacion.nDiaHoraInicio = '09:00';
+                this.fillProgramacion.nDiaHoraFin = '19:00';
+                this.fillProgramacion.nDiaVerificarHoraFlag = false;
+                this.fillProgramacion.nDiaCantidadPermitida = '';
+                this.fillProgramacion.nDiaCantidadProgramadoByFecha = '';
+                this.fillProgramacion.nDiaVerificar = false;
+                this.fillProgramacion.nHoraHoraCapturada = '';
+                this.fillProgramacion.nHoraVerificar = false;
+                this.fillProgramacion.arrayListHorasLibresByFecha = [];
             },
             // ============================
             // SUBTAB DATOS SOLICTIUD
@@ -1972,6 +2028,96 @@
             // ============================
             // SUBTAB DATOS VEHÍCULO
             // ============================
+            verificarCantidadPorDia(){
+                var url = this.ruta + '/autorizacion/GetListCantidadEntregaByDia';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : (this.fillNuevaSolicitud.dfechamovimiento) ? 110108 : '',
+                        'dFechaEntrega' : this.fillNuevaSolicitud.dfechamovimiento
+                    }
+                }).then(response => {
+                    // console.log(response.data)
+                    if(response.data.length > 0) {
+                        this.fillProgramacion.arrayDiaCantidadHoras = response.data;
+                        this.fillProgramacion.nDiaHoraInicio                = this.fillProgramacion.arrayDiaCantidadHoras[0].cHora;//Obtener Hora Inicio
+                        this.fillProgramacion.nDiaHoraFin                   = this.fillProgramacion.arrayDiaCantidadHoras[this.fillProgramacion.arrayDiaCantidadHoras.length - 1].cHora;//Obtener Hora de Fin
+                        this.fillProgramacion.nDiaCantidadPermitida         = this.fillProgramacion.arrayDiaCantidadHoras[0].nCantidadPermitida;//Obtener Cantidad Maxima Permitida
+                        this.fillProgramacion.nDiaCantidadProgramadoByFecha = this.fillProgramacion.arrayDiaCantidadHoras[0].nCantidadProgramadoByFecha;//Obtener Cantidad Programada
+
+                        //Verificar si la Cantidad Programada es igual a la Cantidad Maxima Permitida
+                        if(this.fillProgramacion.nDiaCantidadProgramadoByFecha == this.fillProgramacion.nDiaCantidadPermitida){
+                            this.fillProgramacion.nDiaVerificarHoraFlag = false;//Ocultar Hora
+                            this.fillProgramacion.nDiaVerificar = true;//Mostrar Error de Limite de Cantidad de Entregas por Fecha
+                        } else {
+                            this.fillProgramacion.nDiaVerificarHoraFlag  = true;//Mostrar Hora
+                            this.fillProgramacion.nDiaVerificar = false;//Ocultar Error de Limite de Cantidad de Entregas por Fecha
+                        }
+                    } else {
+                        this.fillProgramacion.nDiaVerificarHoraFlag = false;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            verificarHoraPorDia(){
+                var url = this.ruta + '/autorizacion/GetListHoraEntregaByDia';
+                axios.get(url, {
+                    params: {
+                        'dFechaEntrega' : this.fillNuevaSolicitud.dfechamovimiento,
+                        'choraEntrega'  : this.fillNuevaSolicitud.choraMovimiento
+                    }
+                }).then(response => {
+                    if(response.data.length > 0) {
+                        this.fillProgramacion.nHoraVerificar = true;
+                        //Hora Captura a mostrar en el Error
+                        this.fillProgramacion.nHoraHoraCapturada = this.fillNuevaSolicitud.choraMovimiento
+                        this.getListHorasLibresPorFecha();
+                    } else {
+                        this.fillProgramacion.nHoraVerificar = false;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getListHorasLibresPorFecha(){
+                var url = this.ruta + '/autorizacion/GetListHorasLibresPorFecha';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : (this.fillNuevaSolicitud.dfechamovimiento) ? 110108 : '',
+                        'dFechaEntrega' : this.fillNuevaSolicitud.dfechamovimiento
+                    }
+                }).then(response => {
+                    if(response.data.length > 0) {
+                        this.fillProgramacion.arrayListHorasLibresByFecha = response.data
+                    } else {
+                        this.fillProgramacion.arrayListHorasLibresByFecha = []
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            asignarNuevaHoraLibre(cHora){
+                this.fillNuevaSolicitud.choraMovimiento = cHora;
+                this.verificarHoraPorDia();
+            },
             tabDatosVehiculo(){
                 this.llenarMoverVehiculo();
             },
@@ -2000,6 +2146,10 @@
                     this.modal = 1;
                     return;
                 }
+                let me = this;
+                me.loadingProgressBar("REGISTRANDO AUTORIZACIÓN...");
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/autorizacion/SetRegistrarSolicitudAutorizacion';
                 axios.post(url, {
                     'nIdAsigContacto'       :   this.fillNuevaSolicitud.nidasigcontacto,
@@ -2026,6 +2176,8 @@
                     this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
                     this.limpiarMisSolicitudes();
                     this.tabVolverMisSolicitudes();
+                    $("#myBar").hide();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2242,6 +2394,18 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
@@ -2309,6 +2473,26 @@
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events:none;
+    }
+    .choras{
+        display: flex;
+        justify-content: start;
+        margin-bottom: .4rem;
+        margin-top: .3rem;
+    }
+    .el-tag{
+        cursor: pointer;
+        margin-right: .2rem;
+        background-color: rgba(64,158,255,.1);
+        padding: 0 10px;
+        height: 32px;
+        line-height: 30px;
+        font-size: 12px;
+        color: #409EFF;
+        border-radius: 4px;
+        box-sizing: border-box;
+        border: 1px solid rgba(64,158,255,.2);
+        white-space: nowrap;
     }
 </style>
 
