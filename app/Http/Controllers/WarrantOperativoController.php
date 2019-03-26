@@ -134,4 +134,16 @@ class WarrantOperativoController extends Controller
             DB::rollBack();
         }
     }
+
+    public function UpdEstadoWoDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayWO = DB::select('exec [usp_WO_UpdEstadoWoDetalle] ?, ?, ?',
+                                                [   $request->nIdDetalleWarrant,
+                                                    $request->nIdEstadoWarrant,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayWO);
+    }
 }

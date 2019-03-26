@@ -68,7 +68,47 @@ class SapComprobanteController extends Controller
                                 "TaxCode"           => "EXE_IGV",
                                 "PriceAfterVAT"     => $value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "AccountCode"       => (string)$value['cAccountCode']
+                                "AccountCode"       => (string)$value['cAccountCode'],
+                                //"WarehouseCode"     => (string)$request->cWarehouseCode,
+                                "ProjectCode"       => (string)$value['cNumeroVin']
+                            ]
+                        ]
+                    ]
+                ];
+
+            $response = $client->request('POST', "/api/Comprobante/SapSetFacturaProveedor/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
+
+    public function SapSetFacturaProveedorWF(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            $json = [
+                'json' => [
+                    "CardCode"      => $request->cCardCode,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocCurrency"   =>  "US$",
+                    "DocType"       => "dDocument_Service",
+                    "DocumentLines" => [
+                            [
+                                "ItemDescription"   => "Servicio WF - ".$value['cNumeroVin'],
+                                "TaxCode"           => "EXE_IGV",
+                                "PriceAfterVAT"     => $value['fTotalCompra'],
+                                "Currency"          => "US$",
+                                "AccountCode"       => (string)$value['cAccountCode'],
+                                "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]
                     ]

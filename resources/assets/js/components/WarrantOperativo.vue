@@ -243,6 +243,7 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>O/C</th>
                                                                                     <th>Nombre Comercial</th>
@@ -256,6 +257,10 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                        <i @click="cancelarWOperativoDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                     <td>{{ odetalle.nIdDetalleWarrant }}</td>
                                                                                     <td>{{ odetalle.nOrdenCompra }}</td>
                                                                                     <td>{{ odetalle.cNombreComercial }}</td>
@@ -1031,6 +1036,51 @@
                 this.pagination.current_page=page;
                 this.listarDetalleWOperativo(page);
             },
+            cancelarWOperativoDetalle(objWarrant){
+                swal({
+                    title: 'Estas seguro de cancelar este warrant?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
+                            axios.post(url, {
+                                'nIdDetalleWarrant'   : parseInt(objWarrant.nIdDetalleWarrant),
+                                'nIdEstadoWarrant'      : 1300081
+                            }).then(response => {
+                                if(response.data[0].nFlagMsje == 1){
+                                    swal(
+                                        'Activado!',
+                                        response.data[0].cMensaje
+                                    );
+                                    this.listarDetalleWOperativo(1);
+                                }
+                                else{
+                                    swal(
+                                        'Alerta!',
+                                        response.data[0].cMensaje
+                                    );
+                                }
+                                this.listarCompras(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                })
+            },
             tabGeneraWOperativo(){
                 this.limpiarFormulario();
                 this.listarProveedores(1);
@@ -1276,7 +1326,7 @@
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
                                 'cFlagTipo'         : "FP",
-                                'cItemCode'         : "",
+                                'cItemCode'         : me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                                 'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
                                 'cDocType'          : me.jsonRespuesta.DocType.toString(),
