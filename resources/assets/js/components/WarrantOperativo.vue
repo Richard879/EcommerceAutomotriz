@@ -257,10 +257,13 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
-                                                                                        <i @click="cancelarWOperativoDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="odetalle.nIdEstadoWarrant==1300079">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                            <i @click="cancelarWOperativoDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
+                                                                                    <template v-else>&nbsp;&nbsp;</template>
                                                                                     <td>{{ odetalle.nIdDetalleWarrant }}</td>
                                                                                     <td>{{ odetalle.nOrdenCompra }}</td>
                                                                                     <td>{{ odetalle.cNombreComercial }}</td>

@@ -397,7 +397,7 @@
                                                                                 <td v-text="temporal.cNumeroVin"></td>
                                                                                 <td v-text="temporal.cNombreComercial"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
-                                                                                <td v-text="temporal.fTotalCompra"></td>
+                                                                                <td><input type="text" v-model="temporal.fTotalCompra" class="form-control form-control-sm"></td>
                                                                                 <td v-text="temporal.cNumeroFactura"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -471,113 +471,111 @@
                         <div class="modal-body">
                             <form v-on:submit.prevent class="form-horizontal">
                                 <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre Comercial</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="card-body">
-                                                <template v-if="arrayVersionVehiculo.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nro VIN</th>
-                                                                    <th>Nombre Comercial</th>
-                                                                    <th>Año Fab.</th>
-                                                                    <th>Año Modelo</th>
-                                                                    <th>Moneda</th>
-                                                                    <th>Costo</th>
-                                                                    <th>Nro Factura</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarVehiculo(vehiculo)" :title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="vehiculo.cNumeroVin"></td>
-                                                                    <td v-text="vehiculo.cNombreComercial"></td>
-                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
-                                                                    <td v-text="vehiculo.nAnioVersion"></td>
-                                                                    <td v-text="vehiculo.cSimboloMoneda"></td>
-                                                                    <td v-text="vehiculo.fTotalCompra"></td>
-                                                                    <td v-text="vehiculo.cNumeroFactura"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
                                                         <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaVehiculos(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="card-body">
+                                            <template v-if="arrayVersionVehiculo.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
                                                             <tr>
-                                                                <td colspan="10">No existen registros!</td>
+                                                                <th>Seleccione</th>
+                                                                <th>Nro VIN</th>
+                                                                <th>Nombre Comercial</th>
+                                                                <th>Año Fab.</th>
+                                                                <th>Año Modelo</th>
+                                                                <th>Moneda</th>
+                                                                <th>Costo</th>
+                                                                <th>Nro Factura</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
+                                                                <td>
+                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" :title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="vehiculo.cNumeroVin"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
+                                                                <td v-text="vehiculo.cSimboloMoneda"></td>
+                                                                <td v-text="vehiculo.fTotalCompra"></td>
+                                                                <td v-text="vehiculo.cNumeroFactura"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </template>
-                                            </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaVehiculos(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
                                         </div>
                                     </div>
                                 </div>
