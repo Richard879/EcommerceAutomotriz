@@ -60,9 +60,9 @@
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                                 v-for="item in arrayMarca"
-                                                                :key="item.nIdMarca"
-                                                                :label="item.cMarcaNombre"
-                                                                :value="item.nIdMarca">
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -222,9 +222,9 @@
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                                 v-for="item in arrayMarca"
-                                                                :key="item.nIdMarca"
-                                                                :label="item.cMarcaNombre"
-                                                                :value="item.nIdMarca">
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -237,9 +237,9 @@
                                                         <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                                 v-for="item in arrayModelo"
-                                                                :key="item.nIdModelo"
-                                                                :label="item.cModeloNombre"
-                                                                :value="item.nIdModelo">
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -250,9 +250,6 @@
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                     <i class="fa fa-save"></i> Registrar
-                                                </button>
-                                                <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                    <i class="fa fa-save"></i> Actualizar
                                                 </button>
                                                 <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
                                                     <i class="fa fa-close"></i> Cancelar
@@ -529,15 +526,15 @@
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
 
                 axios.get(url, {
                     params: {
-                        'nidlinea' : this.formVersion.nidlinea,
+                        'ngrupoparid' : 110032,
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data.arrayMarca;
+                    this.arrayMarca = response.data.arrayParametro;
                     if(this.vistaFormulario){
                         this.formVersion.nidmarca = '';
                     }
@@ -554,16 +551,15 @@
                 });
             },
             llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': this.formVersion.nidlinea,
-                        'nidmarca': this.formVersion.nidmarca,
+                        'ngrupoparid' : 110033,
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data.arrayModelo;
+                    this.arrayModelo = response.data.arrayParametro;
                     if(this.vistaFormulario){
                         this.formVersion.nidmodelo = '';
                     }
@@ -585,11 +581,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 0,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion'            : 0,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
@@ -639,9 +635,9 @@
                 if(this.formVersion.nidlinea == 0 || !this.formVersion.nidlinea){
                     this.mensajeError.push('Debe Seleccionar Linea');
                 };
-                if(this.formVersion.nidmarca == 0 || !this.formVersion.nidmarca){
+                /*if(this.formVersion.nidmarca == 0 || !this.formVersion.nidmarca){
                     this.mensajeError.push('Debe Seleccionar Marca');
-                };
+                };*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -653,11 +649,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidproveedor' : this.formVersion.nidproveedor,
-                        'nidlinea' : this.formVersion.nidlinea,
-                        'nidmarca' : this.formVersion.nidmarca,
-                        'nidmodelo' : this.formVersion.nidmodelo,
-                        'page' : page
+                        'nidproveedor'  : this.formVersion.nidproveedor,
+                        'nidlinea'      : this.formVersion.nidlinea,
+                        'nidmarca'      : this.formVersion.nidmarca,
+                        'nidmodelo'     : this.formVersion.nidmodelo,
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayVersionVehiculo = response.data.arrayLineaMarcaModelo.data;
@@ -691,10 +687,10 @@
 
                 var url = this.ruta + '/parametro/SetLineaMarcaModelo';
                 axios.post(url, {
-                    'nIdProveedor': this.formVersion.nidproveedor,
-                    'nIdLinea': this.formVersion.nidlinea,
-                    'nIdMarca': this.formVersion.nidmarca,
-                    'nIdModelo': this.formVersion.nidmodelo
+                    'nIdProveedor'  : this.formVersion.nidproveedor,
+                    'nIdLinea'      : this.formVersion.nidlinea,
+                    'nIdMarca'      : this.formVersion.nidmarca,
+                    'nIdModelo'     : this.formVersion.nidmodelo
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -702,6 +698,9 @@
                         this.limpiarFormulario();
                         this.listarLineaMarcaModelo(1);
                         this.vistaFormulario = 1;
+                    }
+                    else if(response.data[0].nFlagMsje == 2){
+                        swal('El Modelo ya ha sido Asignado');
                     }
                     else{
                         swal('Ya existe Registro');
@@ -740,46 +739,6 @@
                 }
                 return this.error;
             },
-            actualizar(){
-                var url = this.ruta + '/versionvehiculo/UpdVersionVehiculoById';
-
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                axios.post(url, {
-                    nIdVersionVeh: parseInt(this.formVersion.nidversionveh),
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdProveedor: parseInt(this.formVersion.nidproveedor),
-                    nIdClase: parseInt(this.formVersion.nidclase),
-                    nIdSubClase: parseInt(this.formVersion.nidsubclase),
-                    nIdLinea: parseInt(this.formVersion.nidlinea),
-                    nIdMarca: parseInt(this.formVersion.nidmarca),
-                    nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Versión Vehículo Actualizado');
-                        this.limpiarFormulario();
-                        this.listarLineaMarcaModelo(1);
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Vehiculo');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             activar(p){
                 swal({
                     title: 'Estas seguro de activar este registro?',
@@ -798,10 +757,23 @@
                                 'nIdMarca': parseInt(p.nIdMarca),
                                 'nIdModelo': parseInt(p.nIdModelo)
                             }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
+                                if(response.data[0].nFlagMsje == 1)
+                                {
+                                    swal(
+                                    'Activado!',
+                                    'El registro fue activado.'
+                                    );
+                                }
+                                else if(response.data[0].nFlagMsje == 2){
+                                    swal({
+                                        type: 'error',
+                                        title: 'Error...',
+                                        text: 'El Modelo ya ha sido Asignado y está Activo!',
+                                    })
+                                }
+                                else{
+                                    swal('Ya existe Registro');
+                                }
                                 this.listarLineaMarcaModelo(1);
                             })
                             .catch(function (error) {
@@ -897,27 +869,8 @@
                                 this.limpiarFormulario();
                                 break;
                             }
-                            case 'actualizar':
-                            {
-                                this.vistaFormulario = 0;
-                                this.accion = 2;
-                                this.formVersion.nidproveedor = data['nIdProveedor'];
-                                this.formVersion.cproveedornombre = data['cProveedorNombre'];
-                                this.llenarComboLinea();
-                                this.formVersion.nidclase = data['nIdClase'];
-                                this.formVersion.nidsubclase = data['nIdSubClase'];
-                                this.formVersion.nidlinea = data['nIdLinea'];
-                                //this.llenarComboMarca();
-                                this.formVersion.nidmarca = data['nIdMarca'];
-                                //this.llenarComboModelo();
-                                this.tituloFormulario = 'ACTUALIZAR LINEA MARCA MODELO';
-                                this.formVersion.nidmodelo = data['nIdModelo'];
-                                this.formVersion.nidversionveh = data['nIdVersionVeh'];
-                                this.formVersion.cnombrecomercial = data['cNombreComercial'];
-                                break;
-                            }
                         }
-                    }
+                    }break;
                 }
             },
             cambiarVistaFormulario(){
