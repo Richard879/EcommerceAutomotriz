@@ -70,7 +70,7 @@ class SapComprobanteController extends Controller
                                 "Currency"          => "US$",
                                 "AccountCode"       => (string)$value['cAccountCode'],
                                 //"WarehouseCode"     => (string)$request->cWarehouseCode,
-                                "ProjectCode"       => (string)$value['cNumeroVin'],
+                                "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]
                     ]
@@ -107,7 +107,8 @@ class SapComprobanteController extends Controller
                                 "TaxCode"           => "EXE_IGV",
                                 "PriceAfterVAT"     => $value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "AccountCode"       => (string)$value['cAccountCode']
+                                "AccountCode"       => (string)$value['cAccountCode'],
+                                "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]
                     ]

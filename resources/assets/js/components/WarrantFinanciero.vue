@@ -1232,8 +1232,11 @@
                 });
             },
             confirmarWF(){
-                this.limpiarFormulario();
+                let me = this;
+                me.loading.close();
+                $("#myBar").hide();
                 swal('Warrant Financiero registrado');
+                me.limpiarFormulario();
             },
             validar(){
                 this.error = 0;

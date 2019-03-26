@@ -1048,7 +1048,7 @@
                     }).then((result) => {
                         if (result.value) {
                             var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
-                            axios.put(url, {
+                            axios.post(url, {
                                 'nIdDetalleWarrant'   : parseInt(objWarrant.nIdDetalleWarrant),
                                 'nIdEstadoWarrant'      : 1300081
                             }).then(response => {
@@ -1057,6 +1057,7 @@
                                         'Activado!',
                                         response.data[0].cMensaje
                                     );
+                                    this.listarDetalleWOperativo(1);
                                 }
                                 else{
                                     swal(
