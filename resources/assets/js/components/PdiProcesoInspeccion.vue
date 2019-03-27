@@ -1736,32 +1736,6 @@
                     }
                 });
             },
-            /*obtenerAlmacenByLocalidad(){
-                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
-                axios.get(url, {
-                    params: {
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
-                    }
-                }).then(response => {
-                    if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
-                        this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
                 var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
@@ -2063,7 +2037,7 @@
                     }
                 });
             },
-            listarAccesorioByCod(){
+            listarAccesorioPdiEntrada(){
                 var url = this.ruta + '/pdi/GetElementoByTipoBsq';
 
                 axios.get(url, {
@@ -2196,18 +2170,7 @@
             },
             aceptarAccesorio(){
                 let me = this;
-                me.arrayTempAccesorio = [];
-                me.arrayAccesorio.map(function(value, key){
-                    me.arrayTempAccesorio.push({
-                        'nIdAccesorio'      :   value.nIdElemento,
-                        'cCodigoERP'        :   value.cCodigoERP,
-                        'nCantidad'         :   value.nCantidad,
-                        'fMonto'            :   value.fElemenValorVenta,
-                        'cFlagMarca'        :   (value.cFlagMarca == false) ? 'N' : 'C',
-                        'cDescripcionNoConformidad': (value.cDescripcion == null) ? '' : value.cDescripcion,
-                        'cElemenNombre'     :   value.cElemenNombre,
-                    });
-                });
+
                 this.nflagaccesorioValida  = 1;//Valida que se aceptaron los accesorios
                 this.fillAccesorio.cnombre = '';
                 this.cerrarModal();
@@ -2277,10 +2240,7 @@
 
                         //Validar que se aceptaron los accesorios
                         if(this.nflagaccesorioValida==1){
-                            //Validar que existen accesorios agregados
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
+                            this.registrarAccesorios();
                         }
 
                         //this.generaSapActividadPdiEntrada();
@@ -2441,18 +2401,14 @@
                                 this.registrarPlantilla();
                             }
                         }
-                        if(this.nflagaccesorioValida==1){
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
-                        }
+
                         if(this.attachment){
                             this.subirArchivo();
                         }
-                        swal('Inspección realizada con éxito');
-                        this.limpiarFormulario();
-                        this.vistaFormulario = 1;
-                        this.listarPdi(1);
+
+                        if(this.nflagaccesorioValida==1){
+                            this.registrarAccesorios();
+                        }
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2486,10 +2442,24 @@
             registrarAccesorios(){
                 let me = this;
 
+                me.arrayTempAccesorio = [];
+                me.arrayAccesorio.map(function(value, key){
+                    me.arrayTempAccesorio.push({
+                        'nIdAccesorio'      : value.nIdElemento,
+                        'cCodigoERP'        : value.cCodigoERP,
+                        'nCantidad'         : value.nCantidad,
+                        'fMonto'            : value.fElemenValorVenta,
+                        'cFlagMarca'        : (value.cFlagMarca == false) ? 'N' : 'C',
+                        'cDescripcionNoConformidad': (value.cDescripcion == null) ? '' : value.cDescripcion,
+                        'cElemenNombre'     : value.cElemenNombre,
+                        'cIdAlmacen'        : me.formAlmacen.cwhscode
+                    });
+                });
+
                 var url = me.ruta + '/pdi/SetAccesorioPdi';
                 axios.post(url, {
-                    'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
-                    'data': me.arrayTempAccesorio
+                    'nIdCabeceraInspeccion' : me.formPdi.nidcabecerainspeccion,
+                    'data'                  : me.arrayTempAccesorio
                 }).then(response => {
                     //Si es Pdi Entrada
                     if(me.formPdi.nidtipoinspeccion == 4){
@@ -3211,7 +3181,7 @@
                                 this.listarAccesorio();
                                 //Solo si es Entrada
                                 if(this.formPdi.nidtipoinspeccion == 4 && !this.arrayAccesorio.length) {
-                                    this.listarAccesorioByCod();
+                                    this.listarAccesorioPdiEntrada();
                                 };
                                 //Si es Entrega Vehiculo
                                 if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){
