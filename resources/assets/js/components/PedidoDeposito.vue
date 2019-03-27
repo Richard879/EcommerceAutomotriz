@@ -479,11 +479,29 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <div class="col-sm-6">
+                                                                            <!-- <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Cambio SUNAT</label>
                                                                                     <div class="col-sm-8">
                                                                                         <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> -->
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio SUNAT</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <div class="input-group">
+                                                                                            <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm" readonly>
+                                                                                            <div class="input-group-prepend">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Obtener Tipo Cambio SAP </div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="obtenerSapTipoCamcioByFecha()">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1028,7 +1046,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </transition>
 </template>
@@ -1083,6 +1101,7 @@
                 arrayFormaPago2: [],
                 arrayTipoMovimiento: [],
                 arrayTipoMovimientoPermisos: [],
+                arraySapRespuesta: [],
                 formNuevoDeposito:{
                     nidbanco_origen: '',
                     nidmoneda_origen: '',
@@ -1149,7 +1168,8 @@
                 someData: '',
                 attachment: null,
                 form: new FormData,
-                textFile: ''
+                textFile: '',
+                loading: false
             }
         },
         computed:{
@@ -1669,6 +1689,37 @@
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
             },
+            obtenerSapTipoCamcioByFecha(){
+                let me = this;
+
+                me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/tipocambio/SapGetTipoCambioByFecha';
+
+                // moment().format('YYYY-MM-DD')
+                axios.get(url, {
+                    params: {
+                        'dfecha': moment().format('YYYY-MM-DD')
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.formNuevoDeposito.ftipocambiosunat = value.Rate;
+                        });
+                    }
+
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             verificarTipoCambioEspecial(){
                 //Si el Switch esta desactivado setear input TCE
                 if (!this.formNuevoDeposito.cflagtce) {
@@ -1847,7 +1898,7 @@
                 if(this.formNuevoDeposito.nnumerooperacion == ''){
                     this.mensajeError.push('Debe ingresar Nro Operación');
                 };
-                if(this.formNuevoDeposito.ftipocambiosunat == ''){
+                if(this.formNuevoDeposito.ftipocambiosunat == '' || this.formNuevoDeposito.ftipocambiosunat == 0){
                     this.mensajeError.push('Debe ingresar Tipo Cambio SUNAT');
                 };
                 if(this.formNuevoDeposito.ftipocambiocomercial == 0){
@@ -2140,6 +2191,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){
