@@ -28,27 +28,27 @@ class SapAsientoContableController extends Controller
                     "Memo"                  =>  "WO-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
                     "Reference2"            =>  $value['cProjectCode'],
-                    "JournalEntryLines"    =>
+                    "JournalEntryLines"     =>
+                    [
                         [
-                            [
-                                "AccountCode"       =>  "012110",
-                                "ProjectCode"       =>  $value['cProjectCode'],
-                                /*"Credit"          =>  (string)$value['fCredit'],
-                                "Debit"             =>  (string)$value['fDebit']*/
-                                "FCDebit"           => (string)$value['fCredit'],
-                                "FCCredit"          => (string)$value['fDebit'],
-                                "FCCurrency"        => "US$"
-                            ],
-                            [
-                                "AccountCode"       =>  "099111",
-                                "ProjectCode"       =>  $value['cProjectCode'],
-                                /*"Credit"            =>  (string)$value['fCredit1'],
-                                "Debit"             =>  (string)$value['fDebit1'],*/
-                                "FCDebit"           => (string)$value['fCredit1'],
-                                "FCCredit"          => (string)$value['fDebit1'],
-                                "FCCurrency"        => "US$"
-                            ]
+                            "AccountCode"       =>  "012110",
+                            "ProjectCode"       =>  $value['cProjectCode'],
+                            /*"Credit"          =>  (string)$value['fCredit'],
+                            "Debit"             =>  (string)$value['fDebit']*/
+                            "FCDebit"           =>  (string)$value['fCredit'],
+                            "FCCredit"          =>  (string)$value['fDebit'],
+                            "FCCurrency"        =>  "US$"
+                        ],
+                        [
+                            "AccountCode"       =>  "099111",
+                            "ProjectCode"       =>  $value['cProjectCode'],
+                            /*"Credit"            =>  (string)$value['fCredit1'],
+                            "Debit"             =>  (string)$value['fDebit1'],*/
+                            "FCDebit"           =>  (string)$value['fCredit1'],
+                            "FCCredit"          =>  (string)$value['fDebit1'],
+                            "FCCurrency"        =>  "US$"
                         ]
+                    ]
                 ]
             ];
 

@@ -68,12 +68,12 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Estado</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="fillWOperativo.nidestadowarrant" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="fillWOperativo.nidestadowarrant" filterable clearable placeholder="SELECCIONE ESTADO" >
                                                                                         <el-option
-                                                                                        v-for="item in arrayEstadoWarrant"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
+                                                                                            v-for="item in arrayEstadoWarrant"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
                                                                                         </el-option>
                                                                                     </el-select>
                                                                                 </div>
@@ -82,7 +82,9 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();"><i class="fa fa-search"></i> Buscar</button>
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -122,8 +124,13 @@
                                                                                     <td v-text="operativo.cParNombre"></td>
                                                                                     <td v-text="operativo.nDocNum"></td>
                                                                                     <td>
-                                                                                        <a href="#" @click="asignaIdWOperativo(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
-                                                                                        <i class="fa-md fa fa-eye"></i></a>
+                                                                                        <a  href="#"
+                                                                                            @click="asignaIdWOperativo(operativo)"
+                                                                                            data-toggle="tooltip"
+                                                                                            data-placement="top"
+                                                                                            :title="'Ver Detalle ' + operativo.nIdWarrantOperativo">
+                                                                                            <i class="fa-md fa fa-eye"></i>
+                                                                                        </a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -207,10 +214,10 @@
                                                                                     <div class="input-group">
                                                                                         <el-select v-model="fillWOperativoDetalle.nidestadowarrant" filterable clearable placeholder="SELECCIONE" >
                                                                                             <el-option
-                                                                                            v-for="item in arrayEstadoWarrant"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                                v-for="item in arrayEstadoWarrant"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
                                                                                             </el-option>
                                                                                         </el-select>
                                                                                     </div>
@@ -420,7 +427,8 @@
                                                                             <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
                                                                                 <td>
                                                                                     <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                                 <td v-text="temporal.nOrdenCompra"></td>
                                                                                 <td v-text="temporal.cNumeroVin"></td>
@@ -442,7 +450,7 @@
                                                                         <div class="col-lg-7">
                                                                         </div>
                                                                         <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
+                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
                                                                             <!--<div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
                                                                             <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>-->
                                                                         </div>
@@ -511,7 +519,7 @@
                                         <h3 class="h4">LISTA DE PROVEEDORES</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
+                                        <form @submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -612,7 +620,7 @@
                                         <h3 class="h4">LISTADO</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
+                                        <form @submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -873,7 +881,21 @@
                     from++;
                 }
                 return pagesArray;
-            }
+            },
+            totalVehiculo: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fTotalCompra);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
+        },
+        mounted(){
+            this.tabBuscarWOperativo();
+            this.obtenerAlmacenPorDefecto();
         },
         methods:{
             obtenerAlmacenPorDefecto(){
@@ -959,6 +981,9 @@
                     }
                 });
             },
+            // =================================================================
+            // METODOS TAB BUSCAR WARRANT OPERATIVO
+            // =================================================================
             tabBuscarWOperativo(){
                 this.vistaFormularioTabBuscar = 1;
                 this.llenarComboEstadoWarrant();
@@ -1012,10 +1037,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nidwarrantoperativo': this.fillWOperativoDetalle.nidwarrantoperativo,
-                        'cnumerovin'        : this.fillWOperativoDetalle.cnumerovin,
-                        'nidestadowarrant'  : this.fillWOperativoDetalle.nidestadowarrant,
-                        'page'              : page
+                        'nidwarrantoperativo'   :   this.fillWOperativoDetalle.nidwarrantoperativo,
+                        'cnumerovin'            :   this.fillWOperativoDetalle.cnumerovin,
+                        'nidestadowarrant'      :   this.fillWOperativoDetalle.nidestadowarrant,
+                        'page'                  :   page
                     }
                 }).then(response => {
                     this.arrayWOperativoDetalle = response.data.arrayWOperativoDetalle.data;
@@ -1084,6 +1109,9 @@
                         }
                 })
             },
+            // =================================================================
+            // METODOS TAB GENERAR WARRANT OPERATIVO
+            // =================================================================
             tabGeneraWOperativo(){
                 this.limpiarFormulario();
                 this.listarProveedores(1);
@@ -1159,34 +1187,20 @@
                 this.listarVersionVehiculo(page);
             },
             asignarVehiculo(data){
-                if(this.encuentra(data.nIdCompra)){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Ese vehículo ya se encuentra agregado!',
-                            })
-                }
-                else{
+                if(this.encuentra(data.nIdCompra)) {
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El Vehículo seleccionado ya se encuentra agregado!',
+                    })
+                } else {
                     this.arrayTemporal.push(data);
-                    this.sumarWarrant();
                     toastr.success('Se Agregó Vehículo');
                 }
             },
             eliminaItemTempVehiculo(index){
                 this.$delete(this.arrayTemporal, index);
-                this.sumarWarrant();
                 toastr.success('Se Eliminó Item Vehículo');
-            },
-            sumarWarrant(){
-                let me = this;
-                //me.fTotalValor = 0;
-                //me.fTotalComisionDolar = 0;
-                //me.fTotalComisionSol = 0;
-                me.arrayTemporal.map(function(value, key) {
-                    me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
-                    //me.fTotalComisionDolar = parseFloat(me.fTotalComisionDolar) + parseFloat(value.fComisionDolar);
-                    //me.fTotalComisionSol = parseFloat(me.fTotalComisionSol) + parseFloat(value.fComisionSol);
-                });
             },
             encuentra(nIdCompra){
                 var sw=0;
@@ -1210,12 +1224,13 @@
 
                 var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'      : me.formWOperativo.nidproveedor,
-                    'fTotalValor'       : me.fTotalValor,
+                    'nIdProveedor'      :   me.formWOperativo.nidproveedor,
+                    'fTotalValor'       :   me.fTotalValor,
                     //'fTotalComisionDolar': me.fTotalComisionDolar,
                     //'fTotalComisionSol' : me.fTotalComisionSol,
-                    'data'              : me.arrayTemporal
+                    'data'              :   me.arrayTemporal
                 }).then(response => {
+                    console.log(response.data);
                     me.fillWOperativo.nidwarrantoperativo = response.data;
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
@@ -1255,6 +1270,7 @@
                 axios.post(url, {
                     'data' : me.arrayAsiento
                 }).then(response => {
+                    console.log(response.data);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 
@@ -1273,7 +1289,6 @@
                             });
                         }
                     });
-
                     //==============================================================================
                     //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
                     setTimeout(function() {
@@ -1295,8 +1310,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
+                    if(response.data[0].nFlagMsje == 1) {
                          setTimeout(function() {
                             me.generaSapFacturaProveedor();
                         }, 1600);
@@ -1329,12 +1343,12 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
-                                'cFlagTipo'         : "FP",
-                                'cItemCode'         : me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
-                                'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          : me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta'     : response.data.toString()
+                                'cFlagTipo'         :   "FP",
+                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     :   response.data.toString()
                             });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
@@ -1445,7 +1459,7 @@
                 this.mensajeError =[];
 
                 if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
-                    this.mensajeError.push('Debes Seleecionar un Proveedor');
+                    this.mensajeError.push('Debe seleecionar un Proveedor');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1501,10 +1515,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            this.tabBuscarWOperativo();
-            this.obtenerAlmacenPorDefecto();
         }
     }
 </script>
