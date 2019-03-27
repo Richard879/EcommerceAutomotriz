@@ -1240,6 +1240,7 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
@@ -2186,7 +2187,9 @@
                         'cFlagMarca'                : true,
                         'cDescripcion'              : '',
                         'cWhsCode'                  : !value.cWhsCode ? '' : value.cWhsCode,
-                        'cWhsName'                  : !value.cWhsName ? '' : value.cWhsName
+                        'cWhsName'                  : !value.cWhsName ? '' : value.cWhsName,
+                        'cAcctCodeEntrada'          : !value.cAcctCodeEntrada ? '' : value.cAcctCodeEntrada,
+                        'cAcctCodeSalida'           : !value.cAcctCodeSalida ? '' : value.cAcctCodeSalida
                     });
                 });
             },
@@ -2455,7 +2458,9 @@
                         'cFlagMarca'        : (value.cFlagMarca == false) ? 'N' : 'C',
                         'cDescripcionNoConformidad': (value.cDescripcion == null) ? '' : value.cDescripcion,
                         'cElemenNombre'     : value.cElemenNombre,
-                        'cWhsCode'          : !value.cwhscode ? me.formAlmacen.cwhscode : value.cwhscode
+                        'cWhsCode'          : !value.cWhsCode ? me.formAlmacen.cwhscode : value.cWhsCode,
+                        'cAcctCodeEntrada'  : !value.cAcctCodeEntrada ? '' : value.cAcctCodeEntrada,
+                        'cAcctCodeSalida'   : !value.cAcctCodeSalida ? '' : value.cAcctCodeSalida
                     });
                 });
 
@@ -2765,9 +2770,9 @@
                 me.arrayTempAccesorio.map(function(value, key) {
                     me.arraySapMercancia.push({
                         'ItemCode'       : value.cCodigoERP,
-                        'WarehouseCode'  : value.cwhscode,
+                        'WarehouseCode'  : value.cWhsCode,
                         'Quantity'       : value.nCantidad,
-                        'AccountCode'    : me.formAlmacen.cacctcodesalida
+                        'AccountCode'    : value.cAcctCodeSalida
                     });
                 });
                 //==============================================================
@@ -2842,7 +2847,7 @@
                         me.generaActualizarMercanciaExit();
                     }, 1600);
                 }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
+                    me.limpiarPorError("Error en la Integración Salida Mercancía SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
