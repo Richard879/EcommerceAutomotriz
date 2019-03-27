@@ -89,7 +89,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -328,12 +328,12 @@
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                </el-tooltip>
+                                                                                </el-tooltip>&nbsp;&nbsp;
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Rechazar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
-                                                                            </template>
+                                                                            </template>&nbsp;&nbsp;
                                                                             <!-- <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Tipo Cambio Especial {{ deposito.nNumeroOperacion }}</div>
