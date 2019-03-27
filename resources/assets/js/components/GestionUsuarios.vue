@@ -1071,20 +1071,20 @@
         font-weight: bold;
         font-size: 0.75rem;
     }
-    .imgRedonda {
+    .imgRedonda{
         width:30px;
         height:30px;
         border-radius:150px;
         border:3px solid #666;
     }
-    #preview {
+    #preview{
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    #preview img {
+    #preview img{
         max-width: 60%;
         min-width: 33%;
         max-height: 200px;

@@ -1528,5 +1528,3 @@
         cursor: pointer;
     }
 </style>
-
-

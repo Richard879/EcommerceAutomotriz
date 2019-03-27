@@ -2170,12 +2170,4 @@
         font-weight: bold;
         font-size: 0.75rem;
     }
-    .flex-rigth-margin{
-        display: flex;
-        justify-content: space-around;
-        align-content: space-around;
-        flex-direction: column;
-        align-items: flex-end;
-        margin-right: 2rem;
-    }
 </style>

@@ -1516,10 +1516,10 @@
         text-align: center;
         margin: auto;
     }
-    .el-select {
+    .el-select{
         width: 100%;
     }
-    .input-with-select .el-input-group__prepend {
+    .input-with-select .el-input-group__prepend{
         background-color: #fff;
     }
     .widthFull>.el-select>.el-input {
@@ -1527,39 +1527,6 @@
     }
     .el-date-editor.el-input, .el-date-editor.el-input__inner{
         width: 100%;
-    }
-    .el-input-number{
-        width: 100% !important;
-    }
-    /* Estilos Modal */
-    .menosPadding{
-        padding: .31rem;
-    }
-    .subCabecera{
-        justify-content: center;
-        padding: 1rem;
-        background: white;
-    }
-    .subCabecera>h3{
-        color: black;
-        font-size: 1rem;
-        font-weight: bolder;
-    }
-    .flexRigth{
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        align-content: flex-end;
-    }
-    .flexLeft{
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        align-content: flex-start;
-    }
-    .flexLeft>h4{
-        font-weight: bolder;
     }
     .el-row{
         display: flex;
@@ -1576,4 +1543,3 @@
         margin-bottom: .5rem;
     }
 </style>
-
