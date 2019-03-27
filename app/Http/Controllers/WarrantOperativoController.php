@@ -18,14 +18,14 @@ class WarrantOperativoController extends Controller
         $cNroWarrant = $request->cnrowarrant;
         $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
         $cNroWarrant = ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
-                
-        $arrayWOperativo = DB::select('exec [usp_WO_GetWarrantByEstado] ?, ?', 
+
+        $arrayWOperativo = DB::select('exec [usp_WO_GetWarrantByEstado] ?, ?',
                                                             [   $nIdEstadoWarrant,
                                                                 $cNroWarrant
                                                             ]);
 
         $arrayWOperativo = ParametroController::arrayPaginator($arrayWOperativo, $request);
-        return ['arrayWOperativo'=>$arrayWOperativo];   
+        return ['arrayWOperativo'=>$arrayWOperativo];
     }
 
     public function GetWOperativoDetalle(Request $request)
@@ -35,40 +35,40 @@ class WarrantOperativoController extends Controller
         $nIdWarrantOperativo = $request->nidwarrantoperativo;
         $cNumeroVin = $request->cnumerovin;
         $nIdEstadoWarrant = $request->nidestadowarrant;
-        
+
         $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
-        $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetWarrantDetalleByEstado] ?, ?, ?', 
+        $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetWarrantDetalleByEstado] ?, ?, ?',
                                                                     [   $nIdWarrantOperativo,
                                                                         $cNumeroVin,
                                                                         $nIdEstadoWarrant
                                                                     ]);
 
         $arrayWOperativoDetalle = ParametroController::arrayPaginator($arrayWOperativoDetalle, $request);
-        return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];   
+        return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];
     }
 
     public function SetWOperativo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
            DB::beginTransaction();
 
-            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?', 
+            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?',
                                                     [   $request->nIdProveedor,
                                                         $request->fTotalValor,
                                                         0,
                                                         0,
                                                         Auth::user()->id
-                                                    ]);                 
+                                                    ]);
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?',
                                                     [   $nIdWarrantOperativo,
                                                         $det['nIdCompra'],
                                                         $det['fTotalCompra'],
@@ -77,37 +77,37 @@ class WarrantOperativoController extends Controller
                                                         0,
                                                         Auth::user()->id
                                                     ]);
-            }  
+            }
             DB::commit();
             return $nIdWarrantOperativo;
         }catch (Exception $e){
             DB::rollBack();
-        }    
+        }
     }
 
     public function SetWOperativoDetalle(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
-        
+
 
             $detalles = $request->data;
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_WO_SetWOperativoDetalle ?, ?, ?, ?', 
+                DB::select('exec usp_WO_SetWOperativoDetalle ?, ?, ?, ?',
                                                             array($request->nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
                                                                 $det['fTotalCompra'],
                                                                 Auth::user()->id
                                                             ));
-            }  
-            DB::commit(); 
+            }
+            DB::commit();
         } catch (Exception $e){
             DB::rollBack();
-        }   
+        }
     }
 
     public function SetIntegraAsientoContableWO(Request $request)

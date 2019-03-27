@@ -28,7 +28,7 @@ class SapAsientoContableController extends Controller
                     "Memo"                  =>  "WO-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
                     "Reference2"            =>  $value['cProjectCode'],
-                    "JournalEntryLines"    => 
+                    "JournalEntryLines"    =>
                         [
                             [
                                 "AccountCode"       =>  "012110",
@@ -58,6 +58,7 @@ class SapAsientoContableController extends Controller
         }
         return $array_rpta;
     }
+
     public function SapSetAsientoContableWF(Request $request)
     {
         $client = new Client([
@@ -76,7 +77,7 @@ class SapAsientoContableController extends Controller
                     "Memo"                  =>  "WF-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
                     "Reference2"            =>  $value['cProjectCode'],
-                    "JournalEntryLines"    => 
+                    "JournalEntryLines"    =>
                         [
                             [
                                 "AccountCode"       =>  "012310",
