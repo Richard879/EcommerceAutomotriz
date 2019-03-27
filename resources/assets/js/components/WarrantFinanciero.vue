@@ -78,7 +78,9 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWFinanciero();"><i class="fa fa-search"></i> Buscar</button>
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWFinanciero();">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -969,7 +971,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'banco':
                     {
                         switch(accion){
@@ -981,7 +984,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                 }
             },
             buscarVersionVehiculo(){
@@ -1302,6 +1306,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
