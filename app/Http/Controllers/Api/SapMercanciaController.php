@@ -85,22 +85,17 @@ class SapMercanciaController extends Controller
             ]
         ];
 
-        //Inicializo el contador de la linea
-        $cont = 0;
-
         $dataLength = sizeof($request->data);
         if($dataLength > 0) {
             $data = $request->data;
             foreach ($data as $key => $value) {
                 $json['json']['DocumentLines'][] = [
-                    //'LineNum'           =>  $cont,
                     "ItemCode"          =>  (string)$value['ItemCode'],
                     "WarehouseCode"     =>  (string)$value['WarehouseCode'],
                     "Quantity"          =>  (string)$value['Quantity'],
                     "UnitPrice"         =>  (string)$value['UnitPrice'],
                     "AccountCode"       =>  (string)$value['AccountCode']
                 ];
-                $cont++;//Aumento Linea
             }
         }
 

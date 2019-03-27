@@ -1073,7 +1073,7 @@
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-10">
-                                                    <div class="row">
+                                                    <div class="row" v-if="nflagalmacen!=0">
                                                         <label class="col-sm-4 form-control-label">Buscar Accesorio</label>
                                                         <div class="col-sm-8">
                                                             <el-autocomplete
@@ -1101,6 +1101,8 @@
                                                             <th>Nombre</th>
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
+                                                            <th></th>
+                                                            <th>Almacen</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1122,7 +1124,10 @@
                                                                     </el-switch>
                                                                 </span>
                                                             </td>
-                                                            <td><input type="text" v-if="!a.cFlagMarca" v-model="a.cDescripcion" class="form-control form-control-sm"></td>
+                                                            <td>
+                                                                <input type="text" v-if="!a.cFlagMarca" v-model="a.cDescripcion" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td v-if="nflagalmacen==0" v-text="a.cWhsName"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1235,6 +1240,7 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
@@ -1673,11 +1679,11 @@
                 this.obtenerDetalleTipoInspeccionById();
             },
             limpiarTipoInspeccion(){
-                this.nflagalmacen               = ''
-                this.nflagaccesorio             = ''
-                this.nflagtestdrive             = ''
-                this.nflagseccioninspeccion     = ''
-                this.nflagvalidarfichatecnica   = ''
+                this.nflagalmacen               = 0,
+                this.nflagaccesorio             = 0,
+                this.nflagtestdrive             = 0,
+                this.nflagseccioninspeccion     = 0,
+                this.nflagvalidarfichatecnica   = 0,
                 //Modal Accesorio
                 this.nflagaccesorioValida  = 0;//Valida que se aceptaron los accesorios
                 this.arrayAccesorio = [];
@@ -1736,32 +1742,6 @@
                     }
                 });
             },
-            /*obtenerAlmacenByLocalidad(){
-                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
-                axios.get(url, {
-                    params: {
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
-                    }
-                }).then(response => {
-                    if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
-                        this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
                 var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
@@ -2063,7 +2043,81 @@
                     }
                 });
             },
-            listarAccesorioByCod(){
+            querySearch(queryString, cb) {
+                var links = this.links;
+                var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+                // call callback function to return suggestions
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (obj) => {
+                    //Busca coincidencias del string escrito con algun Nombre del Objeto del Arreglo
+                    return (obj.value.indexOf(queryString.toUpperCase()) >= 0);
+                 };
+            },
+            asignarAccesorio(item) {
+                let me = this;
+                if(me.encontrarAccesorio(item.nIdElemento)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El accesorio ya se encuentra agregado!',
+                    })
+                } else {
+                    me.arrayAccesorio.push({
+                        'nIdElemento'               :   item.nIdElemento,
+                        'nIdTipoElemento'           :   item.nIdTipoElemento,
+                        'cTipoElemenNombre'         :   item.cTipoElemenNombre,
+                        'nIdProveedor'              :   item.nIdProveedor,
+                        'cProveedorNombre'          :   item.cProveedorNombre,
+                        'cElemenNombre'             :   item.cElemenNombre,
+                        'value'                     :   item.value,
+                        'nIdMoneda'                 :   item.nIdMoneda,
+                        'cMonedaNombre'             :   item.cMonedaNombre,
+                        'cCodigoERP'                :   item.cCodigoERP,
+                        'fElemenValorVenta'         :   item.fElemenValorVenta,
+                        'fElemenValorMinimoVenta'   :   item.fElemenValorMinimoVenta,
+                        'fElementValorCosto'        :   item.fElementValorCosto,
+                        'cElementoEstado'           :   item.cElementoEstado,
+                        'nCantidad'                 :   1,
+                        'cFlagMarca'                :   true,
+                        'cDescripcion'              :   '',
+                        'cWhsCode'                  :   '19',
+                        'cWhsName'                  :   ''
+                    });
+
+                    toastr.success('Se agregó accesorio');
+                }
+            },
+            verificarConformidad(){
+                let me = this;
+                me.arrayAccesorio.map(function(value, key){
+                    if(value.cFlagMarca == false){
+                        value.cDescripcion = '';
+                    }
+                });
+            },
+            aceptarAccesorio(){
+                let me = this;
+
+                this.nflagaccesorioValida  = 1;//Valida que se aceptaron los accesorios
+                this.fillAccesorio.cnombre = '';
+                this.cerrarModal();
+            },
+            encontrarAccesorio(nIdElemento){
+                var sw=0;
+                this.arrayAccesorio.map(function (x) {
+                    if(x.nIdElemento == nIdElemento){
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
+            removerAccesorio(index){
+                this.$delete(this.arrayAccesorio, index);
+            },
+            //================================================================
+            listarAccesorioPdiEntrada(){
                 var url = this.ruta + '/pdi/GetElementoByTipoBsq';
 
                 axios.get(url, {
@@ -2115,114 +2169,29 @@
                 let me = this;
                 me.arrayAccesorioFlag.map(function(value, key){
                     me.arrayAccesorio.push({
-                        'nIdElemento'               :   value.nIdElemento,
-                        'nIdTipoElemento'           :   value.nIdTipoElemento,
-                        'cTipoElemenNombre'         :   value.cTipoElemenNombre,
-                        'nIdProveedor'              :   value.nIdProveedor,
-                        'cProveedorNombre'          :   value.cProveedorNombre,
-                        'cElemenNombre'             :   value.cElemenNombre,
-                        'value'                     :   value.value,
-                        'nIdMoneda'                 :   value.nIdMoneda,
-                        'cMonedaNombre'             :   value.cMonedaNombre,
-                        'cCodigoERP'                :   value.cCodigoERP,
-                        'fElemenValorVenta'         :   value.fElemenValorVenta,
-                        'fElemenValorMinimoVenta'   :   value.fElemenValorMinimoVenta,
-                        'fElementValorCosto'        :   value.fElementValorCosto,
-                        'cElementoEstado'           :   value.cElementoEstado,
-                        'nCantidad'                 :   value.nCantidad,
-                        'cFlagMarca'                :   true,
-                        'cDescripcion'              :   ''
+                        'nIdElemento'               : value.nIdElemento,
+                        'nIdTipoElemento'           : value.nIdTipoElemento,
+                        'cTipoElemenNombre'         : value.cTipoElemenNombre,
+                        'nIdProveedor'              : value.nIdProveedor,
+                        'cProveedorNombre'          : value.cProveedorNombre,
+                        'cElemenNombre'             : value.cElemenNombre,
+                        'value'                     : value.value,
+                        'nIdMoneda'                 : value.nIdMoneda,
+                        'cMonedaNombre'             : value.cMonedaNombre,
+                        'cCodigoERP'                : value.cCodigoERP,
+                        'fElemenValorVenta'         : value.fElemenValorVenta,
+                        'fElemenValorMinimoVenta'   : value.fElemenValorMinimoVenta,
+                        'fElementValorCosto'        : value.fElementValorCosto,
+                        'cElementoEstado'           : value.cElementoEstado,
+                        'nCantidad'                 : value.nCantidad,
+                        'cFlagMarca'                : true,
+                        'cDescripcion'              : '',
+                        'cWhsCode'                  : !value.cWhsCode ? '' : value.cWhsCode,
+                        'cWhsName'                  : !value.cWhsName ? '' : value.cWhsName,
+                        'cAcctCodeEntrada'          : !value.cAcctCodeEntrada ? '' : value.cAcctCodeEntrada,
+                        'cAcctCodeSalida'           : !value.cAcctCodeSalida ? '' : value.cAcctCodeSalida
                     });
                 });
-            },
-            querySearch(queryString, cb) {
-                var links = this.links;
-                var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-                // call callback function to return suggestions
-                cb(results);
-            },
-            createFilter(queryString) {
-                return (obj) => {
-                    //Busca coincidencias del string escrito con algun Nombre del Objeto del Arreglo
-                    return (obj.value.indexOf(queryString.toUpperCase()) >= 0);
-                 };
-            },
-            asignarAccesorio(item) {
-                let me = this;
-                if(me.encontrarAccesorio(item.nIdElemento)){
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'El accesorio ya se encuentra agregado!',
-                    })
-                } else {
-                    // console.log(item);
-                    me.arrayAccesorio.push({
-                        'nIdElemento'               :   item.nIdElemento,
-                        'nIdTipoElemento'           :   item.nIdTipoElemento,
-                        'cTipoElemenNombre'         :   item.cTipoElemenNombre,
-                        'nIdProveedor'              :   item.nIdProveedor,
-                        'cProveedorNombre'          :   item.cProveedorNombre,
-                        'cElemenNombre'             :   item.cElemenNombre,
-                        'value'                     :   item.value,
-                        'nIdMoneda'                 :   item.nIdMoneda,
-                        'cMonedaNombre'             :   item.cMonedaNombre,
-                        'cCodigoERP'                :   item.cCodigoERP,
-                        'fElemenValorVenta'         :   item.fElemenValorVenta,
-                        'fElemenValorMinimoVenta'   :   item.fElemenValorMinimoVenta,
-                        'fElementValorCosto'        :   item.fElementValorCosto,
-                        'cElementoEstado'           :   item.cElementoEstado,
-                        'nCantidad'                 :   0,
-                        'cFlagMarca'                :   true,
-                        'cDescripcion'              :   ''
-                    });
-
-                    // me.arrayAccesorio.push(item);
-                    // me.arrayAccesorio.map(function(value, key){
-                    //     if(item.nIdElemento == value.nIdElemento){
-                    //         me.arrayAccesorioCantidad[key] = 0;
-                    //     }
-                    // });
-                    toastr.success('Se agregó accesorio');
-                }
-            },
-            verificarConformidad(){
-                let me = this;
-                me.arrayAccesorio.map(function(value, key){
-                    if(value.cFlagMarca == false){
-                        value.cDescripcion = '';
-                    }
-                });
-            },
-            aceptarAccesorio(){
-                let me = this;
-                me.arrayTempAccesorio = [];
-                me.arrayAccesorio.map(function(value, key){
-                    me.arrayTempAccesorio.push({
-                        'nIdAccesorio'      :   value.nIdElemento,
-                        'cCodigoERP'        :   value.cCodigoERP,
-                        'nCantidad'         :   value.nCantidad,
-                        'fMonto'            :   value.fElemenValorVenta,
-                        'cFlagMarca'        :   (value.cFlagMarca == false) ? 'N' : 'C',
-                        'cDescripcionNoConformidad': (value.cDescripcion == null) ? '' : value.cDescripcion,
-                        'cElemenNombre'     :   value.cElemenNombre,
-                    });
-                });
-                this.nflagaccesorioValida  = 1;//Valida que se aceptaron los accesorios
-                this.fillAccesorio.cnombre = '';
-                this.cerrarModal();
-            },
-            encontrarAccesorio(nIdElemento){
-                var sw=0;
-                this.arrayAccesorio.map(function (x) {
-                    if(x.nIdElemento == nIdElemento){
-                        sw = true;
-                    }
-                });
-                return sw;
-            },
-            removerAccesorio(index){
-                this.$delete(this.arrayAccesorio, index);
             },
             //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
@@ -2277,10 +2246,7 @@
 
                         //Validar que se aceptaron los accesorios
                         if(this.nflagaccesorioValida==1){
-                            //Validar que existen accesorios agregados
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
+                            this.registrarAccesorios();
                         }
 
                         //this.generaSapActividadPdiEntrada();
@@ -2441,18 +2407,14 @@
                                 this.registrarPlantilla();
                             }
                         }
-                        if(this.nflagaccesorioValida==1){
-                            if(this.arrayTempAccesorio.length){
-                                this.registrarAccesorios();
-                            }
-                        }
+
                         if(this.attachment){
                             this.subirArchivo();
                         }
-                        swal('Inspección realizada con éxito');
-                        this.limpiarFormulario();
-                        this.vistaFormulario = 1;
-                        this.listarPdi(1);
+
+                        if(this.nflagaccesorioValida==1){
+                            this.registrarAccesorios();
+                        }
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2486,10 +2448,26 @@
             registrarAccesorios(){
                 let me = this;
 
+                me.arrayTempAccesorio = [];
+                me.arrayAccesorio.map(function(value, key){
+                    me.arrayTempAccesorio.push({
+                        'nIdAccesorio'      : value.nIdElemento,
+                        'cCodigoERP'        : value.cCodigoERP,
+                        'nCantidad'         : value.nCantidad,
+                        'fMonto'            : value.fElemenValorVenta,
+                        'cFlagMarca'        : (value.cFlagMarca == false) ? 'N' : 'C',
+                        'cDescripcionNoConformidad': (value.cDescripcion == null) ? '' : value.cDescripcion,
+                        'cElemenNombre'     : value.cElemenNombre,
+                        'cWhsCode'          : !value.cWhsCode ? me.formAlmacen.cwhscode : value.cWhsCode,
+                        'cAcctCodeEntrada'  : !value.cAcctCodeEntrada ? '' : value.cAcctCodeEntrada,
+                        'cAcctCodeSalida'   : !value.cAcctCodeSalida ? '' : value.cAcctCodeSalida
+                    });
+                });
+
                 var url = me.ruta + '/pdi/SetAccesorioPdi';
                 axios.post(url, {
-                    'nIdCabeceraInspeccion': me.formPdi.nidcabecerainspeccion,
-                    'data': me.arrayTempAccesorio
+                    'nIdCabeceraInspeccion' : me.formPdi.nidcabecerainspeccion,
+                    'data'                  : me.arrayTempAccesorio
                 }).then(response => {
                     //Si es Pdi Entrada
                     if(me.formPdi.nidtipoinspeccion == 4){
@@ -2580,13 +2558,7 @@
                 });
             },
             */
-            confirmaPdi(){
-                swal('Inspección realizada con éxito');
-                this.limpiarFormulario();
-                this.vistaFormulario = 1;
-                this.listarPdi(1);
-            },
-            //================Generar Sap Entrada Mercancia
+            //================Generar Sap Entrada Mercancia ============
             generaSapMercanciaEntry(){
                 let me = this;
 
@@ -2791,16 +2763,16 @@
                     }
                 });
             },
-            //================Generar Sap Entrega Vehiculo
+            //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
                     me.arraySapMercancia.push({
                         'ItemCode'       : value.cCodigoERP,
-                        'WarehouseCode'  : me.formAlmacen.cwhscode,
+                        'WarehouseCode'  : value.cWhsCode,
                         'Quantity'       : value.nCantidad,
-                        'AccountCode'    : me.formAlmacen.cacctcodesalida
+                        'AccountCode'    : value.cAcctCodeSalida
                     });
                 });
                 //==============================================================
@@ -2875,7 +2847,7 @@
                         me.generaActualizarMercanciaExit();
                     }, 1600);
                 }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
+                    me.limpiarPorError("Error en la Integración Salida Mercancía SapB1!");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -3072,6 +3044,7 @@
                     }
                 });
             },
+            //=======================================================
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
@@ -3105,6 +3078,12 @@
                         }
                     }
                 });
+            },
+            confirmaPdi(){
+                swal('Inspección realizada con éxito');
+                this.limpiarFormulario();
+                this.vistaFormulario = 1;
+                this.listarPdi(1);
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
@@ -3211,7 +3190,7 @@
                                 this.listarAccesorio();
                                 //Solo si es Entrada
                                 if(this.formPdi.nidtipoinspeccion == 4 && !this.arrayAccesorio.length) {
-                                    this.listarAccesorioByCod();
+                                    this.listarAccesorioPdiEntrada();
                                 };
                                 //Si es Entrega Vehiculo
                                 if(this.formPdi.nidtipoinspeccion == 5 && !this.arrayAccesorio.length){

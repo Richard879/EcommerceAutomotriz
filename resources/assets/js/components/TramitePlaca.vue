@@ -1998,7 +1998,9 @@
                     return;
                 }
 
-                this.mostrarProgressBar();
+                let me = this;
+
+                me.mostrarProgressBar();
                 me.loadingProgressBar("INTEGRANDO PLACA CON SAP BUSINESS ONE...");
 
                 var url = this.ruta + '/tramite/SetEstadoTramitePlaca';

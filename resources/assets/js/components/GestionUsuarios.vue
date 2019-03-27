@@ -1083,7 +1083,6 @@
         justify-content: center;
         align-items: center;
     }
-
     #preview img{
         max-width: 60%;
         min-width: 33%;

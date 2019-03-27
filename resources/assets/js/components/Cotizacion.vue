@@ -886,7 +886,7 @@
                                                                                         <div class="col-lg-12">
                                                                                             <div class="row flex-rigth-margin">
                                                                                                 <div class="form-group row">
-                                                                                                    <label class="form-control-label">TOTAL $ &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label">TOTAL US$ &nbsp; &nbsp;</label>
                                                                                                     <label class="form-control-label"><strong>{{ montoTotalElementoVenta = totalElementoVenta }}</strong></label>
                                                                                                 </div>
                                                                                                 <div class="form-group row">
@@ -981,7 +981,7 @@
                                                                                     <div class="col-lg-12">
                                                                                         <div class="row flex-rigth-margin">
                                                                                             <div class="form-group row">
-                                                                                                <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label">TOTAL US$ &nbsp; &nbsp;</label>
                                                                                                 <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
                                                                                             </div>
                                                                                             <div class="form-group row">

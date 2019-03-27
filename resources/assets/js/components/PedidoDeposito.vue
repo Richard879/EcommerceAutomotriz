@@ -280,13 +280,13 @@
                                                                 <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE APROBAR</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
+                                                                        US$ {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                                 <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RECHAZADO</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
+                                                                        US$ {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                             </el-row>
@@ -294,13 +294,13 @@
                                                                 <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO (APROBADO)</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
+                                                                        US$ {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                                 <el-col :span="6"><div class="grid-content bg-purple">MONTO PEDIDO</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                                        US$ {{ Number((parseFloat(formDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                             </el-row>
@@ -308,7 +308,7 @@
                                                                 <el-col :span="6"><div class="grid-content bg-purple"> SALDO A CANCELAR</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
+                                                                        US$ {{ Number((parseFloat(formDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                             </el-row>
@@ -1028,6 +1028,7 @@
                     </div>
                 </div>
             </div>
+            
         </main>
     </transition>
 </template>

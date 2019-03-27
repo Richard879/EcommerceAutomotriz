@@ -89,7 +89,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -267,13 +267,13 @@
                                                             <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
+                                                                    US$ {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                             <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RECHAZADO</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
+                                                                    US$ {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                         </el-row>
@@ -281,13 +281,13 @@
                                                             <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
+                                                                    US$ {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                             <el-col :span="6"><div class="grid-content bg-purple">MONTO PEDIDO</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                                    US$ {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                         </el-row>
@@ -295,7 +295,7 @@
                                                             <el-col :span="6"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
+                                                                    US$ {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                         </el-row>
@@ -315,7 +315,7 @@
                                                                         <th>FECHA</th>
                                                                         <th>TTPO CAMBIO</th>
                                                                         <th>MONTO S/</th>
-                                                                        <th>MONTO USD/</th>
+                                                                        <th>MONTO US$</th>
                                                                         <th>TCE</th>
                                                                         <th>TIPO</th>
                                                                         <th>ESTADO</th>
@@ -328,12 +328,12 @@
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                </el-tooltip>
+                                                                                </el-tooltip>&nbsp;&nbsp;
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Rechazar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
-                                                                            </template>
+                                                                            </template>&nbsp;&nbsp;
                                                                             <!-- <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Tipo Cambio Especial {{ deposito.nNumeroOperacion }}</div>
@@ -431,7 +431,7 @@
                                                     <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN DOLARES</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD/. {{ fillDepositoTCEspecial.fMontoOrigenDolares }}
+                                                            US$ {{ fillDepositoTCEspecial.fMontoOrigenDolares }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -446,7 +446,7 @@
                                                     <el-col :span="6"><div class="grid-content bg-purple">SALDO RESTANTE</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoFaltante)).toFixed(2)) }}
+                                                            US$ {{ Number((parseFloat(fillDepositoTCEspecial.fMontoFaltante)).toFixed(2)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -482,7 +482,7 @@
                                                     <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RESULTANTE EN DOLARES</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoResultanteDolares)).toFixed(2)) }}
+                                                            US$ {{ Number((parseFloat(fillDepositoTCEspecial.fMontoResultanteDolares)).toFixed(2)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
