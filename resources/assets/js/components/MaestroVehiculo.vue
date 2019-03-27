@@ -616,7 +616,7 @@
                                                                                                     <div class="col-sm-6">
                                                                                                         <div class="row">
                                                                                                             <label class="col-md-4 form-control-label">*Tipo Persona</label>
-                                                                                                            <div class="col-md-8 widthFull">
+                                                                                                            <div class="col-md-8">
                                                                                                                 <el-radio-group v-model="fillPropietario.ntipopersona" @change="cambiarTipoPersona">
                                                                                                                     <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
                                                                                                                 </el-radio-group>
@@ -628,7 +628,7 @@
                                                                                                     <div class="col-sm-6">
                                                                                                         <div class="row">
                                                                                                             <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                                            <div class="col-sm-8 widthFull">
+                                                                                                            <div class="col-sm-8">
                                                                                                                 <el-select v-model="fillPropietario.ntpodocumento"
                                                                                                                             filterable
                                                                                                                             clearable
@@ -846,7 +846,7 @@
                                                                                                         <div class="col-sm-6">
                                                                                                             <div class="row">
                                                                                                                 <label class="col-sm-4 form-control-label">Estado Civil</label>
-                                                                                                                <div class="col-sm-8 widthFull">
+                                                                                                                <div class="col-sm-8">
                                                                                                                     <el-select v-model="fillPropietario.nestadocivil"
                                                                                                                                 filterable
                                                                                                                                 clearable
@@ -868,7 +868,7 @@
                                                                                                         <div class="col-sm-6">
                                                                                                             <div class="row">
                                                                                                                 <label class="col-sm-4 form-control-label">Profesión</label>
-                                                                                                                <div class="col-sm-8 widthFull">
+                                                                                                                <div class="col-sm-8">
                                                                                                                     <el-select v-model="fillPropietario.nprofesion"
                                                                                                                                 filterable
                                                                                                                                 clearable
@@ -2891,9 +2891,6 @@
     }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
-    }
-    .widthFull>.el-select>.el-input {
-        width: 100%;
     }
     .el-input-number{
         width: 100% !important;
