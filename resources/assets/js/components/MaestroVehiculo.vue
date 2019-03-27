@@ -2898,35 +2898,5 @@
     .el-input-number{
         width: 100% !important;
     }
-    /* Estilos Modal */
-    .menosPadding{
-        padding: .31rem;
-    }
-    .subCabecera{
-        justify-content: center;
-        padding: 1rem;
-        background: white;
-    }
-    .subCabecera>h3{
-        color: black;
-        font-size: 1rem;
-        font-weight: bolder;
-    }
-    .flexRigth{
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        align-content: flex-end;
-    }
-    .flexLeft{
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        align-content: flex-start;
-    }
-    .flexLeft>h4{
-        font-weight: bolder;
-    }
 </style>
 
