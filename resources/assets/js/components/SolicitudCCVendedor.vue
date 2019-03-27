@@ -2023,12 +2023,6 @@
         font-size: 1rem;
         font-weight: bolder;
     }
-    .flexRigth{
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        align-content: flex-end;
-    }
     .flexLeft{
         width: 100%;
         display: flex;
@@ -2044,5 +2038,3 @@
             width: 30%;
     }
 </style>
-
-

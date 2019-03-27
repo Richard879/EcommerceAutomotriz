@@ -845,16 +845,10 @@
         text-align: center;
         margin: auto;
     }
-    .disabled{
-        opacity: 0.65;
-        cursor: not-allowed;
-        border: 2px outset buttonface;
-        pointer-events:none;
-    }
-    .alert-danger {
+    .alert-danger{
         color: red;
     }
-    .has-error {
+    .has-error{
         border-color: red;
     }
 </style>
