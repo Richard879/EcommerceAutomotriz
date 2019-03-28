@@ -31,7 +31,7 @@ class SapAsientoContableController extends Controller
                     "JournalEntryLines"     =>
                     [
                         [
-                            "AccountCode"       =>  "012110",
+                            "AccountCode"       =>  "421212", // //012110
                             "ProjectCode"       =>  $value['cProjectCode'],
                             /*"Credit"          =>  (string)$value['fCredit'],
                             "Debit"             =>  (string)$value['fDebit']*/
@@ -40,7 +40,7 @@ class SapAsientoContableController extends Controller
                             "FCCurrency"        =>  "US$"
                         ],
                         [
-                            "AccountCode"       =>  "099111",
+                            "AccountCode"       =>  "281114",  // //099111
                             "ProjectCode"       =>  $value['cProjectCode'],
                             /*"Credit"            =>  (string)$value['fCredit1'],
                             "Debit"             =>  (string)$value['fDebit1'],*/
