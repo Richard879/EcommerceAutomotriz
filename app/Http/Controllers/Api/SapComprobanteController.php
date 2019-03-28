@@ -58,23 +58,23 @@ class SapComprobanteController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "CardCode"      => $request->cCardCode,
-                    "DocDate"       => (string)$request->fDocDate,
-                    "DocCurrency"   =>  "US$",
-                    "DocType"       => "dDocument_Service",
-                    "DocumentLines" => [
-                            [
-                                "ItemDescription"   => "Servicio WO - ".$value['cNumeroVin'],
-                                "TaxCode"           => "EXE_IGV",
-                                "PriceAfterVAT"     => $value['fTotalCompra'],
-                                "Currency"          => "US$",
-                                "AccountCode"       => (string)$value['cAccountCode'],
-                                //"WarehouseCode"     => (string)$request->cWarehouseCode,
-                                "ProjectCode"       => (string)$value['cNumeroVin']
-                            ]
+                    "CardCode"      =>  $request->cCardCode,
+                    "DocDate"       =>  (string)$request->fDocDate,
+                    "DocCurrency"   =>   "US$",
+                    "DocType"       =>  "dDocument_Service",
+                    "DocumentLines" =>  [
+                        [
+                            "ItemDescription"   =>  "Servicio WO - ".$value['cNumeroVin'],
+                            "TaxCode"           =>  "EXE_IGV",
+                            "PriceAfterVAT"     =>  $value['fTotalCompra'],
+                            "Currency"          =>  "US$",
+                            "AccountCode"       =>  (string)$value['cAccountCode'],
+                            //"WarehouseCode"     => (string)$request->cWarehouseCode,
+                            "ProjectCode"       =>  (string)$value['cNumeroVin']
                         ]
                     ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());

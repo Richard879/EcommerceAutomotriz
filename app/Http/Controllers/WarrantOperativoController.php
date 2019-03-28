@@ -14,10 +14,11 @@ class WarrantOperativoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEstadoWarrant = $request->nidestadowarrant;
-        $cNroWarrant = $request->cnrowarrant;
-        $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
-        $cNroWarrant = ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
+        $nIdEstadoWarrant   =   $request->nidestadowarrant;
+        $cNroWarrant        =   $request->cnrowarrant;
+
+        $nIdEstadoWarrant   =   ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
+        $cNroWarrant        =   ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
 
         $arrayWOperativo = DB::select('exec [usp_WO_GetWarrantByEstado] ?, ?',
                                                             [   $nIdEstadoWarrant,
@@ -32,12 +33,12 @@ class WarrantOperativoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdWarrantOperativo = $request->nidwarrantoperativo;
-        $cNumeroVin = $request->cnumerovin;
-        $nIdEstadoWarrant = $request->nidestadowarrant;
+        $nIdWarrantOperativo    =   $request->nidwarrantoperativo;
+        $cNumeroVin             =   $request->cnumerovin;
+        $nIdEstadoWarrant       =   $request->nidestadowarrant;
 
-        $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdEstadoWarrant       =   ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
+        $cNumeroVin             =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
         $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetWarrantDetalleByEstado] ?, ?, ?',
                                                                     [   $nIdWarrantOperativo,

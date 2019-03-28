@@ -253,7 +253,7 @@
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <div class="row">
-                                                                        <div class="col-md-6">
+                                                                        <div class="col-md-12">
                                                                             <vs-divider border-style="solid" color="dark">
                                                                                 Costo TYP
                                                                             </vs-divider>
@@ -337,7 +337,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-6">
+                                                                        <div class="col-md-12">
                                                                             <!-- DETALLE DOCUMENTOS -->
                                                                             <template v-if="arrayPedidoDoumentoNew.length">
                                                                                 <vs-divider border-style="solid" color="dark">
@@ -537,61 +537,74 @@
                                                                                 <form class="form-horizontal">
                                                                                     <div class="col-lg-12">
                                                                                         <template v-if="arraySolicitudesTramites.length">
-                                                                                            <div>
-                                                                                                <el-table
-                                                                                                    v-loading="loading"
-                                                                                                    :data="arraySolicitudesTramites"
-                                                                                                    style="width: 100%">
-                                                                                                        <el-table-column property="cNumeroSolicitudTramite" label="N° Solicitud T" width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column property="cEstadoTramite" label="Estado Tramite" width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column property="nNumeroVehiculos" label="Total Vehiculo" width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column property="fTotalTramite" label="Total General" width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column property="nTotalTarjeta" label="Tarjeta" width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column property="nTotalPlaca" label="Placa" show-overflow-tooltip>
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column fixed="right" label="Acciones" width="80">
-                                                                                                            <template slot-scope="scope">
+                                                                                            <div class="table-responsive">
+                                                                                                <table class="table table-striped table-sm">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>N° Solicitud T</th>
+                                                                                                            <th>Estado Tramite</th>
+                                                                                                            <th>Total Vehiculo</th>
+                                                                                                            <th>Total General</th>
+                                                                                                            <th>Tarjeta</th>
+                                                                                                            <th>Placa</th>
+                                                                                                            <th>Acciones</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr v-for="(solicitud, index) in arraySolicitudesTramites" :key="index">
+                                                                                                            <td v-text="solicitud.cNumeroSolicitudTramite"></td>
+                                                                                                            <td v-text="solicitud.cEstadoTramite"></td>
+                                                                                                            <td v-text="solicitud.nNumeroVehiculos"></td>
+                                                                                                            <td v-text="solicitud.fTotalTramite"></td>
+                                                                                                            <td v-text="solicitud.nTotalTarjeta"></td>
+                                                                                                            <td v-text="solicitud.nTotalPlaca"></td>
+                                                                                                            <td>
                                                                                                                 <el-tooltip class="item"
                                                                                                                             effect="dark"
                                                                                                                             content="Ver Detalle Solicitud"
                                                                                                                             placement="top-start">
-                                                                                                                    <el-button @click="abrirModal('solicitud-tramite', 'detalle', scope.row)"><i class="fa fa-eye"></i></el-button>
+                                                                                                                    <el-button @click="abrirModal('solicitud-tramite', 'detalle', solicitud)"><i class="fa fa-eye"></i></el-button>
                                                                                                                 </el-tooltip>
-                                                                                                            </template>
-                                                                                                        </el-table-column>
-                                                                                                </el-table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-7">
+                                                                                                        <nav>
+                                                                                                            <ul class="pagination">
+                                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                                    <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                                </li>
+                                                                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                                                :class="[page==isActivedModal?'active':'']">
+                                                                                                                    <a class="page-link"
+                                                                                                                    href="#" @click.prevent="cambiarPaginaMisTramites(page)"
+                                                                                                                    v-text="page"></a>
+                                                                                                                </li>
+                                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                                    <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </nav>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-5">
+                                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                                    </div>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </template>
-                                                                                    </div>
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-7">
-                                                                                                <nav>
-                                                                                                    <ul class="pagination">
-                                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                        </li>
-                                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                        :class="[page==isActived?'active':'']">
-                                                                                                            <a class="page-link"
-                                                                                                            href="#" @click.prevent="cambiarPaginaMisTramites(page)"
-                                                                                                            v-text="page"></a>
-                                                                                                        </li>
-                                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </nav>
-                                                                                            </div>
-                                                                                            <div class="col-lg-5">
-                                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        <template v-else>
+                                                                                            <table>
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </template>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
@@ -670,74 +683,88 @@
                                                                                 <form class="form-horizontal">
                                                                                     <div class="col-lg-12">
                                                                                         <template v-if="arrayDetalleSolicitudTramite.length">
-                                                                                            <el-table
-                                                                                                v-loading="loading"
-                                                                                                :data="arrayDetalleSolicitudTramite"
-                                                                                                style="width: 100%">
-                                                                                                    <el-table-column property="dFechaInicioTramite" label="Fecha Inicio T" width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column property="dFechaFinTramite" label="Fecha Fin T" width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column property="dFechaFinRealTramite" label="Fecha Fin Real T" width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column property="cNumeroVin" label="N° VIN" width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column property="cEstadoTarjeta" label="Estado Tarjeta" width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column property="cEstadoPlaca" label="Estado Placa" show-overflow-tooltip>
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column fixed="right" label="Acciones" width="180">
-                                                                                                        <template slot-scope="scope">
-                                                                                                            <template v-if="scope.row.cEstadoTarjeta != 'RECIBIDA'">
-                                                                                                                <el-tooltip class="item"
-                                                                                                                            effect="dark"
-                                                                                                                            content="Tarjeta"
-                                                                                                                            placement="top-start">
-                                                                                                                    <el-button @click="abrirModal('tarjeta', 'abrir', scope.row);">
-                                                                                                                        <i class="fa fa-address-card"></i>
-                                                                                                                    </el-button>
-                                                                                                                </el-tooltip>
-                                                                                                            </template>
-
-                                                                                                            <template v-if="scope.row.cEstadoTarjeta == 'RECIBIDA' && scope.row.cEstadoPlaca != 'RECIBIDA'">
-                                                                                                                <el-tooltip class="item"
-                                                                                                                            effect="dark"
-                                                                                                                            content="Placa"
-                                                                                                                            placement="top-start">
-                                                                                                                    <el-button @click="abrirModal('placa', 'abrir', scope.row);">
-                                                                                                                        <i class="fa fa-car"></i>
-                                                                                                                    </el-button>
-                                                                                                                </el-tooltip>
-                                                                                                            </template>
-                                                                                                        </template>
-                                                                                                    </el-table-column>
-                                                                                            </el-table>
+                                                                                            <div class="table-responsive">
+                                                                                                <table class="table table-striped table-sm">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Fecha Inicio Tramite</th>
+                                                                                                            <th>Fecha Fin Tramite</th>
+                                                                                                            <th>Fecha Fin Real Tramite</th>
+                                                                                                            <th>N° VIN</th>
+                                                                                                            <th>Estado Tarjeta</th>
+                                                                                                            <th>Estado Placa</th>
+                                                                                                            <th>Acciones</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr v-for="(solicitud, index) in arrayDetalleSolicitudTramite" :key="index">
+                                                                                                            <td v-text="solicitud.dFechaInicioTramite"></td>
+                                                                                                            <td v-text="solicitud.dFechaFinTramite"></td>
+                                                                                                            <td v-text="solicitud.dFechaFinRealTramite"></td>
+                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
+                                                                                                            <td v-text="solicitud.cEstadoTarjeta"></td>
+                                                                                                            <td v-text="solicitud.cEstadoPlaca"></td>
+                                                                                                            <td>
+                                                                                                                <template v-if="solicitud.cEstadoTarjeta != 'RECIBIDA'">
+                                                                                                                    <el-tooltip class="item"
+                                                                                                                                effect="dark"
+                                                                                                                                content="Tarjeta"
+                                                                                                                                placement="top-start">
+                                                                                                                        <el-button @click="abrirModal('tarjeta', 'abrir', solicitud);">
+                                                                                                                            <i class="fa fa-address-card"></i>
+                                                                                                                        </el-button>
+                                                                                                                    </el-tooltip>
+                                                                                                                </template>
+                                                                                                                <template v-if="solicitud.cEstadoTarjeta == 'RECIBIDA' && solicitud.cEstadoPlaca != 'RECIBIDA'">
+                                                                                                                    <el-tooltip class="item"
+                                                                                                                                effect="dark"
+                                                                                                                                content="Placa"
+                                                                                                                                placement="top-start">
+                                                                                                                        <el-button @click="abrirModal('placa', 'abrir', solicitud);">
+                                                                                                                            <i class="fa fa-car"></i>
+                                                                                                                        </el-button>
+                                                                                                                    </el-tooltip>
+                                                                                                                </template>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-7">
+                                                                                                        <nav>
+                                                                                                            <ul class="pagination">
+                                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                                    <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                                </li>
+                                                                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                                                :class="[page==isActivedModal?'active':'']">
+                                                                                                                    <a class="page-link"
+                                                                                                                    href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
+                                                                                                                    v-text="page"></a>
+                                                                                                                </li>
+                                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                                    <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </nav>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-5">
+                                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </template>
-                                                                                    </div>
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-7">
-                                                                                                <nav>
-                                                                                                    <ul class="pagination">
-                                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                        </li>
-                                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                        :class="[page==isActived?'active':'']">
-                                                                                                            <a class="page-link"
-                                                                                                            href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
-                                                                                                            v-text="page"></a>
-                                                                                                        </li>
-                                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </nav>
-                                                                                            </div>
-                                                                                            <div class="col-lg-5">
-                                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        <template v-else>
+                                                                                            <table>
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </template>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
