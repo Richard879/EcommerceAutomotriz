@@ -1689,10 +1689,7 @@
                 this.nflagseccioninspeccion     = 0,
                 this.nflagvalidarfichatecnica   = 0,
                 //Modal Accesorio
-                this.nflagaccesorioValida  = 0;//Valida que se aceptaron los accesorios
-                this.arrayAccesorio = [];
-                this.arrayAccesorioFlag = [];
-                this.arrayTempAccesorio = [];
+                this.changeFlagVinPlaca();
             },
             obtenerDetalleTipoInspeccionById(){
                 var url = this.ruta + '/pdi/GetDetalleTipoInspeccionById';
@@ -1880,9 +1877,7 @@
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
-                this.limpiarchangeFlagVinPlaca();
-            },
-            limpiarchangeFlagVinPlaca(){
+                //Limpiar
                 this.arrayPlantilla =[],
                 this.arrayAccesorio =[],
                 this.arrayTempAccesorio =[],
