@@ -208,49 +208,23 @@
                                         <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label v-if="accion==1" class="col-sm-3 form-control-label">*&nbsp;
-                                                        <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
-                                                            <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" @change="changeFlagVinPlaca">
-                                                            <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        </label>
-                                                    </label>
-                                                    <label v-if="accion==2" class="col-sm-3 form-control-label" v-text="formPdi.cFlagVinPlaca=='P' ? 'Nro Placa' : 'Nro Vin'"></label>
+                                                    <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
                                                     <div class="col-sm-5">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Buscar Por Vin o Placa </div>
-                                                                    <button v-if="accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </el-tooltip>
-                                                            </div>
-                                                        </div>
+                                                        <el-select  v-model="formPdi.nidtipoinspeccion"
+                                                                    filterable
+                                                                    clearable
+                                                                    placeholder="SELECCIONE TIPO DE INSPECCIÓN"
+                                                                    @change="changeTipoInspeccion"
+                                                                    :class="[this.accion==1 ? '' : 'disabled']" >
+                                                            <el-option
+                                                                v-for="item in arrayTipoInspeccion"
+                                                                :key="item.nIdTipoInspeccion"
+                                                                :label="item.cNombreTipoInspeccion"
+                                                                :value="item.nIdTipoInspeccion">
+                                                            </el-option>
+                                                        </el-select>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <template v-if="formPdi.cvinplacanombre">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
-                                                        <div class="col-sm-5">
-                                                            <el-select  v-model="formPdi.nidtipoinspeccion"
-                                                                        filterable
-                                                                        clearable
-                                                                        placeholder="SELECCIONE TIPO DE INSPECCIÓN"
-                                                                        @change="changeTipoInspeccion"
-                                                                        :class="[this.accion==1 ? '' : 'disabled']" >
-                                                                <el-option
-                                                                    v-for="item in arrayTipoInspeccion"
-                                                                    :key="item.nIdTipoInspeccion"
-                                                                    :label="item.cNombreTipoInspeccion"
-                                                                    :value="item.nIdTipoInspeccion">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
+                                                    <template v-if="formPdi.cvinplacanombre">
                                                         <div class="col-sm-3">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Plantilla </div>
@@ -265,9 +239,39 @@
                                                                 </button>
                                                             </el-tooltip>
                                                         </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <template v-if="formPdi.nidtipoinspeccion">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label v-if="accion==1" class="col-sm-3 form-control-label">*&nbsp;
+                                                            <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
+                                                                <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" @change="changeFlagVinPlaca">
+                                                                <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                        </label>
+                                                        <label v-if="accion==2" class="col-sm-3 form-control-label" v-text="formPdi.cFlagVinPlaca=='P' ? 'Nro Placa' : 'Nro Vin'"></label>
+                                                        <div class="col-sm-5">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Por Vin o Placa </div>
+                                                                        <button v-if="accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </template>
+                                        <template v-if="formPdi.cvinplacanombre">
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
                                                     <div class="row">
@@ -1876,6 +1880,10 @@
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
+                //Limpiar
+                this.arrayPlantilla =[],
+                this.arrayAccesorio =[],
+                this.arrayTempAccesorio =[];
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
@@ -2431,8 +2439,8 @@
             registrarPlantilla(){
                 var url = this.ruta + '/pdi/SetPlantillaPdi';
                 axios.post(url, {
-                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
-                    data: this.arrayPlantilla
+                    'nIdCabeceraInspeccion' : this.formPdi.nidcabecerainspeccion,
+                    'data'                  : this.arrayPlantilla
                 }).then(response => {
                 }).catch(error => {
                     console.log(error);
@@ -3152,7 +3160,6 @@
                             case 'vinplaca':
                             {
                                 this.changeFlagVinPlaca();
-                                this.limpiarFormulario();
                                 //Si es VIN
                                 if(this.formPdi.nidflagvinplaca == 1){
                                     this.accionmodal    = 5;
