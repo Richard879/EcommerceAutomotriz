@@ -933,6 +933,7 @@
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'npartipo' : 1001,
                         'opcion' : 0,
                         'page' : page
                     }
