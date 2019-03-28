@@ -1230,7 +1230,7 @@
                     //'fTotalComisionSol' : me.fTotalComisionSol,
                     'data'              :   me.arrayTemporal
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     me.fillWOperativo.nidwarrantoperativo = response.data;
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
@@ -1270,7 +1270,7 @@
                 axios.post(url, {
                     'data' : me.arrayAsiento
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 
@@ -1282,9 +1282,9 @@
                         if(me.jsonRespuesta.ProjectCode){
                             me.arraySapUpdSgc.push({
                                 'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
-                                'cTipo'         : 'WO',
                                 'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
                                 'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cTipo'         : 'WO',
                                 'cLogRespuesta' : response.data.toString()
                             });
                         }
@@ -1344,6 +1344,7 @@
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
                                 'cFlagTipo'         :   "FP",
+                                'cTipo'             :   'WO',
                                 'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                                 'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
@@ -1371,7 +1372,7 @@
             registroSgcFacturaProveedor(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
                 axios.post(sapUrl, {
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
@@ -1483,6 +1484,7 @@
                 this.arraySapUpdSgc= [],
                 this.arraySapWO= [],
                 this.arraySapCompra= []
+                this.arrayAsiento = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

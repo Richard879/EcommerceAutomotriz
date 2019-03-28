@@ -120,11 +120,11 @@ class WarrantOperativoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objArticulo = DB::select('exec [usp_Integra_SetIntegraAsiento] ?, ?, ?, ?, ?, ?',
+                $objArticulo = DB::select('exec [usp_Integra_SetIntegraAsientoWarrant] ?, ?, ?, ?, ?, ?',
                                                             [   $det['cProjectCode'],
-                                                                $det['cTipo'],
                                                                 $det['nJdtNum'],
                                                                 $det['nNumber'],
+                                                                $det['cTipo'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);

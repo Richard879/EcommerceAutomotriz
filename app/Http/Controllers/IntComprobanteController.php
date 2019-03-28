@@ -34,4 +34,31 @@ class IntComprobanteController extends Controller
             DB::rollBack();
         }
     }
+
+    public function SetIntegraComprobanteWO(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobanteWarrant] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cFlagTipo'],
+                                                                $det['cTipo'],
+                                                                $det['cItemCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cDocType'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objFactura);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

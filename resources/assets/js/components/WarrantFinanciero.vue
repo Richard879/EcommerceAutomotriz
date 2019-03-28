@@ -410,7 +410,7 @@
                                                                         <div class="col-lg-7">
                                                                         </div>
                                                                         <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor }}</strong></div>
+                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -814,7 +814,20 @@
                     from++;
                 }
                 return pagesArray;
-            }
+            },
+            totalVehiculo: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fTotalCompra);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
+        },
+        mounted(){
+            this.tabBuscarWFinanciero();
         },
         methods:{
             listarBancos(page){
@@ -1025,29 +1038,20 @@
                 this.listarVersionVehiculo(page);
             },
             asignarVehiculo(data){
-                if(this.encuentra(data.nIdCompra)){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Ese vehículo ya se encuentra agregado!',
-                            })
-                }
-                else{
+                if(this.encuentra(data.nIdCompra)) {
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El Vehículo seleccionado ya se encuentra agregado!',
+                    })
+                } else {
                     this.arrayTemporal.push(data);
-                    this.sumarWarrant();
                     toastr.success('Se Agregó Vehículo');
                 }
             },
             eliminaItemTempVehiculo(index){
                 this.$delete(this.arrayTemporal, index);
-                this.sumarWarrant();
                 toastr.success('Se Eliminó Item Vehículo');
-            },
-            sumarWarrant(){
-                let me = this;
-                me.arrayTemporal.map(function(value, key) {
-                    me.fTotalValor = parseFloat(me.fTotalValor) + parseFloat(value.fTotalCompra);
-                });
             },
             encuentra(nIdCompra){
                 var sw=0;
@@ -1125,9 +1129,9 @@
                         if(me.jsonRespuesta.ProjectCode){
                             me.arraySapUpdSgc.push({
                                 'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
-                                'cTipo'         : 'WF',
                                 'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
                                 'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cTipo'         : 'WF',
                                 'cLogRespuesta' : response.data.toString()
                             });
                         }
@@ -1154,8 +1158,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
+                    if(response.data[0].nFlagMsje == 1) {
                          setTimeout(function() {
                             me.generaSapFacturaProveedor();
                         }, 1600);
@@ -1188,12 +1191,13 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
-                                'cFlagTipo'         : "FP",
-                                'cItemCode'         : me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
-                                'nDocEntry'         : parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'           : parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          : me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta'     : response.data.toString()
+                                'cFlagTipo'         :   "FP",
+                                'cTipo'             :   'WF',
+                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     :   response.data.toString()
                             });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
@@ -1216,7 +1220,7 @@
             registroSgcFacturaProveedor(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
                 axios.post(sapUrl, {
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
@@ -1267,7 +1271,8 @@
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
                 this.arraySapWO= [],
-                this.arraySapCompra= []
+                this.arraySapCompra= [],
+                this.arrayAsiento = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1300,9 +1305,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            this.tabBuscarWFinanciero();
         }
     }
 </script>
