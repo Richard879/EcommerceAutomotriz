@@ -467,6 +467,7 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Vehiculos -->
             <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -590,6 +591,7 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Bancos -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -635,14 +637,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
-                                                                    <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="banco.cParJerarquia"></td>
-                                                            <td v-text="banco.cParNombre"></td>
+                                                            <template v-if="cParJerarquia">
+                                                                <td>    
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
+                                                                        <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="banco.cParJerarquia"></td>
+                                                                <td v-text="banco.cParNombre"></td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
