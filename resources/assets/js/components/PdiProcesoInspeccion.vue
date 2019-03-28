@@ -1282,13 +1282,13 @@
                 nflagaccesorio: 0,
                 nflagtestdrive: 0,
                 nflagseccioninspeccion: 0,
-                nflagvalidarfichatecnica: 0,
+                nflagfichatecnica: 0,
                 // ============ Variables Valida Flag Tipo Inspeccion =================
                 nflagalmacenValida: 0,
                 nflagaccesorioValida: 0,
                 nflagtestdriveValida: 0,
                 nflagseccioninspeccionValida: 0,
-                nflagvalidarfichatecnicaValida: 0,
+                nflagfichatecnicaValida: 0,
                 // ============================================
                 // ============ REGISTRO PDI =================
                 formPdi:{
@@ -1687,7 +1687,7 @@
                 this.nflagaccesorio             = 0,
                 this.nflagtestdrive             = 0,
                 this.nflagseccioninspeccion     = 0,
-                this.nflagvalidarfichatecnica   = 0,
+                this.nflagfichatecnica   = 0,
                 //Modal Accesorio
                 this.changeFlagVinPlaca();
             },
@@ -1705,7 +1705,7 @@
                         this.nflagaccesorio             = response.data[0].nFlagAccesorio;  //Mostrar Objeto Accesorio
                         this.nflagtestdrive             = response.data[0].nFlagTestDrive;  //Mostrar Objeto TestDrive
                         this.nflagseccioninspeccion     = response.data[0].nFlagSeccionInspeccion;//Mostrar Objeto Inspección
-                        this.nflagvalidarfichatecnica   = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
+                        this.nflagfichatecnica   = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1885,7 +1885,7 @@
                 this.nflagaccesorioValida = 0,
                 this.nflagtestdriveValida = 0,
                 this.nflagseccioninspeccionValida = 0,
-                this.nflagvalidarfichatecnicaValida = 0;
+                this.nflagfichatecnicaValida = 0;
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
@@ -3257,12 +3257,12 @@
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
                 this.nflagseccioninspeccion= 0,
-                this.nflagvalidarfichatecnica= 0,
+                this.nflagfichatecnica= 0,
                 this.nflagalmacenValida= 0,
                 this.nflagaccesorioValida= 0,
                 this.nflagtestdriveValida= 0,
                 this.nflagseccioninspeccionValida= 0,
-                this.nflagvalidarfichatecnicaValida= 0,
+                this.nflagfichatecnicaValida= 0,
                 this.nidflagmovimiento = 1,
                 this.formPdi.cnumeroinspeccion = '',
                 this.formPdi.dfechainspeccion = '',
