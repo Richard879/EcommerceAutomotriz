@@ -399,7 +399,7 @@
                                                                                 <td v-text="temporal.cNumeroVin"></td>
                                                                                 <td v-text="temporal.cNombreComercial"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
-                                                                                <td><input type="text" v-model="temporal.fTotalCompra" class="form-control form-control-sm"></td>
+                                                                                <td><input type="number" v-model="temporal.fTotalCompra" class="form-control form-control-sm"></td>
                                                                                 <td v-text="temporal.cNumeroFactura"></td>
                                                                             </tr>
                                                                         </tbody>
