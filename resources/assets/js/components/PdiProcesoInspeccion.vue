@@ -1879,7 +1879,7 @@
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-                var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
+                var url = this.ruta + '/pdi/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
