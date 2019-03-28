@@ -2674,6 +2674,7 @@
             },
             generaSgcActividadPdiEntrada(){
                 let me = this;
+                //var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc

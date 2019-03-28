@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IntActividadController extends Controller
 {
-    public function SetIntegraActividad(Request $request)
+    public function SetIntegraActividadByServiceCall(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -120,7 +120,7 @@ class IntActividadController extends Controller
         }
     }
 
-    public function SetIntegraActividadServicio(Request $request)
+    public function SetIntegraActividad(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
