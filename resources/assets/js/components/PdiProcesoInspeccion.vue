@@ -2665,7 +2665,7 @@
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrada();
                             }, 1600);
@@ -2693,11 +2693,11 @@
                     {
                         //================================================================================
                         //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        // setTimeout(function() {
-                        //     me.generaSapActividadServiceCallEntry();
-                        // }, 1600);
-                        me.loading.close();
-                        me.confirmaPdi();
+                        setTimeout(function() {
+                             me.generaSapSolucion();
+                        }, 1600);
+                        //me.loading.close();
+                        //me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2709,7 +2709,82 @@
                     }
                 });
             },
-            /*
+            generaSapSolucion(){
+                let me = this;
+
+                me.arraySolucion.push({
+                    'cItemCode' : cNumeroVin,
+                    'cSubject'  : "Cierre De Servicio"
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'C',
+                                'cLogRespuesta' : response.data.toString()
+                            });
+
+                            me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode'     : me.nactivitycode,
+                                'cCustomerCode'     : cCustomerCode,
+                                'cInternalSerialNum': cNumeroVin,
+                                'cItemCode'         : cNumeroVin,
+                                'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
+                                'cSubject'          : 'PdiEntrada'
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaActualizarSolucion();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    //==============================================================
+                    //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
+                    setTimeout(function() {
+                        me.generaSapLlamadaServicioPdiEntrada();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             generaSapLlamadaServicioPdiEntrada(){
                 let me = this;
 
@@ -2761,6 +2836,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
+                    me.loading.close();
                     me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
@@ -2772,7 +2848,6 @@
                     }
                 });
             },
-            */
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
