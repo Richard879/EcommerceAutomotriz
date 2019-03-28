@@ -81,6 +81,7 @@ class SapMercanciaController extends Controller
             'json' => [
                 'DocDate'       =>  (string)$request->fDocDate,
                 'DocDueDate'    =>  (string)$request->fDocDueDate,
+                "U_SYP_MDMT"    =>  "02",
                 "DocumentLines" =>  array()
             ]
         ];
@@ -122,6 +123,7 @@ class SapMercanciaController extends Controller
             'json' => [
                 'DocDate'       =>  (string)$request->fDocDate,
                 'DocDueDate'    =>  (string)$request->fDocDueDate,
+                "U_SYP_MDMT"    =>  "01",
                 "DocumentLines" =>  array()
             ]
         ];
