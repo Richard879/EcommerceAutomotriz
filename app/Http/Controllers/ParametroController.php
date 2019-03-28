@@ -50,16 +50,20 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdGrupoPar = $request->nidgrupopar;
-        $cNombreProveedor = $request->cnombreproveedor;
-        $variable   = $request->opcion;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdGrupoPar        = $request->nidgrupopar;
+        $cNombreProveedor   = $request->cnombreproveedor;
+        $nParTipo           = $request->npartipo;
+        $variable           = $request->opcion;
+
         $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
+        $nParTipo = ($nParTipo == NULL) ? ($nParTipo = 1000) : $nParTipo;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayProveedor = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?, ?',
+        $arrayProveedor = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdGrupoPar,
+                                                            $nParTipo,
                                                             $cNombreProveedor
                                                         ]);
         if($variable == "0"){
@@ -234,26 +238,6 @@ class ParametroController extends Controller
             $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
         }
         return ['arrayParametro'=>$arrayParametro];
-    }
-
-    public function GetLstProveedorTodos(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $nIdEmpresa = $request->nidempresa;
-        $cNombreProveedor = $request->cnombreproveedor;
-        $variable   = $request->opcion;
-        $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
-
-        $parametro = DB::select('exec [usp_Proveedor_GetLstProveedorTodos] ?, ?',
-                                                        [   $nIdEmpresa,
-                                                            $cNombreProveedor
-                                                        ]);
-        if($variable == "0"){
-            $parametro = $this->arrayPaginator($parametro, $request);
-        }
-        return ['arrayProveedor'=>$parametro];
     }
 
     public function GetListParametroByGrupo(Request $request)

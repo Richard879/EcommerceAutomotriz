@@ -62,6 +62,8 @@ class SapComprobanteController extends Controller
                     "DocDate"       =>  (string)$request->fDocDate,
                     "DocCurrency"   =>   "US$",
                     "DocType"       =>  "dDocument_Service",
+                    "U_SYP_MDMT"    =>  "WO",
+                    "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" =>  [
                         [
                             "ItemDescription"   =>  "Servicio WO - ".$value['cNumeroVin'],
@@ -101,6 +103,8 @@ class SapComprobanteController extends Controller
                     "DocDate"       => (string)$request->fDocDate,
                     "DocCurrency"   =>  "US$",
                     "DocType"       => "dDocument_Service",
+                    "U_SYP_MDMT"    =>  "WF",
+                    "U_SYP_TCOMPRA" =>  "01",
                     "DocumentLines" => [
                             [
                                 "ItemDescription"   => "Servicio WF - ".$value['cNumeroVin'],

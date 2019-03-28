@@ -399,7 +399,7 @@
                                                                                 <td v-text="temporal.cNumeroVin"></td>
                                                                                 <td v-text="temporal.cNombreComercial"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
-                                                                                <td><input type="text" v-model="temporal.fTotalCompra" class="form-control form-control-sm"></td>
+                                                                                <td><input type="number" v-model="temporal.fTotalCompra" class="form-control form-control-sm"></td>
                                                                                 <td v-text="temporal.cNumeroFactura"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -467,6 +467,7 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Vehiculos -->
             <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -590,6 +591,7 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Bancos -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -635,7 +637,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
-                                                            <td>
+                                                            <td>    
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
                                                                     <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
@@ -1251,6 +1253,9 @@
 
                 if(this.formWFinanciero.nidbanco == 0){
                     this.mensajeError.push('Debes Seleccionar un Banco');
+                };
+                if(!this.formWFinanciero.ccarcode){
+                    this.mensajeError.push('Debes Seleccionar un Banco con Código SAP');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
