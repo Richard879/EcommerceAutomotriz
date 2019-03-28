@@ -745,6 +745,7 @@
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
@@ -1523,6 +1524,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
