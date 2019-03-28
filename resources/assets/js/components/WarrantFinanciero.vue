@@ -637,16 +637,14 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
-                                                            <template v-if="banco.cParJerarquia">
-                                                                <td>    
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
-                                                                        <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="banco.cParJerarquia"></td>
-                                                                <td v-text="banco.cParNombre"></td>
-                                                            </template>
+                                                            <td>    
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
+                                                                    <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="banco.cParJerarquia"></td>
+                                                            <td v-text="banco.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1255,6 +1253,9 @@
 
                 if(this.formWFinanciero.nidbanco == 0){
                     this.mensajeError.push('Debes Seleccionar un Banco');
+                };
+                if(!this.formWFinanciero.ccarcode){
+                    this.mensajeError.push('Debes Seleccionar un Banco con Código SAP');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
