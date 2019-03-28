@@ -1880,10 +1880,17 @@
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
-                //Limpiar
+                this.limpiarchangeFlagVinPlaca();
+            },
+            limpiarchangeFlagVinPlaca(){
                 this.arrayPlantilla =[],
                 this.arrayAccesorio =[],
-                this.arrayTempAccesorio =[];
+                this.arrayTempAccesorio =[],
+                this.nflagalmacenValida = 0,
+                this.nflagaccesorioValida = 0,
+                this.nflagtestdriveValida = 0,
+                this.nflagseccioninspeccionValida = 0,
+                this.nflagvalidarfichatecnicaValida = 0;
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
