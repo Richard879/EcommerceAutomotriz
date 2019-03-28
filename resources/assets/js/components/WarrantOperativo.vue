@@ -109,7 +109,6 @@
                                                                                     <!--<th>Total Comision Dolar</th>
                                                                                     <th>Total Comision Sol</th>-->
                                                                                     <th>Estado</th>
-                                                                                    <th>Doc Sap</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
@@ -122,7 +121,6 @@
                                                                                     <!--<td v-text="operativo.fTotalComisionDolar"></td>
                                                                                     <td v-text="operativo.fTotalComisionSol"></td>-->
                                                                                     <td v-text="operativo.cParNombre"></td>
-                                                                                    <td v-text="operativo.nDocNum"></td>
                                                                                     <td>
                                                                                         <a  href="#"
                                                                                             @click="asignaIdWOperativo(operativo)"
@@ -257,6 +255,7 @@
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
+                                                                                    <th>DocNum</th>
                                                                                     <!--<th>Comisión Dolar</th>
                                                                                     <th>Comisión Sol</th>-->
                                                                                     <th>Estado</th>
