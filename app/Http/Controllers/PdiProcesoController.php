@@ -361,7 +361,7 @@ class PdiProcesoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nidempresa     =   $request->nidempresa;
-        $tipoBsq        =   $request->nidtipoelemen;
+        $tipoBsq        =   $request->tipoBsq;
         $codVehiculo    =   $request->codVehiculo;
 
         $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
@@ -372,7 +372,6 @@ class PdiProcesoController extends Controller
                                                                     $tipoBsq,
                                                                     $codVehiculo
                                                                 ]);
-
         //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }

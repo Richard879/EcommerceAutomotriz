@@ -1695,8 +1695,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion
                     }
                 }).then(response => {
                     if(response.data.length > 0) {
@@ -2118,19 +2118,18 @@
             },
             //================================================================
             listarAccesorioPdiEntrada(){
-                var url = this.ruta + '/pdi/GetElementoByTipoBsq';
-
+                let me = this;
+                var url = me.ruta + '/pdi/GetElementoByTipoBsq';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
-                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                        'tipoBsq'           :   me.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    let me = this;
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
-                    this.llenarAccesorios();
+                    me.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2142,19 +2141,19 @@
                 });
             },
             listarAccesoriosPdiEntregaVehiculo(){
-                var url = this.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
-
+                let me = this;
+                var url = me.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
-                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                        'tipoBsq'           :   me.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    let me = this;
+                    console.log(response.data);
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
-                    this.llenarAccesorios();
+                    me.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3114,7 +3113,9 @@
                                 this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
                                 this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
                                 this.formPdi.nidcompra = data['nIdCompra'];
-                                //this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
+                                this.formPdi.cnumerovin = data['cNumeroVin'];
+                                this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
+                                this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
