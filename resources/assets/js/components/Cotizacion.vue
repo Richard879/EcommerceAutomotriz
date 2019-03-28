@@ -2986,6 +2986,9 @@
                 this.pagination.current_page=page;
                 this.listarMisCotizaciones(page);
             },
+            // =================================================================
+            // VER DETALLE COTIZACION
+            // =================================================================
             verCotizacion(cotizacion){
                 this.fillDetalleCotizacion.cnumerocotizacion        = cotizacion.cNumeroCotizacion,
                 this.fillDetalleCotizacion.cdocumentocliente        = cotizacion.cPerDocumento,
