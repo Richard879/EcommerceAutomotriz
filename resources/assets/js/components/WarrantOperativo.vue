@@ -1473,6 +1473,9 @@
                 this.fillWOperativo.cnumerovin=  '',
                 this.formWOperativo.dfechainicio = '',
                 this.formWOperativo.ccarcode= '',
+                this.formWOperativo.nidproveedor= '',
+                this.formWOperativo.cproveedornombre= '',
+                this.formWOperativo.cnrowarrant= '',
                 this.arrayWOperativo = [],
                 this.arrayTemporal = [];
                 this.limpiarPaginacion();
