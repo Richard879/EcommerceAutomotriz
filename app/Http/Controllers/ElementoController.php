@@ -6,7 +6,7 @@ use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Elemento;
+//use App\Elemento;
 
 class ElementoController extends Controller
 {
