@@ -637,7 +637,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
-                                                            <template v-if="cParJerarquia">
+                                                            <template v-if="banco.cParJerarquia">
                                                                 <td>    
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
