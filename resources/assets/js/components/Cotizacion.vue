@@ -649,13 +649,6 @@
                                                                                                                    min="0"/>
                                                                                                         </td>
                                                                                                         <td>US$ {{ vehiculo.PrecioLista }} </td>
-                                                                                                        <!-- <td>
-                                                                                                            <input type="number"
-                                                                                                                   class="form-control form-control-sm"
-                                                                                                                   v-model="vehiculo.sobrePrecio"
-                                                                                                                   @keyup="changeSobrePrecio(vehiculo.sobrePrecio)"
-                                                                                                                   min="0"/>
-                                                                                                        </td> -->
                                                                                                         <td>
                                                                                                             <input type="number"
                                                                                                                    class="form-control form-control-sm"
@@ -666,7 +659,6 @@
                                                                                                         </td>
                                                                                                         <td>US$ {{ vehiculo.TYP }} </td>
                                                                                                         <td>US$ {{ vehiculo.Flete }} </td>
-                                                                                                        <!-- <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td> -->
                                                                                                         <td>US$ {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioLista) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio) + parseFloat(vehiculo.TYP) + parseFloat(vehiculo.Flete)) }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
@@ -680,18 +672,6 @@
                                                                                                             <label class="col-sm-4 form-control-label">Sobre Precio </label>
                                                                                                             <label class="form-control-label"><strong>US$ {{ this.arrayVehiculo[0].sobrePrecio = (parseFloat(this.arrayVehiculo[0].PrecioBase)-(parseFloat(this.arrayVehiculo[0].Bono)+parseFloat(this.arrayVehiculo[0].PrecioLista))) }} </strong></label>
                                                                                                         </div>
-                                                                                                        <!-- <div class="col-sm-12" :class="[(fdscto02 > 0) ? '' : 'datos']">
-                                                                                                            <label class="col-sm-4 form-control-label">Dscto #02: </label>
-                                                                                                            <label class="form-control-label"><strong>{{ fdscto02 = Math.abs(calcularDscto02[0]) }} </strong></label>
-                                                                                                        </div>
-                                                                                                        <div class="col-sm-12" :class="[(fdscto03 > 0) ? '' : 'datos']">
-                                                                                                            <label class="col-sm-4 form-control-label">Dscto #03: </label>
-                                                                                                            <label class="form-control-label"><strong>{{ fdscto03 = Math.abs(calcularDscto03[0]) }} </strong></label>
-                                                                                                        </div>
-                                                                                                        <div class="col-sm-12">
-                                                                                                            <label class="col-sm-4 form-control-label">Dx: </label>
-                                                                                                            <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
-                                                                                                        </div> -->
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="col-lg-6 direction-money">
@@ -2986,6 +2966,9 @@
                 this.pagination.current_page=page;
                 this.listarMisCotizaciones(page);
             },
+            // =================================================================
+            // VER DETALLE COTIZACION
+            // =================================================================
             verCotizacion(cotizacion){
                 this.fillDetalleCotizacion.cnumerocotizacion        = cotizacion.cNumeroCotizacion,
                 this.fillDetalleCotizacion.cdocumentocliente        = cotizacion.cPerDocumento,
@@ -4784,5 +4767,3 @@
         pointer-events:none;
     }
 </style>
-
-

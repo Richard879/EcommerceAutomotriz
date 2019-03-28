@@ -259,6 +259,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
     Route::post('/pdi/GetDetallePDI', 'PdiProcesoController@GetDetallePDI');
     Route::get('/pdi/GetAccesoriosPdiEntregaVehiculo', 'PdiProcesoController@GetAccesoriosPdiEntregaVehiculo');
+    Route::get('/pdi/GetLstVehiculosByCriterio', 'PdiProcesoController@GetLstVehiculosByCriterio');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
     Route::post('/documentoadjunto/subirArchivoPDI', 'DocumentoAdjuntoController@subirArchivoPDI');
@@ -421,8 +422,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
-    Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicioCompra','IntLlamadaServicioController@SetIntegraLlamadaServicioCompra');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
     Route::post('/solucion/SetIntegraSolucion','IntLlamadaServicioController@SetIntegraSolucion');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');
@@ -434,7 +436,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/actividad/SetIntegraActividadVenta','IntActividadController@SetIntegraActividadVenta');
     Route::get('/actividad/GetIntegraActividadByItemCode','IntActividadController@GetIntegraActividadByItemCode');
     Route::post('/actividad/GetIntegraActividadVentaByItemCode','IntActividadController@GetIntegraActividadVentaByItemCode');
-    Route::post('/actividad/SetIntegraActividadServicio','IntActividadController@SetIntegraActividadServicio');
+    Route::post('/actividad/SetIntegraActividadByServiceCall','IntActividadController@SetIntegraActividadByServiceCall');
 
     Route::post('/tablacosto/GetCompraConceptosTblCosto','IntTablaCostoController@GetCompraConceptosTblCosto');
     Route::post('/tablacosto/SetIntegraTblCostoCab','IntTablaCostoController@SetIntegraTblCostoCab');
@@ -502,6 +504,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SapUpdTarjetaPlaca', 'Api\SapTarjetaEquipoController@SapUpdTarjetaPlaca');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
+    Route::post('/llamadaservicio/SapSetLlamadaServicioCompra', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioCompra');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
     Route::post('/llamadaservicio/SapCloseLlamadaServicio', 'Api\SapLlamadaServicioController@SapCloseLlamadaServicio');
     Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');

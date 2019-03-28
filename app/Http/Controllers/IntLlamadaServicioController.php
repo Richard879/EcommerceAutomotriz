@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IntLlamadaServicioController extends Controller
 {
-    public function SetIntegraLlamadaServicio(Request $request)
+    public function SetIntegraLlamadaServicioCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -73,29 +73,35 @@ class IntLlamadaServicioController extends Controller
                                                                 ]);
                 }
             }
-            /*
-                // ======================================================================
-                // GUARDAR LLAMADA DE SERVICIOS DE LA O.V DEL E.V EN SQL SERVER
-                // ======================================================================
-                $arraySapUpdSgcEVLength = sizeof($request->arraySapUpdSgcEV);
-                if($arraySapUpdSgcEVLength > 0) {
-                    $data = $request->arraySapUpdSgcEV;
-                    foreach($data as $ep=>$det)
-                    {
-                        $objProyecto = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?',
-                                                                    [   $det['nServiceCallID'],
-                                                                        $det['nActivityCode'],
-                                                                        $det['cItemCode'],
-                                                                        $det['cInternalSerialNum'],
-                                                                        $det['cLogRespuesta'],
-                                                                        Auth::user()->id
-                                                                    ]);
-                    }
-                }
-            */
 
             DB::commit();
             return response()->json($objProyecto);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function SetIntegraLlamadaServicio(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objLlamadaServicio = DB::select('exec [usp_Integra_SetIntegraLlamadaServicio] ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['nServiceCallID'],
+                                                                $det['cFlagTipo'],
+                                                                $det['nActivityCode'],
+                                                                $det['cItemCode'],
+                                                                $det['cInternalSerialNum'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objLlamadaServicio);
         } catch (Exception $e){
             DB::rollBack();
         }

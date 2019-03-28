@@ -2690,7 +2690,7 @@
             registroSapBusinessLlamadaServicio(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
@@ -2733,7 +2733,7 @@
             },
             registroSgcLlamadaServicio(){
                 let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -3624,7 +3624,7 @@
                 }
 
                 if(objCompra.nServiceCallID== 0){
-                    var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                    var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                     axios.post(sapUrl, {
                         'data': me.arraySapLlamadaServicio
                     }).then(response => {
@@ -3676,7 +3676,7 @@
             },
             generaActualizarLlamadaServicio(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {

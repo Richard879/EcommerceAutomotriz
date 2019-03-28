@@ -474,7 +474,7 @@
                                                             </li>
                                                             <li class="nav-item">
                                                                 <a class="nav-link disabled" id="Tab2" href="#TabDocReferencias" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-book"></i> DOCUMENTOS REFERENCIAS
+                                                                    <i class="fa fa-file-text-o"></i> DOCUMENTOS REFERENCIAS
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">
@@ -776,6 +776,129 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </form>
+                                                                                    <br/>
+                                                                                    <!-- DETALLE VEHICULO -->
+                                                                                    <template v-if="arrayDetalleCotizacion.length">
+                                                                                        <vs-divider border-style="solid" color="dark">
+                                                                                            Detalle Vehículo
+                                                                                        </vs-divider>
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Cod. Vehiculo</th>
+                                                                                                        <th>NombreComercial</th>
+                                                                                                        <th>Sobre Precio</th>
+                                                                                                        <th>Dscto</th>
+                                                                                                        <th>Total Soles</th>
+                                                                                                        <th>Total Dolares</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                                                                        <template v-if="vehiculo.cFlagTipoItem=='V'">
+                                                                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                                                            <td v-text="vehiculo.fSobrePrecio"></td>
+                                                                                                            <td v-text="vehiculo.fDescuento"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                                                                        </template>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
+                                                                                    <template v-if="cFlagActivaElemento">
+                                                                                        <vs-divider border-style="solid" color="dark">
+                                                                                            Detalle Elementos Venta Vendidos
+                                                                                        </vs-divider>
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Cod. Elemento</th>
+                                                                                                        <th>Nombre Elemento</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Total Soles</th>
+                                                                                                        <th>Total Dolares</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                                                                        <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                                                                        </template>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
+                                                                                    <template v-if="cFlagActivaObsequio">
+                                                                                        <vs-divider border-style="solid" color="dark">
+                                                                                            Detalle Regalos
+                                                                                        </vs-divider>
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Cod. Elemento</th>
+                                                                                                        <th>Nombre Elemento</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Total Soles</th>
+                                                                                                        <th>Total Dolares</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                                                                        <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                                                                        </template>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
+                                                                                    <template v-if="cFlagActivaCampania">
+                                                                                        <vs-divider border-style="solid" color="dark">
+                                                                                            Detalle Campaña
+                                                                                        </vs-divider>
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Cod. Elemento</th>
+                                                                                                        <th>Nombre Elemento</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Total Soles</th>
+                                                                                                        <th>Total Dolares</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
+                                                                                                        <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                                                                        </template>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1943,6 +2066,9 @@
                         });
                     })
             },
+            // =================================================================
+            // VER DETALLE COTIZACION
+            // =================================================================
             verCotizacion(cotizacion){
                 this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
                 this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
@@ -2068,14 +2194,37 @@
                 this.formDocRef.ccolor = compra.cNombreColor;
                 this.formDocRef.cmotor = compra.cNombreMotor;
                 this.obtenerFechaRegistroPedido();
-                this.listarDatosListaPrecioDetalle(parseInt(this.formCompra.nidcabeceracotizacion));
+                this.listarDatosListaPrecioDetalle();
+                this.listarDetalleCotizacion();
                 this.llenarComboBanco();
                 this.llenarFormaPago();
+            },
+            listarDetalleCotizacion(){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion': this.formCompra.nidcabeceracotizacion
+                    }
+                }).then(response => {
+                    this.arrayDetalleCotizacion = response.data.arrayDetalleCotizacion.data;
+                    this.verificaDetalleCotizacion();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             obtenerFechaRegistroPedido(){
                 this.formDocRef.dfechapedido = moment().format('DD/MM/YYYY');
             },
-            listarDatosListaPrecioDetalle(nidcabeceracotizacion){
+            listarDatosListaPrecioDetalle(){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';

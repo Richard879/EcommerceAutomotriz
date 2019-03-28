@@ -208,49 +208,23 @@
                                         <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label v-if="accion==1" class="col-sm-3 form-control-label">*&nbsp;
-                                                        <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
-                                                            <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" @change="changeFlagVinPlaca">
-                                                            <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        </label>
-                                                    </label>
-                                                    <label v-if="accion==2" class="col-sm-3 form-control-label" v-text="formPdi.cFlagVinPlaca=='P' ? 'Nro Placa' : 'Nro Vin'"></label>
+                                                    <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
                                                     <div class="col-sm-5">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Buscar Por Vin o Placa </div>
-                                                                    <button v-if="accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </el-tooltip>
-                                                            </div>
-                                                        </div>
+                                                        <el-select  v-model="formPdi.nidtipoinspeccion"
+                                                                    filterable
+                                                                    clearable
+                                                                    placeholder="SELECCIONE TIPO DE INSPECCIÓN"
+                                                                    @change="changeTipoInspeccion"
+                                                                    :class="[this.accion==1 ? '' : 'disabled']" >
+                                                            <el-option
+                                                                v-for="item in arrayTipoInspeccion"
+                                                                :key="item.nIdTipoInspeccion"
+                                                                :label="item.cNombreTipoInspeccion"
+                                                                :value="item.nIdTipoInspeccion">
+                                                            </el-option>
+                                                        </el-select>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <template v-if="formPdi.cvinplacanombre">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <label class="col-sm-3 form-control-label">* Tipo Inspección</label>
-                                                        <div class="col-sm-5">
-                                                            <el-select  v-model="formPdi.nidtipoinspeccion"
-                                                                        filterable
-                                                                        clearable
-                                                                        placeholder="SELECCIONE TIPO DE INSPECCIÓN"
-                                                                        @change="changeTipoInspeccion"
-                                                                        :class="[this.accion==1 ? '' : 'disabled']" >
-                                                                <el-option
-                                                                    v-for="item in arrayTipoInspeccion"
-                                                                    :key="item.nIdTipoInspeccion"
-                                                                    :label="item.cNombreTipoInspeccion"
-                                                                    :value="item.nIdTipoInspeccion">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
+                                                    <template v-if="formPdi.cvinplacanombre">
                                                         <div class="col-sm-3">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Plantilla </div>
@@ -265,9 +239,39 @@
                                                                 </button>
                                                             </el-tooltip>
                                                         </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <template v-if="formPdi.nidtipoinspeccion">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label v-if="accion==1" class="col-sm-3 form-control-label">*&nbsp;
+                                                            <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
+                                                                <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" @change="changeFlagVinPlaca">
+                                                                <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                        </label>
+                                                        <label v-if="accion==2" class="col-sm-3 form-control-label" v-text="formPdi.cFlagVinPlaca=='P' ? 'Nro Placa' : 'Nro Vin'"></label>
+                                                        <div class="col-sm-5">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Por Vin o Placa </div>
+                                                                        <button v-if="accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </template>
+                                        <template v-if="formPdi.cvinplacanombre">
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
                                                     <div class="row">
@@ -1278,13 +1282,13 @@
                 nflagaccesorio: 0,
                 nflagtestdrive: 0,
                 nflagseccioninspeccion: 0,
-                nflagvalidarfichatecnica: 0,
+                nflagfichatecnica: 0,
                 // ============ Variables Valida Flag Tipo Inspeccion =================
                 nflagalmacenValida: 0,
                 nflagaccesorioValida: 0,
                 nflagtestdriveValida: 0,
                 nflagseccioninspeccionValida: 0,
-                nflagvalidarfichatecnicaValida: 0,
+                nflagfichatecnicaValida: 0,
                 // ============================================
                 // ============ REGISTRO PDI =================
                 formPdi:{
@@ -1683,20 +1687,17 @@
                 this.nflagaccesorio             = 0,
                 this.nflagtestdrive             = 0,
                 this.nflagseccioninspeccion     = 0,
-                this.nflagvalidarfichatecnica   = 0,
+                this.nflagfichatecnica   = 0,
                 //Modal Accesorio
-                this.nflagaccesorioValida  = 0;//Valida que se aceptaron los accesorios
-                this.arrayAccesorio = [];
-                this.arrayAccesorioFlag = [];
-                this.arrayTempAccesorio = [];
+                this.changeFlagVinPlaca();
             },
             obtenerDetalleTipoInspeccionById(){
                 var url = this.ruta + '/pdi/GetDetalleTipoInspeccionById';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion
                     }
                 }).then(response => {
                     if(response.data.length > 0) {
@@ -1704,7 +1705,7 @@
                         this.nflagaccesorio             = response.data[0].nFlagAccesorio;  //Mostrar Objeto Accesorio
                         this.nflagtestdrive             = response.data[0].nFlagTestDrive;  //Mostrar Objeto TestDrive
                         this.nflagseccioninspeccion     = response.data[0].nFlagSeccionInspeccion;//Mostrar Objeto Inspección
-                        this.nflagvalidarfichatecnica   = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
+                        this.nflagfichatecnica   = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1876,10 +1877,19 @@
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
+                //Limpiar
+                this.arrayPlantilla =[],
+                this.arrayAccesorio =[],
+                this.arrayTempAccesorio =[],
+                this.nflagalmacenValida = 0,
+                this.nflagaccesorioValida = 0,
+                this.nflagtestdriveValida = 0,
+                this.nflagseccioninspeccionValida = 0,
+                this.nflagfichatecnicaValida = 0;
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-                var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
+                var url = this.ruta + '/pdi/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2118,19 +2128,18 @@
             },
             //================================================================
             listarAccesorioPdiEntrada(){
-                var url = this.ruta + '/pdi/GetElementoByTipoBsq';
-
+                let me = this;
+                var url = me.ruta + '/pdi/GetElementoByTipoBsq';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
-                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                        'tipoBsq'           :   me.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    let me = this;
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
-                    this.llenarAccesorios();
+                    me.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2142,19 +2151,19 @@
                 });
             },
             listarAccesoriosPdiEntregaVehiculo(){
-                var url = this.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
-
+                let me = this;
+                var url = me.ruta + '/pdi/GetAccesoriosPdiEntregaVehiculo';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'tipoBsq'           :   this.formPdi.nidflagvinplaca,
-                        'codVehiculo'       :   (this.formPdi.nidflagvinplaca == 1) ? this.formPdi.cnumerovin : this.formPdi.nidvehiculoplaca
+                        'tipoBsq'           :   me.formPdi.nidflagvinplaca,
+                        'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    let me = this;
+                    console.log(response.data);
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
-                    this.llenarAccesorios();
+                    me.llenarAccesorios();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2432,8 +2441,8 @@
             registrarPlantilla(){
                 var url = this.ruta + '/pdi/SetPlantillaPdi';
                 axios.post(url, {
-                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
-                    data: this.arrayPlantilla
+                    'nIdCabeceraInspeccion' : this.formPdi.nidcabecerainspeccion,
+                    'data'                  : this.arrayPlantilla
                 }).then(response => {
                 }).catch(error => {
                     console.log(error);
@@ -2494,70 +2503,6 @@
                     }
                 });
             },
-            /*
-            generaSapLlamadaServicioPdiEntrada(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI SERVICIOS
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
-
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaSgcLlamadaServicioPdiEntrada();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcLlamadaServicioPdiEntrada(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.confirmaPdi();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            */
             //================Generar Sap Entrada Mercancia ============
             generaSapMercanciaEntry(){
                 let me = this;
@@ -2739,6 +2684,7 @@
             },
             generaSgcActividadPdiEntrada(){
                 let me = this;
+                //var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
@@ -2763,6 +2709,70 @@
                     }
                 });
             },
+            /*
+            generaSapLlamadaServicioPdiEntrada(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'E', //LLAMADA SERVICIO PDI ENTRADA
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //=========================================================================
+                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                            setTimeout(function() {
+                                me.generaSgcLlamadaServicioPdiEntrada();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicioPdiEntrada(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.confirmaPdi();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            */
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
@@ -3114,7 +3124,9 @@
                                 this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
                                 this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
                                 this.formPdi.nidcompra = data['nIdCompra'];
-                                //this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
+                                this.formPdi.cnumerovin = data['cNumeroVin'];
+                                this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
+                                this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
@@ -3150,7 +3162,6 @@
                             case 'vinplaca':
                             {
                                 this.changeFlagVinPlaca();
-                                this.limpiarFormulario();
                                 //Si es VIN
                                 if(this.formPdi.nidflagvinplaca == 1){
                                     this.accionmodal    = 5;
@@ -3246,12 +3257,12 @@
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
                 this.nflagseccioninspeccion= 0,
-                this.nflagvalidarfichatecnica= 0,
+                this.nflagfichatecnica= 0,
                 this.nflagalmacenValida= 0,
                 this.nflagaccesorioValida= 0,
                 this.nflagtestdriveValida= 0,
                 this.nflagseccioninspeccionValida= 0,
-                this.nflagvalidarfichatecnicaValida= 0,
+                this.nflagfichatecnicaValida= 0,
                 this.nidflagmovimiento = 1,
                 this.formPdi.cnumeroinspeccion = '',
                 this.formPdi.dfechainspeccion = '',
