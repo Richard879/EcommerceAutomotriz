@@ -503,6 +503,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SapUpdTarjetaPlaca', 'Api\SapTarjetaEquipoController@SapUpdTarjetaPlaca');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
+    Route::post('/llamadaservicio/SapSetLlamadaServicioCompra', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioCompra');
     Route::post('/llamadaservicio/SapSetLlamadaServicioVenta', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioVenta');
     Route::post('/llamadaservicio/SapCloseLlamadaServicio', 'Api\SapLlamadaServicioController@SapCloseLlamadaServicio');
     Route::post('/solucion/SapSetSolucion', 'Api\SapLlamadaServicioController@SapSetSolucion');
