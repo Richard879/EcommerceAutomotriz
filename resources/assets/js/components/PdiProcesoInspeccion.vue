@@ -2719,7 +2719,7 @@
 
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI SERVICIOS
+                                'cFlagTipo'         : 'E', //LLAMADA SERVICIO PDI ENTRADA
                                 'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
