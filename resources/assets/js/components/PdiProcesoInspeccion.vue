@@ -2493,70 +2493,6 @@
                     }
                 });
             },
-            /*
-            generaSapLlamadaServicioPdiEntrada(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI SERVICIOS
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
-
-                            //=========================================================================
-                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                            setTimeout(function() {
-                                me.generaSgcLlamadaServicioPdiEntrada();
-                            }, 1600);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcLlamadaServicioPdiEntrada(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    me.confirmaPdi();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            */
             //================Generar Sap Entrada Mercancia ============
             generaSapMercanciaEntry(){
                 let me = this;
@@ -2762,6 +2698,70 @@
                     }
                 });
             },
+            /*
+            generaSapLlamadaServicioPdiEntrada(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
+
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI SERVICIOS
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //=========================================================================
+                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                            setTimeout(function() {
+                                me.generaSgcLlamadaServicioPdiEntrada();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicioPdiEntrada(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.confirmaPdi();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            */
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;

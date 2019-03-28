@@ -422,8 +422,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');
     Route::post('/tarjetaequipo/SetIntegraTarjetaEquipo','IntTarjetaEquipoController@SetIntegraTarjetaEquipo');
-    Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicioCompra','IntLlamadaServicioController@SetIntegraLlamadaServicioCompra');
     Route::post('/llamadaservicio/SetIntegraLlamadaServicioVenta','IntLlamadaServicioController@SetIntegraLlamadaServicioVenta');
+    Route::post('/llamadaservicio/SetIntegraLlamadaServicio','IntLlamadaServicioController@SetIntegraLlamadaServicio');
     Route::post('/solucion/SetIntegraSolucion','IntLlamadaServicioController@SetIntegraSolucion');
     Route::post('/compra/SetIntegraCompra', 'CompraController@SetIntegraCompra');
     Route::post('/compra/SetIntegraCompraWO', 'CompraController@SetIntegraCompraWO');

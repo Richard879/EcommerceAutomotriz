@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SapLlamadaServicioController extends Controller
 {
-    public function SapSetLlamadaServicio(Request $request)
+    public function SapSetLlamadaServicioCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
