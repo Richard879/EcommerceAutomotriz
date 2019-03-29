@@ -26,7 +26,7 @@
                                                         </el-radio-group>
                                                     </label>
                                                     <div class="col-md-8">
-                                                        <input type="text" v-model="fillPdi.cdescripcioncriterio" class="form-control form-control-sm">
+                                                        <input type="text" v-model="fillPdi.cdescripcioncriterio" @keyup.enter="listarPdi(1)" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
