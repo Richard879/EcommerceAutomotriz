@@ -2749,6 +2749,7 @@
                     }
                 });
             },
+            //GENERO SOLUCION
             generaSapSolucion(){
                 let me = this;
 
@@ -2825,6 +2826,7 @@
                     }
                 });
             },
+            //GENERO LLAMADA DE SERVICIO Y ADJUNTO SOLUCION
             generaSapLlamadaServicioPdiEntrada(){
                 let me = this;
 
