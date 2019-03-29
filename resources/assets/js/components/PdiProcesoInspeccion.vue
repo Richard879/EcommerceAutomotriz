@@ -144,7 +144,7 @@
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ pdi.cNombreSolicitud }}</div>
                                                                     <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>&nbsp;
+                                                                </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
