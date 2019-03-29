@@ -1429,6 +1429,7 @@
         mounted(){
             this.llenarComboEstadoPdi();
             this.llenarTipoInspeccion();
+            this.obtenerCodigoSapEmpresa();
         },
         computed:{
             isActived: function(){
@@ -1483,6 +1484,9 @@
             }
         },
         methods:{
+            obtenerCodigoSapEmpresa(){
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
+            },
             //===================================================================
             //================= BUSCAR PROCESO DE INSPECCION ====================
             llenarComboEstadoPdi(){
@@ -1925,6 +1929,7 @@
             },
             asignarPlaca(objVehiculo){
                 this.formPdi.nidcompra          = 0;
+                this.formPdi.cnumerovin         = objVehiculo.cNumeroVin;
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.cerrarModal();
@@ -2656,15 +2661,6 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            /*me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccustomercode,
-                                'cInternalSerialNum': me.formPdi.cnumerovin,
-                                'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI ENTRADA'
-                            });*/
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
@@ -2686,8 +2682,8 @@
             },
             generaSgcActividadPdiEntrada(){
                 let me = this;
-                //var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
+                //var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -2695,11 +2691,11 @@
                     {
                         //================================================================================
                         //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        setTimeout(function() {
+                        /*setTimeout(function() {
                              me.generaSapSolucion();
-                        }, 1600);
-                        //me.loading.close();
-                        //me.confirmaPdi();
+                        }, 1600);*/
+                        me.loading.close();
+                        me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2711,11 +2707,11 @@
                     }
                 });
             },
-            generaSapSolucion(){
+            /*generaSapSolucion(){
                 let me = this;
 
                 me.arraySolucion.push({
-                    'cItemCode' : cNumeroVin,
+                    'cItemCode' : me.formPdi.cnumerovin,
                     'cSubject'  : "Cierre De Servicio"
                 });
 
@@ -2742,9 +2738,9 @@
                             me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.nactivitycode,
-                                'cCustomerCode'     : cCustomerCode,
-                                'cInternalSerialNum': cNumeroVin,
-                                'cItemCode'         : cNumeroVin,
+                                'cCustomerCode'     : me.ccustomercode,
+                                'cInternalSerialNum': me.formPdi.cnumerovin,
+                                'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
                                 'cSubject'          : 'PdiEntrada'
                             });
@@ -2849,7 +2845,7 @@
                         }
                     }
                 });
-            },
+            },*/
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
