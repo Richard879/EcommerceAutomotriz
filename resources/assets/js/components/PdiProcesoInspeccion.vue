@@ -789,8 +789,7 @@
                                                             <th>Almacén<nav></nav></th>
                                                             <th>Nro Vin</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año Fab</th>
-                                                            <th>Año Mod</th>
+                                                            <th>Año Modelo</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -808,8 +807,7 @@
                                                             <td v-text="compra.cNombreAlmacen"></td>
                                                             <td v-text="compra.cNumeroVin"></td>
                                                             <td v-text="compra.cNombreComercial"></td>
-                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                            <td v-text="compra.nAnioVersion"></td>
+                                                            <td v-text="compra.nAnioModelo"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -900,9 +898,10 @@
                                                             <th>Codigo</th>
                                                             <th>Placa</th>
                                                             <th>Nombre Comercial</th>
+                                                            <th>Año Modelo</th>
                                                             <th>Nro Vin</th>
                                                             <th>Linea</th>
-                                                            <th>Forma de Pago</th>
+                                                            <th>Propietario</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -915,9 +914,10 @@
                                                             <td v-text="vehiculo.nIdVehiculoPlaca"></td>
                                                             <td v-text="vehiculo.cPlaca"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
+                                                            <td v-text="vehiculo.nAnioModelo"></td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreLinea"></td>
-                                                            <td v-text="vehiculo.cFormaPago"></td>
+                                                            <td v-text="vehiculo.cPropietario"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
