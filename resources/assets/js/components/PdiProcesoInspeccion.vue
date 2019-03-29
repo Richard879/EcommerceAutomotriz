@@ -2731,7 +2731,7 @@
                         me.jsonRespuesta= JSON.parse(x);
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.EquipmentCardNum){
-                            me.ccustomercode = parseInt(me.jsonRespuesta.CustomerCode),
+                            me.ccustomercode = me.jsonRespuesta.CustomerCode.toString();
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
@@ -2786,7 +2786,7 @@
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
-                                'cSubject'          : 'PdiEntrada'
+                                'cSubject'          : 'PDIENTRADA'
                             });
 
                             //================================================================
