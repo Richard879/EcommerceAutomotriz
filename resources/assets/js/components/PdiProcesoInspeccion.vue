@@ -2705,6 +2705,7 @@
                     }
                 });
             },
+            //CONSULTAR SI ESTA VENDIDO Y OBTENER DATOS DE TARJETA
             /*generaSapSolucion(){
                 let me = this;
 
