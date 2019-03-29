@@ -755,6 +755,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                ccustomercode: '',
                 arrayEstadoWarrant: [],
                 arrayWOperativo: [],
                 arrayWOperativoDetalle: [],
@@ -805,6 +806,7 @@
                 arraySapUpdSgc: [],
                 arraySapWO: [],
                 arraySapCompra: [],
+                arraySapActividad: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1116,6 +1118,10 @@
             tabGeneraWOperativo(){
                 this.limpiarFormulario();
                 this.listarProveedores(1);
+                this.obtenerCodigoSapEmpresa();
+            },
+            obtenerCodigoSapEmpresa(){
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             cerrarModal(){
                 this.modal = 0,
@@ -1352,6 +1358,25 @@
                                 'cDocType'          :   me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta'     :   response.data.toString()
                             });
+
+                            me.arraySapActividad.push({
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hActivityTime' :   '08:13:00',
+                                'cCardCode'     :   me.ccustomercode,
+                                'cNotes'        :   'WarranOperativo',
+                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocType'      :   '13',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hEndTime'      :   '08:28:00',
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hStartTime'    :   '08:13:00'
+                            });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
                             setTimeout(function() {
@@ -1378,8 +1403,76 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        me.confirmarWO();
+                        me.registroSapBusinessActividad();
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessActividad(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
+                axios.post(sapUrl, {
+                    'data'       : me.arraySapActividad
+                }).then(response => {
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    if(me.arraySapRespuesta.length > 0) {
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ActivityCode){
+                                me.arraySapUpdSgc.push({
+                                    'nActividadTipo':   13,
+                                    'cActividadTipo':   'WarranOperativo',
+                                    'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
+                                    'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcActividad(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
+                axios.post(sapUrl, {
+                    'arraySapUpdSgc': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.confirmarWO();
+                        // me.registroSapBusinessSolucion();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
