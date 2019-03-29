@@ -1168,7 +1168,7 @@
                                                         <tbody>
                                                             <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                                 <td>
-                                                                    <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                    <a href="#" @click="asignarProveedor(proveedor)">
                                                                         <i class='fa-md fa fa-check-circle'></i>
                                                                     </a>
                                                                 </td>
@@ -2342,23 +2342,22 @@
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110076,
-                        'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
-                        'opcion' : 0,
-                        'page' : page
+                        'ngrupoparid'   : 110076,
+                        'cparnombre'    : this.fillProveedor.cproveedornombre.toString(),
+                        'opcion'        : 0,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page   =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total          = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from           = response.data.arrayProveedor.from;
-                    this.paginationModal.to             = response.data.arrayProveedor.to;
+                    this.arrayProveedor = response.data.arrayParametro.data;
+                    this.paginationModal.current_page   =  response.data.arrayParametro.current_page;
+                    this.paginationModal.total          = response.data.arrayParametro.total;
+                    this.paginationModal.per_page       = response.data.arrayParametro.per_page;
+                    this.paginationModal.last_page      = response.data.arrayParametro.last_page;
+                    this.paginationModal.from           = response.data.arrayParametro.from;
+                    this.paginationModal.to             = response.data.arrayParametro.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2373,9 +2372,9 @@
                 this.paginationModal.current_page=page;
                 this.listarProveedores(page);
             },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.fillProveedor.nidproveedor = nProveedorId;
-                this.fillProveedor.cproveedornombre = cProveedorNombre;
+            asignarProveedor(objProveedor){
+                this.fillProveedor.nidproveedor = objProveedor.nIdPar;
+                this.fillProveedor.cproveedornombre = objProveedor.cParNombre;
                 this.cerrarModal();
             },
             agregarSOAT(){

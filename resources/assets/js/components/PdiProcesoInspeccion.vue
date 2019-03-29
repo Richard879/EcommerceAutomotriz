@@ -715,7 +715,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarPorVin(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -723,7 +723,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarPorVin(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -783,14 +783,12 @@
                                                         <tr>
                                                             <th>Seleccione</th>
                                                             <th>Código</th>
-                                                            <th>Periodo</th>
                                                             <th>OC</th>
                                                             <th>Línea</th>
                                                             <th>Almacén<nav></nav></th>
                                                             <th>Nro Vin</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año Fab</th>
-                                                            <th>Año Mod</th>
+                                                            <th>Año Modelo</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -802,14 +800,12 @@
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="compra.nIdCompra"></td>
-                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
                                                             <td v-text="compra.nOrdenCompra"></td>
                                                             <td v-text="compra.cNombreLinea"></td>
                                                             <td v-text="compra.cNombreAlmacen"></td>
                                                             <td v-text="compra.cNumeroVin"></td>
                                                             <td v-text="compra.cNombreComercial"></td>
-                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                            <td v-text="compra.nAnioVersion"></td>
+                                                            <td v-text="compra.nAnioModelo"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -897,11 +893,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>Codigo</th>
                                                             <th>Placa</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año / Mes</th>
+                                                            <th>Año Modelo</th>
+                                                            <th>Nro Vin</th>
                                                             <th>Linea</th>
-                                                            <th>Forma de Pago</th>
+                                                            <th>Propietario</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -911,11 +909,13 @@
                                                                     <i class='fa-md fa fa-check-circle'></i>
                                                                 </a>
                                                             </td>
+                                                            <td v-text="vehiculo.nIdVehiculoPlaca"></td>
                                                             <td v-text="vehiculo.cPlaca"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
-                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
+                                                            <td v-text="vehiculo.nAnioModelo"></td>
+                                                            <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreLinea"></td>
-                                                            <td v-text="vehiculo.cFormaPago"></td>
+                                                            <td v-text="vehiculo.cPropietario"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1427,6 +1427,7 @@
         mounted(){
             this.llenarComboEstadoPdi();
             this.llenarTipoInspeccion();
+            this.obtenerCodigoSapEmpresa();
         },
         computed:{
             isActived: function(){
@@ -1481,6 +1482,9 @@
             }
         },
         methods:{
+            obtenerCodigoSapEmpresa(){
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
+            },
             //===================================================================
             //================= BUSCAR PROCESO DE INSPECCION ====================
             llenarComboEstadoPdi(){
@@ -1923,6 +1927,7 @@
             },
             asignarPlaca(objVehiculo){
                 this.formPdi.nidcompra          = 0;
+                this.formPdi.cnumerovin         = objVehiculo.cNumeroVin;
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.cerrarModal();
@@ -2654,18 +2659,9 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            /*me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccustomercode,
-                                'cInternalSerialNum': me.formPdi.cnumerovin,
-                                'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI ENTRADA'
-                            });*/
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrada();
                             }, 1600);
@@ -2684,8 +2680,8 @@
             },
             generaSgcActividadPdiEntrada(){
                 let me = this;
-                //var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadByServiceCall';
+                //var sapUrl = me.ruta + '/actividad/SetIntegraActividad';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -2693,9 +2689,9 @@
                     {
                         //================================================================================
                         //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        // setTimeout(function() {
-                        //     me.generaSapActividadServiceCallEntry();
-                        // }, 1600);
+                        /*setTimeout(function() {
+                             me.generaSapSolucion();
+                        }, 1600);*/
                         me.loading.close();
                         me.confirmaPdi();
                     }
@@ -2709,7 +2705,82 @@
                     }
                 });
             },
-            /*
+            /*generaSapSolucion(){
+                let me = this;
+
+                me.arraySolucion.push({
+                    'cItemCode' : me.formPdi.cnumerovin,
+                    'cSubject'  : "Cierre De Servicio"
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'C',
+                                'cLogRespuesta' : response.data.toString()
+                            });
+
+                            me.arraySapLlamadaServicio = [];
+                            me.arraySapLlamadaServicio.push({
+                                'nActivityCode'     : me.nactivitycode,
+                                'cCustomerCode'     : me.ccustomercode,
+                                'cInternalSerialNum': me.formPdi.cnumerovin,
+                                'cItemCode'         : me.formPdi.cnumerovin,
+                                'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
+                                'cSubject'          : 'PdiEntrada'
+                            });
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaActualizarSolucion();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    //==============================================================
+                    //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
+                    setTimeout(function() {
+                        me.generaSapLlamadaServicioPdiEntrada();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             generaSapLlamadaServicioPdiEntrada(){
                 let me = this;
 
@@ -2761,6 +2832,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
+                    me.loading.close();
                     me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
@@ -2771,8 +2843,7 @@
                         }
                     }
                 });
-            },
-            */
+            },*/
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
@@ -3168,13 +3239,11 @@
                                     this.modal          = 1;
                                     this.llenarComboMarca();
                                     this.llenarComboModelo();
-                                    //this.listarPorVin(1);
                                 }
                                 //Si es Placa
                                 else{
                                     this.accionmodal    = 6;
                                     this.modal          = 1;
-                                    //this.listarPorPlaca(1);
                                 }
                                 break;
                             }
