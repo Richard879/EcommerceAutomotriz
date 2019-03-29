@@ -1881,7 +1881,7 @@
                 this.formPdi.nidcompra          = 0;
                 this.formPdi.cvinplacanombre    = '';
                 this.formPdi.cnumerovin         = '';
-                this.ccustomercode              = '';
+                //this.ccustomercode              = '';
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
@@ -1935,6 +1935,7 @@
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.formPdi.nequipmentcardnum  = objVehiculo.nEquipmentCardNum;
+                this.ccustomercode              = objVehiculo.cCustomerCode;
                 this.cerrarModal();
             },
             //===========
@@ -3438,7 +3439,7 @@
                 this.formPdi.cvinplacanombre = '',
                 this.formPdi.nidtipoinspeccion= '',
                 this.formPdi.nequipmentcardnum= 0,
-                this.formPdi.ccustomercode= '',
+                //this.formPdi.ccustomercode= '',
                 this.nflagalmacen= 0,
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
