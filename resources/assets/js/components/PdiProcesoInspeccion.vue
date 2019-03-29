@@ -1881,7 +1881,7 @@
                 this.formPdi.nidcompra          = 0;
                 this.formPdi.cvinplacanombre    = '';
                 this.formPdi.cnumerovin         = '';
-                //this.ccustomercode              = '';
+                this.ccustomercode              = '';
                 this.nIdServiceCallCompra       = '';
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
@@ -3314,6 +3314,7 @@
                                 this.formPdi.cnumerovin = data['cNumeroVin'];
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
+                                this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
@@ -3431,7 +3432,7 @@
                 this.formPdi.cnumerovin = '',
                 this.formPdi.nidcompra = '',
                 this.formPdi.nidflagmovimiento = 1,
-                //this.formPdi.nidflagvinplaca = 1
+                this.formPdi.nidflagvinplaca = '',
                 this.formPdi.nidpuntoinspeccion = 0,
                 this.formPdi.cnombrepuntoinspeccion = '',
                 this.formPdi.nidsolicitud = 0,
@@ -3439,7 +3440,7 @@
                 this.formPdi.cvinplacanombre = '',
                 this.formPdi.nidtipoinspeccion= '',
                 this.formPdi.nequipmentcardnum= 0,
-                //this.formPdi.ccustomercode= '',
+                this.formPdi.ccustomercode= '',
                 this.nflagalmacen= 0,
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
