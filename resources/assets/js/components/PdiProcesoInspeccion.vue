@@ -2512,7 +2512,8 @@
                     }
                 });
             },
-            //================Generar Sap Entrada Mercancia ============
+            //=========================================================
+            //=============== Generar Sap Entrada Mercancia ===========
             generaSapMercanciaEntry(){
                 let me = this;
 
@@ -2890,7 +2891,8 @@
                     }
                 });
             },
-            //================Generar Sap Entrega Vehiculo ==================
+            //==============================================================
+            //================ Generar Sap Entrega Vehiculo ================
             generaSapMercanciaExit(){
                 let me = this;
 
