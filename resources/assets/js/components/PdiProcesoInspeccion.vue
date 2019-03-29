@@ -2783,7 +2783,7 @@
                             me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.nactivitycode,
-                                'cCustomerCode'     : !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
+                                'cCustomerCode'     : me.ccustomercode,
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
