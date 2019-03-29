@@ -2405,6 +2405,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/pdi/UpdCabeceraInspeccion';
                 axios.post(url, {
                     'nIdCabeceraInspeccion'     : this.formPdi.nidcabecerainspeccion,
@@ -3314,6 +3316,7 @@
                                 this.formPdi.cnumerovin = data['cNumeroVin'];
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
+                                this.formPdi.nequipmentcardnum = data['nEquipmentCardNum'];
                                 //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
