@@ -2170,7 +2170,6 @@
                         'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    console.log(response.data);
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
                     me.llenarAccesorios();
