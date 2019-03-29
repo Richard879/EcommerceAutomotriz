@@ -238,11 +238,11 @@
                                                                                             <td>
                                                                                                 <el-tooltip class="item" effect="dark">
                                                                                                     <div slot="content">Asignar  {{ elemento.cElementoNombre }}</div>
-                                                                                                    <input type="checkbox" v-model="arrayCheckElementoVenta[index]" class="checkbox-template">
+                                                                                                    <input type="checkbox" v-model="elemento.cFlagVerifica" class="checkbox-template">
                                                                                                 </el-tooltip>
                                                                                             </td>
                                                                                             <td v-text="elemento.cElementoNombre"></td>
-                                                                                            <td v-text="elemento.fElementValorCosto"></td>
+                                                                                            <td v-text="elemento.fElemenValorVenta"></td>
                                                                                             <td><input type="number" v-model="elemento.cantidad" class="form-control form-control-sm"/></td>
                                                                                         </tr>
                                                                                     </tbody>
@@ -419,6 +419,7 @@
                                                             <th>ID</th>
                                                             <th>Cod. SAP</th>
                                                             <th>Accesorio</th>
+                                                            <th>Cantidad</th>
                                                             <th>Costo</th>
                                                         </tr>
                                                     </thead>
@@ -427,6 +428,7 @@
                                                             <td v-text="accesorio.nIdElemento"></td>
                                                             <td v-text="accesorio.cCodigoERP"></td>
                                                             <td v-text="accesorio.cElementoNombre"></td>
+                                                            <td v-text="accesorio.nCantidad"></td>
                                                             <td v-text="accesorio.fElemenValorVenta"></td>
                                                         </tr>
                                                     </tbody>
@@ -491,7 +493,7 @@
                 },
                 arrayElementoVenta: [],
                 arrayElementoVentaFlag: [],
-                arrayCheckElementoVenta: [],
+                arrayTemproralEV: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -584,6 +586,7 @@
             tabBandejaVehiculos(){
                 this.vistaFormulario = 1;
                 this.limpiarTabBsqVehiculo();
+                this.limpiarTabBsqConfigurarAccesorios();
             },
             limpiarTabBsqVehiculo(){
                 this.formBsqVehiculo.nidproveedor       = '';
@@ -650,7 +653,8 @@
                 axios.get(url, {
                     params: {
                         'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'cnombrevehiculo'   :   data.cNombreVehiculo
+                        // 'cnombrevehiculo'   :   data.cNombreVehiculo
+                        'nIdVersionVeh'     :   data.nIdVersionVeh
                     }
                 }).then(response => {
                     this.arrayAccesorios   =   response.data;
@@ -789,7 +793,7 @@
                 this.formConfigVehiculo.nidversion       = '';
                 this.formConfigVehiculo.cnombrevehiculo  = '';
                 this.arrayElementoVenta = [];
-                this.arrayCheckElementoVenta = [];
+                this.arrayElementoVentaFlag = [];
                 this.arrayTemproralEV = [];
             },
             generarAccesorios(op, vehiculo){
@@ -804,7 +808,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'cnombrevehiculo'   :   vehiculo.cNombreVehiculo,
+                        'nIdVersionVeh'     :   vehiculo.nIdVersionVeh
+                        // 'cnombrevehiculo'   :   vehiculo.cNombreVehiculo,
                     }
                 }).then(response => {
                     this.arrayElementoVenta = response.data;
@@ -826,47 +831,52 @@
                     me.arrayElementoVentaFlag.push({
                         nIdElemento         :   value.nIdElemento,
                         cElementoNombre     :   value.cElementoNombre,
-                        fElementValorCosto  :   value.fElementValorCosto,
-                        cFlagVerifica       :   value.cFlagVerifica,
+                        fElemenValorVenta   :   value.fElemenValorVenta,
+                        cFlagVerifica       :   value.cFlagVerifica == 0 ? false : true,
                         cantidad            :   value.nCantidad
                     });
-                });
-                this.llenarCheckBox();
-            },
-            llenarCheckBox(){
-                let me = this;
-                me.arrayElementoVentaFlag.map(function(value, key){
-                    me.arrayCheckElementoVenta[key] = value.cFlagVerifica == 0 ? false : true;
                 });
 
                 jQuery(function ($) {
                     $("#lsttreegrupo").treeview();
                 });
                 $("#myBar").hide();
+
+                // this.llenarCheckBox();
             },
             seleccionarEleVenta(){
                 let me = this;
-                me.mostrarProgressBar();
-
                 me.arrayTemproralEV = [];
 
                 me.arrayElementoVentaFlag.map(function(value, key) {
                     //Recorre los elementos activos que esten activos
-                    if(me.arrayCheckElementoVenta[key] == true) {
+                    // if(me.arrayCheckElementoVenta[key] == true) {
+                    if (value.cFlagVerifica == true) {
                         me.arrayTemproralEV.push({
-                            nIdElemento : value.nIdElemento,
-                            cantidad    : value.cantidad
+                            nIdElemento     :   value.nIdElemento,
+                            cantidad        :   value.cantidad,
+                            cElementoNombre :   value.cElementoNombre
                         });
                     }
                 });
                 this.eliminarEleVenta();
             },
             eliminarEleVenta(){
+                let me = this;
+                if(this.validarEleVentaSelect()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                me.mostrarProgressBar();
+
                 var url = this.ruta + '/accesoriovehiculo/DeleteElementosByVehiculo';
                 axios.post(url, {
-                    'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'cnombrevehiculo'   : this.formConfigVehiculo.cnombrevehiculo
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    // 'cnombrevehiculo'   : this.formConfigVehiculo.cnombrevehiculo
+                    'nidversion'    : this.formConfigVehiculo.nidversion
                 }).then(response => {
+                    console.log(response.data);
                     this.registrarEleVenta();
                 }).catch(error => {
                     this.errors = error
@@ -881,12 +891,12 @@
             registrarEleVenta(){
                 var url = this.ruta + '/accesoriovehiculo/SetElementosByVehiculo';
                 axios.post(url, {
-                    'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'cnombrevehiculo'   :   this.formConfigVehiculo.cnombrevehiculo,
-                    'arrayData'         :   this.arrayTemproralEV
+                    'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    // 'cnombrevehiculo'   :   this.formConfigVehiculo.cnombrevehiculo,
+                    'nidversion'    :   this.formConfigVehiculo.nidversion,
+                    'arrayData'     :   this.arrayTemproralEV
                 }).then(response => {
-                    console.log(response.data);
-                    swal('Accesorios Registrados exitosamente');
+                    swal('Accesorios Registrados exitosamente al Vehiculo ' + this.formConfigVehiculo.cnombrevehiculo);
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
@@ -897,6 +907,24 @@
                         }
                     }
                 });
+            },
+            validarEleVentaSelect(){
+                let me = this;
+                this.error = 0;
+                this.mensajeError =[];
+
+                me.arrayTemproralEV.map(function(value, key) {
+                    //Recorre los elementos activos que esten activos
+                    // if(me.arrayCheckElementoVenta[key] == true) {
+                    if (value.cantidad == 0) {
+                        me.mensajeError.push('Debe ingresar una cantidad en el Accesorio Seleccionado : ' + value.cElementoNombre);
+                    }
+                });
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =============================================
             // =============  MODAL ========================
