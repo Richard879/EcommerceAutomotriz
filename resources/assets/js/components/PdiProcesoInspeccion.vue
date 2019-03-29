@@ -115,12 +115,12 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Código</th>
+                                                        <th>Tipo Inspección</th>
                                                         <th>Fecha</th>
                                                         <th>Hora</th>
-                                                        <th>Tipo Solicitud</th>
+                                                        <th>Solicitud</th>
                                                         <th>Tipo Movimiento</th>
                                                         <th>Vin/Placa</th>
-                                                        <th>Tipo Inspección</th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
@@ -129,12 +129,12 @@
                                                 <tbody>
                                                     <tr v-for="pdi in arrayPdi" :key="pdi.nIdCabeceraInspeccion">
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
+                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
                                                         <td v-text="pdi.dFechaInspeccion"></td>
                                                         <td v-text="pdi.cHoraInspeccion"></td>
                                                         <td v-text="pdi.cNombreSolicitud"></td>
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
-                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
@@ -1508,6 +1508,8 @@
             },
             cambiarBusquedaPorCriterio(){
                 this.fillPdi.cdescripcioncriterio = '';
+                this.arrayPdi = [];
+                this.limpiarFormulario();
             },
             listarPdi(page){
                 this.mostrarProgressBar();
