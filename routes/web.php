@@ -502,6 +502,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
     Route::post('/tarjetaequipo/SapUpdSocioNegocio', 'Api\SapTarjetaEquipoController@SapUpdSocioNegocio');
     Route::post('/tarjetaequipo/SapUpdTarjetaPlaca', 'Api\SapTarjetaEquipoController@SapUpdTarjetaPlaca');
+    Route::post('/tarjetaequipo/SapGetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapGetTarjetaEquipo');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioCompra', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioCompra');

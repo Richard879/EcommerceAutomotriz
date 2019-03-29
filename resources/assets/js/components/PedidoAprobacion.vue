@@ -816,7 +816,7 @@
                 arraySapElementoVenta: [],
                 arraySapEVArticulosEnvia: [],
                 arraySapEVServiciosEnvia: [],
-                arraySolucion: [],
+                arraySapSolucion: [],
                 arrayPatchLlamadaServicios: [],
                 fAvgPrice: 0,
                 fImporte: 0,
@@ -1949,7 +1949,7 @@
 
                 //Depurar Array para registrar en SAP
                 me.arraySapPedido.map(function(value, key){
-                    me.arraySolucion.push({
+                    me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
                     });
@@ -1957,7 +1957,7 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySolucion
+                    'data': me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2585,7 +2585,7 @@
                 this.arraySapElementoVenta= [];
                 this.arraySapEVArticulosEnvia= [];
                 this.arraySapEVServiciosEnvia= [];
-                this.arraySolucion= [];
+                this.arraySapSolucion= [];
                 this.arrayPatchLlamadaServicios= [];
                 this.nSolutionCode= 0;
 

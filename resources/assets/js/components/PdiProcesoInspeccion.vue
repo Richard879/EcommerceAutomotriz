@@ -1106,7 +1106,7 @@
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
                                                             <th></th>
-                                                            <th>Almacen</th>
+                                                            <th v-if="nflagalmacen==0">Almacen</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1386,7 +1386,7 @@
                 arraySapArticulo: [],
                 arraySapItemCode: [],
                 arraySapTarjetaEquipo: [],
-                //
+                arraySapSolucion: [],
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
@@ -2754,14 +2754,14 @@
             generaSapSolucion(){
                 let me = this;
 
-                me.arraySolucion.push({
+                me.arraySapSolucion.push({
                     'cItemCode' : me.formPdi.cnumerovin,
                     'cSubject'  : "Cierre De Servicio"
                 });
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySolucion
+                    'data': me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
