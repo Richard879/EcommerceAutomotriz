@@ -3432,7 +3432,7 @@
                 this.formPdi.cnumerovin = '',
                 this.formPdi.nidcompra = '',
                 this.formPdi.nidflagmovimiento = 1,
-                this.formPdi.nidflagvinplaca = '',
+                //this.formPdi.nidflagvinplaca = '',
                 this.formPdi.nidpuntoinspeccion = 0,
                 this.formPdi.cnombrepuntoinspeccion = '',
                 this.formPdi.nidsolicitud = 0,
