@@ -1313,7 +1313,8 @@
                     cflagconformidaddescripcion: '',
                     cFlagVinPlaca: '',
                     cobservacion: '',
-                    nidconformidad: 0
+                    nidconformidad: 0,
+                    nequipmentcardnum: 0
                 },
                 arraySolicitud: [],
                 arrayPuntoInspeccion: [],
@@ -1384,6 +1385,7 @@
                 // =============  VARIABLES SAP ========================
                 arraySapArticulo: [],
                 arraySapItemCode: [],
+                arraySapTarjetaEquipo: [],
                 //
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
@@ -1827,6 +1829,7 @@
                 this.formPdi.nidcompra          = objCompra.nIdCompra;
                 this.formPdi.cvinplacanombre    = objCompra.cNumeroVin;
                 this.formPdi.cnumerovin         = objCompra.cNumeroVin;
+                this.formPdi.nequipmentcardnum  = objCompra.nEquipmentCardNum;
                 this.ccustomercode              = objCompra.cCustomerCode;
                 this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
                 this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
@@ -1893,7 +1896,7 @@
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-                var url = this.ruta + '/pdi/GetLstVehiculosByCriterio';
+                var url = this.ruta + '/pdi/GetLstVehiculoPaca';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -1903,7 +1906,7 @@
                         'page' : page,
                     }
                 }).then(response => {
-                    let info = response.data.arrayVehiculosByCriterio;
+                    let info = response.data.arrayVehiculoPlaca;
                     this.arrayVehiculoPlaca           = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
@@ -1930,6 +1933,7 @@
                 this.formPdi.cnumerovin         = objVehiculo.cNumeroVin;
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
+                this.formPdi.nequipmentcardnum  = objVehiculo.nEquipmentCardNum;
                 this.cerrarModal();
             },
             //===========
@@ -2688,12 +2692,12 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         //================================================================================
-                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        /*setTimeout(function() {
-                             me.generaSapSolucion();
-                        }, 1600);*/
-                        me.loading.close();
-                        me.confirmaPdi();
+                        //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
+                        setTimeout(function() {
+                             me.obtenerSapTarjetaEquipo();
+                        }, 1600);
+                        //me.loading.close();
+                        //me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2705,8 +2709,47 @@
                     }
                 });
             },
-            //CONSULTAR SI ESTA VENDIDO Y OBTENER DATOS DE TARJETA
-            /*generaSapSolucion(){
+            //CONSULTAR DATOS DE TARJETA DE EQUIPO, OBTENGO SOCIO DEL NEGOCIO DE TARJETA
+            obtenerSapTarjetaEquipo(){
+                let me = this;
+
+                me.arraySapTarjetaEquipo.push({
+                    'nEquipmentCardNum' : me.formPdi.nequipmentcardnum
+                });
+
+                var sapUrl = me.ruta + '/tarjetaequipo/SapGetTarjetaEquipo';
+                axios.post(sapUrl, {
+                    'data': me.arraySapTarjetaEquipo
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.EquipmentCardNum){
+                            me.ccustomercode = parseInt(me.jsonRespuesta.CustomerCode),
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaSapSolucion();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapSolucion(){
                 let me = this;
 
                 me.arraySolucion.push({
@@ -2844,7 +2887,7 @@
                         }
                     }
                 });
-            },*/
+            },
             //================Generar Sap Entrega Vehiculo ==================
             generaSapMercanciaExit(){
                 let me = this;
@@ -3323,6 +3366,8 @@
                 this.formPdi.cnombresolicitud = '',
                 this.formPdi.cvinplacanombre = '',
                 this.formPdi.nidtipoinspeccion= '',
+                this.formPdi.nequipmentcardnum= 0,
+                this.formPdi.ccustomercode= '',
                 this.nflagalmacen= 0,
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
@@ -3355,6 +3400,7 @@
                 //Limpiar variables Sap Articulo
                 this.arraySapArticulo= [],
                 this.arraySapItemCode= [],
+                this.arraySapTarjetaEquipo= [],
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
