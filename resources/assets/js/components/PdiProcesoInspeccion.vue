@@ -120,7 +120,8 @@
                                                         <th>Hora</th>
                                                         <th>Solicitud</th>
                                                         <th>Tipo Movimiento</th>
-                                                        <th>Vin/Placa</th>
+                                                        <th v-text="fillPdi.ncriterio==1 ? 'Nro VIN' : 'Nro Placa'"></th>
+                                                        <th v-if="fillPdi.ncriterio==2" v-text="'Nro VIN'"></th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
@@ -135,6 +136,7 @@
                                                         <td v-text="pdi.cNombreSolicitud"></td>
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
+                                                        <td v-if="fillPdi.ncriterio==2" v-text="pdi.cNumeroVin"></td>
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
