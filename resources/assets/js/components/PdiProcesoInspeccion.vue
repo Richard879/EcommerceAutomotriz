@@ -715,7 +715,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarPorVin(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -723,7 +723,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarPorVin()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarPorVin(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3239,13 +3239,11 @@
                                     this.modal          = 1;
                                     this.llenarComboMarca();
                                     this.llenarComboModelo();
-                                    //this.listarPorVin(1);
                                 }
                                 //Si es Placa
                                 else{
                                     this.accionmodal    = 6;
                                     this.modal          = 1;
-                                    //this.listarPorPlaca(1);
                                 }
                                 break;
                             }
