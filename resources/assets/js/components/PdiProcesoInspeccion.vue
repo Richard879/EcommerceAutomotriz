@@ -3468,7 +3468,8 @@
                 this.formAlmacen.cwhscode = '';
                 this.formAlmacen.cwhsname = '';
                 this.formAlmacen.cacctcode = '';
-
+                this.arrayCompra =[],
+                this.arrayVehiculoPlaca =[],
                 //========= VARIABLES SAP =============
                 //Limpiar variables Sap Articulo
                 this.arraySapArticulo= [],
