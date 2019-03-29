@@ -231,6 +231,8 @@
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
+                                                                                    <th>DocNum Asiento</th>
+                                                                                    <th>DocNum Comprobante</th>
                                                                                     <th>Estado</th>
                                                                                 </tr>
                                                                             </thead>
@@ -242,6 +244,8 @@
                                                                                     <td v-text="odetalle.cNumeroVin"></td>
                                                                                     <td v-text="odetalle.cSimboloMoneda"></td>
                                                                                     <td v-text="odetalle.fValorWarrant"></td>
+                                                                                    <td v-text="odetalle.nDocNumAsiento"></td>
+                                                                                    <td v-text="odetalle.nDocNumComprobante"></td>
                                                                                     <td v-text="odetalle.cParNombre"></td>
                                                                                 </tr>
                                                                             </tbody>
@@ -637,7 +641,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="banco in arrayBanco" :key="banco.nIdPar">
-                                                            <td>    
+                                                            <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ banco.cParNombre }}</div>
                                                                     <i @click="asignarBanco(banco)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>

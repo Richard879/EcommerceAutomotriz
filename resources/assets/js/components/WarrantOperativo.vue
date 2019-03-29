@@ -255,7 +255,8 @@
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
-                                                                                    <th>DocNum</th>
+                                                                                    <th>DocNum Asiento</th>
+                                                                                    <th>DocNum Comprobante</th>
                                                                                     <!--<th>Comisión Dolar</th>
                                                                                     <th>Comisión Sol</th>-->
                                                                                     <th>Estado</th>
@@ -276,6 +277,8 @@
                                                                                     <td>{{ odetalle.cNumeroVin }}</td>
                                                                                     <td>{{ odetalle.cSimboloMoneda }}</td>
                                                                                     <td>{{ odetalle.fValorWarrant }}</td>
+                                                                                    <td>{{ odetalle.nDocNumAsiento }}</td>
+                                                                                    <td>{{ odetalle.nDocNumComprobante }}</td>
                                                                                     <!--<td v-text="odetalle.fComisionDolar"></td>
                                                                                     <td v-text="odetalle.fComisionSol"></td>-->
                                                                                     <td>{{ odetalle.cParNombre }}</td>
@@ -1074,40 +1077,37 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
-                            axios.post(url, {
-                                'nIdDetalleWarrant'   : parseInt(objWarrant.nIdDetalleWarrant),
-                                'nIdEstadoWarrant'      : 1300081
-                            }).then(response => {
-                                if(response.data[0].nFlagMsje == 1){
-                                    swal(
-                                        'Activado!',
-                                        response.data[0].cMensaje
-                                    );
-                                    this.listarDetalleWOperativo(1);
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
+                        axios.post(url, {
+                            'nIdDetalleWarrant' :   parseInt(objWarrant.nIdDetalleWarrant),
+                            'nIdEstadoWarrant'  :   1300081
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Activado!',
+                                    response.data[0].cMensaje
+                                );
+                                this.listarDetalleWOperativo(1);
+                            } else {
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                                else{
-                                    swal(
-                                        'Alerta!',
-                                        response.data[0].cMensaje
-                                    );
-                                }
-                                this.listarCompras(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
             // =================================================================
