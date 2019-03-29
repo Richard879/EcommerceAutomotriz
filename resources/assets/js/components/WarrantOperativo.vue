@@ -109,7 +109,6 @@
                                                                                     <!--<th>Total Comision Dolar</th>
                                                                                     <th>Total Comision Sol</th>-->
                                                                                     <th>Estado</th>
-                                                                                    <th>Doc Sap</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
@@ -122,7 +121,6 @@
                                                                                     <!--<td v-text="operativo.fTotalComisionDolar"></td>
                                                                                     <td v-text="operativo.fTotalComisionSol"></td>-->
                                                                                     <td v-text="operativo.cParNombre"></td>
-                                                                                    <td v-text="operativo.nDocNum"></td>
                                                                                     <td>
                                                                                         <a  href="#"
                                                                                             @click="asignaIdWOperativo(operativo)"
@@ -257,6 +255,8 @@
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
+                                                                                    <th>DocNum Asiento</th>
+                                                                                    <th>DocNum Comprobante</th>
                                                                                     <!--<th>Comisión Dolar</th>
                                                                                     <th>Comisión Sol</th>-->
                                                                                     <th>Estado</th>
@@ -277,6 +277,8 @@
                                                                                     <td>{{ odetalle.cNumeroVin }}</td>
                                                                                     <td>{{ odetalle.cSimboloMoneda }}</td>
                                                                                     <td>{{ odetalle.fValorWarrant }}</td>
+                                                                                    <td>{{ odetalle.nDocNumAsiento }}</td>
+                                                                                    <td>{{ odetalle.nDocNumComprobante }}</td>
                                                                                     <!--<td v-text="odetalle.fComisionDolar"></td>
                                                                                     <td v-text="odetalle.fComisionSol"></td>-->
                                                                                     <td>{{ odetalle.cParNombre }}</td>
@@ -753,6 +755,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                ccustomercode: '',
                 arrayEstadoWarrant: [],
                 arrayWOperativo: [],
                 arrayWOperativoDetalle: [],
@@ -803,6 +806,7 @@
                 arraySapUpdSgc: [],
                 arraySapWO: [],
                 arraySapCompra: [],
+                arraySapActividad: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1075,40 +1079,37 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
-                            axios.post(url, {
-                                'nIdDetalleWarrant'   : parseInt(objWarrant.nIdDetalleWarrant),
-                                'nIdEstadoWarrant'      : 1300081
-                            }).then(response => {
-                                if(response.data[0].nFlagMsje == 1){
-                                    swal(
-                                        'Activado!',
-                                        response.data[0].cMensaje
-                                    );
-                                    this.listarDetalleWOperativo(1);
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
+                        axios.post(url, {
+                            'nIdDetalleWarrant' :   parseInt(objWarrant.nIdDetalleWarrant),
+                            'nIdEstadoWarrant'  :   1300081
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Activado!',
+                                    response.data[0].cMensaje
+                                );
+                                this.listarDetalleWOperativo(1);
+                            } else {
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                                else{
-                                    swal(
-                                        'Alerta!',
-                                        response.data[0].cMensaje
-                                    );
-                                }
-                                this.listarCompras(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
             // =================================================================
@@ -1117,6 +1118,10 @@
             tabGeneraWOperativo(){
                 this.limpiarFormulario();
                 this.listarProveedores(1);
+                this.obtenerCodigoSapEmpresa();
+            },
+            obtenerCodigoSapEmpresa(){
+                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             cerrarModal(){
                 this.modal = 0,
@@ -1353,6 +1358,25 @@
                                 'cDocType'          :   me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta'     :   response.data.toString()
                             });
+
+                            me.arraySapActividad.push({
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hActivityTime' :   '08:13:00',
+                                'cCardCode'     :   me.ccustomercode,
+                                'cNotes'        :   'WarranOperativo',
+                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocType'      :   '13',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hEndTime'      :   '08:28:00',
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hStartTime'    :   '08:13:00'
+                            });
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
                             setTimeout(function() {
@@ -1379,8 +1403,76 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        me.confirmarWO();
+                        me.registroSapBusinessActividad();
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessActividad(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
+                axios.post(sapUrl, {
+                    'data'       : me.arraySapActividad
+                }).then(response => {
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    if(me.arraySapRespuesta.length > 0) {
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ActivityCode){
+                                me.arraySapUpdSgc.push({
+                                    'nActividadTipo':   13,
+                                    'cActividadTipo':   'WarranOperativo',
+                                    'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
+                                    'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcActividad(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
+                axios.post(sapUrl, {
+                    'arraySapUpdSgc': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.confirmarWO();
+                        // me.registroSapBusinessSolucion();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
