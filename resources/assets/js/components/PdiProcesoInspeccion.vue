@@ -2576,7 +2576,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccustomercode,
+                                'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                                 'cNotes'        :   'PdiEntrada',
                                 'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
@@ -2783,7 +2783,7 @@
                             me.arraySapLlamadaServicio = [];
                             me.arraySapLlamadaServicio.push({
                                 'nActivityCode'     : me.nactivitycode,
-                                'cCustomerCode'     : me.ccustomercode,
+                                'cCustomerCode'     : !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
@@ -2962,7 +2962,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccustomercode,
+                                'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                                 'cNotes'        :   'PdiSalida',
                                 'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
@@ -3093,7 +3093,7 @@
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
                     'hActivityTime' :   moment().format('HH:mm:ss'),
-                    'cCardCode'     :   me.ccustomercode,
+                    'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                     'cNotes'        :   'EntregaVehiculo',
                     'nDocEntry'     :   me.nDocEntryOrdenVenta.toString(),
                     'nDocNum'       :   me.nDocNumOrdenVenta.toString(),
@@ -3314,7 +3314,7 @@
                                 this.formPdi.cnumerovin = data['cNumeroVin'];
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
-                                this.ccustomercode = data['cCustomerCode'];
+                                //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
