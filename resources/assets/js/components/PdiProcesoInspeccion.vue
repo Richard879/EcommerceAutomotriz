@@ -1384,7 +1384,6 @@
                 //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapArticulo: [],
-                arraySapItemCode: [],
                 arraySapTarjetaEquipo: [],
                 arraySapSolucion: [],
                 arraySapRespuesta: [],
@@ -2775,7 +2774,7 @@
                             me.arraySapUpdSgc.push({
                                 'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cFlagTipo'     : 'C',
+                                'cFlagTipo'     : me.formPdi.nidtipoinspeccion == 4 ? 'E' : 'S',
                                 'cLogRespuesta' : response.data.toString()
                             });
 
@@ -2786,7 +2785,7 @@
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
-                                'cSubject'          : 'PDIENTRADA'
+                                'cSubject'          : me.formPdi.nidtipoinspeccion == 4 ? 'PDIENTRADA' : 'PDISALIDA'
                             });
 
                             //================================================================
@@ -2812,11 +2811,22 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    //==============================================================
-                    //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
-                    setTimeout(function() {
-                        me.generaSapLlamadaServicioPdiEntrada();
-                    }, 1600);
+                    //Si es Pdi Entrada
+                    if(me.formPdi.nidtipoinspeccion == 4){
+                        //==========================================================================
+                        //=========== REGISTRO LLAMADA DE SERVICIO PDI ENTRADA EN SAP ==============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioPdiEntrada();
+                        }, 1600);
+                    }
+                    //Si es Pdi Entrega Vehiculo
+                    else if(me.formPdi.nidtipoinspeccion == 5){
+                        //==========================================================================
+                        //=========== REGISTRO LLAMADA DE SERVICIO PDI SALIDA EN SAP ==============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioPdiSalida();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2844,8 +2854,6 @@
                         me.jsonRespuesta= JSON.parse(x);
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
                                 'cFlagTipo'         : 'E', //LLAMADA SERVICIO PDI ENTRADA
@@ -3033,18 +3041,9 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            /*me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccustomercode,
-                                'cInternalSerialNum': me.formPdi.cnumerovin,
-                                'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI SALIDA'
-                            });*/
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiSalida();
                             }, 1600);
@@ -3160,9 +3159,76 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        me.loading.close();
-                        me.confirmaPdi();
+                        //================================================================================
+                        //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
+                        setTimeout(function() {
+                             me.obtenerSapTarjetaEquipo();
+                        }, 1600);
+                        //me.loading.close();
+                        //me.confirmaPdi();
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //GENERO LLAMADA DE SERVICIO Y ADJUNTO SOLUCION
+            generaSapLlamadaServicioPdiSalida(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI ENTRADA
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //=========================================================================
+                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                            setTimeout(function() {
+                                me.generaSgcLlamadaServicioPdiSalida();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicioPdiSalida(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.loading.close();
+                    me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3403,7 +3469,6 @@
                 //========= VARIABLES SAP =============
                 //Limpiar variables Sap Articulo
                 this.arraySapArticulo= [],
-                this.arraySapItemCode= [],
                 this.arraySapTarjetaEquipo= [],
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
