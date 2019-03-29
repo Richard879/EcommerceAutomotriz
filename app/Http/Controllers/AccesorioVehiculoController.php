@@ -40,13 +40,14 @@ class AccesorioVehiculoController extends Controller
 
     public function GetListElemetosByVehiculo(Request $request)
     {
-        $nIdEmpresa         = $request->nidempresa;
-        $cNombreVehiculo    = $request->cnombrevehiculo;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdVersionVeh  =   $request->nIdVersionVeh;
+        // $cNombreVehiculo    = $request->cnombrevehiculo;
 
         $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementos] ?, ?',
                                                         [
                                                             $nIdEmpresa,
-                                                            $cNombreVehiculo
+                                                            $nIdVersionVeh
                                                         ]);
         return response()->json($data);
     }
@@ -58,7 +59,7 @@ class AccesorioVehiculoController extends Controller
         $element = DB::select('exec [usp_AccesorioVehiculo_SetDeleteElementoVentaByVehiculo] ?, ?, ?',
                                                             [
                                                                 $request->nIdEmpresa,
-                                                                $request->cnombrevehiculo,
+                                                                $request->nidversion,
                                                                 Auth::user()->id
                                                             ]);
         return response()->json($element);
@@ -76,7 +77,7 @@ class AccesorioVehiculoController extends Controller
                 DB::select('exec [usp_AccesorioVehiculo_SetElementosByVehiculo] ?, ?, ?, ?, ?',
                                                             [
                                                                 $request->nIdEmpresa,
-                                                                $request->cnombrevehiculo,
+                                                                $request->nidversion,
                                                                 $det['nIdElemento'],
                                                                 $det['cantidad'],
                                                                 Auth::user()->id
@@ -90,13 +91,14 @@ class AccesorioVehiculoController extends Controller
 
     public function GetListAccesoriosByVehiculo(Request $request)
     {
-        $nIdEmpresa         = $request->nIdEmpresa;
-        $cNombreVehiculo    = $request->cnombrevehiculo;
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdVersionVeh  = $request->nIdVersionVeh;
+        // $cNombreVehiculo    = $request->cnombrevehiculo;
 
         $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementosByVehiculo] ?, ?',
                                                         [
                                                             $nIdEmpresa,
-                                                            $cNombreVehiculo
+                                                            $nIdVersionVeh
                                                         ]);
         return response()->json($data);
     }
