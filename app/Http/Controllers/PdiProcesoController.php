@@ -375,27 +375,4 @@ class PdiProcesoController extends Controller
         //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
-
-    public function GetLstVehiculosByCriterio(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $nIdEmpresa  = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $cNumeroVehiculo  = $request->cnrovehiculo;
-        $nCriterio  = $request->criterio;
-
-        $cNumeroVehiculo  = ($cNumeroVehiculo == NULL) ? ($cNumeroVehiculo = ' ') : $cNumeroVehiculo;
-
-        $arrayVehiculosByCriterio = DB::select('exec usp_Pdi_GetLstVehiculosByCriterio ?, ?, ?, ?',
-                                                            [
-                                                                $nIdEmpresa,
-                                                                $nIdSucursal,
-                                                                $cNumeroVehiculo,
-                                                                $nCriterio
-                                                            ]);
-
-        $arrayVehiculosByCriterio = ParametroController::arrayPaginator($arrayVehiculosByCriterio, $request);
-        return ['arrayVehiculosByCriterio'=>$arrayVehiculosByCriterio];
-    }
 }

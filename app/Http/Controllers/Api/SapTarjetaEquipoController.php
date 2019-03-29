@@ -83,4 +83,30 @@ class SapTarjetaEquipoController extends Controller
         $rptaSap    =   json_decode($response->getBody());
         return $rptaSap;
     }
+
+    public function SapGetTarjetaEquipo(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+
+            $json = [
+                'json' => [
+                    "EquipmentCardNum"  => $value['nEquipmentCardNum']
+                ]
+            ];
+
+            $response = $client->request('POST', "/api/TarjetaEquipo/SapGetTarjetaEquipo/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
 }

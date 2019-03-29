@@ -259,7 +259,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
     Route::post('/pdi/GetDetallePDI', 'PdiProcesoController@GetDetallePDI');
     Route::get('/pdi/GetAccesoriosPdiEntregaVehiculo', 'PdiProcesoController@GetAccesoriosPdiEntregaVehiculo');
-    Route::get('/pdi/GetLstVehiculosByCriterio', 'PdiProcesoController@GetLstVehiculosByCriterio');
+    Route::get('/pdi/GetLstVehiculoPaca', 'PdiProcesoController@GetLstVehiculoPaca');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
     Route::post('/documentoadjunto/subirArchivoPDI', 'DocumentoAdjuntoController@subirArchivoPDI');
@@ -502,6 +502,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/tarjetaequipo/SapSetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapSetTarjetaEquipo');
     Route::post('/tarjetaequipo/SapUpdSocioNegocio', 'Api\SapTarjetaEquipoController@SapUpdSocioNegocio');
     Route::post('/tarjetaequipo/SapUpdTarjetaPlaca', 'Api\SapTarjetaEquipoController@SapUpdTarjetaPlaca');
+    Route::post('/tarjetaequipo/SapGetTarjetaEquipo', 'Api\SapTarjetaEquipoController@SapGetTarjetaEquipo');
     //LlamadaServicio
     Route::post('/llamadaservicio/SapSetLlamadaServicio', 'Api\SapLlamadaServicioController@SapSetLlamadaServicio');
     Route::post('/llamadaservicio/SapSetLlamadaServicioCompra', 'Api\SapLlamadaServicioController@SapSetLlamadaServicioCompra');

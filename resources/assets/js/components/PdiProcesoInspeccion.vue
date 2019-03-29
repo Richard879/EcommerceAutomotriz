@@ -26,7 +26,7 @@
                                                         </el-radio-group>
                                                     </label>
                                                     <div class="col-md-8">
-                                                        <input type="text" v-model="fillPdi.cdescripcioncriterio" class="form-control form-control-sm">
+                                                        <input type="text" v-model="fillPdi.cdescripcioncriterio" @keyup.enter="listarPdi(1)" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,12 +115,12 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Código</th>
+                                                        <th>Tipo Inspección</th>
                                                         <th>Fecha</th>
                                                         <th>Hora</th>
-                                                        <th>Tipo Solicitud</th>
+                                                        <th>Solicitud</th>
                                                         <th>Tipo Movimiento</th>
                                                         <th>Vin/Placa</th>
-                                                        <th>Tipo Inspección</th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
@@ -129,12 +129,12 @@
                                                 <tbody>
                                                     <tr v-for="pdi in arrayPdi" :key="pdi.nIdCabeceraInspeccion">
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
+                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
                                                         <td v-text="pdi.dFechaInspeccion"></td>
                                                         <td v-text="pdi.cHoraInspeccion"></td>
                                                         <td v-text="pdi.cNombreSolicitud"></td>
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
-                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
@@ -1106,7 +1106,7 @@
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
                                                             <th></th>
-                                                            <th>Almacen</th>
+                                                            <th v-if="nflagalmacen==0">Almacen</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1313,7 +1313,8 @@
                     cflagconformidaddescripcion: '',
                     cFlagVinPlaca: '',
                     cobservacion: '',
-                    nidconformidad: 0
+                    nidconformidad: 0,
+                    nequipmentcardnum: 0
                 },
                 arraySolicitud: [],
                 arrayPuntoInspeccion: [],
@@ -1383,8 +1384,8 @@
                 //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapArticulo: [],
-                arraySapItemCode: [],
-                //
+                arraySapTarjetaEquipo: [],
+                arraySapSolucion: [],
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
@@ -1507,6 +1508,8 @@
             },
             cambiarBusquedaPorCriterio(){
                 this.fillPdi.cdescripcioncriterio = '';
+                this.arrayPdi = [];
+                this.limpiarFormulario();
             },
             listarPdi(page){
                 this.mostrarProgressBar();
@@ -1827,6 +1830,7 @@
                 this.formPdi.nidcompra          = objCompra.nIdCompra;
                 this.formPdi.cvinplacanombre    = objCompra.cNumeroVin;
                 this.formPdi.cnumerovin         = objCompra.cNumeroVin;
+                this.formPdi.nequipmentcardnum  = objCompra.nEquipmentCardNum;
                 this.ccustomercode              = objCompra.cCustomerCode;
                 this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
                 this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
@@ -1893,7 +1897,7 @@
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-                var url = this.ruta + '/pdi/GetLstVehiculosByCriterio';
+                var url = this.ruta + '/pdi/GetLstVehiculoPaca';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -1903,7 +1907,7 @@
                         'page' : page,
                     }
                 }).then(response => {
-                    let info = response.data.arrayVehiculosByCriterio;
+                    let info = response.data.arrayVehiculoPlaca;
                     this.arrayVehiculoPlaca           = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
@@ -1930,6 +1934,8 @@
                 this.formPdi.cnumerovin         = objVehiculo.cNumeroVin;
                 this.formPdi.cvinplacanombre    = objVehiculo.cPlaca;
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
+                this.formPdi.nequipmentcardnum  = objVehiculo.nEquipmentCardNum;
+                this.ccustomercode              = objVehiculo.cCustomerCode;
                 this.cerrarModal();
             },
             //===========
@@ -2165,7 +2171,6 @@
                         'codVehiculo'       :   (me.formPdi.nidflagvinplaca == 1) ? me.formPdi.cnumerovin : me.formPdi.nidvehiculoplaca
                     }
                 }).then(response => {
-                    console.log(response.data);
                     me.arrayAccesorioFlag = [];
                     me.arrayAccesorioFlag = response.data.arrayElementoVenta;
                     me.llenarAccesorios();
@@ -2508,7 +2513,8 @@
                     }
                 });
             },
-            //================Generar Sap Entrada Mercancia ============
+            //=========================================================
+            //=============== Generar Sap Entrada Mercancia ===========
             generaSapMercanciaEntry(){
                 let me = this;
 
@@ -2570,7 +2576,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccustomercode,
+                                'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                                 'cNotes'        :   'PdiEntrada',
                                 'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
@@ -2688,12 +2694,12 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         //================================================================================
-                        //================== REGISTRO EN TABLA SCL5 DE LA LLAMADA SERVICIO ===============
-                        /*setTimeout(function() {
-                             me.generaSapSolucion();
-                        }, 1600);*/
-                        me.loading.close();
-                        me.confirmaPdi();
+                        //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
+                        setTimeout(function() {
+                             me.obtenerSapTarjetaEquipo();
+                        }, 1600);
+                        //me.loading.close();
+                        //me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2705,17 +2711,58 @@
                     }
                 });
             },
-            /*generaSapSolucion(){
+            //CONSULTAR DATOS DE TARJETA DE EQUIPO, OBTENGO SOCIO DEL NEGOCIO DE TARJETA
+            obtenerSapTarjetaEquipo(){
                 let me = this;
 
-                me.arraySolucion.push({
+                me.arraySapTarjetaEquipo.push({
+                    'nEquipmentCardNum' : me.formPdi.nequipmentcardnum
+                });
+
+                var sapUrl = me.ruta + '/tarjetaequipo/SapGetTarjetaEquipo';
+                axios.post(sapUrl, {
+                    'data': me.arraySapTarjetaEquipo
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.EquipmentCardNum){
+                            me.ccustomercode = me.jsonRespuesta.CustomerCode.toString();
+
+                            //================================================================
+                            //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            setTimeout(function() {
+                                me.generaSapSolucion();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //GENERO SOLUCION
+            generaSapSolucion(){
+                let me = this;
+
+                me.arraySapSolucion.push({
                     'cItemCode' : me.formPdi.cnumerovin,
                     'cSubject'  : "Cierre De Servicio"
                 });
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySolucion
+                    'data': me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2729,7 +2776,7 @@
                             me.arraySapUpdSgc.push({
                                 'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cFlagTipo'     : 'C',
+                                'cFlagTipo'     : me.formPdi.nidtipoinspeccion == 4 ? 'E' : 'S',
                                 'cLogRespuesta' : response.data.toString()
                             });
 
@@ -2740,7 +2787,7 @@
                                 'cInternalSerialNum': me.formPdi.cnumerovin,
                                 'cItemCode'         : me.formPdi.cnumerovin,
                                 'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
-                                'cSubject'          : 'PdiEntrada'
+                                'cSubject'          : me.formPdi.nidtipoinspeccion == 4 ? 'PDIENTRADA' : 'PDISALIDA'
                             });
 
                             //================================================================
@@ -2766,11 +2813,22 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    //==============================================================
-                    //=========== REGISTRO LLAMADA DE SERVICIO EN SAP ==============
-                    setTimeout(function() {
-                        me.generaSapLlamadaServicioPdiEntrada();
-                    }, 1600);
+                    //Si es Pdi Entrada
+                    if(me.formPdi.nidtipoinspeccion == 4){
+                        //==========================================================================
+                        //=========== REGISTRO LLAMADA DE SERVICIO PDI ENTRADA EN SAP ==============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioPdiEntrada();
+                        }, 1600);
+                    }
+                    //Si es Pdi Entrega Vehiculo
+                    else if(me.formPdi.nidtipoinspeccion == 5){
+                        //==========================================================================
+                        //=========== REGISTRO LLAMADA DE SERVICIO PDI SALIDA EN SAP ==============
+                        setTimeout(function() {
+                            me.generaSapLlamadaServicioPdiSalida();
+                        }, 1600);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2781,6 +2839,7 @@
                     }
                 });
             },
+            //GENERO LLAMADA DE SERVICIO Y ADJUNTO SOLUCION
             generaSapLlamadaServicioPdiEntrada(){
                 let me = this;
 
@@ -2797,8 +2856,6 @@
                         me.jsonRespuesta= JSON.parse(x);
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ItemCode){
-                            me.arraySapItemCode.push(me.jsonRespuesta.ItemCode); //PARA DEPURAR
-
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
                                 'cFlagTipo'         : 'E', //LLAMADA SERVICIO PDI ENTRADA
@@ -2843,8 +2900,9 @@
                         }
                     }
                 });
-            },*/
-            //================Generar Sap Entrega Vehiculo ==================
+            },
+            //==============================================================
+            //================ Generar Sap Entrega Vehiculo ================
             generaSapMercanciaExit(){
                 let me = this;
 
@@ -2904,7 +2962,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccustomercode,
+                                'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                                 'cNotes'        :   'PdiSalida',
                                 'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
@@ -2985,18 +3043,9 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
-                            /*me.arraySapLlamadaServicio = [];
-                            me.arraySapLlamadaServicio.push({
-                                'nActivityCode'     : me.jsonRespuesta.ActivityCode,
-                                'cCustomerCode'     : me.ccustomercode,
-                                'cInternalSerialNum': me.formPdi.cnumerovin,
-                                'cItemCode'         : me.formPdi.cnumerovin,
-                                'cSubject'          : 'PDI SALIDA'
-                            });*/
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                            //me.nactivitycode = me.jsonRespuesta.ActivityCode;
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiSalida();
                             }, 1600);
@@ -3044,7 +3093,7 @@
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
                     'hActivityTime' :   moment().format('HH:mm:ss'),
-                    'cCardCode'     :   me.ccustomercode,
+                    'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
                     'cNotes'        :   'EntregaVehiculo',
                     'nDocEntry'     :   me.nDocEntryOrdenVenta.toString(),
                     'nDocNum'       :   me.nDocNumOrdenVenta.toString(),
@@ -3112,9 +3161,76 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        me.loading.close();
-                        me.confirmaPdi();
+                        //================================================================================
+                        //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
+                        setTimeout(function() {
+                             me.obtenerSapTarjetaEquipo();
+                        }, 1600);
+                        //me.loading.close();
+                        //me.confirmaPdi();
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //GENERO LLAMADA DE SERVICIO Y ADJUNTO SOLUCION
+            generaSapLlamadaServicioPdiSalida(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'S', //LLAMADA SERVICIO PDI ENTRADA
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+
+                            //=========================================================================
+                            //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                            setTimeout(function() {
+                                me.generaSgcLlamadaServicioPdiSalida();
+                            }, 1600);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Llamada Servicio SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicioPdiSalida(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    me.loading.close();
+                    me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3198,6 +3314,7 @@
                                 this.formPdi.cnumerovin = data['cNumeroVin'];
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
+                                //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
                                 break;
@@ -3315,13 +3432,15 @@
                 this.formPdi.cnumerovin = '',
                 this.formPdi.nidcompra = '',
                 this.formPdi.nidflagmovimiento = 1,
-                //this.formPdi.nidflagvinplaca = 1
+                this.formPdi.nidflagvinplaca = '',
                 this.formPdi.nidpuntoinspeccion = 0,
                 this.formPdi.cnombrepuntoinspeccion = '',
                 this.formPdi.nidsolicitud = 0,
                 this.formPdi.cnombresolicitud = '',
                 this.formPdi.cvinplacanombre = '',
                 this.formPdi.nidtipoinspeccion= '',
+                this.formPdi.nequipmentcardnum= 0,
+                this.formPdi.ccustomercode= '',
                 this.nflagalmacen= 0,
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
@@ -3353,7 +3472,7 @@
                 //========= VARIABLES SAP =============
                 //Limpiar variables Sap Articulo
                 this.arraySapArticulo= [],
-                this.arraySapItemCode= [],
+                this.arraySapTarjetaEquipo= [],
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],

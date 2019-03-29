@@ -1614,7 +1614,7 @@
                 arraySapLlamadaServicio: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
-                arraySolucion: [],
+                arraySapSolucion: [],
                 //Tbls Costo
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
@@ -2587,7 +2587,7 @@
 
                 //Depurar Array para registrar en SAP
                 me.arraySapCompra.map(function(value, key){
-                    me.arraySolucion.push({
+                    me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
                     });
@@ -2595,7 +2595,7 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySolucion
+                    'data': me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3520,14 +3520,14 @@
             generaSapSolucion(objCompra){
                 let me = this;
                 if(objCompra.nSolutionCode== 0){
-                    me.arraySolucion.push({
+                    me.arraySapSolucion.push({
                         'cItemCode' : objCompra.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
                     });
 
                     var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                     axios.post(sapUrl, {
-                        'data': me.arraySolucion
+                        'data': me.arraySapSolucion
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -4526,7 +4526,7 @@
                 this.arraySapLlamadaServicio= [],
                 this.arraySapCompra= [],
                 this.arraySapActividad= [],
-                this.arraySolucion= [],
+                this.arraySapSolucion= [],
                 //Tbls Costo
                 this.arrayTCTipoBeneficio= [];
                 this.arrayTCCostoVehiculo= [];
