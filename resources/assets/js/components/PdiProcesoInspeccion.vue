@@ -1688,8 +1688,16 @@
                 });
             },
             changeTipoInspeccion(){
-                this.limpiarTipoInspeccion();
-                this.obtenerDetalleTipoInspeccionById();
+                 //Si es Entrega Vehiculo
+                if(this.formPdi.nidtipoinspeccion==5){
+                    swal(
+                        'Error!',
+                        'Debe generar una Solicitud de Entrega.'
+                    );
+                }else{
+                    this.limpiarTipoInspeccion();
+                    this.obtenerDetalleTipoInspeccionById();
+                };
             },
             limpiarTipoInspeccion(){
                 this.nflagalmacen               = 0,
