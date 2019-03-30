@@ -140,9 +140,10 @@ class WarrantOperativoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayWO = DB::select('exec [usp_WO_UpdEstadoWoDetalle] ?, ?, ?',
+        $arrayWO = DB::select('exec [usp_WO_UpdEstadoWoDetalle] ?, ?, ?, ?',
                                                 [   $request->nIdDetalleWarrant,
                                                     $request->nIdEstadoWarrant,
+                                                    $request->nIdCompra,
                                                     Auth::user()->id
                                                 ]);
         return response()->json($arrayWO);

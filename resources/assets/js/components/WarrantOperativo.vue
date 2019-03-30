@@ -1084,7 +1084,8 @@
                         var url = this.ruta + '/woperativo/UpdEstadoWoDetalle';
                         axios.post(url, {
                             'nIdDetalleWarrant' :   parseInt(objWarrant.nIdDetalleWarrant),
-                            'nIdEstadoWarrant'  :   1300081
+                            'nIdEstadoWarrant'  :   1300081,
+                            'nIdCompra'         :   objWarrant.nIdCompra
                         }).then(response => {
                             if(response.data[0].nFlagMsje == 1){
                                 swal(
@@ -1366,7 +1367,7 @@
                                 'cNotes'        :   'WarranOperativo',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
-                                'nDocType'      :   '13',
+                                'nDocType'      :   '18',
                                 'nDuration'     :   '15',
                                 'cDurationType' :   'du_Minuts',
                                 'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
@@ -1436,7 +1437,7 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   13,
+                                    'nActividadTipo':   18,
                                     'cActividadTipo':   'WarranOperativo',
                                     'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
                                     'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
@@ -1467,7 +1468,7 @@
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
                 axios.post(sapUrl, {
-                    'arraySapUpdSgc': me.arraySapUpdSgc
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
                         me.confirmarWO();

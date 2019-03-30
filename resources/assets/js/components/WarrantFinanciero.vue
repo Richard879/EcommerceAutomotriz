@@ -710,7 +710,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                ccustomercode: '',
+                ccustomercode: 'C20480683839',
                 arrayBanco: [],
                 arrayEstadoWarrant: [],
                 arrayWFinanciero: [],
@@ -988,6 +988,7 @@
             // =================================================================
             tabGeneraWFinanciero(){
                 this.limpiarFormulario();
+                this.obtenerCodigoSapEmpresa();
             },
             obtenerCodigoSapEmpresa(){
                 this.ccustomercode = sessionStorage.getItem("cCustomerCode");
@@ -1233,7 +1234,7 @@
                                 'cNotes'        :   'WarranFinanciero',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
-                                'nDocType'      :   '13',
+                                'nDocType'      :   '18',
                                 'nDuration'     :   '15',
                                 'cDurationType' :   'du_Minuts',
                                 'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
@@ -1303,7 +1304,7 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   13,
+                                    'nActividadTipo':   18,
                                     'cActividadTipo':   'WarranFinanciero',
                                     'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
                                     'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
@@ -1334,11 +1335,60 @@
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
                 axios.post(sapUrl, {
-                    'arraySapUpdSgc': me.arraySapUpdSgc
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWO();
+                        me.confirmarWF();
                         // me.registroSapBusinessSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapBusinessSolucion(){
+                let me = this;
+
+                //Depurar Array para registrar en SAP
+                me.arraySapPedido.map(function(value, key){
+                    me.arraySapSolucion.push({
+                        'cItemCode' : value.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapSolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'V',
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
+                            });
+
+                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                        }
+                    });
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcSolucion();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
