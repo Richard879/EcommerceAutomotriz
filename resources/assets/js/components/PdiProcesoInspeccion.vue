@@ -1692,8 +1692,11 @@
                 if(this.formPdi.nidtipoinspeccion==5){
                     swal(
                         'Error!',
-                        'Debe generar una Solicitud de Entrega.'
+                        'Debe generar una Solicitud de Entrega Vehiculo'
                     );
+                    this.limpiarFormulario();
+                    this.limpiarTipoInspeccion();
+                    this.changeFlagVinPlaca();
                 }else{
                     this.limpiarTipoInspeccion();
                     this.obtenerDetalleTipoInspeccionById();
