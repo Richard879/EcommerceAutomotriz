@@ -120,7 +120,8 @@
                                                         <th>Hora</th>
                                                         <th>Solicitud</th>
                                                         <th>Tipo Movimiento</th>
-                                                        <th>Vin/Placa</th>
+                                                        <th v-text="fillPdi.ncriterio==1 ? 'Nro VIN' : 'Nro Placa'"></th>
+                                                        <th v-if="fillPdi.ncriterio==2" v-text="'Nro VIN'"></th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
@@ -135,6 +136,7 @@
                                                         <td v-text="pdi.cNombreSolicitud"></td>
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
+                                                        <td v-if="fillPdi.ncriterio==2" v-text="pdi.cNumeroVin"></td>
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
@@ -142,7 +144,7 @@
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ pdi.cNombreSolicitud }}</div>
                                                                     <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>&nbsp;
+                                                                </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
@@ -1686,8 +1688,19 @@
                 });
             },
             changeTipoInspeccion(){
-                this.limpiarTipoInspeccion();
-                this.obtenerDetalleTipoInspeccionById();
+                 //Si es Entrega Vehiculo
+                if(this.formPdi.nidtipoinspeccion==5){
+                    swal(
+                        'Error!',
+                        'Debe generar una Solicitud de Entrega Vehiculo'
+                    );
+                    this.limpiarFormulario();
+                    this.limpiarTipoInspeccion();
+                    this.changeFlagVinPlaca();
+                }else{
+                    this.limpiarTipoInspeccion();
+                    this.obtenerDetalleTipoInspeccionById();
+                };
             },
             limpiarTipoInspeccion(){
                 this.nflagalmacen               = 0,
@@ -2404,6 +2417,8 @@
                     this.modal = 1;
                     return;
                 }
+
+                this.mostrarProgressBar();
 
                 var url = this.ruta + '/pdi/UpdCabeceraInspeccion';
                 axios.post(url, {
@@ -3314,6 +3329,7 @@
                                 this.formPdi.cnumerovin = data['cNumeroVin'];
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
+                                this.formPdi.nequipmentcardnum = data['nEquipmentCardNum'];
                                 //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
