@@ -182,8 +182,8 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
-                    "ItemCode"             => $value['cItemCode'],
-                    "Solution"             => $value['cSubject']
+                    "ItemCode"  => $value['cItemCode'],
+                    "Solution"  => $value['cSubject']
                 ]
             ];
 

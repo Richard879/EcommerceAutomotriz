@@ -807,6 +807,8 @@
                 arraySapWO: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
+                arraySapSolucion: [],
+                nSolutionCode:  0,
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1483,6 +1485,107 @@
                         }
                     }
                 });
+            },
+            registroSapBusinessSolucion(){
+                let me = this;
+
+                //Depurar Array para registrar en SAP
+                me.arrayAsiento.map(function(value, key){
+                    me.arraySapSolucion.push({
+                        'cItemCode' : value.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapSolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'WO',
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
+                            });
+
+                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                        }
+                    });
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        // me.confirmarWO();
+                        // me.getOrdenCompraActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getOrdenCompraActividad(){
+                let me = this;
+                me.arraySapSolucion.map(function(x, y){
+                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWOByItemCode';
+                    axios.get(sapUrl, {
+                        params: {
+                            'citemcode'     : x.cNumeroVin,
+                            'nactividadtipo': 18
+                        }
+                    }).then(response => {
+                        me.arraySapLlamadaServicio.push({
+                            'nActivityCode'     : response.data[0].nActivityCode,
+                            'cCustomerCode'     : response.data[0].cCustomerCode,
+                            'cInternalSerialNum': response.data[0].cItemCode,
+                            'cItemCode'         : response.data[0].cItemCode,
+                            'nSolutionCode'     : response.data[0].nSolutionCode,
+                            'cSubject'          : 'COMPRA'
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                });
+                setTimeout(function() {
+                    me.registroSapBusinessLlamadaServicio();
+                }, 1600);
             },
             /*obtenerWOTblCosto(){
                 let me = this;

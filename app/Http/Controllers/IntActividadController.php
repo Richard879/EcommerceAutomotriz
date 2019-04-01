@@ -214,4 +214,34 @@ class IntActividadController extends Controller
 
         // return response()->json($arrayActividad);
     }
+
+    public function GetIntegraActividadWOByItemCode(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cItemCode      =  $request->citemcode;
+        $nActividadTipo =  $request->nactividadtipo;
+
+        $arrayActividad = DB::select('exec [usp_Integra_GetIntegraActividadWOByItemCode] ?, ?',
+                                            [   $cItemCode,
+                                                $nActividadTipo
+                                            ]);
+
+        return response()->json($arrayActividad);
+    }
+
+    public function GetIntegraActividadWFByItemCode(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cItemCode      =  $request->citemcode;
+        $nActividadTipo =  $request->nactividadtipo;
+
+        $arrayActividad = DB::select('exec [usp_Integra_GetIntegraActividadWFByItemCode] ?, ?',
+                                            [   $cItemCode,
+                                                $nActividadTipo
+                                            ]);
+
+        return response()->json($arrayActividad);
+    }
 }

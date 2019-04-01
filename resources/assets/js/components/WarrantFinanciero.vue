@@ -752,6 +752,10 @@
                 arraySapWO: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
+                arraySapSolucion: [],
+                nSolutionCode:  0,
+                arraySapLlamadaServicio: [],
+                arraySapItemCode: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1099,7 +1103,6 @@
                 }
 
                 me.mostrarProgressBar();
-
                 var url = me.ruta + '/wfinanciero/SetWFinanciero';
                 axios.post(url, {
                     'nIdBanco'      : me.formWFinanciero.nidbanco,
@@ -1338,8 +1341,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWF();
-                        // me.registroSapBusinessSolucion();
+                        // me.confirmarWF();
+                        me.registroSapBusinessSolucion();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1355,7 +1358,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arraySapPedido.map(function(value, key){
+                me.arrayAsiento.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -1378,7 +1381,7 @@
                             me.arraySapUpdSgc.push({
                                 'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                 'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cFlagTipo'     : 'V',
+                                'cFlagTipo'     : 'WF',
                                 'cLogRespuesta' : me.arraySapRespuesta[key].toString()
                             });
 
@@ -1389,6 +1392,118 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.getFacturaProveedorActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getFacturaProveedorActividad(){
+                let me = this;
+                me.arraySapSolucion.map(function(x, y){
+                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWFByItemCode';
+                    axios.get(sapUrl, {
+                        params: {
+                            'citemcode'     : x.cItemCode,
+                            'nactividadtipo': 18
+                        }
+                    }).then(response => {
+                        me.arraySapLlamadaServicio.push({
+                            'nActivityCode'     : response.data[0].nActivityCode,
+                            'cCustomerCode'     : response.data[0].cCustomerCode,
+                            'cInternalSerialNum': response.data[0].cItemCode,
+                            'cItemCode'         : response.data[0].cItemCode,
+                            'nSolutionCode'     : response.data[0].nSolutionCode,
+                            'cSubject'          : 'FACTURA PROVEEDOR'
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                });
+                setTimeout(function() {
+                    me.registroSapBusinessLlamadaServicio();
+                }, 1600);
+            },
+            registroSapBusinessLlamadaServicio(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'F',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                    setTimeout(function() {
+                        me.registroSgcLlamadaServicio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcLlamadaServicio(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.confirmarWF();
+                        // me.registroSapBusinessTblCostoCabecera();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
