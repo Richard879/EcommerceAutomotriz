@@ -1000,7 +1000,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarWOperativos(page);
+                this.listarWOperativo(page);
             },
             cambiarVistaFormulario(){
                 this.vistaFormularioTabBuscar = 1;
