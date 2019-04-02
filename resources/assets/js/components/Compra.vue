@@ -4328,7 +4328,7 @@
                 this.listarProveedorWO();
                 this.limpiarFormulario();
             },
-            listarProveedorWO(){
+            listarProveedorWO(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 
                 axios.get(url, {
