@@ -1539,7 +1539,7 @@
                             'cInternalSerialNum': response.data[0].cItemCode,
                             'cItemCode'         : response.data[0].cItemCode,
                             'nSolutionCode'     : response.data[0].nSolutionCode,
-                            'cSubject'          : 'FACTURA PROVEEDOR'
+                            'cSubject'          : 'WOPERATIVO'
                         });
                     }).catch(error => {
                         console.log(error);
@@ -1598,7 +1598,7 @@
             },
             registroSgcLlamadaServicio(){
                 let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
