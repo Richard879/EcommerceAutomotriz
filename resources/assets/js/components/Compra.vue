@@ -769,7 +769,6 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Monto</th>
                                                                                     <th>Fecha</th>
-                                                                                    <th>Valor Interés</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -783,9 +782,8 @@
                                                                                     <td v-text="forum.cNumeroMotor"></td>
                                                                                     <td v-text="forum.cNombreColor"></td>
                                                                                     <td v-text="forum.cMoneda"></td>
-                                                                                    <td v-text="forum.fMonto"></td>
+                                                                                    <td v-text="forum.fTotalCompra"></td>
                                                                                     <td v-text="forum.dFecha"></td>
-                                                                                    <td><input type="text" v-model="arrayValorInteres[index]" class="form-control form-control-sm"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -795,7 +793,7 @@
                                                                             <div class="col-sm-7">
                                                                             </div>
                                                                             <div class="col-sm-5">
-                                                                                <div class="datatable-info">Total: {{ contadorArrayForum }} registros</div>
+                                                                                <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1630,6 +1628,7 @@
                 nidcronograma: 0,
                 nservicecallid: 0,
                 nactivitycode: 0,
+                fTotalValor: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -1705,8 +1704,6 @@
                 },
                 arrayProveedorForum: [],
                 arrayWOperativo: [],
-                contadorArrayForum: 0,
-                arrayValorInteres: [],
                 // ==========================================================
                 // =============  BUSCAR PROVEEDORES ========================
                 fillProveedor:{
@@ -1819,7 +1816,17 @@
                     from++;
                 }
                 return pagesArray;
-            }
+            },
+            totalVehiculo: function(){
+                let me = this;
+                if(me.arrayWOperativo.length > 0) {
+                    return me.arrayWOperativo.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fTotalCompra);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
         },
         methods:{
             tabBuscarCompra(){
@@ -4411,7 +4418,6 @@
 
                     this.$delete(response.data, 0);
                     this.arrayWOperativo = response.data;
-                    this.contadorArrayForum = this.arrayWOperativo.length;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -4473,7 +4479,6 @@
             },
             eliminarItemForum(index){
                 this.$delete(this.arrayWOperativo, index);
-                this.contadorArrayForum = this.arrayWOperativo.length;
             },
             registrarForum(){
                 let me = this;
