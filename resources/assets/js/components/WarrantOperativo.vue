@@ -798,14 +798,13 @@
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-                arraySapWO: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapSolucion: [],
-                nSolutionCode:  0,
                 arraySapLlamadaServicio: [],
                 arraySapItemCode: [],
                 arraySapAsiento: [],
+                nSolutionCode:  0,
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1652,7 +1651,6 @@
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
-                this.arraySapWO= [],
                 this.arraySapCompra= [],
                 this.arraySapAsiento = [],
                 this.arraySapActividad= [],

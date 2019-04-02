@@ -1705,6 +1705,7 @@
                 },
                 arrayProveedorForum: [],
                 arrayWOperativo: [],
+                arrayTemporal: [],
                 // ==========================================================
                 // =============  BUSCAR PROVEEDORES ========================
                 fillProveedor:{
@@ -1724,6 +1725,8 @@
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapSolucion: [],
+                arraySapAsiento: [],
+                nSolutionCode:  0,
                 //Tbls Costo
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
@@ -4620,7 +4623,7 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
-                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'cCardCode' : me.formWOperativo.ccarcode,
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
                     'data'      : me.arrayTemporal
                 }).then(response => {
@@ -5075,6 +5078,7 @@
                 this.formWOperativo.cproveedornombre= '',
                 this.formWOperativo.cnrowarrant= '',
                 this.arrayWOperativo = [];
+                this.arrayTemporal = [];
                 this.attachment = [];
                 this.form = new FormData,
                 $("#file-upload").val("");
