@@ -8,6 +8,7 @@
     <style type="text/css">
         @page {
             margin: 1.3rem;
+            margin-top: 1.9rem;
             padding: 1rem;
         }
         body {
@@ -96,34 +97,69 @@
     <div class="padding">
         <table width="100%">
             <tr>
-                <td>Nombre/Razón Social: <strong>{{ $arrayDetalleCotizacion[0]->cContacto }}</strong></td>
+                <td>Nombre/Razón Social:</td>
+                <td colspan="85"><strong>{{ $arrayDetalleCotizacion[0]->cContacto }}</strong></td>
             </tr>
             <tr>
-                <td>Dirección: <strong>{{ $arrayDetalleCotizacion[0]->cDireccion }}</strong></td>
+                <td>Dirección:</td>
+                <td><strong>{{ $arrayDetalleCotizacion[0]->cDireccion }}</strong></td>
             </tr>
             <tr>
-                <td>DNI/RUC: <strong>{{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}</strong></td>
-                <td>Telf. Fijo: <strong>{{ $arrayDetalleCotizacion[0]->cTelefonoFijo }}</strong></td>
-                <td>Telf. Celular: <strong>{{ $arrayDetalleCotizacion[0]->cTelefonoMovil }}</strong></td>
+                <td>DNI/RUC:</td>
+                <td><strong>{{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}</strong></td>
             </tr>
-            <br/>
             <tr>
-                <td>
-                    Estimado cliente de acuerdo con sus indicaciones se le extiende la cotización con los datos técnicos de su elección.
+                <td>Telf. Fijo:</td>
+                <td><strong>{{ $arrayDetalleCotizacion[0]->cTelefonoFijo }}</strong></td>
+            </tr>
+            <tr>
+                <td>Telf. Celular:</td>
+                <td><strong>{{ $arrayDetalleCotizacion[0]->cTelefonoMovil }}</strong></td>
+            </tr>
+            <tr>
+                <td colspan="85">
+                    <p>Estimado cliente de acuerdo con sus indicaciones se le extiende la cotización con los datos técnicos de su elección.</p>
                 </td>
             </tr>
         </table>
 
+        {{-- <table width="100%" border="2px">
+            <tr>
+                <td>Campo 1</td>
+                <td>Campo 2</td>
+                <td>Campo 3</td>
+            </tr>
+            <tr>
+                <td colspan="2">Campos 4 y 5</td>
+                <td>Campo 6</td>
+            </tr>
+            <tr>
+                <td>Campo 7</td>
+                <td>Campo 8</td>
+                <td>Campo 9</td>
+            </tr>
+        </table> --}}
+
         <br/>
 
         <div class="invoice">
+            <div class="center">
+                <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
+            </div>
+
             <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
 
             <div class="center">
-                <table width="80%">
+                <table width="100%">
                     <tr>
-                        <td><h4>PRECIO DE LISTA:</h4> <strong> <h4> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioLista }} </h4></strong></td>
-                        <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecial }} </h3></strong></td>
+                        <td>
+                            <h4>PRECIO DE LISTA:</h4>
+                            <strong><h4> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioLista }} </h4></strong>
+                        </td>
+                        <td>
+                            <h2>PRECIO ESPECIAL:</h2>
+                            <strong> <h2> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecial }} </h2></strong>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -301,13 +337,10 @@
                         Los gastos adicionales, extraordinarios u otros que surjan, a los de placas y tarjeta de identificación vehicular, sean necesarios o no para el cumplimiento del
                         registro vehicular (legalización de firmas, formularios notariales, copias certificadas, garantías mobiliarias, etc.) no están cubiertos en la cortesía especificada en el
                         párrafo anterior y son de cuenta del cliente.
-                    </td>
-                </tr>
-                <tr>
-                    <td class="justify">
                         Sin otro particular quedamos de usted a su pleno servicio. Atentamente.
                     </td>
                 </tr>
+                <tr></tr>
             </table>
 
             <br/>
@@ -317,17 +350,13 @@
                     <td align="left" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>{{ $arrayDetalleCotizacion[0]->cNombreAsesorComercial }}</h3>
-                        <pre>
-                            ASESOR COMERCIAL
-                        </pre>
+                        <h5 class="center">ASESOR COMERCIAL</h5>
                     </td>
                     <td align="center"></td>
                     <td align="right" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>{{ $arrayDetalleCotizacion[0]->cJefeVentas }}</h3>
-                        <pre>
-                            JEFE DE VENTAS
-                        </pre>
+                        <h5 class="center" style="margin-right: 6rem">JEFE DE VENTAS</h5>
                     </td>
                 </tr>
             </table>

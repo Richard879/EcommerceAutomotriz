@@ -2363,7 +2363,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -2578,7 +2577,6 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-
             }
         },
         mounted() {
