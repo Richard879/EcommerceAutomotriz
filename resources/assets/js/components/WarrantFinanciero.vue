@@ -1503,7 +1503,6 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.confirmarWF();
-                        // me.registroSapBusinessTblCostoCabecera();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);

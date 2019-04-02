@@ -4492,13 +4492,43 @@
 
                 me.mostrarProgressBar();
 
+                me.arrayWOperativo.map(function(value, key) {
+                    me.arrayTemporal.push({
+                        'cNumeroVin'    : value.cNumeroVin,
+                        'fTotalCompra'  : value.fTotalCompra,
+                        'cAccountCode'  : ''
+                    })
+                });
+
                 var url = me.ruta + '/woperativo/SetWOperativoCompra';
                 axios.post(url, {
                     'nIdProveedor'      : me.formWOperativo.nidproveedor,
                     'fTotalValor'       : me.fTotalValor,
-                    'data'              : me.arrayWOperativo
+                    'data'              : me.arrayTemporal
                 }).then(response => {
-                    me.confirmarForum();
+                    me.confirmarWO();
+
+                    //me.fillWOperativo.nidwarrantoperativo = response.data;
+
+                    //if(me.fillWOperativo.nidwarrantoperativo > 0){
+                        me.arrayTemporal.map(function(value, key) {
+                            me.arrayAsiento.push({
+                                'cNumeroVin'    : value.cNumeroVin,
+                                'cProjectCode'  : value.cNumeroVin,
+                                'fCredit'       : "0",
+                                'fDebit'        : value.fTotalCompra,
+                                'fCredit1'      : value.fTotalCompra,
+                                'fDebit1'       : "0"
+                                /*'fComisionSol'  : value.fComisionSol,*/
+                            })
+                        });
+
+                        //==============================================================
+                        //================== GENERAR ASIENTO CONTABLE SAP ===============
+                        setTimeout(function() {
+                            me.generaSapAsientoContable();
+                        }, 1600);
+                    //}
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4524,7 +4554,7 @@
                 }
                 return this.error;
             },
-            confirmarForum(){
+            confirmarWO(){
                 let me = this;
                 //me.loading.close();
                 $("#myBar").hide();

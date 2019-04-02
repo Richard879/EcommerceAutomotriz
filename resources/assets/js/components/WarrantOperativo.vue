@@ -1476,8 +1476,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWO();
-                        // me.registroSapBusinessSolucion();
+                        //me.confirmarWO();
+                        me.registroSapBusinessSolucion();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1545,8 +1545,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        // me.confirmarWO();
-                        // me.getOrdenCompraActividad();
+                        me.getFacturaProveedorActividad();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1558,13 +1557,13 @@
                     }
                 });
             },
-            getOrdenCompraActividad(){
+            getFacturaProveedorActividad(){
                 let me = this;
                 me.arraySapSolucion.map(function(x, y){
-                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWOByItemCode';
+                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWFByItemCode';
                     axios.get(sapUrl, {
                         params: {
-                            'citemcode'     : x.cNumeroVin,
+                            'citemcode'     : x.cItemCode,
                             'nactividadtipo': 18
                         }
                     }).then(response => {
@@ -1574,7 +1573,7 @@
                             'cInternalSerialNum': response.data[0].cItemCode,
                             'cItemCode'         : response.data[0].cItemCode,
                             'nSolutionCode'     : response.data[0].nSolutionCode,
-                            'cSubject'          : 'COMPRA'
+                            'cSubject'          : 'FACTURA PROVEEDOR'
                         });
                     }).catch(error => {
                         console.log(error);
@@ -1589,6 +1588,66 @@
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
                 }, 1600);
+            },
+            registroSapBusinessLlamadaServicio(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'F',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                    setTimeout(function() {
+                        me.registroSgcLlamadaServicio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcLlamadaServicio(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.confirmarWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             /*obtenerWOTblCosto(){
                 let me = this;
