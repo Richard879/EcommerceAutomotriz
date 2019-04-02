@@ -945,7 +945,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarWFinancieros(page);
+                this.listarWFinanciero(page);
             },
             asignaIdWFinanciero(objWF){
                 this.fillWFinancieroDetalle.nidwarrantfinanciero= objWF.nIdWarrantFinanciero;
