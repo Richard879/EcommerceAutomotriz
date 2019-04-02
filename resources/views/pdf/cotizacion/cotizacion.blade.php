@@ -170,9 +170,9 @@
             <table width="100%" border="1" datasrc="#fichatecnica">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Jobtitle</th>
-                        <th>Born</th>
+                        <th>DIMENSIONES</th>
+                        <th>EQUIPAMIENTO</th>
+                        <th>FRENOS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -184,6 +184,7 @@
                 </tbody>
             </table> --}}
 
+            {{-- Contenido del XML --}}
             {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $contents }}</pre> --}}
 
             <table width="100%">
