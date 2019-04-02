@@ -622,9 +622,9 @@ class CotizacionController extends Controller
                                     ]);
 
         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        $cadena = substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
-        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA
-        $contents = Storage::get('public/'. $cadena);
+        $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
+        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/
+        $contents   =   Storage::get('public/'. $cadena);
 
         $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 

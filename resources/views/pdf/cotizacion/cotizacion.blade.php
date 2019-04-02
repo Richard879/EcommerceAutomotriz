@@ -166,7 +166,8 @@
 
             {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $arrayDetalleDocs[0]->cFichaImageUrl }}</pre> --}}
 
-            {{-- <xml id="fichatecnica" src="{{ $arrayDetalleDocs[0]->cFichaImageUrl }}"></xml>
+            {{--
+            <xml id="fichatecnica" src="{{ $arrayDetalleDocs[0]->cFichaImageUrl }}"></xml>
             <table width="100%" border="1" datasrc="#fichatecnica">
                 <thead>
                     <tr>
@@ -177,15 +178,26 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span datafld="table1"></span></td>
-                        <td><span datafld="table2"></span></td>
-                        <td><span datafld="table3"></span></td>
+                        <td><span datafld="textbox21"></span></td>
+                        <td><span datafld="textbox21"></span></td>
+                        <td><span datafld="textbox21"></span></td>
                     </tr>
                 </tbody>
-            </table> --}}
+            </table>
+            --}}
 
             {{-- Contenido del XML --}}
-            {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $contents }}</pre> --}}
+            {{-- <pre lang="xml" style="white-space:normal;">{{ $contents }}</pre> --}}
+
+            {{-- <?xml version="1.0"?>
+            <!-- File Name: Book.xml -->
+            <BOOK>
+                <TITLE>The Adventures of Huckleberry Finn</TITLE>
+                <AUTHOR>Mark Twain</AUTHOR>
+                <BINDING>mass market paperback</BINDING>
+                <PAGES>298</PAGES>
+                <PRICE>$5.49</PRICE>
+            </BOOK> --}}
 
             <table width="100%">
                 <tr>
@@ -418,3 +430,10 @@
     </div>
 </body>
 </html>
+
+<script language="JavaScript">
+    var xmlDoc = new ActiveXObject("Microsoft.XMLDOM")
+    xmlDoc.async="false"
+    xmlDoc.load({{ $arrayDetalleDocs[0]->cFichaImageUrl }})
+    // ....... processing the document goes here
+</script>
