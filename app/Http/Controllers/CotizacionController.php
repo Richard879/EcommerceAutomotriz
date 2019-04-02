@@ -362,7 +362,7 @@ class CotizacionController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdUsuario = Auth::user()->id;
-        
+
         if($request->opcion == 1) {
             $dfecha     = date('Y-m-d');;
 
@@ -613,13 +613,19 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
+                                    [
+                                        $nIdCabeceraCotizacion
+                                    ]);
+
         $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                             'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
-                                                            'arrayDatosBanco' => $arrayDatosBanco,
-                                                            'logo' => $logo,
-                                                            'hyundai' => $hyundai
+                                                            'arrayDetalleDocs'  => $arrayDetalleDocs,
+                                                            'arrayDatosBanco'   => $arrayDatosBanco,
+                                                            'logo'              => $logo,
+                                                            'hyundai'           => $hyundai
                                                             ]);
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
     }
