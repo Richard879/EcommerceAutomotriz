@@ -105,7 +105,7 @@ class SapComprobanteController extends Controller
         $rptaSap   = [];
 
         $data = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
-                                                            [   1300528,
+                                                            [   1300529,
                                                                 '',
                                                                 70
                                                             ]);

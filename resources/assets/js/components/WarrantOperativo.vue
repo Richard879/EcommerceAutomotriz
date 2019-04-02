@@ -1408,7 +1408,7 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   17,
+                                    'nActividadTipo':   18,
                                     'cActividadTipo':   'WarranOperativo',
                                     'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
                                     'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
@@ -1530,7 +1530,7 @@
                     axios.get(sapUrl, {
                         params: {
                             'citemcode'     : x.cItemCode,
-                            'nactividadtipo': 17
+                            'nactividadtipo': 18
                         }
                     }).then(response => {
                         me.arraySapLlamadaServicio.push({
@@ -1573,7 +1573,7 @@
                         if(me.jsonRespuesta.ItemCode){
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'F',
+                                'cFlagTipo'         : 'WO',
                                 'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
