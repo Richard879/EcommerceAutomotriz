@@ -1629,6 +1629,7 @@
                 nservicecallid: 0,
                 nactivitycode: 0,
                 fTotalValor: 0,
+                nIdWarrantOperativo: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -4522,9 +4523,9 @@
                 }).then(response => {
                     me.confirmarWO();
 
-                    //me.fillWOperativo.nidwarrantoperativo = response.data;
+                    me.nIdWarrantOperativo = response.data;
 
-                    //if(me.fillWOperativo.nidwarrantoperativo > 0){
+                    if(me.nIdWarrantOperativo > 0){
                         me.arrayTemporal.map(function(value, key) {
                             me.arrayAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
@@ -4541,7 +4542,7 @@
                         setTimeout(function() {
                             me.generaSapAsientoContable();
                         }, 1600);
-                    //}
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
