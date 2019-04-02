@@ -4495,8 +4495,7 @@
                 me.arrayWOperativo.map(function(value, key) {
                     me.arrayTemporal.push({
                         'cNumeroVin'    : value.cNumeroVin,
-                        'fTotalCompra'  : value.fTotalCompra,
-                        'cAccountCode'  : '281114' ///CUENTA CONTABLE
+                        'fTotalCompra'  : value.fTotalCompra
                     })
                 });
 
