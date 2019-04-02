@@ -86,27 +86,35 @@ class WarrantOperativoController extends Controller
         }
     }
 
-    public function SetWOperativoDetalle(Request $request)
+    public function SetWOperativoCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         try{
-            DB::beginTransaction();
+           DB::beginTransaction();
 
+            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?',
+                                                    [   $request->nIdProveedor,
+                                                        $request->fTotalValor,
+                                                        0,
+                                                        0,
+                                                        Auth::user()->id
+                                                    ]);
+            $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;
-
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_WO_SetWOperativoDetalle ?, ?, ?, ?',
-                                                            array($request->nIdWarrantOperativo,
-                                                                $det['nIdCompra'],
-                                                                $det['fTotalCompra'],
-                                                                Auth::user()->id
-                                                            ));
+                DB::select('exec [usp_WO_SetWOperativoDetalleCompra] ?, ?, ?, ?',
+                                                    [   $nIdWarrantOperativo,
+                                                        $det['cNumeroVin'],
+                                                        $det['fTotalCompra'],
+                                                        Auth::user()->id
+                                                    ]);
             }
             DB::commit();
-        } catch (Exception $e){
+            return $nIdWarrantOperativo;
+        }catch (Exception $e){
             DB::rollBack();
         }
     }

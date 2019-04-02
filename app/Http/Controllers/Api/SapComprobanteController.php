@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class SapComprobanteController extends Controller
@@ -54,6 +55,14 @@ class SapComprobanteController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
+        $data = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+                                                            [   1300528,
+                                                                '',
+                                                                69
+                                                            ]);
+        //Obtener Cuenta Servicio
+        $cAccountCode   =   $data[0]->cDatoParDescripcion;
+
         $data = $request->data;
         foreach ($data as $key => $value) {
             $json = [
@@ -70,7 +79,7 @@ class SapComprobanteController extends Controller
                             "TaxCode"           =>  "EXE_IGV",
                             "PriceAfterVAT"     =>  $value['fTotalCompra'],
                             "Currency"          =>  "US$",
-                            "AccountCode"       =>  (string)$value['cAccountCode'],
+                            "AccountCode"       =>  (string)$cAccountCode,
                             //"WarehouseCode"     => (string)$request->cWarehouseCode,
                             "ProjectCode"       =>  (string)$value['cNumeroVin']
                         ]
@@ -95,6 +104,14 @@ class SapComprobanteController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
+        $data = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+                                                            [   1300529,
+                                                                '',
+                                                                70
+                                                            ]);
+        //Obtener Cuenta Servicio
+        $cAccountCode   =   $data[0]->cDatoParDescripcion;
+
         $data = $request->data;
         foreach ($data as $key => $value) {
             $json = [
@@ -111,7 +128,7 @@ class SapComprobanteController extends Controller
                                 "TaxCode"           => "EXE_IGV",
                                 "PriceAfterVAT"     => $value['fTotalCompra'],
                                 "Currency"          => "US$",
-                                "AccountCode"       => (string)$value['cAccountCode'],
+                                "AccountCode"       => (string)$cAccountCode,
                                 "ProjectCode"       => (string)$value['cNumeroVin']
                             ]
                         ]

@@ -740,7 +740,6 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
-                arrayAsiento: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
@@ -749,13 +748,14 @@
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-                arraySapWO: [],
+                arraySapWF: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapSolucion: [],
                 nSolutionCode:  0,
                 arraySapLlamadaServicio: [],
                 arraySapItemCode: [],
+                arraySapAsiento: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -945,7 +945,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarWFinancieros(page);
+                this.listarWFinanciero(page);
             },
             asignaIdWFinanciero(objWF){
                 this.fillWFinancieroDetalle.nidwarrantfinanciero= objWF.nIdWarrantFinanciero;
@@ -1114,7 +1114,7 @@
 
                     if(me.fillWFinanciero.nidwarrantfinanciero > 0){
                         me.arrayTemporal.map(function(value, key) {
-                            me.arrayAsiento.push({
+                            me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
                                 'fCredit'       : "0",
@@ -1146,7 +1146,7 @@
 
                 var url = me.ruta + '/asiento/SapSetAsientoContableWF';
                 axios.post(url, {
-                    'data' : me.arrayAsiento
+                    'data' : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -1307,7 +1307,7 @@
                             //Si el valor de respuesta Code tiene un valor
                             if(me.jsonRespuesta.ActivityCode){
                                 me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   18,
+                                    'nActividadTipo':   19,
                                     'cActividadTipo':   'WarranFinanciero',
                                     'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
                                     'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
@@ -1358,7 +1358,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arrayAsiento.map(function(value, key){
+                me.arraySapAsiento.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -1429,7 +1429,7 @@
                     axios.get(sapUrl, {
                         params: {
                             'citemcode'     : x.cItemCode,
-                            'nactividadtipo': 18
+                            'nactividadtipo': 19
                         }
                     }).then(response => {
                         me.arraySapLlamadaServicio.push({
@@ -1438,7 +1438,7 @@
                             'cInternalSerialNum': response.data[0].cItemCode,
                             'cItemCode'         : response.data[0].cItemCode,
                             'nSolutionCode'     : response.data[0].nSolutionCode,
-                            'cSubject'          : 'FACTURA PROVEEDOR'
+                            'cSubject'          : 'WFINANCIERO'
                         });
                     }).catch(error => {
                         console.log(error);
@@ -1457,7 +1457,7 @@
             registroSapBusinessLlamadaServicio(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
@@ -1472,7 +1472,7 @@
                         if(me.jsonRespuesta.ItemCode){
                             me.arraySapUpdSgc.push({
                                 'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'F',
+                                'cFlagTipo'         : 'WF',
                                 'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
                                 'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
                                 'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
@@ -1497,13 +1497,12 @@
             },
             registroSgcLlamadaServicio(){
                 let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicioCompra';
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
                         me.confirmarWF();
-                        // me.registroSapBusinessTblCostoCabecera();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1554,9 +1553,14 @@
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
-                this.arraySapWO= [],
+                this.arraySapWF= [],
                 this.arraySapCompra= [],
-                this.arrayAsiento = []
+                this.arraySapAsiento = [],
+                this.arraySapActividad= [],
+                this.arraySapSolucion= [],
+                this.nSolutionCode=  0,
+                this.arraySapLlamadaServicio= [],
+                this.arraySapItemCode= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

@@ -80,11 +80,11 @@
                                                         <td v-text="p.cParNombre"></td>
                                                         <td v-text="p.nParTipo"></td>
                                                         <td>
-                                                            <el-tooltip class="item" :content="'Configurar Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                <i @click="abrirModal('parametro', 'configurar', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
-                                                            </el-tooltip>&nbsp;&nbsp;
                                                             <el-tooltip class="item" :content="'Editar ' + p.cParNombre" effect="dark" placement="top-start">
                                                                 <i @click="abrirFormulario('parametro','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
+                                                            <el-tooltip class="item" :content="'Configurar Parámetro ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                <i @click="abrirModal('parametro', 'configurar', p)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <template v-if="p.cSituacionRegistro=='A'">
                                                                 <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
@@ -158,7 +158,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Grupo</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="formParametro.nidgrupopar" class="form-control form-control-sm">
+                                                        <input type="text" v-model="formParametro.nidgrupopar" class="form-control form-control-sm" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,6 +309,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Acciones</th>
+                                                            <th>Código</th>
                                                             <th>Descripción</th>
                                                             <th>Tipo Parametro</th>
                                                             <th>Valor</th>
@@ -322,6 +323,7 @@
                                                                     <i @click="actualizarTipoParametro(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="tipo.nIdTipoPar"></td>
                                                             <td v-text="tipo.cParNombre"></td>
                                                             <td v-text="tipo.cTipoDescripcion"></td>
                                                             <td v-if="tipo.cTipoParametro=='D'">
@@ -804,6 +806,7 @@
                     this.paginationModal.last_page   = response.data.arrayTipoParametro.last_page;
                     this.paginationModal.from        = response.data.arrayTipoParametro.from;
                     this.paginationModal.to           = response.data.arrayTipoParametro.to;
+                    this.formTipoParametro.cvalor = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -872,6 +875,8 @@
                     })
             },
             registrarTipoParametro(){
+                this.mostrarProgressBar();
+                
                 var url = this.ruta + '/tipoparametro/SetTipoParametro';
                 axios.post(url, {
                     'nIdPar'                : parseInt(this.formParametro.nidpar),
@@ -880,6 +885,7 @@
                     'nDatoParNumerico'      : this.formTipoParametro.ctipoparametro == 'N' ? this.formTipoParametro.cvalor : 0,
                     'fDatoParPorcentual'    : this.formTipoParametro.ctipoparametro == 'P' ? this.formTipoParametro.cvalor : 0
                 }).then(response => {
+                    $("#myBar").hide();
                     swal(
                         'Registrado!',
                         'El registro fue registrado.'

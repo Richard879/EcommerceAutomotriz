@@ -789,28 +789,21 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
-                arrayAsiento: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
                 //===========================================================
-                // =============  VARIABLES ALMACEN ========================
-                formAlmacen:{
-                    nidlocalidad: 0,
-                    cwhscode: '',
-                    cwhsname: ''
-                },
-                arrayAlmacen: [],
-                //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-                arraySapWO: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapSolucion: [],
+                arraySapLlamadaServicio: [],
+                arraySapItemCode: [],
+                arraySapAsiento: [],
                 nSolutionCode:  0,
                 //===========================================================
                 pagination: {
@@ -905,35 +898,8 @@
         },
         mounted(){
             this.tabBuscarWOperativo();
-            this.obtenerAlmacenPorDefecto();
         },
         methods:{
-            obtenerAlmacenPorDefecto(){
-                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
-                axios.get(url, {
-                    params: {
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
-                    }
-                }).then(response => {
-                    if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
-                        this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 
@@ -1033,7 +999,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarWOperativos(page);
+                this.listarWOperativo(page);
             },
             cambiarVistaFormulario(){
                 this.vistaFormularioTabBuscar = 1;
@@ -1248,7 +1214,7 @@
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
                         me.arrayTemporal.map(function(value, key) {
-                            me.arrayAsiento.push({
+                            me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
                                 'fCredit'       : "0",
@@ -1281,9 +1247,8 @@
 
                 var url = me.ruta + '/asiento/SapSetAsientoContableWO';
                 axios.post(url, {
-                    'data' : me.arrayAsiento
+                    'data' : me.arraySapAsiento
                 }).then(response => {
-                    // console.log(response.data);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 
@@ -1476,8 +1441,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWO();
-                        // me.registroSapBusinessSolucion();
+                        //me.confirmarWO();
+                        me.registroSapBusinessSolucion();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1493,7 +1458,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arrayAsiento.map(function(value, key){
+                me.arraySapAsiento.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -1545,8 +1510,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        // me.confirmarWO();
-                        // me.getOrdenCompraActividad();
+                        me.getFacturaProveedorActividad();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1558,13 +1522,13 @@
                     }
                 });
             },
-            getOrdenCompraActividad(){
+            getFacturaProveedorActividad(){
                 let me = this;
                 me.arraySapSolucion.map(function(x, y){
                     var sapUrl = me.ruta + '/actividad/GetIntegraActividadWOByItemCode';
                     axios.get(sapUrl, {
                         params: {
-                            'citemcode'     : x.cNumeroVin,
+                            'citemcode'     : x.cItemCode,
                             'nactividadtipo': 18
                         }
                     }).then(response => {
@@ -1574,7 +1538,7 @@
                             'cInternalSerialNum': response.data[0].cItemCode,
                             'cItemCode'         : response.data[0].cItemCode,
                             'nSolutionCode'     : response.data[0].nSolutionCode,
-                            'cSubject'          : 'COMPRA'
+                            'cSubject'          : 'WOPERATIVO'
                         });
                     }).catch(error => {
                         console.log(error);
@@ -1590,34 +1554,36 @@
                     me.registroSapBusinessLlamadaServicio();
                 }, 1600);
             },
-            /*obtenerWOTblCosto(){
+            registroSapBusinessLlamadaServicio(){
                 let me = this;
-                var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
-                axios.post(url, {
-                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'data'          : me.arrayAsiento
-                }).then(response => {
-                    me.arraySapWO = [];
-                    // ====================== CONCEPTO =========================
-                    // ======================== COMISION WO ====================
-                    let arrayCostoWO = response.data.array_infoWO;
-                    arrayCostoWO.map(function (x) {
-                        me.arraySapWO.push({
-                            'U_SYP_VIN'           :   x.U_SYP_VIN,
-                            'DocEntry'            :   x.DocEntry,
-                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
-                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
-                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
-                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
-                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
-                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
-                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
-                        });
-                    });
 
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'WO',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
-                        me.registroSapBusinessTblCostoWO();
+                        me.registroSgcLlamadaServicio();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1629,16 +1595,15 @@
                     }
                 });
             },
-            registroSapBusinessTblCostoWO(){
+            registroSgcLlamadaServicio(){
                 let me = this;
-                me.loading.close();
-                me.loadingProgressBar("INTEGRANDO COSTO WO CON SAP BUSINESS ONE...");
-
-                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
-                axios.post(url, {
-                    'data'  : me.arraySapWO
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.confirmarWO();
+                    setTimeout(function() {
+                        me.confirmarWO();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1648,7 +1613,7 @@
                         }
                     }
                 });
-            },*/
+            },
             confirmarWO(){
                 let me = this;
                 me.loading.close();
@@ -1686,9 +1651,13 @@
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
-                this.arraySapWO= [],
-                this.arraySapCompra= []
-                this.arrayAsiento = []
+                this.arraySapCompra= [],
+                this.arraySapAsiento = [],
+                this.arraySapActividad= [],
+                this.arraySapSolucion= [],
+                this.nSolutionCode=  0,
+                this.arraySapLlamadaServicio= [],
+                this.arraySapItemCode= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
