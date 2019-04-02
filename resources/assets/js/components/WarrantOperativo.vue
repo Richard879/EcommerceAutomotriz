@@ -1215,7 +1215,7 @@
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
                         me.arrayTemporal.map(function(value, key) {
-                            me.arrayAsiento.push({
+                            me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
                                 'fCredit'       : "0",
@@ -1248,7 +1248,7 @@
 
                 var url = me.ruta + '/asiento/SapSetAsientoContableWO';
                 axios.post(url, {
-                    'data' : me.arrayAsiento
+                    'data' : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -1459,7 +1459,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arrayAsiento.map(function(value, key){
+                me.arraySapAsiento.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
