@@ -70,7 +70,12 @@ class ModeloConfigController extends Controller
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFichaTecnica) {
                 $banderaFicha = str_random(10);
-                $nombreArchivoServidorFicha = $banderaFicha .'_'. $fileFichaTecnica->getClientOriginalName();
+
+                //PARSEAR ESPACIO BLANCO
+                $archivo        = $fileFichaTecnica->getClientOriginalName();
+                $archivoLimpio  = str_replace(" ", "_", $archivo);
+
+                $nombreArchivoServidorFicha = $banderaFicha .'_'. $archivoLimpio;
                 //Almaceno el archivo en un ruta especifica
                 $ruta = Storage::putFileAs('public/ModeloAnio/Ficha/', $fileFichaTecnica, $nombreArchivoServidorFicha);
             }
@@ -139,7 +144,12 @@ class ModeloConfigController extends Controller
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFichaTecnica) {
                 $banderaFicha = str_random(10);
-                $nombreArchivoServidorFicha = $banderaFicha .'_'. $fileFichaTecnica->getClientOriginalName();
+
+                //PARSEAR ESPACIO BLANCO
+                $archivo        = $fileFichaTecnica->getClientOriginalName();
+                $archivoLimpio  = str_replace(" ", "_", $archivo);
+
+                $nombreArchivoServidorFicha = $banderaFicha .'_'. $archivoLimpio;
                 //Almaceno el archivo en un ruta especifica
                 $ruta = Storage::putFileAs('public/ModeloAnio/Ficha/', $fileFichaTecnica, $nombreArchivoServidorFicha);
             }
