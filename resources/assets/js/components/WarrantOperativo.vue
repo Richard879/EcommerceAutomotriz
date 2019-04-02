@@ -1250,7 +1250,6 @@
                 axios.post(url, {
                     'data' : me.arrayAsiento
                 }).then(response => {
-                    // console.log(response.data);
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
 

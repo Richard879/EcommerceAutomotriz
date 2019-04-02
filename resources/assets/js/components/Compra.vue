@@ -4496,7 +4496,7 @@
                     me.arrayTemporal.push({
                         'cNumeroVin'    : value.cNumeroVin,
                         'fTotalCompra'  : value.fTotalCompra,
-                        'cAccountCode'  : ''
+                        'cAccountCode'  : '281114' ///CUENTA CONTABLE
                     })
                 });
 
@@ -4519,7 +4519,6 @@
                                 'fDebit'        : value.fTotalCompra,
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
-                                /*'fComisionSol'  : value.fComisionSol,*/
                             })
                         });
 
