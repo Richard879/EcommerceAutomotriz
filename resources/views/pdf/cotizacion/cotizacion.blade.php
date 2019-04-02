@@ -337,6 +337,7 @@
                         Los gastos adicionales, extraordinarios u otros que surjan, a los de placas y tarjeta de identificación vehicular, sean necesarios o no para el cumplimiento del
                         registro vehicular (legalización de firmas, formularios notariales, copias certificadas, garantías mobiliarias, etc.) no están cubiertos en la cortesía especificada en el
                         párrafo anterior y son de cuenta del cliente.
+                        <br>
                         Sin otro particular quedamos de usted a su pleno servicio. Atentamente.
                     </td>
                 </tr>
