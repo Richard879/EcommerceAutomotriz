@@ -183,13 +183,13 @@ class ExcelController extends Controller
         foreach ($sheetData as $key => $value) {
             if($value[1]!='' || $value[1]!=null){
                 $data[$key+1] =[
-                    'cNombreModelo'   => $value[0],
-                    'cNumeroVin' => $value[1],
-                    'cNumeroMotor' => $value[2],
-                    'cNombreColor' => $value[3],
-                    'cMoneda' => $value[4],
-                    'fMonto' => $value[5],
-                    'dFecha' => $value[6]
+                    'cNombreModelo' => $value[0],
+                    'cNumeroVin'    => $value[1],
+                    'cNumeroMotor'  => $value[2],
+                    'cNombreColor'  => $value[3],
+                    'cMoneda'       => $value[4],
+                    'fTotalCompra'  => $value[5],
+                    'dFecha'        => $value[6]
                 ];
             }
         }
