@@ -430,10 +430,3 @@
     </div>
 </body>
 </html>
-
-<script language="JavaScript">
-    var xmlDoc = new ActiveXObject("Microsoft.XMLDOM")
-    xmlDoc.async="false"
-    xmlDoc.load({{ $arrayDetalleDocs[0]->cFichaImageUrl }})
-    // ....... processing the document goes here
-</script>
