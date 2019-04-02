@@ -740,7 +740,6 @@
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
-                arrayAsiento: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
@@ -749,13 +748,14 @@
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
-                arraySapWO: [],
+                arraySapWF: [],
                 arraySapCompra: [],
                 arraySapActividad: [],
                 arraySapSolucion: [],
                 nSolutionCode:  0,
                 arraySapLlamadaServicio: [],
                 arraySapItemCode: [],
+                arraySapAsiento: [],
                 //===========================================================
                 pagination: {
                     'total': 0,
@@ -1114,7 +1114,7 @@
 
                     if(me.fillWFinanciero.nidwarrantfinanciero > 0){
                         me.arrayTemporal.map(function(value, key) {
-                            me.arrayAsiento.push({
+                            me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
                                 'fCredit'       : "0",
@@ -1146,7 +1146,7 @@
 
                 var url = me.ruta + '/asiento/SapSetAsientoContableWF';
                 axios.post(url, {
-                    'data' : me.arrayAsiento
+                    'data' : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -1358,7 +1358,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arrayAsiento.map(function(value, key){
+                me.arraySapAsiento.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -1457,7 +1457,7 @@
             registroSapBusinessLlamadaServicio(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
                     'data': me.arraySapLlamadaServicio
                 }).then(response => {
@@ -1553,9 +1553,14 @@
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',
                 this.arraySapUpdSgc= [],
-                this.arraySapWO= [],
+                this.arraySapWF= [],
                 this.arraySapCompra= [],
-                this.arrayAsiento = []
+                this.arraySapAsiento = [],
+                this.arraySapActividad= [],
+                this.arraySapSolucion= [],
+                this.nSolutionCode=  0,
+                this.arraySapLlamadaServicio= [],
+                this.arraySapItemCode= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
