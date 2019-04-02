@@ -1069,7 +1069,7 @@
                 axios.post(url, this.form, config).
                 then(response => {
                     me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
-                    
+
                     me.arraySapActividad.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
                         'hActivityTime' :   moment().format('HH:mm:ss'),

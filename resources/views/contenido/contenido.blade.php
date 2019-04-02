@@ -70,6 +70,9 @@
     <template v-if="menu==1300497">
         <accesorioconfig :ruta="ruta"></accesorioconfig>
     </template>
+    <template v-if="menu==1300525">
+        <modeloconfig :ruta="ruta"></modeloconfig>
+    </template>
 
 
     <template v-if="menu==1300284">

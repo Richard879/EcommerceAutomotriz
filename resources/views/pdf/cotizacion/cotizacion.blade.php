@@ -7,7 +7,7 @@
     <title>Cotización {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }} </title>
     <style type="text/css">
         @page {
-            margin: 0px;
+            margin: 1.3rem;
             padding: 1rem;
         }
         body {
@@ -124,110 +124,6 @@
                     <tr>
                         <td><h4>PRECIO DE LISTA:</h4> <strong> <h4> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioLista }} </h4></strong></td>
                         <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecial }} </h3></strong></td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">DIMENSIONES</th >
-                    </tr>
-                    <tr>
-                        <td>RADIO MIMO DE GIRO (M.) </td>
-                        <td>4.88</td>
-                    </tr>
-                    <tr>
-                        <td>CAPACIDAD DE LA MALETERA (LTS.) </td>
-                        <td>4.88</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">EQUIPAMIENTO</th >
-                    </tr>
-                    <tr>
-                        <td>AIRE ACONDICIONADO </td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>AROS DE FIERRO CON VASOS 14 PULGADAS  </td>
-                        <td>Si</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">FRENOS</th >
-                    </tr>
-                    <tr>
-                        <td>FRENOS DELANTEROS </td>
-                        <td>DISCOS VENTILADOS</td>
-                    </tr>
-                    <tr>
-                        <td>FRENOS POSTERIORES</td>
-                        <td>TAMBOR</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">GENERAL</th >
-                    </tr>
-                    <tr>
-                        <td>VERSI</td>
-                        <td>GL</td>
-                    </tr>
-                    <tr>
-                        <td>NOMBRE DEL FABRICANTE</td>
-                        <td>HYUNDAI MOTOR INDIA LTD</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">MOTOR</th >
-                    </tr>
-                    <tr>
-                        <td>TIPO DE COMBUSTIBLE</td>
-                        <td>GASOLINA</td>
-                    </tr>
-                    <tr>
-                        <td>CAPACIDAD DEL TANQUE DE COMBUSTIBLE (LT/GL) </td>
-                        <td>43 LT</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">SEGURIDAD</th >
-                    </tr>
-                    <tr>
-                        <td>BARRA DE ACERO EN PUERTAS LATERALES </td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>CHASIS REFORZADO</td>
-                        <td>Si</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">SUSPENSI</th >
-                    </tr>
-                    <tr>
-                        <td>SUSPENSI DELANTERA </td>
-                        <td>MC PHERSON</td>
-                    </tr>
-                    <tr>
-                        <td>DIRECCI</td>
-                        <td>Eltrica</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">EQUIPAMIENTO EXTERIOR</th >
-                    </tr>
-                    <tr>
-                        <td>PARACHOQUES DEL COLOR DE LA CARROCER</td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>TERCERA LUZ DE FRENO </td>
-                        <td>Si</td>
                     </tr>
                 </table>
             </div>
@@ -423,9 +319,6 @@
                         <h3>{{ $arrayDetalleCotizacion[0]->cNombreAsesorComercial }}</h3>
                         <pre>
                             ASESOR COMERCIAL
-                            Telf : (051)(074)271036
-                            Cel : 978728115
-                            Email : jose.andaluz@gpsinka.com
                         </pre>
                     </td>
                     <td align="center"></td>
@@ -433,7 +326,7 @@
                         <h3>_____________________________</h3>
                         <h3>{{ $arrayDetalleCotizacion[0]->cJefeVentas }}</h3>
                         <pre>
-                            Jefe de Ventas
+                            JEFE DE VENTAS
                         </pre>
                     </td>
                 </tr>
@@ -447,9 +340,7 @@
                     <td align="center" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>CLIENTE : {{ $arrayDetalleCotizacion[0]->cContacto }}</h3>
-                        <pre>
-                            DOC IDEN: {{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}
-                        </pre>
+                        <pre>DOC IDEN: {{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}</pre>
                     </td>
                     <td align="right" style="width: 40%;">
                         <div class="cuadrado"></div>
