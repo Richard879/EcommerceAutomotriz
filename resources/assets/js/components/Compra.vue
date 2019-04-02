@@ -699,7 +699,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formForum.nidproveedor" filterable clearable placeholder="SELECCIONE" >
+                                                                                <el-select v-model="formWOperativo.nidproveedor" filterable clearable placeholder="SELECCIONE" >
                                                                                     <el-option
                                                                                     v-for="item in arrayProveedorForum"
                                                                                     :key="item.nIdPar"
@@ -1589,8 +1589,13 @@
                 checkBoxLinea: [],
                 // ============================================================
                 // =========== TAB FORUM ============
-                formForum:{
-                    nidproveedor: ''
+                formWOperativo:{
+                    nidproveedor: 0,
+                    cproveedornombre: '',
+                    cnrowarrant: '',
+                    dfechainicio: '',
+                    dfechafin: '',
+                    ccarcode: ''
                 },
                 arrayProveedorForum: [],
                 arrayForum: [],
@@ -4347,22 +4352,23 @@
                 this.contadorArrayForum = this.arrayForum.length;
             },
             registrarForum(){
-                if(this.validarRegistroForum()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                let me = this;
+
+                if(me.validarRegistroForum()){
+                    me.accionmodal=1;
+                    me.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/woperativo/SetWOperativo';
+                me.mostrarProgressBar();
+
+                var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'  : this.formForum.nidproveedor,
-                    'dFechaInicio'  : '',
-                    'data'          : this.arrayForum
+                    'nIdProveedor'      : me.formWOperativo.nidproveedor,
+                    'fTotalValor'       : me.fTotalValor,
+                    'data'              : me.arrayForum
                 }).then(response => {
-                    swal('Warrant Operativo registrado');
-                    this.arrayForum = [];
-                    this.attachment = [];
-                    this.limpiarFormulario();
+                    this.confirmarForum();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4380,13 +4386,20 @@
                 if(this.arrayForum == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.formForum.nidproveedor == 0 || !this.formForum.nidproveedor){
+                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
                     this.mensajeError.push('Seleccione Proveedor');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
+            },
+            confirmarForum(){
+                let me = this;
+                //me.loading.close();
+                $("#myBar").hide();
+                swal('Warrant Operativo registrado');
+                me.limpiarFormulario();
             },
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
@@ -4511,6 +4524,8 @@
                 this.formCompra.nidproveedor = 0,
                 this.formCompra.cproveedornombre = '',
                 this.arrayExcel = [],
+                this.arrayForum = [];
+                this.attachment = [];
                 this.form = new FormData,
                 $("#file-upload").val("");
 
