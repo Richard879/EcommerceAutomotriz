@@ -4481,6 +4481,21 @@
                 this.$delete(this.arrayWOperativo, index);
                 toastr.success('Se Eliminó Item Vehículo');
             },
+            validarRegistroForum(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayWOperativo == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
+                    this.mensajeError.push('Seleccione Proveedor');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             registrarForum(){
                 let me = this;
 
@@ -4537,20 +4552,378 @@
                     }
                 });
             },
-            validarRegistroForum(){
-                this.error = 0;
-                this.mensajeError =[];
+            generaSapAsientoContable(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
-                if(this.arrayWOperativo == []){
-                    this.mensajeError.push('No hay Datos a Registrar');
-                };
-                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
-                    this.mensajeError.push('Seleccione Proveedor');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
+                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
+                axios.post(url, {
+                    'data' : me.arraySapAsiento
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ProjectCode){
+                            me.arraySapUpdSgc.push({
+                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cTipo'         : 'WO',
+                                'cLogRespuesta' : response.data.toString()
+                            });
+                        }
+                    });
+                    //==============================================================================
+                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                    setTimeout(function() {
+                        me.registroSgcAsientoContable();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcAsientoContable(){
+                let me = this;
+                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1) {
+                         setTimeout(function() {
+                            me.generaSapFacturaProveedor();
+                        }, 1600);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
+                axios.post(sapUrl, {
+                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'fDocDate'  : moment().format('YYYY-MM-DD'),
+                    'data'      : me.arrayTemporal
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            me.arraySapUpdSgc.push({
+                                'cFlagTipo'         :   "FP",
+                                'cTipo'             :   'WO',
+                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     :   response.data.toString()
+                            });
+
+                            me.arraySapActividad.push({
+                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hActivityTime' :   '08:13:00',
+                                'cCardCode'     :   me.ccustomercode,
+                                'cNotes'        :   'WarranOperativo',
+                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                'nDocType'      :   '18',
+                                'nDuration'     :   '15',
+                                'cDurationType' :   'du_Minuts',
+                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hEndTime'      :   '08:28:00',
+                                'cReminder'     :   'tYES',
+                                'nReminderPeriod':  '15',
+                                'cReminderType' :   'du_Minuts',
+                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                'hStartTime'    :   '08:13:00'
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroSgcFacturaProveedor();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcFacturaProveedor(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.generaSapBusinessActividad();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapBusinessActividad(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
+                axios.post(sapUrl, {
+                    'data'       : me.arraySapActividad
+                }).then(response => {
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    if(me.arraySapRespuesta.length > 0) {
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ActivityCode){
+                                me.arraySapUpdSgc.push({
+                                    'nActividadTipo':   18,
+                                    'cActividadTipo':   'WarranOperativo',
+                                    'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
+                                    'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
+                                    'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.generaSgcActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcActividad(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        //me.confirmarWO();
+                        me.generaSapBusinessSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapBusinessSolucion(){
+                let me = this;
+
+                //Depurar Array para registrar en SAP
+                me.arraySapAsiento.map(function(value, key){
+                    me.arraySapSolucion.push({
+                        'cItemCode' : value.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
+                });
+
+                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapSolucion
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.SolutionCode){
+                            me.arraySapUpdSgc.push({
+                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                'cFlagTipo'     : 'WO',
+                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
+                            });
+
+                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                        }
+                    });
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.generaSgcSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcSolucion(){
+                let me = this;
+                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.getFacturaProveedorActividad();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getFacturaProveedorActividad(){
+                let me = this;
+                me.arraySapSolucion.map(function(x, y){
+                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWOByItemCode';
+                    axios.get(sapUrl, {
+                        params: {
+                            'citemcode'     : x.cItemCode,
+                            'nactividadtipo': 18
+                        }
+                    }).then(response => {
+                        me.arraySapLlamadaServicio.push({
+                            'nActivityCode'     : response.data[0].nActivityCode,
+                            'cCustomerCode'     : response.data[0].cCustomerCode,
+                            'cInternalSerialNum': response.data[0].cItemCode,
+                            'cItemCode'         : response.data[0].cItemCode,
+                            'nSolutionCode'     : response.data[0].nSolutionCode,
+                            'cSubject'          : 'WOPERATIVO'
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                });
+                setTimeout(function() {
+                    me.generaSapBusinessLlamadaServicio();
+                }, 1600);
+            },
+            generaSapBusinessLlamadaServicio(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapLlamadaServicio
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(value);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arraySapUpdSgc.push({
+                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                'cFlagTipo'         : 'WO',
+                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
+                            });
+                        }
+                    });
+                    //=========================================================================
+                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                    setTimeout(function() {
+                        me.generaSgcLlamadaServicio();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSgcLlamadaServicio(){
+                let me = this;
+                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    setTimeout(function() {
+                        me.confirmarWO();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             confirmarWO(){
                 let me = this;
