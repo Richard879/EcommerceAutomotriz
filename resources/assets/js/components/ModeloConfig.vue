@@ -256,11 +256,13 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Ficha Tecnica</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnica" accept="image/*" class="form-control form-control-sm"/>
+                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnica" accept="xml" class="form-control form-control-sm"/>
                                                                                     </div>
-                                                                                    <div id="preview">
+                                                                                    <!-- <div id="preview">
                                                                                         <img v-if="formConfigurador.urlImageFichaTecnica" :src="formConfigurador.urlImageFichaTecnica"/>
-                                                                                    </div>
+                                                                                    </div> -->
+                                                                                    <!-- <div id="xml"></div> -->
+                                                                                    <!-- <pre lang="xml" >{{formConfigurador.attachmentFichaTecnica}}</pre> -->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -778,7 +780,7 @@
                 }).then(response => {
                     if(response.data != ''){
                         this.formConfigurador.urlImageFotografia      =   response.data[0].cFotoImageUrl;
-                        this.formConfigurador.urlImageFichaTecnica    =   response.data[0].cFichaImageUrl;
+                        this.formConfigurador.urlImageFichaTecnica    =   '';
                         this.cFlagAccion = 2;//EDICION
                     } else {
                         this.formConfigurador.urlImageFotografia = '';

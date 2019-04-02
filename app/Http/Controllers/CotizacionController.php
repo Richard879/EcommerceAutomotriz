@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDashboard;
 use App\User;
@@ -613,20 +615,28 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        //OBTENGO LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
         $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
                                     [
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+        $cadena = substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
+        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA
+        $contents = Storage::get('public/'. $cadena);
+
         $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
-                                                            'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
-                                                            'arrayDetalleDocs'  => $arrayDetalleDocs,
-                                                            'arrayDatosBanco'   => $arrayDatosBanco,
-                                                            'logo'              => $logo,
-                                                            'hyundai'           => $hyundai
+                                                                'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
+                                                                'arrayDetalleDocs'  =>  $arrayDetalleDocs,
+                                                                'contents'          =>  $contents,
+                                                                'arrayDatosBanco'   =>  $arrayDatosBanco,
+                                                                'logo'              =>  $logo,
+                                                                'hyundai'           =>  $hyundai
                                                             ]);
+
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
     }
 

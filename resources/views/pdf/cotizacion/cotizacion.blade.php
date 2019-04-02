@@ -164,6 +164,28 @@
                 </table>
             </div>
 
+            {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $arrayDetalleDocs[0]->cFichaImageUrl }}</pre> --}}
+
+            {{-- <xml id="fichatecnica" src="{{ $arrayDetalleDocs[0]->cFichaImageUrl }}"></xml>
+            <table width="100%" border="1" datasrc="#fichatecnica">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Jobtitle</th>
+                        <th>Born</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span datafld="table1"></span></td>
+                        <td><span datafld="table2"></span></td>
+                        <td><span datafld="table3"></span></td>
+                    </tr>
+                </tbody>
+            </table> --}}
+
+            {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $contents }}</pre> --}}
+
             <table width="100%">
                 <tr>
                     <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>
