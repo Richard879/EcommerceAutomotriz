@@ -4479,6 +4479,7 @@
             },
             eliminarItemForum(index){
                 this.$delete(this.arrayWOperativo, index);
+                toastr.success('Se Eliminó Item Vehículo');
             },
             registrarForum(){
                 let me = this;
@@ -4491,13 +4492,13 @@
 
                 me.mostrarProgressBar();
 
-                var url = me.ruta + '/woperativo/SetWOperativo';
+                var url = me.ruta + '/woperativo/SetWOperativoCompra';
                 axios.post(url, {
                     'nIdProveedor'      : me.formWOperativo.nidproveedor,
                     'fTotalValor'       : me.fTotalValor,
                     'data'              : me.arrayWOperativo
                 }).then(response => {
-                    this.confirmarForum();
+                    me.confirmarForum();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
