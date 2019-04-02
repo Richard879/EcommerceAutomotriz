@@ -699,14 +699,17 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formForum.nidproveedor" filterable clearable placeholder="SELECCIONE" >
-                                                                                    <el-option
-                                                                                    v-for="item in arrayProveedorForum"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                                                                <div class="input-group">
+                                                                                    <input type="text" v-model="formWOperativo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Proveedor </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedorWO','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -753,7 +756,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12">
-                                                                <template v-if="arrayForum.length">
+                                                                <template v-if="arrayWOperativo.length">
                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
@@ -770,7 +773,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(forum, index) in arrayForum" :key="forum.cNumeroVin">
+                                                                                <tr v-for="(forum, index) in arrayWOperativo" :key="forum.cNumeroVin">
                                                                                     <td>
                                                                                         <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
@@ -827,6 +830,7 @@
                 </div>
             </section>
 
+            <!-- Modal Show Errors -->
             <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
@@ -1508,6 +1512,108 @@
                 </div>
             </div>
 
+            <!-- MODAL Proveedores WO -->
+            <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarProveedorWO(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarProveedorWO(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedorForum.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedorForum" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedorWO(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedorWO(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1589,11 +1695,16 @@
                 checkBoxLinea: [],
                 // ============================================================
                 // =========== TAB FORUM ============
-                formForum:{
-                    nidproveedor: ''
+                formWOperativo:{
+                    nidproveedor: 0,
+                    cproveedornombre: '',
+                    cnrowarrant: '',
+                    dfechainicio: '',
+                    dfechafin: '',
+                    ccarcode: ''
                 },
                 arrayProveedorForum: [],
-                arrayForum: [],
+                arrayWOperativo: [],
                 contadorArrayForum: 0,
                 arrayValorInteres: [],
                 // ==========================================================
@@ -4217,18 +4328,26 @@
                 this.listarProveedorWO();
                 this.limpiarFormulario();
             },
-            listarProveedorWO(){
+            listarProveedorWO(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar': 110094,
-                        'cnombreproveedor': '',
-                        'opcion' : 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
+                        'npartipo'          : 1001,
+                        'opcion'            : 0,
+                        'page'              : page
                     }
                 }).then(response => {
-                    this.arrayProveedorForum = response.data.arrayProveedor;
+                    this.arrayProveedorForum = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
+                    this.paginationModal.total = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from        = response.data.arrayProveedor.from;
+                    this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4238,6 +4357,16 @@
                         }
                     }
                 });
+            },
+            cambiarPaginaProveedorWO(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedorWO(page);
+            },
+            asignarProveedorWO(objProveedor){
+                this.formWOperativo.nidproveedor = objProveedor.nIdPar;
+                this.formWOperativo.cproveedornombre = objProveedor.cParNombre;
+                this.formWOperativo.ccarcode = objProveedor.cParJerarquia;
+                this.cerrarModal();
             },
             descargaFormatoForum(){
                 window.open(this.ruta + '/storage/FormatosDescarga/FormatoForum.xlsx');
@@ -4281,8 +4410,8 @@
                     }*/
 
                     this.$delete(response.data, 0);
-                    this.arrayForum = response.data;
-                    this.contadorArrayForum = this.arrayForum.length;
+                    this.arrayWOperativo = response.data;
+                    this.contadorArrayForum = this.arrayWOperativo.length;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -4343,26 +4472,27 @@
                 return this.error;
             },
             eliminarItemForum(index){
-                this.$delete(this.arrayForum, index);
-                this.contadorArrayForum = this.arrayForum.length;
+                this.$delete(this.arrayWOperativo, index);
+                this.contadorArrayForum = this.arrayWOperativo.length;
             },
             registrarForum(){
-                if(this.validarRegistroForum()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                let me = this;
+
+                if(me.validarRegistroForum()){
+                    me.accionmodal=1;
+                    me.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/woperativo/SetWOperativo';
+                me.mostrarProgressBar();
+
+                var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'  : this.formForum.nidproveedor,
-                    'dFechaInicio'  : '',
-                    'data'          : this.arrayForum
+                    'nIdProveedor'      : me.formWOperativo.nidproveedor,
+                    'fTotalValor'       : me.fTotalValor,
+                    'data'              : me.arrayWOperativo
                 }).then(response => {
-                    swal('Warrant Operativo registrado');
-                    this.arrayForum = [];
-                    this.attachment = [];
-                    this.limpiarFormulario();
+                    this.confirmarForum();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4377,16 +4507,23 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayForum == []){
+                if(this.arrayWOperativo == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.formForum.nidproveedor == 0 || !this.formForum.nidproveedor){
+                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
                     this.mensajeError.push('Seleccione Proveedor');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
+            },
+            confirmarForum(){
+                let me = this;
+                //me.loading.close();
+                $("#myBar").hide();
+                swal('Warrant Operativo registrado');
+                me.limpiarFormulario();
             },
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
@@ -4500,6 +4637,19 @@
                         }
                     }
                     break;
+                    case 'proveedorWO':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=8;
+                                this.modal = 1;
+                                this.listarProveedorWO(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             },
             // ===========================================================
@@ -4511,6 +4661,13 @@
                 this.formCompra.nidproveedor = 0,
                 this.formCompra.cproveedornombre = '',
                 this.arrayExcel = [],
+                this.formWOperativo.dfechainicio = '',
+                this.formWOperativo.ccarcode= '',
+                this.formWOperativo.nidproveedor= '',
+                this.formWOperativo.cproveedornombre= '',
+                this.formWOperativo.cnrowarrant= '',
+                this.arrayWOperativo = [];
+                this.attachment = [];
                 this.form = new FormData,
                 $("#file-upload").val("");
 
