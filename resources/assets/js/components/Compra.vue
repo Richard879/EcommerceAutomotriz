@@ -756,7 +756,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12">
-                                                                <template v-if="arrayForum.length">
+                                                                <template v-if="arrayWOperativo.length">
                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
@@ -773,7 +773,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(forum, index) in arrayForum" :key="forum.cNumeroVin">
+                                                                                <tr v-for="(forum, index) in arrayWOperativo" :key="forum.cNumeroVin">
                                                                                     <td>
                                                                                         <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
@@ -1574,16 +1574,16 @@
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedorWO(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -1704,7 +1704,7 @@
                     ccarcode: ''
                 },
                 arrayProveedorForum: [],
-                arrayForum: [],
+                arrayWOperativo: [],
                 contadorArrayForum: 0,
                 arrayValorInteres: [],
                 // ==========================================================
@@ -4410,8 +4410,8 @@
                     }*/
 
                     this.$delete(response.data, 0);
-                    this.arrayForum = response.data;
-                    this.contadorArrayForum = this.arrayForum.length;
+                    this.arrayWOperativo = response.data;
+                    this.contadorArrayForum = this.arrayWOperativo.length;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -4472,8 +4472,8 @@
                 return this.error;
             },
             eliminarItemForum(index){
-                this.$delete(this.arrayForum, index);
-                this.contadorArrayForum = this.arrayForum.length;
+                this.$delete(this.arrayWOperativo, index);
+                this.contadorArrayForum = this.arrayWOperativo.length;
             },
             registrarForum(){
                 let me = this;
@@ -4490,7 +4490,7 @@
                 axios.post(url, {
                     'nIdProveedor'      : me.formWOperativo.nidproveedor,
                     'fTotalValor'       : me.fTotalValor,
-                    'data'              : me.arrayForum
+                    'data'              : me.arrayWOperativo
                 }).then(response => {
                     this.confirmarForum();
                 }).catch(error => {
@@ -4507,7 +4507,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayForum == []){
+                if(this.arrayWOperativo == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
                 if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
@@ -4661,7 +4661,12 @@
                 this.formCompra.nidproveedor = 0,
                 this.formCompra.cproveedornombre = '',
                 this.arrayExcel = [],
-                this.arrayForum = [];
+                this.formWOperativo.dfechainicio = '',
+                this.formWOperativo.ccarcode= '',
+                this.formWOperativo.nidproveedor= '',
+                this.formWOperativo.cproveedornombre= '',
+                this.formWOperativo.cnrowarrant= '',
+                this.arrayWOperativo = [];
                 this.attachment = [];
                 this.form = new FormData,
                 $("#file-upload").val("");
