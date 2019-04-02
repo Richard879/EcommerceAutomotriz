@@ -144,19 +144,40 @@
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>Acción</th>
+                                                                                        <th>Marca</th>
                                                                                         <th>Modelo</th>
+                                                                                        <th>Año</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <tr v-for="(modelo, index) in arrayListModelos" :key="index">
                                                                                         <td>
+                                                                                            <template v-if="modelo.cFichaImageUrl">
+                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                    <div slot="content">Ver Ficha Tecnica del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                    <a href="#" @click="descargaFichaTecnica(modelo.cFichaImageUrl)">
+                                                                                                        <i class="fa-md fa fa-file-excel-o"></i>
+                                                                                                    </a>
+                                                                                                </el-tooltip>
+                                                                                            </template>
+
+                                                                                            <template v-if="modelo.cFotoImageUrl">
+                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                    <div slot="content">Ver Fotografia Referencial del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                    <a href="#" @click="descargaFotoRef(modelo.cFotoImageUrl)">
+                                                                                                        <i class="fa-md fa fa-file"></i>
+                                                                                                    </a>
+                                                                                                </el-tooltip>
+                                                                                            </template>
+
                                                                                             <el-tooltip class="item" effect="dark">
-                                                                                                <div slot="content">Ver Ficha Tecnica del Modelo  {{ modelo.cNombreVehiculo }}</div>
-                                                                                                <i @click="abrirModal('accesorios', 'ver', modelo)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                                <div slot="content">Configuracion del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                <i @click="generarConfiguracion(0, modelo)" :style="'color:gris'" class="fa-md fa fa-cogs"></i>
                                                                                             </el-tooltip>
                                                                                         </td>
-                                                                                        <td v-text="modelo.cNombreVehiculo"></td>
-                                                                                        <td v-text="modelo.cCantidad"></td>
+                                                                                        <td v-text="modelo.cNombreMarca"></td>
+                                                                                        <td v-text="modelo.cNombreModelo"></td>
+                                                                                        <td v-text="modelo.nAnioModelo"></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -196,6 +217,71 @@
                                                                             </tbody>
                                                                         </table>
                                                                     </template>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </template>
+
+                                    <template v-else>
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">CONFIGURADOR DEL MODELO/AÑO{{ formConfigModelo.cnombremodelo }} </h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Fotografía Referencial</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFileFotografia" accept="image/*" class="form-control form-control-sm"/>
+                                                                                    </div>
+                                                                                    <div id="preview">
+                                                                                        <img v-if="formConfigurador.urlImageFotografia" :src="formConfigurador.urlImageFotografia"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Ficha Tecnica</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnica" accept="image/*" class="form-control form-control-sm"/>
+                                                                                    </div>
+                                                                                    <div id="preview">
+                                                                                        <img v-if="formConfigurador.urlImageFichaTecnica" :src="formConfigurador.urlImageFichaTecnica"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-9 offset-sm-5">
+                                                                                <template v-if="cFlagAccion == 1">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDocsForModelo()">
+                                                                                        <i class="fa fa-save"></i> Registrar
+                                                                                    </button>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarDocsForModelo()">
+                                                                                        <i class="fa fa-save"></i> Actualizar
+                                                                                    </button>
+                                                                                </template>
+                                                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="generarConfiguracion(1)">
+                                                                                    <i class="fa fa-close"></i> Cancelar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -367,13 +453,19 @@
                 // =============================================================
                 // ================ VARIABLES TAB CONFIG VEHICULO ==============
                 // =============================================================
-                formConfigVehiculo:{
-                    nidversion: '',
+                formConfigModelo:{
+                    nidmodelo: '',
+                    naniomodelo: '',
                     cnombremodelo: ''
                 },
-                arrayElementoVenta: [],
-                arrayElementoVentaFlag: [],
-                arrayTemproralEV: [],
+                formConfigurador: {
+                    urlImageFotografia: '',
+                    urlImageFichaTecnica: '',
+                    attachmentFotografia: '',// Archivo a almacenar
+                    attachmentFichaTecnica: '',// Archivo a almacenar
+                },
+                cFlagAccion: 1,
+                form: new FormData,// El archivo tendrá que ser enviado como elemento FormData
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -527,11 +619,401 @@
                 this.pagination.current_page=page;
                 this.listarModelos(page);
             },
+            descargaFotoRef(cFotoImageUrl){
+                window.open(cFotoImageUrl);
+            },
+            descargaFichaTecnica(cFichaImageUrl){
+                window.open(cFichaImageUrl);
+            },
+            // ==========================================================
+            // =============  BUSCAR PROVEEDORES ========================
+            buscaProveedores(){
+                this.listarProveedores(1);
+            },
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion'            : 0,
+                        'page'              : page
+                    }
+                }).then(response => {
+                    this.arrayProveedor                 =   response.data.arrayProveedor.data;
+                    this.paginationModal.current_page   =   response.data.arrayProveedor.current_page;
+                    this.paginationModal.total          =   response.data.arrayProveedor.total;
+                    this.paginationModal.per_page       =   response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page      =   response.data.arrayProveedor.last_page;
+                    this.paginationModal.from           =   response.data.arrayProveedor.from;
+                    this.paginationModal.to             =   response.data.arrayProveedor.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
+            },
+            asignarProveedor(nProveedorId, cProveedorNombre){
+                this.formBsqModelo.nidproveedor       = nProveedorId;
+                this.formBsqModelo.cproveedornombre   = cProveedorNombre;
+                this.cerrarModal();
+                this.arrayMarca = [];
+                this.arrayModelo = [];
+                this.llenarComboLinea();
+            },
+            llenarComboLinea(){
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor'
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidproveedor'  :   this.formBsqModelo.nidproveedor,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    this.arrayLinea = response.data.arrayLinea
+                    this.formBsqModelo.nidlinea = ''
+                    this.llenarComboMarca();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboMarca(){
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea'
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea'  : this.formBsqModelo.nidlinea,
+                        'opcion'    : 1
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data.arrayMarca
+                    this.formBsqModelo.nidmarca = ''
+                    this.arrayModelo = [];
+                    this.llenarComboModelo();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea'  : this.formBsqModelo.nidlinea,
+                        'nidmarca'  : this.formBsqModelo.nidmarca,
+                        'opcion'    : 1
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data.arrayModelo;
+                    this.formBsqModelo.nidmodelo = '';
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =================================================================
+            // TAB CONFIGURADOR DE ACCESORIOS
+            // =================================================================
+            tabConfigurador(op){
+                this.vistaFormulario = op;
+                this.limpiarTabBsqConfigurar();
+            },
+            limpiarTabBsqConfigurar(){
+                //Registrar
+                this.formConfigModelo.nidmodelo = '';
+                this.formConfigModelo.naniomodelo = '';
+                this.formConfigModelo.cnombremodelo = '';
+                this.formConfigurador.urlImageFotografia = '';
+                this.formConfigurador.urlImageFichaTecnica = '';
+                this.formConfigurador.attachmentFotografia = '';
+                this.formConfigurador.attachmentFichaTecnica = '';
+                this.form = '';//Seteo a vacio
+                this.form = new FormData;//Inicializo el Obj FormData
+            },
+            generarConfiguracion(op, modelo = null){
+                this.tabConfigurador(op);
+                if(op == 0) {
+                    this.formConfigModelo.nidmodelo     =   modelo.nIdModelo
+                    this.formConfigModelo.naniomodelo   =   modelo.nAnioModelo
+                    this.formConfigModelo.cnombremodelo =   modelo.cNombreModelo + ' - ' + modelo.nAnioModelo
+                    this.verificarDosc(modelo);
+                }
+            },
+            verificarDosc(){
+                var url = this.ruta + '/modeloconfig/GetInfoDocsModelo';
+
+                axios.get(url, {
+                    params: {
+                        'nidmodelo'     : this.formConfigModelo.nidmodelo,
+                        'naniomodelo'   : this.formConfigModelo.naniomodelo
+                    }
+                }).then(response => {
+                    if(response.data != ''){
+                        this.formConfigurador.urlImageFotografia      =   response.data[0].cFotoImageUrl;
+                        this.formConfigurador.urlImageFichaTecnica    =   response.data[0].cFichaImageUrl;
+                        this.cFlagAccion = 2;//EDICION
+                    } else {
+                        this.formConfigurador.urlImageFotografia = '';
+                        this.formConfigurador.urlImageFichaTecnica = '';
+                        this.cFlagAccion = 1;//REGISTRAR
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getFileFotografia(e){
+                let selectFile  = e.target.files[0];
+                if(selectFile) {
+                    this.formConfigurador.attachmentFotografia = selectFile;
+                    this.formConfigurador.urlImageFotografia   = URL.createObjectURL(selectFile);
+                } else {
+                    this.formConfigurador.attachmentFotografia = '';
+                    this.formConfigurador.urlImageFotografia   = '';
+                }
+            },
+            getFileFichaTecnica(e){
+                let selectFile  = e.target.files[0];
+                if(selectFile) {
+                    this.formConfigurador.attachmentFichaTecnica = selectFile;
+                    this.formConfigurador.urlImageFichaTecnica   = URL.createObjectURL(selectFile);
+                } else {
+                    this.formConfigurador.attachmentFichaTecnica = '';
+                    this.formConfigurador.urlImageFichaTecnica   = '';
+                }
+            },
+            registrarDocsForModelo(){
+                if(this.validarRegistrarDocForModelo()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+                //AGREGAR ARCHIVO AL FORM DATA
+                this.form.append('fileFotografia', this.formConfigurador.attachmentFotografia);
+                this.form.append('fileFichaTecnica', this.formConfigurador.attachmentFichaTecnica);
+                this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
+                this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
+
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+
+                // Mostrar ProgressBar
+                this.mostrarProgressBar();
+
+                let url;
+                url = this.ruta + '/modeloconfig/SetRegistrarDocs';
+                axios.post(url, this.form, config).then(response => {
+                    // console.log(response.data)
+                    if(response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje);
+                        $("#myBar").hide();
+                        me.limpiarFormulario();
+                    } else {
+                        swal(response.data[0].cMensaje);
+                        $("#myBar").hide();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarRegistrarDocForModelo(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
+
+                if(!this.formConfigurador.attachmentFotografia && !this.formConfigurador.attachmentFichaTecnica) {
+                    me.mensajeError.push('Debe Seleccionar al menos un documento para el Modelo ');
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            limpiarFormulario(){
+                this.limpiarTabBsqModelo();
+                this.generarConfiguracion(1);
+            },
+            actualizarDocsForModelo(){
+                if(this.validarRegistrarDocForModelo()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+                //AGREGAR ARCHIVO AL FORM DATA
+                this.form.append('fileFotografia', this.formConfigurador.attachmentFotografia);
+                this.form.append('fileFichaTecnica', this.formConfigurador.attachmentFichaTecnica);
+                this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
+                this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
+
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+
+                // Mostrar ProgressBar
+                this.mostrarProgressBar();
+
+                let url;
+                url = this.ruta + '/modeloconfig/SetActualizarDocs';
+                axios.post(url, this.form, config).then(response => {
+                    // console.log(response.data)
+                    if(response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje);
+                        $("#myBar").hide();
+                        me.limpiarFormulario();
+                    } else {
+                        swal(response.data[0].cMensaje);
+                        $("#myBar").hide();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'proveedor':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'accesorios':
+                    {
+                        switch(accion){
+                            case 'ver':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.listarAccesoriosPorVehiculo(data);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+            }
         }
     }
 </script>
 
 <style>
-
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+    .barraLateral{
+        height: 45vh;
+        max-width:1200px;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+    .imgRedonda{
+        width:30px;
+        height:30px;
+        border-radius:150px;
+        border:3px solid #666;
+    }
+    #preview{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #preview img{
+        max-width: 20%;
+        min-width: 13%;
+        max-height: 100px;
+        border-radius:120px;
+        border:5px solid #666;
+    }
 </style>
 

@@ -22,7 +22,7 @@ class AccesorioVehiculoController extends Controller
         $nIdProveedor       = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
         $nIdLinea           = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdMarca;
+        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $cNombreVehiculo    = ($cNombreVehiculo == NULL) ? ($cNombreVehiculo = '') : $cNombreVehiculo;
 
         $data = DB::select('exec [usp_AccesorioVehiculo_GetListVehiculos] ?, ?, ?, ?, ?, ?',

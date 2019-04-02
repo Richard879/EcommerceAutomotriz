@@ -111,6 +111,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     // Configurador Modelos
     Route::get('/modeloconfig/GetListModelos', 'ModeloConfigController@GetListModelos');
+    Route::post('/modeloconfig/SetRegistrarDocs', 'ModeloConfigController@SetRegistrarDocs');
+    Route::get('/modeloconfig/GetInfoDocsModelo', 'ModeloConfigController@GetInfoDocsModelo');
+    Route::post('/modeloconfig/SetActualizarDocs', 'ModeloConfigController@SetActualizarDocs');
 
     Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
     Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
