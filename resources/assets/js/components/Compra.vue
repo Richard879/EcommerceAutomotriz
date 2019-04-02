@@ -699,14 +699,17 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formWOperativo.nidproveedor" filterable clearable placeholder="SELECCIONE" >
-                                                                                    <el-option
-                                                                                    v-for="item in arrayProveedorForum"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                                                                <div class="input-group">
+                                                                                    <input type="text" v-model="formWOperativo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Proveedor </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedorWO','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1527,11 +1530,11 @@
                                                         <label class="col-sm-4 form-control-label">Nombre</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarProveedores(1)" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarProveedorWO(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarProveedores(1)">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarProveedorWO(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -1543,7 +1546,7 @@
                                             </div>
                                         </form>
                                         <br/>
-                                        <template v-if="arrayProveedor.length">
+                                        <template v-if="arrayProveedorForum.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -1553,11 +1556,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                        <tr v-for="proveedor in arrayProveedorForum" :key="proveedor.nIdPar">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click="asignarProveedorWO(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="proveedor.cParNombre"></td>
@@ -4629,6 +4632,19 @@
                                 this.accionmodal=7;
                                 this.modal = 1;
                                 this.listarAlmacen(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'proveedorWO':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=8;
+                                this.modal = 1;
+                                this.listarProveedorWO(1);
                                 break;
                             }
                         }
