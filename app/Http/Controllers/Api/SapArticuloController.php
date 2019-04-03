@@ -133,4 +133,29 @@ class SapArticuloController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapSetArticuloUpd(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $json = [
+            'json' => [
+                'U_SYP_FAMILIA'         =>  (string)$value['cNombreLinea'],
+                'U_SYP_AMOD'            =>  (string)$value['nAnioVersion'],
+                "ItemCode"              =>  (string)$value['cNumeroVin'],
+                "ItemName"              =>  (string)$cItemCode,
+                "ItemType"              =>  (string)$ItemType,
+                "ItemsGroupCode"        =>  "107",
+                "IndirectTax"           =>  "tYES", //General           =>  Impuesto Directo
+                "U_SYP_CATEXIST"        =>  "1",    //Campos Usuario    =>  Catalogo de Existencias
+                "U_SYP_CATEXIST1"       =>  "1"     //Campos Usuario    =>  Catalogo de Existencias - SUNAT
+            ]
+        ];
+
+        $response = $client->request('POST', "/api/Articulo/SapSetArticuloUpd/", $json);
+        return $response->getBody();
+    }
 }
