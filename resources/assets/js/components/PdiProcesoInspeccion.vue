@@ -3344,6 +3344,7 @@
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
                                 this.formPdi.nequipmentcardnum = data['nEquipmentCardNum'];
+                                this.formPdi.cdescripcion = data['cNombreComercial'] + ' ' + data['nAnioModelo'];
                                 //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
