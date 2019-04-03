@@ -2363,6 +2363,7 @@
                     </div>
                 </div>
             </div>
+            
         </main>
     </transition>
 </template>
@@ -3565,24 +3566,24 @@
                     this.arrayVehiculo = [];
 
                     this.arrayVehiculo.push({
-                        codListaPrecioVD    : vehiculo.codListaPrecioVD,
-                        NombreComercial     : vehiculo.NombreComercial,
-                        AnioFabricacion     : vehiculo.nAnioFabricacion,
-                        AnioModelo          : vehiculo.nAnioModelo,
-                        PrecioBase          : vehiculo.PrecioBase,
-                        Bono                : vehiculo.Bono,
-                        PrecioLista         : vehiculo.PrecioLista,
-                        TYP                 : (vehiculo.TYP == null) ? 0 : vehiculo.TYP,
-                        Flete               : (vehiculo.Flete == null) ? 0 : parseFloat(vehiculo.Flete),
-                        cantidad            : 1,
-                        sobrePrecio         : 0,
-                        descuento           : 0,
-                        subtotal            : 0,
-                        nIdMoneda           : vehiculo.nIdMoneda,
-                        nIdLinea            : vehiculo.nIdLinea,
-                        nIdMarca            : vehiculo.nIdMarca,
-                        nIdModelo           : vehiculo.nIdModelo,
-                        BonoFlag            : vehiculo.Bono,
+                        'codListaPrecioVD'    : vehiculo.codListaPrecioVD,
+                        'NombreComercial'     : vehiculo.NombreComercial,
+                        'AnioFabricacion'     : vehiculo.nAnioFabricacion,
+                        'AnioModelo'          : vehiculo.nAnioModelo,
+                        'PrecioBase'          : vehiculo.PrecioBase,
+                        'Bono'                : vehiculo.Bono,
+                        'PrecioLista'         : vehiculo.PrecioLista,
+                        'TYP'                 : (vehiculo.TYP == null) ? 0 : vehiculo.TYP,
+                        'Flete'               : (vehiculo.Flete == null) ? 0 : parseFloat(vehiculo.Flete),
+                        'cantidad'            : 1,
+                        'sobrePrecio'         : 0,
+                        'descuento'           : 0,
+                        'subtotal'            : 0,
+                        'nIdMoneda'           : vehiculo.nIdMoneda,
+                        'nIdLinea'            : vehiculo.nIdLinea,
+                        'nIdMarca'            : vehiculo.nIdMarca,
+                        'nIdModelo'           : vehiculo.nIdModelo,
+                        'BonoFlag'            : vehiculo.Bono,
                     });
 
                     toastr.success('Se Agregó vehículo "'+ vehiculo.NombreComercial +'"');
@@ -3833,15 +3834,15 @@
                     if(this.arrayObsequioEleVenta.length > 0){
                         this.arrayObsequioEleVenta.map(function(eev){
                             me.arrayObsequioEleVentaModal.push({
-                                nIdObsequio             : eev.nIdObsequio,
-                                cNombreObsequio         : eev.cNombreObsequio,
-                                nIdElementoVenta        : eev.nIdElementoVenta,
-                                cNombre                 : eev.cNombre,
-                                nIdMoneda               : eev.nIdMoneda,
-                                cMonedaNombre           : eev.cMonedaNombre,
-                                nIdObsequioElementoVenta  : eev.nIdObsequioElementoVenta,
-                                fValorVenta             : eev.fValorVenta,
-                                cantidad                : eev.nCantidad
+                                'nIdObsequio'             : eev.nIdObsequio,
+                                'cNombreObsequio'         : eev.cNombreObsequio,
+                                'nIdElementoVenta'        : eev.nIdElementoVenta,
+                                'cNombre'                 : eev.cNombre,
+                                'nIdMoneda'               : eev.nIdMoneda,
+                                'cMonedaNombre'           : eev.cMonedaNombre,
+                                'nIdObsequioElementoVenta'  : eev.nIdObsequioElementoVenta,
+                                'fValorVenta'             : eev.fValorVenta,
+                                'cantidad'                : eev.nCantidad
                             });
                         });
                     }
@@ -3940,39 +3941,41 @@
                 this.buscarElementoVenta(page);
             },
             agregarElementoVentaLista(elemento){
-                if(this.encontrarElementoVenta(elemento.cElemenNombre)){
+                if(this.encontrarElementoVenta(elemento)){
                     swal({
                         type: 'error',
                         title: 'Error...',
                         text: 'El elemento de venta ya se encuentra agregado!',
-                    })
-                } else {
-                    this.arrayElementoVenta.push({
-                        cCodigoERP              : elemento.cCodigoERP,
-                        cElemenNombre           : elemento.cElemenNombre,
-                        cMonedaNombre           : elemento.cMonedaNombre,
-                        cProveedorNombre        : elemento.cProveedorNombre,
-                        cTipoElemenNombre       : elemento.cTipoElemenNombre,
-                        fElemenValorMinimoVenta : elemento.fElemenValorMinimoVenta,
-                        fElemenValorVenta       : elemento.fElemenValorVenta,
-                        nIdElemento             : elemento.nIdElemento,
-                        nIdMoneda               : elemento.nIdMoneda,
-                        nIdProveedor            : elemento.nIdProveedor,
-                        nIdTipoElemento         : elemento.nIdTipoElemento,
-                        cantidad                : 1,
-                        subtotal                : 0
                     });
-
-                    /*toastr.options.progressBar = true;
-                    toastr.options.closeButton = true;
-                    toastr.options.positionClass = "toast-top-full-width";*/
+                }else if(elemento.nIdTipoElemento == 1300512){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'No puede agregar este Tipo de Elemento!',
+                    });
+                }else {
+                    this.arrayElementoVenta.push({
+                        'cCodigoERP'              : elemento.cCodigoERP,
+                        'cElemenNombre'           : elemento.cElemenNombre,
+                        'cMonedaNombre'           : elemento.cMonedaNombre,
+                        'cProveedorNombre'        : elemento.cProveedorNombre,
+                        'cTipoElemenNombre'       : elemento.cTipoElemenNombre,
+                        'fElemenValorMinimoVenta' : elemento.fElemenValorMinimoVenta,
+                        'fElemenValorVenta'       : elemento.fElemenValorVenta,
+                        'nIdElemento'             : elemento.nIdElemento,
+                        'nIdMoneda'               : elemento.nIdMoneda,
+                        'nIdProveedor'            : elemento.nIdProveedor,
+                        'nIdTipoElemento'         : elemento.nIdTipoElemento,
+                        'cantidad'                : 1,
+                        'subtotal'                : 0
+                    });
                     toastr.success('Se Agregó "'+ elemento.cElemenNombre +'" ');
                 }
             },
             encontrarElementoVenta(elemento){
                 var sw=0;
                 this.arrayElementoVenta.map(function (x) {
-                    if(x.cElemenNombre == elemento){
+                    if(x.nIdElemento == elemento.nIdElemento){
                         sw = true;
                     }
                 });
