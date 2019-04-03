@@ -134,7 +134,7 @@ class SapArticuloController extends Controller
         return $array_rpta;
     }
 
-    public function SapSetArticuloUpd(Request $request)
+    public function SapPatchArticulo(Request $request)
     {
         $client = new Client([
             'verify'    => false,
@@ -142,17 +142,12 @@ class SapArticuloController extends Controller
         ]);
 
         $cNumeroVin         = $request->cNumeroVin;
-        $cNumeroMotor       = $request->cNumeroMotor;
-        $cNumeroDua         = $request->cNumeroDua;
-        $cNombreColor       = $request->cNombreColor;
-        $cSerieComprobante  = $request->cSerieComprobante;
-        $cNumeroComprobante = $request->cNumeroComprobante;
         $cCodigoNaciones    = $request->cCodigoNaciones;
 
         $json = [
             'json' => [
                 "ItemCode"      =>  (string)$cNumeroVin,
-                'U_SYP_UNSPSC'  =>  (string)$cCodigoNaciones
+                'U_SYP_UNSPSC'  =>  (string)$cCodigoNaciones//Código Naciones Unidas
             ]
         ];
 

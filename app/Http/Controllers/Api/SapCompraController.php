@@ -90,4 +90,36 @@ class SapCompraController extends Controller
         }
         return $array_rpta;
     }
+
+    public function SapPatchCompra(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $nDocEntry          = $request->nDocEntry;
+        $cSerieComprobante  = $request->cSerieComprobante;
+        $cNumeroComprobante = $request->cNumeroComprobante;
+        $nIdCompra          = $request->nIdCompra;
+        $cNumeroDua         = $request->cNumeroDua;
+        $dFechaDua          = $request->dFechaDua;
+        $cNumeroMotor       = $request->cNumeroMotor;
+        $cNombreColor       = $request->cNombreColor;
+
+        $json = [
+            'json' => [
+                "DocEntry"          =>  (string)$nDocEntry,
+                'U_SYP_MDSD'        =>  (string)$cSerieComprobante, //Serie del Documento
+                'U_SYP_MDCD'        =>  (string)$cNumeroComprobante,//Correlativo del Documento
+                'U_SYP_NOCCLIENTE'  =>  (string)$nIdCompra,         //Correlativo del Documento
+                'U_SYP_MDND'        =>  (string)$cNumeroDua,        //Numero de DUA
+                'U_SYP_CDAD'        =>  "055",                      //Codigo Aduana
+                'U_SYP_MDFD'        =>  (string)$dFechaDua,         //Fecha de DUA
+            ]
+        ];
+
+        $response = $client->request('POST', "/api/Compra/SapPatchCompra/", $json);
+        return $response->getBody();
+    }
 }

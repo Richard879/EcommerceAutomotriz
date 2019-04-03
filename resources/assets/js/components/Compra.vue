@@ -1679,6 +1679,8 @@
                 // ==========================================================
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
+                    ndocentry: '',
+                    ccardcode: '',
                     nidcompra: 0,
                     nordencompra: '',
                     cnombrecomercial:'',
@@ -4216,20 +4218,47 @@
             actualizarSapSetArticulo(){
                 let me = this;
                 this.mostrarProgressBar();
-                me.loadingProgressBar("ACTUALIZANDO DATOS DE VEHICULO EN SAP BUSINESS ONE...");
+                me.loadingProgressBar("ACTUALIZANDO DATOS DE LA COMPRA EN SAP BUSINESS ONE...");
 
-                var url = this.ruta + '/articulo/SapSetArticuloUpd';
+                var url = this.ruta + '/articulo/SapPatchArticulo';
                 axios.post(url, {
                     cNumeroVin          :   this.formModalCompra.cnumerovin,
-                    cNumeroMotor        :   this.formModalCompra.cnumeromotor,
-                    cNumeroDua          :   this.formModalCompra.cnumerodua,
-                    cNombreColor        :   this.formModalCompra.cnombrecolor,
-                    cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
-                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
                     cCodigoNaciones     :   this.formModalCompra.codigonacionesunidas
                 }).then(response => {
                     // console.log(response.data);
-                    console.log("ACUTALIZACIÒN DEL VEHÌCULO - SAP : OK");
+                    this.actualizarSapSetCompra();
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error al Generar la Actualizaciòn de Datos del Vehiculo en SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarSapSetCompra(){
+                let me = this;
+
+                var url = this.ruta + '/compra/SapPatchCompra';
+                axios.post(url, {
+                    nDocEntry           :   this.formModalCompra.ndocentry,
+                    cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
+                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
+                    nIdCompra           :   this.formModalCompra.nidcompra,
+                    cNumeroDua          :   this.formModalCompra.cnumerodua,
+                    dFechaDua           :   moment().format('YYYY-MM-DD'),
+                    cNumeroMotor        :   this.formModalCompra.cnumeromotor,
+                    cNombreColor        :   this.formModalCompra.cnombrecolor
+                }).then(response => {
+                    // console.log(response.data);
+                    console.log("ACUTALIZACIÓN DE LA COMPRA - SAP : OK");
                     swal('COMPRA ACTUALIZADA CORRECTAMENTE');
                     $("#myBar").hide();
                     me.loading.close();
@@ -5050,12 +5079,13 @@
                             {
                                 this.accionmodal=4;
                                 this.modal = 1;
+                                this.formModalCompra.ndocentry              =   data['nDocEntry'];
                                 this.formModalCompra.nidcompra              =   data['nIdCompra'];
                                 this.formModalCompra.nordencompra           =   data['nOrdenCompra'];
                                 this.formModalCompra.cnombrecomercial       =   data['cNombreComercial'];
                                 this.formModalCompra.cnumerovin             =   data['cNumeroVin'];
                                 this.formModalCompra.cnumeromotor           =   data['cNumeroMotor'];
-                                this.formModalCompra.cnumerodua             =   data['cNumeroDua'];
+                                this.formModalCompra.cnumerodua             =   data['cNumeroDUA'];
                                 this.formModalCompra.cnombrecolor           =   data['cNombreColor'];
                                 this.formModalCompra.cseriecomprobante      =   data['cSerieComprobante'];
                                 this.formModalCompra.cnumerocomprobante     =   data['cNumeroComprobante'];
