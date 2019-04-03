@@ -1784,13 +1784,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayAlmacen = response.data.arrayAlmacen.data;
-                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
-                    this.paginationModal.total = response.data.arrayAlmacen.total;
-                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
-                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
-                    this.paginationModal.from        = response.data.arrayAlmacen.from;
-                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                    this.arrayAlmacen                   = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page   = response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total          = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page       = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page      = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from           = response.data.arrayAlmacen.from;
+                    this.paginationModal.to             = response.data.arrayAlmacen.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1818,24 +1818,24 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
-                        'nidmarca': this.fillCompra.nidmarca,
-                        'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.fillCompra.dfechainicio,
+                        'dfechafin'     : this.fillCompra.dfechafin,
+                        'nordencompra'  : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin'    : this.fillCompra.cnumerovin,
+                        'nidmarca'      : this.fillCompra.nidmarca,
+                        'nidmodelo'     : this.fillCompra.nidmodelo,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.paginationModal.current_page =  response.data.arrayCompra.current_page;
-                    this.paginationModal.total = response.data.arrayCompra.total;
-                    this.paginationModal.per_page    = response.data.arrayCompra.per_page;
-                    this.paginationModal.last_page   = response.data.arrayCompra.last_page;
-                    this.paginationModal.from        = response.data.arrayCompra.from;
-                    this.paginationModal.to           = response.data.arrayCompra.to;
+                    this.arrayCompra                    = response.data.arrayCompra.data;
+                    this.paginationModal.current_page   = response.data.arrayCompra.current_page;
+                    this.paginationModal.total          = response.data.arrayCompra.total;
+                    this.paginationModal.per_page       = response.data.arrayCompra.per_page;
+                    this.paginationModal.last_page      = response.data.arrayCompra.last_page;
+                    this.paginationModal.from           = response.data.arrayCompra.from;
+                    this.paginationModal.to             = response.data.arrayCompra.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1926,21 +1926,21 @@
                 var url = this.ruta + '/pdi/GetLstVehiculoPaca';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnrovehiculo' : this.fillVehiculoPlaca.cdescripcion.toString(),
-                        'criterio': 2,
-                        'page' : page,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnrovehiculo'  : this.fillVehiculoPlaca.cdescripcion.toString(),
+                        'criterio'      : 2,
+                        'page'          : page,
                     }
                 }).then(response => {
-                    let info = response.data.arrayVehiculoPlaca;
-                    this.arrayVehiculoPlaca           = info.data;
-                    this.paginationModal.current_page =  info.current_page;
-                    this.paginationModal.total        = info.total;
-                    this.paginationModal.per_page     = info.per_page;
-                    this.paginationModal.last_page    = info.last_page;
-                    this.paginationModal.from         = info.from;
-                    this.paginationModal.to           = info.to;
+                    let info                            = response.data.arrayVehiculoPlaca;
+                    this.arrayVehiculoPlaca             = info.data;
+                    this.paginationModal.current_page   =  info.current_page;
+                    this.paginationModal.total          = info.total;
+                    this.paginationModal.per_page       = info.per_page;
+                    this.paginationModal.last_page      = info.last_page;
+                    this.paginationModal.from           = info.from;
+                    this.paginationModal.to             = info.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
