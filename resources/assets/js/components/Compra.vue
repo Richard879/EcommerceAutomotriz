@@ -548,7 +548,6 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">EN MANTENIMIENTO</div>
 
-
                                     <div role="tabpanel" class="tab-pane fade" id="TabLineaCredito">
                                         <section class="forms">
                                             <div class="container-fluid">
@@ -1102,6 +1101,16 @@
                                                     <label class="col-sm-4 form-control-label">Numero Comprobante</label>
                                                     <div class="col-sm-8">
                                                         <input type="number" v-model="formModalCompra.cnumerocomprobante" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Codigo Naciones Unidas</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalCompra.codigonacionesunidas" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1678,7 +1687,8 @@
                     cnumerodua: '',
                     cnombrecolor: '',
                     cseriecomprobante: '',
-                    cnumerocomprobante: ''
+                    cnumerocomprobante: '',
+                    codigonacionesunidas: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
@@ -4182,13 +4192,14 @@
                     cNumeroDua          :   this.formModalCompra.cnumerodua,
                     cNombreColor        :   this.formModalCompra.cnombrecolor,
                     cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
-                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante
+                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
+                    cCodigoNaciones     :   this.formModalCompra.codigonacionesunidas
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
-                        swal('Compra actualizada correctamente');
-                        // this.actualizarSapSetArticulo()
-                        this.cerrarModal();
-                        this.listarCompras(1);
+                        this.actualizarSapSetArticulo()
+                        // swal('Compra actualizada correctamente');
+                        // this.cerrarModal();
+                        // this.listarCompras(1);
                     } else {
                         swal('Ya existe VIN');
                     }
@@ -4207,25 +4218,29 @@
                 this.mostrarProgressBar();
                 me.loadingProgressBar("ACTUALIZANDO DATOS DE VEHICULO EN SAP BUSINESS ONE...");
 
-                var url = this.ruta + '/pedido/SapSetPedidoDscto';
+                var url = this.ruta + '/articulo/SapSetArticuloUpd';
                 axios.post(url, {
-                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
-                    nDocEntryPedido     : this.fillPedidoDscto.nDocEntryPedido,
-                    cCardCode           : this.fillPedidoDscto.cCardCode,
-                    cItemCode           : this.fillPedidoDscto.cItemCode,
-                    dMontoNuevoDolares  : this.fillPedidoDscto.dMontoNuevoDolares,
-                    dMontoDescontar     : this.fillPedidoDscto.dMontoDescontar,
-                    dFechaModificacion  : moment().format('YYYY-MM-DD'),
+                    cNumeroVin          :   this.formModalCompra.cnumerovin,
+                    cNumeroMotor        :   this.formModalCompra.cnumeromotor,
+                    cNumeroDua          :   this.formModalCompra.cnumerodua,
+                    cNombreColor        :   this.formModalCompra.cnombrecolor,
+                    cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
+                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
+                    cCodigoNaciones     :   this.formModalCompra.codigonacionesunidas
                 }).then(response => {
                     // console.log(response.data);
-                    console.log("Integración Descuento del Pedido - SAP : OK");
-                    this.registrarTblCostoSAP();
+                    console.log("ACUTALIZACIÒN DEL VEHÌCULO - SAP : OK");
+                    swal('COMPRA ACTUALIZADA CORRECTAMENTE');
+                    $("#myBar").hide();
+                    me.loading.close();
+                    this.cerrarModal();
+                    this.listarCompras(1);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Error al Generar el Dscto del Pedido SapB1!',
+                        text: 'Error al Generar la Actualizaciòn de Datos del Vehiculo en SapB1!',
                     });
                     console.log(error);
                     if (error.response) {
@@ -5035,15 +5050,16 @@
                             {
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                this.formModalCompra.nidcompra          =   data['nIdCompra'];
-                                this.formModalCompra.nordencompra       =   data['nOrdenCompra'];
-                                this.formModalCompra.cnombrecomercial   =   data['cNombreComercial'];
-                                this.formModalCompra.cnumerovin         =   data['cNumeroVin'];
-                                this.formModalCompra.cnumeromotor       =   data['cNumeroMotor'];
-                                this.formModalCompra.cnumerodua         =   data['cNumeroDua'];
-                                this.formModalCompra.cnombrecolor       =   data['cNombreColor'];
-                                this.formModalCompra.cseriecomprobante  =   data['cSerieComprobante'];
-                                this.formModalCompra.cnumerocomprobante =   data['cNumeroComprobante'];
+                                this.formModalCompra.nidcompra              =   data['nIdCompra'];
+                                this.formModalCompra.nordencompra           =   data['nOrdenCompra'];
+                                this.formModalCompra.cnombrecomercial       =   data['cNombreComercial'];
+                                this.formModalCompra.cnumerovin             =   data['cNumeroVin'];
+                                this.formModalCompra.cnumeromotor           =   data['cNumeroMotor'];
+                                this.formModalCompra.cnumerodua             =   data['cNumeroDua'];
+                                this.formModalCompra.cnombrecolor           =   data['cNombreColor'];
+                                this.formModalCompra.cseriecomprobante      =   data['cSerieComprobante'];
+                                this.formModalCompra.cnumerocomprobante     =   data['cNumeroComprobante'];
+                                this.formModalCompra.codigonacionesunidas   =   data['cCodigoNaciones'];
                                 break;
                             }
                             case 'lineacredito':

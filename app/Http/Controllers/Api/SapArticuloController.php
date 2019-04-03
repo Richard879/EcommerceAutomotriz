@@ -141,21 +141,22 @@ class SapArticuloController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
+        $cNumeroVin         = $request->cNumeroVin;
+        $cNumeroMotor       = $request->cNumeroMotor;
+        $cNumeroDua         = $request->cNumeroDua;
+        $cNombreColor       = $request->cNombreColor;
+        $cSerieComprobante  = $request->cSerieComprobante;
+        $cNumeroComprobante = $request->cNumeroComprobante;
+        $cCodigoNaciones    = $request->cCodigoNaciones;
+
         $json = [
             'json' => [
-                'U_SYP_FAMILIA'         =>  (string)$value['cNombreLinea'],
-                'U_SYP_AMOD'            =>  (string)$value['nAnioVersion'],
-                "ItemCode"              =>  (string)$value['cNumeroVin'],
-                "ItemName"              =>  (string)$cItemCode,
-                "ItemType"              =>  (string)$ItemType,
-                "ItemsGroupCode"        =>  "107",
-                "IndirectTax"           =>  "tYES", //General           =>  Impuesto Directo
-                "U_SYP_CATEXIST"        =>  "1",    //Campos Usuario    =>  Catalogo de Existencias
-                "U_SYP_CATEXIST1"       =>  "1"     //Campos Usuario    =>  Catalogo de Existencias - SUNAT
+                "ItemCode"      =>  (string)$cNumeroVin,
+                'U_SYP_UNSPSC'  =>  (string)$cCodigoNaciones
             ]
         ];
 
-        $response = $client->request('POST', "/api/Articulo/SapSetArticuloUpd/", $json);
+        $response = $client->request('POST', "/api/Articulo/SapPatchArticulo/", $json);
         return $response->getBody();
     }
 }
