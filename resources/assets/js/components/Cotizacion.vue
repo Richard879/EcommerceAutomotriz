@@ -2636,65 +2636,6 @@
                 }
                 return pagesArray;
             },
-            /*
-            //Calcula el Dscto 01
-            calcularDscto01: function(){
-                let me = this;
-                if(me.arrayVehiculo){
-                    return me.arrayVehiculo.map(function(x){
-                        if((x.subtotal - x.PrecioVenta) >= 0) {
-                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) >= 0) {
-                            me.observacionDscto = '';
-                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
-                            return x.subtotal - x.PrecioVenta;
-                        } else {
-                            return 0;
-                        }
-                    });
-                }
-            },
-            //Calcula el Dscto 02
-            calcularDscto02: function(){
-                let me = this;
-                if(me.arrayVehiculo){
-                    return me.arrayVehiculo.map(function(x){
-                        if((x.subtotal - x.PrecioVenta) < 0) {
-                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
-                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
-                            // console.log(me.fdscto03);
-                            // console.log(Math.abs(x.subtotal - x.PrecioVenta));
-                            let residuo = Math.abs(x.subtotal - x.PrecioVenta);
-                            return residuo - me.fdscto03;
-                        } else {
-                            return 0;
-                        }
-                    });
-                }
-            },
-            //Calcula el Dscto 03
-            calcularDscto03: function(){
-                let me = this;
-                if(me.arrayVehiculo){
-                    return me.arrayVehiculo.map(function(x){
-                        if((x.subtotal - x.PrecioCierre) < 0) {
-                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
-                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
-                            return x.subtotal - x.PrecioCierre;
-                        } else {
-                            return 0;
-                        }
-                    });
-                }
-            },
-            //Calcula el Dx
-            calcularDx: function(){
-                let me = this;
-                if(me.arrayVehiculo) {
-                    return me.arrayVehiculo.map(function(x){
-                        return x.PrecioBase - x.PrecioCierre;
-                    });
-                }
-            },*/
             //Calcula SubTotales y Total del TAB Vehículo
             totalVehiculo: function(){
                 let me = this;
@@ -2804,45 +2745,6 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
-            //Calcula SubTotales y Total del TAB Cotización - Elemento Venta Por Regalar
-            /*totalConfiCotiEleVentaPorRegalar: function(){
-                let me = this;
-                return me.arrayConfiCotiObsequios.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.subtotal);
-                }, 0);
-            },
-            totalConfiCotiEleVentaPorRegalarSoles: function(){
-                let me = this;
-                let montoconvertido = me.montoTotalConfiCotiObsequios * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
-            },*/
-            //Calcula SubTotales y Total del TAB Cotización - Elemento Venta
-            /*totalConfiCotiEleVenta: function(){
-                let me = this;
-                return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.subtotal);
-                }, 0);
-            },
-            totalConfiCotiEleVentaSoles: function(){
-                let me = this;
-                let montoconvertido = me.montoTotalConfiCotiEleVenta * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
-            },*/
-            //Calcula SubTotales y Total del TAB Cotización - Evento Camapaña (Elemento Venta)
-            /*totalConfiCotiEventoEleVenta: function(){
-                let me = this;
-                return me.arrayConfiCotiEventoEleVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.preciofinal);
-                }, 0);
-            },
-            totalConfiCotiEventoEleVentaSoles: function(){
-                let me = this;
-                let montoconvertido = me.montoTotalConfiCotiEventoEleVenta * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
-            },*/
             //Calcula SubTotales y Total de toda la Cotización
             totalConfiCoti: function(){
                 let me = this;
@@ -3590,35 +3492,6 @@
                     this.cerrarModal();
                 }
             },
-            //Evalua el cambio del sobre Precio
-            /*
-            changeSobrePrecio(value){
-                //Si existe descuento
-                if (this.arrayVehiculo[0].descuento > 0) {
-                    this.$message.error(`Primero borre el Descuento para generar el Sobre Precio`);
-                    this.arrayVehiculo[0].sobrePrecio = 0;
-                    this.$forceUpdate();
-                } else {
-                    if(value == ''){
-                        this.arrayVehiculo[0].sobrePrecio = 0;
-                    }
-                    //Sino entonces calcular el 10% y evaluarlo con el sobre precio actual
-                    this.flagLimiteSobrePrecio = this.arrayVehiculo[0].PrecioBase * 0.1;
-                    if (value > this.flagLimiteSobrePrecio) {
-                        this.$message.error(`El sobre precio (${value}) no puede superar el limite del 10% del Precio Base (${this.arrayVehiculo[0].PrecioBase})`);
-                        this.arrayVehiculo[0].sobrePrecio = 0;
-                        this.flagLimiteSobrePrecio = 0;
-                        this.$forceUpdate();
-                    } else {
-                        if(value > (this.flagLimiteSobrePrecio/1.2) && value < this.flagLimiteSobrePrecio) {
-                            this.$message.warning(`El sobre precio es (${value}), Se encuentra cerca del 10% del Precio Base (${this.flagLimiteSobrePrecio})`);
-                        }
-                    }
-                    this.$forceUpdate();
-                }
-                this.$forceUpdate();
-            },
-            */
             //Evalua el Bono
             changeBono(value){
                 //Si el Bono es modificado entonces deshabilitar Dscto
@@ -3669,21 +3542,6 @@
                         this.arrayVehiculo[0].descuento = 0;
                         this.$forceUpdate();
                     }
-                    /*
-                    if((parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta)) && (parseFloat(this.arrayVehiculo[0].subtotal) > (parseFloat(this.arrayVehiculo[0].PrecioCierre)))) {
-                        // this.$message.error(`El descuento no puede superar el limite del PVP`);
-                        // this.arrayVehiculo[0].descuento = 0;
-                        // this.$forceUpdate();
-                        this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del PVP ${this.arrayVehiculo[0].PrecioVenta}`);
-                        this.$forceUpdate();
-                    }
-
-                    //Si el SubTotal es menor que el Precio de Cierre (Precio Real Vehiculo)
-                    if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioCierre) ) {
-                        this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del Precio de Cierre ${this.arrayVehiculo[0].PrecioCierre}`);
-                        this.$forceUpdate();
-                    }
-                    */
                     this.$forceUpdate();
                 }
                 this.$forceUpdate();
@@ -3799,11 +3657,11 @@
                     if(this.arrayObsequiosByModelo.length > 0){
                         this.arrayObsequiosByModelo.map(function(ec){
                             me.arrayObsequio.push({
-                                nIdObsequio         : ec.nIdObsequio,
-                                cNombreObsequio     : ec.cNombreObsequio,
-                                dFechaInicio        : ec.dFechaInicio,
-                                dFechaFin           : ec.dFechaFin,
-                                fValorPresupuesto   : ec.fValorPresupuesto
+                                'nIdObsequio'         : ec.nIdObsequio,
+                                'cNombreObsequio'     : ec.cNombreObsequio,
+                                'dFechaInicio'        : ec.dFechaInicio,
+                                'dFechaFin'           : ec.dFechaFin,
+                                'fValorPresupuesto'   : ec.fValorPresupuesto
                             });
 
                             axios.get(url, {
@@ -4049,13 +3907,13 @@
                     if(this.arrayCampaniasByModelo.length > 0){
                         this.arrayCampaniasByModelo.map(function(ec){
                             me.arrayEventoCampania.push({
-                                nIdEventoCampania       : ec.nIdEventoCampania,
-                                cNombreEventoCampania   : ec.cNombreEventoCampania,
-                                nIdTipoEvento           : ec.nIdTipoEvento,
-                                TipoEvento              : ec.TipoEvento,
-                                dFechaInicio            : ec.dFechaInicio,
-                                dFechaFin               : ec.dFechaFin,
-                                fValorPresupuesto       : ec.fValorPresupuesto
+                                'nIdEventoCampania'       : ec.nIdEventoCampania,
+                                'cNombreEventoCampania'   : ec.cNombreEventoCampania,
+                                'nIdTipoEvento'           : ec.nIdTipoEvento,
+                                'TipoEvento'              : ec.TipoEvento,
+                                'dFechaInicio'            : ec.dFechaInicio,
+                                'dFechaFin'               : ec.dFechaFin,
+                                'fValorPresupuesto'       : ec.fValorPresupuesto
                             });
 
                             axios.get(url, {
@@ -4079,72 +3937,6 @@
                             });
                         });
                     }
-                    /*if(this.arrayCampaniasByMarca.length > 0){
-                        this.arrayCampaniasByMarca.map(function(ec){
-                            me.arrayEventoCampania.push({
-                                nIdEventoCampania       : ec.nIdEventoCampania,
-                                cNombreEventoCampania   : ec.cNombreEventoCampania,
-                                nIdTipoEvento           : ec.nIdTipoEvento,
-                                TipoEvento              : ec.TipoEvento,
-                                dFechaInicio            : ec.dFechaInicio,
-                                dFechaFin               : ec.dFechaFin,
-                                fValorPresupuesto       : ec.fValorPresupuesto
-                            });
-
-                            axios.get(url, {
-                                params: {
-                                    'fecha'  : moment().format('YYYY-MM-DD'),
-                                    'nideventocampania'  : ec.nIdEventoCampania
-                                }
-                            }).then(response => {
-                                me.arrayEventoEleVenta  =  response.data;
-                                me.$nextTick(function () {
-                                    me.llenarEventoEleVenta();
-                                })
-                            }).catch(error => {
-                                this.errors = error
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        });
-                    }
-                    if(this.arrayCampaniasByLinea.length > 0){
-                        this.arrayCampaniasByLinea.map(function(ec){
-                            me.arrayEventoCampania.push({
-                                nIdEventoCampania       : ec.nIdEventoCampania,
-                                cNombreEventoCampania   : ec.cNombreEventoCampania,
-                                nIdTipoEvento           : ec.nIdTipoEvento,
-                                TipoEvento              : ec.TipoEvento,
-                                dFechaInicio            : ec.dFechaInicio,
-                                dFechaFin               : ec.dFechaFin,
-                                fValorPresupuesto       : ec.fValorPresupuesto
-                            });
-
-                            axios.get(url, {
-                                params: {
-                                    'fecha'  : moment().format('YYYY-MM-DD'),
-                                    'nideventocampania'  : ec.nIdEventoCampania
-                                }
-                            }).then(response => {
-                                me.arrayEventoEleVenta  =  response.data;
-                                me.$nextTick(function () {
-                                    me.llenarEventoEleVenta();
-                                })
-                            }).catch(error => {
-                                me.errors = error
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        });
-                    }*/
                 })
             },
             llenarEventoEleVenta(){
