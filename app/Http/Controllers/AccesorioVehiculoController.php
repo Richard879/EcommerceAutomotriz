@@ -42,12 +42,13 @@ class AccesorioVehiculoController extends Controller
     {
         $nIdEmpresa     =   $request->nidempresa;
         $nIdVersionVeh  =   $request->nIdVersionVeh;
-        // $cNombreVehiculo    = $request->cnombrevehiculo;
+        $nAnioModelo    =   $request->nAnioModelo;
 
-        $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementos] ?, ?',
+        $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementos] ?, ?, ?',
                                                         [
                                                             $nIdEmpresa,
-                                                            $nIdVersionVeh
+                                                            $nIdVersionVeh,
+                                                            $nAnioModelo
                                                         ]);
         return response()->json($data);
     }
@@ -56,10 +57,11 @@ class AccesorioVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $element = DB::select('exec [usp_AccesorioVehiculo_SetDeleteElementoVentaByVehiculo] ?, ?, ?',
+        $element = DB::select('exec [usp_AccesorioVehiculo_SetDeleteElementoVentaByVehiculo] ?, ?, ?, ?',
                                                             [
                                                                 $request->nIdEmpresa,
                                                                 $request->nidversion,
+                                                                $request->naniomodelo,
                                                                 Auth::user()->id
                                                             ]);
         return response()->json($element);
@@ -74,10 +76,11 @@ class AccesorioVehiculoController extends Controller
             $detalles = $request->arrayData;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_AccesorioVehiculo_SetElementosByVehiculo] ?, ?, ?, ?, ?',
+                DB::select('exec [usp_AccesorioVehiculo_SetElementosByVehiculo] ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $request->nIdEmpresa,
                                                                 $request->nidversion,
+                                                                $request->naniomodelo,
                                                                 $det['nIdElemento'],
                                                                 $det['cantidad'],
                                                                 Auth::user()->id
@@ -93,12 +96,13 @@ class AccesorioVehiculoController extends Controller
     {
         $nIdEmpresa     = $request->nIdEmpresa;
         $nIdVersionVeh  = $request->nIdVersionVeh;
-        // $cNombreVehiculo    = $request->cnombrevehiculo;
+        $nAnioModelo    = $request->nAnioModelo;
 
-        $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementosByVehiculo] ?, ?',
+        $data = DB::select('exec [usp_AccesorioVehiculo_GetListElementosByVehiculo] ?, ?, ?',
                                                         [
                                                             $nIdEmpresa,
-                                                            $nIdVersionVeh
+                                                            $nIdVersionVeh,
+                                                            $nAnioModelo
                                                         ]);
         return response()->json($data);
     }
