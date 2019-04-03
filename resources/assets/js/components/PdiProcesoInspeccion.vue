@@ -271,6 +271,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div v-if="formPdi.cdescripcion" class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Descripción Vehículo</label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" v-model="formPdi.cdescripcion" disabled="disabled" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </template>
                                         <template v-if="formPdi.cvinplacanombre">
@@ -1318,7 +1326,8 @@
                     cFlagVinPlaca: '',
                     cobservacion: '',
                     nidconformidad: 0,
-                    nequipmentcardnum: 0
+                    nequipmentcardnum: 0,
+                    cdescripcion: ''
                 },
                 arraySolicitud: [],
                 arrayPuntoInspeccion: [],
@@ -1775,13 +1784,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayAlmacen = response.data.arrayAlmacen.data;
-                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
-                    this.paginationModal.total = response.data.arrayAlmacen.total;
-                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
-                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
-                    this.paginationModal.from        = response.data.arrayAlmacen.from;
-                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                    this.arrayAlmacen                   = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page   = response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total          = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page       = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page      = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from           = response.data.arrayAlmacen.from;
+                    this.paginationModal.to             = response.data.arrayAlmacen.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1809,24 +1818,24 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
-                        'nidmarca': this.fillCompra.nidmarca,
-                        'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.fillCompra.dfechainicio,
+                        'dfechafin'     : this.fillCompra.dfechafin,
+                        'nordencompra'  : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin'    : this.fillCompra.cnumerovin,
+                        'nidmarca'      : this.fillCompra.nidmarca,
+                        'nidmodelo'     : this.fillCompra.nidmodelo,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.paginationModal.current_page =  response.data.arrayCompra.current_page;
-                    this.paginationModal.total = response.data.arrayCompra.total;
-                    this.paginationModal.per_page    = response.data.arrayCompra.per_page;
-                    this.paginationModal.last_page   = response.data.arrayCompra.last_page;
-                    this.paginationModal.from        = response.data.arrayCompra.from;
-                    this.paginationModal.to           = response.data.arrayCompra.to;
+                    this.arrayCompra                    = response.data.arrayCompra.data;
+                    this.paginationModal.current_page   = response.data.arrayCompra.current_page;
+                    this.paginationModal.total          = response.data.arrayCompra.total;
+                    this.paginationModal.per_page       = response.data.arrayCompra.per_page;
+                    this.paginationModal.last_page      = response.data.arrayCompra.last_page;
+                    this.paginationModal.from           = response.data.arrayCompra.from;
+                    this.paginationModal.to             = response.data.arrayCompra.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1850,6 +1859,7 @@
                 this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
                 this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
                 this.formPdi.nidvehiculoplaca   = 0;
+                this.formPdi.cdescripcion       = objCompra.cNombreComercial + ' ' + objCompra.nAnioModelo;
                 this.cerrarModal();
             },
             llenarComboMarca(){
@@ -1893,6 +1903,7 @@
                 });
             },
             changeFlagVinPlaca(){
+                this.formPdi.cdescripcion       = '',
                 this.formPdi.nidcompra          = 0;
                 this.formPdi.cvinplacanombre    = '';
                 this.formPdi.cnumerovin         = '';
@@ -1915,21 +1926,21 @@
                 var url = this.ruta + '/pdi/GetLstVehiculoPaca';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnrovehiculo' : this.fillVehiculoPlaca.cdescripcion.toString(),
-                        'criterio': 2,
-                        'page' : page,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnrovehiculo'  : this.fillVehiculoPlaca.cdescripcion.toString(),
+                        'criterio'      : 2,
+                        'page'          : page,
                     }
                 }).then(response => {
-                    let info = response.data.arrayVehiculoPlaca;
-                    this.arrayVehiculoPlaca           = info.data;
-                    this.paginationModal.current_page =  info.current_page;
-                    this.paginationModal.total        = info.total;
-                    this.paginationModal.per_page     = info.per_page;
-                    this.paginationModal.last_page    = info.last_page;
-                    this.paginationModal.from         = info.from;
-                    this.paginationModal.to           = info.to;
+                    let info                            = response.data.arrayVehiculoPlaca;
+                    this.arrayVehiculoPlaca             = info.data;
+                    this.paginationModal.current_page   =  info.current_page;
+                    this.paginationModal.total          = info.total;
+                    this.paginationModal.per_page       = info.per_page;
+                    this.paginationModal.last_page      = info.last_page;
+                    this.paginationModal.from           = info.from;
+                    this.paginationModal.to             = info.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1951,6 +1962,7 @@
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.formPdi.nequipmentcardnum  = objVehiculo.nEquipmentCardNum;
                 this.ccustomercode              = objVehiculo.cCustomerCode;
+                this.formPdi.cdescripcion       = objVehiculo.cNombreComercial;
                 this.cerrarModal();
             },
             //===========
@@ -3332,6 +3344,7 @@
                                 this.formPdi.nidvehiculoplaca = data['nIdVehiculoPlaca'];
                                 this.formPdi.nidflagvinplaca = data['nIdFlagVinPlaca'];
                                 this.formPdi.nequipmentcardnum = data['nEquipmentCardNum'];
+                                this.formPdi.cdescripcion = data['cNombreComercial'] + ' ' + data['nAnioModelo'];
                                 //this.ccustomercode = data['cCustomerCode'];
                                 this.obtenerOrdenVenta();
                                 this.obtenerDetalleTipoInspeccionById();
@@ -3342,7 +3355,7 @@
                 }
             },
             cerrarModal(){
-                this.modal = 0
+                this.modal = 0,
                 this.error = 0,
                 this.mensajeError = ''
             },
@@ -3447,6 +3460,7 @@
                 return this.error;
             },
             limpiarFormulario(){
+                this.formPdi.cdescripcion = '',
                 this.formPdi.cnumerovin = '',
                 this.formPdi.nidcompra = '',
                 this.formPdi.nidflagmovimiento = 1,
