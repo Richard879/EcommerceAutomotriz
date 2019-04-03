@@ -42,7 +42,7 @@ class ElementoController extends Controller
          ],'elementos'=>$element];*/
     }
 
-    public function GetElementoByTipoBsq(Request $request)
+    /*public function GetElementoByTipoBsq(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -61,7 +61,7 @@ class ElementoController extends Controller
 
         $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
-    }
+    }*/
 
     public function store(Request $request)
     {
