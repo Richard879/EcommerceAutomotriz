@@ -174,8 +174,8 @@
                                                                                             <li v-if="pagination.current_page > 1" class="page-item">
                                                                                                 <a @click.prevent="cambiarPaginaVehiculos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                             </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
                                                                                                 <a class="page-link"
                                                                                                 href="#" @click.prevent="cambiarPaginaVehiculos(page)"
                                                                                                 v-text="page"></a>

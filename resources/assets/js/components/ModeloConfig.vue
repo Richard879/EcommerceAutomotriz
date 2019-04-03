@@ -423,6 +423,7 @@
                     </div>
                 </div>
             </div>
+            
         </main>
     </transition>
 </template>
@@ -1006,4 +1007,3 @@
         border:5px solid #666;
     }
 </style>
-
