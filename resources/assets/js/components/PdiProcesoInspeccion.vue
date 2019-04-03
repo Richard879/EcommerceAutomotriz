@@ -1080,7 +1080,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-10">
                                                     <div class="row" v-if="nflagalmacen!=0">
-                                                        <label class="col-sm-4 form-control-label">Buscar Accesorio</label>
+                                                        <label class="col-sm-2 form-control-label">Buscar Accesorio</label>
                                                         <div class="col-sm-8">
                                                             <el-autocomplete
                                                                     class=""
@@ -1104,6 +1104,7 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Tipo</th>
+                                                            <th>Código Sap</th>
                                                             <th>Nombre</th>
                                                             <th>Cantidad</th>
                                                             <th>Conformidad</th>
@@ -1120,6 +1121,7 @@
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="a.cTipoElemenNombre"></td>
+                                                            <td v-text="a.cCodigoERP"></td>
                                                             <td v-text="a.cElemenNombre"></td>
                                                             <td><input type="number" v-model="a.nCantidad" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
                                                             <td>
@@ -2153,7 +2155,7 @@
             //================================================================
             listarAccesorioPdiEntrada(){
                 let me = this;
-                var url = me.ruta + '/pdi/GetElementoByTipoBsq';
+                var url = me.ruta + '/pdi/GetAccesoriosPdiEntrada';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),

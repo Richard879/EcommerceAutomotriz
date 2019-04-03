@@ -182,16 +182,16 @@
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
-                                                                        <div class="col-lg-12">
+                                                                        <div class="col-sm-12">
                                                                             <div class="row">
-                                                                                <div class="col-lg-7">
+                                                                                <div class="col-sm-7">
                                                                                     <nav>
                                                                                         <ul class="pagination">
                                                                                             <li v-if="pagination.current_page > 1" class="page-item">
                                                                                                 <a @click.prevent="cambiarPaginaModelos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                             </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
                                                                                                 <a class="page-link"
                                                                                                 href="#" @click.prevent="cambiarPaginaModelos(page)"
                                                                                                 v-text="page"></a>
@@ -202,7 +202,7 @@
                                                                                         </ul>
                                                                                     </nav>
                                                                                 </div>
-                                                                                <div class="col-lg-5">
+                                                                                <div class="col-sm-5">
                                                                                     <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
@@ -423,6 +423,7 @@
                     </div>
                 </div>
             </div>
+            
         </main>
     </transition>
 </template>
@@ -992,18 +993,6 @@
         font-weight: bold;
         font-size: 0.75rem;
     }
-    .barraLateral{
-        height: 45vh;
-        max-width:1200px;
-        overflow-x: auto;
-        overflow-y: auto;
-    }
-    .imgRedonda{
-        width:30px;
-        height:30px;
-        border-radius:150px;
-        border:3px solid #666;
-    }
     #preview{
         width: 100%;
         display: flex;
@@ -1018,4 +1007,3 @@
         border:5px solid #666;
     }
 </style>
-

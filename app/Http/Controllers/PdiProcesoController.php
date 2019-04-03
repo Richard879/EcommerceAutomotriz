@@ -315,7 +315,7 @@ class PdiProcesoController extends Controller
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
 
-    public function GetElementoByTipoBsq(Request $request)
+    public function GetAccesoriosPdiEntrada(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -326,7 +326,7 @@ class PdiProcesoController extends Controller
         $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
         $codVehiculo    =   ($codVehiculo == NULL) ? ($codVehiculo = '') : $codVehiculo;
 
-        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipoBsq] ?, ?, ?',
+        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetAccesoriosPdiEntrada] ?, ?, ?',
                                                                 [   $nidempresa,
                                                                     $tipoBsq,
                                                                     $codVehiculo
