@@ -271,6 +271,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div v-if="formPdi.cdescripcion" class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Descripción Vehículo</label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" v-model="formPdi.cdescripcion" disabled="disabled" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </template>
                                         <template v-if="formPdi.cvinplacanombre">
@@ -1318,7 +1326,8 @@
                     cFlagVinPlaca: '',
                     cobservacion: '',
                     nidconformidad: 0,
-                    nequipmentcardnum: 0
+                    nequipmentcardnum: 0,
+                    cdescripcion: ''
                 },
                 arraySolicitud: [],
                 arrayPuntoInspeccion: [],
@@ -1850,6 +1859,7 @@
                 this.nIdServiceCallCompra       = objCompra.nServiceCallIDCompra;
                 this.nIdServiceCallVenta        = objCompra.nServiceCallIDVenta;
                 this.formPdi.nidvehiculoplaca   = 0;
+                this.formPdi.cdescripcion       = objCompra.cNombreComercial + ' ' + objCompra.nAnioModelo;
                 this.cerrarModal();
             },
             llenarComboMarca(){
@@ -1893,6 +1903,7 @@
                 });
             },
             changeFlagVinPlaca(){
+                this.formPdi.cdescripcion       = '',
                 this.formPdi.nidcompra          = 0;
                 this.formPdi.cvinplacanombre    = '';
                 this.formPdi.cnumerovin         = '';
@@ -1951,6 +1962,7 @@
                 this.formPdi.nidvehiculoplaca   = objVehiculo.nIdVehiculoPlaca;
                 this.formPdi.nequipmentcardnum  = objVehiculo.nEquipmentCardNum;
                 this.ccustomercode              = objVehiculo.cCustomerCode;
+                this.formPdi.cdescripcion       = objVehiculo.cNombreComercial;
                 this.cerrarModal();
             },
             //===========
@@ -3342,7 +3354,7 @@
                 }
             },
             cerrarModal(){
-                this.modal = 0
+                this.modal = 0,
                 this.error = 0,
                 this.mensajeError = ''
             },
@@ -3447,6 +3459,7 @@
                 return this.error;
             },
             limpiarFormulario(){
+                this.formPdi.cdescripcion = '',
                 this.formPdi.cnumerovin = '',
                 this.formPdi.nidcompra = '',
                 this.formPdi.nidflagmovimiento = 1,
