@@ -489,6 +489,7 @@
                 // =============================================================
                 formConfigVehiculo:{
                     nidversion: '',
+                    naniomodelo: '',
                     cnombrevehiculo: ''
                 },
                 arrayElementoVenta: [],
@@ -654,7 +655,8 @@
                     params: {
                         'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         // 'cnombrevehiculo'   :   data.cNombreVehiculo
-                        'nIdVersionVeh'     :   data.nIdVersionVeh
+                        'nIdVersionVeh'     :   data.nIdVersionVeh,
+                        'nAnioModelo'       :   data.nAnioModelo
                     }
                 }).then(response => {
                     this.arrayAccesorios   =   response.data;
@@ -791,6 +793,7 @@
             },
             limpiarTabBsqConfigurarAccesorios(){
                 this.formConfigVehiculo.nidversion       = '';
+                this.formConfigVehiculo.naniomodelo      = '';
                 this.formConfigVehiculo.cnombrevehiculo  = '';
                 this.arrayElementoVenta = [];
                 this.arrayElementoVentaFlag = [];
@@ -799,6 +802,7 @@
             generarAccesorios(op, vehiculo){
                 this.tabConfiguradorAccesorios();
                 this.formConfigVehiculo.nidversion      =   vehiculo.nIdVersionVeh
+                this.formConfigVehiculo.naniomodelo     =   vehiculo.nAnioModelo
                 this.formConfigVehiculo.cnombrevehiculo =   vehiculo.cNombreVehiculo
                 this.listarElementoVenta(vehiculo);
             },
@@ -808,8 +812,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdVersionVeh'     :   vehiculo.nIdVersionVeh
-                        // 'cnombrevehiculo'   :   vehiculo.cNombreVehiculo,
+                        'nIdVersionVeh'     :   vehiculo.nIdVersionVeh,
+                        'nAnioModelo'       :   vehiculo.nAnioModelo
                     }
                 }).then(response => {
                     this.arrayElementoVenta = response.data;
@@ -841,8 +845,6 @@
                     $("#lsttreegrupo").treeview();
                 });
                 $("#myBar").hide();
-
-                // this.llenarCheckBox();
             },
             seleccionarEleVenta(){
                 let me = this;
@@ -872,11 +874,12 @@
 
                 var url = this.ruta + '/accesoriovehiculo/DeleteElementosByVehiculo';
                 axios.post(url, {
-                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     // 'cnombrevehiculo'   : this.formConfigVehiculo.cnombrevehiculo
-                    'nidversion'    : this.formConfigVehiculo.nidversion
+                    'nidversion'    :   this.formConfigVehiculo.nidversion,
+                    'naniomodelo'   :   this.formConfigVehiculo.naniomodelo
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.registrarEleVenta();
                 }).catch(error => {
                     this.errors = error
@@ -894,6 +897,7 @@
                     'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     // 'cnombrevehiculo'   :   this.formConfigVehiculo.cnombrevehiculo,
                     'nidversion'    :   this.formConfigVehiculo.nidversion,
+                    'naniomodelo'   :   this.formConfigVehiculo.naniomodelo,
                     'arrayData'     :   this.arrayTemproralEV
                 }).then(response => {
                     swal('Accesorios Registrados exitosamente al Vehiculo ' + this.formConfigVehiculo.cnombrevehiculo);
