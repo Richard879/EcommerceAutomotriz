@@ -1078,10 +1078,10 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-11">
                                                     <div class="row" v-if="nflagalmacen!=0">
                                                         <label class="col-sm-2 form-control-label">Buscar Accesorio</label>
-                                                        <div class="col-sm-8">
+                                                        <div class="col-sm-9">
                                                             <el-autocomplete
                                                                     class=""
                                                                     clearable
@@ -3570,5 +3570,8 @@
     }
     .el-autocomplete{
         width: 100%;
+    }
+    .el-autocomplete-suggestion li{
+        font-size: 0.8em;
     }
 </style>
