@@ -105,7 +105,7 @@ const app = new Vue({
         Echo.private(`userlogout.${userId}`)
             .listen('LogoutFromEveryWhere', (e) => {
                 // console.log(e);
-                location.reload()
+                //location.reload()
             })
         this.obtenerRolUsuario();
     },
