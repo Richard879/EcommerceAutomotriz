@@ -2391,6 +2391,58 @@
 
                 this.mostrarProgressBar();
 
+                //Si el PDI es de EXHIBICION DE VEHICULOS
+                if(this.formPdi.nidtipoinspeccion==3){
+                    this.registraCabeceraInspeccionExhibicion();
+                }
+                else{
+                    this.registraCabeceraInspeccion();
+                }
+            },
+            registraCabeceraInspeccionExhibicion(){
+                var url = this.ruta + '/pdi/SetCabeceraInspeccion';
+                axios.post(url, {
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdPuntoInspeccion'        : this.formPdi.nidpuntoinspeccion,
+                    'nIdSolicitudAutorizacion'  : this.formPdi.nidsolicitud,
+                    'nIdCompra'                 : 0,
+                    'nIdVehiculoPlaca'          : 0,
+                    'nIdTipoInspeccion'         : this.formPdi.nidtipoinspeccion,
+                    'cIdAlmacen'                : this.formAlmacen.cwhscode,
+                    'cNumeroInspeccion'         : this.formPdi.cnumeroinspeccion,
+                    'dFechaInspeccion'          : this.formPdi.dfechainspeccion,
+                    'cHoraInspeccion'           : this.formPdi.chorainspeccion,
+                    'cFlagTipoMovimiento'       : this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
+                    'cFlagVinPlaca'             : this.formPdi.nidcompra == 0 ? 'P' : 'V',
+                    'cNumeroMovimientoAlmacen'  : '',
+                    'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
+                    'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
+                    'cObservacion'              : this.formPdi.cobservacion,
+                    'cNumeroVinSapReferencia'   : this.formPdi.cvinplacanombre
+                }).then(response => {
+                    let me = this;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //Obtener el ID de la Cabecera Inspeccion Registrada
+                        this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
+
+                        this.registraDetalleProcesoInspeccion();
+                    }
+                    else{
+                        swal('ERROR EN LA INSPECCIÓN');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registraCabeceraInspeccion(){
                 var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
                     'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2417,23 +2469,7 @@
                         //Obtener el ID de la Cabecera Inspeccion Registrada
                         this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
 
-                        if(this.nflagseccioninspeccionValida==1){
-                            if(this.arrayPlantilla.length){
-                                this.registrarPlantilla();
-                            }
-                        }
-                        // Si se Sube imagen
-                        if(this.attachment){
-                            this.subirArchivo();
-                        }
-
-                        //Validar que se aceptaron los accesorios
-                        if(this.nflagaccesorioValida==1){
-                            this.registrarAccesorios();
-                        }
-
-                        //this.generaSapActividadPdiEntrada();
-                        //this.generaSapMercanciaEntry();
+                        this.registraDetalleProcesoInspeccion();
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2447,6 +2483,22 @@
                         }
                     }
                 });
+            },
+            registraDetalleProcesoInspeccion(){
+                if(this.nflagseccioninspeccionValida==1){
+                    if(this.arrayPlantilla.length){
+                        this.registrarPlantilla();
+                    }
+                }
+                // Si se Sube imagen
+                if(this.attachment){
+                    this.subirArchivo();
+                }
+
+                //Validar que se aceptaron los accesorios
+                if(this.nflagaccesorioValida==1){
+                    this.registrarAccesorios();
+                }
             },
             validar(){
                 this.error = 0;
