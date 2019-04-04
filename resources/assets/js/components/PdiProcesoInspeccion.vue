@@ -2008,14 +2008,17 @@
             listarPorVinSap(){
                 let me = this;
                 
-                if(!me.fillVinSap.cnumerovin){
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Deebe Ingresar Número de Vin!',
-                    });
-                }
-                else if(me.formPdi.nidflagvinplaca==1){
+                if(me.formPdi.nidflagvinplaca==1){
+
+                    if(!me.fillVinSap.cnumerovin){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Deebe Ingresar Nro Vin!',
+                        });
+                        return;
+                    }
+
                     //==============================================================
                     //================== REGISTRO MERCANCIA EN SAP ===============
                     me.loadingProgressBar("VERIFICANDO VEHICULO EN SAP BUSINESS ONE...");
@@ -2063,7 +2066,7 @@
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Tipo de búsqueda Inválido, Debe buscar por Vin!',
+                        text: 'Tipo de búsqueda Inválido, Debe buscar por Nro Vin!',
                     });
                 }
             },
