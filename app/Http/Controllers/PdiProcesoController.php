@@ -97,7 +97,7 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $pdi = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $pdi = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdPuntoInspeccion,
@@ -115,6 +115,7 @@ class PdiProcesoController extends Controller
                                                                     $request->dFechaMovimientoAlmacen,
                                                                     $request->cFlagEstadoAprobacion,
                                                                     $request->cObservacion,
+                                                                    $request->cNumeroVinExhibicion,
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($pdi);
