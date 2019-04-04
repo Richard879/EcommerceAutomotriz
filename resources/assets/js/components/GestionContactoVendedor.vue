@@ -2549,9 +2549,9 @@
                         if (result.value) {
                             var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
                             axios.post(url, {
-                                nIdCronograma: 220016,
-                                nIdContacto: parseInt(c.nIdContacto),
-                                cFlagCarteraMes: 'N'
+                                'nIdCronograma'     : 220016,
+                                'nIdContacto'       : parseInt(c.nIdContacto),
+                                'cFlagCarteraMes'   : 'N'
                             }).then(response => {
                                 if(response.data[0].nFlagMsje==1){
                                     swal('Se asignó a Cartera de Mes');
@@ -2701,34 +2701,6 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(this.formNuevoContacto.ntpodocumento == 0){
-                    this.mensajeError.push('Debe Seleccionar Tipo Documento');
-                }
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    if(!this.formNuevoContacto.cnrodocumento){
-                    this.mensajeError.push('Debe Ingresar Nro Documento');
-                    }
-                    if(!this.formNuevoContacto.capepaterno){
-                        this.mensajeError.push('Debe Ingresar Apellido Paterno');
-                    }
-                    if(!this.formNuevoContacto.capematerno){
-                        this.mensajeError.push('Debe Ingresar Apellido Materno');
-                    }
-                    if(!this.formNuevoContacto.cnombre){
-                        this.mensajeError.push('Debe Ingresar Nombres');
-                    }
-                }
-
-                if(this.formNuevoContacto.ntipopersona == 2){
-                    if(!this.formNuevoContacto.cnrodocumento){
-                    this.mensajeError.push('Debe Ingresar Nro Documento');
-                    }
-                    if(!this.formNuevoContacto.cnombre){
-                        this.mensajeError.push('Debe Ingresar Razon Social');
-                    }
-                }*/
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2791,16 +2763,16 @@
                 var url = this.ruta + '/gescontacto/SetContactoSegRefVehiculo';
 
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCronograma: 220016,
-                    nIdContacto: this.formNuevoContacto.nidcontacto,
-                    nIdProveedor: this.formNuevoContacto.nidproveedor,
-                    nIdLinea: this.formNuevoContacto.nidlinea,
-                    nIdMarca: this.formNuevoContacto.nidmarca,
-                    nIdModelo: this.formNuevoContacto.nidmodelo,
-                    nAnioFabricacion: nAnioFabricacionRef,
-                    nAnioModelo: nAnioModeloRef
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCronograma' : 220016,
+                    'nIdContacto'   : this.formNuevoContacto.nidcontacto,
+                    'nIdProveedor'  : this.formNuevoContacto.nidproveedor,
+                    'nIdLinea'      : this.formNuevoContacto.nidlinea,
+                    'nIdMarca'      : this.formNuevoContacto.nidmarca,
+                    'nIdModelo'     : this.formNuevoContacto.nidmodelo,
+                    'nAnioFabricacion': nAnioFabricacionRef,
+                    'nAnioModelo'   : nAnioModeloRef
 
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
@@ -2987,16 +2959,16 @@
                 var url = this.ruta + '/gescontacto/SetSeguimiento';
 
                 axios.post(url, {
-                    cFlagOrigenSeguimiento: 'EC',
-                    nIdAsignacionContactoVendedor: this.formNuevoSeguimiento.nidasignacioncontactovendedor,
-                    nIdZona: this.formNuevoSeguimiento.nidzona,
-                    nIdTipoSeguimiento: this.formNuevoSeguimiento.nidtiposeguimiento,
-                    nIdFormaPago: this.formNuevoSeguimiento.nidformapago,
-                    nIdEstadoSeguimiento: this.formNuevoSeguimiento.nidestadoseguimiento,
-                    dFechaSeguimientoVendedor: this.formNuevoSeguimiento.dfechaseguimiento,
-                    cHoraSeguimiento: this.formNuevoSeguimiento.choraseguimiento,
-                    cAsunto: this.formNuevoSeguimiento.casunto,
-                    cRendirSeguimiento: this.formNuevoSeguimiento.crendirseguimiento
+                    'cFlagOrigenSeguimiento'        : 'EC',
+                    'nIdAsignacionContactoVendedor' : this.formNuevoSeguimiento.nidasignacioncontactovendedor,
+                    'nIdZona'                       : this.formNuevoSeguimiento.nidzona,
+                    'nIdTipoSeguimiento'            : this.formNuevoSeguimiento.nidtiposeguimiento,
+                    'nIdFormaPago'                  : this.formNuevoSeguimiento.nidformapago,
+                    'nIdEstadoSeguimiento'          : this.formNuevoSeguimiento.nidestadoseguimiento,
+                    'dFechaSeguimientoVendedor'     : this.formNuevoSeguimiento.dfechaseguimiento,
+                    'cHoraSeguimiento'              : this.formNuevoSeguimiento.choraseguimiento,
+                    'cAsunto'                       : this.formNuevoSeguimiento.casunto,
+                    'cRendirSeguimiento'            : this.formNuevoSeguimiento.crendirseguimiento
                 }).then(response => {
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
