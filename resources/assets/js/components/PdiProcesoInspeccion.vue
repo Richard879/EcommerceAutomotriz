@@ -1257,6 +1257,83 @@
                 </div>
             </div>
 
+            <!-- MODAL VIN SAP-->
+            <div class="modal fade" v-if="accionmodal==10" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO DE VEHICULOS EXHIBICIÓN SAP</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">*Nro Vin</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()" 
+                                                            class="form-control form-control-sm" placeholder="INGRESAR EL NÚMERO DE VIN">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPorVinSap()">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayListaVinSap.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nro Vin</th>
+                                                            <th>Nombre Comercial</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="compra in arrayListaVinSap" :key="compra.nIdCompra">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
+                                                                    <i @click="asignarVinSap(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="compra.cNumeroVin"></td>
+                                                            <td v-text="compra.cNombreComercial"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1395,7 +1472,7 @@
                 },
                 arrayAlmacen: [],
                 //===========================================================
-                // =============  VARIABLES SAP ========================
+                //=============  VARIABLES SAP ========================
                 arraySapArticulo: [],
                 arraySapTarjetaEquipo: [],
                 arraySapSolucion: [],
@@ -1406,7 +1483,13 @@
                 arrayCodSAPPDI: [],
                 arraySapLlamadaServicio: [],
                 arraySapActividad: [],
-                // ============================================
+                arraySapVin: [],
+                //=============VARIABLES VEHICULOS SAP =============
+                fillVinSap:{
+                    cnumerovin: ''
+                },
+                arrayListaVinSap: [],
+                //==================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1921,6 +2004,78 @@
                 this.nflagseccioninspeccionValida = 0,
                 this.nflagfichatecnicaValida = 0;
             },
+            //=============== LISTAR MODAL POR VIN SAP ===================
+            listarPorVinSap(){
+                let me = this;
+                
+                if(me.formPdi.nidflagvinplaca==1){
+
+                    if(!me.fillVinSap.cnumerovin){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Deebe Ingresar Nro Vin!',
+                        });
+                        return;
+                    }
+
+                    //==============================================================
+                    //================== REGISTRO MERCANCIA EN SAP ===============
+                    me.loadingProgressBar("VERIFICANDO VEHICULO EN SAP BUSINESS ONE...");
+
+                    me.arraySapVin = [];
+                    me.arraySapVin.push({
+                        'cNumeroVin'    : me.fillVinSap.cnumerovin
+                    });
+
+                    var sapUrl = me.ruta + '/articulo/SapGetArticulo';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapVin
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ItemCode){
+                                me.arrayListaVinSap.push({
+                                    'cNumeroVin'        : me.jsonRespuesta.ItemCode.toString(),
+                                    'cNombreComercial'  : me.jsonRespuesta.ItemName.toString(),
+                                    'cLogRespuesta'     : response.data.toString()
+                                });
+                            }
+                            else{
+                                me.arrayListaVinSap = [];
+                            }
+                        });
+
+                        me.loading.close();
+                    }).catch(error => {
+                        me.limpiarPorError("Error en la Integración de Vehiculos SapB1!");
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }else{
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Tipo de búsqueda Inválido, Debe buscar por Nro Vin!',
+                    });
+                }
+            },
+            asignarVinSap(objVin){
+                this.formPdi.cvinplacanombre    = objVin.cNumeroVin;
+                this.formPdi.cnumerovin         = objVin.cNumeroVin;
+                this.formPdi.cdescripcion       = objVin.cNombreComercial;
+                this.cerrarModal();
+            },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
                 var url = this.ruta + '/pdi/GetLstVehiculoPaca';
@@ -2254,6 +2409,58 @@
 
                 this.mostrarProgressBar();
 
+                //Si el PDI es de EXHIBICION DE VEHICULOS
+                if(this.formPdi.nidtipoinspeccion==3){
+                    this.registraCabeceraInspeccionExhibicion();
+                }
+                else{
+                    this.registraCabeceraInspeccion();
+                }
+            },
+            registraCabeceraInspeccionExhibicion(){
+                var url = this.ruta + '/pdi/SetCabeceraInspeccion';
+                axios.post(url, {
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdPuntoInspeccion'        : this.formPdi.nidpuntoinspeccion,
+                    'nIdSolicitudAutorizacion'  : this.formPdi.nidsolicitud,
+                    'nIdCompra'                 : 0,
+                    'nIdVehiculoPlaca'          : 0,
+                    'nIdTipoInspeccion'         : this.formPdi.nidtipoinspeccion,
+                    'cIdAlmacen'                : this.formAlmacen.cwhscode,
+                    'cNumeroInspeccion'         : this.formPdi.cnumeroinspeccion,
+                    'dFechaInspeccion'          : this.formPdi.dfechainspeccion,
+                    'cHoraInspeccion'           : this.formPdi.chorainspeccion,
+                    'cFlagTipoMovimiento'       : this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
+                    'cFlagVinPlaca'             : this.formPdi.nidcompra == 0 ? 'P' : 'V',
+                    'cNumeroMovimientoAlmacen'  : '',
+                    'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
+                    'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
+                    'cObservacion'              : this.formPdi.cobservacion,
+                    'cNumeroVinSapReferencia'   : this.formPdi.cvinplacanombre
+                }).then(response => {
+                    let me = this;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //Obtener el ID de la Cabecera Inspeccion Registrada
+                        this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
+
+                        this.registraDetalleProcesoInspeccion();
+                    }
+                    else{
+                        swal('ERROR EN LA INSPECCIÓN');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registraCabeceraInspeccion(){
                 var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
                     'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2280,23 +2487,7 @@
                         //Obtener el ID de la Cabecera Inspeccion Registrada
                         this.formPdi.nidcabecerainspeccion = response.data[0].nIdCabeceraInspeccion;
 
-                        if(this.nflagseccioninspeccionValida==1){
-                            if(this.arrayPlantilla.length){
-                                this.registrarPlantilla();
-                            }
-                        }
-                        // Si se Sube imagen
-                        if(this.attachment){
-                            this.subirArchivo();
-                        }
-
-                        //Validar que se aceptaron los accesorios
-                        if(this.nflagaccesorioValida==1){
-                            this.registrarAccesorios();
-                        }
-
-                        //this.generaSapActividadPdiEntrada();
-                        //this.generaSapMercanciaEntry();
+                        this.registraDetalleProcesoInspeccion();
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -2310,6 +2501,22 @@
                         }
                     }
                 });
+            },
+            registraDetalleProcesoInspeccion(){
+                if(this.nflagseccioninspeccionValida==1){
+                    if(this.arrayPlantilla.length){
+                        this.registrarPlantilla();
+                    }
+                }
+                // Si se Sube imagen
+                if(this.attachment){
+                    this.subirArchivo();
+                }
+
+                //Validar que se aceptaron los accesorios
+                if(this.nflagaccesorioValida==1){
+                    this.registrarAccesorios();
+                }
             },
             validar(){
                 this.error = 0;
@@ -3357,7 +3564,8 @@
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
-                this.mensajeError = ''
+                this.mensajeError = '',
+                this.limpiarModal();
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -3381,19 +3589,25 @@
                             case 'vinplaca':
                             {
                                 this.changeFlagVinPlaca();
-                                //Si es VIN
-                                if(this.formPdi.nidflagvinplaca == 1){
-                                    this.accionmodal    = 5;
+                                //Si el PDI es de EXHIBICION DE VEHICULOS
+                                if(this.formPdi.nidtipoinspeccion == 3){
+                                    this.accionmodal    = 10;
                                     this.modal          = 1;
-                                    this.llenarComboMarca();
-                                    this.llenarComboModelo();
-                                }
-                                //Si es Placa
-                                else{
-                                    this.accionmodal    = 6;
-                                    this.modal          = 1;
-                                }
-                                break;
+                                }else{
+                                    //Si es VIN
+                                    if(this.formPdi.nidflagvinplaca == 1){
+                                        this.accionmodal    = 5;
+                                        this.modal          = 1;
+                                        this.llenarComboMarca();
+                                        this.llenarComboModelo();
+                                    }
+                                    //Si es Placa
+                                    else{
+                                        this.accionmodal    = 6;
+                                        this.modal          = 1;
+                                    }
+                                    break;
+                                }break;
                             }
                             case 'plantilla':
                             {
@@ -3443,6 +3657,12 @@
                     }
                     break;
                 }
+            },
+            limpiarModal(){
+                this.arrayListaVinSap = [];
+                this.fillVinSap.cnumerovin = '';
+                this.arrayCompra = [];
+                this.arrayVehiculoPlaca = [];
             },
             validarMostrarModal(){
                 this.error = 0;
