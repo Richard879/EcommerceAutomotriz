@@ -1938,18 +1938,18 @@
                 var nAnioModeloRef = "";
 
                 $.each(this.arrayLinea2, function (index, value) {
-                    if(value.nIdPar == nidlinea){
-                        cLineaNombreRef = value.cParNombre;
+                    if(value.nIdLinea == nidlinea){
+                        cLineaNombreRef = value.cLineaNombre;
                     }
                 });
                 $.each(this.arrayMarca2, function (index, value) {
-                    if(value.nIdPar == nidmarca){
-                        cMarcaNombreRef = value.cParNombre;
+                    if(value.nIdMarca == nidmarca){
+                        cMarcaNombreRef = value.cMarcaNombre;
                     }
                 });
                 $.each(this.arrayModelo2, function (index, value) {
-                    if(value.nIdPar == nidmodelo){
-                        cModeloNombreRef = value.cParNombre;
+                    if(value.nIdModelo == nidmodelo){
+                        cModeloNombreRef = value.cModeloNombre;
                     }
                 });
                 $.each(this.arrayAnioFabricacion, function (index, value) {
@@ -2249,7 +2249,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayReferenciaVehiculo.length == 0){
+                if(this.arrayReferenciaVehiculo.length == 0 &&  this.arrayOtrosIntereses.length == 0){
                     this.mensajeError.push('Debes Ingresar una Referencia Vehículo');
                 };
                 if(this.mensajeError.length){

@@ -1531,54 +1531,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
-                                                                            <!--<div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Departamento</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable clearable placeholder="SELECCIONE" @change="llenarComboProv()">
-                                                                                                <el-option
-                                                                                                v-for="item in arrayDptos"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Provincia</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable clearable placeholder="SELECCIONE" @change="llenarComboDist()">
-                                                                                                <el-option
-                                                                                                v-for="item in arrayProv"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>-->
                                                                             <div class="form-group row">
-                                                                                <!--<div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Distrito</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable clearable placeholder="SELECCIONE" >
-                                                                                                <el-option
-                                                                                                v-for="item in arrayDist"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>-->
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Ubigeo</label>
@@ -3355,19 +3308,13 @@
                 this.formAmpliarAsignacion.dnuevafechavence = fecha;
             },
             registrarAmpliacion(){
-                /*if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }*/
-
                 var url = this.ruta + '/gescontacto/SetAmpliacionFechaVenceAsignacion';
                 axios.post(url, {
-                    nIdAsignacionContactoVendedor: parseInt(this.formAmpliarAsignacion.nidasignacioncontactovendedor),
-                    nIdReferenciaVehiculoContacto: parseInt(this.formAmpliarAsignacion.nidreferenciavehiculoontacto),
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nNroDias: parseInt(this.formAmpliarAsignacion.nrodias)
+                    'nIdAsignacionContactoVendedor': parseInt(this.formAmpliarAsignacion.nidasignacioncontactovendedor),
+                    'nIdReferenciaVehiculoContacto': parseInt(this.formAmpliarAsignacion.nidreferenciavehiculoontacto),
+                    'nIdEmpresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nNroDias'              : parseInt(this.formAmpliarAsignacion.nrodias)
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -3511,11 +3458,11 @@
                         if (result.value) {
                             var url = this.ruta + '/gescontacto/SetAsignaReferenciaLibre';
                             axios.post(url, {
-                                nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
-                                nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                                nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                                nIdCronograma: 220016,
-                                nIdVendedor: parseInt(this.formVendedor.nidvendedor)
+                                'nIdReferenciaVehiculoContacto': parseInt(nIdReferenciaVehiculoContacto),
+                                'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                                'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                                'nIdCronograma' : 220016,
+                                'nIdVendedor'   : parseInt(this.formVendedor.nidvendedor)
                             }).then(response => {
                                 swal(
                                 'Activado!',
@@ -3652,34 +3599,6 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(this.formNuevoContacto.ntpodocumento == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Documento');
-                };
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    if(!this.formNuevoContacto.cnrodocumento){
-                    this.mensajeError.push('Debes Ingresar Nro Documento');
-                    };
-                    if(!this.formNuevoContacto.capepaterno){
-                        this.mensajeError.push('Debes Ingresar Apellido Paterno');
-                    };
-                    if(!this.formNuevoContacto.capematerno){
-                        this.mensajeError.push('Debes Ingresar Apellido Materno');
-                    };
-                    if(!this.formNuevoContacto.cnombre){
-                        this.mensajeError.push('Debes Ingresar Nombres');
-                    };
-                }
-
-                if(this.formNuevoContacto.ntipopersona == 2){
-                    if(!this.formNuevoContacto.cnrodocumento){
-                    this.mensajeError.push('Debes Ingresar Nro Documento');
-                    };
-                    if(!this.formNuevoContacto.cnombre){
-                        this.mensajeError.push('Debes Ingresar Razon Social');
-                    };
-                }*/
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -3742,17 +3661,16 @@
                 var url = this.ruta + '/gescontacto/SetContactoSegRefVehiculo';
 
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCronograma: 220016,
-                    nIdContacto: this.formNuevoContacto.nidcontacto,
-                    nIdProveedor: this.formNuevoContacto.nidproveedor,
-                    nIdLinea: this.formNuevoContacto.nidlinea,
-                    nIdMarca: this.formNuevoContacto.nidmarca,
-                    nIdModelo: this.formNuevoContacto.nidmodelo,
-                    nAnioFabricacion: nAnioFabricacionRef,
-                    nAnioModelo: nAnioModeloRef
-
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCronograma' : 220016,
+                    'nIdContacto'   : this.formNuevoContacto.nidcontacto,
+                    'nIdProveedor'  : this.formNuevoContacto.nidproveedor,
+                    'nIdLinea'      : this.formNuevoContacto.nidlinea,
+                    'nIdMarca'      : this.formNuevoContacto.nidmarca,
+                    'nIdModelo'     : this.formNuevoContacto.nidmodelo,
+                    'nAnioFabricacion': nAnioFabricacionRef,
+                    'nAnioModelo'   : nAnioModeloRef
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -3928,16 +3846,16 @@
                 var url = this.ruta + '/gescontacto/SetSeguimiento';
 
                 axios.post(url, {
-                    cFlagOrigenSeguimiento: 'EC',
-                    nIdAsignacionContactoVendedor: this.formNuevoSeguimiento.nidasignacioncontactovendedor,
-                    nIdZona: this.formNuevoSeguimiento.nidzona,
-                    nIdTipoSeguimiento: this.formNuevoSeguimiento.nidtiposeguimiento,
-                    nIdFormaPago: this.formNuevoSeguimiento.nidformapago,
-                    nIdEstadoSeguimiento: this.formNuevoSeguimiento.nidestadoseguimiento,
-                    dFechaSeguimientoVendedor: this.formNuevoSeguimiento.dfechaseguimiento,
-                    cHoraSeguimiento: this.formNuevoSeguimiento.choraseguimiento,
-                    cAsunto: this.formNuevoSeguimiento.casunto,
-                    cRendirSeguimiento: this.formNuevoSeguimiento.crendirseguimiento
+                    'cFlagOrigenSeguimiento'        : 'EC',
+                    'nIdAsignacionContactoVendedor' : this.formNuevoSeguimiento.nidasignacioncontactovendedor,
+                    'nIdZona'                       : this.formNuevoSeguimiento.nidzona,
+                    'nIdTipoSeguimiento'            : this.formNuevoSeguimiento.nidtiposeguimiento,
+                    'nIdFormaPago'                  : this.formNuevoSeguimiento.nidformapago,
+                    'nIdEstadoSeguimiento'          : this.formNuevoSeguimiento.nidestadoseguimiento,
+                    'dFechaSeguimientoVendedor'     : this.formNuevoSeguimiento.dfechaseguimiento,
+                    'cHoraSeguimiento'              : this.formNuevoSeguimiento.choraseguimiento,
+                    'cAsunto'                       : this.formNuevoSeguimiento.casunto,
+                    'cRendirSeguimiento'            : this.formNuevoSeguimiento.crendirseguimiento
                 }).then(response => {
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
@@ -4062,10 +3980,6 @@
             },
             cargarTabDatosPersonales(){
                 this.llenarComboTpoDocumento();
-                /*this.llenarComboDptos();
-                this.llenarComboDptos();
-                this.llenarComboProv();
-                this.llenarComboDist();*/
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
                 this.llenarComboAnioFabricacion();
@@ -4199,52 +4113,6 @@
                 this.formNuevoContacto.cdistrito = u.cU_SYP_DIST;
                 this.cerrarModal();
             },
-            /*llenarComboDptos(){
-                var url = this.ruta + '/ubigeo/GetDptos';
-                axios.get(url).then(response => {
-                    this.arrayDptos = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboProv(){
-                var url = this.ruta + '/ubigeo/GetProvinciasByDpto?niddepartamento=' + this.formNuevoContacto.niddepartamento;
-                axios.get(url).then(response => {
-                    this.arrayProv = response.data;
-                    this.formNuevoContacto.nidprovincia = 0;
-                    this.arrayDist = [];
-                    this.llenarComboDist();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboDist(){
-                var url = this.ruta + '/ubigeo/GetDistritosByProv?nidprovincia=' + this.formNuevoContacto.nidprovincia;
-                axios.get(url).then(response => {
-                    this.arrayDist = response.data;
-                    this.formNuevoContacto.niddistrito = 0;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             llenarComboEstadoCivil(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -4710,18 +4578,18 @@
                 var nAnioModeloRef = "";
 
                 $.each(this.arrayLinea2, function (index, value) {
-                    if(value.nIdPar == nidlinea){
-                        cLineaNombreRef = value.cParNombre;
+                    if(value.nIdLinea == nidlinea){
+                        cLineaNombreRef = value.cLineaNombre;
                     }
                 });
                 $.each(this.arrayMarca2, function (index, value) {
-                    if(value.nIdPar == nidmarca){
-                        cMarcaNombreRef = value.cParNombre;
+                    if(value.nIdMarca == nidmarca){
+                        cMarcaNombreRef = value.cMarcaNombre;
                     }
                 });
                 $.each(this.arrayModelo2, function (index, value) {
-                    if(value.nIdPar == nidmodelo){
-                        cModeloNombreRef = value.cParNombre;
+                    if(value.nIdModelo == nidmodelo){
+                        cModeloNombreRef = value.cModeloNombre;
                     }
                 });
                 $.each(this.arrayAnioFabricacion, function (index, value) {
@@ -4865,64 +4733,6 @@
                     }
                 });
             },
-            /*SapRegistrarNuevoContacto2(nIdContacto, contacto){
-                let me = this;
-                me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
-
-                var url = this.ruta + '/gescontacto/SapSetContacto2';
-                axios.post(url, {
-                    'nIdContacto': nIdContacto,
-                    'CardName': (contacto.cnombre + ' ' + contacto.capepaterno + ' ' + contacto.capematerno),
-                    'FederalTaxID': contacto.cnrodocumento,
-                    'EmailAddress': contacto.cmailprincipal,
-                    'Address': contacto.cdireccion,
-                    'Cellular': contacto.ncelular,
-                    'City': contacto.niddistrito
-                }).then(response => {
-                    // console.log(response.data);
-                    swal('Contacto registrado exitosamente');
-                    let data = response.data;
-                    this.SAPNuevoContactoJson  =  JSON.parse(data);
-                    this.actualizarCardCodeContacto2(nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
-                    me.loading.close();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            actualizarCardCodeContacto2(nIdContacto, dataJSON, logRpta){
-                var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
-                axios.post(url, {
-                    'nIdContacto'   : nIdContacto,
-                    'CardCode'      : dataJSON.CardCode.toString(),
-                    'CardType'      : dataJSON.CardType.toString(),
-                    'LogRespuesta'  : logRpta
-                }).then(response => {
-                    $("#myBar").hide();
-                    console.log(response);
-                    if(response.data[0].nFlagMsje==1){
-                        swal(response.data[0].cMensaje);
-                    } else {
-                        swal(response.data[0].cMensaje);
-                    }
-                    this.limpiarNuevoContacto();
-                    this.tabDatosPersonales();
-                    // this.SAPNuevoContactoJson.CardCode = ''; //Setear el JSON
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             registrarNuevoContacto(){
                 if(this.validarTab22()){
                     this.accionmodal=1;
@@ -4951,26 +4761,25 @@
             registrarPersonaNatural(){
                 var url = this.ruta + '/gescontacto/SetContactoPerNatural';
                 axios.post(url, {
-                    nIdTipoDocumento: this.formNuevoContacto.ntpodocumento,
-                    cNumeroDocumento: String(this.formNuevoContacto.cnrodocumento),
-                    cNombre: this.formNuevoContacto.cnombre.toUpperCase().toString(),
-                    cApellidoPaterno: this.formNuevoContacto.capepaterno.toUpperCase().toString(),
-                    cApellidoMaterno: this.formNuevoContacto.capematerno.toUpperCase().toString(),
-                    //cUbigeo: this.formNuevoContacto.niddistrito,
-                    cUbigeo: this.formNuevoContacto.ccode,
-                    cDepartamento: this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
-                    cProvincia: this.formNuevoContacto.cprovincia.toUpperCase().toString(),
-                    cDistrito: this.formNuevoContacto.cdistrito.toUpperCase().toString(),
-                    cDireccion: this.formNuevoContacto.cdireccion.toUpperCase().toString(),
-                    cEmail: this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
-                    cEmailAlternativo: this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
-                    dFechaNacimiento: this.formNuevoContacto.dfecnacimiento,
-                    nIdEstadoCivil: this.formNuevoContacto.nestadocivil,
-                    cTelefonoFijo: this.formNuevoContacto.ctelefonofijo,
-                    nTelefonoMovil: this.formNuevoContacto.ncelular,
-                    nTelefonoMovilAlternativo: this.formNuevoContacto.ncelularalternativo,
-                    cCentroLaboral: this.formNuevoContacto.ccentrolaboral.toUpperCase().toString(),
-                    nIdProfesion: this.formNuevoContacto.nprofesion
+                    'nIdTipoDocumento'  : this.formNuevoContacto.ntpodocumento,
+                    'cNumeroDocumento'  : String(this.formNuevoContacto.cnrodocumento),
+                    'cNombre'           : this.formNuevoContacto.cnombre.toUpperCase().toString(),
+                    'cApellidoPaterno'  : this.formNuevoContacto.capepaterno.toUpperCase().toString(),
+                    'cApellidoMaterno'  : this.formNuevoContacto.capematerno.toUpperCase().toString(),
+                    'cUbigeo'           : this.formNuevoContacto.ccode,
+                    'cDepartamento'     : this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
+                    'cProvincia'        : this.formNuevoContacto.cprovincia.toUpperCase().toString(),
+                    'cDistrito'         : this.formNuevoContacto.cdistrito.toUpperCase().toString(),
+                    'cDireccion'        : this.formNuevoContacto.cdireccion.toUpperCase().toString(),
+                    'cEmail'            : this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
+                    'cEmailAlternativo' : this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
+                    'dFechaNacimiento'  : this.formNuevoContacto.dfecnacimiento,
+                    'nIdEstadoCivil'    : this.formNuevoContacto.nestadocivil,
+                    'cTelefonoFijo'     : this.formNuevoContacto.ctelefonofijo,
+                    'nTelefonoMovil'    : this.formNuevoContacto.ncelular,
+                    'nTelefonoMovilAlternativo': this.formNuevoContacto.ncelularalternativo,
+                    'cCentroLaboral'    : this.formNuevoContacto.ccentrolaboral.toUpperCase().toString(),
+                    'nIdProfesion'      : this.formNuevoContacto.nprofesion
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarReferenciaVehiculo(response.data[0].nIdContacto);
@@ -4991,27 +4800,26 @@
                 var url = this.ruta + '/gescontacto/SetContactoPerJuridica';
                 axios.post(url, {
                     //Datos contacto Juridico
-                    cRuc: String(this.formNuevoContacto.cnrodocumento),
-                    cRazonSocial: this.formNuevoContacto.cnombre.toUpperCase().toString(),
-                    //cUbigeo: this.formNuevoContacto.niddistrito,
-                    cUbigeo: this.formNuevoContacto.ccode,
-                    cDepartamento: this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
-                    cProvincia: this.formNuevoContacto.cprovincia.toUpperCase().toString(),
-                    cDistrito: this.formNuevoContacto.cdistrito.toUpperCase().toString(),
-                    cDireccion: this.formNuevoContacto.cdireccion.toUpperCase().toString(),
-                    cEmail: this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
-                    cEmailAlternativo: this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
-                    cTelefonoFijo: this.formNuevoContacto.ctelefonofijo,
-                    nTelefonoMovil: this.formNuevoContacto.ncelular,
-                    nTelefonoMovilAlternativo: this.formNuevoContacto.ncelularalternativo,
+                    'cRuc'                      : String(this.formNuevoContacto.cnrodocumento),
+                    'cRazonSocial'              : this.formNuevoContacto.cnombre.toUpperCase().toString(),
+                    'cUbigeo'                   : this.formNuevoContacto.ccode,
+                    'cDepartamento'             : this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
+                    'cProvincia'                : this.formNuevoContacto.cprovincia.toUpperCase().toString(),
+                    'cDistrito'                 : this.formNuevoContacto.cdistrito.toUpperCase().toString(),
+                    'cDireccion'                : this.formNuevoContacto.cdireccion.toUpperCase().toString(),
+                    'cEmail'                    : this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
+                    'cEmailAlternativo'         : this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
+                    'cTelefonoFijo'             : this.formNuevoContacto.ctelefonofijo,
+                    'nTelefonoMovil'            : this.formNuevoContacto.ncelular,
+                    'nTelefonoMovilAlternativo' : this.formNuevoContacto.ncelularalternativo,
                     //Datos Contacto Natural del Juridico
-                    nIdTipoDocumentoContacto: this.formNuevoContactoJurifico.ntpodocumento,
-                    cNumeroDocumentoContacto: String(this.formNuevoContactoJurifico.cnrodocumento),
-                    cNombreContacto: this.formNuevoContactoJurifico.cnombre.toUpperCase().toString(),
-                    cApellidoPaternoContacto: this.formNuevoContactoJurifico.capepaterno.toUpperCase().toString(),
-                    cApellidoMaternoContacto: this.formNuevoContactoJurifico.capematerno.toUpperCase().toString(),
-                    cEmailPrincipalContacto: this.formNuevoContactoJurifico.cmailprincipal.toUpperCase().toString(),
-                    cTelefonoMovilContacto: this.formNuevoContactoJurifico.ncelular.toUpperCase().toString()
+                    'nIdTipoDocumentoContacto'  : this.formNuevoContactoJurifico.ntpodocumento,
+                    'cNumeroDocumentoContacto'  : String(this.formNuevoContactoJurifico.cnrodocumento),
+                    'cNombreContacto'           : this.formNuevoContactoJurifico.cnombre.toUpperCase().toString(),
+                    'cApellidoPaternoContacto'  : this.formNuevoContactoJurifico.capepaterno.toUpperCase().toString(),
+                    'cApellidoMaternoContacto'  : this.formNuevoContactoJurifico.capematerno.toUpperCase().toString(),
+                    'cEmailPrincipalContacto'   : this.formNuevoContactoJurifico.cmailprincipal.toUpperCase().toString(),
+                    'cTelefonoMovilContacto'    : this.formNuevoContactoJurifico.ncelular.toUpperCase().toString()
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarReferenciaVehiculo(response.data[0].nIdContacto);
@@ -5033,7 +4841,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayReferenciaVehiculo.length == 0){
+                if(this.arrayReferenciaVehiculo.length == 0 &&  this.arrayOtrosIntereses.length == 0){
                     this.mensajeError.push('Debes Ingresar una Referencia Vehículo');
                 };
                 if(this.mensajeError.length){
@@ -5045,12 +4853,12 @@
                 if(this.arrayReferenciaVehiculo.length > 0){
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
-                        nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                        nIdCronograma: 220016,
-                        nIdContacto: nIdContacto,
-                        referencia: this.arrayReferenciaVehiculo,
-                        otrosintreses: this.arrayOtrosIntereses
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma' : 220016,
+                        'nIdContacto'   : nIdContacto,
+                        'referencia'    : this.arrayReferenciaVehiculo,
+                        'otrosintreses' : this.arrayOtrosIntereses
                     }).then(response => {
                         //this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
                         $("#myBar").hide();
@@ -5497,9 +5305,6 @@
                 this.formNuevoContacto.cnombre = '',
                 this.formNuevoContacto.dfecnacimiento = '',
                 //Tab DATOS DE CONTACTO
-                /*this.formNuevoContacto.niddepartamento = 0,
-                this.formNuevoContacto.nidprovincia = 0,
-                this.formNuevoContacto.niddistrito = 0,*/
                 this.formNuevoContacto.ccode = '',
                 this.formNuevoContacto.cubigeo = '',
                 this.formNuevoContacto.cdepartamento = '',
@@ -5557,9 +5362,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            //this.tabBuscarEventoCampania();
         }
     }
 </script>
