@@ -70,7 +70,7 @@
                                                         <th>Nombre Elemento</th>
                                                         <th>Moneda</th>
                                                         <th>Prec. Venta</th>
-                                                        <th>Prec. Venta Mínimo</th>
+                                                        <th>Prec. Vta Min.</th>
                                                         <th>Costo</th>
                                                         <th>Acciones</th>
                                                     </tr>
