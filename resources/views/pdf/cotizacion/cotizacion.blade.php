@@ -188,6 +188,11 @@
 
             {{-- Contenido del XML --}}
             {{-- <pre lang="xml" style="white-space:normal;">{{ $contents }}</pre> --}}
+            {{-- <pre lang="xml" style="white-space:normal;">
+                @foreach($data as $d)
+                    <p>{{ $d }}</p>
+                @endforeach
+            </pre --}}
 
             {{-- <?xml version="1.0"?>
             <!-- File Name: Book.xml -->
