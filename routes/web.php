@@ -421,6 +421,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/almacen/SetCambiarEstado','AlmacenController@SetCambiarEstado');
     Route::post('/almacen/SetRegistrarAlmacen','AlmacenController@SetRegistrarAlmacen');
     Route::put('/almacen/SetActualizarAlmacen','AlmacenController@SetActualizarAlmacen');
+    Route::put('/almacen/SetFlagActivaPorDefecto','AlmacenController@SetFlagActivaPorDefecto');
 
     Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 

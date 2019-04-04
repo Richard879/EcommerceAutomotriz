@@ -144,16 +144,22 @@
                                                                                         <td v-text="almacen.id"></td>
                                                                                         <td v-text="almacen.cNombreLocalidad"></td>
                                                                                         <td v-text="almacen.cWhsName"></td>
-                                                                                        <td v-text="almacen.cFlagTipo"></td>
+                                                                                        <td v-text="almacen.cFlagTipoDescripcion"></td>
                                                                                         <td v-text="almacen.cAcctCode"></td>
                                                                                         <td v-text="almacen.cAcctCodeSalida"></td>
                                                                                         <td v-text="almacen.cFlagPorDefecto"></td>
                                                                                         <td>
                                                                                             <template v-if="almacen.cFlagPorDefecto == 'NO'">
-                                                                                                <a href="#" @click.prevent="activarPorDefecto(0, almacen)"><i :style="'color:blue'" class="fa-md fa fa-check"></i></a>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Activar por Defecto {{ almacen.cWhsName }}</div>
+                                                                                                    <i @click="activarPorDefecto('S', almacen)" :style="'color:blue'" class="fa-md fa fa-check"></i>
+                                                                                                </el-tooltip>
                                                                                             </template>
                                                                                             <template v-else>
-                                                                                                <a href="#" @click.prevent="activarPorDefecto(1, almacen)"><i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Desactivar por Defecto {{ almacen.cWhsName }}</div>
+                                                                                                    <i @click="activarPorDefecto('N', almacen)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                </el-tooltip>
                                                                                             </template>
                                                                                         </td>
                                                                                     </tr>
@@ -616,10 +622,10 @@
 
                         var url = this.ruta + '/almacen/SetCambiarEstado';
                         axios.put(url, {
-                            nIdLocalidad  :   almacen.cIdLocalidad,
-                            nIdAlmacen    :   (almacen.cWhsCode).toString(),
-                            nCodigoCuenta :   almacen.cAcctCode,
-                            opcion : op
+                            'nIdLocalidad'  : almacen.cIdLocalidad,
+                            'nIdAlmacen'    : (almacen.cWhsCode).toString(),
+                            'nCodigoCuenta' : almacen.cAcctCode,
+                            'opcion'        : op
                         }).then(response => {
                             me.listarAlmacenes(1);
                             $("#myBar").hide();
@@ -638,7 +644,7 @@
                             }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
-                })
+                });
             },
             cambiarVista(op, almacen){
                 this.vistaFormulario = op;
@@ -692,6 +698,47 @@
                         this.modal = 1;
                     }
                 })
+            },
+            activarPorDefecto(cflag, almacen){
+                swal({
+                    title: '¿Esta seguro de ' + ((cflag == 'N') ? 'Desactivar' : ' Activar Por Defecto ') + ' el Almacen ' + almacen.cWhsName + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, ' + ((cflag == 'N') ? 'Desactivar' : ' Activar '),
+                    cancelButtonText: 'No, cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/almacen/SetFlagActivaPorDefecto';
+                        axios.put(url, {
+                            'id'                    : almacen.id,
+                            'nIdLocalidad'          : almacen.nIdLocalidad,
+                            'cWhsCode'              : almacen.cWhsCode.toString(),
+                            'cFlagTipo'             : almacen.cFlagTipo.toString(),
+                            'cFlagActivaporDefecto' : cflag.toString()
+                        }).then(response => {
+                            me.listarAlmacenes(1);
+                            $("#myBar").hide();
+                            swal(
+                                ((cflag == 'N') ? 'Desactivado' : 'Activado Por Defecto'),
+                                'El Almacen ' + almacen.cWhsName +' ha sido ' + ((cflag == 'N') ? 'Desactivado' : 'Activado Por Defecto') + ' con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                });
             },
             // =================================================================
             // TAB CONFIGURADOR DE ALMACENES

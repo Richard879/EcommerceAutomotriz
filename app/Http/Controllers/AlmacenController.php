@@ -143,4 +143,26 @@ class AlmacenController extends Controller
 
         return response()->json($data);
     }
+
+    public function SetFlagActivaPorDefecto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $id                     =   $request->id;
+        $nIdLocalidad           =   $request->nIdLocalidad;
+        $cWhsCode               =   $request->cWhsCode;
+        $cFlagTipo              =   $request->cFlagTipo;
+        $cFlagActivaporDefecto  =   $request->cFlagActivaporDefecto;
+        $nIdUsuario             =   Auth::user()->id;
+
+        $usuario = DB::select('exec [usp_Almacen_SetFlagActivaPorDefecto] ?, ?, ?, ?, ?, ?',
+                                                    [   $id,
+                                                        $nIdLocalidad,
+                                                        $cWhsCode,
+                                                        $cFlagTipo,
+                                                        $cFlagActivaporDefecto,
+                                                        $nIdUsuario
+                                                    ]);
+        return response()->json($usuario);
+    }
 }
