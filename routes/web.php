@@ -486,6 +486,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/compra/SapSetCompraWO', 'Api\SapCompraController@SapSetCompraWO');
+    Route::post('/compra/SapPatchCompra', 'Api\SapCompraController@SapPatchCompra');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
     Route::post('/mercancia/SapSetMercanciaEntry', 'Api\SapMercanciaController@SapSetMercanciaEntry');
@@ -495,6 +496,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
     Route::post('/articulo/SapGetCostoPromedio', 'Api\SapArticuloController@SapGetCostoPromedio');
     Route::post('/articulo/SapSetSerialNumber', 'Api\SapArticuloController@SapSetSerialNumber');
+    Route::post('/articulo/SapPatchArticulo', 'Api\SapArticuloController@SapPatchArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     Route::post('/pedido/prueba', 'Api\SapPedidoController@prueba');
