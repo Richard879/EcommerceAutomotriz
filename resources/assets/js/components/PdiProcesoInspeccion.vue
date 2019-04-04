@@ -2424,8 +2424,8 @@
                     'nIdSucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdPuntoInspeccion'        : this.formPdi.nidpuntoinspeccion,
                     'nIdSolicitudAutorizacion'  : this.formPdi.nidsolicitud,
-                    'nIdCompra'                 : 0,
-                    'nIdVehiculoPlaca'          : 0,
+                    'nIdCompra'                 : null,
+                    'nIdVehiculoPlaca'          : null,
                     'nIdTipoInspeccion'         : this.formPdi.nidtipoinspeccion,
                     'cIdAlmacen'                : this.formAlmacen.cwhscode,
                     'cNumeroInspeccion'         : this.formPdi.cnumeroinspeccion,
@@ -2437,7 +2437,7 @@
                     'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
                     'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
                     'cObservacion'              : this.formPdi.cobservacion,
-                    'cNumeroVinSapReferencia'   : this.formPdi.cvinplacanombre
+                    'cNumeroVinExhibicion'      : this.formPdi.cvinplacanombre
                 }).then(response => {
                     let me = this;
                     if(response.data[0].nFlagMsje == 1)
@@ -2479,7 +2479,8 @@
                     'cNumeroMovimientoAlmacen'  : '',
                     'dFechaMovimientoAlmacen'   : this.formPdi.dfechamovimientoalmacen,
                     'cFlagEstadoAprobacion'     : this.formPdi.nidconformidad == 1 ? 'C' : 'N',
-                    'cObservacion'              : this.formPdi.cobservacion
+                    'cObservacion'              : this.formPdi.cobservacion,
+                    'cNumeroVinExhibicion'      : ''
                 }).then(response => {
                     let me = this;
                     if(response.data[0].nFlagMsje == 1)

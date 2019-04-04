@@ -125,17 +125,20 @@
                                                                                         <th>Codigo Almacen Entrada</th>
                                                                                         <th>Codigo Almacen Salida</th>
                                                                                         <th>Activo por Defecto</th>
+                                                                                        <th></th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <tr v-for="(almacen, index) in arrayListAlmacenes" :key="index">
                                                                                         <td>
                                                                                             <template v-if="almacen.cEstado == 'A'">
-                                                                                                <a href="#" @click.prevent="cambiarEstado(0, almacen)"><i :style="'color:red'" class="fa-md fa fa-trash"></i></a>
+                                                                                                <a href="#" @click.prevent="cambiarEstado(0, almacen)"><i :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i></a>
+                                                                                                &nbsp;&nbsp;
                                                                                                 <a href="#" @click.prevent="cambiarVista(0, almacen)"><i :style="'color:blue'" class="fa-md fa fa-edit"></i></a>
+                                                                                                &nbsp;&nbsp;
                                                                                             </template>
                                                                                             <template v-else>
-                                                                                                <a href="#" @click.prevent="cambiarEstado(1, almacen)"><i :style="'color:green'" class="fa-md fa fa-check"></i></a>
+                                                                                                <a href="#" @click.prevent="cambiarEstado(1, almacen)"><i :style="'color:red'" class="fa-md fa fa-square"></i></a>
                                                                                             </template>
                                                                                         </td>
                                                                                         <td v-text="almacen.id"></td>
@@ -145,6 +148,14 @@
                                                                                         <td v-text="almacen.cAcctCode"></td>
                                                                                         <td v-text="almacen.cAcctCodeSalida"></td>
                                                                                         <td v-text="almacen.cFlagPorDefecto"></td>
+                                                                                        <td>
+                                                                                            <template v-if="almacen.cFlagPorDefecto == 'NO'">
+                                                                                                <a href="#" @click.prevent="activarPorDefecto(0, almacen)"><i :style="'color:blue'" class="fa-md fa fa-check"></i></a>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <a href="#" @click.prevent="activarPorDefecto(1, almacen)"><i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                            </template>
+                                                                                        </td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
