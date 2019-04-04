@@ -152,54 +152,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
-                                                                            <!--<div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Departamento</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboProv()">
-                                                                                                <el-option
-                                                                                                v-for="item in arrayDptos"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Provincia</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboDist()">
-                                                                                                <el-option
-                                                                                                v-for="item in arrayProv"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>-->
                                                                             <div class="form-group row">
-                                                                                <!--<div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Distrito</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable clearable placeholder="SELECCIONE" >
-                                                                                                <el-option
-                                                                                                v-for="item in arrayDist"
-                                                                                                :key="item.id"
-                                                                                                :label="item.text"
-                                                                                                :value="item.id">
-                                                                                                </el-option>
-                                                                                            </el-select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>-->
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Ubigeo</label>
@@ -1296,10 +1249,6 @@
             },
             cargarTabDatosPersonales(){
                 this.llenarComboTpoDocumento();
-                /*this.llenarComboDptos();
-                this.llenarComboDptos();
-                this.llenarComboProv();
-                this.llenarComboDist();*/
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
                 this.llenarComboAnioFabricacion();
@@ -1394,7 +1343,6 @@
                 }
             },
             llenarUbigeo(page){
-                //var url = this.ruta + '/ubigeo/SapGetUbigeo';
                 var url = this.ruta + '/ubigeo/GetUbigeo';
                 axios.get(url, {
                     params: {
@@ -1432,52 +1380,6 @@
                 this.formNuevoContacto.cdistrito = u.cU_SYP_DIST;
                 this.cerrarModal();
             },
-            /*llenarComboDptos(){
-                var url = this.ruta + '/ubigeo/GetDptos';
-                axios.get(url).then(response => {
-                    this.arrayDptos = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboProv(){
-                var url = this.ruta + '/ubigeo/GetProvinciasByDpto?niddepartamento=' + this.formNuevoContacto.niddepartamento;
-                axios.get(url).then(response => {
-                    this.arrayProv = response.data;
-                    this.formNuevoContacto.nidprovincia = 0;
-                    this.arrayDist = [];
-                    this.llenarComboDist();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboDist(){
-                var url = this.ruta + '/ubigeo/GetDistritosByProv?nidprovincia=' + this.formNuevoContacto.nidprovincia;
-                axios.get(url).then(response => {
-                    this.arrayDist = response.data;
-                    this.formNuevoContacto.niddistrito = 0;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             llenarComboEstadoCivil(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -1795,16 +1697,16 @@
                 }
                 else{
                     this.arrayReferenciaVehiculo.push({
-                                nIdProveedor: nIdProveedorRef,
-                                nIdLinea: nIdLineaRef,
-                                nIdMarca: nIdMarcaRef,
-                                nIdModelo: nIdModeloRef,
-                                cProveedorNombre: cProveedorNombreRef,
-                                cLineaNombre: cLineaNombreRef,
-                                cMarcaNombre: cMarcaNombreRef,
-                                cModeloNombre: cModeloNombreRef,
-                                nAnioFabricacion: nAnioFabricacionRef,
-                                nAnioModelo: nAnioModeloRef
+                                'nIdProveedor'      : nIdProveedorRef,
+                                'nIdLinea'          : nIdLineaRef,
+                                'nIdMarca'          : nIdMarcaRef,
+                                'nIdModelo'         : nIdModeloRef,
+                                'cProveedorNombre'  : cProveedorNombreRef,
+                                'cLineaNombre'      : cLineaNombreRef,
+                                'cMarcaNombre'      : cMarcaNombreRef,
+                                'cModeloNombre'     : cModeloNombreRef,
+                                'nAnioFabricacion'  : nAnioFabricacionRef,
+                                'nAnioModelo'       : nAnioModeloRef
                     });
                     toastr.success('Se Agregó Referencia Vehiculo');
                 }
@@ -2167,26 +2069,25 @@
             registrarPersonaNatural(){
                 var url = this.ruta + '/gescontacto/SetContactoPerNatural';
                 axios.post(url, {
-                    nIdTipoDocumento: this.formNuevoContacto.ntpodocumento,
-                    cNumeroDocumento: String(this.formNuevoContacto.cnrodocumento),
-                    cNombre: this.formNuevoContacto.cnombre.toUpperCase().toString(),
-                    cApellidoPaterno: this.formNuevoContacto.capepaterno.toUpperCase().toString(),
-                    cApellidoMaterno: this.formNuevoContacto.capematerno.toUpperCase().toString(),
-                    //cUbigeo: this.formNuevoContacto.niddistrito,
-                    cUbigeo: this.formNuevoContacto.ccode,
-                    cDepartamento: this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
-                    cProvincia: this.formNuevoContacto.cprovincia.toUpperCase().toString(),
-                    cDistrito: this.formNuevoContacto.cdistrito.toUpperCase().toString(),
-                    cDireccion: this.formNuevoContacto.cdireccion.toUpperCase().toString(),
-                    cEmail: this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
-                    cEmailAlternativo: this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
-                    dFechaNacimiento: this.formNuevoContacto.dfecnacimiento,
-                    nIdEstadoCivil: this.formNuevoContacto.nestadocivil,
-                    cTelefonoFijo: this.formNuevoContacto.ctelefonofijo,
-                    nTelefonoMovil: this.formNuevoContacto.ncelular,
-                    nTelefonoMovilAlternativo: this.formNuevoContacto.ncelularalternativo,
-                    cCentroLaboral: this.formNuevoContacto.ccentrolaboral.toUpperCase().toString(),
-                    nIdProfesion: this.formNuevoContacto.nprofesion
+                    'nIdTipoDocumento'  : this.formNuevoContacto.ntpodocumento,
+                    'cNumeroDocumento'  : String(this.formNuevoContacto.cnrodocumento),
+                    'cNombre'           : this.formNuevoContacto.cnombre.toUpperCase().toString(),
+                    'cApellidoPaterno'  : this.formNuevoContacto.capepaterno.toUpperCase().toString(),
+                    'cApellidoMaterno'  : this.formNuevoContacto.capematerno.toUpperCase().toString(),
+                    'cUbigeo'           : this.formNuevoContacto.ccode,
+                    'cDepartamento'     : this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
+                    'cProvincia'        : this.formNuevoContacto.cprovincia.toUpperCase().toString(),
+                    'cDistrito'         : this.formNuevoContacto.cdistrito.toUpperCase().toString(),
+                    'cDireccion'        : this.formNuevoContacto.cdireccion.toUpperCase().toString(),
+                    'cEmail'            : this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
+                    'cEmailAlternativo' : this.formNuevoContacto.cmailalternativo.toUpperCase().toString(),
+                    'dFechaNacimiento'  : this.formNuevoContacto.dfecnacimiento,
+                    'nIdEstadoCivil'    : this.formNuevoContacto.nestadocivil,
+                    'cTelefonoFijo'     : this.formNuevoContacto.ctelefonofijo,
+                    'nTelefonoMovil'    : this.formNuevoContacto.ncelular,
+                    'nTelefonoMovilAlternativo': this.formNuevoContacto.ncelularalternativo,
+                    'cCentroLaboral'    : this.formNuevoContacto.ccentrolaboral.toUpperCase().toString(),
+                    'nIdProfesion'      : this.formNuevoContacto.nprofesion
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarReferenciaVehiculo(response.data[0].nIdContacto);
@@ -2209,7 +2110,6 @@
                     //Datos contacto Juridico
                     cRuc: String(this.formNuevoContacto.cnrodocumento),
                     cRazonSocial: this.formNuevoContacto.cnombre.toUpperCase().toString(),
-                    //cUbigeo: this.formNuevoContacto.niddistrito,
                     cUbigeo: this.formNuevoContacto.ccode,
                     cDepartamento: this.formNuevoContacto.cdepartamento.toUpperCase().toString(),
                     cProvincia: this.formNuevoContacto.cprovincia.toUpperCase().toString(),
@@ -2261,12 +2161,12 @@
                 if(this.arrayReferenciaVehiculo.length > 0){
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
-                        nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                        nIdCronograma: 220016,
-                        nIdContacto: nIdContacto,
-                        referencia: this.arrayReferenciaVehiculo,
-                        otrosintreses: this.arrayOtrosIntereses
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCronograma' : 220016,
+                        'nIdContacto'   : nIdContacto,
+                        'referencia'    : this.arrayReferenciaVehiculo,
+                        'otrosintreses' : this.arrayOtrosIntereses
                     }).then(response => {
                         this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
                     }).catch(error => {
