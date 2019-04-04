@@ -2007,50 +2007,65 @@
             //=============== LISTAR MODAL POR VIN SAP ===================
             listarPorVinSap(){
                 let me = this;
+                
+                if(!me.fillVinSap.cnumerovin){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Deebe Ingresar Número de Vin!',
+                    });
+                }
+                else if(me.formPdi.nidflagvinplaca==1){
+                    //==============================================================
+                    //================== REGISTRO MERCANCIA EN SAP ===============
+                    me.loadingProgressBar("VERIFICANDO VEHICULO EN SAP BUSINESS ONE...");
 
-                //==============================================================
-                //================== REGISTRO MERCANCIA EN SAP ===============
-                me.loadingProgressBar("VERIFICANDO VEHICULO EN SAP BUSINESS ONE...");
-
-                me.arraySapVin = [];
-                me.arraySapVin.push({
-                    'cNumeroVin'    : me.fillVinSap.cnumerovin
-                });
-
-                var sapUrl = me.ruta + '/articulo/SapGetArticulo';
-                axios.post(sapUrl, {
-                    'data': me.arraySapVin
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arrayListaVinSap.push({
-                                'cNumeroVin'        : me.jsonRespuesta.ItemCode.toString(),
-                                'cNombreComercial'  : me.jsonRespuesta.ItemName.toString(),
-                                'cLogRespuesta'     : response.data.toString()
-                            });
-                        }
-                        else{
-                            me.arrayListaVinSap = [];
-                        }
+                    me.arraySapVin = [];
+                    me.arraySapVin.push({
+                        'cNumeroVin'    : me.fillVinSap.cnumerovin
                     });
 
-                    me.loading.close();
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración de Vehiculos SapB1!");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+                    var sapUrl = me.ruta + '/articulo/SapGetArticulo';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapVin
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ItemCode){
+                                me.arrayListaVinSap.push({
+                                    'cNumeroVin'        : me.jsonRespuesta.ItemCode.toString(),
+                                    'cNombreComercial'  : me.jsonRespuesta.ItemName.toString(),
+                                    'cLogRespuesta'     : response.data.toString()
+                                });
+                            }
+                            else{
+                                me.arrayListaVinSap = [];
+                            }
+                        });
+
+                        me.loading.close();
+                    }).catch(error => {
+                        me.limpiarPorError("Error en la Integración de Vehiculos SapB1!");
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Tipo de búsqueda Inválido, Debe buscar por Vin!',
+                    });
+                }
             },
             asignarVinSap(objVin){
                 this.formPdi.cvinplacanombre    = objVin.cNumeroVin;
