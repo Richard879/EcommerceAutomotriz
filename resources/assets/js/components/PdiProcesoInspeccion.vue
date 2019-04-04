@@ -1265,16 +1265,17 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">LISTADO DE VEHICULOS SAP</h3>
+                                        <h3 class="h4">LISTADO DE VEHICULOS EXHIBICIÓN SAP</h3>
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                        <label class="col-sm-4 form-control-label">*Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()" 
+                                                            class="form-control form-control-sm" placeholder="INGRESAR EL NÚMERO DE VIN">
                                                         </div>
                                                     </div>
                                                 </div>
