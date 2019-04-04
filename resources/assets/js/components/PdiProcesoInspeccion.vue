@@ -1288,7 +1288,7 @@
                                             </div>
                                         </form>
                                         <br/>
-                                        <template v-if="arrayVinSap.length">
+                                        <template v-if="arrayListaVinSap.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -1299,7 +1299,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="compra in arrayVinSap" :key="compra.nIdCompra">
+                                                        <tr v-for="compra in arrayListaVinSap" :key="compra.nIdCompra">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
@@ -1487,7 +1487,7 @@
                 fillVinSap:{
                     cnumerovin: ''
                 },
-                arrayVinSap: [],
+                arrayListaVinSap: [],
                 //==================================================
                 pagination: {
                     'total': 0,
@@ -2028,14 +2028,14 @@
                         me.jsonRespuesta= JSON.parse(x);
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.ItemCode){
-                            me.arrayVinSap.push({
+                            me.arrayListaVinSap.push({
                                 'cNumeroVin'        : me.jsonRespuesta.ItemCode.toString(),
                                 'cNombreComercial'  : me.jsonRespuesta.ItemName.toString(),
                                 'cLogRespuesta'     : response.data.toString()
                             });
                         }
                         else{
-                            me.arrayVinSap = [];
+                            me.arrayListaVinSap = [];
                         }
                     });
 
@@ -3493,7 +3493,8 @@
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
-                this.mensajeError = ''
+                this.mensajeError = '',
+                this.limpiarModal();
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -3585,6 +3586,12 @@
                     }
                     break;
                 }
+            },
+            limpiarModal(){
+                this.arrayListaVinSap = [];
+                this.fillVinSap.cnumerovin = '';
+                this.arrayCompra = [];
+                this.arrayVehiculoPlaca = [];
             },
             validarMostrarModal(){
                 this.error = 0;
