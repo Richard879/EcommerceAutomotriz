@@ -1257,6 +1257,82 @@
                 </div>
             </div>
 
+            <!-- MODAL VIN SAP-->
+            <div class="modal fade" v-if="accionmodal==10" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO DE VEHICULOS SAP</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPorVinSap()">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVinSap.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nro Vin</th>
+                                                            <th>Nombre Comercial</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="compra in arrayVinSap" :key="compra.nIdCompra">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
+                                                                    <i @click="asignarVinSap(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="compra.cNumeroVin"></td>
+                                                            <td v-text="compra.cNombreComercial"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1395,7 +1471,7 @@
                 },
                 arrayAlmacen: [],
                 //===========================================================
-                // =============  VARIABLES SAP ========================
+                //=============  VARIABLES SAP ========================
                 arraySapArticulo: [],
                 arraySapTarjetaEquipo: [],
                 arraySapSolucion: [],
@@ -1406,7 +1482,13 @@
                 arrayCodSAPPDI: [],
                 arraySapLlamadaServicio: [],
                 arraySapActividad: [],
-                // ============================================
+                arraySapVin: [],
+                //=============VARIABLES VEHICULOS SAP =============
+                fillVinSap:{
+                    cnumerovin: ''
+                },
+                arrayVinSap: [],
+                //==================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1920,6 +2002,54 @@
                 this.nflagtestdriveValida = 0,
                 this.nflagseccioninspeccionValida = 0,
                 this.nflagfichatecnicaValida = 0;
+            },
+            //=============== LISTAR MODAL POR VIN SAP ===================
+            listarPorVinSap(){
+                let me = this;
+
+                //==============================================================
+                //================== REGISTRO MERCANCIA EN SAP ===============
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+
+                me.arraySapVin = [];
+                me.arraySapVin.push({
+                    'cNumeroVin'    : me.fillVinSap.cnumerovin
+                });
+
+                var sapUrl = me.ruta + '/articulo/SapGetArticulo';
+                axios.post(sapUrl, {
+                    'data': me.arraySapVin
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ItemCode){
+                            me.arrayVinSap.push({
+                                'cNumeroVin'        : me.jsonRespuesta.ItemCode.toString(),
+                                'cNombreComercial'  : me.jsonRespuesta.ItemName.toString(),
+                                'cLogRespuesta'     : response.data.toString()
+                            });
+                        }
+                    });
+
+                    me.loading.close();
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración de Vehiculos SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            asignarVinSap(){
+                
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
@@ -3381,19 +3511,25 @@
                             case 'vinplaca':
                             {
                                 this.changeFlagVinPlaca();
-                                //Si es VIN
-                                if(this.formPdi.nidflagvinplaca == 1){
-                                    this.accionmodal    = 5;
+                                //Si el PDI es de EXHIBICION DE VEHICULOS
+                                if(this.formPdi.nidtipoinspeccion == 3){
+                                    this.accionmodal    = 10;
                                     this.modal          = 1;
-                                    this.llenarComboMarca();
-                                    this.llenarComboModelo();
-                                }
-                                //Si es Placa
-                                else{
-                                    this.accionmodal    = 6;
-                                    this.modal          = 1;
-                                }
-                                break;
+                                }else{
+                                    //Si es VIN
+                                    if(this.formPdi.nidflagvinplaca == 1){
+                                        this.accionmodal    = 5;
+                                        this.modal          = 1;
+                                        this.llenarComboMarca();
+                                        this.llenarComboModelo();
+                                    }
+                                    //Si es Placa
+                                    else{
+                                        this.accionmodal    = 6;
+                                        this.modal          = 1;
+                                    }
+                                    break;
+                                }break;
                             }
                             case 'plantilla':
                             {
