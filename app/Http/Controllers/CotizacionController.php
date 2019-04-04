@@ -286,23 +286,25 @@ class CotizacionController extends Controller
 
     public function GetListCotizacionesByIdVendedor(Request $request)
     {
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $dFechaInicio = $request->dfechainicio;
-        $dFechaFin = $request->dfechafin;
-        $nIdMarca = $request->nidmarca;
-        $nIdModelo = $request->nidmodelo;
-        $cNumeroCotizacion = $request->cnumerocotizacion;
-        $nIdEstadoCotizacion = $request->nidestadocotizacion;
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $dFechaInicio           =   $request->dfechainicio;
+        $dFechaFin              =   $request->dfechafin;
+        $nIdMarca               =   $request->nidmarca;
+        $nIdModelo              =   $request->nidmodelo;
+        $cNumeroCotizacion      =   $request->cnumerocotizacion;
+        $nIdEstadoCotizacion    =   $request->nidestadocotizacion;
+        $cContacto              =   $request->ccontacto;
 
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $cNumeroCotizacion = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
-        $nIdEstadoCotizacion = ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
+        $dFechaInicio           =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin              =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nIdMarca               =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo              =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNumeroCotizacion      =   ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
+        $nIdEstadoCotizacion    =   ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
+        $cContacto              =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
 
-        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
@@ -311,6 +313,7 @@ class CotizacionController extends Controller
                                                                     $nIdModelo,
                                                                     $cNumeroCotizacion,
                                                                     $nIdEstadoCotizacion,
+                                                                    $cContacto,
                                                                     Auth::user()->id
                                                                 ]);
 

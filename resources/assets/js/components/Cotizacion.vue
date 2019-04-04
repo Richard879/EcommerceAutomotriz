@@ -152,6 +152,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillMisCotizaciones.ccontacto" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarMisCotizaciones(1)">
                                                                             <i class="fa fa-search"></i> Buscar
@@ -2363,7 +2373,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </transition>
 </template>
@@ -2384,7 +2394,8 @@
                     nidmarca: '',
                     nidmodelo: '',
                     nidestadocotizacion: '',
-                    cnumerocotizacion: ''
+                    cnumerocotizacion: '',
+                    ccontacto: ''
                 },
                 arrayCotizaciones: [],
                 arrayEstadoCotizacion: [],
@@ -2834,24 +2845,25 @@
                 var url = this.ruta + '/gescotizacion/GetListCotizacionesByIdVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillMisCotizaciones.dfechainicio,
-                        'dfechafin': this.fillMisCotizaciones.dfechafin,
-                        'nidmarca': this.fillMisCotizaciones.nidmarca,
-                        'nidmodelo': this.fillMisCotizaciones.nidmodelo,
-                        'cnumerocotizacion': this.fillMisCotizaciones.cnumerocotizacion,
-                        'nidestadocotizacion': this.fillMisCotizaciones.nidestadocotizacion,
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'          :   this.fillMisCotizaciones.dfechainicio,
+                        'dfechafin'             :   this.fillMisCotizaciones.dfechafin,
+                        'nidmarca'              :   this.fillMisCotizaciones.nidmarca,
+                        'nidmodelo'             :   this.fillMisCotizaciones.nidmodelo,
+                        'cnumerocotizacion'     :   this.fillMisCotizaciones.cnumerocotizacion,
+                        'nidestadocotizacion'   :   this.fillMisCotizaciones.nidestadocotizacion,
+                        'ccontacto'             :   this.fillMisCotizaciones.ccontacto,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayCotizaciones = response.data.arrayCotizaciones.data;
-                    this.pagination.current_page =  response.data.arrayCotizaciones.current_page;
-                    this.pagination.total = response.data.arrayCotizaciones.total;
-                    this.pagination.per_page    = response.data.arrayCotizaciones.per_page;
-                    this.pagination.last_page   = response.data.arrayCotizaciones.last_page;
-                    this.pagination.from        = response.data.arrayCotizaciones.from;
-                    this.pagination.to           = response.data.arrayCotizaciones.to;
+                    this.arrayCotizaciones          = response.data.arrayCotizaciones.data;
+                    this.pagination.current_page    =  response.data.arrayCotizaciones.current_page;
+                    this.pagination.total           = response.data.arrayCotizaciones.total;
+                    this.pagination.per_page        = response.data.arrayCotizaciones.per_page;
+                    this.pagination.last_page       = response.data.arrayCotizaciones.last_page;
+                    this.pagination.from            = response.data.arrayCotizaciones.from;
+                    this.pagination.to              = response.data.arrayCotizaciones.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
