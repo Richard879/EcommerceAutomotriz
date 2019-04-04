@@ -497,6 +497,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/articulo/SapGetCostoPromedio', 'Api\SapArticuloController@SapGetCostoPromedio');
     Route::post('/articulo/SapSetSerialNumber', 'Api\SapArticuloController@SapSetSerialNumber');
     Route::post('/articulo/SapPatchArticulo', 'Api\SapArticuloController@SapPatchArticulo');
+    Route::post('/articulo/SapGetArticulo', 'Api\SapArticuloController@SapGetArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     Route::post('/pedido/prueba', 'Api\SapPedidoController@prueba');
