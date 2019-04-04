@@ -20,7 +20,7 @@ class ElementoController extends Controller
         $nIdTipoElemento    =   ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
         $cElemenNombre      =   ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
 
-        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipo] ?, ?, ?',
+        $arrayElementoVenta = DB::select('exec [usp_Elemen_GetElementoByTipo] ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdTipoElemento,
                                                                     $cElemenNombre
@@ -29,7 +29,7 @@ class ElementoController extends Controller
         $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
 
-        /*$data = $this->paginateArray($element = DB::select('exec usp_Pdi_GetElementoByTipo ?, ?',
+        /*$data = $this->paginateArray($element = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?',
                                                     array($nIdEmpresa, $nIdTipoElemento)));*/
 
         /*return ['pagination'=>[
@@ -41,27 +41,6 @@ class ElementoController extends Controller
                 'to'           => $pagination->lastItem(),
          ],'elementos'=>$element];*/
     }
-
-    /*public function GetElementoByTipoBsq(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $nidempresa     =   $request->nidempresa;
-        $tipoBsq        =   $request->nidtipoelemen;
-        $codVehiculo    =   $request->codVehiculo;
-
-        $tipoBsq        =   ($tipoBsq == NULL) ? ($tipoBsq = 1) : $tipoBsq;
-        $codVehiculo    =   ($codVehiculo == NULL) ? ($codVehiculo = '') : $codVehiculo;
-
-        $arrayElementoVenta = DB::select('exec [usp_Pdi_GetElementoByTipoBsq] ?, ?, ?',
-                                                                [   $nidempresa,
-                                                                    $tipoBsq,
-                                                                    $codVehiculo
-                                                                ]);
-
-        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
-        return ['arrayElementoVenta'=>$arrayElementoVenta];
-    }*/
 
     public function store(Request $request)
     {
