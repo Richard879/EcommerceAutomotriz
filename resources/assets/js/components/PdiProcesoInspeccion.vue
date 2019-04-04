@@ -2009,7 +2009,7 @@
 
                 //==============================================================
                 //================== REGISTRO MERCANCIA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
+                me.loadingProgressBar("VERIFICANDO VEHICULO EN SAP BUSINESS ONE...");
 
                 me.arraySapVin = [];
                 me.arraySapVin.push({
@@ -2034,6 +2034,9 @@
                                 'cLogRespuesta'     : response.data.toString()
                             });
                         }
+                        else{
+                            me.arrayVinSap = [];
+                        }
                     });
 
                     me.loading.close();
@@ -2048,8 +2051,11 @@
                     }
                 });
             },
-            asignarVinSap(){
-                
+            asignarVinSap(objVin){
+                this.formPdi.cvinplacanombre    = objVin.cNumeroVin;
+                this.formPdi.cnumerovin         = objVin.cNumeroVin;
+                this.formPdi.cdescripcion       = objVin.cNombreComercial;
+                this.cerrarModal();
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
