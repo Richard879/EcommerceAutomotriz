@@ -150,10 +150,16 @@
                                                                                         <td v-text="almacen.cFlagPorDefecto"></td>
                                                                                         <td>
                                                                                             <template v-if="almacen.cFlagPorDefecto == 'NO'">
-                                                                                                <a href="#" @click.prevent="activarPorDefecto(0, almacen)"><i :style="'color:blue'" class="fa-md fa fa-check"></i></a>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Activar por Defecto {{ almacen.cWhsName }}</div>
+                                                                                                    <i @click="activarPorDefecto(1, almacen)" :style="'color:blue'" class="fa-md fa fa-check"></i>
+                                                                                                </el-tooltip>
                                                                                             </template>
                                                                                             <template v-else>
-                                                                                                <a href="#" @click.prevent="activarPorDefecto(1, almacen)"><i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Desactivar por Defecto {{ almacen.cWhsName }}</div>
+                                                                                                    <i @click="activarPorDefecto(0, almacen)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                </el-tooltip>
                                                                                             </template>
                                                                                         </td>
                                                                                     </tr>
