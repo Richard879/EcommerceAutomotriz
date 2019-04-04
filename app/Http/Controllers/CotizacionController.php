@@ -615,6 +615,9 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
+
+
         //OBTENGO LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
         $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
                                     [
@@ -623,18 +626,16 @@ class CotizacionController extends Controller
 
         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
-        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/
+        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
         $contents   =   Storage::get('public/'. $cadena);
-
-        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
-                                                                'arrayDetalleDocs'  =>  $arrayDetalleDocs,
-                                                                'contents'          =>  $contents,
-                                                                'arrayDatosBanco'   =>  $arrayDatosBanco,
-                                                                'logo'              =>  $logo,
-                                                                'hyundai'           =>  $hyundai
+                                                                'arrayDetalleDocs'      =>  $arrayDetalleDocs,
+                                                                'contents'              =>  $contents,
+                                                                'arrayDatosBanco'       =>  $arrayDatosBanco,
+                                                                'logo'                  =>  $logo,
+                                                                'hyundai'               =>  $hyundai
                                                             ]);
 
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');

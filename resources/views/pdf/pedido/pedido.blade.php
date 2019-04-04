@@ -7,7 +7,8 @@
     <title>Pedido {{ $arrayDetallePedido[0]->cNumeroPedido }} </title>
     <style type="text/css">
         @page {
-            margin: 0px;
+            margin: 1.3rem;
+            margin-top: 1.9rem;
             padding: 1rem;
         }
         body {
@@ -96,51 +97,69 @@
     <div class="padding">
         <table width="100%">
             <tr>
-                <td>Nombre/Razón Social: <strong>{{ $arrayDetallePedido[0]->cContacto }}</strong></td>
+                <td>Nombre/Razón Social:</td>
+                <td colspan="85"><strong>{{ $arrayDetallePedido[0]->cContacto }}</strong></td>
             </tr>
             <tr>
-                <td>Dirección: <strong>{{ $arrayDetallePedido[0]->cDireccion }}</strong></td>
+                <td>Dirección:</td>
+                <td><strong>{{ $arrayDetallePedido[0]->cDireccion }}</strong></td>
             </tr>
             <tr>
-                <td>DNI/RUC: <strong>{{ $arrayDetallePedido[0]->cNumeroDocumento }}</strong></td>
-                <td>Telf. Fijo: <strong>{{ $arrayDetallePedido[0]->cTelefonoFijo }}</strong></td>
-                <td>Telf. Celular: <strong>{{ $arrayDetallePedido[0]->cTelefonoMovil }}</strong></td>
+                <td>DNI/RUC:</td>
+                <td><strong>{{ $arrayDetallePedido[0]->cNumeroDocumento }}</strong></td>
             </tr>
-            <br/>
+            <tr>
+                <td>Telf. Fijo:</td>
+                <td><strong>{{ $arrayDetallePedido[0]->cTelefonoFijo }}</strong></td>
+            </tr>
+            <tr>
+                <td>Telf. Celular:</td>
+                <td><strong>{{ $arrayDetallePedido[0]->cTelefonoMovil }}</strong></td>
         </table>
 
         <br/>
 
         <div class="invoice">
+            <div class="center">
+                <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
+            </div>
+
             <h3>{{ $arrayDetallePedido[0]->cNombreVehiculo }}</h3>
 
             <div class="center">
-                <table width="80%">
+                <table width="100%">
                     <tr>
-                        <td><h4>PRECIO DE LISTA:</h4> <strong> <h4> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioLista }} </h4></strong></td>
-                        <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioEspecial }} </h3></strong></td>
+                        <td>
+                            <h4>PRECIO DE LISTA:</h4>
+                            <strong><h4> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioLista }} </h4></strong>
+                        </td>
+                        <td>
+                            <h2>PRECIO ESPECIAL:</h2>
+                            <strong> <h2> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioEspecial }} </h2></strong>
+                        </td>
                     </tr>
                 </table>
-                <table width="100%">
-                    <thead style="background-color: lightgray;">
-                        <tr align="center" valign="middle" >
-                            <th colspan="2">DOCUMENTOS ASOCIADOS</th >
-                        </tr>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Archivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($arrayPedidoDoumento as $doc)
-                            <tr>
-                                <td> {{ $doc->cParNombre }} </td>
-                                <td> {{ $doc->cArchivo }} </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
+
+            <table width="100%">
+                <thead style="background-color: lightgray;">
+                    <tr align="center" valign="middle" >
+                        <th colspan="2">DOCUMENTOS ASOCIADOS</th >
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($arrayPedidoDoumento as $doc)
+                        <tr>
+                            <td> {{ $doc->cParNombre }} </td>
+                            <td> {{ $doc->cArchivo }} </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
             <table width="100%">
                 <tr>
@@ -315,13 +334,11 @@
                         Los gastos adicionales, extraordinarios u otros que surjan, a los de placas y tarjeta de identificación vehicular, sean necesarios o no para el cumplimiento del
                         registro vehicular (legalización de firmas, formularios notariales, copias certificadas, garantías mobiliarias, etc.) no están cubiertos en la cortesía especificada en el
                         párrafo anterior y son de cuenta del cliente.
-                    </td>
-                </tr>
-                <tr>
-                    <td class="justify">
+                        <br>
                         Sin otro particular quedamos de usted a su pleno servicio. Atentamente.
                     </td>
                 </tr>
+                <tr></tr>
             </table>
 
             <br/>
@@ -331,20 +348,13 @@
                     <td align="left" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>{{ $arrayDetallePedido[0]->cNombreAsesorComercial }}</h3>
-                        <pre>
-                            ASESOR COMERCIAL
-                            Telf : (051)(074)271036
-                            Cel : 978728115
-                            Email : jose.andaluz@gpsinka.com
-                        </pre>
+                        <h5 class="center">ASESOR COMERCIAL</h5>
                     </td>
                     <td align="center"></td>
                     <td align="right" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>{{ $arrayDetallePedido[0]->cJefeVentas }}</h3>
-                        <pre>
-                            Jefe de Ventas
-                        </pre>
+                        <h5 class="center" style="margin-right: 6rem">JEFE DE VENTAS</h5>
                     </td>
                 </tr>
             </table>
@@ -357,9 +367,7 @@
                     <td align="center" style="width: 40%;">
                         <h3>_____________________________</h3>
                         <h3>CLIENTE : {{ $arrayDetallePedido[0]->cContacto }}</h3>
-                        <pre>
-                            DOC IDEN: {{ $arrayDetallePedido[0]->cNumeroDocumento }}
-                        </pre>
+                        <pre>DOC IDEN: {{ $arrayDetallePedido[0]->cNumeroDocumento }}</pre>
                     </td>
                     <td align="right" style="width: 40%;">
                         <div class="cuadrado"></div>

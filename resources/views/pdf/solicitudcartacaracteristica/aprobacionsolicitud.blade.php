@@ -7,7 +7,8 @@
     <title>Carta de Caracteristicaas N° {{ $CartaDetalleSolicitud->cNumCarta }}</title>
     <style type="text/css">
         @page {
-            margin: 0px;
+            margin: 1.3rem;
+            margin-top: 1.9rem;
             padding: 1rem;
         }
         body {
@@ -23,7 +24,7 @@
             padding: 2rem;
         }
         .information {
-            background-color: #F7FFFF;
+            background-color: #60A7A6;
             color: #FFF;
             padding: 2rem;
             padding-bottom: 0px;
