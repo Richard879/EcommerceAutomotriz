@@ -872,6 +872,7 @@
                     params: {
                         'ngrupoparid'   : 110042,
                         'cparnombre'    : this.fillProveedor.cnombreproveedor.toString(),
+                        'npartipo'      : 1000,
                         'opcion'        : 0,
                         'page'          : page
                     }

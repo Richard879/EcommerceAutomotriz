@@ -552,6 +552,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>Código Sap</th>
                                                             <th>Nombre Proveedor</th>
                                                         </tr>
                                                     </thead>
@@ -563,6 +564,7 @@
                                                                     <i @click="asignarProveedor(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="proveedor.cParJerarquia"></td>
                                                             <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
