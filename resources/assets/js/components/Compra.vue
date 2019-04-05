@@ -3438,7 +3438,7 @@
             generaSapCompra(objCompra){
                 let me = this;
                 //Verifico Si No existe OrdenCompra De EXCEL
-                if(objCompra.nDocEntry== 0){
+                if(objCompra.nDocEntry==0){
                     //==============================================================
                     //================== REGISTRO COMPRA EN SAP ===============
                     me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
@@ -3542,8 +3542,8 @@
             },
             generaSapActividadCompra(objCompra){
                 let me = this;
-                //Verifico Si No existe Actividad De EXCEL
-                if(objCompra.nActivityCode== 0){
+                //Verifico Si No existe Actividad
+                if(objCompra.nActivityCode==0){
                     //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
@@ -3589,8 +3589,8 @@
                     });
                 }
                 else{
-                    //==============================================================
-                    //============= REGISTRO LLAMADA DE SERVICIO EN SAP ============
+                    //===================================================
+                    //============= REGISTRO SOLUCION EN SAP ============
                     setTimeout(function() {
                             me.generaSapSolucion(objCompra);
                     }, 1200);
@@ -3622,7 +3622,7 @@
             },
             generaSapSolucion(objCompra){
                 let me = this;
-                if(objCompra.nSolutionCode== 0){
+                if(objCompra.nSolutionCode==0){
                     me.arraySapSolucion.push({
                         'cItemCode' : objCompra.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -3711,7 +3711,7 @@
                 let me = this;
 
                 //Validar que Solucion ya esta registrado
-                if(objCompra.nSolutionCode!= 0){
+                if(objCompra.nSolutionCode!=0){
 
                     me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
 
@@ -3726,7 +3726,7 @@
                     });
                 }
 
-                if(objCompra.nServiceCallID== 0){
+                if(objCompra.nServiceCallID==0){
                     var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                     axios.post(sapUrl, {
                         'data': me.arraySapLlamadaServicio

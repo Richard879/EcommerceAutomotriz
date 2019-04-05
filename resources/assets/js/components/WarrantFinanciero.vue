@@ -1779,6 +1779,13 @@
                         }
                     });
                 }
+                else{
+                    //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    setTimeout(function() {
+                        me.integraSapBusinessActividad(objCompra);
+                    }, 1200);
+                }
             },
             actualizaSgcFacturaProveedor(objWO){
                 let me = this;
@@ -1803,50 +1810,61 @@
             integraSapBusinessActividad(objWO){
                 let me = this;
 
-                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
-                axios.post(sapUrl, {
-                    'data'  : me.arraySapActividad
-                }).then(response => {
-                    // ======================================================================
-                    // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
-                    // ======================================================================
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                //Verifico Si No existe Actividad
+                if(objWO.nActivityCode==0)
+                {
+                    var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
+                    axios.post(sapUrl, {
+                        'data'  : me.arraySapActividad
+                    }).then(response => {
+                        // ======================================================================
+                        // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
+                        // ======================================================================
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
 
-                    me.arraySapRespuesta = response.data;
-                    if(me.arraySapRespuesta.length > 0) {
-                        me.arraySapRespuesta.map(function(value, key){
-                            me.jsonRespuesta = '';
-                            me.jsonRespuesta= JSON.parse(value);
-                            //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){
-                                me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   19,
-                                    'cActividadTipo':   'WarranFinanciero',
-                                    'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
-                                    'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
-                                    'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
-                                    'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
-                                });
-                            }
-                        });
-                    }
-
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                    setTimeout(function() {
-                        me.actualizaSgcActividad(objWO);
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+                        me.arraySapRespuesta = response.data;
+                        if(me.arraySapRespuesta.length > 0) {
+                            me.arraySapRespuesta.map(function(value, key){
+                                me.jsonRespuesta = '';
+                                me.jsonRespuesta= JSON.parse(value);
+                                //Si el valor de respuesta Code tiene un valor
+                                if(me.jsonRespuesta.ActivityCode){
+                                    me.arraySapUpdSgc.push({
+                                        'nActividadTipo':   19,
+                                        'cActividadTipo':   'WarranFinanciero',
+                                        'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
+                                        'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
+                                        'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
+                                        'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
+                                        'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
+                                    });
+                                }
+                            });
                         }
-                    }
-                });
+
+                        //================================================================
+                        //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                        setTimeout(function() {
+                            me.actualizaSgcActividad(objWO);
+                        }, 1200);
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+                else{
+                    //===================================================
+                    //============= REGISTRO SOLUCION EN SAP ============
+                    setTimeout(function() {
+                            me.integraSapBusinessSolucion(objCompra);
+                    }, 1200);
+                }
             },
             actualizaSgcActividad(objWO){
                 let me = this;
@@ -1871,48 +1889,57 @@
             integraSapBusinessSolucion(objWO){
                 let me = this;
 
-                me.arraySapSolucion.push({
-                    'cItemCode' : objWO.cNumeroVin,
-                    'cSubject'  : "Cierre De Servicio"
-                });
+                if(objCompra.nSolutionCode==0){
+                    me.arraySapSolucion.push({
+                        'cItemCode' : objWO.cNumeroVin,
+                        'cSubject'  : "Cierre De Servicio"
+                    });
 
-                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
-                axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                    var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapSolucion
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.SolutionCode){
-                            me.arraySapUpdSgc.push({
-                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
-                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cFlagTipo'     : 'WF',
-                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
-                            });
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.SolutionCode){
+                                me.arraySapUpdSgc.push({
+                                    'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                    'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                    'cFlagTipo'     : 'WF',
+                                    'cLogRespuesta' : me.arraySapRespuesta[key].toString()
+                                });
 
-                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                                me.nSolutionCode = me.jsonRespuesta.SolutionCode;
+                            }
+                        });
+                        //================================================================
+                        //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                        setTimeout(function() {
+                            me.actualizaSgcSolucion(objWO);
+                        }, 1200);
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                }
+                else{
+                    //==============================================================
+                    //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
                     setTimeout(function() {
-                        me.actualizaSgcSolucion(objWO);
+                        me.obtenerFacturaProveedorActividad(objCompra);
                     }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
             },
             actualizaSgcSolucion(objWO){
                 let me = this;
@@ -1968,43 +1995,65 @@
             integraSapBusinessLlamadaServicio(objWO){
                 let me = this;
 
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
+                //Validar que Solucion ya esta registrado
+                if(objWO.nSolutionCode!=0){
 
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'WF',
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
-                            });
+                    me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
+
+                    me.arraySapLlamadaServicio = [];
+                    me.arraySapLlamadaServicio.push({
+                        'nActivityCode'     : objWO.nActivityCode,
+                        'cCustomerCode'     : objWO.cCustomerCode,
+                        'cInternalSerialNum': objWO.cNumeroVin,
+                        'cItemCode'         : objWO.cNumeroVin,
+                        'nSolutionCode'     : objWO.nSolutionCode,
+                        'cSubject'          : objWO.cSubject
+                    });
+                }
+
+                if(objWO.nServiceCallID==0){
+                    var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapLlamadaServicio
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ItemCode){
+                                me.arraySapUpdSgc.push({
+                                    'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
+                                    'cFlagTipo'         : 'WF',
+                                    'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
+                                    'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
+                                    'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
+                                    'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
+                                });
+                            }
+                        });
+                        //=========================================================================
+                        //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                        setTimeout(function() {
+                            me.actualizaSgcLlamadaServicio(objWO);
+                        }, 1200);
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
                         }
                     });
-                    //=========================================================================
-                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
+                }else{
                     setTimeout(function() {
-                        me.actualizaSgcLlamadaServicio(objWO);
+                        me.confirmarWFDetalle();
                     }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
+                }
             },
             actualizaSgcLlamadaServicio(objWO){
                 let me = this;
