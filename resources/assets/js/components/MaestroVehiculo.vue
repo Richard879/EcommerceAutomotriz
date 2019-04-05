@@ -2809,7 +2809,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'ubigeo':
                     {
                         switch(accion){
@@ -2820,7 +2821,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case "contacto":
                     {
                         switch(accion){
