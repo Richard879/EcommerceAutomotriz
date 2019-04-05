@@ -630,12 +630,14 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
-        //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
-        //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-        $contents   =   Storage::get('public/'. $cadena);
+        if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
+            //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+            $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
+            //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+            $contents   =   Storage::get('public/'. $cadena);
+        }
 
-        $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
+        // $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
         // $data_xml->loadXML($contents); //cargo el xml, en este caso es una cadena codificada
         // $data1 = $data_xml->getElementsByTagNameNS('SGS_FichaTec_Cotizacion' ,'textbox21');//busca el elemento del xml y lo guarda en variable
 
