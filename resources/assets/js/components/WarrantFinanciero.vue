@@ -233,6 +233,7 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acción</th>
                                                                                     <th>Código</th>
                                                                                     <th>O/C</th>
                                                                                     <th>Nombre Comercial</th>
@@ -252,6 +253,7 @@
                                                                                             <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
+                                                                                    <template v-else>&nbsp;&nbsp;</template>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
                                                                                     <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
@@ -1021,7 +1023,7 @@
                         }).then(response => {
                             if(response.data[0].nFlagMsje == 1){
                                 swal(
-                                    'Activado!',
+                                    'Actualizado!',
                                     response.data[0].cMensaje
                                 );
                                 this.listarDetalleWFinanciero(1);

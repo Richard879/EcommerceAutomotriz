@@ -60,7 +60,7 @@ class MaestroVehiculoController extends Controller
 
         $nFlagEditar = $request->nFlagEditar;
 
-        $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca] 
+        $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca]
                                                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         NULL,
@@ -140,7 +140,7 @@ class MaestroVehiculoController extends Controller
         $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
         $nFlagEditar        = $request->nFlagEditar;
 
-        $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPersonaNatural] 
+        $arrayPropietario = DB::select('exec [usp_MaestroVehiculo_SetPersonaNatural]
                                                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                 [
                                                     $nidpersona,
