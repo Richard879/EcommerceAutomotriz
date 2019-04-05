@@ -193,7 +193,8 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra"
+                                                                                    :style="{ background : compra.cFlagColor }">
                                                                                 <td>
                                                                                     <template v-if="compra.cSituacionRegistro=='A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">

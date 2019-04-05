@@ -56,14 +56,14 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <!--<div class="col-sm-6">
+                                                                        <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Nro Warrant</label>
+                                                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="fillWOperativo.cnrowarrant" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillWOperativo.cnumerovin" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
-                                                                        </div>-->
+                                                                        </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Estado</label>
@@ -772,7 +772,8 @@
                 fillWOperativo:{
                     nidwarrantoperativo: 0,
                     nidestadowarrant: '',
-                    cnrowarrant: ''
+                    cnrowarrant: '',
+                    cnumerovin: ''
                 },
                 fillWOperativoDetalle:{
                     nidwarrantoperativo: 0,
@@ -999,7 +1000,7 @@
                 axios.get(url, {
                     params: {
                         'nidestadowarrant'  : this.fillWOperativo.nidestadowarrant,
-                        'cnrowarrant'       : this.fillWOperativo.cnrowarrant,
+                        'cnumerovin'       : this.fillWOperativo.cnumerovin,
                         'page'              : page
                     }
                 }).then(response => {
@@ -1701,8 +1702,6 @@
 
                 //==============================================================
                 //================== REGISTRO COMPRA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
-
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
                     'cCardCode'     : me.formCompra.ccarcode,

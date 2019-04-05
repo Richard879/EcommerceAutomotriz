@@ -886,7 +886,7 @@
                                         <form class="form-horizontal">
                                             <div class="col-lg-12">
                                                 <template v-if="arrayDetalleDepositosPorPedido.length">
-                                                    <!-- <div class="table-responsive">
+                                                    <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
@@ -914,9 +914,9 @@
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div> -->
+                                                    </div>
 
-                                                    <el-table
+                                                    <!--<el-table
                                                         :data="arrayDetalleDepositosPorPedido"
                                                         style="width: 100%"
                                                         :stripe="true"
@@ -943,7 +943,7 @@
                                                             </template>
                                                         </el-table-column>
                                                         <el-table-column label="ESTADO" prop="cEstadoDeposito"></el-table-column>
-                                                    </el-table>
+                                                    </el-table>-->
                                                 </template>
                                                 <template v-else>
                                                     <table>
