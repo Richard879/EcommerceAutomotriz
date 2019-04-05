@@ -806,6 +806,7 @@
                 arraySapLlamadaServicio: [],
                 arraySapItemCode: [],
                 arraySapAsiento: [],
+                arraySapWO: [],
                 nSolutionCode:  0,
                 //===========================================================
                 pagination: {
@@ -1624,7 +1625,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWO();
+                        me.obtenerWOTblCosto();
+                        //me.confirmarWO();
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1636,7 +1638,7 @@
                     }
                 });
             },
-            /*obtenerWOTblCosto(){
+            obtenerWOTblCosto(){
                 let me = this;
                 var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
                 axios.post(url, {
@@ -1696,7 +1698,7 @@
                     }
                 });
             },
-            generaSapCompraWO(objCompra){
+            /*generaSapCompraWO(objCompra){
                 let me = this;
 
                 //==============================================================
@@ -1813,7 +1815,8 @@
                 this.arraySapSolucion= [],
                 this.nSolutionCode=  0,
                 this.arraySapLlamadaServicio= [],
-                this.arraySapItemCode= []
+                this.arraySapItemCode= [],
+                this.arraySapWO= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
