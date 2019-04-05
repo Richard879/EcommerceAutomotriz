@@ -1173,7 +1173,7 @@
                     me.fillWFinanciero.nidwarrantfinanciero = response.data;
 
                     if(me.fillWFinanciero.nidwarrantfinanciero > 0){
-                        /*me.arrayTemporal.map(function(value, key) {
+                        me.arrayTemporal.map(function(value, key) {
                             me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
@@ -1182,12 +1182,12 @@
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
                             })
-                        });*/
+                        });
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
-                            me.generaSapFacturaProveedor();
+                            me.generaSapAsientoContable();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -1200,7 +1200,7 @@
                     }
                 });
             },
-            /*generaSapAsientoContable(){
+            generaSapAsientoContable(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
@@ -1262,7 +1262,7 @@
                         }
                     }
                 });
-            },*/
+            },
             generaSapFacturaProveedor(){
                 let me = this;
 
@@ -1270,7 +1270,7 @@
                 axios.post(sapUrl, {
                     'cCardCode' : me.formWFinanciero.ccarcode, //CODIGO FORUM
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arrayTemporal
+                    'data'      : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];

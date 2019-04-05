@@ -421,8 +421,8 @@
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
-                                                                                <!--<th>Comisión Dolares</th>
-                                                                                <th>Comisión Soles</th>-->
+                                                                                <th>Comisión Dolares</th>
+                                                                                <th>Comisión Soles</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -441,8 +441,8 @@
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
                                                                                 <td v-text="temporal.fTotalCompra"></td>
                                                                                 <td v-text="temporal.cNumeroFactura"></td>
-                                                                                <!--<td v-text="temporal.fComisionDolar"></td>
-                                                                                <td v-text="temporal.fComisionSol"></td>-->
+                                                                                <td v-text="temporal.fComisionDolar"></td>
+                                                                                <td v-text="temporal.fComisionSol"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -453,8 +453,8 @@
                                                                         </div>
                                                                         <div class="col-lg-5">
                                                                             <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
-                                                                            <!--<div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
-                                                                            <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>-->
+                                                                            <div class="datatable-info">Total Comision Dolares: US$ <strong>{{ fTotalComisionDolar = totalComisionDolar }}</strong></div>
+                                                                            <div class="datatable-info">Total Comision Soles: s./ <strong>{{ fTotalComisionSol = totalComisionSol }}</strong></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -897,6 +897,26 @@
                     return 0;
                 }
             },
+            totalComisionDolar: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fComisionDolar);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
+            totalComisionSol: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fComisionSol);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
         },
         mounted(){
             this.tabBuscarWOperativo();
@@ -1205,11 +1225,11 @@
 
                 var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'      :   me.formWOperativo.nidproveedor,
-                    'fTotalValor'       :   me.fTotalValor,
-                    //'fTotalComisionDolar': me.fTotalComisionDolar,
-                    //'fTotalComisionSol' : me.fTotalComisionSol,
-                    'data'              :   me.arrayTemporal
+                    'nIdProveedor'          : me.formWOperativo.nidproveedor,
+                    'fTotalValor'           : me.fTotalValor,
+                    'fTotalComisionDolar'   : me.fTotalComisionDolar,
+                    'fTotalComisionSol'     : me.fTotalComisionSol,
+                    'data'                  : me.arrayTemporal
                 }).then(response => {
                     // console.log(response.data);
                     me.fillWOperativo.nidwarrantoperativo = response.data;
