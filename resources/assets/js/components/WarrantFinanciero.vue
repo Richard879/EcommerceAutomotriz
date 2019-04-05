@@ -253,6 +253,7 @@
                                                                                             <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
+                                                                                    <template v-else>&nbsp;&nbsp;</template>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
                                                                                     <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
