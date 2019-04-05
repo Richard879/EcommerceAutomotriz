@@ -1201,6 +1201,7 @@
                             'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
                             'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
                             'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
+                            'U_SYP_IMPORTE_USD'   :   x.U_SYP_IMPORTE_USD,
                             'U_SYP_COSTO'         :   x.U_SYP_COSTO,
                             'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
                         });
