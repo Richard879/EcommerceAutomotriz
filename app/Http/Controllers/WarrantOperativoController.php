@@ -15,14 +15,14 @@ class WarrantOperativoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEstadoWarrant   =   $request->nidestadowarrant;
-        $cNroWarrant        =   $request->cnrowarrant;
+        $cNumeroVin        =   $request->cnumerovin;
 
         $nIdEstadoWarrant   =   ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
-        $cNroWarrant        =   ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
+        $cNumeroVin        =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
         $arrayWOperativo = DB::select('exec [usp_WO_GetWarrantByEstado] ?, ?',
                                                             [   $nIdEstadoWarrant,
-                                                                $cNroWarrant
+                                                                $cNumeroVin
                                                             ]);
 
         $arrayWOperativo = ParametroController::arrayPaginator($arrayWOperativo, $request);
@@ -60,8 +60,8 @@ class WarrantOperativoController extends Controller
             $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?',
                                                     [   $request->nIdProveedor,
                                                         $request->fTotalValor,
-                                                        0,
-                                                        0,
+                                                        $request->fTotalComisionDolar,
+                                                        $request->fTotalComisionSol,
                                                         Auth::user()->id
                                                     ]);
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
@@ -73,9 +73,9 @@ class WarrantOperativoController extends Controller
                                                     [   $nIdWarrantOperativo,
                                                         $det['nIdCompra'],
                                                         $det['fTotalCompra'],
-                                                        0,
-                                                        0,
-                                                        0,
+                                                        $det['fComisionDolar'],
+                                                        $det['fComisionSol'],
+                                                        $det['fValorTipoCambio'],
                                                         Auth::user()->id
                                                     ]);
             }

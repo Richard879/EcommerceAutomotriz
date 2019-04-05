@@ -189,26 +189,26 @@
                                                                                 <th>Nro Factura</th>
                                                                                 <th>Fecha Facturado</th>
                                                                                 <th>Fecha Compra</th>
-                                                                                <th>DocEntry Compra</th>
-                                                                                <th>DocEntry Merc.</th>
+                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra"
+                                                                                    :style="{ background : compra.cFlagColor }">
                                                                                 <td>
                                                                                     <template v-if="compra.cSituacionRegistro=='A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Desactivar Compra {{ compra.nOrdenCompra }}</div>
+                                                                                            <div slot="content">Desactivar Compra {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="desactivar(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                     <template v-else>
-                                                                                        <el-tooltip class="item" :content="'Activar ' + compra.nOrdenCompra" effect="dark" placement="top-start">
+                                                                                        <el-tooltip class="item" :content="'Activar ' + compra.cNumeroVin" effect="dark" placement="top-start">
                                                                                             <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar Compra  {{ compra.nOrdenCompra }}</div>
+                                                                                        <div slot="content">Editar Compra  {{ compra.cNumeroVin }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;<!---->
                                                                                     <template v-if="compra.nValidaIntegracion==0">
@@ -217,12 +217,6 @@
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <!--<template v-if="compra.nDocEntryMercanciaValida==0">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="generaSapEntradaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>-->
                                                                                 </td>
                                                                                 <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
@@ -242,7 +236,6 @@
                                                                                 <td v-text="compra.dFechaFacturado"></td>
                                                                                 <td v-text="compra.dFechaCompra"></td>
                                                                                 <td v-text="compra.nDocEntry"></td>
-                                                                                <td v-text="compra.nDocEntryMercancia"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>

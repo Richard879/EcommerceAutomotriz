@@ -241,19 +241,26 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
                                                                                     <th>DocNum Asiento</th>
-                                                                                    <th>DocNum Comprobante</th>
+                                                                                    <th>DocNum Fact.Prov.</th>
                                                                                     <th>Estado</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                    <template v-if="odetalle.nIdEstadoWarrant==1300079">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
-                                                                                            <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
-                                                                                    <template v-else>&nbsp;&nbsp;</template>
+                                                                                    <td>
+                                                                                        <template v-if="odetalle.nIdEstadoWarrant==1300079">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                                <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                        <template v-if="odetalle.nValidaIntegracion==0">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">{{ odetalle.cFlagVistaIntegracion + ' ' + odetalle.cNumeroVin }}</div>
+                                                                                                <i @click="validarSapArticulo(odetalle)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                    </td>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
                                                                                     <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
@@ -1163,6 +1170,7 @@
                 }
 
                 me.mostrarProgressBar();
+
                 var url = me.ruta + '/wfinanciero/SetWFinanciero';
                 axios.post(url, {
                     'nIdBanco'      : me.formWFinanciero.nidbanco,
@@ -1173,7 +1181,7 @@
                     me.fillWFinanciero.nidwarrantfinanciero = response.data;
 
                     if(me.fillWFinanciero.nidwarrantfinanciero > 0){
-                        /*me.arrayTemporal.map(function(value, key) {
+                        me.arrayTemporal.map(function(value, key) {
                             me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
@@ -1182,13 +1190,13 @@
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
                             })
-                        });*/
+                        });
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
-                            me.generaSapFacturaProveedor();
-                        }, 1600);
+                            me.generaSapAsientoContable();
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1200,7 +1208,7 @@
                     }
                 });
             },
-            /*generaSapAsientoContable(){
+            generaSapAsientoContable(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
@@ -1231,7 +1239,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
                     setTimeout(function() {
                         me.registroSgcAsientoContable();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1251,7 +1259,7 @@
                     if(response.data[0].nFlagMsje == 1) {
                          setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 1600);
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1262,7 +1270,7 @@
                         }
                     }
                 });
-            },*/
+            },
             generaSapFacturaProveedor(){
                 let me = this;
 
@@ -1270,7 +1278,7 @@
                 axios.post(sapUrl, {
                     'cCardCode' : me.formWFinanciero.ccarcode, //CODIGO FORUM
                     'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arrayTemporal
+                    'data'      : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -1383,7 +1391,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1403,7 +1411,7 @@
                     setTimeout(function() {
                         // me.confirmarWF();
                         me.registroSapBusinessSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1452,7 +1460,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1471,7 +1479,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getFacturaProveedorActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1512,7 +1520,7 @@
                 });
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
-                }, 1600);
+                }, 1200);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
@@ -1544,7 +1552,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1563,7 +1571,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.confirmarWF();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

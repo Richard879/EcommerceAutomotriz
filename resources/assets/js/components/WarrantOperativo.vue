@@ -56,14 +56,14 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <!--<div class="col-sm-6">
+                                                                        <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Nro Warrant</label>
+                                                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="fillWOperativo.cnrowarrant" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillWOperativo.cnumerovin" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
-                                                                        </div>-->
+                                                                        </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Estado</label>
@@ -421,8 +421,8 @@
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
-                                                                                <!--<th>Comisión Dolares</th>
-                                                                                <th>Comisión Soles</th>-->
+                                                                                <th>Comisión Dolares</th>
+                                                                                <th>Comisión Soles</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -441,8 +441,8 @@
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
                                                                                 <td v-text="temporal.fTotalCompra"></td>
                                                                                 <td v-text="temporal.cNumeroFactura"></td>
-                                                                                <!--<td v-text="temporal.fComisionDolar"></td>
-                                                                                <td v-text="temporal.fComisionSol"></td>-->
+                                                                                <td v-text="temporal.fComisionDolar"></td>
+                                                                                <td v-text="temporal.fComisionSol"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -453,8 +453,8 @@
                                                                         </div>
                                                                         <div class="col-lg-5">
                                                                             <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
-                                                                            <!--<div class="datatable-info">Total Comision Dolares: USD <strong>{{ fTotalComisionDolar }}</strong></div>
-                                                                            <div class="datatable-info">Total Comision Soles: S./ <strong>{{ fTotalComisionSol }}</strong></div>-->
+                                                                            <div class="datatable-info">Total Comision Dolares: US$ <strong>{{ fTotalComisionDolar = totalComisionDolar }}</strong></div>
+                                                                            <div class="datatable-info">Total Comision Soles: s./ <strong>{{ fTotalComisionSol = totalComisionSol }}</strong></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -772,7 +772,8 @@
                 fillWOperativo:{
                     nidwarrantoperativo: 0,
                     nidestadowarrant: '',
-                    cnrowarrant: ''
+                    cnrowarrant: '',
+                    cnumerovin: ''
                 },
                 fillWOperativoDetalle:{
                     nidwarrantoperativo: 0,
@@ -806,6 +807,7 @@
                 arraySapLlamadaServicio: [],
                 arraySapItemCode: [],
                 arraySapAsiento: [],
+                arraySapWO: [],
                 nSolutionCode:  0,
                 //===========================================================
                 pagination: {
@@ -897,6 +899,26 @@
                     return 0;
                 }
             },
+            totalComisionDolar: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fComisionDolar);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
+            totalComisionSol: function(){
+                let me = this;
+                if(me.arrayTemporal.length > 0) {
+                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                        return valorAnterior + parseFloat(valorActual.fComisionSol);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            },
         },
         mounted(){
             this.tabBuscarWOperativo();
@@ -978,7 +1000,7 @@
                 axios.get(url, {
                     params: {
                         'nidestadowarrant'  : this.fillWOperativo.nidestadowarrant,
-                        'cnrowarrant'       : this.fillWOperativo.cnrowarrant,
+                        'cnumerovin'       : this.fillWOperativo.cnumerovin,
                         'page'              : page
                     }
                 }).then(response => {
@@ -1205,13 +1227,12 @@
 
                 var url = me.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    'nIdProveedor'      :   me.formWOperativo.nidproveedor,
-                    'fTotalValor'       :   me.fTotalValor,
-                    //'fTotalComisionDolar': me.fTotalComisionDolar,
-                    //'fTotalComisionSol' : me.fTotalComisionSol,
-                    'data'              :   me.arrayTemporal
+                    'nIdProveedor'          : me.formWOperativo.nidproveedor,
+                    'fTotalValor'           : me.fTotalValor,
+                    'fTotalComisionDolar'   : me.fTotalComisionDolar,
+                    'fTotalComisionSol'     : me.fTotalComisionSol,
+                    'data'                  : me.arrayTemporal
                 }).then(response => {
-                    // console.log(response.data);
                     me.fillWOperativo.nidwarrantoperativo = response.data;
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
@@ -1223,7 +1244,6 @@
                                 'fDebit'        : value.fTotalCompra,
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
-                                /*'fComisionSol'  : value.fComisionSol,*/
                             })
                         });
 
@@ -1231,7 +1251,7 @@
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
                             me.generaSapAsientoContable();
-                        }, 1600);
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1273,7 +1293,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
                     setTimeout(function() {
                         me.registroSgcAsientoContable();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1293,7 +1313,7 @@
                     if(response.data[0].nFlagMsje == 1) {
                          setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 1600);
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1310,9 +1330,10 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
-                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
-                    'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arrayTemporal
+                    'cCardCode'     : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data'          : me.arrayTemporal
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -1425,7 +1446,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1445,7 +1466,7 @@
                     setTimeout(function() {
                         //me.confirmarWO();
                         me.registroSapBusinessSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1494,7 +1515,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1513,7 +1534,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getFacturaProveedorActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1554,7 +1575,7 @@
                 });
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
-                }, 1600);
+                }, 1200);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
@@ -1586,7 +1607,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1604,8 +1625,9 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWO();
-                    }, 1600);
+                        me.obtenerWOTblCosto();
+                        //me.confirmarWO();
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1616,13 +1638,13 @@
                     }
                 });
             },
-            /*obtenerWOTblCosto(){
+            obtenerWOTblCosto(){
                 let me = this;
                 var url = me.ruta + '/tablacosto/GetWOComisionTblCosto';
                 axios.post(url, {
                         'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'data'          : me.arrayAsiento
+                        'data'          : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapWO = [];
                     // ====================== CONCEPTO =========================
@@ -1645,7 +1667,7 @@
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoWO();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1676,13 +1698,11 @@
                     }
                 });
             },
-            generaSapCompraWO(objCompra){
+            /*generaSapCompraWO(objCompra){
                 let me = this;
 
                 //==============================================================
                 //================== REGISTRO COMPRA EN SAP ===============
-                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
-
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
                     'cCardCode'     : me.formCompra.ccarcode,
@@ -1716,7 +1736,7 @@
                             //================== ACTUALIZAR DOCENTRY ===============
                             setTimeout(function() {
                                 me.generaActualizarDocEntryWO(objCompra);
-                            }, 1600);
+                            }, 1200);
                         }
                     });
                 }).catch(error => {
@@ -1793,7 +1813,8 @@
                 this.arraySapSolucion= [],
                 this.nSolutionCode=  0,
                 this.arraySapLlamadaServicio= [],
-                this.arraySapItemCode= []
+                this.arraySapItemCode= [],
+                this.arraySapWO= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
