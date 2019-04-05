@@ -1114,7 +1114,7 @@
                     me.fillWFinanciero.nidwarrantfinanciero = response.data;
 
                     if(me.fillWFinanciero.nidwarrantfinanciero > 0){
-                        me.arrayTemporal.map(function(value, key) {
+                        /*me.arrayTemporal.map(function(value, key) {
                             me.arraySapAsiento.push({
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
@@ -1123,12 +1123,12 @@
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
                             })
-                        });
+                        });*/
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
-                            me.generaSapAsientoContable();
+                            me.generaSapFacturaProveedor();
                         }, 1600);
                     }
                 }).catch(error => {
@@ -1141,7 +1141,7 @@
                     }
                 });
             },
-            generaSapAsientoContable(){
+            /*generaSapAsientoContable(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
 
@@ -1203,7 +1203,7 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapFacturaProveedor(){
                 let me = this;
 
@@ -1359,7 +1359,7 @@
                 let me = this;
 
                 //Depurar Array para registrar en SAP
-                me.arraySapAsiento.map(function(value, key){
+                me.arrayTemporal.map(function(value, key){
                     me.arraySapSolucion.push({
                         'cItemCode' : value.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
