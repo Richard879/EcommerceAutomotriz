@@ -1163,6 +1163,7 @@
                 }
 
                 me.mostrarProgressBar();
+
                 var url = me.ruta + '/wfinanciero/SetWFinanciero';
                 axios.post(url, {
                     'nIdBanco'      : me.formWFinanciero.nidbanco,
@@ -1188,7 +1189,7 @@
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
                             me.generaSapAsientoContable();
-                        }, 1600);
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1231,7 +1232,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
                     setTimeout(function() {
                         me.registroSgcAsientoContable();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1251,7 +1252,7 @@
                     if(response.data[0].nFlagMsje == 1) {
                          setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 1600);
+                        }, 1200);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1383,7 +1384,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1403,7 +1404,7 @@
                     setTimeout(function() {
                         // me.confirmarWF();
                         me.registroSapBusinessSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1452,7 +1453,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1471,7 +1472,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getFacturaProveedorActividad();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1512,7 +1513,7 @@
                 });
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
-                }, 1600);
+                }, 1200);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
@@ -1544,7 +1545,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1563,7 +1564,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.confirmarWF();
-                    }, 1600);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
