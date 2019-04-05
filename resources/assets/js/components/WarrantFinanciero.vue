@@ -115,14 +115,14 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="operativo in arrayWFinanciero" :key="operativo.nIdWarrantFinanciero">
-                                                                                    <td>{{ operativo.nIdWarrantFinanciero }}</td>
-                                                                                    <td>{{ operativo.cNumeroWarrant }}</td>
-                                                                                    <td>{{ operativo.BancoNombre }}</td>
-                                                                                    <td>{{ operativo.dFechaInicioWarrant }}</td>
-                                                                                    <td>{{ operativo.dFechaVencimientoWarrant }}</td>
-                                                                                    <td>{{ operativo.cSimboloMoneda }}</td>
-                                                                                    <td>{{ operativo.fValorTotal }}</td>
-                                                                                    <td>{{ operativo.cParNombre }}</td>
+                                                                                    <td v-text="operativo.nIdWarrantFinanciero"></td>
+                                                                                    <td v-text="operativo.cNumeroWarrant"></td>
+                                                                                    <td v-text="operativo.BancoNombre"></td>
+                                                                                    <td v-text="operativo.dFechaInicioWarrant"></td>
+                                                                                    <td v-text="operativo.dFechaVencimientoWarrant"></td>
+                                                                                    <td v-text="operativo.cSimboloMoneda"></td>
+                                                                                    <td v-text="operativo.fValorTotal"></td>
+                                                                                    <td v-text="operativo.cParNombre"></td>
                                                                                     <td>
                                                                                         <a href="#" @click="asignaIdWFinanciero(operativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
                                                                                         <i class="fa-md fa fa-eye"></i></a>
@@ -178,7 +178,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
+                                                                <h3 class="h4">DETALLE</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
@@ -210,12 +210,19 @@
                                                                                                 :value="item.nIdPar">
                                                                                             </el-option>
                                                                                         </el-select>
-                                                                                        <span class="input-group-btn">
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                        </span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleWFinanciero(1)">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                                                <i class="fa fa-close"></i> Regresar
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -974,6 +981,9 @@
             asignaIdWFinanciero(objWF){
                 this.fillWFinancieroDetalle.nidwarrantfinanciero= objWF.nIdWarrantFinanciero;
                 this.buscarWFinancieroDetalle();
+            },
+            cambiarVistaFormulario(){
+                this.vistaFormularioTabBuscar = 1;
             },
             buscarWFinancieroDetalle(){
                 this.listarDetalleWFinanciero(1);

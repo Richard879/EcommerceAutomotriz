@@ -264,24 +264,31 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                    <template v-if="odetalle.nIdEstadoWarrant==1300079">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
-                                                                                            <i @click="cancelarWOperativoDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
-                                                                                    <template v-else>&nbsp;&nbsp;</template>
-                                                                                    <td>{{ odetalle.nIdDetalleWarrant }}</td>
-                                                                                    <td>{{ odetalle.nOrdenCompra }}</td>
-                                                                                    <td>{{ odetalle.cNombreComercial }}</td>
-                                                                                    <td>{{ odetalle.cNumeroVin }}</td>
-                                                                                    <td>{{ odetalle.cSimboloMoneda }}</td>
-                                                                                    <td>{{ odetalle.fValorWarrant }}</td>
-                                                                                    <td>{{ odetalle.nDocNumAsiento }}</td>
-                                                                                    <td>{{ odetalle.nDocNumComprobante }}</td>
+                                                                                    <td>
+                                                                                        <template v-if="odetalle.nIdEstadoWarrant==1300079">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                                <i @click="cancelarWOperativoDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                        <template v-if="odetalle.nValidaIntegracion==0">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">{{ odetalle.cFlagVistaIntegracion + ' ' + odetalle.cNumeroVin }}</div>
+                                                                                                <i @click="validarSapArticulo(odetalle)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                    </td>
+                                                                                    <td v-text="odetalle.nIdDetalleWarrant"></td>
+                                                                                    <td v-text="odetalle.nOrdenCompra"></td>
+                                                                                    <td v-text="odetalle.cNombreComercial"></td>
+                                                                                    <td v-text="odetalle.cNumeroVin"></td>
+                                                                                    <td v-text="odetalle.cSimboloMoneda"></td>
+                                                                                    <td v-text="odetalle.fValorWarrant"></td>
+                                                                                    <td v-text="odetalle.nDocNumAsiento"></td>
+                                                                                    <td v-text="odetalle.nDocNumComprobante"></td>
                                                                                     <!--<td v-text="odetalle.fComisionDolar"></td>
                                                                                     <td v-text="odetalle.fComisionSol"></td>-->
-                                                                                    <td>{{ odetalle.cParNombre }}</td>
+                                                                                    <td v-text="odetalle.cParNombre"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
