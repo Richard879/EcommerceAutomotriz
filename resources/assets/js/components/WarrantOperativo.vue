@@ -1232,7 +1232,6 @@
                     'fTotalComisionSol'     : me.fTotalComisionSol,
                     'data'                  : me.arrayTemporal
                 }).then(response => {
-                    // console.log(response.data);
                     me.fillWOperativo.nidwarrantoperativo = response.data;
 
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
@@ -1244,7 +1243,6 @@
                                 'fDebit'        : value.fTotalCompra,
                                 'fCredit1'      : value.fTotalCompra,
                                 'fDebit1'       : "0"
-                                /*'fComisionSol'  : value.fComisionSol,*/
                             })
                         });
 
