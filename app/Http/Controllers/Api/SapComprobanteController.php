@@ -121,10 +121,11 @@ class SapComprobanteController extends Controller
                 'json' => [
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
+                    "DocDueDate"    =>  (string)$request->fDocDueDate,
                     "DocCurrency"   => "US$",
                     "DocType"       => "dDocument_Service",
-                    "U_SYP_MDMT"    => "WF",
-                    "U_SYP_TCOMPRA" => "01",
+                    "U_SYP_MDMT"    => "01",
+                    "U_SYP_MDTD"    => "WF",
                     "DocumentLines" => [
                             [
                                 "ItemDescription"   => "Servicio WF - ".$value['cNumeroVin'],
