@@ -247,13 +247,20 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                    <template v-if="odetalle.nIdEstadoWarrant==1300079">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
-                                                                                            <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
-                                                                                    <template v-else>&nbsp;&nbsp;</template>
+                                                                                    <td>
+                                                                                        <template v-if="odetalle.nIdEstadoWarrant==1300079">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                                <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                        <template v-if="odetalle.nValidaIntegracion==0">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">{{ odetalle.cFlagVistaIntegracion + ' ' + odetalle.cNumeroVin }}</div>
+                                                                                                <i @click="validarSapArticulo(odetalle)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp;&nbsp;
+                                                                                    </td>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
                                                                                     <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
