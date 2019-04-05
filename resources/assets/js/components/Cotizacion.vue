@@ -154,6 +154,17 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                    <input type="radio" class="radio-template" v-model="fillMisCotizaciones.ntipopersona" :value="tipo.value">
+                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillMisCotizaciones.ccontacto" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
@@ -2388,6 +2399,10 @@
                 // =============================================================
                 // VARIABLES TAB MIS COTIZACIONES
                 // =============================================================
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
                 fillMisCotizaciones: {
                     dfechainicio: '',
                     dfechafin: '',
@@ -2395,7 +2410,8 @@
                     nidmodelo: '',
                     nidestadocotizacion: '',
                     cnumerocotizacion: '',
-                    ccontacto: ''
+                    ccontacto: '',
+                    ntipopersona: 1
                 },
                 arrayCotizaciones: [],
                 arrayEstadoCotizacion: [],
@@ -2854,6 +2870,7 @@
                         'cnumerocotizacion'     :   this.fillMisCotizaciones.cnumerocotizacion,
                         'nidestadocotizacion'   :   this.fillMisCotizaciones.nidestadocotizacion,
                         'ccontacto'             :   this.fillMisCotizaciones.ccontacto,
+                        'ntipopersona'          :   this.fillMisCotizaciones.ntipopersona,
                         'page' : page
                     }
                 }).then(response => {

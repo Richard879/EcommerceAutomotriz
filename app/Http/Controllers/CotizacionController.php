@@ -295,6 +295,7 @@ class CotizacionController extends Controller
         $cNumeroCotizacion      =   $request->cnumerocotizacion;
         $nIdEstadoCotizacion    =   $request->nidestadocotizacion;
         $cContacto              =   $request->ccontacto;
+        $ntipopersona           =   $request->ntipopersona;
 
         $dFechaInicio           =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin              =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
@@ -303,8 +304,9 @@ class CotizacionController extends Controller
         $cNumeroCotizacion      =   ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
         $nIdEstadoCotizacion    =   ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
         $cContacto              =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $ntipopersona           =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor2] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
@@ -314,6 +316,7 @@ class CotizacionController extends Controller
                                                                     $cNumeroCotizacion,
                                                                     $nIdEstadoCotizacion,
                                                                     $cContacto,
+                                                                    $ntipopersona,
                                                                     Auth::user()->id
                                                                 ]);
 
@@ -632,11 +635,12 @@ class CotizacionController extends Controller
         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
         $contents   =   Storage::get('public/'. $cadena);
 
-        // $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
-        // $data_xml->load($contents); //cargo el xml, en este caso es una cadena codificada
-        // $data1 = $data_xml->getElementsByTagNameNS('SGS_FichaTec_Cotizacion' ,'textbox21');//busca el elemento del xml y lo guarda en variables
-        // $data2 = $data_xml->getElementsByTagName('textbox21');//busca el elemento del xml y lo guarda en variables
+        $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
+        // $data_xml->loadXML($contents); //cargo el xml, en este caso es una cadena codificada
+        // $data1 = $data_xml->getElementsByTagNameNS('SGS_FichaTec_Cotizacion' ,'textbox21');//busca el elemento del xml y lo guarda en variable
 
+        // // $data_xml->load($arrayDetalleDocs[0]->cFichaImageUrl); //cargo el xml, en este caso desde una ruta
+        // // $data2 = $data_xml->getElementsByTagName('textbox21');//busca el elemento del xml y lo guarda en variables
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
