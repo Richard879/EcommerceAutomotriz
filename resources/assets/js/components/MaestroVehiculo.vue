@@ -2313,7 +2313,7 @@
                         this.mensajeError.push('Debes seleccionar un Contacto');
                     }
                 }
-                
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2765,7 +2765,7 @@
                     this.fillPropietario.cflagtipopersona = 'J',
                     this.fillPropietario.nidpersonanatural = 0,
                     this.fillPropietario.nidpersonajuridica = objContacto.nIdPersonaJuridica,
-                    this.fillPropietario.cnombrecontacto = objContacto.cContacto                    
+                    this.fillPropietario.cnombrecontacto = objContacto.cContacto
                 }
                 this.cerrarModal();
                 this.arrayContacto = [];
