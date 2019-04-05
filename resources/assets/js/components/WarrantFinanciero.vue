@@ -68,10 +68,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Estado</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select v-model="fillWFinanciero.nidestadowarrant" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
+                                                                                    <el-select v-model="fillWFinanciero.nidestadowarrant" filterable clearable placeholder="SELECCIONE ESTADO" >
+                                                                                        <el-option
+                                                                                            v-for="item in arrayEstadoWarrant"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -198,10 +202,14 @@
                                                                                 <label class="col-sm-4 form-control-label">Estado</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
-                                                                                        <select v-model="fillWFinancieroDetalle.nidestadowarrant" class="form-control form-control-sm">
-                                                                                            <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="fillWFinancieroDetalle.nidestadowarrant" filterable clearable placeholder="SELECCIONE ESTADO" >
+                                                                                            <el-option
+                                                                                                v-for="item in arrayEstadoWarrant"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                         <span class="input-group-btn">
                                                                                             <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
                                                                                         </span>
@@ -238,6 +246,12 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
+                                                                                    <template v-if="odetalle.nIdEstadoWarrant==1300079">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Cancelar {{ odetalle.nIdDetalleWarrant }}</div>
+                                                                                            <i @click="cancelarFinancieroDetalle(odetalle)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
                                                                                     <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
@@ -987,6 +1001,49 @@
             cambiarPaginaDetalle(page){
                 this.pagination.current_page=page;
                 this.listarDetalleWFinanciero(page);
+            },
+            cancelarFinancieroDetalle(objWarrant){
+                swal({
+                    title: 'Estas seguro de cancelar el warrant?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/wfinanciero/UpdEstadoWoDetalle';
+                        axios.post(url, {
+                            'nIdDetalleWarrant' :   parseInt(objWarrant.nIdDetalleWarrant),
+                            'nIdEstadoWarrant'  :   1300081,
+                            'nIdCompra'         :   objWarrant.nIdCompra
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Activado!',
+                                    response.data[0].cMensaje
+                                );
+                                this.listarDetalleWFinanciero(1);
+                            } else {
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             // =================================================================
             // METODOS TAB GENERAR WARRANT FINANCIERO

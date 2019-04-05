@@ -125,6 +125,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/wfinanciero/SetWFinanciero', 'WarrantFinancieroController@SetWFinanciero');
     Route::post('/wfinanciero/SetWFinancieroDetalle', 'WarrantFinancieroController@SetWFinancieroDetalle');
     Route::get('/wfinanciero/GetWFinancieroDetalle', 'WarrantFinancieroController@GetWFinancieroDetalle');
+    Route::post('/wfinanciero/UpdEstadoWoDetalle', 'WarrantFinancieroController@UpdEstadoWoDetalle');
 
     Route::post('/ec/SetEventoCampania', 'EventoCampaniaController@store');
     Route::post('/ec/SetDetalleEventoCampania', 'EventoCampaniaController@SetDetalleEventoCampania');
