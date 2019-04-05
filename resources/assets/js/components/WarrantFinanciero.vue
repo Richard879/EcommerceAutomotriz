@@ -1783,7 +1783,7 @@
                     //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
-                        me.integraSapBusinessActividad(objCompra);
+                        me.integraSapBusinessActividad(objWO);
                     }, 1200);
                 }
             },
@@ -1862,7 +1862,7 @@
                     //===================================================
                     //============= REGISTRO SOLUCION EN SAP ============
                     setTimeout(function() {
-                            me.integraSapBusinessSolucion(objCompra);
+                            me.integraSapBusinessSolucion(objWO);
                     }, 1200);
                 }
             },
@@ -1889,7 +1889,7 @@
             integraSapBusinessSolucion(objWO){
                 let me = this;
 
-                if(objCompra.nSolutionCode==0){
+                if(objWO.nSolutionCode==0){
                     me.arraySapSolucion.push({
                         'cItemCode' : objWO.cNumeroVin,
                         'cSubject'  : "Cierre De Servicio"
@@ -1937,7 +1937,7 @@
                     //==============================================================
                     //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
                     setTimeout(function() {
-                        me.obtenerFacturaProveedorActividad(objCompra);
+                        me.obtenerFacturaProveedorActividad(objWO);
                     }, 1200);
                 }
             },
