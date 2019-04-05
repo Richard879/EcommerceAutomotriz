@@ -320,7 +320,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Actualizar {{ tipo.cParNombre }}</div>
-                                                                    <i @click="actualizarTipoParametro(tipo)" :style="'color:green'" class="fa-md fa fa-save"></i>
+                                                                    <i @click="actualizarTipoParametro(tipo)" :style="'color:green'" class="fa-md fa fa-refresh"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="tipo.nIdTipoPar"></td>
