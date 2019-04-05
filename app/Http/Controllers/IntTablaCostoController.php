@@ -255,7 +255,8 @@ class IntTablaCostoController extends Controller
                 $U_SYP_DCONCEPTO    =   $flete->U_SYP_DCONCEPTO;
                 $U_SYP_CDOCUMENTO   =   $flete->U_SYP_CDOCUMENTO;
                 $U_SYP_DDOCUMENTO   =   $flete->U_SYP_DDOCUMENTO;
-                $U_SYP_IMPORTE      =   $flete->fComisionSol;
+                $U_SYP_IMPORTE      =   $flete->U_SYP_IMPORTE;
+                $U_SYP_IMPORTE_USD  =   $flete->U_SYP_IMPORTE_USD;
                 $U_SYP_COSTO        =   $flete->U_SYP_COSTO;
                 $U_SYP_ESTADO       =   $flete->U_SYP_ESTADO;
 
@@ -267,6 +268,7 @@ class IntTablaCostoController extends Controller
                     'U_SYP_CDOCUMENTO'  =>  $U_SYP_CDOCUMENTO,
                     'U_SYP_DDOCUMENTO'  =>  $U_SYP_DDOCUMENTO,
                     'U_SYP_IMPORTE'     =>  $U_SYP_IMPORTE,
+                    'U_SYP_IMPORTE_USD' =>  $U_SYP_IMPORTE_USD,
                     'U_SYP_COSTO'       =>  $U_SYP_COSTO,
                     'U_SYP_ESTADO'      =>  $U_SYP_ESTADO
                 ];
