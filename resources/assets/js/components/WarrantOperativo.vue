@@ -1330,9 +1330,10 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
-                    'cCardCode' : me.formWOperativo.ccarcode, //CODIGO FORUM
-                    'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arrayTemporal
+                    'cCardCode'     : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data'          : me.arrayTemporal
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
