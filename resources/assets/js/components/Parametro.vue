@@ -875,8 +875,17 @@
                     })
             },
             registrarTipoParametro(){
-                this.mostrarProgressBar();
+                if(!this.formTipoParametro.cvalor || !this.formTipoParametro.ctipoparametro){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Deebe Ingresar un Valor!',
+                    });
+                    return;
+                }
                 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/tipoparametro/SetTipoParametro';
                 axios.post(url, {
                     'nIdPar'                : parseInt(this.formParametro.nidpar),
