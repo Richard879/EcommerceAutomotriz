@@ -241,7 +241,7 @@
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
                                                                                     <th>DocNum Asiento</th>
-                                                                                    <th>DocNum Comprobante</th>
+                                                                                    <th>DocNum Fact.Prov.</th>
                                                                                     <th>Estado</th>
                                                                                 </tr>
                                                                             </thead>
