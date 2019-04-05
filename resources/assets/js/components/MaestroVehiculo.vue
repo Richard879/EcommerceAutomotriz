@@ -2461,10 +2461,10 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         //Si el Contacto esta marcado como nuevo
-                        if(this.checked==true) {
+                        if(this.checked == true) {
                             this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
                         } else {
-                            //Sino se actualiza el propietario
+                            //Sino se encuentra el propietario en la bandeja
                             this.registrarPropietario(response.data[0].nIdVehiculoPlaca);
                         }
                     } else {
@@ -2574,7 +2574,7 @@
                 axios.post(url, {
                     fillNuevoVehiculo   :   this.fillNuevoVehiculo
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     $("#myBar").hide();
                     me.loading.close();
                     this.limpiarVehiculo();
@@ -2803,15 +2803,15 @@
             },
             asignarContacto(objContacto){
                 if(this.modalMisContactos.ntipopersona == 1){
-                    this.fillPropietario.cflagtipopersona = 'N',
-                    this.fillPropietario.nidpersonanatural = objContacto.nIdPersonaNatural,
-                    this.fillPropietario.nidpersonajuridica = 0,
-                    this.fillPropietario.cnombrecontacto = objContacto.cContacto
+                    this.fillPropietario.cflagtipopersona   =   'N',
+                    this.fillPropietario.nidpersonanatural  =   objContacto.nIdPersonaNatural,
+                    this.fillPropietario.nidpersonajuridica =   0,
+                    this.fillPropietario.cnombrecontacto    =   objContacto.cContacto
                 }else{
-                    this.fillPropietario.cflagtipopersona = 'J',
-                    this.fillPropietario.nidpersonanatural = 0,
-                    this.fillPropietario.nidpersonajuridica = objContacto.nIdPersonaJuridica,
-                    this.fillPropietario.cnombrecontacto = objContacto.cContacto
+                    this.fillPropietario.cflagtipopersona   =   'J',
+                    this.fillPropietario.nidpersonanatural  =   0,
+                    this.fillPropietario.nidpersonajuridica =   objContacto.nIdPersonaJuridica,
+                    this.fillPropietario.cnombrecontacto    =   objContacto.cContacto
                 }
                 this.cerrarModal();
                 this.arrayContacto = [];

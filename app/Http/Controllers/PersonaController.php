@@ -13,16 +13,16 @@ class PersonaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $variable   = $request->opcion;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
+        $variable           =   $request->opcion;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $variable           =   ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayPersona = DB::select('exec [usp_Persona_GetListPersona] ?, ?, ?, ?, ?, ?',
                                                                         [   $nIdEmpresa,
