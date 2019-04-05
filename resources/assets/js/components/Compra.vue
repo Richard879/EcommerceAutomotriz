@@ -213,7 +213,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;<!---->
                                                                                     <template v-if="compra.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
+                                                                                            <div slot="content">{{ compra.cFlagVistaIntegracion + ' ' + compra.cNumeroVin }}</div>
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
@@ -3790,13 +3790,14 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    ////////////////////////////////////////if()
-                     ////////////////////////////////////////if()
-                    //==============================================================
-                    //================== REGISTRO TABLA COSTO EN SAP ===============
-                    setTimeout(function() {
-                        me.generaSapTblCostoCabecera(objCompra);
-                    }, 1200);
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        //==============================================================
+                        //================== REGISTRO TABLA COSTO EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapTblCostoCabecera(objCompra);
+                        }, 1200);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
