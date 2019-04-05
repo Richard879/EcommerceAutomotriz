@@ -35,33 +35,35 @@ class MaestroVehiculoController extends Controller
         $caltura                =   $request->fillNuevoVehiculo['faltura'];
         $cancho                 =   $request->fillNuevoVehiculo['fancho'];
         $ccargautil             =   $request->fillNuevoVehiculo['fcargautil'];
+        $cnacionesunidas        =   $request->fillNuevoVehiculo['cnacionesunidas'];
 
-        $nidvehiculo            = ($nidvehiculo == NULL)   ? ($nidvehiculo = ' ') : $nidvehiculo;
-        $cnroplaca              = ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
-        $cnrotarjetapropiedad   = ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
-        $nidclase               = ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
-        $nidmarca               = ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
-        $nidmodelo              = ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
-        $nidcolor               = ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
-        $nidcombustible         = ($nidcombustible == NULL) ? ($nidcombustible = ' ')   : $nidcombustible;
-        $dfechaventa            = ($dfechaventa == NULL)    ? ($dfechaventa = ' ')      : $dfechaventa;
-        $cnromotor              = ($cnromotor == NULL)      ? ($cnromotor = ' ')        : $cnromotor;
-        $cnroserie              = ($cnroserie == NULL)      ? ($cnroserie = ' ')        : $cnroserie;
-        $cnrocilindros          = ($cnrocilindros == NULL)  ? ($cnrocilindros = ' ')    : $cnrocilindros;
-        $cnrorueda              = ($cnrorueda == NULL)      ? ($cnrorueda = ' ')        : $cnrorueda;
-        $cnropasajeros          = ($cnropasajeros == NULL)  ? ($cnropasajeros = ' ')    : $cnropasajeros;
-        $cnroasiento            = ($cnroasiento == NULL)    ? ($cnroasiento = ' ')      : $cnroasiento;
-        $cpesoseco              = ($cpesoseco == NULL)      ? ($cpesoseco = ' ')        : $cpesoseco;
-        $cpesobruto             = ($cpesobruto == NULL)     ? ($cpesobruto = ' ')       : $cpesobruto;
-        $clongitud              = ($clongitud == NULL)      ? ($clongitud = ' ')        : $clongitud;
-        $caltura                = ($caltura == NULL)        ? ($caltura = ' ')          : $caltura;
-        $cancho                 = ($cancho == NULL)         ? ($cancho = ' ')           : $cancho;
-        $ccargautil             = ($ccargautil == NULL)     ? ($ccargautil = ' ')       : $ccargautil;
+        $nidvehiculo            =   ($nidvehiculo == NULL)   ? ($nidvehiculo = ' ') : $nidvehiculo;
+        $cnroplaca              =   ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
+        $cnrotarjetapropiedad   =   ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
+        $nidclase               =   ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
+        $nidmarca               =   ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
+        $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
+        $nidcolor               =   ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
+        $nidcombustible         =   ($nidcombustible == NULL) ? ($nidcombustible = ' ')   : $nidcombustible;
+        $dfechaventa            =   ($dfechaventa == NULL)    ? ($dfechaventa = ' ')      : $dfechaventa;
+        $cnromotor              =   ($cnromotor == NULL)      ? ($cnromotor = ' ')        : $cnromotor;
+        $cnroserie              =   ($cnroserie == NULL)      ? ($cnroserie = ' ')        : $cnroserie;
+        $cnrocilindros          =   ($cnrocilindros == NULL)  ? ($cnrocilindros = ' ')    : $cnrocilindros;
+        $cnrorueda              =   ($cnrorueda == NULL)      ? ($cnrorueda = ' ')        : $cnrorueda;
+        $cnropasajeros          =   ($cnropasajeros == NULL)  ? ($cnropasajeros = ' ')    : $cnropasajeros;
+        $cnroasiento            =   ($cnroasiento == NULL)    ? ($cnroasiento = ' ')      : $cnroasiento;
+        $cpesoseco              =   ($cpesoseco == NULL)      ? ($cpesoseco = ' ')        : $cpesoseco;
+        $cpesobruto             =   ($cpesobruto == NULL)     ? ($cpesobruto = ' ')       : $cpesobruto;
+        $clongitud              =   ($clongitud == NULL)      ? ($clongitud = ' ')        : $clongitud;
+        $caltura                =   ($caltura == NULL)        ? ($caltura = ' ')          : $caltura;
+        $cancho                 =   ($cancho == NULL)         ? ($cancho = ' ')           : $cancho;
+        $ccargautil             =   ($ccargautil == NULL)     ? ($ccargautil = ' ')       : $ccargautil;
+        $cnacionesunidas        =   ($cnacionesunidas == NULL)     ? ($cnacionesunidas = ' ')       : $cnacionesunidas;
 
         $nFlagEditar = $request->nFlagEditar;
 
         $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca]
-                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         NULL,
                                         NULL,
@@ -87,6 +89,7 @@ class MaestroVehiculoController extends Controller
                                         $caltura,
                                         $cancho,
                                         $ccargautil,
+                                        $cnacionesunidas,
                                         $nFlagEditar,
                                         Auth::user()->id
                                     ]);

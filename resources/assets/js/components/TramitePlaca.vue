@@ -1607,9 +1607,9 @@
                 me.arrayPedidoDoumentoNew = [];
                 me.montoSubTotalTramiteAdicional = 0;
 
-                if(arrayPedidoDoumento.length > 0) {
+                if(me.arrayPedidoDoumento.length > 0) {
                     me.arrayPedidoDoumento.map(function(value, key){
-                        if(value.cCaracter == '*') {
+                        if(value.cCaracter == '*' && value.nValida == '1') {
                             me.arrayPedidoDoumentoNew.push({
                                 'nIdDocumentoAdjuntoPedido' :   value.nIdDocumentoAdjuntoPedido,
                                 'nIdPar'                    :   value.nIdPar,
@@ -1623,14 +1623,16 @@
                             });
                         }
                     });
-                    let acumulador = 0;
-                    //Recorrer y acumular monto
-                    me.arrayPedidoDoumentoNew.map(function(value, key){
-                        if(value.cFlagDocumento == true){
-                            acumulador = acumulador + parseFloat(value.fMontoDocumento);
-                        }
-                    });
-                    me.montoSubTotalTramiteAdicional = acumulador;
+                    if(me.arrayPedidoDoumentoNew.length) {
+                        let acumulador = 0;
+                        //Recorrer y acumular monto
+                        me.arrayPedidoDoumentoNew.map(function(value, key){
+                            if(value.cFlagDocumento == true){
+                                acumulador = acumulador + parseFloat(value.fMontoDocumento);
+                            }
+                        });
+                        me.montoSubTotalTramiteAdicional = acumulador;
+                    }
                 }
             },
             verificarConformidad(){
@@ -1715,8 +1717,10 @@
                 // if(!this.montoSubTotalTramitePlaca){
                 //     this.mensajeError.push('El SubTotal del Tramite de la Placa es un campo obligatorio');
                 // }
-                if(!this.montoSubTotalTramiteAdicional){
-                    this.mensajeError.push('El SubTotal del Gasto Adicional es un campo obligatorio');
+                if(this.arrayPedidoDoumentoNew.length) {
+                    if(!this.montoSubTotalTramiteAdicional){
+                        this.mensajeError.push('El SubTotal del Gasto Adicional es un campo obligatorio');
+                    }
                 }
                 if(!this.montoTotalGeneralTramite){
                     this.mensajeError.push('El Total General del Tramite es un campo obligatorio');
@@ -2046,7 +2050,7 @@
                     'cObservacion'          : this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.fillIntegracionTarjetaEquipo = response.data;
                     this.actualizarTarjetaEquipo();
                     // this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
@@ -2068,10 +2072,10 @@
                     'EquipmentCardNum'      : me.fillIntegracionTarjetaEquipo.nEquipmentCardNum,
                     'ManufacturerSerialNum' : me.fillIntegracionTarjetaEquipo.cPlaca
                 }).then(response => {
-                    this.tabBandejaSolicitudes();
-                    this.cerrarModalTramiteTarjetaPlaca();
                     $("#myBar").hide();
                     me.loading.close();
+                    this.tabBandejaSolicitudes();
+                    this.cerrarModalTramiteTarjetaPlaca();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

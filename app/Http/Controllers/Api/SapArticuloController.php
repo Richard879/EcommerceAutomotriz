@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -179,5 +180,83 @@ class SapArticuloController extends Controller
             array_push($array_rpta, $rptaSap);
         }
         return $array_rpta;
+    }
+
+    public function SapPatchArticuloAll(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10/'
+        ]);
+
+        $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
+        $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
+        $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
+        $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
+        $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
+        $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
+        $nidaniofabricacion     =   $request->fillNuevoVehiculo['nidaniofabricacion'];
+        $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
+        $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
+        $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
+        $cnroserie              =   $request->fillNuevoVehiculo['cnroserie'];
+        $cnrocilindros          =   $request->fillNuevoVehiculo['cnrocilindros'];
+        $cnrorueda              =   $request->fillNuevoVehiculo['cnrorueda'];
+        $cnropasajeros          =   $request->fillNuevoVehiculo['cnropasajeros'];
+        $cnroasiento            =   $request->fillNuevoVehiculo['cnroasiento'];
+        $cpesoseco              =   $request->fillNuevoVehiculo['fpesoseco'];
+        $cpesobruto             =   $request->fillNuevoVehiculo['fpesobruto'];
+        $clongitud              =   $request->fillNuevoVehiculo['flongitud'];
+        $caltura                =   $request->fillNuevoVehiculo['faltura'];
+        $cancho                 =   $request->fillNuevoVehiculo['fancho'];
+        $ccargautil             =   $request->fillNuevoVehiculo['fcargautil'];
+        $cnacionesunidas        =   $request->fillNuevoVehiculo['cnacionesunidas'];
+
+        //OBTENER LA MARCA DEL VEHÍCULO
+        $marca = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                        [
+                                                                            $nidmarca
+                                                                        ]);
+        $nidmarca = $marca[0]->cParNombre;//Setear por el Nombre
+
+        //OBTENER EL COLOR EXT DEL VEHÍCULO
+        $color = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                        [
+                                                                            $nidcolor
+                                                                        ]);
+        $nidcolor = $color[0]->cParNombre;//Setear por el Nombre
+
+        //OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO
+        $combustible = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                        [
+                                                                            $nidcombustible
+                                                                        ]);
+        $nidcombustible = $combustible[0]->cParNombre;//Setear por el Nombre
+
+        $json = [
+            'json' => [
+                "ItemCode"          =>  (string)$cnroserie,
+                'U_SYP_MARCA'       =>  (string)$nidmarca,
+                'U_SYP_CEXTERIOR'   =>  (string)$nidcolor,
+                'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
+                'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
+                'U_SYP_NROCHASIS'   =>  (string)$cnroserie,//Numero de Chasis
+                'U_SYP_CILINDRADA'  =>  (string)$cnrocilindros,//Cilindrada
+                'U_SYP_COMBUSTIBLE' =>  (string)$nidcombustible,//Combustible
+                'U_SYP_NROCLINDRO'  =>  (string)$cnrocilindros,//Nro Cilindos
+                'U_SYP_NROPASAJERO' =>  (string)$cnropasajeros,//Nro Pasajeros
+                'U_SYP_NROASIENTO'  =>  (string)$cnroasiento,//Nro Asiento
+                'U_SYP_NRORUEDA'    =>  (string)$cnrorueda,//Nro Rueda
+                'U_SYP_PBRUTO'      =>  (string)$cpesobruto,//Nro Rueda
+                'U_SYP_PSECO'       =>  (string)$cpesoseco,//Nro Rueda
+                'U_SYP_ALTURA'      =>  (string)$caltura,//Nro Rueda
+                'U_SYP_LONGITUD'    =>  (string)$clongitud,//Nro Rueda
+                'U_SYP_ANCHO'       =>  (string)$cancho,//Nro Rueda
+                'U_SYP_CUTIL'       =>  (string)$ccargautil
+            ]
+        ];
+
+        $response = $client->request('POST', "/api/Articulo/SapPatchArticulo/", $json);
+        return $response->getBody();
     }
 }
