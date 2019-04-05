@@ -189,7 +189,7 @@
                                                                                 <th>Nro Factura</th>
                                                                                 <th>Fecha Facturado</th>
                                                                                 <th>Fecha Compra</th>
-                                                                                <th>DocEntry Compra</th>
+                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
