@@ -1642,7 +1642,7 @@
                 axios.post(url, {
                         'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'data'          : me.arrayAsiento
+                        'data'          : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapWO = [];
                     // ====================== CONCEPTO =========================
