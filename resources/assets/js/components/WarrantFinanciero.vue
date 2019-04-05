@@ -233,6 +233,7 @@
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acción</th>
                                                                                     <th>Código</th>
                                                                                     <th>O/C</th>
                                                                                     <th>Nombre Comercial</th>
@@ -1021,7 +1022,7 @@
                         }).then(response => {
                             if(response.data[0].nFlagMsje == 1){
                                 swal(
-                                    'Activado!',
+                                    'Actualizado!',
                                     response.data[0].cMensaje
                                 );
                                 this.listarDetalleWFinanciero(1);
