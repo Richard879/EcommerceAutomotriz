@@ -2230,4 +2230,15 @@
         font-weight: bold;
         font-size: 0.75rem;
     }
+    .el-table .cell{
+        font-size: .79rem;
+        font-weight: bold;
+    }
+    p{
+        margin-bottom: 0px;
+    }
+    .el-table--enable-row-transition .el-table__body td p{
+        font-size: .78rem;
+        font-weight: bold;
+    }
 </style>

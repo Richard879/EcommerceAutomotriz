@@ -385,19 +385,19 @@
                                                                                         </tbody>
                                                                                     </table>
                                                                                 </div>
-                                                                            </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-12">
-                                                                                    <el-row :gutter="10">
-                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
-                                                                                        <el-col :span="8">
-                                                                                            <div class="grid-content bg-purple">
-                                                                                                S/. {{ montoSubTotalTramiteAdicional }}
-                                                                                            </div>
-                                                                                        </el-col>
-                                                                                    </el-row>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-12">
+                                                                                        <el-row :gutter="10">
+                                                                                            <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
+                                                                                            <el-col :span="8">
+                                                                                                <div class="grid-content bg-purple">
+                                                                                                    S/. {{ montoSubTotalTramiteAdicional }}
+                                                                                                </div>
+                                                                                            </el-col>
+                                                                                        </el-row>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </template>
                                                                         </div>
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group row">
@@ -1365,7 +1365,7 @@
                             }
                         });
                     } else {
-                        condicion = 0;
+                        condicion = 1;
                     }
                     return condicion;
                 },
@@ -1603,31 +1603,35 @@
             },
             llenarDocumentos(){
                 let me = this;
-                me.arrayPedidoDoumentoNew = [];
-                me.arrayPedidoDoumento.map(function(value, key){
-                    if(value.cCaracter == '*') {
-                        me.arrayPedidoDoumentoNew.push({
-                            'nIdDocumentoAdjuntoPedido' :   value.nIdDocumentoAdjuntoPedido,
-                            'nIdPar'                    :   value.nIdPar,
-                            'cParNombre'                :   value.cParNombre,
-                            'cArchivo'                  :   value.cArchivo,
-                            'cRutaDocumento'            :   value.cRutaDocumento,
-                            'cCaracter'                 :   value.cCaracter,
-                            'cFlagDocumento'            :   (value.cFlagDocumento == 0) ? false : true,
-                            'fMontoDocumento'           :   (value.fMontoDocumento == '.0000') ? 0 : value.fMontoDocumento,
-                            'nValida'                   :   value.nValida
-                        });
-                    }
-                });
 
-                let acumulador = 0;
-                //Recorrer y acumular monto
-                me.arrayPedidoDoumentoNew.map(function(value, key){
-                    if(value.cFlagDocumento == true){
-                        acumulador = acumulador + parseFloat(value.fMontoDocumento);
-                    }
-                });
-                me.montoSubTotalTramiteAdicional = acumulador;
+                me.arrayPedidoDoumentoNew = [];
+                me.montoSubTotalTramiteAdicional = 0;
+
+                if(arrayPedidoDoumento.length > 0) {
+                    me.arrayPedidoDoumento.map(function(value, key){
+                        if(value.cCaracter == '*') {
+                            me.arrayPedidoDoumentoNew.push({
+                                'nIdDocumentoAdjuntoPedido' :   value.nIdDocumentoAdjuntoPedido,
+                                'nIdPar'                    :   value.nIdPar,
+                                'cParNombre'                :   value.cParNombre,
+                                'cArchivo'                  :   value.cArchivo,
+                                'cRutaDocumento'            :   value.cRutaDocumento,
+                                'cCaracter'                 :   value.cCaracter,
+                                'cFlagDocumento'            :   (value.cFlagDocumento == 0) ? false : true,
+                                'fMontoDocumento'           :   (value.fMontoDocumento == '.0000') ? 0 : value.fMontoDocumento,
+                                'nValida'                   :   value.nValida
+                            });
+                        }
+                    });
+                    let acumulador = 0;
+                    //Recorrer y acumular monto
+                    me.arrayPedidoDoumentoNew.map(function(value, key){
+                        if(value.cFlagDocumento == true){
+                            acumulador = acumulador + parseFloat(value.fMontoDocumento);
+                        }
+                    });
+                    me.montoSubTotalTramiteAdicional = acumulador;
+                }
             },
             verificarConformidad(){
                 let me = this;
