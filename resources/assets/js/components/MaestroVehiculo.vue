@@ -566,6 +566,16 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Codigo Nacioens Unidas</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="number" v-model="fillNuevoVehiculo.cnacionesunidas" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="activarTab0202">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
@@ -1552,7 +1562,8 @@
                     faltura: 0,
                     flongitud: 0,
                     fcargautil: 0,
-                    fancho: 0
+                    fancho: 0,
+                    cnacionesunidas: ''
                 },
                 arrayClase: [],
                 arrayColor: [],
@@ -2441,19 +2452,22 @@
                     this.modal = 1;
                     return;
                 }
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarVehiculoPlaca';
                 axios.post(url, {
                     'fillNuevoVehiculo' : this.fillNuevoVehiculo,
                     'nFlagEditar'       : this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        if(this.checked==true){
+                        //Si el Contacto esta marcado como nuevo
+                        if(this.checked==true) {
                             this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
-                        }
-                        else{
+                        } else {
+                            //Sino se actualiza el propietario
                             this.registrarPropietario(response.data[0].nIdVehiculoPlaca);
                         }
-                    }else{
+                    } else {
                         swal('Ocurrio un error al registrar el vehículo');
                     }
                 }).catch(error => {
@@ -2537,11 +2551,42 @@
                     nIdVehiculoPlaca    :   data,
                     nFlagEditar         :   this.nFlagEditar
                 }).then(response => {
+                    this.actualizarSapSetArticulo();
+                    // this.limpiarVehiculo();
+                    // this.limpiarPropietario();
+                    // this.reiniciarTabs();
+                    swal('El proceso fue registrado existosamente');
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarSapSetArticulo(){
+                let me = this;
+                me.loadingProgressBar("ACTUALIZANDO DATOS DEL VEHÍCULO EN SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/articulo/SapPatchArticuloAll';
+                axios.post(url, {
+                    fillNuevoVehiculo   :   this.fillNuevoVehiculo
+                }).then(response => {
+                    console.log(response.data);
+                    $("#myBar").hide();
+                    me.loading.close();
                     this.limpiarVehiculo();
                     this.limpiarPropietario();
                     this.reiniciarTabs();
-                    swal('El proceso fue registrado existosamente');
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error al Generar la Actualizaciòn de Datos del Vehiculo en SapB1!',
+                    });
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -2614,72 +2659,73 @@
 
                 let me = this;
 
-                this.cFlagTipoPersona = data['cFlagTipoPersona'];//Cpaturo el Flag para saber si es PN, PJ o Libre
+                this.cFlagTipoPersona = data['cFlagTipoPersona'];//Capturo el Flag para saber si es PN, PJ o Libre
 
                 //CAPTURAR DATOS DEL VEHICULO
-                this.fillNuevoVehiculo.nidvehiculo = data['nIdVehiculoPlaca'];
-                this.fillNuevoVehiculo.cnroplaca = data['cPlaca'];
-                this.fillNuevoVehiculo.cnrotarjetapropiedad = data['cNroTarjeta'];
-                this.fillNuevoVehiculo.nidclase = (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
-                this.fillNuevoVehiculo.nidmarca = (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
-                this.fillNuevoVehiculo.nidmodelo = (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
-                this.fillNuevoVehiculo.nidcolor = (data['nIdColor'] == 0) ? '' : data['nIdColor'];
-                this.fillNuevoVehiculo.nidaniofabricacion = data['nAnioFabricacion'];
-                this.fillNuevoVehiculo.dfechaventa = data['dFechaVenta'];
-                this.fillNuevoVehiculo.nidcombustible = (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
-                this.fillNuevoVehiculo.cnromotor = (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
-                this.fillNuevoVehiculo.cnroserie = (data['cNroSerie'] == 0) ? '' : data['cNroSerie'] ;
-                this.fillNuevoVehiculo.cnrorueda = (data['nNumeroRueda'] == 0) ? '' : data['nNumeroRueda'];
-                this.fillNuevoVehiculo.cnrocilindros = (data['nNumeroCilindro'] == 0) ? '' : data['nNumeroCilindro'];
-                this.fillNuevoVehiculo.cnroasiento = (data['nNumeroAsiento'] == 0) ? '' : data['nNumeroAsiento'];
-                this.fillNuevoVehiculo.cnropasajeros = (data['nNumeroPasajero'] == 0) ? '' : data['nNumeroPasajero'] ;
-                this.fillNuevoVehiculo.fpesobruto = data['fPesoBruto'];
-                this.fillNuevoVehiculo.fpesoseco = data['fPesoSeco'];
-                this.fillNuevoVehiculo.faltura = data['fAltura'];
-                this.fillNuevoVehiculo.flongitud = data['fLongitud'];
-                this.fillNuevoVehiculo.fcargautil = data['fCargaUtil'];
+                this.fillNuevoVehiculo.nidvehiculo          =   data['nIdVehiculoPlaca'];
+                this.fillNuevoVehiculo.cnroplaca            =   data['cPlaca'];
+                this.fillNuevoVehiculo.cnrotarjetapropiedad =   data['cNroTarjeta'];
+                this.fillNuevoVehiculo.nidclase             =   (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
+                this.fillNuevoVehiculo.nidmarca             =   (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
+                this.fillNuevoVehiculo.nidmodelo            =   (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
+                this.fillNuevoVehiculo.nidcolor             =   (data['nIdColor'] == 0) ? '' : data['nIdColor'];
+                this.fillNuevoVehiculo.nidaniofabricacion   =   data['nAnioFabricacion'];
+                this.fillNuevoVehiculo.dfechaventa          =   data['dFechaVenta'];
+                this.fillNuevoVehiculo.nidcombustible       =   (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
+                this.fillNuevoVehiculo.cnromotor            =   (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
+                this.fillNuevoVehiculo.cnroserie            =   (data['cNroSerie'] == 0) ? '' : data['cNroSerie'] ;
+                this.fillNuevoVehiculo.cnrorueda            =   (data['nNumeroRueda'] == 0) ? '' : data['nNumeroRueda'];
+                this.fillNuevoVehiculo.cnrocilindros        =   (data['nNumeroCilindro'] == 0) ? '' : data['nNumeroCilindro'];
+                this.fillNuevoVehiculo.cnroasiento          =   (data['nNumeroAsiento'] == 0) ? '' : data['nNumeroAsiento'];
+                this.fillNuevoVehiculo.cnropasajeros        =   (data['nNumeroPasajero'] == 0) ? '' : data['nNumeroPasajero'] ;
+                this.fillNuevoVehiculo.fpesobruto           =   data['fPesoBruto'];
+                this.fillNuevoVehiculo.fpesoseco            =   data['fPesoSeco'];
+                this.fillNuevoVehiculo.faltura              =   data['fAltura'];
+                this.fillNuevoVehiculo.flongitud            =   data['fLongitud'];
+                this.fillNuevoVehiculo.fcargautil           =   data['fCargaUtil'];
+                this.fillNuevoVehiculo.cnacionesunidas      =   data['cCodigoNaciones'];
 
-                //CAPTURAR DATOS DEL A PERSONA NATURAL
+                //CAPTURAR DATOS DE LA PERSONA NATURAL
                 if (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) {
-                    this.fillPropietario.nidpersona = (data['nIdPersonaNatural'] == undefined) ? '' : data['nIdPersonaNatural'];
-                    this.fillPropietario.ntipopersona = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '1': '2';
-                    this.vistaDatosPersonaNatural = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? 1 : 0;
-                    this.fillPropietario.ntpodocumento = data['nIdTipoDocumento'];
-                    this.fillPropietario.cnrodocumento = data['cNumeroDocumento'];
-                    this.fillPropietario.capepaterno = data['cApellidoPaterno'];
-                    this.fillPropietario.capematerno = data['cApellidoMaterno'];
-                    this.fillPropietario.cnombre = data['cNombre'];
-                    this.fillPropietario.dfecnacimiento = data['dFechaNacimiento'];
-                    this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '* Nombres': '* Razón Social';
-                    this.fillPropietario.ccode = data['cCode'];
-                    this.fillPropietario.cubigeo = data['cUbigeo'];
-                    this.fillPropietario.cdireccion = data['cDireccion'];
-                    this.fillPropietario.cmailprincipal = data['cEmail'];
-                    this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];
-                    this.fillPropietario.ctelefonofijo = data['cTelefonoFijo'];
-                    this.fillPropietario.ncelular = data['nTelefonoMovil'];
-                    this.fillPropietario.ncelularalternativo = data['nTelefonoMovilAlternativo'];
-                    this.fillPropietario.nestadocivil = (data['nIdEstadoCivil'] == 0 || data['nIdEstadoCivil'] == undefined) ? '' : data['nIdEstadoCivil'];
-                    this.fillPropietario.nprofesion = (data['nIdProfesion'] == 0 || data['nIdProfesion'] == undefined) ? '' : data['nIdProfesion'];
-                    this.fillPropietario.ccentrolaboral = (data['cCentroLaboral'] == 0 || data['cCentroLaboral'] == undefined) ? '' : data['cCentroLaboral'];
-                    this.fillPropietario.cnrolicencia = (data['cNumeroLicenciaConducir'] == 0 || data['cNumeroLicenciaConducir'] == undefined) ? '' : data['cNumeroLicenciaConducir'];
+                    this.fillPropietario.nidpersona             =   (data['nIdPersonaNatural'] == undefined) ? '' : data['nIdPersonaNatural'];
+                    this.fillPropietario.ntipopersona           =   (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '1': '2';
+                    this.vistaDatosPersonaNatural               =   (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? 1 : 0;
+                    this.fillPropietario.ntpodocumento          =   data['nIdTipoDocumento'];
+                    this.fillPropietario.cnrodocumento          =   data['cNumeroDocumento'];
+                    this.fillPropietario.capepaterno            =   data['cApellidoPaterno'];
+                    this.fillPropietario.capematerno            =   data['cApellidoMaterno'];
+                    this.fillPropietario.cnombre                =   data['cNombre'];
+                    this.fillPropietario.dfecnacimiento         =   data['dFechaNacimiento'];
+                    this.fillPropietario.lblcnombres            =   (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '* Nombres': '* Razón Social';
+                    this.fillPropietario.ccode                  =   data['cCode'];
+                    this.fillPropietario.cubigeo                =   data['cUbigeo'];
+                    this.fillPropietario.cdireccion             =   data['cDireccion'];
+                    this.fillPropietario.cmailprincipal         =   data['cEmail'];
+                    this.fillPropietario.cmailalternativo       =   data['cEmailAlternativo'];
+                    this.fillPropietario.ctelefonofijo          =   data['cTelefonoFijo'];
+                    this.fillPropietario.ncelular               =   data['nTelefonoMovil'];
+                    this.fillPropietario.ncelularalternativo    =   data['nTelefonoMovilAlternativo'];
+                    this.fillPropietario.nestadocivil           =   (data['nIdEstadoCivil'] == 0 || data['nIdEstadoCivil'] == undefined) ? '' : data['nIdEstadoCivil'];
+                    this.fillPropietario.nprofesion             =   (data['nIdProfesion'] == 0 || data['nIdProfesion'] == undefined) ? '' : data['nIdProfesion'];
+                    this.fillPropietario.ccentrolaboral         =   (data['cCentroLaboral'] == 0 || data['cCentroLaboral'] == undefined) ? '' : data['cCentroLaboral'];
+                    this.fillPropietario.cnrolicencia           =   (data['cNumeroLicenciaConducir'] == 0 || data['cNumeroLicenciaConducir'] == undefined) ? '' : data['cNumeroLicenciaConducir'];
                 } else {
                     ///CAPTURAR DATOS DE LA PERSONA JURIDICA
-                    this.fillPropietario.nidpersona = (data['nIdPersonaJuridica'] == undefined) ? '' : data['nIdPersonaJuridica'];
-                    this.fillPropietario.ntipopersona = (data['cFlagTipoPersona'] == 'J') ? '2': '1';
+                    this.fillPropietario.nidpersona             =   (data['nIdPersonaJuridica'] == undefined) ? '' : data['nIdPersonaJuridica'];
+                    this.fillPropietario.ntipopersona           =   (data['cFlagTipoPersona'] == 'J') ? '2': '1';
                     this.llenarComboTpoDocumento();//cargo el listado de documentos de tipo juridico
-                    this.vistaDatosPersonaNatural = (data['cFlagTipoPersona'] == 'J') ? 0 : 1;
-                    this.fillPropietario.cnrodocumento = data['cRuc'];
-                    this.fillPropietario.cnombre = data['cRazonSocial'];
-                    this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'J') ? '* Razón Social': '* Nombres';
-                    this.fillPropietario.ccode = data['cCode'];
-                    this.fillPropietario.cubigeo = data['cUbigeo'];
-                    this.fillPropietario.cdireccion = data['cDireccion'];
-                    this.fillPropietario.cmailprincipal = data['cEmail'];
-                    this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];
-                    this.fillPropietario.ctelefonofijo = data['cTelefonoFijo'];
-                    this.fillPropietario.ncelular = data['nTelefonoMovil'];
-                    this.fillPropietario.ncelularalternativo = data['nTelefonoMovilAlternativo'];
+                    this.vistaDatosPersonaNatural               =   (data['cFlagTipoPersona'] == 'J') ? 0 : 1;
+                    this.fillPropietario.cnrodocumento          =   data['cRuc'];
+                    this.fillPropietario.cnombre                =   data['cRazonSocial'];
+                    this.fillPropietario.lblcnombres            =   (data['cFlagTipoPersona'] == 'J') ? '* Razón Social': '* Nombres';
+                    this.fillPropietario.ccode                  =   data['cCode'];
+                    this.fillPropietario.cubigeo                =   data['cUbigeo'];
+                    this.fillPropietario.cdireccion             =   data['cDireccion'];
+                    this.fillPropietario.cmailprincipal         =   data['cEmail'];
+                    this.fillPropietario.cmailalternativo       =   data['cEmailAlternativo'];
+                    this.fillPropietario.ctelefonofijo          =   data['cTelefonoFijo'];
+                    this.fillPropietario.ncelular               =   data['nTelefonoMovil'];
+                    this.fillPropietario.ncelularalternativo    =   data['nTelefonoMovilAlternativo'];
 
                     setTimeout(function() {
                         me.setearTipoDocumento(data)//Asignar idTipoDocumento cuando es del Rol Juridico despues de 2.5 seg (esperar a que cargue la lista de tipos de documento)
@@ -2688,13 +2734,13 @@
 
                 //CAPTURAR DATOS DEL SOAT
                 if (data['cNumeroSoat'] != null) {
-                    this.fillSOAT.nidsoat = (data['nIdSoatVehiculo'] == undefined) ? '' : data['nIdSoatVehiculo'];
-                    this.fillSOAT.csoat = data['cNumeroSoat'];
-                    this.fillSOAT.dfechainicio = data['dFechaInicioSOAT'];
-                    this.fillSOAT.dfechafin = data['dFechaFinSOAT'];
-                    this.fillSOAT.nidestado = data['cFlagEstadoActivoSOAT'];
-                    this.fillProveedor.nidproveedor = data['nIdProveedorSOAT'];
-                    this.fillProveedor.cproveedornombre = data['cNombreProveedorSOAT'];
+                    this.fillSOAT.nidsoat               =   (data['nIdSoatVehiculo'] == undefined) ? '' : data['nIdSoatVehiculo'];
+                    this.fillSOAT.csoat                 =   data['cNumeroSoat'];
+                    this.fillSOAT.dfechainicio          =   data['dFechaInicioSOAT'];
+                    this.fillSOAT.dfechafin             =   data['dFechaFinSOAT'];
+                    this.fillSOAT.nidestado             =   data['cFlagEstadoActivoSOAT'];
+                    this.fillProveedor.nidproveedor     =   data['nIdProveedorSOAT'];
+                    this.fillProveedor.cproveedornombre =   data['cNombreProveedorSOAT'];
 
                     this.arraySOAT.push({
                         nidsoat             : this.fillSOAT.nidsoat,
@@ -2863,6 +2909,18 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
             },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+            }
         }
     }
 </script>
