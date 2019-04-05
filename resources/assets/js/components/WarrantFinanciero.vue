@@ -1598,6 +1598,7 @@
                 $("#myBar").hide();
                 swal('Warrant Financiero registrado');
                 me.limpiarFormulario();
+                me.listarWFinanciero(1);
             },
             validar(){
                 this.error = 0;
@@ -1628,7 +1629,8 @@
                     'fCredit'       : "0",
                     'fDebit'        : objWO.fValorWarrant,
                     'fCredit1'      : objWO.fValorWarrant,
-                    'fDebit1'       : "0"
+                    'fDebit1'       : "0",
+                    'fTotalCompra'  : objWO.fValorWarrant
                 })
 
                 //Verifico Si existe Asiento
@@ -1711,6 +1713,9 @@
 
                 //Verifico Si existe Comprobante
                 if(objWO.nDocEntryComprobante==0){
+
+                    me.loadingProgressBar("INTEGRANDO FACTURA DE PROVEEDOR CON SAP BUSINESS ONE...");
+
                     //==============================================================
                     //================== REGISTRO ARTICULO EN SAP ===============
                     var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWF';
@@ -2008,7 +2013,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWF();
+                        me.confirmarWFDetalle();
                     }, 1200);
                 }).catch(error => {
                     console.log(error);
@@ -2020,6 +2025,15 @@
                     }
                 });
             },
+            confirmarWFDetalle(){
+                let me = this;
+                me.loading.close();
+                $("#myBar").hide();
+                swal('Warrant Financiero registrado');
+                me.limpiarFormulario();
+                me.listarDetalleWFinanciero(1);
+            },
+            //=================================================================
             limpiarFormulario(){
                 this.fillWFinanciero.nidwarrantfinanciero= 0,
                 this.fillWFinanciero.nordencompra= '',
