@@ -135,4 +135,17 @@ class WarrantFinancieroController extends Controller
             DB::rollBack();
         }
     }
+
+    public function UpdEstadoWoDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayWF = DB::select('exec [usp_WF_UpdEstadoWoDetalle] ?, ?, ?, ?',
+                                                [   $request->nIdDetalleWarrant,
+                                                    $request->nIdEstadoWarrant,
+                                                    $request->nIdCompra,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayWF);
+    }
 }
