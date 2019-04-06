@@ -152,6 +152,27 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                    <input type="radio" class="radio-template" v-model="fillPedido.ntipopersona" :value="tipo.value">
+                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos">
                                                                             <i class="fa fa-search"></i> Buscar
@@ -1064,6 +1085,10 @@
                 fValorTipocambioComercial: 0,
                 // ======================================================
                 // =========== VARIABLES TAB BUSCAR PEDIDO ==============
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
                 fillPedido:{
                     dfechainicio: '',
                     dfechafin: '',
@@ -1071,7 +1096,9 @@
                     cnumerovin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidestadopedido: ''
+                    nidestadopedido: '',
+                    ntipopersona: 1,
+                    ccontacto: ''
                 },
                 arrayPedido: [],
                 arrayEstadoPedido: [],
@@ -1303,15 +1330,17 @@
                 var url = this.ruta + '/pedido/GetListPedidoAprobados';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillPedido.dfechainicio,
-                        'dfechafin': this.fillPedido.dfechafin,
-                        'cnumeropedido': this.fillPedido.cnumeropedido,
-                        'cnumerovin': this.fillPedido.cnumerovin,
-                        'nidmarca': this.fillPedido.nidmarca,
-                        'nidmodelo': this.fillPedido.nidmodelo,
-                        'nidestadopedido': this.fillPedido.nidestadopedido,
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      :   this.fillPedido.dfechainicio,
+                        'dfechafin'         :   this.fillPedido.dfechafin,
+                        'cnumeropedido'     :   this.fillPedido.cnumeropedido,
+                        'cnumerovin'        :   this.fillPedido.cnumerovin,
+                        'nidmarca'          :   this.fillPedido.nidmarca,
+                        'nidmodelo'         :   this.fillPedido.nidmodelo,
+                        'nidestadopedido'   :   this.fillPedido.nidestadopedido,
+                        'ccontacto'         :   this.fillPedido.ccontacto,
+                        'ntipopersona'      :   this.fillPedido.ntipopersona,
                         'page' : page
                     }
                 }).then(response => {
