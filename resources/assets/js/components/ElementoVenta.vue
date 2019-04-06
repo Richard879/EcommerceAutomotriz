@@ -2,9 +2,11 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">ELEMENTO VENTA</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO ELEMENTO DE VENTA</vs-divider>
+                    </h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">

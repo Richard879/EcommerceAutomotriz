@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">CONFIGURADOR DE MODELOS POR AÑO</h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO CONFIGURADOR DE MODELOS POR AÑO</vs-divider>
+                    </h2>
                 </div>
             </header>
 
@@ -423,7 +425,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </transition>
 </template>

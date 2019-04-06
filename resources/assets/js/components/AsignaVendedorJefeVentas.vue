@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Asignación de Vendedores - Jefe Ventas</h2>
+                    <vs-divider color="dark">
+                        <h2 class="no-margin-bottom">MODULO ASIGNACIÓN DE VENDEDORES - JEFE DE VENTAS</h2>
+                    </vs-divider>
                 </div>
             </header>
 

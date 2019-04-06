@@ -2,9 +2,11 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">Parámetros</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO PARAMETROS</vs-divider>
+                    </h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -832,7 +834,7 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            
+
                             var cDatoParDescripcion = "", nDatoParNumerico = 0, fDatoParPorcentual = 0;
 
                             if(objTipoPar.cTipoParametro == 'D'){
@@ -842,7 +844,7 @@
                                 this.nDatoParNumerico =  objTipoPar.nDatoParNumerico;
                             };
                             if(objTipoPar.cTipoParametro == 'P'){
-                                this.fDatoParPorcentual =  objTipoPar.fDatoParPorcentual; 
+                                this.fDatoParPorcentual =  objTipoPar.fDatoParPorcentual;
                             };
 
                             var url = this.ruta + '/tipoparametro/UpdTipoParametroById';
@@ -883,7 +885,7 @@
                     });
                     return;
                 }
-                
+
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/tipoparametro/SetTipoParametro';

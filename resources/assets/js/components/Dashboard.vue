@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Dashboard de {{ formLogin.cUsuario }} - {{ formLogin.cRol }} </h2>
+                    <vs-divider color="dark">
+                        <h2 class="no-margin-bottom">DASHBOARD DE {{ formLogin.cUsuario }} - {{ formLogin.cRol }}</h2>
+                    </vs-divider>
                 </div>
             </header>
 

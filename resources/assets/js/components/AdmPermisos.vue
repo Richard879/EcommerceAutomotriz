@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Administración de Permisos</h2>
+                    <vs-divider color="dark">
+                        <h2 class="no-margin-bottom">MODULO ADMINISTRACIÓN DE PERMISOS</h2>
+                    </vs-divider>
                 </div>
             </header>
 
