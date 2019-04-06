@@ -23,21 +23,16 @@
                                             <i class="fa fa-bus"></i> GENERAR COMPRA
                                         </a>
                                     </li>
-                                    <!--<li class="nav-item">
-                                        <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario()" role="tab" data-toggle="tab">
-                                            <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
-                                        </a>
-                                    </li>-->
                                     <li class="nav-item">
                                         <a class="nav-link" href="#TabLineaCredito" @click="tabLineaCredito()" role="tab" data-toggle="tab">
                                             <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--<li class="nav-item">
                                         <a class="nav-link" href="#TabForum" @click="tabForum()" role="tab" data-toggle="tab">
                                             <i class="fa fa fa-signal"></i> LÍNEA FORUM
                                         </a>
-                                    </li>
+                                    </li>-->
                                 </ul>
 
                                 <div class="tab-content">
@@ -5187,7 +5182,6 @@
         }
     }
 </script>
-
 <style>
     .mostrar{
         display: list-item !important;
