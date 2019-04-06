@@ -301,4 +301,50 @@ class PedidoDepositoController extends Controller
 
         return response()->json($arrayDepositosPorPedido);
     }
+
+    public function GetListPedidoAprobados(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $dFechaInicio       =   $request->dfechainicio;
+        $dFechaFin          =   $request->dfechafin;
+        $cNumeroPedido      =   $request->cnumeropedido;
+        $cNumeroVin         =   $request->cnumerovin;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $nIdEstadoPedido    =   $request->nidestadopedido;
+        $cContacto          =   $request->ccontacto;
+        $ntipopersona       =   $request->ntipopersona;
+
+        $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido      =   ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin         =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido    =   ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
+
+        $arrayPedido = DB::select('exec [usp_Deposito_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [
+                                                                            $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $cNumeroPedido,
+                                                                            $cNumeroVin,
+                                                                            $nIdMarca,
+                                                                            $nIdModelo,
+                                                                            $nIdEstadoPedido,
+                                                                            $cContacto,
+                                                                            $ntipopersona,
+                                                                            Auth::user()->id
+                                                                        ]);
+
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+        return ['arrayPedido'=>$arrayPedido];
+    }
 }
