@@ -1327,7 +1327,7 @@
             listarPedidos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetListPedidoAprobados';
+                var url = this.ruta + '/deposito/GetListPedidoAprobados';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
