@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA</h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO CARTA DE CARACTERISTICAS - ASESOR COMERCIAL</vs-divider>
+                    </h2>
                 </div>
             </header>
 

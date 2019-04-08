@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> PEDIDOS PARA REALIZAR DESCUENTO</h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO PEDIDOS PARA REALIZAR DESCUENTO</vs-divider>
+                    </h2>
                 </div>
             </header>
 

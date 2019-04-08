@@ -246,11 +246,26 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <!-- <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Contraseña</label>
                                                     <div class="col-sm-8">
                                                         <input type="password" v-model="fillUsuario.cpassword" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Contraseña</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="password" placeholder="INGRESE O GENERE CONTRASEÑA" v-model="fillUsuario.cpassword" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Generar Contraseña" class="btn btn-info btn-corner btn-sm" @click="generarContrasena">
+                                                                    <i class="fa-lg fa fa-refresh"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,7 +303,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Fotografía</label>
+                                                    <label class="col-sm-4 form-control-label">Fotografía</label>
                                                     <div class="col-sm-8">
                                                         <input type="file" id="file-upload" @change="getFile" accept="image/*" class="form-control form-control-sm"/>
                                                     </div>
@@ -704,6 +719,10 @@
                         }
                     }
                 });
+            },
+            generarContrasena(){
+                let me = this;
+                me.fillUsuario.cpassword = me.fillUsuario.cusuario  + '123';
             },
             asignarRol(nIdGrupoPar, cGrupoParNombre){
                 this.fillUsuario.nrol = nIdGrupoPar;

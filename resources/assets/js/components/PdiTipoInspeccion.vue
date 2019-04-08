@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO TIPO DE INSPECCIÓN</vs-divider>
+                    </h2>
                 </div>
             </header>
 

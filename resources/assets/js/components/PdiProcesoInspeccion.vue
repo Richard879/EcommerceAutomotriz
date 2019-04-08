@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">PROCESO DE INSPECCIÓN</h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO PROCESO DE INSPECCIÓN</vs-divider>
+                    </h2>
                 </div>
             </header>
 
@@ -1274,7 +1276,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">*Nro Vin</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()" 
+                                                            <input type="text" v-model="fillVinSap.cnumerovin" @keyup.enter="listarPorVinSap()"
                                                             class="form-control form-control-sm" placeholder="INGRESAR EL NÚMERO DE VIN">
                                                         </div>
                                                     </div>
@@ -2007,7 +2009,7 @@
             //=============== LISTAR MODAL POR VIN SAP ===================
             listarPorVinSap(){
                 let me = this;
-                
+
                 if(me.formPdi.nidflagvinplaca==1){
 
                     if(!me.fillVinSap.cnumerovin){

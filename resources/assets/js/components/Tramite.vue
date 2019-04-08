@@ -3,7 +3,9 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> TRAMITE - TARJETA Y PLACA </h2>
+                    <h2 class="no-margin-bottom">
+                        <vs-divider color="dark">MODULO TRAMITE - TARJETA Y PLACA</vs-divider>
+                    </h2>
                 </div>
             </header>
 
