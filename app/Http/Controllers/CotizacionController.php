@@ -306,7 +306,7 @@ class CotizacionController extends Controller
         $cContacto              =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
         $ntipopersona           =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor2] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
