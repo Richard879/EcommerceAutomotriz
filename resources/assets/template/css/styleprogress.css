@@ -86,4 +86,12 @@
     .el-select {
         margin-bottom: .2rem;
     }
+    .parteIzq {
+        flex-grow: 5;
+        width: 60%;
+    }
+    .parteDer {
+        flex-grow: 7;
+        width: 95%;
+    }
 }

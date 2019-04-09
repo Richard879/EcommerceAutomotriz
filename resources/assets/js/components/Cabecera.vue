@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-fade" appear>
-        <li class="nav-item d-flex align-items-center">
+        <li class="nav-item d-flex align-items-center parteDer1">
             <el-select v-model="formCabecera.nidempresa"
                        filterable
                        clearable
@@ -163,5 +163,11 @@
     .tcc span{
         font-weight: bold;
         font-style: oblique;
+    }
+    @media (max-width: 426px) {
+        .parteDer1{
+            flex-direction: column;
+            width: 100%;
+        }
     }
 </style>
