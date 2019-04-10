@@ -188,10 +188,10 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
-                                                                                <th>DocEntry</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
                                                                                 <th>Vendedor</th>
+                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -204,7 +204,13 @@
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                    </el-tooltip>&nbsp;
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="pedido.nValidaIntegracion==0">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">{{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="validarSapArticulo(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
@@ -213,10 +219,10 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
-                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>
+                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1204,26 +1210,27 @@
                 var url = this.ruta + '/pedido/GetListPedidoAprobados';
                 axios.get(url, {
                     params: {
-                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio'      : this.fillPedido.dfechainicio,
-                        'dfechafin'         : this.fillPedido.dfechafin,
-                        'cnumeropedido'     : this.fillPedido.cnumeropedido,
-                        'cnumerovin'        : this.fillPedido.cnumerovin,
-                        'nidmarca'          : this.fillPedido.nidmarca,
-                        'nidmodelo'         : this.fillPedido.nidmodelo,
-                        'ccontacto'         : this.fillPedido.ccontacto,
-                        'ntipopersona'      : this.fillPedido.ntipopersona,
-                        'page': page
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      :   this.fillPedido.dfechainicio,
+                        'dfechafin'         :   this.fillPedido.dfechafin,
+                        'cnumeropedido'     :   this.fillPedido.cnumeropedido,
+                        'cnumerovin'        :   this.fillPedido.cnumerovin,
+                        'nidmarca'          :   this.fillPedido.nidmarca,
+                        'nidmodelo'         :   this.fillPedido.nidmodelo,
+                        'nidestadopedido'   :   this.fillPedido.nidestadopedido,
+                        'ccontacto'         :   this.fillPedido.ccontacto,
+                        'ntipopersona'      :   this.fillPedido.ntipopersona,
+                        'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedidosAprobados = response.data.arrayPedido.data;
-                    this.pagination.current_page   =  response.data.arrayPedido.current_page;
-                    this.pagination.total          = response.data.arrayPedido.total;
-                    this.pagination.per_page       = response.data.arrayPedido.per_page;
-                    this.pagination.last_page      = response.data.arrayPedido.last_page;
-                    this.pagination.from           = response.data.arrayPedido.from;
-                    this.pagination.to             = response.data.arrayPedido.to;
+                    this.arrayPedidosAprobados      = response.data.arrayPedido.data;
+                    this.pagination.current_page    = response.data.arrayPedido.current_page;
+                    this.pagination.total           = response.data.arrayPedido.total;
+                    this.pagination.per_page        = response.data.arrayPedido.per_page;
+                    this.pagination.last_page       = response.data.arrayPedido.last_page;
+                    this.pagination.from            = response.data.arrayPedido.from;
+                    this.pagination.to              = response.data.arrayPedido.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

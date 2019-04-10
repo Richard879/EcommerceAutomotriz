@@ -205,9 +205,9 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
-                                                                                <th>DocEntry</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
+                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -234,9 +234,9 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
-                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
+                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
