@@ -17,12 +17,12 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaPedidoAprobado" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" href="#TabBuscaPedidoAprobado" @click="tabBuscaPedidoAprobado()" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR PEDIDOS APROBADOS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabAprobarPedido" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabAprobarPedido" @click="tabAprobarPedido()" role="tab" data-toggle="tab">
                                             <i class="fa fa-bus"></i> APROBAR PEDIDOS
                                         </a>
                                     </li>
@@ -1204,6 +1204,9 @@
             },
         },
         methods: {
+            tabBuscaPedidoAprobado(){
+                this.arrayPedidosAprobados= [];
+            },
             listarPedidosAprobados(page){
                 this.mostrarProgressBar();
 
@@ -1244,6 +1247,9 @@
             },
             //================================================================
             //====================== TAB APROBAR PEDIDOS =====================
+            tabAprobarPedido(){
+                this.arrayPedidos= [];
+            },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
