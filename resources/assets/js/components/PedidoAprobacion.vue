@@ -131,7 +131,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos()">
+                                                                                <el-select v-model="fillBusquedaPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -146,7 +146,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                         v-for="item in arrayModelo"
                                                                                         :key="item.nIdModelo"
@@ -1216,8 +1216,8 @@
                         'dfechafin'         :   this.fillPedido.dfechafin,
                         'cnumeropedido'     :   this.fillPedido.cnumeropedido,
                         'cnumerovin'        :   this.fillPedido.cnumerovin,
-                        'nidmarca'          :   this.fillPedido.nidmarca,
-                        'nidmodelo'         :   this.fillPedido.nidmodelo,
+                        'nidmarca'          :   this.fillBusquedaPedido.nidmarca,
+                        'nidmodelo'         :   this.fillBusquedaPedido.nidmodelo,
                         'nidestadopedido'   :   this.fillPedido.nidestadopedido,
                         'ccontacto'         :   this.fillPedido.ccontacto,
                         'ntipopersona'      :   this.fillPedido.ntipopersona,
