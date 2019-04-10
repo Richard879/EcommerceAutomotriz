@@ -60,6 +60,27 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                    <input type="radio" class="radio-template" v-model="fillPedido.ntipopersona" :value="tipo.value">
+                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
@@ -92,7 +113,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidosAprobados(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -100,7 +121,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidosAprobados(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -139,7 +160,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidosAprobados(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -154,7 +175,7 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <!--<template v-if="arrayMisPedido.length">
+                                                            <template v-if="arrayPedidosAprobados.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -174,7 +195,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="pedido in arrayMisPedido" :key="pedido.nIdCabeceraPedido">
+                                                                            <tr v-for="pedido in arrayPedidosAprobados" :key="pedido.nIdCabeceraPedido">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
@@ -234,7 +255,7 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                            </template>-->
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -936,6 +957,7 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
@@ -957,6 +979,11 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                //========================  TAB PEDIDOS APROBADOS ====================
                 fillPedido:{
                     dfechainicio: '',
                     dfechafin: '',
@@ -968,6 +995,8 @@
                     nidmarca: '',
                     nidmodelo: ''
                 },
+                arrayPedidosAprobados: [],
+                //========================  TAB APROBAR PEDIDO ====================
                 fillBusquedaPedido:{
                     dfechainicio: '',
                     dfechafin: '',
@@ -1169,6 +1198,45 @@
             },
         },
         methods: {
+            listarPedidosAprobados(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/pedido/GetListPedidoAprobados';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      : this.fillPedido.dfechainicio,
+                        'dfechafin'         : this.fillPedido.dfechafin,
+                        'cnumeropedido'     : this.fillPedido.cnumeropedido,
+                        'cnumerovin'        : this.fillPedido.cnumerovin,
+                        'nidmarca'          : this.fillPedido.nidmarca,
+                        'nidmodelo'         : this.fillPedido.nidmodelo,
+                        'ccontacto'         : this.fillPedido.ccontacto,
+                        'ntipopersona'      : this.fillPedido.ntipopersona,
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayPedidosAprobados = response.data.arrayPedido.data;
+                    this.pagination.current_page   =  response.data.arrayPedido.current_page;
+                    this.pagination.total          = response.data.arrayPedido.total;
+                    this.pagination.per_page       = response.data.arrayPedido.per_page;
+                    this.pagination.last_page      = response.data.arrayPedido.last_page;
+                    this.pagination.from           = response.data.arrayPedido.from;
+                    this.pagination.to             = response.data.arrayPedido.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //================================================================
+            //====================== TAB APROBAR PEDIDOS =====================
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -1241,7 +1309,6 @@
                     this.pagination.last_page      = response.data.arrayPedido.last_page;
                     this.pagination.from           = response.data.arrayPedido.from;
                     this.pagination.to             = response.data.arrayPedido.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
