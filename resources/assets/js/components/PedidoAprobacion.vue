@@ -207,7 +207,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <template v-if="pedido.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">{{ pedido.cNumeroPedido }}</div>
+                                                                                            <div slot="content">{{ pedido.cFlagVistaIntegracion }}</div>
                                                                                             <i @click="validarSapPedido(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
@@ -1527,77 +1527,128 @@
             generaSapBusinessActividad(objPedido){
                 let me = this;
 
-                var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
-                axios.post(sapUrl, {
-                    'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
-                    'arraySapActividadEV'       : me.arraySapActividadEV
-                }).then(response => {
-                    // ======================================================================
-                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA VEHÍCULO EN SQL SERVER
-                    // ======================================================================
-                    me.arraySapRespuestaVehiculo = [];
-                    me.arraySapUpdSgcVehiculo = [];
+                //Verifico si existe Actividad registrada
+                if(objPedido.nDocEntryDetallePedido!=0){
 
-                    me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
-                    if(me.arraySapRespuestaVehiculo.length > 0) {
-                        me.arraySapRespuestaVehiculo.map(function(value, key){
-                            me.jsonRespuestaVehiculo = '';
-                            me.jsonRespuestaVehiculo= JSON.parse(value);
-                            //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuestaVehiculo.ActivityCode){
-                                me.arraySapUpdSgcVehiculo.push({
-                                    'nActividadTipo': 17,
-                                    'cActividadTipo': 'OrdenVenta',
-                                    'nActivityCode' : parseInt(me.jsonRespuestaVehiculo.ActivityCode),
-                                    'cCardCode'     : me.jsonRespuestaVehiculo.CardCode.toString(),
-                                    'nDocEntry'     : parseInt(me.jsonRespuestaVehiculo.DocEntry),
-                                    'nDocNum'       : parseInt(me.jsonRespuestaVehiculo.DocNum),
-                                    'cLogRespuesta' : me.arraySapRespuestaVehiculo[key].toString()
-                                });
-                            }
-                        });
-                    }
+                    me.loadingProgressBar("INTEGRANDO ACTIVIDAD CON SAP BUSINESS ONE...");
 
-                    // ======================================================================
-                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA ELEMENTO VENTA EN SQL SERVER
-                    // ======================================================================
-                    me.arraySapRespuestaEV = [];
-                    me.arraySapUpdSgcEV = [];
+                    me.arraySapActividadVehiculo.push({
+                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                        'hActivityTime' :   moment().format('HH:mm:ss'),
+                        'cCardCode'     :   me.ccustomercode,
+                        'cNotes'        :   'OrdenVenta',
+                        'nDocEntry'     :   objPedido.nDocEntryDetallePedido.toString(),
+                        'nDocNum'       :   objPedido.nDocNumDetallePedido.toString(),
+                        'nDocType'      :   '17',
+                        'nDuration'     :   '15',
+                        'cDurationType' :   'du_Minuts',
+                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                        'cReminder'     :   'tYES',
+                        'nReminderPeriod':  '15',
+                        'cReminderType' :   'du_Minuts',
+                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                        'hStartTime'    :   moment().format('HH:mm:ss')
+                    });
 
-                    me.arraySapRespuestaEV = response.data.arrayEV;
-                    if(me.arraySapRespuestaEV.length > 0) {
-                        me.arraySapRespuestaEV.map(function(value, key){
-                            me.jsonRespuestaEV = '';
-                            me.jsonRespuestaEV = JSON.parse(value);
-                            //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuestaEV.ActivityCode){
-                                me.arraySapUpdSgcEV.push({
-                                    'nActividadTipo': 17,
-                                    'cActividadTipo': 'OrdenVenta',
-                                    'nActivityCode' : parseInt(me.jsonRespuestaEV.ActivityCode),
-                                    'cCardCode'     : me.jsonRespuestaEV.CardCode.toString(),
-                                    'nDocEntry'     : parseInt(me.jsonRespuestaEV.DocEntry),
-                                    'nDocNum'       : parseInt(me.jsonRespuestaEV.DocNum),
-                                    'cLogRespuesta' : me.arraySapRespuestaEV[key].toString()
-                                });
-                            }
-                        });
-                    }
+                    me.arraySapActividadEV.push({
+                        'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                        'hActivityTime' :   '08:13:00',
+                        'cCardCode'     :   me.ccustomercode,
+                        'cNotes'        :   'OrdenVenta',
+                        //'cCardCode'   :   'P20506006024',
+                        'nDocEntry'     :   me.jsonRespuestaEV.DocEntry.toString(),
+                        'nDocNum'       :   me.jsonRespuestaEV.DocNum.toString(),
+                        'nDocType'      :   '17',
+                        'nDuration'     :   '15',
+                        'cDurationType' :   'du_Minuts',
+                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                        'hEndTime'      :   '08:28:00',
+                        'cReminder'     :   'tYES',
+                        'nReminderPeriod':  '15',
+                        'cReminderType' :   'du_Minuts',
+                        'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                        'hStartTime'    :   '08:13:00'
+                    });
+                }
 
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                    setTimeout(function() {
-                        me.registroSgcActividad();
-                    }, 1600);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+                if(objPedido.nActivityCode==0){
+                    var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
+                    axios.post(sapUrl, {
+                        'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
+                        'arraySapActividadEV'       : me.arraySapActividadEV
+                    }).then(response => {
+                        // ======================================================================
+                        // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA VEHÍCULO EN SQL SERVER
+                        // ======================================================================
+                        me.arraySapRespuestaVehiculo = [];
+                        me.arraySapUpdSgcVehiculo = [];
+
+                        me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
+                        if(me.arraySapRespuestaVehiculo.length > 0) {
+                            me.arraySapRespuestaVehiculo.map(function(value, key){
+                                me.jsonRespuestaVehiculo = '';
+                                me.jsonRespuestaVehiculo= JSON.parse(value);
+                                //Si el valor de respuesta Code tiene un valor
+                                if(me.jsonRespuestaVehiculo.ActivityCode){
+                                    me.arraySapUpdSgcVehiculo.push({
+                                        'nActividadTipo': 17,
+                                        'cActividadTipo': 'OrdenVenta',
+                                        'nActivityCode' : parseInt(me.jsonRespuestaVehiculo.ActivityCode),
+                                        'cCardCode'     : me.jsonRespuestaVehiculo.CardCode.toString(),
+                                        'nDocEntry'     : parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                        'nDocNum'       : parseInt(me.jsonRespuestaVehiculo.DocNum),
+                                        'cLogRespuesta' : me.arraySapRespuestaVehiculo[key].toString()
+                                    });
+                                }
+                            });
                         }
-                    }
-                });
+
+                        // ======================================================================
+                        // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA ELEMENTO VENTA EN SQL SERVER
+                        // ======================================================================
+                        me.arraySapRespuestaEV = [];
+                        me.arraySapUpdSgcEV = [];
+
+                        me.arraySapRespuestaEV = response.data.arrayEV;
+                        if(me.arraySapRespuestaEV.length > 0) {
+                            me.arraySapRespuestaEV.map(function(value, key){
+                                me.jsonRespuestaEV = '';
+                                me.jsonRespuestaEV = JSON.parse(value);
+                                //Si el valor de respuesta Code tiene un valor
+                                if(me.jsonRespuestaEV.ActivityCode){
+                                    me.arraySapUpdSgcEV.push({
+                                        'nActividadTipo': 17,
+                                        'cActividadTipo': 'OrdenVenta',
+                                        'nActivityCode' : parseInt(me.jsonRespuestaEV.ActivityCode),
+                                        'cCardCode'     : me.jsonRespuestaEV.CardCode.toString(),
+                                        'nDocEntry'     : parseInt(me.jsonRespuestaEV.DocEntry),
+                                        'nDocNum'       : parseInt(me.jsonRespuestaEV.DocNum),
+                                        'cLogRespuesta' : me.arraySapRespuestaEV[key].toString()
+                                    });
+                                }
+                            });
+                        }
+
+                        //================================================================
+                        //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                        setTimeout(function() {
+                            me.registroSgcActividad();
+                        }, 1600);
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+                else{
+
+                }
+                
             },
             //================================================================
             //====================== TAB APROBAR PEDIDOS =====================
