@@ -57,7 +57,7 @@ class SapArticuloController extends Controller
                     "ItemName"              =>  (string)$cItemCode,
                     "ItemType"              =>  (string)$ItemType,
                     "ItemsGroupCode"        =>  "107",
-                    "IndirectTax"           =>  "tYES", //General           =>  Impuesto Directo
+                    "IndirectTax"           =>  "tYES", //General           =>  Impuesto Indirecto
                     "ManageSerialNumbers"   =>  "tYES", //General           =>  Articulo Gestiano Por
                     "ApTaxCode"             =>  "IGV",  //Datos Compras     =>  Indicador impuestos acreedores
                     "PurchaseUnit"          =>  "ZZ",   //Datos Compras     =>  Nombre de Unidad de Medida de Compras
