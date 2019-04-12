@@ -208,7 +208,7 @@
                                                                                     <template v-if="pedido.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">{{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="validarSapArticulo(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            <i @click="validarSapPedido(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -1235,6 +1235,360 @@
                     this.pagination.from            = response.data.arrayPedido.from;
                     this.pagination.to              = response.data.arrayPedido.to;
                     $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //==========================================================
+            //=================== REGISTRO SAP INDIVIDUAL ==============
+            validarSapPedido(objPedido){
+                this.getPedidoById();
+            },
+            getPedidoById(objPedido){
+                var url = this.ruta + '/pedido/GetPedidoById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : objPedido.nIdEmpresa,
+                        'nidsucursal'       : objPedido.nIdSucursal,
+                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    this.arraySapPedido = response.data.arrayCabeceraPedido.data;
+                    this.getEVById(objPedido);
+                    this.getObsequiosCampaniasByIdPedido(objPedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getEVById(objPedido){
+                var url = this.ruta + '/pedido/GetPedidoEVById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : objPedido.nIdEmpresa,
+                        'nidsucursal'       : objPedido.nIdSucursal,
+                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    this.arraySapEVPedido = response.data.arrayEVPedido.data;
+                    this.generaSapBusinessPedido(objPedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getObsequiosCampaniasByIdPedido(objPedido){
+                let me = this;
+                var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : objPedido.nIdEmpresa,
+                        'nidsucursal'       : objPedido.nIdSucursal,
+                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido,
+                        'opcion'            : 1
+                    }
+                }).then(response => {
+                    me.arraySapElementoVenta = response.data.arrayEVPedido;
+
+                    me.arraySapElementoVenta.map(function(value, key) {
+                        //Amaceno Solo Articulos para Costo Promedio
+                        if(value.nIdTipoElementoVenta != 1300025){
+                            me.arraySapEVArticulosEnvia.push({
+                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                'cItemCode' :  value.cCodigoERP
+                            });
+                        }
+                        //Almaceno Servicios para envar el Costo de Sgc
+                        else{
+                            me.arraySapEVServiciosEnvia.push({
+                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                'cItemCode' : value.cCodigoERP,
+                                'fImporte'  : value.fImporte
+                            });
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //REGISTRA PEDIDO EN SAP
+            generaSapBusinessPedido(objPedido){
+                let me = this;
+
+                 //Verifico Si No existe OrdenCompra
+                if(objPedido.nDocEntryDetallePedido==0){
+                    //==============================================================
+                    //================== REGISTRO PEDIDO EN SAP ===============
+                    me.loadingProgressBar("INTEGRANDO EL PEDIDO CON SAP BUSINESS ONE...");
+
+                    var sapUrl = me.ruta + '/pedido/SapSetPedido';
+                    axios.post(sapUrl, {
+                        'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                        'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'WarehouseCode'     :   me.formAlmacen.cwhscode,
+                        'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                        'arraySapPedido'    :   me.arraySapPedido,
+                        'arraySapEVPedido'  :   me.arraySapEVPedido
+                    }).then(response => {
+                        // ======================================================================
+                        // GUARDAR ORDEN VENTA PARA EL VEHÍCULO EN SQL SERVER
+                        // ======================================================================
+                        me.arraySapRespuestaVehiculo = [];
+                        me.arraySapUpdSgcVehiculo = [];
+
+                        me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;//arreglar
+                        if(me.arraySapRespuestaVehiculo.length > 0) {
+                            me.arraySapRespuestaVehiculo.map(function(value, key){
+                                me.jsonRespuestaVehiculo = '';
+                                me.jsonRespuestaVehiculo = JSON.parse(value);
+                                //Verifico que devuelva DocEntry
+                                if(me.jsonRespuestaVehiculo.DocEntry){
+                                    console.log("Integración Pedido Vehiculo SAP : OK");
+                                    //console.log(me.jsonRespuestaVehiculo.DocEntry);
+                                    //Guardo el VIN del Pedido del Vehìculo
+                                    me.arrayVINPedidoVehiculo.push({
+                                        'nDocEntry' : parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                        'cItemCode' : me.jsonRespuestaVehiculo.DocumentLines[0].ItemCode.toString()
+                                    });
+
+                                    me.arraySapUpdSgcVehiculo.push({
+                                        'nIdCabeceraPedido' :   (me.cFlagOpcion == 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
+                                        'cItemCode'         :   me.jsonRespuestaVehiculo.DocumentLines[0].ItemCode.toString(),
+                                        'nDocEntry'         :   parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                        'nDocNum'           :   parseInt(me.jsonRespuestaVehiculo.DocNum),
+                                        'cDocType'          :   me.jsonRespuestaVehiculo.DocType.toString(),
+                                        'cLogRespuesta'     :   me.arraySapRespuestaVehiculo[key].toString()
+                                    });
+
+                                    me.arraySapActividadVehiculo.push({
+                                        'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                                        'hActivityTime' :   moment().format('HH:mm:ss'),
+                                        'cCardCode'     :   me.ccustomercode,
+                                        'cNotes'        :   'OrdenVenta',
+                                        'nDocEntry'     :   me.jsonRespuestaVehiculo.DocEntry.toString(),
+                                        'nDocNum'       :   me.jsonRespuestaVehiculo.DocNum.toString(),
+                                        'nDocType'      :   '17',
+                                        'nDuration'     :   '15',
+                                        'cDurationType' :   'du_Minuts',
+                                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                                        'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                                        'cReminder'     :   'tYES',
+                                        'nReminderPeriod':  '15',
+                                        'cReminderType' :   'du_Minuts',
+                                        'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                                        'hStartTime'    :   moment().format('HH:mm:ss')
+                                    });
+                                }
+                            });
+                        }
+
+                        // ======================================================================
+                        // GUARDAR ORDEN VENTA PARA LOS ELEMENTOS DE VENTA EN SQL SERVER
+                        // ======================================================================
+                        me.arraySapRespuestaEV = [];
+                        me.arraySapUpdSgcEV = [];
+
+                        me.arraySapRespuestaEV = response.data.arrayEV;
+                        if(me.arraySapRespuestaEV.length > 0) {
+                            me.arraySapRespuestaEV.map(function(value, key){
+                                me.jsonRespuestaEV = '';
+                                me.jsonRespuestaEV= JSON.parse(value);
+                                //Verifico que devuelva DocEntry
+                                if(me.jsonRespuestaEV.DocEntry){
+                                    console.log("Integración Pedido Ele.Venta SAP : OK");
+                                    //console.log(me.jsonRespuestaEV.DocEntry);
+
+                                    //Generar varias lineas de la misma Orden Venta para actualizar DOCENTRY en cada detalle de Pedido en SQL SERVER
+                                    let arrayDocumentLines = me.jsonRespuestaEV.DocumentLines;
+                                    //console.log(arrayDocumentLines);
+                                    arrayDocumentLines.map(function(linea) {
+                                        //console.log(linea);
+                                        //Guardo el Codigo SAP de los Elemento Venta
+                                        me.arrayCodSAPPedidoEV.push({
+                                            'nDocEntry' :   parseInt(me.jsonRespuestaEV.DocEntry),
+                                            'cItemCode' :   linea.ItemCode.toString()
+                                        });
+
+                                        me.arraySapUpdSgcEV.push({
+                                            'nIdCabeceraPedido' :   (me.cFlagOpcion == 1) ? me.fillDirecciones.nIdCabeceraPedido.toString() : me.formSap.nidcabecerapedido.toString(),
+                                            'cItemCode'         :   linea.ItemCode.toString(),
+                                            'nDocEntry'         :   parseInt(me.jsonRespuestaEV.DocEntry),
+                                            'nDocNum'           :   parseInt(me.jsonRespuestaEV.DocNum),
+                                            'cDocType'          :   me.jsonRespuestaEV.DocType.toString(),
+                                            'cLogRespuesta'     :   me.arraySapRespuestaEV[key].toString()
+                                        });
+                                    });
+
+                                    me.arraySapActividadEV.push({
+                                        'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                        'hActivityTime' :   '08:13:00',
+                                        'cCardCode'     :   me.ccustomercode,
+                                        'cNotes'        :   'OrdenVenta',
+                                        //'cCardCode'   :   'P20506006024',
+                                        'nDocEntry'     :   me.jsonRespuestaEV.DocEntry.toString(),
+                                        'nDocNum'       :   me.jsonRespuestaEV.DocNum.toString(),
+                                        'nDocType'      :   '17',
+                                        'nDuration'     :   '15',
+                                        'cDurationType' :   'du_Minuts',
+                                        'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                        'hEndTime'      :   '08:28:00',
+                                        'cReminder'     :   'tYES',
+                                        'nReminderPeriod':  '15',
+                                        'cReminderType' :   'du_Minuts',
+                                        'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                        'hStartTime'    :   '08:13:00'
+                                    });
+                                }
+                            });
+                        }
+
+                        //==============================================================
+                        //================== ACTUALIZAR DOCENTRY PEDIDO ================
+                        setTimeout(function() {
+                            me.generaSgcPedido(objPedido);
+                        }, 3800);
+                    }).catch(error => {
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración de Pedido SapB1!',
+                        });
+                        me.limpiarFormulario();
+                        me.listarPedidos(1);
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+                else{
+                     //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapBusinessActividad(objPedido);
+                    }, 1200);
+                }
+            },
+            generaSgcPedido(objPedido){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
+                axios.post(sapUrl, {
+                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
+                    'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
+                }).then(response => {
+                    if (response.data[0].nFlagMsje == 1) {
+                        setTimeout(function() {
+                            me.generaSapBusinessActividad(objPedido);
+                        }, 1000);
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaSapBusinessActividad(objPedido){
+                let me = this;
+
+                var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
+                axios.post(sapUrl, {
+                    'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
+                    'arraySapActividadEV'       : me.arraySapActividadEV
+                }).then(response => {
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA VEHÍCULO EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaVehiculo = [];
+                    me.arraySapUpdSgcVehiculo = [];
+
+                    me.arraySapRespuestaVehiculo = response.data.arrayVehiculo;
+                    if(me.arraySapRespuestaVehiculo.length > 0) {
+                        me.arraySapRespuestaVehiculo.map(function(value, key){
+                            me.jsonRespuestaVehiculo = '';
+                            me.jsonRespuestaVehiculo= JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaVehiculo.ActivityCode){
+                                me.arraySapUpdSgcVehiculo.push({
+                                    'nActividadTipo': 17,
+                                    'cActividadTipo': 'OrdenVenta',
+                                    'nActivityCode' : parseInt(me.jsonRespuestaVehiculo.ActivityCode),
+                                    'cCardCode'     : me.jsonRespuestaVehiculo.CardCode.toString(),
+                                    'nDocEntry'     : parseInt(me.jsonRespuestaVehiculo.DocEntry),
+                                    'nDocNum'       : parseInt(me.jsonRespuestaVehiculo.DocNum),
+                                    'cLogRespuesta' : me.arraySapRespuestaVehiculo[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    // ======================================================================
+                    // GUARDAR ACTIVIDAD DE LA ORDEN DE VENTA PARA ELEMENTO VENTA EN SQL SERVER
+                    // ======================================================================
+                    me.arraySapRespuestaEV = [];
+                    me.arraySapUpdSgcEV = [];
+
+                    me.arraySapRespuestaEV = response.data.arrayEV;
+                    if(me.arraySapRespuestaEV.length > 0) {
+                        me.arraySapRespuestaEV.map(function(value, key){
+                            me.jsonRespuestaEV = '';
+                            me.jsonRespuestaEV = JSON.parse(value);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuestaEV.ActivityCode){
+                                me.arraySapUpdSgcEV.push({
+                                    'nActividadTipo': 17,
+                                    'cActividadTipo': 'OrdenVenta',
+                                    'nActivityCode' : parseInt(me.jsonRespuestaEV.ActivityCode),
+                                    'cCardCode'     : me.jsonRespuestaEV.CardCode.toString(),
+                                    'nDocEntry'     : parseInt(me.jsonRespuestaEV.DocEntry),
+                                    'nDocNum'       : parseInt(me.jsonRespuestaEV.DocNum),
+                                    'cLogRespuesta' : me.arraySapRespuestaEV[key].toString()
+                                });
+                            }
+                        });
+                    }
+
+                    //================================================================
+                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                    setTimeout(function() {
+                        me.registroSgcActividad();
+                    }, 1600);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

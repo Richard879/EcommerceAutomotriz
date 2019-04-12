@@ -3434,7 +3434,7 @@
             },
             generaSapCompra(objCompra){
                 let me = this;
-                //Verifico Si No existe OrdenCompra De EXCEL
+                //Verifico Si No existe OrdenCompra
                 if(objCompra.nDocEntry==0){
                     //==============================================================
                     //================== REGISTRO COMPRA EN SAP ===============
