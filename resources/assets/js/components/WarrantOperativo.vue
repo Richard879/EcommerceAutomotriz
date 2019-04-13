@@ -1260,19 +1260,45 @@
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
-                        if(value.nDocEntry){
+                        //Si la Factura de Reserva se encuentra ABIERTA
+                        if(value.cDocStatus == 'O'){
                             me.arraySapUpdSgc.push({
+                                'cFlagTipo'    : "FR",
+                                'cItemCode'    : value.cItemCode,
+                                'nDocEntry'    : value.nDocEntry,
+                                'nDocNum'      : value.nDocNum,
                                 'fDocRate'     : value.fDocRate,
                                 'cDocStatus'   : value.cDocStatus,
-                                'cItemCode'    : value.cItemCode
+                                'cDocStatus'   : value.cDocStatus
                             });
+
+                            setTimeout(function() {
+                                me.registraSgcFacturaReserva();
+                            }, 600);
                         }
                     });
-
-                    me.loading.close();
-
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Factura Reserva SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registraSgcFacturaReserva(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.loading.close();
+                    }
+                }).catch(error => {
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
