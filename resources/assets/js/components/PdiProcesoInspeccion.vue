@@ -1766,13 +1766,13 @@
                         'page': page
                     }
                 }).then(response => {
-                    this.arrayTipoInspeccion = response.data.arrayTipoInspeccion.data;
-                    this.pagination.current_page =  response.data.arrayTipoInspeccion.current_page;
-                    this.pagination.total = response.data.arrayTipoInspeccion.total;
+                    this.arrayTipoInspeccion    = response.data.arrayTipoInspeccion.data;
+                    this.pagination.current_page= response.data.arrayTipoInspeccion.current_page;
+                    this.pagination.total       = response.data.arrayTipoInspeccion.total;
                     this.pagination.per_page    = response.data.arrayTipoInspeccion.per_page;
                     this.pagination.last_page   = response.data.arrayTipoInspeccion.last_page;
                     this.pagination.from        = response.data.arrayTipoInspeccion.from;
-                    this.pagination.to           = response.data.arrayTipoInspeccion.to;
+                    this.pagination.to          = response.data.arrayTipoInspeccion.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1817,11 +1817,11 @@
                     }
                 }).then(response => {
                     if(response.data.length > 0) {
-                        this.nflagalmacen               = response.data[0].nFlagAlmacen;    //Mostrar Objeto Almacen
-                        this.nflagaccesorio             = response.data[0].nFlagAccesorio;  //Mostrar Objeto Accesorio
-                        this.nflagtestdrive             = response.data[0].nFlagTestDrive;  //Mostrar Objeto TestDrive
-                        this.nflagseccioninspeccion     = response.data[0].nFlagSeccionInspeccion;//Mostrar Objeto Inspección
-                        this.nflagfichatecnica   = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
+                        this.nflagalmacen           = response.data[0].nFlagAlmacen;    //Mostrar Objeto Almacen
+                        this.nflagaccesorio         = response.data[0].nFlagAccesorio;  //Mostrar Objeto Accesorio
+                        this.nflagtestdrive         = response.data[0].nFlagTestDrive;  //Mostrar Objeto TestDrive
+                        this.nflagseccioninspeccion = response.data[0].nFlagSeccionInspeccion;//Mostrar Objeto Inspección
+                        this.nflagfichatecnica      = response.data[0].nFlagValidarFichaTecnica;//Mostrar Objeto Ficha Tecnica
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1838,16 +1838,15 @@
 
                 axios.get(url, {
                     params: {
-                        'nparsrccodigo': 0,
-                        'nparsrcgrupoarametro': 110102,
-                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'npardstgrupoarametro': 110022,
-                        'opcion': 1
+                        'nparsrccodigo'         : 0,
+                        'nparsrcgrupoarametro'  : 110102,
+                        'npardstcodigo'         : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro'  : 110022,
+                        'opcion'                : 1
                     }
                 }).then(response => {
                     if(response.data.arrayParParametro.length){
                         this.formAlmacen.nidlocalidad = response.data.arrayParParametro[0].nParSrcCodigo;
-                        //this.obtenerAlmacenByLocalidad();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1997,14 +1996,14 @@
                 this.nIdServiceCallVenta        = '';
                 this.formPdi.nidvehiculoplaca   = 0;
                 //Limpiar
-                this.arrayPlantilla =[],
-                this.arrayAccesorio =[],
-                this.arrayTempAccesorio =[],
-                this.nflagalmacenValida = 0,
-                this.nflagaccesorioValida = 0,
-                this.nflagtestdriveValida = 0,
+                this.arrayPlantilla             =[],
+                this.arrayAccesorio             =[],
+                this.arrayTempAccesorio         =[],
+                this.nflagalmacenValida         = 0,
+                this.nflagaccesorioValida       = 0,
+                this.nflagtestdriveValida       = 0,
                 this.nflagseccioninspeccionValida = 0,
-                this.nflagfichatecnicaValida = 0;
+                this.nflagfichatecnicaValida    = 0;
             },
             //=============== LISTAR MODAL POR VIN SAP ===================
             listarPorVinSap(){

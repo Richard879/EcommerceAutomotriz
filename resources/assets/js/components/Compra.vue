@@ -2542,7 +2542,6 @@
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'cWarehouseCode': me.formAlmacen.cwhscode,
-                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
                     'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
                     'data'          : me.arraySapCompra
                 }).then(response => {
@@ -3434,7 +3433,7 @@
             },
             generaSapCompra(objCompra){
                 let me = this;
-                //Verifico Si No existe OrdenCompra De EXCEL
+                //Verifico Si No existe OrdenCompra
                 if(objCompra.nDocEntry==0){
                     //==============================================================
                     //================== REGISTRO COMPRA EN SAP ===============
@@ -3446,7 +3445,6 @@
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                         'cWarehouseCode': me.formAlmacen.cwhscode,
-                        'Igv'           : 1 + parseFloat((me.formCompra.igv)),
                         'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
                         'data'          : me.arraySapCompra
                     }).then(response => {
@@ -3474,7 +3472,7 @@
                                     'dActivityDate' : moment().format('YYYY-MM-DD'),
                                     'hActivityTime' : moment().format('HH:mm:ss'),
                                     'cCardCode'     : objCompra.cCustomerCode,
-                                    'cNotes'        : 'OrdenCompra',
+                                    'cNotes'        : objCompra.cNotes,
                                     'nDocEntry'     : me.jsonRespuesta.DocEntry.toString(),
                                     'nDocNum'       : me.jsonRespuesta.DocNum.toString(),
                                     'nDocType'      : '22',
@@ -3539,6 +3537,28 @@
             },
             generaSapActividadCompra(objCompra){
                 let me = this;
+
+                if(objCompra.nDocEntry!=0){
+                    me.arraySapActividad.push({
+                        'dActivityDate' : moment().format('YYYY-MM-DD'),
+                        'hActivityTime' : moment().format('HH:mm:ss'),
+                        'cCardCode'     : objCompra.cCustomerCode,
+                        'cNotes'        : objCompra.cNotes,
+                        'nDocEntry'     : objCompra.nDocEntry.toString(),
+                        'nDocNum'       : objCompra.nDocNum.toString(),
+                        'nDocType'      : '22',
+                        'nDuration'     : '15',
+                        'cDurationType' : 'du_Minuts',
+                        'dEndDueDate'   : moment().format('YYYY-MM-DD'),
+                        'hEndTime'      : moment().add(15, 'minutes').format('HH:mm:ss'),
+                        'cReminder'     : 'tYES',
+                        'nReminderPeriod': '15',
+                        'cReminderType' : 'du_Minuts',
+                        'dStartDate'    : moment().format('YYYY-MM-DD'),
+                        'hStartTime'    : moment().format('HH:mm:ss')
+                    });
+                }
+
                 //Verifico Si No existe Actividad
                 if(objCompra.nActivityCode==0){
                     //==============================================================
@@ -3622,7 +3642,7 @@
                 if(objCompra.nSolutionCode==0){
                     me.arraySapSolucion.push({
                         'cItemCode' : objCompra.cNumeroVin,
-                        'cSubject'  : "Cierre De Servicio"
+                        'cSubject'  : objCompra.cSubjectSolution
                     });
 
                     var sapUrl = me.ruta + '/solucion/SapSetSolucion';
