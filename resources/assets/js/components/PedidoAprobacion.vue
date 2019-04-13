@@ -963,7 +963,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -1089,7 +1088,7 @@
                 arraySapItemCodeEV: [],
                 arrayCodSAPPedidoEV: [],//Almacena CodSAP
                 arraySapActividadEV: [],
-                 //=====Variables SAP Antiguas OrdenVenta
+                //=====Variables SAP Antiguas OrdenVenta
                 arraySapRespuesta: [],
                 arraySapItemCode: [],
                 jsonRespuesta: '',
@@ -1486,8 +1485,7 @@
                             }
                         }
                     });
-                }
-                else{
+                } else {
                      //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
@@ -1649,8 +1647,7 @@
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     //================================================================
                     //=========== REGISTRO SOLUCION SAP ==========
                     setTimeout(function() {
@@ -1805,8 +1802,7 @@
                     if(response.data.length){
                         this.formAlmacen.cwhscode = response.data[0].cWhsCode;
                         this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
+                    } else {
                         this.formAlmacen.cwhscode = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
@@ -3025,7 +3021,7 @@
                         setTimeout(function() {
                             me.registroSapBusinessTblCostoEV();
                         }, 1600);
-                    }else{
+                    } else {
                         setTimeout(function() {
                             me.obtenerSgcCostoServicio();
                         }, 1600);
@@ -3064,8 +3060,8 @@
             obtenerSgcCostoServicio(){
                 let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
-                        me.fImporte = me.fImporte + value.fImporte;
-                    });
+                    me.fImporte = me.fImporte + value.fImporte;
+                });
 
                 me.arraySapCostoServicio = [];
                 // ====================== CONCEPTO =========================
@@ -3082,11 +3078,11 @@
                     U_SYP_ESTADO        :   'Pendiente'
                 });
 
-                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                if(me.fImporte > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
                     }, 1600);
-                }else{
+                } else {
                     setTimeout(function() {
                         me.confirmaPedido();
                     }, 1600);
@@ -3417,6 +3413,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
