@@ -963,7 +963,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -1089,7 +1088,7 @@
                 arraySapItemCodeEV: [],
                 arrayCodSAPPedidoEV: [],//Almacena CodSAP
                 arraySapActividadEV: [],
-                 //=====Variables SAP Antiguas OrdenVenta
+                //=====Variables SAP Antiguas OrdenVenta
                 arraySapRespuesta: [],
                 arraySapItemCode: [],
                 jsonRespuesta: '',
@@ -1298,31 +1297,33 @@
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa'        : objPedido.nIdEmpresa,
-                        'nidsucursal'       : objPedido.nIdSucursal,
-                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido,
-                        'opcion'            : 1
+                        'nidempresa'        :   objPedido.nIdEmpresa,
+                        'nidsucursal'       :   objPedido.nIdSucursal,
+                        'nidcabecerapedido' :   objPedido.nIdCabeceraPedido,
+                        'opcion'            :   1
                     }
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySapElementoVenta.map(function(value, key) {
-                        //Amaceno Solo Articulos para Costo Promedio
-                        if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' :  value.cCodigoERP
-                            });
-                        }
-                        //Almaceno Servicios para envar el Costo de Sgc
-                        else{
-                            me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' : value.cCodigoERP,
-                                'fImporte'  : value.fImporte
-                            });
-                        }
-                    });
+                    if (me.arraySapElementoVenta.length > 0) {
+                        me.arraySapElementoVenta.map(function(value, key) {
+                            //Amaceno Solo Articulos para Costo Promedio
+                            if(value.nIdTipoElementoVenta != 1300025){
+                                me.arraySapEVArticulosEnvia.push({
+                                    'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' :  value.cCodigoERP
+                                });
+                            }
+                            //Almaceno Servicios para envar el Costo de Sgc
+                            else {
+                                me.arraySapEVServiciosEnvia.push({
+                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' : value.cCodigoERP,
+                                    'fImporte'  : value.fImporte
+                                });
+                            }
+                        });
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1486,8 +1487,7 @@
                             }
                         }
                     });
-                }
-                else{
+                } else {
                      //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
@@ -1652,8 +1652,7 @@
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     //================================================================
                     //=========== REGISTRO SOLUCION SAP ==========
                     setTimeout(function() {
@@ -1808,8 +1807,7 @@
                     if(response.data.length){
                         this.formAlmacen.cwhscode = response.data[0].cWhsCode;
                         this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
+                    } else {
                         this.formAlmacen.cwhscode = '';
                         this.formAlmacen.cwhsname = 'Sin Almacén Definido';
                     }
@@ -2411,23 +2409,25 @@
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySapElementoVenta.map(function(value, key) {
-                        //Amaceno Solo Articulos para Costo Promedio
-                        if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' :  value.cCodigoERP
-                            });
-                        }
-                        //Almaceno Servicios para envar el Costo de Sgc
-                        else{
-                            me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' : value.cCodigoERP,
-                                'fImporte'  : value.fImporte
-                            });
-                        }
-                    });
+                    if (me.arraySapElementoVenta.length > 0) {
+                        me.arraySapElementoVenta.map(function(value, key) {
+                            //Amaceno Solo Articulos para Costo Promedio
+                            if(value.nIdTipoElementoVenta != 1300025){
+                                me.arraySapEVArticulosEnvia.push({
+                                    'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' :  value.cCodigoERP
+                                });
+                            }
+                            //Almaceno Servicios para envar el Costo de Sgc
+                            else{
+                                me.arraySapEVServiciosEnvia.push({
+                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' : value.cCodigoERP,
+                                    'fImporte'  : value.fImporte
+                                });
+                            }
+                        });
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3024,12 +3024,11 @@
                         U_SYP_ESTADO        :   'Pendiente'
                     });
 
-                    //Si la suma de Costo Promedio > 0 y existe nDocEntry TblCostoCabecera
                     if(me.fAvgPrice > 0 && me.formSap.ndocentry != 0){
                         setTimeout(function() {
                             me.registroSapBusinessTblCostoEV();
                         }, 1600);
-                    }else{
+                    } else {
                         setTimeout(function() {
                             me.obtenerSgcCostoServicio();
                         }, 1600);
@@ -3068,8 +3067,8 @@
             obtenerSgcCostoServicio(){
                 let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
-                        me.fImporte = me.fImporte + value.fImporte;
-                    });
+                    me.fImporte = me.fImporte + value.fImporte;
+                });
 
                 me.arraySapCostoServicio = [];
                 // ====================== CONCEPTO =========================
@@ -3086,12 +3085,11 @@
                     U_SYP_ESTADO        :   'Pendiente'
                 });
 
-                //Si la suma de Costo Promedio > 0 y existe nDocEntry TblCostoCabecera
                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
                     }, 1600);
-                }else{
+                } else {
                     setTimeout(function() {
                         me.confirmaPedido();
                     }, 1600);
@@ -3422,6 +3420,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
