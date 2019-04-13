@@ -487,7 +487,17 @@
                                             <section class="forms">
                                                 <div class="container-fluid">
                                                     <div class="col-lg-12">
-                                                        <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-12 aligContact">
+                                                                <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Desea Cambiar de Contacto?</div>
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
+                                                                        <i class="fa-md fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
+                                                            </div>
+                                                        </div>
                                                         <hr/>
                                                         <ul class="nav nav-tabs">
                                                             <li class="nav-item">
@@ -1571,6 +1581,161 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Contactos -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">BUSQUEDA DE CONTACTOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.value">
+                                                                <input type="radio" class="radio-template" v-model="fillBusqContacto.ntipopersona" :value="tipo.value" @change="cambiarTipoPersona()">
+                                                                <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label" v-text="fillBusqContacto.lblcontactonombre"></label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillBusqContacto.ccontactonombre" @keyup.enter="buscarContactosPorVendedor(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar por {{ fillBusqContacto.lblcontactonombre }} </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarContactosPorVendedor(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label" v-text="fillBusqContacto.lblcontactodocumento"></label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillBusqContacto.ccontactodocumento" @keyup.enter="buscarContactosPorVendedor(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar por {{ fillBusqContacto.lblcontactodocumento }} </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarContactosPorVendedor(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosPorVendedor(1);">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayContactosPorVendedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <template v-if="arrayContactosPorVendedor[0].cPerApellidos">
+                                                                <th>Apellidos y Nombres</th>
+                                                                <th>DNI</th>
+                                                            </template>
+                                                            <template v-else>
+                                                                <th>Razón Social</th>
+                                                                <th>RUC</th>
+                                                            </template>
+                                                            <th>Email</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="contactos in arrayContactosPorVendedor" :key="contactos.nIdContacto">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', contactos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <template v-if="contactos.cPerApellidos">
+                                                                <td v-text="contactos.cContacto"></td>
+                                                                <td v-text="contactos.cNumeroDocumento"></td>
+                                                            </template>
+                                                            <template v-else>
+                                                                <td v-text="contactos.cRazonSocial"></td>
+                                                                <td v-text="contactos.cNumeroDocumento"></td>
+                                                            </template>
+                                                            <td v-text="contactos.cEmail"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaContactosPorVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaContactosPorVendedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaContactosPorVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1637,6 +1802,7 @@
                     nidmarca: '',
                     nidmodelo: '',
                     cnumerocotizacion: '',
+                    nidcontacto: '',
                     cnombrecontacto: '',
                     nidcabecerapedido: 0
                 },
@@ -1645,6 +1811,22 @@
                 arrayMarca: [],
                 arrayModelo: [],
                 vistaFormularioPedido: 1,
+                // =============================================================
+                // VARIABLES TAB ASIGNAR CONTACTO
+                // =============================================================
+                fillBusqContacto:{
+                    ntipopersona: 1,
+                    lblcontactonombre: 'Apellidos',
+                    lblcontactodocumento: 'DNI',
+                    ccontactonombre: '',
+                    ccontactodocumento: ''
+                },
+                arrayContactosPorVendedor: [],
+                fillAsignarContacto:{
+                    nidasignarcontacto: 0,
+                    nidcontacto: 0,
+                    ccontacto: ''
+                },
                 // ============== VARIABLES TAB COMPRA =================
                 formCompra:{
                     nidcabeceracotizacion: 0,
@@ -2066,36 +2248,34 @@
                 this.listarCotizacionesIngresadas(page);
             },
             desactivar(nIdPedido){
-
                 swal({
-                        title: 'Estas seguro de eliminar esta Pedido?',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivar!',
-                        cancelButtonText: 'No, cancelar!'
-                        }).then((result) => {
-                        var url = this.ruta + '/compra/desactivar';
-                        axios.put(url, {
-                            nIdPedido: nIdPedido
-                        }).then(response => {
-                            swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                            );
-                            this.listarPedidos(1);
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                            if (error.response) {
-                                if (error.response.status == 401) {
-                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                    location.reload('0');
-                                }
+                    title: 'Estas seguro de eliminar esta Pedido?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    var url = this.ruta + '/compra/desactivar';
+                    axios.put(url, {
+                        nIdPedido: nIdPedido
+                    }).then(response => {
+                        swal(
+                        'Desactivado!',
+                        'El registro fue eliminado.'
+                        );
+                        this.listarPedidos(1);
+                    }).catch(function (error) {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
                             }
-                        });
-                    })
+                        }
+                    });
+                })
             },
             // =================================================================
             // VER DETALLE COTIZACION
@@ -2156,11 +2336,69 @@
             },
             //=============== APROBAR COTIZACION ========================
             generarPedido(cotizacion){
-                this.formPedido.cnombrecontacto = cotizacion.cContacto;
-                this.formCompra.nidcabeceracotizacion = cotizacion.nIdCabeceraCotizacion;
-                this.formDocRef.cnrocotizacion = cotizacion.cNumeroCotizacion;
+                this.formPedido.nidcontacto             =   cotizacion.nIdContacto;
+                this.formPedido.cnombrecontacto         =   cotizacion.cContacto;
+                this.formCompra.nidcabeceracotizacion   =   cotizacion.nIdCabeceraCotizacion;
+                this.formDocRef.cnrocotizacion          =   cotizacion.cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
+            },
+            // =================================================================
+            // TAB ASIGNAR CONTACTO
+            // =================================================================
+            buscarContactosPorVendedor(page){
+                var url = this.ruta + '/getcotizacion/GetListContactoByVendedor';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'         :   220016,
+                        'ntipopersona'          :   this.fillBusqContacto.ntipopersona,
+                        'cnrodocumento'         :   String(this.fillBusqContacto.ccontactodocumento.toString()),
+                        'cfiltrodescripcion'    :   this.fillBusqContacto.ccontactonombre.toString(),
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayContactosPorVendedor;
+                    //Data
+                    this.arrayContactosPorVendedor = info.data;
+                    //Pagination
+                    this.paginationModal.current_page   =   info.current_page;
+                    this.paginationModal.total          =   info.total;
+                    this.paginationModal.per_page       =   info.per_page;
+                    this.paginationModal.last_page      =   info.last_page;
+                    this.paginationModal.from           =   info.from;
+                    this.paginationModal.to             =   info.to;
+                    //Limpiar caja busqueda
+                    this.limpiarfillBusqContacto();
+                }).catch(error => {
+                    this.errors = error.response.data
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaContactosPorVendedor(page){
+                this.pagination.current_page=page;
+                this.buscarContactosPorVendedor(page);
+            },
+            cambiarTipoPersona(){
+                this.arrayContactosPorVendedor = [];
+                if (this.fillBusqContacto.ntipopersona == 1) {
+                    this.fillBusqContacto.lblcontactonombre = "Apellidos";
+                    this.fillBusqContacto.lblcontactodocumento = "DNI";
+                } else {
+                    this.fillBusqContacto.lblcontactonombre = "Razón Social";
+                    this.fillBusqContacto.lblcontactodocumento = "RUC";
+                }
+                this.limpiarfillBusqContacto();
+            },
+            limpiarfillBusqContacto(){
+                this.fillBusqContacto.ccontactonombre = '';
+                this.fillBusqContacto.ccontactodocumento = '';
             },
             //=============== TAB ASIGNAR COMPRA ========================
             tabAsignarCompra(){
@@ -2559,6 +2797,29 @@
                             }
                         }
                     }
+                    case "contacto":
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.arrayContactosPorVendedor = [];
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                //this.buscarContactosPorVendedor(1);
+                                break;
+                            }
+                            break;
+                            case 'asignar':
+                            {
+                                (this.fillBusqContacto.ntipopersona) == 1 ?
+                                        this.formPedido.cnombrecontacto = data['cContacto'] :
+                                        this.formPedido.cnombrecontacto = data['cRazonSocial'];
+                                this.formPedido.nidcontacto = data['nIdContacto'];
+                                this.cerrarModal();
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
             },
@@ -2605,5 +2866,13 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .aligContact{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .aligContact button{
+        margin-left: .5rem;
     }
 </style>
