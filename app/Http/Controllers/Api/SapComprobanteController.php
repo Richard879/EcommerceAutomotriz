@@ -160,7 +160,7 @@ class SapComprobanteController extends Controller
         foreach ($arrayData as $key => $value) {
 
             $nBaseEntry = $value['nBaseEntry'];
-            $nBaseEntry = $value['nBaseEntry'];
+            $nBaseType  = $value['nBaseType'];
             $cItemCode  = $value['cItemCode'];
 
             $response = $client->request('POST', "/api/Comprobante/SapGetComprobanteByTipo/", [

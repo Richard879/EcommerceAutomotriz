@@ -511,6 +511,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
     Route::post('/comprobante/SapSetFacturaProveedorWO', 'Api\SapComprobanteController@SapSetFacturaProveedorWO');
     Route::post('/comprobante/SapSetFacturaProveedorWF', 'Api\SapComprobanteController@SapSetFacturaProveedorWF');
+    Route::post('/comprobante/SapGetComprobanteByTipo', 'Api\SapComprobanteController@SapGetComprobanteByTipo');
     //Proyecto
     Route::post('/proyecto/SapSetProyecto', 'Api\SapProyectoController@SapSetProyecto');
     //TarjetaEquipo

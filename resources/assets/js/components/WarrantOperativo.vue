@@ -690,24 +690,33 @@
                                                             <th>Forma Pago</th>
                                                             <th>Moneda</th>
                                                             <th>Costo</th>
-                                                            <th>Nro Factura</th>
+                                                            <th>Sap Factura Res.</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
                                                             <td>
-                                                                <a href="#" @click="asignarVehiculo(vehiculo)">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <template v-if="vehiculo.nValidaIntegracion==0">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">{{ vehiculo.cFlagVistaIntegracion + ' ' + vehiculo.cNumeroVin }}</div>
+                                                                        <i @click="validarSapFacturaReserva(vehiculo)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">{{ vehiculo.cNumeroVin }}</div>
+                                                                        <i @click="asignarVehiculo(vehiculo)" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </template>&nbsp;&nbsp;
                                                             </td>
-                                                            <td>{{vehiculo.cNumeroVin}}</td>
-                                                            <td>{{vehiculo.cNombreComercial}}</td>
-                                                            <td>{{vehiculo.nAnioFabricacion}}</td>
-                                                            <td>{{vehiculo.nAnioVersion}}</td>
-                                                            <td>{{vehiculo.cFormaPago}}</td>
-                                                            <td>{{vehiculo.cSimboloMoneda}}</td>
-                                                            <td>{{vehiculo.fTotalCompra}}</td>
-                                                            <td>{{vehiculo.cNumeroFactura}}</td>
+                                                            <td v-text="vehiculo.cNumeroVin"></td>
+                                                            <td v-text="vehiculo.cNombreComercial"></td>
+                                                            <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                            <td v-text="vehiculo.nAnioVersion"></td>
+                                                            <td v-text="vehiculo.cFormaPago"></td>
+                                                            <td v-text="vehiculo.cSimboloMoneda"></td>
+                                                            <td v-text="vehiculo.fTotalCompra"></td>
+                                                            <td v-text="vehiculo.nDocNumFacturaReserva"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -817,6 +826,7 @@
                 arraySapItemCode: [],
                 arraySapAsiento: [],
                 arraySapWO: [],
+                arraySapFacturaRserva: [],
                 nSolutionCode:  0,
                 //===========================================================
                 pagination: {
@@ -1223,6 +1233,56 @@
                 }
                 return sw;
             },
+            //================= INTEGRA FACTURA DE RESERVA ==================
+            validarSapFacturaReserva(objVehiculo){
+                let me = this;
+                me.arraySapFacturaRserva= [];
+                me.arraySapFacturaRserva.push({
+                    'nBaseEntry'    : objVehiculo.nBaseEntry,
+                    'nBaseType'     : objVehiculo.nBaseType,
+                    'cItemCode'     : objVehiculo.cItemCode
+                });
+
+                setTimeout(function() {
+                    me.getSapFacturaReserva();
+                }, 1200);
+            },
+            getSapFacturaReserva(){
+                let me = this; 
+
+                me.loadingProgressBar("VERIFICANDO FACTURA DE RESERVA CON SAP BUSINESS ONE...");
+                var sapUrl = me.ruta + '/comprobante/SapGetComprobanteByTipo';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapFacturaRserva
+                }).then(response => {
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc = [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(value, key){
+                        if(value.nDocEntry){
+                            me.arraySapUpdSgc.push({
+                                'fDocRate'     : value.fDocRate,
+                                'cDocStatus'   : value.cDocStatus,
+                                'cItemCode'    : value.cItemCode
+                            });
+                        }
+                    });
+
+                    me.loading.close();
+
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Factura Reserva SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //================= INTEGRA WARRANT OPERATIVO ==================
             registrar(){
                 let me = this;
 
@@ -1320,7 +1380,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
-                         setTimeout(function() {
+                        setTimeout(function() {
                             me.generaSapFacturaProveedor();
                         }, 1200);
                     }
@@ -2291,7 +2351,8 @@
                 this.nSolutionCode=  0,
                 this.arraySapLlamadaServicio= [],
                 this.arraySapItemCode= [],
-                this.arraySapWO= []
+                this.arraySapWO= [],
+                this.arraySapFacturaRserva= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
