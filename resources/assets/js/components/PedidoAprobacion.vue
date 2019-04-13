@@ -1530,13 +1530,16 @@
                 //Verifico si existe Actividad registrada
                 if(objPedido.nDocEntryDetallePedido!=0){
 
-                    me.loadingProgressBar("INTEGRANDO ACTIVIDAD CON SAP BUSINESS ONE...");
+                    me.arrayVINPedidoVehiculo.push({
+                        'nDocEntry' : objPedido.nDocEntryDetallePedido,
+                        'cItemCode' : objPedido.cItemCode
+                    });
 
                     me.arraySapActividadVehiculo.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
                         'hActivityTime' :   moment().format('HH:mm:ss'),
-                        'cCardCode'     :   me.ccustomercode,
-                        'cNotes'        :   'OrdenVenta',
+                        'cCardCode'     :   objPedido.cCustomerCode,
+                        'cNotes'        :   objPedido.cNotes,
                         'nDocEntry'     :   objPedido.nDocEntryDetallePedido.toString(),
                         'nDocNum'       :   objPedido.nDocNumDetallePedido.toString(),
                         'nDocType'      :   '17',
@@ -1551,6 +1554,7 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
 
+                    //FALTA VALIDAR SI TIENE ORDEN DE VENTA DE ELEMENTOS
                     me.arraySapActividadEV.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                         'hActivityTime' :   '08:13:00',
@@ -1633,7 +1637,7 @@
                         //================================================================
                         //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                         setTimeout(function() {
-                            me.registroSgcActividad();
+                            me.generaSgcActividad();
                         }, 1600);
                     }).catch(error => {
                         console.log(error);
@@ -1646,9 +1650,32 @@
                     });
                 }
                 else{
+                    //================================================================
+                    //=========== REGISTRO SOLUCION SAP ==========
+                    setTimeout(function() {
 
+                    }, 1600);
                 }
-                
+            },
+            generaSgcActividad(){
+                let me = this;
+                var sapUrl = me.ruta + '/actividad/SetIntegraActividadVenta';
+                axios.post(sapUrl, {
+                    'arraySapUpdSgcVehiculo': me.arraySapUpdSgcVehiculo,
+                    'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
+                }).then(response => {
+                    setTimeout(function() {
+                        //me.registroSapBusinessSolucion();
+                    }, 1600);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //================================================================
             //====================== TAB APROBAR PEDIDOS =====================
