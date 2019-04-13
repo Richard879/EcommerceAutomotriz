@@ -1248,7 +1248,7 @@
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapPedido(objPedido){
-                this.getPedidoById();
+                this.getPedidoById(objPedido);
             },
             getPedidoById(objPedido){
                 var url = this.ruta + '/pedido/GetPedidoById';
@@ -1554,6 +1554,7 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
 
+                    //REALIZAR UNA CONSULTA PARA OBTENER EL PEDIDO DE ELEMENTO DE VENTA
                     //FALTA VALIDAR SI TIENE ORDEN DE VENTA DE ELEMENTOS
                     me.arraySapActividadEV.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
@@ -1637,7 +1638,7 @@
                         //================================================================
                         //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                         setTimeout(function() {
-                            me.generaSgcActividad();
+                            me.generaSgcActividad(objPedido);
                         }, 1600);
                     }).catch(error => {
                         console.log(error);
@@ -1657,7 +1658,7 @@
                     }, 1600);
                 }
             },
-            generaSgcActividad(){
+            generaSgcActividad(objPedido){
                 let me = this;
                 var sapUrl = me.ruta + '/actividad/SetIntegraActividadVenta';
                 axios.post(sapUrl, {
