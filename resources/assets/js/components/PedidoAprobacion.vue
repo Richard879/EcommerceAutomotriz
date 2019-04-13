@@ -1297,10 +1297,10 @@
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa'        : objPedido.nIdEmpresa,
-                        'nidsucursal'       : objPedido.nIdSucursal,
-                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido,
-                        'opcion'            : 1
+                        'nidempresa'        :   objPedido.nIdEmpresa,
+                        'nidsucursal'       :   objPedido.nIdSucursal,
+                        'nidcabecerapedido' :   objPedido.nIdCabeceraPedido,
+                        'opcion'            :   1
                     }
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
@@ -1314,7 +1314,7 @@
                             });
                         }
                         //Almaceno Servicios para envar el Costo de Sgc
-                        else{
+                        else {
                             me.arraySapEVServiciosEnvia.push({
                                 'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
                                 'cItemCode' : value.cCodigoERP,
