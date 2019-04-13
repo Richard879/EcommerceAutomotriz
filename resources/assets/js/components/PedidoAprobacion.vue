@@ -1305,23 +1305,25 @@
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySapElementoVenta.map(function(value, key) {
-                        //Amaceno Solo Articulos para Costo Promedio
-                        if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' :  value.cCodigoERP
-                            });
-                        }
-                        //Almaceno Servicios para envar el Costo de Sgc
-                        else {
-                            me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' : value.cCodigoERP,
-                                'fImporte'  : value.fImporte
-                            });
-                        }
-                    });
+                    if (me.arraySapElementoVenta.length > 0) {
+                        me.arraySapElementoVenta.map(function(value, key) {
+                            //Amaceno Solo Articulos para Costo Promedio
+                            if(value.nIdTipoElementoVenta != 1300025){
+                                me.arraySapEVArticulosEnvia.push({
+                                    'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' :  value.cCodigoERP
+                                });
+                            }
+                            //Almaceno Servicios para envar el Costo de Sgc
+                            else {
+                                me.arraySapEVServiciosEnvia.push({
+                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' : value.cCodigoERP,
+                                    'fImporte'  : value.fImporte
+                                });
+                            }
+                        });
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2407,23 +2409,25 @@
                 }).then(response => {
                     me.arraySapElementoVenta = response.data.arrayEVPedido;
 
-                    me.arraySapElementoVenta.map(function(value, key) {
-                        //Amaceno Solo Articulos para Costo Promedio
-                        if(value.nIdTipoElementoVenta != 1300025){
-                            me.arraySapEVArticulosEnvia.push({
-                                'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' :  value.cCodigoERP
-                            });
-                        }
-                        //Almaceno Servicios para envar el Costo de Sgc
-                        else{
-                            me.arraySapEVServiciosEnvia.push({
-                                'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                'cItemCode' : value.cCodigoERP,
-                                'fImporte'  : value.fImporte
-                            });
-                        }
-                    });
+                    if (me.arraySapElementoVenta.length > 0) {
+                        me.arraySapElementoVenta.map(function(value, key) {
+                            //Amaceno Solo Articulos para Costo Promedio
+                            if(value.nIdTipoElementoVenta != 1300025){
+                                me.arraySapEVArticulosEnvia.push({
+                                    'nWhsCode'  :  me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' :  value.cCodigoERP
+                                });
+                            }
+                            //Almaceno Servicios para envar el Costo de Sgc
+                            else{
+                                me.arraySapEVServiciosEnvia.push({
+                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode' : value.cCodigoERP,
+                                    'fImporte'  : value.fImporte
+                                });
+                            }
+                        });
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
