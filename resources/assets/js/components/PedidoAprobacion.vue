@@ -3024,6 +3024,7 @@
                         U_SYP_ESTADO        :   'Pendiente'
                     });
 
+                    //Si la suma de Costo Promedio > 0 y existe nDocEntry TblCostoCabecera
                     if(me.fAvgPrice > 0 && me.formSap.ndocentry != 0){
                         setTimeout(function() {
                             me.registroSapBusinessTblCostoEV();
@@ -3085,7 +3086,8 @@
                     U_SYP_ESTADO        :   'Pendiente'
                 });
 
-                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                //Si la suma de Costo Promedio > 0 y existe nDocEntry TblCostoCabecera
+                if(me.fImporte > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
                     }, 1600);
