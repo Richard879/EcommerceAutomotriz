@@ -3609,7 +3609,7 @@
                     //===================================================
                     //============= REGISTRO SOLUCION EN SAP ============
                     setTimeout(function() {
-                            me.generaSapSolucion(objCompra);
+                        me.generaSapSolucion(objCompra);
                     }, 1200);
                 }
             },
