@@ -1266,21 +1266,24 @@
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
-                        me.arraySapUpdSgc.push({
-                            'cTipo'        : "WO",
-                            'cFlagTipo'    : "FR",
-                            'cItemCode'    : value.cItemCode,
-                            'nDocEntry'    : value.nDocEntry,
-                            'nDocNum'      : value.nDocNum,
-                            'cDocType'     : 'items',
-                            'fDocRate'     : value.fDocRate,
-                            'cDocStatus'   : value.cDocStatus,
-                            'cLogRespuesta': ''
-                        });
+                        //Si la Factura de Reserva se encuentra ABIERTA
+                        if(value.cDocStatus == 'O'){
+                            me.arraySapUpdSgc.push({
+                                'cTipo'        : "WO",
+                                'cFlagTipo'    : "FR",
+                                'cItemCode'    : value.cItemCode,
+                                'nDocEntry'    : value.nDocEntry,
+                                'nDocNum'      : value.nDocNum,
+                                'cDocType'     : 'items',
+                                'fDocRate'     : value.fDocRate,
+                                'cDocStatus'   : value.cDocStatus,
+                                'cLogRespuesta': ''
+                            });
 
-                        setTimeout(function() {
-                            me.registraSgcFacturaReserva();
-                        }, 600);
+                            setTimeout(function() {
+                                me.registraSgcFacturaReserva();
+                            }, 600);
+                        }
                     });
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Factura Reserva SapB1!");
