@@ -58,6 +58,24 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Rol</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillBsqUsuario.nidrol"
+                                                                    filterable
+                                                                    clearable
+                                                                    placeholder="SELECCIONE UN ROL" >
+                                                            <el-option
+                                                                v-for="item in arrayRolesBsq"
+                                                                :key="item.nIdGrupoPar"
+                                                                :label="item.cGrupoParNombre"
+                                                                :value="item.nIdGrupoPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Nombre</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="fillBsqUsuario.cdescripcion" class="form-control form-control-sm">
@@ -441,10 +459,12 @@
                 fillBsqUsuario: {
                     nidempresa: '',
                     nidsucursal: '',
+                    nidrol: '',
                     cdescripcion: ''
                 },
                 arrayEmpresas: [],
                 arraySucursal: [],
+                arrayRolesBsq: [],
                 arrayUsuarios: [],
                 //==========================================================
                 //================== REGISTRAR USUARIO =====================
@@ -555,6 +575,7 @@
         },
         mounted(){
             this.listarEmpresa();
+            this.listarRolesPreConfigBsq();
         },
         methods:{
             listarEmpresa(){
@@ -593,6 +614,24 @@
                     }
                 });
             },
+            listarRolesPreConfigBsq(){
+                var url = this.ruta + '/usuario/GetListRolesBsq';
+                axios.get(url, {
+                    params: {
+                        'nidrol': this.fillBsqUsuario.nidrol
+                    }
+                }).then(response => {
+                    this.arrayRolesBsq = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             listarUsuarios(page){
                 if(this.validarListarUsuarios()){
                     this.accionmodal=1;
@@ -606,6 +645,7 @@
                     params: {
                         'nidempresa'    :   this.fillBsqUsuario.nidempresa,
                         'nidsucursal'   :   this.fillBsqUsuario.nidsucursal,
+                        'nidrol'        :   this.fillBsqUsuario.nidrol,
                         'cdescripcion'  :   this.fillBsqUsuario.cdescripcion,
                         'opcion': 1,
                         'page' : page
@@ -755,7 +795,7 @@
 
                 //AGREGAR ARCHIVO AL FORM DATA
                 this.form.append('file', this.attachment);
-                this.form.append('nIdUsuario', this.fillUsuario.nIdUsuario);
+                this.form.append('nidusuario', this.fillUsuario.nIdUsuario);
                 this.form.append('nidempresa', this.fillUsuario.nidempresa);
                 this.form.append('nidsucursal', this.fillUsuario.nidsucursal);
                 this.form.append('cnombrecompleto', this.fillUsuario.cnombrecompleto);
@@ -775,7 +815,7 @@
                     if(response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
 
-                        this.fillUsuario.nIdUsuario = response.data[0].nIdPar
+                        (this.flagRegistrarEditar == 1) ? this.fillUsuario.nIdUsuario = response.data[0].nIdPar : '';
                         this.obtenerPermisosPorRol();
                     } else {
                         swal(response.data[0].cMensaje);
@@ -829,7 +869,8 @@
                 }).then(response => {
                     // console.log(response.data)
                     this.arrayPermisosbyRol = response.data;
-                    this.registrarPermisosByRol();
+
+                    (this.flagRegistrarEditar == 1) ? this.registrarPermisosByRol() : this.eliminarPermisosByRol();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -840,7 +881,34 @@
                     }
                 });
             },
+            eliminarPermisosByRol(){
+                let me = this;
+
+                var url = this.ruta + '/usuario/SetEliminarPermisosByUsuario';
+                axios.post(url, {
+                    'nIdEmpresa'    :   this.fillUsuario.nidempresa,
+                    'nIdSucursal'   :   this.fillUsuario.nidsucursal,
+                    'nIdUsuario'    :   this.fillUsuario.nIdUsuario,
+                    'nIdPerfil'     :   this.fillUsuario.nrol
+                }).then(response => {
+                    // console.log(response.data);
+                    if(response.data[0].nFlagMsje == 1) {
+                        me.registrarPermisosByRol()
+                    } else {
+                        swal("Ocurrio un error al eliminar los permisos del Usuario");
+                    }
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             registrarPermisosByRol(){
+                let me = this;
+
                 var url = this.ruta + '/usuario/SetPermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa'    :   this.fillUsuario.nidempresa,
@@ -851,7 +919,17 @@
                 }).then(response => {
                     // console.log(response.data);
                     if(response.data[0].nFlagMsje == 1) {
-                        this.registrarSapBusinessEmpleado2();
+                        // (me.flagRegistrarEditar == 1) ? this.registrarSapBusinessEmpleado2() : this.actualizarSapBusinessEmpleado();
+                        if(me.flagRegistrarEditar == 1) {
+                            // me.registrarSapBusinessEmpleado2()
+                            me.limpiarFormulario();
+                            $("#myBar").hide();
+                            me.loading.close();
+                        } else {
+                            me.limpiarFormulario();
+                            $("#myBar").hide();
+                            me.loading.close();
+                        }
                         // swal(response.data[0].cMensaje);
                         // this.cambiarVistaFormulario(1);
                     } else {
@@ -900,6 +978,49 @@
                         type: 'error',
                         title: 'Error...',
                         text: 'Error al Generar el Vendedor en SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarSapBusinessEmpleado(){
+                let me = this;
+                this.mostrarProgressBar();
+                me.loadingProgressBar("ACTUALIZANDO VENDEDOR EN SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/empleado/SapPatchEmpleado';
+                axios.post(url, {
+                    cNombre : usuario.cNombreCompleto,
+                    cRol    : usuario.cNombreRol
+                }).then(response => {
+                    // console.log(response.data);
+                    me.arraySapRespuesta = response.data;
+                    me.jsonRespuesta = '';
+                    me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+                    if(me.jsonRespuesta.SalesEmployeeCode) {
+                        console.log("Integración Vendedor - SAP : OK");
+                        me.arraySapUpdVendedor.push({
+                            'nUsuario'          :   parseInt(usuario.nIdUsuario),
+                            'SalesEmployeeCode' :   parseInt(me.jsonRespuesta.SalesEmployeeCode),
+                            'cLogRespuesta'     :   me.arraySapRespuesta.toString()
+                        });
+                    }
+                    // ==============================================================
+                    // ================== ACTUALIZAR DOCENTRY PEDIDO ================
+                    setTimeout(function() {
+                        me.registroSgcVendedor();
+                    }, 3800);
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error al Actualizar el Vendedor en SapB1!',
                     });
                     console.log(error);
                     if (error.response) {
@@ -1025,6 +1146,7 @@
                                 this.fillUsuario.cpassword          =   '';
                                 this.fillUsuario.nrol               =   data['nIdRol'];
                                 this.fillUsuario.cnombrerol         =   data['cNombreRol'];
+                                this.urlImage                       =   data['cPathImage'];
                                 this.flagRegistrarEditar = 2;
                                 break;
                             }
@@ -1045,6 +1167,8 @@
                 this.arraySapUpdVendedor = [];
                 //Registrar
                 this.fillUsuario.nIdUsuario = '';
+                this.fillUsuario.nidempresa = '';
+                this.fillUsuario.nidsucursal = '';
                 this.fillUsuario.cnombrecompleto = '';
                 this.fillUsuario.cusuario = '';
                 this.fillUsuario.cpassword = '';
@@ -1125,10 +1249,10 @@
         align-items: center;
     }
     #preview img{
-        max-width: 60%;
-        min-width: 33%;
+        max-width: 20%;
+        min-width: 20%;
         max-height: 200px;
-        border-radius:120px;
-        border:5px solid #666;
+        border-radius: 120px;
+        border: 5px solid #666;
     }
 </style>

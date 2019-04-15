@@ -16,18 +16,21 @@ class GestionUsuariosController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $cDescripcion = $request->cdescripcion;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdRol         =   $request->nidrol;
+        $cDescripcion   =   $request->cdescripcion;
 
         $opcion = $request->opcion;
 
-        $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
+        $nIdRol         = ($nIdRol == NULL) ? ($nIdRol = 0) : $nIdRol;
+        $cDescripcion   = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
 
-        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuarios ?, ?, ?',
+        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuarios ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $nIdRol,
                                                                 $cDescripcion
                                                             ]);
 
@@ -49,6 +52,21 @@ class GestionUsuariosController extends Controller
         $arrayRoles = DB::select('exec usp_Usuario_GetListRoles ?',
                                                         [
                                                             $cnombre
+                                                        ]);
+
+        return response()->json($arrayRoles);
+    }
+
+    public function GetListRolesBsq(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidrol = $request->nidrol;
+        $nidrol = ($nidrol == NULL) ? ($nidrol = 0) : $nidrol;
+
+        $arrayRoles = DB::select('exec usp_Usuario_GetListRolesBsq ?',
+                                                        [
+                                                            $nidrol
                                                         ]);
 
         return response()->json($arrayRoles);
@@ -106,11 +124,12 @@ class GestionUsuariosController extends Controller
             DB::beginTransaction();
 
             $file           =   $request->file;
+            $nIdEmpleado    =   $request->nidusuario;
             $nIdEmpresa     =   $request->nidempresa;
             $nIdSucursal    =   $request->nidsucursal;
             $cNombreC       =   $request->cnombrecompleto;
             $cusuario       =   $request->cusuario;
-            $cpassword      =   bcrypt($request->cpassword);
+            $cpassword      =   ($request->cpassword == null) ? '' : bcrypt($request->cpassword);
             $nrol           =   $request->nrol;
             $nIdUsuario     =   Auth::user()->id;
 
@@ -123,10 +142,11 @@ class GestionUsuariosController extends Controller
 
             $pcNombreRuta = ($file) ? (asset('storage/Usuario/' . $nombreArchivoServidor)) : '';
 
-            $usuario = DB::select('exec usp_Usuario_SetEditarUsuario ?, ?, ?, ?, ?, ?, ?, ?',
+            $usuario = DB::select('exec usp_Usuario_SetEditarUsuario ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $nIdEmpleado,
                                                                 $cNombreC,
                                                                 $cusuario,
                                                                 $cpassword,
@@ -154,6 +174,39 @@ class GestionUsuariosController extends Controller
                                                         ]);
 
         return response()->json($arrayPermisosbyRol);
+    }
+
+    public function SetEliminarPermisosByUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $nIdEmpresa     =   $request->nIdEmpresa;
+            $nIdSucursal    =   $request->nIdSucursal;
+            $nIdUsuario     =   $request->nIdUsuario;
+            $nIdPerfil      =   $request->nIdPerfil;
+            $nIdUsuarioAuth =   Auth::user()->id;
+
+            $nIdEmpresa = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
+            $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+
+            //REGISTRAR RELACIÓN DEL USUARIO CON LA EMPRESA/SUCURSAL
+            $data = DB::select('EXEC usp_Usuario_SetEliminarPermisosByUsuario ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdUsuario,
+                                        $nIdPerfil,
+                                        $nIdUsuarioAuth
+                                    ]);
+
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 
     public function SetPermisosByUsuario(Request $request)

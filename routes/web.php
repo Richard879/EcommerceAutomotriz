@@ -245,7 +245,6 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/puga/GetListMenuByUsuario', 'PerUsuGruAccController@GetListMenuByUsuario');
     Route::get('/puga/GetLstUsuarios', 'PerUsuGruAccController@GetLstUsuarios');
     Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
-    Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');
     Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
     //Asignación Jefe Ventas
     Route::get('/puga/GetListUsuarios2', 'PerUsuGruAccController@GetListUsuarios2');
@@ -408,9 +407,12 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::get('/usuario/GetListUsuarios','GestionUsuariosController@GetListUsuarios');
     Route::get('/usuario/GetListRoles','GestionUsuariosController@GetListRoles');
+    Route::get('/usuario/GetListRolesBsq','GestionUsuariosController@GetListRolesBsq');
     Route::post('/usuario/SetRegistrarUsuario','GestionUsuariosController@SetRegistrarUsuario');
+    Route::post('/usuario/SetEditarUsuario','GestionUsuariosController@SetEditarUsuario');
     Route::get('/usuario/GetListPermisosByRol','GestionUsuariosController@GetListPermisosByRol');
     Route::post('/usuario/SetPermisosByUsuario','GestionUsuariosController@SetPermisosByUsuario');
+    Route::post('/usuario/SetEliminarPermisosByUsuario', 'GestionUsuariosController@SetEliminarPermisosByUsuario');
     Route::get('/usuario/GetInformacionUsuario','GestionUsuariosController@GetInformacionUsuario');
     Route::get('/usuario/GetInformacionUsuarioCabecera','GestionUsuariosController@GetInformacionUsuarioCabecera');
     Route::put('/usuario/SetCambiarEstadoUsuario','GestionUsuariosController@SetCambiarEstadoUsuario');
@@ -541,6 +543,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/tipocambio/SapGetTipoCambioByFecha', 'Api\SapTipoCambioController@SapGetTipoCambioByFecha');
     //Vendedor
     Route::post('/empleado/SapSetEmpleado', 'Api\SapEmpleadoController@SapSetEmpleado');
+    Route::post('/empleado/SapPatchEmpleado', 'Api\SapEmpleadoController@SapPatchEmpleado');
     //Asiento Contable
     Route::post('/asiento/SapSetAsientoContableWO', 'Api\SapAsientoContableController@SapSetAsientoContableWO');
     Route::post('/asiento/SapSetAsientoContableWF', 'Api\SapAsientoContableController@SapSetAsientoContableWF');
