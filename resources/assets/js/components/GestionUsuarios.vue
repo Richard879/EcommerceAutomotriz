@@ -104,24 +104,24 @@
                                                             <img :src="usuario.cPathImage" :alt="usuario.cParNombre" class="imgRedonda">
                                                         </td>
                                                         <td v-text="usuario.nIdUsuario"></td>
-                                                        <td v-text="usuario.cParNombre"></td>
-                                                        <td v-text="usuario.usuario"></td>
-                                                        <td v-text="usuario.cGrupoParNombre"></td>
+                                                        <td v-text="usuario.cNombreCompleto"></td>
+                                                        <td v-text="usuario.cUsuario"></td>
+                                                        <td v-text="usuario.cNombreRol"></td>
                                                         <td>
                                                             <template v-if="!usuario.nSalesEmployeeCode">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Integrar Trabajador  {{ usuario.cParNombre }}</div>
+                                                                    <div slot="content">Integrar Trabajador  {{ usuario.cNombreCompleto }}</div>
                                                                     <i @click="registrarSapBusinessEmpleado(usuario)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                 </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                             <!-- @click="cambiarVistaFormulario(0, rol)" -->
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Editar {{ usuario.cParNombre }}</div>
-                                                                <i :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                <div slot="content">Editar {{ usuario.cNombreCompleto }}</div>
+                                                                <i  @click="abrirModal('usuario', 'editar', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                             </el-tooltip>&nbsp;
                                                             <template v-if="usuario.condicion == 1">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Desactivar Usuario {{ usuario.cParNombre }}</div>
+                                                                    <div slot="content">Desactivar Usuario {{ usuario.cNombreCompleto }}</div>
                                                                     <i  @click="cambiarEstado(0, usuario)"
                                                                         :style="'color:red'"
                                                                         class="fa-md fa fa-trash"></i>
@@ -129,7 +129,7 @@
                                                             </template>
                                                             <template v-else>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Activar Usuario {{ usuario.cParNombre }}</div>
+                                                                    <div slot="content">Activar Usuario {{ usuario.cNombreCompleto }}</div>
                                                                     <i  @click="cambiarEstado(1, usuario)"
                                                                         :style="'color:green'"
                                                                         class="fa-md fa fa-check-circle"></i>
@@ -240,7 +240,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Usuario</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillUsuario.cusuario" class="form-control form-control-sm">
+                                                        <input type="text" v-model="fillUsuario.cusuario" style="text-transform:uppercase" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,7 +259,7 @@
                                                     <label class="col-sm-4 form-control-label">* Contraseña</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="password" placeholder="INGRESE O GENERE CONTRASEÑA" v-model="fillUsuario.cpassword" class="form-control form-control-sm">
+                                                            <input type="password" placeholder="INGRESE O GENERE CONTRASEÑA" v-model="fillUsuario.cpassword" style="text-transform:uppercase" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <button type="button" title="Generar Contraseña" class="btn btn-info btn-corner btn-sm" @click="generarContrasena">
                                                                     <i class="fa-lg fa fa-refresh"></i>
@@ -453,7 +453,6 @@
                     nIdUsuario: '',
                     nidempresa: '',
                     nidsucursal: '',
-                    nIdUsuario: '',
                     cnombrecompleto: '',
                     cusuario: '',
                     cpassword: '',
@@ -605,20 +604,20 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillBsqUsuario.nidempresa,
-                        'nidsucursal': this.fillBsqUsuario.nidsucursal,
-                        'cdescripcion': this.fillBsqUsuario.cdescripcion,
+                        'nidempresa'    :   this.fillBsqUsuario.nidempresa,
+                        'nidsucursal'   :   this.fillBsqUsuario.nidsucursal,
+                        'cdescripcion'  :   this.fillBsqUsuario.cdescripcion,
                         'opcion': 1,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayUsuarios = response.data.arrayUsuarios.data;
-                    this.pagination.current_page =  response.data.arrayUsuarios.current_page;
-                    this.pagination.total       = response.data.arrayUsuarios.total;
-                    this.pagination.per_page    = response.data.arrayUsuarios.per_page;
-                    this.pagination.last_page   = response.data.arrayUsuarios.last_page;
-                    this.pagination.from        = response.data.arrayUsuarios.from;
-                    this.pagination.to          = response.data.arrayUsuarios.to;
+                    this.arrayUsuarios              =   response.data.arrayUsuarios.data;
+                    this.pagination.current_page    =   response.data.arrayUsuarios.current_page;
+                    this.pagination.total           =   response.data.arrayUsuarios.total;
+                    this.pagination.per_page        =   response.data.arrayUsuarios.per_page;
+                    this.pagination.last_page       =   response.data.arrayUsuarios.last_page;
+                    this.pagination.from            =   response.data.arrayUsuarios.from;
+                    this.pagination.to              =   response.data.arrayUsuarios.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -651,7 +650,7 @@
             },
             cambiarEstado(op, usuario){
                 swal({
-                    title: '¿Esta seguro de ' + ((op == 0) ? 'Desactivar' : ' Activar ') + ' Al Usuario ' + usuario.cParNombre + '?',
+                    title: '¿Esta seguro de ' + ((op == 0) ? 'Desactivar' : ' Activar ') + ' Al Usuario ' + usuario.cNombreCompleto + '?',
                     text: 'Se Cerrarán las Sesiones en todos sus dispositivos!',
                     type: 'warning',
                     showCancelButton: true,
@@ -674,7 +673,7 @@
                             $("#myBar").hide();
                             swal(
                                 ((op == 0) ? 'Desactivado' : ' Activado '),
-                                'El Usuario ' + usuario.cParNombre +' ha sido ' + ((op == 0) ? 'Desactivado' : ' Activado ') + ' con éxito.',
+                                'El Usuario ' + usuario.cNombreCompleto +' ha sido ' + ((op == 0) ? 'Desactivado' : ' Activado ') + ' con éxito.',
                                 'success'
                             )
                         }).catch(error => {
@@ -756,6 +755,7 @@
 
                 //AGREGAR ARCHIVO AL FORM DATA
                 this.form.append('file', this.attachment);
+                this.form.append('nIdUsuario', this.fillUsuario.nIdUsuario);
                 this.form.append('nidempresa', this.fillUsuario.nidempresa);
                 this.form.append('nidsucursal', this.fillUsuario.nidsucursal);
                 this.form.append('cnombrecompleto', this.fillUsuario.cnombrecompleto);
@@ -920,8 +920,8 @@
 
                 var url = this.ruta + '/empleado/SapSetEmpleado';
                 axios.post(url, {
-                    cNombre : usuario.cParNombre,
-                    cRol    : usuario.cGrupoParNombre
+                    cNombre : usuario.cNombreCompleto,
+                    cRol    : usuario.cNombreRol
                 }).then(response => {
                     // console.log(response.data);
                     me.arraySapRespuesta = response.data;
@@ -1006,6 +1006,26 @@
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 this.listarRolesPreConfig();
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'usuario':
+                    {
+                        switch(accion){
+                            case 'editar':
+                            {
+                                this.cambiarVistaFormulario(0);
+                                this.fillUsuario.nIdUsuario         =   data['nIdUsuario'];
+                                this.fillUsuario.nidempresa         =   data['nIdEmpresa'];
+                                this.fillUsuario.nidsucursal        =   data['nIdSucursal'];
+                                this.fillUsuario.cnombrecompleto    =   data['cNombreCompleto'];
+                                this.fillUsuario.cusuario           =   data['cUsuario'];
+                                this.fillUsuario.cpassword          =   '';
+                                this.fillUsuario.nrol               =   data['nIdRol'];
+                                this.fillUsuario.cnombrerol         =   data['cNombreRol'];
+                                this.flagRegistrarEditar = 2;
                                 break;
                             }
                         }

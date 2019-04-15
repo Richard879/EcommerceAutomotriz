@@ -98,6 +98,50 @@ class GestionUsuariosController extends Controller
         }
     }
 
+    public function SetEditarUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $file           =   $request->file;
+            $nIdEmpresa     =   $request->nidempresa;
+            $nIdSucursal    =   $request->nidsucursal;
+            $cNombreC       =   $request->cnombrecompleto;
+            $cusuario       =   $request->cusuario;
+            $cpassword      =   bcrypt($request->cpassword);
+            $nrol           =   $request->nrol;
+            $nIdUsuario     =   Auth::user()->id;
+
+            if($file) {
+                $bandera = str_random(10);
+                $nombreArchivoServidor = $bandera .'_'. $file->getClientOriginalName();
+                //Almaceno el archivo en un ruta especifica
+                $ruta = Storage::putFileAs('public/Usuario', $file, $nombreArchivoServidor);
+            }
+
+            $pcNombreRuta = ($file) ? (asset('storage/Usuario/' . $nombreArchivoServidor)) : '';
+
+            $usuario = DB::select('exec usp_Usuario_SetEditarUsuario ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $cNombreC,
+                                                                $cusuario,
+                                                                $cpassword,
+                                                                $nrol,
+                                                                $pcNombreRuta,
+                                                                $nIdUsuario
+                                                            ]);
+
+            DB::commit();
+            return response()->json($usuario);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
     public function GetListPermisosByRol(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

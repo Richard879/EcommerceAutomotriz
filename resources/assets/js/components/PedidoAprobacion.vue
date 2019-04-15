@@ -1338,10 +1338,10 @@
             generaSapBusinessPedido(objPedido){
                 let me = this;
 
-                 //Verifico Si No existe OrdenCompra
-                if(objPedido.nDocEntryDetallePedido==0){
+                 //Verifico Si No existe OrdenVenta del Vehiculo
+                if(objPedido.nDocEntryDetallePedido == 0) {
                     //==============================================================
-                    //================== REGISTRO PEDIDO EN SAP ===============
+                    //================== REGISTRO PEDIDO EN SAP ====================
                     me.loadingProgressBar("INTEGRANDO EL PEDIDO CON SAP BUSINESS ONE...");
 
                     var sapUrl = me.ruta + '/pedido/SapSetPedido';
@@ -1489,7 +1489,7 @@
                     });
                 } else {
                      //==============================================================
-                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    //================== REGISTRO ACTIVIDAD EN SAP ==================
                     setTimeout(function() {
                         me.generaSapBusinessActividad(objPedido);
                     }, 1200);
@@ -1527,9 +1527,9 @@
             generaSapBusinessActividad(objPedido){
                 let me = this;
 
-                //Verifico si existe Actividad registrada
-                if(objPedido.nDocEntryDetallePedido!=0){
-
+                //Verificar si el Detalle del Pedido esta integrado
+                if(objPedido.nDocEntryDetallePedido!=0) {
+                    //Guardo el/los VIN(es) del Pedido del/los Vehìculo(s)
                     me.arrayVINPedidoVehiculo.push({
                         'nDocEntry' : objPedido.nDocEntryDetallePedido,
                         'cItemCode' : objPedido.cItemCode
@@ -1554,7 +1554,17 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
 
-                    arraySapEVPedido.map(function(value, key){
+                    me.arraySapEVPedido.map(function(value, key){
+                        //Guardo el Codigo SAP de los Elemento Venta
+                        me.arrayCodSAPPedidoEV.push({
+                            'nDocEntry' :   parseInt(value.nDocEntryDetallePedido),
+                            'cItemCode' :   value.cNumeroVin.toString()
+                        });
+
+                        /**
+                         * Solo la primera iteración debido que es la misma actividad para todos los EV
+                         * ya que estos pertenecen a una sola OV
+                         */
                         if(key == 0)
                         {
                             me.arraySapActividadEV.push({
@@ -1580,7 +1590,8 @@
                     })
                 }
 
-                if(objPedido.nActivityCode==0){
+                //Verificar si no existe Actividad registrada
+                if(objPedido.nActivityCode == 0){
                     var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
                     axios.post(sapUrl, {
                         'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
@@ -1656,7 +1667,7 @@
                     //================================================================
                     //=========== REGISTRO SOLUCION SAP ==========
                     setTimeout(function() {
-
+                        me.registroSapBusinessSolucion(objPedido);
                     }, 1600);
                 }
             },
@@ -1668,7 +1679,7 @@
                     'arraySapUpdSgcEV'      : me.arraySapUpdSgcEV
                 }).then(response => {
                     setTimeout(function() {
-                        //me.registroSapBusinessSolucion();
+                        me.registroSapBusinessSolucion(objPedido);
                     }, 1600);
                 }).catch(error => {
                     console.log(error);
@@ -1679,6 +1690,68 @@
                         }
                     }
                 });
+            },
+            registroSapBusinessSolucion(objPedido){
+                let me = this;
+                if(objPedido.nSolutionCode == 0) {
+                    me.arraySapSolucion.push({
+                        'cItemCode' : objPedido.cNumeroVin,
+                        'cSubject'  : objPedido.cSubjectSolution
+                    });
+
+                    var sapUrl = me.ruta + '/solucion/SapSetSolucion';
+                    axios.post(sapUrl, {
+                        'data': me.arraySapSolucion
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.SolutionCode){
+                                me.arraySapUpdSgc.push({
+                                    'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
+                                    'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
+                                    'cFlagTipo'     : 'C',
+                                    'cLogRespuesta' : response.data.toString()
+                                });
+
+                                me.arraySapLlamadaServicio = [];
+                                me.arraySapLlamadaServicio.push({
+                                    'nActivityCode'     : me.nactivitycode,
+                                    'cCustomerCode'     : objPedido.cCustomerCode,
+                                    'cInternalSerialNum': objPedido.cNumeroVin,
+                                    'cItemCode'         : objPedido.cNumeroVin,
+                                    'nSolutionCode'     : me.jsonRespuesta.SolutionCode,
+                                    'cSubject'          : objPedido.cSubject
+                                });
+
+                                //================================================================
+                                //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                                setTimeout(function() {
+                                    me.generaActualizarSolucion(objPedido);
+                                }, 1200);
+                            }
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                } else {
+                    //==============================================================
+                    //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
+                    setTimeout(function() {
+                        me.generaSapLlamadaServicioCompra(objPedido);
+                    }, 1200);
+                }
             },
             //================================================================
             //====================== TAB APROBAR PEDIDOS =====================
@@ -3024,6 +3097,7 @@
                         U_SYP_ESTADO        :   'Pendiente'
                     });
 
+                    //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
                     if(me.fAvgPrice > 0 && me.formSap.ndocentry != 0){
                         setTimeout(function() {
                             me.registroSapBusinessTblCostoEV();
@@ -3085,6 +3159,7 @@
                     U_SYP_ESTADO        :   'Pendiente'
                 });
 
+                //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
