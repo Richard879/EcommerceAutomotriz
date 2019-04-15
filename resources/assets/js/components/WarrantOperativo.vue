@@ -1308,6 +1308,7 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
+                        me.listarVersionVehiculo(1);
                         me.loading.close();
                     }
                 }).catch(error => {
