@@ -25,11 +25,11 @@
                                             <i class="fa fa-bus"></i> GENERAR COMPRA
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--<li class="nav-item">
                                         <a class="nav-link" href="#TabLineaCredito" @click="tabLineaCredito()" role="tab" data-toggle="tab">
                                             <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <!--<li class="nav-item">
                                         <a class="nav-link" href="#TabForum" @click="tabForum()" role="tab" data-toggle="tab">
                                             <i class="fa fa fa-signal"></i> LÍNEA FORUM

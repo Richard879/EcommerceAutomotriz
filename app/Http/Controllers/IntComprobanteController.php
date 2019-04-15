@@ -35,7 +35,7 @@ class IntComprobanteController extends Controller
         }
     }
 
-    public function SetIntegraComprobanteWO(Request $request)
+    public function SetIntegraComprobanteWarrant(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -44,13 +44,14 @@ class IntComprobanteController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobanteWarrant] ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cFlagTipo'],
-                                                                $det['cTipo'],
+                $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobanteWarrant] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cTipo'],
+                                                                $det['cFlagTipo'],
                                                                 $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
+                                                                ($det['fDocRate'] == NULL) ? ($det['fDocRate'] = 0) : $det['fDocRate'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);
