@@ -71,6 +71,7 @@ class SapComprobanteController extends Controller
                     "DocDate"       =>  (string)$request->fDocDate,
                     "DocDueDate"    =>  (string)$request->fDocDueDate,
                     "DocCurrency"   =>  "US$",
+                    
                     "DocType"       =>  "dDocument_Service",
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "WO",
@@ -78,7 +79,7 @@ class SapComprobanteController extends Controller
                     "U_SYP_MDCD"    =>  (string)$value['cNumeroComprobante'],
                     "DocumentLines" =>  [
                         [
-                            "ItemDescription"   =>  "Servicio WO - ".$value['cNumeroVin'],
+                            "ItemDescription"   =>  "Warrant Operativo - ".$value['cNumeroVin'],
                             "TaxCode"           =>  "EXE_IGV",
                             "PriceAfterVAT"     =>  $value['fTotalCompra'],
                             "Currency"          =>  "US$",

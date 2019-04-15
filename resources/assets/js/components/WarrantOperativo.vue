@@ -1273,7 +1273,7 @@
                                     'cItemCode'    : value.cItemCode,
                                     'nDocEntry'    : value.nDocEntry,
                                     'nDocNum'      : value.nDocNum,
-                                    'cDocType'     : 'items',
+                                    'cDocType'     : value.cDocType,
                                     'fDocRate'     : value.fDocRate,
                                     'cDocStatus'   : value.cDocStatus,
                                     'cLogRespuesta': ''
