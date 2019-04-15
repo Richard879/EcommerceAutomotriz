@@ -429,7 +429,6 @@
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Nro Factura</th>
                                                                                 <th>Comisión Dolares</th>
                                                                                 <th>Comisión Soles</th>
                                                                             </tr>
@@ -449,7 +448,6 @@
                                                                                 <td v-text="temporal.cFormaPago"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
                                                                                 <td v-text="temporal.fTotalCompra"></td>
-                                                                                <td v-text="temporal.cNumeroFactura"></td>
                                                                                 <td v-text="temporal.fComisionDolar"></td>
                                                                                 <td v-text="temporal.fComisionSol"></td>
                                                                             </tr>
@@ -1265,30 +1263,32 @@
                     let arrayFR = [];
 
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        arrayFR.push(x);
-                    });
+                    if(me.arraySapRespuesta.length){
+                        me.arraySapRespuesta.map(function(value, key){
+                            //Si la Factura de Reserva se encuentra ABIERTA
+                            if(value.cDocStatus == 'O'){
+                                me.arraySapUpdSgc.push({
+                                    'cTipo'        : "WO",
+                                    'cFlagTipo'    : "FR",
+                                    'cItemCode'    : value.cItemCode,
+                                    'nDocEntry'    : value.nDocEntry,
+                                    'nDocNum'      : value.nDocNum,
+                                    'cDocType'     : 'items',
+                                    'fDocRate'     : value.fDocRate,
+                                    'cDocStatus'   : value.cDocStatus,
+                                    'cLogRespuesta': ''
+                                });
 
-                    arrayFR.map(function(value, key){
-                        //Si la Factura de Reserva se encuentra ABIERTA
-                        if(value.cDocStatus == 'O'){
-                            me.arraySapUpdSgc.push({
-                                'cTipo'        : "WO",
-                                'cFlagTipo'    : "FR",
-                                'cItemCode'    : value.cItemCode,
-                                'nDocEntry'    : value.nDocEntry,
-                                'nDocNum'      : value.nDocNum,
-                                'cDocType'     : 'items',
-                                'fDocRate'     : value.fDocRate,
-                                'cDocStatus'   : value.cDocStatus,
-                                'cLogRespuesta': ''
-                            });
-
-                            setTimeout(function() {
-                                me.registraSgcFacturaReserva();
-                            }, 600);
-                        }
-                    });
+                                setTimeout(function() {
+                                    me.registraSgcFacturaReserva();
+                                }, 600);
+                            }
+                        });
+                    }
+                    else{
+                        me.loading.close();
+                        swal('No existe Factura de Reserva');
+                    }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Factura Reserva SapB1!");
                     console.log(error);

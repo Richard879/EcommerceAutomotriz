@@ -1097,7 +1097,6 @@
                 arraySapEVPedido: [],
                 arraySapActividad: [],
                 arraySapLlamadaServicio: [],
-                arraySapCostoProm: [],
                 arraySapCostoEV: [],
                 arraySapCostoServicio: [],
                 arraySapElementoVenta: [],
@@ -3074,11 +3073,6 @@
 
                     me.arraySapRespuestaVehiculo = response.data;
                     me.arraySapRespuestaVehiculo.map(function(value, key){
-                        me.arraySapCostoProm.push(value[0]);
-
-                    });
-
-                    me.arraySapCostoProm.map(function(value, key){
                         me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
                     });
 
@@ -3423,7 +3417,6 @@
                 this.formSap.igv = '';
                 this.formSap.cnumerovin = '';
                 this.formSap.ndocentry = 0;
-                this.arraySapCostoProm= [];
                 this.arraySapCostoEV= [];
                 this.arraySapCostoServicio= [];
                 this.arraySapElementoVenta= [];
