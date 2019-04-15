@@ -1265,26 +1265,32 @@
                     let arrayFR = [];
 
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        //Si la Factura de Reserva se encuentra ABIERTA
-                        if(value.cDocStatus == 'O'){
-                            me.arraySapUpdSgc.push({
-                                'cTipo'        : "WO",
-                                'cFlagTipo'    : "FR",
-                                'cItemCode'    : value.cItemCode,
-                                'nDocEntry'    : value.nDocEntry,
-                                'nDocNum'      : value.nDocNum,
-                                'cDocType'     : 'items',
-                                'fDocRate'     : value.fDocRate,
-                                'cDocStatus'   : value.cDocStatus,
-                                'cLogRespuesta': ''
-                            });
+                    if(me.arraySapRespuesta.length){
+                        me.arraySapRespuesta.map(function(value, key){
+                            //Si la Factura de Reserva se encuentra ABIERTA
+                            if(value.cDocStatus == 'O'){
+                                me.arraySapUpdSgc.push({
+                                    'cTipo'        : "WO",
+                                    'cFlagTipo'    : "FR",
+                                    'cItemCode'    : value.cItemCode,
+                                    'nDocEntry'    : value.nDocEntry,
+                                    'nDocNum'      : value.nDocNum,
+                                    'cDocType'     : 'items',
+                                    'fDocRate'     : value.fDocRate,
+                                    'cDocStatus'   : value.cDocStatus,
+                                    'cLogRespuesta': ''
+                                });
 
-                            setTimeout(function() {
-                                me.registraSgcFacturaReserva();
-                            }, 600);
-                        }
-                    });
+                                setTimeout(function() {
+                                    me.registraSgcFacturaReserva();
+                                }, 600);
+                            }
+                        });
+                    }
+                    else{
+                        me.loading.close();
+                        swal('No existe Factura de Reserva');
+                    }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Factura Reserva SapB1!");
                     console.log(error);
