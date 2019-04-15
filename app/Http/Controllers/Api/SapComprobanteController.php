@@ -169,8 +169,7 @@ class SapComprobanteController extends Controller
                                                                                                     'cItemCode' => $cItemCode]
                                                                                     ]);
             $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
         }
-        return $array_rpta;
+        return $rptaSap;
     }
 }

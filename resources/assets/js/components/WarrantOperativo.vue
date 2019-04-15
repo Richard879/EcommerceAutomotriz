@@ -1141,7 +1141,12 @@
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
-                this.mensajeError = ''
+                this.mensajeError = '',
+                this.limpiarModal();
+                
+            },
+            limpiarModal(){
+                this.arrayVersionVehiculo = []
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -1260,8 +1265,8 @@
                     let arrayFR = [];
 
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        arrayFR.push(value[0]);
+                    me.arraySapRespuesta.map(function(x){
+                        arrayFR.push(x);
                     });
 
                     arrayFR.map(function(value, key){
