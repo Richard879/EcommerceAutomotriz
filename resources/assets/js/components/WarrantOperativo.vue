@@ -705,7 +705,7 @@
                                                                 <template v-else>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">{{ vehiculo.cNumeroVin }}</div>
-                                                                        <i @click="asignarVehiculo(vehiculo)" class="fa-md fa fa-check-circle"></i>
+                                                                        <i @click="asignarVehiculo(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                     </el-tooltip>
                                                                 </template>&nbsp;&nbsp;
                                                             </td>
@@ -1165,7 +1165,7 @@
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                this.listarVersionVehiculo(1);
+                                //this.listarVersionVehiculo(1);
                                 break;
                             }
                         }
@@ -1257,19 +1257,26 @@
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
+                    let arrayFR = [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
+                        arrayFR.push(value[0]);
+                    });
+
+                    arrayFR.map(function(value, key){
                         //Si la Factura de Reserva se encuentra ABIERTA
                         if(value.cDocStatus == 'O'){
                             me.arraySapUpdSgc.push({
+                                'cTipo'        : "WO",
                                 'cFlagTipo'    : "FR",
                                 'cItemCode'    : value.cItemCode,
                                 'nDocEntry'    : value.nDocEntry,
                                 'nDocNum'      : value.nDocNum,
+                                'cDocType'     : 'items',
                                 'fDocRate'     : value.fDocRate,
                                 'cDocStatus'   : value.cDocStatus,
-                                'cDocStatus'   : value.cDocStatus
+                                'cLogRespuesta': ''
                             });
 
                             setTimeout(function() {
@@ -1291,7 +1298,7 @@
             registraSgcFacturaReserva(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWarrant';
                 axios.post(sapUrl, {
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
@@ -1439,8 +1446,8 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
+                                'cTipo'             :   "WO",
                                 'cFlagTipo'         :   "FP",
-                                'cTipo'             :   'WO',
                                 'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                                 'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
@@ -1487,7 +1494,7 @@
             registroSgcFacturaProveedor(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWarrant';
                 axios.post(sapUrl, {
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
@@ -2059,7 +2066,7 @@
             actualizaSgcFacturaProveedor(objWO){
                 let me = this;
 
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWarrant';
                 axios.post(sapUrl, {
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {

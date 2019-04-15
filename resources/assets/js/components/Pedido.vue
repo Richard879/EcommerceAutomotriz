@@ -2032,7 +2032,6 @@
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
                     this.pagination.to           = response.data.arrayPedido.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
