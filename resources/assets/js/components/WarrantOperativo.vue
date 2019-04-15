@@ -429,7 +429,6 @@
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Nro Factura</th>
                                                                                 <th>Comisión Dolares</th>
                                                                                 <th>Comisión Soles</th>
                                                                             </tr>
@@ -449,7 +448,6 @@
                                                                                 <td v-text="temporal.cFormaPago"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
                                                                                 <td v-text="temporal.fTotalCompra"></td>
-                                                                                <td v-text="temporal.cNumeroFactura"></td>
                                                                                 <td v-text="temporal.fComisionDolar"></td>
                                                                                 <td v-text="temporal.fComisionSol"></td>
                                                                             </tr>
