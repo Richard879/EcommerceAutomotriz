@@ -391,12 +391,13 @@ class GestionContactoController extends Controller
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
-        $arrayContactoLibre = DB::select('exec usp_Contacto_GetListContactosLibres ?, ?, ?, ?',
-                                                                        array(  $nTipoPersona,
-                                                                                $cNroDocumento,
-                                                                                $cFiltroDescripcion,
-                                                                                $nTipoContacto
-                                                                                ));
+        $arrayContactoLibre = DB::select('exec [usp_Contacto_GetListContactosLibres] ?, ?, ?, ?, ?',
+                                                                    [   $nTipoPersona,
+                                                                        $cNroDocumento,
+                                                                        $cFiltroDescripcion,
+                                                                        $nTipoContacto,
+                                                                        Auth::user()->id
+                                                                    ]);
 
         $arrayContactoLibre = ParametroController::arrayPaginator($arrayContactoLibre, $request);
         return ['arrayContactoLibre'=>$arrayContactoLibre];

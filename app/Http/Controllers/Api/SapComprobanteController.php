@@ -71,7 +71,7 @@ class SapComprobanteController extends Controller
                     "DocDate"       =>  (string)$request->fDocDate,
                     "DocDueDate"    =>  (string)$request->fDocDueDate,
                     "DocCurrency"   =>  "US$",
-                    
+                    "DocRate"       =>  $value['fDocRate'],
                     "DocType"       =>  "dDocument_Service",
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "WO",

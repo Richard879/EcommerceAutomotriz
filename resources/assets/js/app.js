@@ -102,27 +102,27 @@ const app = new Vue({
         notifications: []
     },
     mounted() {
-        var userId = $('meta[name="userId"]').attr('content');
+       /* var userId = $('meta[name="userId"]').attr('content');
         Echo.private(`userlogout.${userId}`)
             .listen('LogoutFromEveryWhere', (e) => {
                 // console.log(e);
-                //location.reload()
-            })
+                location.reload()
+            })*/
         this.obtenerRolUsuario();
     },
     created() {
-        let me = this;
-        axios.post('notification/get').then(function(response) {
-            // console.log(response.data);
-            me.notifications = response.data;
-        }).catch(function(error) {
-            console.log(error);
-        });
+        // let me = this;
+        // axios.post('notification/get').then(function(response) {
+        //     // console.log(response.data);
+        //     me.notifications = response.data;
+        // }).catch(function(error) {
+        //     console.log(error);
+        // });
 
-        var userId = $('meta[name="userId"]').attr('content');
-        Echo.private('App.User.' + userId).notification((notification) => {
-            // console.log(notification);
-        });
+        // var userId = $('meta[name="userId"]').attr('content');
+        // Echo.private('App.User.' + userId).notification((notification) => {
+        //     // console.log(notification);
+        // });
     },
     methods: {
         obtenerRolUsuario() {
