@@ -1409,7 +1409,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Cantidad</label>
+                                                        <label class="col-sm-4 form-control-label">% Distribución</label>
                                                         <div class="col-sm-8">
                                                             <input type="number" v-model="formDistribucionEv.fvalorporcentual" class="form-control form-control-sm" min="1">
                                                         </div>
@@ -2705,13 +2705,14 @@
                 });
             },
             listarProveedorElementoVenta(){
-                var url = this.ruta + '/parametro/GetLstProveedorTodos';
+                var url = this.ruta + '/parametro/GetLstProveedor';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'cnombreproveedor': '',
-                        'opcion': 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'       : 110023,
+                        'cnombreproveedor'  : '',
+                        'opcion'            : 1
                     }
                 }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor;

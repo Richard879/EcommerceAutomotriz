@@ -87,7 +87,8 @@
                                                     <tr>
                                                         <th>Acciones</th>
                                                         <th>Código</th>
-                                                        <th>Linea</th>
+                                                        <th>Abreviatura</th>
+                                                        <th>Descripción Linea</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -99,6 +100,7 @@
                                                             </el-tooltip>
                                                         </td>
                                                         <td v-text="proveedorlinea.nIdLinea"></td>
+                                                        <td v-text="proveedorlinea.cLineaAbreviatura"></td>
                                                         <td v-text="proveedorlinea.cLineaNombre"></td>
                                                     </tr>
                                                 </tbody>
