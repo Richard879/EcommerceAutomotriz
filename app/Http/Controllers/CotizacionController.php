@@ -638,7 +638,8 @@ class CotizacionController extends Controller
 
         if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
             //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-            $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47);
+            // $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
+            $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
             //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
             $contents   =   Storage::get('public/'. $cadena);
         }
