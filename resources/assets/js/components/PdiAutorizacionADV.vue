@@ -1647,7 +1647,7 @@
             },
             cambiarPaginaSolicitudesVendedores(page){
                 this.pagination.current_page=page;
-                this.buscarMisSolicitudes(page);
+                this.buscarSolicitudesJefeVentas(page);
             },
             getDetalleSolicitud(data, modalidad){
                 let me = this;
