@@ -248,7 +248,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
     Route::post('/puga/SetPermisosByUsuario','PerUsuGruAccController@SetPermisosByUsuario');
     //Asignación Jefe Ventas
-    Route::get('/puga/GetListUsuarios2', 'PerUsuGruAccController@GetListUsuarios2');
+    Route::get('/puga/GetListAsesorComercialByJF', 'PerUsuGruAccController@GetListAsesorComercialByJF');
     Route::post('/puga/SetAsignarJefeVentas', 'PerUsuGruAccController@SetAsignarJefeVentas');
 
     Route::get('/pdi/GetListSolicitudByEstado', 'PdiProcesoController@GetListSolicitudByEstado');
