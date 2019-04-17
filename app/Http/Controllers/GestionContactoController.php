@@ -156,7 +156,7 @@ class GestionContactoController extends Controller
                                                                 $det['nIdLinea'],
                                                                 $det['nIdMarca'],
                                                                 $det['nIdModelo'],
-                                                                $det['nAnioFabricacion'],
+                                                                ($det['nAnioFabricacion'] == NULL) ? ($det['nAnioFabricacion'] = 0) : $det['nAnioFabricacion'],
                                                                 $det['nAnioModelo'],
                                                                 Auth::user()->id
                                                             ]);
@@ -175,7 +175,7 @@ class GestionContactoController extends Controller
                                                                     $det['nIdLinea'],
                                                                     $det['nIdMarca'],
                                                                     $det['nIdModelo'],
-                                                                    $det['nAnioFabricacion'],
+                                                                    ($det['nAnioFabricacion'] == NULL) ? ($det['nAnioFabricacion'] = 0) : $det['nAnioFabricacion'],
                                                                     $det['nAnioModelo'],
                                                                     Auth::user()->id
                                                                 ]);

@@ -1530,6 +1530,7 @@
                                                         </div>
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
                                                             <section class="forms">
+                                                                
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
@@ -3708,9 +3709,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
@@ -4480,9 +4481,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
