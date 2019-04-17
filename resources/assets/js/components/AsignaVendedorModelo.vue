@@ -846,6 +846,7 @@
                 this.cerrarModal();
                 this.arrayMarca = [];
                 this.arrayModelo = [];
+                this.arrayProveedorLinea = [];
             },
             cambiarPaginaProveedor(page){
                 this.paginationModal.current_page=page;
