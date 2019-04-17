@@ -3292,8 +3292,10 @@
                 if(!this.formNuevoContacto.cdireccion){
                     this.mensajeError.push('Debe Ingresar Dirección');
                 }
-                if(!this.formNuevoContacto.cmailprincipal){
-                    this.mensajeError.push('Debe Ingresar Email');
+                if(this.formNuevoContacto.cmailprincipal){
+                    if (!this.validarEmail(this.formNuevoContacto.cmailprincipal)){
+                        this.mensajeError.push('Debe Ingresar Email válido');
+                    }
                 }
                 if(!this.formNuevoContacto.ncelular){
                     this.mensajeError.push('Debe Ingresar Celular');
@@ -3330,8 +3332,10 @@
                     if(!this.formNuevoContactoJurifico.cnombre){
                         this.mensajeError.push('Debe escribir el nombre del contacto');
                     }
-                    if(!this.formNuevoContactoJurifico.cmailprincipal){
-                        this.mensajeError.push('Debe escribir el correo del contacto');
+                    if(this.formNuevoContactoJurifico.cmailprincipal){
+                        if (!this.validarEmail(this.formNuevoContactoJurifico.cmailprincipal)){
+                            this.mensajeError.push('Debe escribir el correo del contacto');
+                        }
                     }
                     if(!this.formNuevoContactoJurifico.ncelular){
                         this.mensajeError.push('Debe escribir el telefono movil del contacto');
@@ -3342,6 +3346,10 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            validarEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
             },
             llenarComboTpoDocumentoDatoConctactoJurifico(){
                 var url = this.ruta + '/parametro/GetDocumentoNatural';
