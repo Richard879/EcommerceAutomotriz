@@ -99,7 +99,7 @@ class PerUsuGruAccController extends Controller
     }
 
     //Asignar Jefe Ventas
-    public function GetListUsuarios2(Request $request)
+    public function GetListAsesorComercialByJF(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
@@ -107,12 +107,13 @@ class PerUsuGruAccController extends Controller
         $nIdGrupoPar = $request->nidgrupopar;
         $nIdParParent = $request->nidparparent;
 
-        $opcion = $request->opcion;
+        $variable = $request->opcion;
 
         $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
         $nIdParParent = ($nIdParParent == NULL) ? ($nIdParParent = 0) : $nIdParParent;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios2] ?, ?, ?, ?, ?',
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListAsesorComercialByJF] ?, ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $cDescripcion,
@@ -120,12 +121,10 @@ class PerUsuGruAccController extends Controller
                                                             $nIdParParent
                                                         ]);
 
-        if($opcion == 1) {
+        if($variable == 0) {
             $arrayUsuarios = ParametroController::arrayPaginator($arrayUsuarios, $request);
-            return ['arrayUsuarios'=>$arrayUsuarios];
-        } else {
-            return response()->json($arrayUsuarios);
-        }
+        } 
+        return ['arrayUsuarios'=>$arrayUsuarios];
     }
 
     public function SetAsignarJefeVentas(Request $request)

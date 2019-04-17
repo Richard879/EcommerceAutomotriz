@@ -41,7 +41,7 @@ class SapArticuloController extends Controller
         $data = $request->data;
         foreach ($data as $key => $value) {
 
-            $cItemCode  =   $value['cNombreComercial'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'].' '.$value['cNombreColor'];
+            $cItemCode  =   $value['cNombreComercial'].' '.$value['nAnioVersion'].' '.$value['cNombreColor'];
             $ItemType   =   $value['cItemType'];
             $ItemType   =   ($ItemType == NULL) ? ($ItemType = 'itItems') : $ItemType;
 

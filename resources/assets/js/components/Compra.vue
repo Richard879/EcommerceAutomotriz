@@ -3207,7 +3207,7 @@
 
                             setTimeout(function() {
                                 me.generaActualizaArticulo(objCompra);
-                            }, 1200);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3233,7 +3233,7 @@
                         //================== REGISTRO PROYECTO EN SAP ===============
                         setTimeout(function() {
                             me.generarSapProyecto(objCompra);
-                        }, 1200);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3320,7 +3320,7 @@
                     //================== REGISTRO TARJETA EQUIPO ===============
                     setTimeout(function() {
                         me.generarSapTarjetaEquipo(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizaProyecto(objCompra){
@@ -3384,7 +3384,7 @@
                                 //================== ACTUALIZO TABLA TarjetaEquipo ===============
                                 setTimeout(function() {
                                     me.generaActualizaTarjetaEquipo(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -3403,7 +3403,7 @@
                     //================== REGISTRO COMPRA EN SAP ===============
                     setTimeout(function() {
                         me.generaSapCompra(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizaTarjetaEquipo(objCompra){
@@ -3419,7 +3419,7 @@
                         me.loading.close();
                         setTimeout(function() {
                             me.generaSapCompra(objCompra);
-                        }, 1200);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3491,7 +3491,7 @@
                                 //================== ACTUALIZAR DOCENTRY ===============
                                 setTimeout(function() {
                                     me.generaActualizarDocEntry(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -3510,7 +3510,7 @@
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
                         me.generaSapActividadCompra(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizarDocEntry(objCompra){
@@ -3523,7 +3523,7 @@
                     {
                         setTimeout(function() {
                             me.generaSapActividadCompra(objCompra);
-                        }, 1200);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3591,7 +3591,7 @@
                                 me.nactivitycode = me.jsonRespuesta.ActivityCode;
                                 setTimeout(function() {
                                     me.generaActualizarActividadCompra(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -3610,7 +3610,7 @@
                     //============= REGISTRO SOLUCION EN SAP ============
                     setTimeout(function() {
                         me.generaSapSolucion(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizarActividadCompra(objCompra){
@@ -3679,7 +3679,7 @@
                                 //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                                 setTimeout(function() {
                                     me.generaActualizarSolucion(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -3697,7 +3697,7 @@
                     //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
                     setTimeout(function() {
                         me.generaSapLlamadaServicioCompra(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizarSolucion(objCompra){
@@ -3772,7 +3772,7 @@
                                 //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                                 setTimeout(function() {
                                     me.generaActualizarLlamadaServicio(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -3791,7 +3791,7 @@
                     //================== REGISTRO TABLA COSTO EN SAP ===============
                     setTimeout(function() {
                         me.generaSapTblCostoCabecera(objCompra);
-                    }, 1200);
+                    }, 800);
                 }
             },
             generaActualizarLlamadaServicio(objCompra){
@@ -3806,7 +3806,7 @@
                         //================== REGISTRO TABLA COSTO EN SAP ===============
                         setTimeout(function() {
                             me.generaSapTblCostoCabecera(objCompra);
-                        }, 1200);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3853,7 +3853,7 @@
 
                     setTimeout(function() {
                         me.generaActualizarTblCostoCabecera(objCompra);
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Tabla Costo Cabecera SapB1!");
                     console.log(error);
@@ -3873,7 +3873,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerConceptosTblCostoPorVin(objCompra);
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

@@ -1304,7 +1304,7 @@
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Linea Vehiculo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
@@ -1321,7 +1321,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Marca</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                                 <el-option
@@ -1336,7 +1336,7 @@
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Modelo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
@@ -1368,7 +1368,7 @@
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Año Modelo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
@@ -1426,7 +1426,7 @@
                                                                                                     <th>Línea</th>
                                                                                                     <th>Marca</th>
                                                                                                     <th>Modelo</th>
-                                                                                                    <th>Año Fab</th>
+                                                                                                    <!--<th>Año Fab</th>-->
                                                                                                     <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -1442,7 +1442,7 @@
                                                                                                     <td v-text="referencia.cLineaNombre"></td>
                                                                                                     <td v-text="referencia.cMarcaNombre"></td>
                                                                                                     <td v-text="referencia.cModeloNombre"></td>
-                                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                                    <!--<td v-text="referencia.nAnioFabricacion"></td>-->
                                                                                                     <td v-text="referencia.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
@@ -1619,7 +1619,7 @@
                                                                                                     <th>Línea</th>
                                                                                                     <th>Marca</th>
                                                                                                     <th>Modelo</th>
-                                                                                                    <th>Año Fab</th>
+                                                                                                    <!--<th>Año Fab</th>-->
                                                                                                     <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -1635,7 +1635,7 @@
                                                                                                     <td v-text="referencia.cLineaNombre"></td>
                                                                                                     <td v-text="referencia.cMarcaNombre"></td>
                                                                                                     <td v-text="referencia.cModeloNombre"></td>
-                                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                                    <!--<td v-text="referencia.nAnioFabricacion"></td>-->
                                                                                                     <td v-text="referencia.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
@@ -1822,7 +1822,7 @@
                                                             <th>Linea</th>
                                                             <th>Marca</th>
                                                             <th>Modelo</th>
-                                                            <th>Año Fab</th>
+                                                            <!--<th>Año Fab</th>-->
                                                             <th>Año Modelo</th>
                                                             <th>Fecha Inicio</th>
                                                             <th>Fecha Fin</th>
@@ -1843,7 +1843,7 @@
                                                                 <td v-text="r.cLineaNombre"></td>
                                                                 <td v-text="r.cMarcaNombre"></td>
                                                                 <td v-text="r.cModeloNombre"></td>
-                                                                <td v-text="r.nAnioFabricacion"></td>
+                                                                <!--<td v-text="r.nAnioFabricacion"></td>-->
                                                                 <td v-text="r.nAnioModelo"></td>
                                                                 <td v-text="r.dFechaInicioAsignacionContacto"></td>
                                                                 <td v-text="r.dFechaFinAsignacionContacto"></td>
@@ -2811,9 +2811,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debe Seleccionar Modelo');
                 }
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debe Seleccionar Año Fabricación');
-                }
+                }*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debe Seleccionar Año Modelo');
                 }
@@ -3292,8 +3292,10 @@
                 if(!this.formNuevoContacto.cdireccion){
                     this.mensajeError.push('Debe Ingresar Dirección');
                 }
-                if(!this.formNuevoContacto.cmailprincipal){
-                    this.mensajeError.push('Debe Ingresar Email');
+                if(this.formNuevoContacto.cmailprincipal){
+                    if (!this.validarEmail(this.formNuevoContacto.cmailprincipal)){
+                        this.mensajeError.push('Debe Ingresar Email válido');
+                    }
                 }
                 if(!this.formNuevoContacto.ncelular){
                     this.mensajeError.push('Debe Ingresar Celular');
@@ -3330,8 +3332,10 @@
                     if(!this.formNuevoContactoJurifico.cnombre){
                         this.mensajeError.push('Debe escribir el nombre del contacto');
                     }
-                    if(!this.formNuevoContactoJurifico.cmailprincipal){
-                        this.mensajeError.push('Debe escribir el correo del contacto');
+                    if(this.formNuevoContactoJurifico.cmailprincipal){
+                        if (!this.validarEmail(this.formNuevoContactoJurifico.cmailprincipal)){
+                            this.mensajeError.push('Debe escribir el correo del contacto');
+                        }
                     }
                     if(!this.formNuevoContactoJurifico.ncelular){
                         this.mensajeError.push('Debe escribir el telefono movil del contacto');
@@ -3342,6 +3346,10 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            validarEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
             },
             llenarComboTpoDocumentoDatoConctactoJurifico(){
                 var url = this.ruta + '/parametro/GetDocumentoNatural';
@@ -3595,9 +3603,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debe Seleccionar Modelo');
                 }
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debe Seleccionar Año Fabricación');
-                }
+                }*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debe Seleccionar Año Modelo');
                 }

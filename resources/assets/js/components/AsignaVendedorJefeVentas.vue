@@ -4,7 +4,7 @@
             <header class="page-header">
                 <div class="container-fluid">
                     <vs-divider color="dark">
-                        <h2 class="no-margin-bottom">MODULO ASIGNACIÓN DE VENDEDORES - JEFE DE VENTAS</h2>
+                        <h2 class="no-margin-bottom">MODULO ASIGNACIÓN DE ASESOR COMERCIAL A JEFE DE VENTAS</h2>
                     </vs-divider>
                 </div>
             </header>
@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">BUSCAR USUARIOS</h3>
+                                    <h3 class="h4">BUSCAR ASESOR COMERCIAL</h3>
                                 </div>
                                 <div class="card-body">
                                     <form class="form-horizontal">
@@ -68,7 +68,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">LISTADO USUARIOS</h3>
+                                    <h3 class="h4">LISTADO ASESORES COMERCIALES</h3>
                                 </div>
                                 <div class="card-body">
                                     <template v-if="arrayUsuarios.length">
@@ -396,17 +396,16 @@
                     return;
                 }
 
-                var url = this.ruta + '/puga/GetListUsuarios2';
+                var url = this.ruta + '/puga/GetListAsesorComercialByJF';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'cdescripcion': this.fillPuga.cdescripcion,
-                        'nidgrupopar': 110026,
-                        'nidparparent': 0,
-                        'opcion': 1,
-                        'page' : page
+                        'nidempresa'    : this.fillPuga.nidempresa,
+                        'nidsucursal'   : this.fillPuga.nidsucursal,
+                        'cdescripcion'  : this.fillPuga.cdescripcion,
+                        'nidgrupopar'   : 110026,
+                        'nidparparent'  : 0,
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayUsuarios = response.data.arrayUsuarios.data;
@@ -446,19 +445,19 @@
             //==========================================================
             //===================== ASIGNAR JV =========================
             listarUsuariosJefeVentasByEmpSucur(data = null, op){
-                var url = this.ruta + '/puga/GetListUsuarios2';
+                var url = this.ruta + '/puga/GetListAsesorComercialByJF';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'cdescripcion': this.fillPuga.cdescripcion,
-                        'nidgrupopar': 110025,
-                        'nidparparent': (op == 1) ? this.formAsignacion.nIdParParent : data,
-                        'opcion': 0
+                        'nidempresa'    : this.fillPuga.nidempresa,
+                        'nidsucursal'   : this.fillPuga.nidsucursal,
+                        'cdescripcion'  : this.fillPuga.cdescripcion,
+                        'nidgrupopar'   : 110025,
+                        'nidparparent'  : (op == 1) ? this.formAsignacion.nIdParParent : data,
+                        'opcion'        : 1
                     }
                 }).then(response => {
-                    this.arrayUsuariosVendedores = response.data;
+                    this.arrayUsuariosVendedores = response.data.arrayUsuarios;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

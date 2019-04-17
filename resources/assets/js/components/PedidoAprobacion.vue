@@ -2641,7 +2641,7 @@
                     //================== ACTUALIZAR DOCENTRY PEDIDO ================
                     setTimeout(function() {
                         me.registroSgcPedido();
-                    }, 3800);
+                    }, 800);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -2672,7 +2672,7 @@
                     if (response.data[0].nFlagMsje == 1) {
                         setTimeout(function() {
                             me.registroSapBusinessActividad();
-                        }, 1000);
+                        }, 800);
                     } else {
                         swal({
                             type: 'error',
@@ -2754,7 +2754,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2774,7 +2774,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.registroSapBusinessSolucion();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2823,7 +2823,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2842,7 +2842,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getOrdenVentaActividad();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2910,7 +2910,7 @@
                 });
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
-                }, 1600);
+                }, 800);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
@@ -2964,7 +2964,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2984,7 +2984,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerLlamadasServicios();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3009,7 +3009,7 @@
                     me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios;
                     setTimeout(function() {
                         me.cerrarLlamadasServicios();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3029,7 +3029,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.actualizarTarjetaEquipo();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3049,7 +3049,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerSapCostoPromedio();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3095,11 +3095,11 @@
                     if(me.fAvgPrice > 0 && me.formSap.ndocentry != 0){
                         setTimeout(function() {
                             me.registroSapBusinessTblCostoEV();
-                        }, 1600);
+                        }, 800);
                     } else {
                         setTimeout(function() {
                             me.obtenerSgcCostoServicio();
-                        }, 1600);
+                        }, 800);
                     }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Costos SapB1!");
@@ -3121,7 +3121,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerSgcCostoServicio();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3157,11 +3157,11 @@
                 if(me.fImporte > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
-                    }, 1600);
+                    }, 800);
                 } else {
                     setTimeout(function() {
                         me.confirmaPedido();
-                    }, 1600);
+                    }, 800);
                 }
 
             },

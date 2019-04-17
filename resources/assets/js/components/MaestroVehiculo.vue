@@ -2308,10 +2308,10 @@
                     if(!this.fillPropietario.cdireccion){
                         this.mensajeError.push('Debes Ingresar Dirección');
                     }
-                    if(!this.fillPropietario.cmailprincipal){
-                        this.mensajeError.push('El correo es obligatorio');
-                    } else if (!this.validarEmail(this.fillPropietario.cmailprincipal)) {
-                        this.errors.push('Debe ingresar un correo electronico válido.');
+                    if(this.fillPropietario.cmailprincipal){
+                        if (!this.validarEmail(this.fillPropietario.cmailprincipal)) {
+                            this.mensajeError.push('Debe ingresar un correo electronico válido.');
+                        }
                     }
                     if(!this.fillPropietario.ncelular){
                         this.mensajeError.push('Debes Ingresar Celular');

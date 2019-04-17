@@ -1530,6 +1530,7 @@
                                                         </div>
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
                                                             <section class="forms">
+                                                                
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
@@ -3708,9 +3709,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
@@ -4182,8 +4183,10 @@
                 if(!this.formNuevoContacto.cdireccion){
                     this.mensajeError.push('Debes Ingresar Dirección');
                 };
-                if(!this.formNuevoContacto.cmailprincipal){
-                    this.mensajeError.push('Debes Ingresar Email');
+                if(this.formNuevoContacto.cmailprincipal){
+                    if (!this.validarEmail(this.formNuevoContacto.cmailprincipal)){
+                        this.mensajeError.push('Debe Ingresar Email válido');
+                    }
                 };
                 if(!this.formNuevoContacto.ncelular){
                     this.mensajeError.push('Debes Ingresar Celular');
@@ -4212,8 +4215,10 @@
                     if(!this.formNuevoContactoJurifico.cnombre){
                         this.mensajeError.push('Debes escribir el nombre del contacto');
                     };
-                    if(!this.formNuevoContactoJurifico.cmailprincipal){
-                        this.mensajeError.push('Debes escribir el correo del contacto');
+                    if(this.formNuevoContactoJurifico.cmailprincipal){
+                        if (!this.validarEmail(this.formNuevoContactoJurifico.cmailprincipal)){
+                            this.mensajeError.push('Debe escribir el correo del contacto');
+                        }
                     };
                     if(!this.formNuevoContactoJurifico.ncelular){
                         this.mensajeError.push('Debes escribir el telefono movil del contacto');
@@ -4480,9 +4485,9 @@
                 if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == ''){
+                /*if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };

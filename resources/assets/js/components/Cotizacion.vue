@@ -451,11 +451,12 @@
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>Acción</th>
+                                                                                        <th>Código</th>
                                                                                         <th>Proovedor</th>
                                                                                         <th>Linea</th>
                                                                                         <th>Marca</th>
                                                                                         <th>Modelo</th>
-                                                                                        <th>Año Fab</th>
+                                                                                        <!--<th>Año Fab</th>-->
                                                                                         <th>Año Modelo</th>
                                                                                         <th>Fecha Inicio</th>
                                                                                         <th>Fecha Fin</th>
@@ -477,11 +478,12 @@
                                                                                                 </el-tooltip>
                                                                                             </template>
                                                                                         </td>
+                                                                                        <td v-text="r.nIdAsignacionContactoVendedor"></td>
                                                                                         <td v-text="r.cProveedorNombre"></td>
                                                                                         <td v-text="r.cLineaNombre"></td>
                                                                                         <td v-text="r.cMarcaNombre"></td>
                                                                                         <td v-text="r.cModeloNombre"></td>
-                                                                                        <td v-text="r.nAnioFabricacion"></td>
+                                                                                        <!--<td v-text="r.nAnioFabricacion"></td>-->
                                                                                         <td v-text="r.nAnioModelo"></td>
                                                                                         <td v-text="r.dFechaInicioAsignacionContacto"></td>
                                                                                         <td v-text="r.dFechaFinAsignacionContacto"></td>
@@ -1347,6 +1349,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>Código</th>
                                                             <template v-if="arrayContactosPorVendedor[0].cPerApellidos">
                                                                 <th>Apellidos y Nombres</th>
                                                                 <th>DNI</th>
@@ -1366,6 +1369,7 @@
                                                                     <i @click.prevent="abrirModal('contacto', 'asignar', contactos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
+                                                            <td v-text="contactos.nIdContacto"></td>
                                                             <template v-if="contactos.cPerApellidos">
                                                                 <td v-text="contactos.cContacto"></td>
                                                                 <td v-text="contactos.cNumeroDocumento"></td>
@@ -2386,6 +2390,7 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
