@@ -1194,6 +1194,7 @@
                 $('#TabNuevaSolicitud').removeClass('in active show');
                 this.limpiarMisSolicitudes();
                 this.llenarEstados();
+                this.arrayMisSolicitudes= [];
                 //this.buscarMisSolicitudes(1);
             },
             llenarEstados(){
@@ -1219,16 +1220,16 @@
                 var url = this.ruta + '/autorizacion/GetLstMisSolicitudes';
                 axios.get(url, {
                     params: {
-                        'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
-                        'cNroVehiculo' : this.fillBusquedaSolicitud.cnrovehiculo,
-                        'dFechaInicio' : this.fillBusquedaSolicitud.dfechainicio,
-                        'dFechaFin' : this.fillBusquedaSolicitud.dfechafin,
-                        'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
-                        'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
-                        'tipoRol': 1,
+                        'nIdTipoBusquedaVehiculo'   : this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'cNroVehiculo'              : this.fillBusquedaSolicitud.cnrovehiculo,
+                        'dFechaInicio'              : this.fillBusquedaSolicitud.dfechainicio,
+                        'dFechaFin'                 : this.fillBusquedaSolicitud.dfechafin,
+                        'nIdAsigContacto'           : this.fillBusquedaSolicitud.nidasigcontacto,
+                        'nIdEstado'                 : this.fillBusquedaSolicitud.nidestado,
+                        'tipoRol'                   : 1,
                         'nIdTipoBusquedaAutorizacion': 1,
-                        'cFlagEstadoAutorizacion' : '',
-                        'nIdSolicitudAutorizacion' : 0,
+                        'cFlagEstadoAutorizacion'   : '',
+                        'nIdSolicitudAutorizacion'  : 0,
                         'page' : page
                     }
                 }).then(response => {
