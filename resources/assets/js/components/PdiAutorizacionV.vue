@@ -796,7 +796,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -953,7 +953,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1284,11 +1284,12 @@
                 var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
-                        'criterio': (this.flagBuscarVehiculoByCriterio == 1) ? this.fillBusquedaSolicitud.nidtipobusqueda : this.fillNuevaSolicitud.nidtipobusqueda,
-                        'page' : page,
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnrovehiculo'      : this.modalVehiculo.cnrovehiculo.toString(),
+                        'criterio'          : (this.flagBuscarVehiculoByCriterio == 1) ? this.fillBusquedaSolicitud.nidtipobusqueda : this.fillNuevaSolicitud.nidtipobusqueda,
+                        'nidtiposolicitud'  : this.fillNuevaSolicitud.nidtiposolicitud ? this.fillNuevaSolicitud.nidtiposolicitud : 0,
+                        'page'              : page,
                     }
                 }).then(response => {
                     let info = response.data.arrayVehiculosByCriterio;
@@ -1332,7 +1333,7 @@
                 }
 
                 this.modalVehiculo.cnrovehiculo = '';
-                this.cerrarModalSolicitud();
+                this.cerrarModal();
             },
             // ======================
             // MODAL BUSCAR CONTACTOS
@@ -1836,7 +1837,7 @@
                                 this.modalMisContactos.ntipopersona = 1;
                                 this.modalMisContactos.cnrodocumento = '';
                                 this.modalMisContactos.cfiltrodescripcion = '';
-                                this.cerrarModalSolicitud();
+                                this.cerrarModal();
                                 break;
                             }
                             break;
@@ -1887,12 +1888,10 @@
                 this.mensajeError = '';
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
+                this.limpiarModal();
             },
-            cerrarModalSolicitud(){
-                this.modal = 0;
-                this.accionmodal = 0;
-                this.error = 0;
-                this.mensajeError = '';
+            limpiarModal(){
+                this.arrayVehiculosByCriterio=[];
             },
             mostrarProgressBar(){
                 $("#myBar").show();
