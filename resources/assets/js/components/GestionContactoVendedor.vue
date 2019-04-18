@@ -2996,9 +2996,9 @@
                 if(this.formNuevoSeguimiento.nidasignacioncontactovendedor == 0){
                     this.mensajeError.push('Debe Seleccionar Referencia de Vehículo');
                 }
-                if(this.formNuevoSeguimiento.nidzona == 0){
+                /*if(this.formNuevoSeguimiento.nidzona == 0){
                     this.mensajeError.push('Debe Seleccionar Zona');
-                }
+                }*/
                 if(this.formNuevoSeguimiento.nidtiposeguimiento == 0){
                     this.mensajeError.push('Debe Seleccionar Tipo Seguimiento');
                 }

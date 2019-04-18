@@ -1194,7 +1194,7 @@
                 $('#TabNuevaSolicitud').removeClass('in active show');
                 this.limpiarMisSolicitudes();
                 this.llenarEstados();
-                this.buscarMisSolicitudes(1);
+                //this.buscarMisSolicitudes(1);
             },
             llenarEstados(){
                 var url = this.ruta + '/getComision/GetParametroByGrupo';
