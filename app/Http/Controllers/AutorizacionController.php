@@ -16,19 +16,22 @@ class AutorizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa  = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $cNumeroVehiculo  = $request->cnrovehiculo;
-        $nCriterio  = $request->criterio;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $cNumeroVehiculo    = $request->cnrovehiculo;
+        $nIdTipoSolicitud   = $request->nidtiposolicitud;
+        $nCriterio          = $request->criterio;
 
-        $cNumeroVehiculo  = ($cNumeroVehiculo == NULL) ? ($cNumeroVehiculo = ' ') : $cNumeroVehiculo;
+        $nIdTipoSolicitud  = ($nIdTipoSolicitud == NULL) ? ($nIdTipoSolicitud = 0) : $nIdTipoSolicitud;
+        $cNumeroVehiculo  = ($cNumeroVehiculo == NULL) ? ($cNumeroVehiculo = '') : $cNumeroVehiculo;
 
-        $arrayVehiculosByCriterio = DB::select('exec usp_Autorizacion_GetLstVehiculosByCriterio ?, ?, ?, ?',
-                                                            [
-                                                                $nIdEmpresa,
+        $arrayVehiculosByCriterio = DB::select('exec [usp_Autorizacion_GetLstVehiculosByCriterio] ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $cNumeroVehiculo,
-                                                                $nCriterio
+                                                                $nCriterio,
+                                                                $nIdTipoSolicitud,
+                                                                Auth::user()->id
                                                             ]);
 
         $arrayVehiculosByCriterio = ParametroController::arrayPaginator($arrayVehiculosByCriterio, $request);
