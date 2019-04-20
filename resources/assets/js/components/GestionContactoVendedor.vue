@@ -1093,7 +1093,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                        <label class="col-sm-4 form-control-label">Email</label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" v-model="formNuevoContacto.cmailprincipal" class="form-control form-control-sm">
                                                                                         </div>
@@ -3507,16 +3507,16 @@
                     return;
                 }
 
-                var nidlinea = this.formNuevoContacto.nidlinea;
-                var nidmarca = this.formNuevoContacto.nidmarca;
-                var nidmodelo = this.formNuevoContacto.nidmodelo;
-                var nidaniofabricacion = this.formNuevoContacto.naniofabricacion;
-                var nidaniomodelo = this.formNuevoContacto.naniomodelo;
-                var cLineaNombreRef = "";
-                var cMarcaNombreRef = "";
-                var cModeloNombreRef = "";
-                var nAnioFabricacionRef = "";
-                var nAnioModeloRef = "";
+                var nidlinea            =   this.formNuevoContacto.nidlinea;
+                var nidmarca            =   this.formNuevoContacto.nidmarca;
+                var nidmodelo           =   this.formNuevoContacto.nidmodelo;
+                var nidaniofabricacion  =   this.formNuevoContacto.naniofabricacion;
+                var nidaniomodelo       =   this.formNuevoContacto.naniomodelo;
+                var cLineaNombreRef     =   "";
+                var cMarcaNombreRef     =   "";
+                var cModeloNombreRef    =   "";
+                var nAnioFabricacionRef =   "";
+                var nAnioModeloRef      =   "";
 
                 $.each(this.arrayLinea, function (index, value) {
                     if(value.nIdLinea == nidlinea){
@@ -3544,11 +3544,11 @@
                     }
                 });
 
-                var nIdProveedorRef = this.formNuevoContacto.nidproveedor;
-                var nIdLineaRef = this.formNuevoContacto.nidlinea;
-                var nIdMarcaRef = this.formNuevoContacto.nidmarca;
-                var nIdModeloRef = this.formNuevoContacto.nidmodelo;
-                var cProveedorNombreRef = this.formNuevoContacto.cproveedornombre;
+                var nIdProveedorRef     =   this.formNuevoContacto.nidproveedor;
+                var nIdLineaRef         =   this.formNuevoContacto.nidlinea;
+                var nIdMarcaRef         =   this.formNuevoContacto.nidmarca;
+                var nIdModeloRef        =   this.formNuevoContacto.nidmodelo;
+                var cProveedorNombreRef =   this.formNuevoContacto.cproveedornombre;
 
                 if(this.encuentraReferenciaVehiculo(nIdProveedorRef, nIdLineaRef, nIdMarcaRef, nIdModeloRef, nAnioFabricacionRef, nAnioModeloRef)){
                     swal({
@@ -3558,16 +3558,16 @@
                     })
                 }else{
                     this.arrayReferenciaVehiculo.push({
-                        'nIdProveedor'      : nIdProveedorRef,
-                        'nIdLinea'          : nIdLineaRef,
-                        'nIdMarca'          : nIdMarcaRef,
-                        'nIdModelo'         : nIdModeloRef,
-                        'cProveedorNombre'  : cProveedorNombreRef,
-                        'cLineaNombre'      : cLineaNombreRef,
-                        'cMarcaNombre'      : cMarcaNombreRef,
-                        'cModeloNombre'     : cModeloNombreRef,
-                        'nAnioFabricacion'  : nAnioFabricacionRef,
-                        'nAnioModelo'       : nAnioModeloRef
+                        'nIdProveedor'      :   nIdProveedorRef,
+                        'nIdLinea'          :   nIdLineaRef,
+                        'nIdMarca'          :   nIdMarcaRef,
+                        'nIdModelo'         :   nIdModeloRef,
+                        'cProveedorNombre'  :   cProveedorNombreRef,
+                        'cLineaNombre'      :   cLineaNombreRef,
+                        'cMarcaNombre'      :   cMarcaNombreRef,
+                        'cModeloNombre'     :   cModeloNombreRef,
+                        'nAnioFabricacion'  :   nAnioFabricacionRef,
+                        'nAnioModelo'       :   nAnioModeloRef
                     });
                     toastr.success('Se Agregó Referencia Vehiculo');
                 }
@@ -3694,16 +3694,16 @@
                     return;
                 }
 
-                var nidlinea = this.formNuevoContacto.nidlinea2;
-                var nidmarca = this.formNuevoContacto.nidmarca2;
-                var nidmodelo = this.formNuevoContacto.nidmodelo2;
-                var nidaniofabricacion = this.formNuevoContacto.naniofabricacion2;
-                var nidaniomodelo = this.formNuevoContacto.naniomodelo2;
-                var cLineaNombreRef = "";
-                var cMarcaNombreRef = "";
-                var cModeloNombreRef = "";
-                var nAnioFabricacionRef = "";
-                var nAnioModeloRef = "";
+                var nidlinea            =   this.formNuevoContacto.nidlinea2;
+                var nidmarca            =   this.formNuevoContacto.nidmarca2;
+                var nidmodelo           =   this.formNuevoContacto.nidmodelo2;
+                var nidaniofabricacion  =   this.formNuevoContacto.naniofabricacion2;
+                var nidaniomodelo       =   this.formNuevoContacto.naniomodelo2;
+                var cLineaNombreRef     =   "";
+                var cMarcaNombreRef     =   "";
+                var cModeloNombreRef    =   "";
+                var nAnioFabricacionRef =   "";
+                var nAnioModeloRef      =   "";
 
                 $.each(this.arrayLinea2, function (index, value) {
                     if(value.nIdLinea == nidlinea){
@@ -3731,11 +3731,11 @@
                     }
                 });
 
-                var nIdProveedorRef = this.formNuevoContacto.nidproveedor2;
-                var nIdLineaRef = this.formNuevoContacto.nidlinea2;
-                var nIdMarcaRef = this.formNuevoContacto.nidmarca2;
-                var nIdModeloRef = this.formNuevoContacto.nidmodelo2;
-                var cProveedorNombreRef = this.formNuevoContacto.cproveedornombre2;
+                var nIdProveedorRef     =   this.formNuevoContacto.nidproveedor2;
+                var nIdLineaRef         =   this.formNuevoContacto.nidlinea2;
+                var nIdMarcaRef         =   this.formNuevoContacto.nidmarca2;
+                var nIdModeloRef        =   this.formNuevoContacto.nidmodelo2;
+                var cProveedorNombreRef =   this.formNuevoContacto.cproveedornombre2;
 
                 if(this.encuentraOtrosIntereses(nIdProveedorRef, nIdLineaRef, nIdMarcaRef, nIdModeloRef, nAnioFabricacionRef, nAnioModeloRef)){
                     swal({
@@ -3790,9 +3790,9 @@
                 if(this.formNuevoContacto.nidmodelo2 == ''){
                     this.mensajeError.push('Debe Seleccionar Modelo');
                 }
-                if(this.formNuevoContacto.naniofabricacion2 == ''){
-                    this.mensajeError.push('Debe Seleccionar Año Fabricación');
-                }
+                // if(this.formNuevoContacto.naniofabricacion2 == ''){
+                //     this.mensajeError.push('Debe Seleccionar Año Fabricación');
+                // }
                 if(this.formNuevoContacto.naniomodelo2 == ''){
                     this.mensajeError.push('Debe Seleccionar Año Modelo');
                 }

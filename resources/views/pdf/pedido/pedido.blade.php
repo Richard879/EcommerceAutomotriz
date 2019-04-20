@@ -344,19 +344,29 @@
             <br/>
 
             <table width="100%">
-                <tr>
-                    <td align="left" style="width: 40%;">
-                        <h3>_____________________________</h3>
-                        <h3>{{ $arrayDetallePedido[0]->cNombreAsesorComercial }}</h3>
-                        <h5 class="center">ASESOR COMERCIAL</h5>
-                    </td>
-                    <td align="center"></td>
-                    <td align="right" style="width: 40%;">
-                        <h3>_____________________________</h3>
-                        <h3>{{ $arrayDetallePedido[0]->cJefeVentas }}</h3>
-                        <h5 class="center" style="margin-right: 6rem">JEFE DE VENTAS</h5>
-                    </td>
-                </tr>
+                @if ($arrayDetallePedido[0]->cJefeVentas == '------')
+                    <tr>
+                        <td align="left" style="width: 40%;">
+                            <h3>_____________________________</h3>
+                            <h3>{{ $arrayDetallePedido[0]->cNombreAsesorComercial }}</h3>
+                            <h5 class="center" style="margin-left: 19.5rem;">JEFE DE VENTAS</h5>
+                        </td>
+                    </tr>
+                @else
+                    <tr>
+                        <td align="left" style="width: 40%;">
+                            <h3>_____________________________</h3>
+                            <h3>{{ $arrayDetallePedido[0]->cNombreAsesorComercial }}</h3>
+                            <h5 class="center">ASESOR COMERCIAL</h5>
+                        </td>
+                        <td align="center"></td>
+                        <td align="right" style="width: 40%;">
+                            <h3>_____________________________</h3>
+                            <h3>{{ $arrayDetallePedido[0]->cJefeVentas }}</h3>
+                            <h5 class="center" style="margin-right: 6rem">JEFE DE VENTAS</h5>
+                        </td>
+                    </tr>
+                @endif
             </table>
 
             <br/>

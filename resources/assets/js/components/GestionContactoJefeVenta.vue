@@ -1530,7 +1530,6 @@
                                                         </div>
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
                                                             <section class="forms">
-                                                                
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
@@ -1565,7 +1564,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                        <label class="col-sm-4 form-control-label">Email</label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" v-model="formNuevoContacto.cmailprincipal" class="form-control form-control-sm">
                                                                                         </div>
@@ -1610,14 +1609,14 @@
                                                                                 <template v-if="vistaDatosPersonaNatural">
                                                                                     <div class="col-sm-6">
                                                                                         <div class="row">
-                                                                                            <label class="col-sm-4 form-control-label">Estado Civil</label>
+                                                                                            <label class="col-sm-4 form-control-label">* Estado Civil</label>
                                                                                             <div class="col-sm-8">
                                                                                                 <el-select v-model="formNuevoContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
                                                                                                     <el-option
-                                                                                                    v-for="item in arrayEstadoCivil"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
+                                                                                                        v-for="item in arrayEstadoCivil"
+                                                                                                        :key="item.nIdPar"
+                                                                                                        :label="item.cParNombre"
+                                                                                                        :value="item.nIdPar">
                                                                                                     </el-option>
                                                                                                 </el-select>
                                                                                             </div>
@@ -1633,10 +1632,10 @@
                                                                                             <div class="col-sm-8">
                                                                                                 <el-select v-model="formNuevoContacto.nprofesion" filterable clearable placeholder="SELECCIONE" >
                                                                                                     <el-option
-                                                                                                    v-for="item in arrayProfesion"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
+                                                                                                        v-for="item in arrayProfesion"
+                                                                                                        :key="item.nIdPar"
+                                                                                                        :label="item.cParNombre"
+                                                                                                        :value="item.nIdPar">
                                                                                                     </el-option>
                                                                                                 </el-select>
                                                                                             </div>
@@ -4171,15 +4170,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formNuevoContacto.niddepartamento == 0){
-                    this.mensajeError.push('Debes Seleccionar Departamento');
-                };
-                if(this.formNuevoContacto.nidprovincia == 0){
-                    this.mensajeError.push('Debes Seleccionar Provincia');
-                };
-                if(this.formNuevoContacto.niddistrito == 0){
-                    this.mensajeError.push('Debes Seleccionar Distrito');
-                };
+                if(this.formNuevoContacto.ccode == 0 || !this.formNuevoContacto.ccode){
+                    this.mensajeError.push('Debe Seleccionar Ubigeo');
+                }
                 if(!this.formNuevoContacto.cdireccion){
                     this.mensajeError.push('Debes Ingresar Dirección');
                 };
@@ -4189,11 +4182,18 @@
                     }
                 };
                 if(!this.formNuevoContacto.ncelular){
-                    this.mensajeError.push('Debes Ingresar Celular');
-                };
-                if(this.formNuevoContacto.ncelular.length > 9){
+                    this.mensajeError.push('Debe Ingresar Celular');
+                } else {
+                    if(this.formNuevoContacto.ncelular.length > 9){
                         this.mensajeError.push('El numero de Celular es incorrecto');
-                };
+                    }
+                }
+
+                if(this.formNuevoContacto.ntipopersona == 1) {
+                    if(this.formNuevoContacto.nestadocivil == ''){
+                        this.mensajeError.push('Debe Seleccionar el Estado Civil');
+                    }
+                }
 
                 if(this.formNuevoContacto.ntipopersona == 2) {
                     let nrodocumento = this.formNuevoContactoJurifico.cnrodocumento;
@@ -4229,6 +4229,10 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            validarEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
             },
             llenarComboTpoDocumentoDatoConctactoJurifico(){
                 var url = this.ruta + '/parametro/GetDocumentoNatural';
@@ -4388,30 +4392,30 @@
                     return;
                 }
 
-                var nidlinea = this.formNuevoContacto.nidlinea;
-                var nidmarca = this.formNuevoContacto.nidmarca;
-                var nidmodelo = this.formNuevoContacto.nidmodelo;
-                var nidaniofabricacion = this.formNuevoContacto.naniofabricacion;
-                var nidaniomodelo = this.formNuevoContacto.naniomodelo;
-                var cLineaNombreRef = "";
-                var cMarcaNombreRef = "";
-                var cModeloNombreRef = "";
-                var nAnioFabricacionRef = "";
-                var nAnioModeloRef = "";
+                var nidlinea            =   this.formNuevoContacto.nidlinea;
+                var nidmarca            =   this.formNuevoContacto.nidmarca;
+                var nidmodelo           =   this.formNuevoContacto.nidmodelo;
+                var nidaniofabricacion  =   this.formNuevoContacto.naniofabricacion;
+                var nidaniomodelo       =   this.formNuevoContacto.naniomodelo;
+                var cLineaNombreRef     =   "";
+                var cMarcaNombreRef     =   "";
+                var cModeloNombreRef    =   "";
+                var nAnioFabricacionRef =   "";
+                var nAnioModeloRef      =   "";
 
                 $.each(this.arrayLinea, function (index, value) {
-                    if(value.nIdPar == nidlinea){
-                        cLineaNombreRef = value.cParNombre;
+                    if(value.nIdLinea == nidlinea){
+                        cLineaNombreRef = value.cLineaNombre;
                     }
                 });
                 $.each(this.arrayMarca, function (index, value) {
-                    if(value.nIdPar == nidmarca){
-                        cMarcaNombreRef = value.cParNombre;
+                    if(value.nIdMarca == nidmarca){
+                        cMarcaNombreRef = value.cMarcaNombre;
                     }
                 });
                 $.each(this.arrayModelo, function (index, value) {
-                    if(value.nIdPar == nidmodelo){
-                        cModeloNombreRef = value.cParNombre;
+                    if(value.nIdModelo == nidmodelo){
+                        cModeloNombreRef = value.cModeloNombre;
                     }
                 });
                 $.each(this.arrayAnioFabricacion, function (index, value) {
@@ -4425,31 +4429,30 @@
                     }
                 });
 
-                var nIdProveedorRef = this.formNuevoContacto.nidproveedor;
-                var nIdLineaRef = this.formNuevoContacto.nidlinea;
-                var nIdMarcaRef = this.formNuevoContacto.nidmarca;
-                var nIdModeloRef = this.formNuevoContacto.nidmodelo;
-                var cProveedorNombreRef = this.formNuevoContacto.cproveedornombre;
+                var nIdProveedorRef     =   this.formNuevoContacto.nidproveedor;
+                var nIdLineaRef         =   this.formNuevoContacto.nidlinea;
+                var nIdMarcaRef         =   this.formNuevoContacto.nidmarca;
+                var nIdModeloRef        =   this.formNuevoContacto.nidmodelo;
+                var cProveedorNombreRef =   this.formNuevoContacto.cproveedornombre;
 
                 if(this.encuentraReferenciaVehiculo(nIdProveedorRef, nIdLineaRef, nIdMarcaRef, nIdModeloRef, nAnioFabricacionRef, nAnioModeloRef)){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Esa Referencia Vehículo ya se encuentra agregada!',
-                            })
-                }
-                else{
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Esa Referencia Vehículo ya se encuentra agregada!',
+                    })
+                } else {
                     this.arrayReferenciaVehiculo.push({
-                                nIdProveedor: nIdProveedorRef,
-                                nIdLinea: nIdLineaRef,
-                                nIdMarca: nIdMarcaRef,
-                                nIdModelo: nIdModeloRef,
-                                cProveedorNombre: cProveedorNombreRef,
-                                cLineaNombre: cLineaNombreRef,
-                                cMarcaNombre: cMarcaNombreRef,
-                                cModeloNombre: cModeloNombreRef,
-                                nAnioFabricacion: nAnioFabricacionRef,
-                                nAnioModelo: nAnioModeloRef
+                        nIdProveedor        :   nIdProveedorRef,
+                        nIdLinea            :   nIdLineaRef,
+                        nIdMarca            :   nIdMarcaRef,
+                        nIdModelo           :   nIdModeloRef,
+                        cProveedorNombre    :   cProveedorNombreRef,
+                        cLineaNombre        :   cLineaNombreRef,
+                        cMarcaNombre        :   cMarcaNombreRef,
+                        cModeloNombre       :   cModeloNombreRef,
+                        nAnioFabricacion    :   nAnioFabricacionRef,
+                        nAnioModelo         :   nAnioModeloRef
                     });
                     toastr.success('Se Agregó Referencia Vehiculo');
                 }
@@ -4573,16 +4576,16 @@
                     return;
                 }
 
-                var nidlinea = this.formNuevoContacto.nidlinea2;
-                var nidmarca = this.formNuevoContacto.nidmarca2;
-                var nidmodelo = this.formNuevoContacto.nidmodelo2;
-                var nidaniofabricacion = this.formNuevoContacto.naniofabricacion2;
-                var nidaniomodelo = this.formNuevoContacto.naniomodelo2;
-                var cLineaNombreRef = "";
-                var cMarcaNombreRef = "";
-                var cModeloNombreRef = "";
-                var nAnioFabricacionRef = "";
-                var nAnioModeloRef = "";
+                var nidlinea            =   this.formNuevoContacto.nidlinea2;
+                var nidmarca            =   this.formNuevoContacto.nidmarca2;
+                var nidmodelo           =   this.formNuevoContacto.nidmodelo2;
+                var nidaniofabricacion  =   this.formNuevoContacto.naniofabricacion2;
+                var nidaniomodelo       =   this.formNuevoContacto.naniomodelo2;
+                var cLineaNombreRef     =   "";
+                var cMarcaNombreRef     =   "";
+                var cModeloNombreRef    =   "";
+                var nAnioFabricacionRef =   "";
+                var nAnioModeloRef      =   "";
 
                 $.each(this.arrayLinea2, function (index, value) {
                     if(value.nIdLinea == nidlinea){
@@ -4610,11 +4613,11 @@
                     }
                 });
 
-                var nIdProveedorRef = this.formNuevoContacto.nidproveedor2;
-                var nIdLineaRef = this.formNuevoContacto.nidlinea2;
-                var nIdMarcaRef = this.formNuevoContacto.nidmarca2;
-                var nIdModeloRef = this.formNuevoContacto.nidmodelo2;
-                var cProveedorNombreRef = this.formNuevoContacto.cproveedornombre2;
+                var nIdProveedorRef     =   this.formNuevoContacto.nidproveedor2;
+                var nIdLineaRef         =   this.formNuevoContacto.nidlinea2;
+                var nIdMarcaRef         =   this.formNuevoContacto.nidmarca2;
+                var nIdModeloRef        =   this.formNuevoContacto.nidmodelo2;
+                var cProveedorNombreRef =   this.formNuevoContacto.cproveedornombre2;
 
                 if(this.encuentraOtrosIntereses(nIdProveedorRef, nIdLineaRef, nIdMarcaRef, nIdModeloRef, nAnioFabricacionRef, nAnioModeloRef)){
                     swal({
@@ -4624,16 +4627,16 @@
                     })
                 } else {
                     this.arrayOtrosIntereses.push({
-                        nIdProveedor: nIdProveedorRef,
-                        nIdLinea: nIdLineaRef,
-                        nIdMarca: nIdMarcaRef,
-                        nIdModelo: nIdModeloRef,
-                        cProveedorNombre: cProveedorNombreRef,
-                        cLineaNombre: cLineaNombreRef,
-                        cMarcaNombre: cMarcaNombreRef,
-                        cModeloNombre: cModeloNombreRef,
-                        nAnioFabricacion: nAnioFabricacionRef,
-                        nAnioModelo: nAnioModeloRef
+                        'nIdProveedor'      : nIdProveedorRef,
+                        'nIdLinea'          : nIdLineaRef,
+                        'nIdMarca'          : nIdMarcaRef,
+                        'nIdModelo'         : nIdModeloRef,
+                        'cProveedorNombre'  : cProveedorNombreRef,
+                        'cLineaNombre'      : cLineaNombreRef,
+                        'cMarcaNombre'      : cMarcaNombreRef,
+                        'cModeloNombre'     : cModeloNombreRef,
+                        'nAnioFabricacion'  : nAnioFabricacionRef,
+                        'nAnioModelo'       : nAnioModeloRef
                     });
                     toastr.success('Se Agregó Referencia Vehiculo de Otros Intereses');
                 }
@@ -4669,9 +4672,9 @@
                 if(this.formNuevoContacto.nidmodelo2 == ''){
                     this.mensajeError.push('Debe Seleccionar Modelo');
                 }
-                if(this.formNuevoContacto.naniofabricacion2 == ''){
-                    this.mensajeError.push('Debe Seleccionar Año Fabricación');
-                }
+                // if(this.formNuevoContacto.naniofabricacion2 == ''){
+                //     this.mensajeError.push('Debe Seleccionar Año Fabricación');
+                // }
                 if(this.formNuevoContacto.naniomodelo2 == ''){
                     this.mensajeError.push('Debe Seleccionar Año Modelo');
                 }

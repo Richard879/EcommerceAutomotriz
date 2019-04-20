@@ -435,7 +435,7 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                <label class="col-sm-4 form-control-label">Email</label>
                                                                                 <div class="col-sm-8">
                                                                                     <input type="text" v-model="fillAsignarContacto.cemail" class="form-control form-control-sm" readonly>
                                                                                 </div>
@@ -2390,7 +2390,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -3171,12 +3170,12 @@
             },
             asingarReferenciaVehiculo(r){
                 this.tabDCVehiculo();
-                this.fillAsignarContacto.nidasignarcontacto = r.nIdAsignacionContactoVendedor;
-                this.fillProveedor.nidproveedor = r.nIdProveedor;
-                this.fillProveedor.cproveedornombre = r.cProveedorNombre;
-                this.fillAsignarContacto.nidlinea = r.nIdLinea;
-                this.fillAsignarContacto.nidmarca = r.nIdMarca;
-                this.fillAsignarContacto.nidmodelo = r.nIdModelo;
+                this.fillAsignarContacto.nidasignarcontacto =   r.nIdAsignacionContactoVendedor;
+                this.fillProveedor.nidproveedor             =   r.nIdProveedor;
+                this.fillProveedor.cproveedornombre         =   r.cProveedorNombre;
+                this.fillAsignarContacto.nidlinea           =   r.nIdLinea;
+                this.fillAsignarContacto.nidmarca           =   r.nIdMarca;
+                this.fillAsignarContacto.nidmodelo          =   r.nIdModelo;
                 this.tabDetalleCotización();
                 this.llenarComboSubLinea();
             },
@@ -3211,9 +3210,9 @@
                 if(!this.fillAsignarContacto.cdireccion){
                     this.mensajeError.push('La dirección no puede estar vacía');
                 }
-                if(!this.fillAsignarContacto.cemail){
-                    this.mensajeError.push('El email no puede estar vacío');
-                }
+                // if(!this.fillAsignarContacto.cemail){
+                //     this.mensajeError.push('El email no puede estar vacío');
+                // }
                 if(this.fillAsignarContacto.nidreferencia == 0 || this.fillAsignarContacto.nidreferencia == ''){
                     this.mensajeError.push('Debes Seleccionar un Tipo Medio');
                 }
@@ -3540,25 +3539,37 @@
                 }
                 // Si el bono es mayor al propio monto del bono, se setea al bono origen
                 if (parseFloat(value) > parseFloat(this.arrayVehiculo[0].BonoFlag)) {
-                    this.$message.error(`El Bono no puede tener una cantidad mayor al Bono Original`);
+                    this.$message.error(`El Bono no puede tener un monto mayor al Bono Original`);
                     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
                     this.checked = false;
                 }
-                //Verifica si es vacio o ingresas 0
+                //Verificar si el monto del bono es vacio o 0
                 if (value == '' || value < 0) {
                     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
                     this.checked = false;
                 }
                 //Calcula el porcentaje del Sobre Precio respecto al Precio de Lista
                 let porcentaje = (parseFloat(this.arrayVehiculo[0].sobrePrecio) * 100) / parseFloat(this.arrayVehiculo[0].PrecioLista);
-
-                //Si el Porcentaje es > al 10% del Precio Lista
+                console.log(porcentaje);
+                // Si el Porcentaje es > al 10% del Precio Lista
                 if (porcentaje > 10) {
                     this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
                     //Si es menor al 10% seteado al Bono Origen
                     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
                     this.checked = false;
                 }
+
+                // let montoLimite = (parseFloat(this.arrayVehiculo[0].PrecioLista) * 10) / 100;
+
+                // console.log(montoLimite);
+                // //Verificar si el SobrePrecio es > que el 10% del PrecioLista
+                // if (parseFloat(this.arrayVehiculo[0].sobrePrecio) > montoLimite) {
+                //      this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
+                //     //Si es mayor al 10% seteado al Bono Origen
+                //     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                //     this.checked = false;
+                // }
+
             },
             //Evalua el cambio de Dscto
             changeDscto(value){

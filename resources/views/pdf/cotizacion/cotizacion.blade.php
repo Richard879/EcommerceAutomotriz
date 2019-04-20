@@ -387,12 +387,12 @@
             <br/>
 
             <table width="100%">
-                @if ($arrayDetalleCotizacion[0]->cJefeVentas == '--')
+                @if ($arrayDetalleCotizacion[0]->cJefeVentas == '------')
                     <tr>
                         <td align="left" style="width: 40%;">
                             <h3>_____________________________</h3>
                             <h3>{{ $arrayDetalleCotizacion[0]->cNombreAsesorComercial }}</h3>
-                            <h5 class="center">JEFE DE VENTAS</h5>
+                            <h5 class="center" style="margin-left: 19.5rem;">JEFE DE VENTAS</h5>
                         </td>
                     </tr>
                 @else
@@ -410,7 +410,6 @@
                         </td>
                     </tr>
                 @endif
-
             </table>
 
             <br/>
