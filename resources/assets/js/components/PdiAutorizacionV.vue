@@ -163,6 +163,8 @@
                                                                                         <th>N° Solicitud</th>
                                                                                         <th>Contacto</th>
                                                                                         <th>VIN/Placa</th>
+                                                                                        <th>Nombre Comercial</th>
+                                                                                        <th>Año Modelo</th>
                                                                                         <th>Estado</th>
                                                                                         <th>Responsable</th>
                                                                                         <th>Acciones</th>
@@ -175,6 +177,8 @@
                                                                                         <td v-text="carta.cNroSolicitud"></td>
                                                                                         <td v-text="carta.cContacto"></td>
                                                                                         <td v-text="carta.cNroVehiculo"></td>
+                                                                                        <td v-text="carta.cNombreComercial"></td>
+                                                                                        <td v-text="carta.nAnioVersion"></td>
                                                                                         <td v-text="carta.cEstado"></td>
                                                                                         <template v-if="carta.cEstadoEvolucion == ''">
                                                                                             <td>------</td>
@@ -629,14 +633,13 @@
                                         <template v-if="arrayVehiculosByCriterio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
-                                                    <template v-if="flagBuscarVehiculoByCriterio == 1">
+                                                    <!--<template v-if="flagBuscarVehiculoByCriterio == 1">
                                                         <template v-if="fillBusquedaSolicitud.nidtipobusqueda == 1">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Seleccione</th>
                                                                     <th>VIN</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Año Fab.</th>
                                                                     <th>Año Modelo</th>
                                                                     <th>Periodo</th>
                                                                     <th>Linea</th>
@@ -653,7 +656,6 @@
                                                                     </td>
                                                                     <td v-text="vehiculo.cNumeroVin"></td>
                                                                     <td v-text="vehiculo.cNombreComercial"></td>
-                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
                                                                     <td v-text="vehiculo.nAnioVersion"></td>
                                                                     <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
                                                                     <td v-text="vehiculo.cNombreLinea"></td>
@@ -667,7 +669,6 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Placa</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Año Fab.</th>
                                                                     <th>Año Modelo</th>
                                                                     <th>Periodo</th>
                                                                     <th>Linea</th>
@@ -683,7 +684,6 @@
                                                                     </td>
                                                                     <td v-text="vehiculo.cPlaca"></td>
                                                                     <td v-text="vehiculo.cNombreComercial"></td>
-                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
                                                                     <td v-text="vehiculo.nAnioVersion"></td>
                                                                     <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
                                                                     <td v-text="vehiculo.cNombreLinea"></td>
@@ -691,15 +691,14 @@
                                                                 </tr>
                                                             </tbody>
                                                         </template>
-                                                    </template>
-                                                    <template v-else>
+                                                    </template>-->
+                                                    <!--<template>-->
                                                         <template v-if="fillNuevaSolicitud.nidtipobusqueda == 1">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Seleccione</th>
                                                                     <th>VIN</th>
                                                                     <th>Nombre Comercial</th>
-                                                                        <th>Año Fab.</th>
                                                                     <th>Año Modelo</th>
                                                                     <th>Periodo</th>
                                                                     <th>Linea</th>
@@ -715,7 +714,6 @@
                                                                     </td>
                                                                     <td v-text="vehiculo.cNumeroVin"></td>
                                                                     <td v-text="vehiculo.cNombreComercial"></td>
-                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
                                                                     <td v-text="vehiculo.nAnioVersion"></td>
                                                                     <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
                                                                     <td v-text="vehiculo.cNombreLinea"></td>
@@ -729,7 +727,6 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Placa</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Año Fab.</th>
                                                                     <th>Año Modelo</th>
                                                                     <th>Periodo</th>
                                                                     <th>Linea</th>
@@ -745,7 +742,6 @@
                                                                     </td>
                                                                     <td v-text="vehiculo.cPlaca"></td>
                                                                     <td v-text="vehiculo.cNombreComercial"></td>
-                                                                    <td v-text="vehiculo.nAnioFabricacion"></td>
                                                                     <td v-text="vehiculo.nAnioVersion"></td>
                                                                     <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
                                                                     <td v-text="vehiculo.cNombreLinea"></td>
@@ -753,7 +749,7 @@
                                                                 </tr>
                                                             </tbody>
                                                         </template>
-                                                    </template>
+                                                    <!--</template>-->
                                                 </table>
                                             </div>
                                             <div class="col-sm-12">
