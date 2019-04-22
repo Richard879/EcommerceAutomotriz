@@ -170,8 +170,8 @@ class ParametroController extends Controller
         $variable       = $request->opcion;
 
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
-        $nIdTipoPar = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdTipoPar     = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
+        $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayTipoParametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   $nIdPar,
@@ -182,7 +182,7 @@ class ParametroController extends Controller
         if($variable == "0"){
             $arrayTipoParametro = $this->arrayPaginator($arrayTipoParametro, $request);
         }
-        return ['arrayTipoParametro'=>$arrayTipoParametro];
+        return ['arrayTipoParametro' => $arrayTipoParametro];
     }
 
     public function GetParametroById(Request $request)

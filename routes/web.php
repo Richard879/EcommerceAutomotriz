@@ -218,6 +218,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/deposito/SetCambiarMontosDepositoByTCE', 'PedidoDepositoController@SetCambiarMontosDepositoByTCE');
     Route::put('/deposito/SetCambiarEstadoIncidencia', 'PedidoDepositoController@SetCambiarEstadoIncidencia');
     Route::get('/deposito/GetListPedidoAprobados', 'PedidoDepositoController@GetListPedidoAprobados');
+    Route::post('/deposito/GetDetalleDeposito', 'PedidoDepositoController@GetDetalleDeposito');
 
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
     Route::get('/tipocambio/GetTipoCambioByFecha', 'TipoCambioController@GetTipoCambioByFecha');

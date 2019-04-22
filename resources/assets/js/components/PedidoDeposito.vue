@@ -224,6 +224,10 @@
                                                                                             <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                        </el-tooltip>&nbsp;
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
@@ -350,7 +354,7 @@
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Tipo Pago</label>
-                                                                                <div class="col-sm-8">
+                                                                                <!-- <div class="col-sm-8">
                                                                                     <div class="input-group">
                                                                                         <input type="text" v-model="formParametrizacionDeposito.cnombretipopago" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
@@ -362,6 +366,20 @@
                                                                                             </el-tooltip>
                                                                                         </div>
                                                                                     </div>
+                                                                                </div> -->
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select v-model="formParametrizacionDeposito.nidtipopago"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE TIPO DE PAGO"
+                                                                                            @change="seleccionarTipoPago">
+                                                                                        <el-option
+                                                                                            v-for="item in arrayTipoPago"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -384,7 +402,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- Codigo 1300456 es cuando se seleccino tipo pago financiado asimismo se selecciono una forma de pago-->
+                                                                        <!-- Codigo 1300456 es cuando se seleccino tipo pago financiado y se selecciono una forma de pago-->
                                                                         <div class="col-sm-6" v-if="formParametrizacionDeposito.nidtipopago == 1300456 && formParametrizacionDeposito.nidformapago">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Forma Pago 2</label>
@@ -418,6 +436,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <template v-if="arrayTipoMovimientoPermisos.includes('1')">
+                                                                <!-- Banco Origen -->
                                                                 <div class="card-header">
                                                                     <h3 class="h4">BANCO ORIGEN</h3>
                                                                 </div>
@@ -515,7 +534,7 @@
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Cambio SUNAT</label>
                                                                                     <div class="col-sm-8">
                                                                                         <div class="input-group">
-                                                                                            <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm" readonly>
+                                                                                            <!-- <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm" readonly>
                                                                                             <div class="input-group-prepend">
                                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                     <div slot="content">Obtener Tipo Cambio SAP </div>
@@ -523,7 +542,8 @@
                                                                                                         <i class="fa-lg fa fa-search"></i>
                                                                                                     </button>
                                                                                                 </el-tooltip>
-                                                                                            </div>
+                                                                                            </div> -->
+                                                                                            <label v-text="formNuevoDeposito.ftipocambiosunat" class="form-control-label-readonly"></label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -594,6 +614,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <!-- Banco Destino -->
                                                                 <div class="card-header">
                                                                     <h3 class="h4">BANCO DESTINO</h3>
                                                                 </div>
@@ -666,6 +687,7 @@
                                                                 </div>
                                                             </template>
                                                             <template v-if="arrayTipoMovimientoPermisos.includes('2')">
+                                                                <!-- Banco Destino sin Inputs-->
                                                                 <div class="card-header">
                                                                     <h3 class="h4">DETALLE DEPÓSITO</h3>
                                                                 </div>
@@ -761,7 +783,8 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm">
+                                                                                        <!-- <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm"> -->
+                                                                                        <label v-text="formNuevoDeposito.ftipocambiosunat" class="form-control-label-readonly"></label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1368,6 +1391,70 @@
                 this.pagination.current_page=page;
                 this.listarPedidos(page);
             },
+            sumatoriaDeposito(pedido){
+                var url = this.ruta + '/deposito/GetMontoTotalDepositos';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCabeceraPedido'     : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion' : 'A'
+                    }
+                }).then(response => {
+                    this.fillDetalleDeposito.nidcabecerapedido          =   pedido.nIdCabeceraPedido;
+                    this.fillDetalleDeposito.cnombrecontacto            =   pedido.cContacto;
+                    this.fillDetalleDeposito.flagMontoTotalCotizacion   =   pedido.fTotalPedido;//Monto del Deposito
+                    this.fillDetalleDeposito.flagMontoTotalDepositos    =   response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
+
+                    // Resto el Total a pagar - El Total Pagado
+                    var flagMontoTotalCotizacion                = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados        = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalDepositos).toFixed(4))
+                    var resultadoMontoCancelar                  = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.fillDetalleDeposito.flagMontoCancelar  = resultadoMontoCancelar;
+                    (this.fillDetalleDeposito.flagMontoCancelar < 0 ) ? this.fillDetalleDeposito.flagMontoCancelar = 0 : this.fillDetalleDeposito.flagMontoCancelar;
+                    this.generarDepositosPDF(pedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generarDepositosPDF(pedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/deposito/GetDetalleDeposito';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(pedido.nIdCabeceraPedido),
+                    'fMontoPedido'          :   this.fillDetalleDeposito.flagMontoTotalCotizacion,
+                    'fMontoDepositado'      :   this.fillDetalleDeposito.flagMontoTotalDepositos,
+                    'fMontoCancelado'       :   this.fillDetalleDeposito.flagMontoCancelar
+                }, config).then(response => {
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // ==========================================================
             // =============  TAB GENERAR DEPOSITO ========================
             tabGenerarDeposito(){
@@ -1495,6 +1582,17 @@
                     }
                 });
             },
+            seleccionarTipoPago(){
+                let me = this;
+                // let data = me.arrayTipoPago.find(x => x.nIdPar === me.formParametrizacionDeposito.nidtipopago).cParNombre;
+                let data = me.arrayTipoPago.find(x => x.nIdPar === me.formParametrizacionDeposito.nidtipopago);
+
+                this.arrayFormaPago2 = [];//Setar forma de pago de la forma seleccionada
+                this.cargarFormasPago();
+                this.ocultarFormularioDeposito();
+                // console.log(data);
+            },
+            /*
             asignarTipoPago(tipopago){
                 this.formParametrizacionDeposito.nidtipopago = tipopago.nIdPar;
                 this.formParametrizacionDeposito.cnombretipopago = tipopago.cParNombre;
@@ -1503,6 +1601,7 @@
                 this.cargarFormasPago();
                 this.ocultarFormularioDeposito();
             },
+            */
             cargarFormasPago(){
                 var url = this.ruta + '/deposito/GetParDsctByParSrc';
                 axios.get(url, {
@@ -1544,14 +1643,16 @@
                 });
             },
             //=============== MOSTRAR FORMULARIO DEPOSITO ========================
-            mostrarFormularioDeposito(){
+            mostrarFormularioDos(){
                 this.getTipoCambio();
+                this.obtenerSapTipoCamcioByFecha();
                 this.llenarComboBanco_Destino();
                 this.llenarComboMoneda_Destino();
                 this.llenarTipoComprobante();
             },
-            mostrarFormularioOtroDeposito(){
+            mostrarFormularioUno(){
                 this.getTipoCambio();
+                this.obtenerSapTipoCamcioByFecha();
                 this.llenarComboBanco_Destino();
                 this.llenarComboMoneda_Destino();
                 this.llenarComboBanco_Origen();
@@ -1795,7 +1896,7 @@
                         }
                     });
                     //Verificar si el Tipo Deposito tiene permiso 01
-                    (this.arrayTipoMovimientoPermisos[0] == '1') ? this.mostrarFormularioOtroDeposito() : this.mostrarFormularioDeposito();
+                    (this.arrayTipoMovimientoPermisos[0] == '1') ? this.mostrarFormularioUno() : this.mostrarFormularioDos();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2187,23 +2288,23 @@
                 this.arrayPedido = [];
             },
             limpiarFormularioDesposito(){
-                this.formNuevoDeposito.nidbanco_origen = '',
-                this.formNuevoDeposito.nidmoneda_origen = '',
-                this.formNuevoDeposito.cnumerocuenta_origen = '',
-                this.formNuevoDeposito.cnumerocuenta_origen = '',
-                this.formNuevoDeposito.nidbanco_destino = '',
-                this.formNuevoDeposito.nidmoneda_destino = '',
-                this.formNuevoDeposito.nidnumerocuenta_destino = '',
-                this.formNuevoDeposito.fmonto = 0,
-                this.formNuevoDeposito.dfechadeposito = '',
-                this.formNuevoDeposito.nnumerooperacion = '',
-                this.formNuevoDeposito.ftipocambiosunat = '',
-                this.attachment = '';
-                this.formNuevoDeposito.nidformapago = '';
-                this.formNuevoDeposito.verificarMonedaTCE = false;
-                this.formNuevoDeposito.cflagtce = false;
-                this.formNuevoDeposito.fmontoTCE = '';
-                this.formNuevoDeposito.cglosa = '';
+                this.formNuevoDeposito.nidbanco_origen          =   '',
+                this.formNuevoDeposito.nidmoneda_origen         =   '',
+                this.formNuevoDeposito.cnumerocuenta_origen     =   '',
+                this.formNuevoDeposito.cnumerocuenta_origen     =   '',
+                this.formNuevoDeposito.nidbanco_destino         =   '',
+                this.formNuevoDeposito.nidmoneda_destino        =   '',
+                this.formNuevoDeposito.nidnumerocuenta_destino  =   '',
+                this.formNuevoDeposito.fmonto                   =   0,
+                this.formNuevoDeposito.dfechadeposito           =   '',
+                this.formNuevoDeposito.nnumerooperacion         =   '',
+                this.formNuevoDeposito.ftipocambiosunat         =   '',
+                this.attachment                                 =   '';
+                this.formNuevoDeposito.nidformapago             =   '';
+                this.formNuevoDeposito.verificarMonedaTCE       =   false;
+                this.formNuevoDeposito.cflagtce                 =   false;
+                this.formNuevoDeposito.fmontoTCE                =   '';
+                this.formNuevoDeposito.cglosa                   =   '';
             },
             limpiarBsqGeneracionDeposito(){
                 this.formParametrizacionDeposito.nidtipopago = '',

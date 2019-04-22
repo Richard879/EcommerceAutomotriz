@@ -31,8 +31,8 @@ class ComisionController extends Controller
 
     public function GetParametroByGrupo(Request $request)
     {
-        $nIdGrupoPar = $request->ngrupoparid;
-        $variable   = $request->opcion;
+        $nIdGrupoPar    =   $request->ngrupoparid;
+        $variable       =   $request->opcion;
 
         $parametro = DB::select('exec usp_Par_GetParametroByGrupo ?', array($nIdGrupoPar));
 

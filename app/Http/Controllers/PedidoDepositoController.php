@@ -347,4 +347,36 @@ class PedidoDepositoController extends Controller
         $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
+
+    public function GetDetalleDeposito(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nIdEmpresa;
+        $nIdSucursal        =   $request->nIdSucursal;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+        $fMontoPedido       =   $request->fMontoPedido;
+        $fMontoDepositado   =   $request->fMontoDepositado;
+        $fMontoCancelado    =   $request->fMontoCancelado;
+
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?',
+                                    [
+                                        $nIdCabeceraPedido,
+                                        Auth::user()->id
+                                    ]);
+
+        $pdf = \PDF::loadView('pdf.pedido.pedidodeposito', [
+                                                        'logo'                      =>  $logo,
+                                                        'hyundai'                   =>  $hyundai,
+                                                        'arrayDepositosPorPedido'   =>  $arrayDepositosPorPedido,
+                                                        'fMontoPedido'              =>  $fMontoPedido,
+                                                        'fMontoDepositado'          =>  $fMontoDepositado,
+                                                        'fMontoCancelado'           =>  $fMontoCancelado
+                                                    ]);
+
+        return $pdf->download('Pedido Deposito -'.$nIdCabeceraPedido.'.pdf');
+    }
 }
