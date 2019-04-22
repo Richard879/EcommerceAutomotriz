@@ -173,7 +173,7 @@
             </tr>
             <tr>
                 <td align="right" colspan="1">
-                    <span>Monto Cancelado</span>
+                    <span>Saldo Cancelado</span>
                     <br>
                     <strong><span>{{ number_format($fMontoCancelado, 2) }}</span></strong>
                 </td>
