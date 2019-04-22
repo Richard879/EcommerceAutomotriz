@@ -1070,7 +1070,7 @@
                 var url = this.ruta + '/entregavehiculo/SetGenerarEntregaVehiculo';
                 axios.post(url, this.form, config).
                 then(response => {
-                    me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
+                    /*me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
 
                     me.arraySapActividad.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
@@ -1090,8 +1090,11 @@
 
                     setTimeout(function() {
                         me.generaSapActividadEntregaVeh();
-                    }, 1600);
-
+                    }, 1600);*/
+                    swal('Se generó la entrega del vehículo');
+                    this.attachments = [];
+                    this.form = new FormData;
+                    this.tabMisInspecciones();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1102,7 +1105,7 @@
                     }
                 });
             },
-            generaSapActividadEntregaVeh(){
+            /*generaSapActividadEntregaVeh(){
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -1206,7 +1209,7 @@
                         }
                     }
                 });
-            },
+            },*/
             /*generaSapLlamadaServicioEntregaVeh(){
                 let me = this;
 
