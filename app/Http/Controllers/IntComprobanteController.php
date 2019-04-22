@@ -51,7 +51,7 @@ class IntComprobanteController extends Controller
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
-                                                                ($det['fDocRate'] == NULL) ? ($det['fDocRate'] = 0) : $det['fDocRate'],
+                                                                $det['fDocRate'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);

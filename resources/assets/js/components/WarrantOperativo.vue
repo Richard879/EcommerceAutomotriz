@@ -680,6 +680,7 @@
                                                         <tr>
                                                             <th>Seleccione</th>
                                                             <th>Nro VIN</th>
+                                                            <th>Proveedor</th>
                                                             <th>Nombre Comercial</th>
                                                             <th>Año Modelo</th>
                                                             <th>Forma Pago</th>
@@ -705,6 +706,7 @@
                                                                 </template>&nbsp;&nbsp;
                                                             </td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
+                                                            <td v-text="vehiculo.cNombreProveedor"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
                                                             <td v-text="vehiculo.nAnioVersion"></td>
                                                             <td v-text="vehiculo.cFormaPago"></td>
@@ -1317,6 +1319,7 @@
                     }
                 });
             },
+            //==============================================================
             //================= INTEGRA WARRANT OPERATIVO ==================
             registrar(){
                 let me = this;
@@ -1342,6 +1345,7 @@
                     if(me.fillWOperativo.nidwarrantoperativo > 0){
                         me.arrayTemporal.map(function(value, key) {
                             me.arraySapAsiento.push({
+                                'cCardCode'     : value.cCardCode,
                                 'cNumeroVin'    : value.cNumeroVin,
                                 'cProjectCode'  : value.cNumeroVin,
                                 'fCredit'       : "0",
@@ -1354,70 +1358,8 @@
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
                         setTimeout(function() {
-                            me.generaSapAsientoContable();
-                        }, 1200);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapAsientoContable(){
-                let me = this;
-                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
-
-                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
-                axios.post(url, {
-                    'data' : me.arraySapAsiento
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ProjectCode){
-                            me.arraySapUpdSgc.push({
-                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
-                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
-                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
-                                'cTipo'         : 'WO',
-                                'cLogRespuesta' : response.data.toString()
-                            });
-                        }
-                    });
-                    //==============================================================================
-                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
-                    setTimeout(function() {
-                        me.registroSgcAsientoContable();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSgcAsientoContable(){
-                let me = this;
-                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1) {
-                        setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 1200);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1429,12 +1371,13 @@
                     }
                 });
             },
+            //===== REGISTRO FACTURA PROVEEDOR =====
             generaSapFacturaProveedor(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
-                    'cCardCode'     : me.formWOperativo.ccarcode, //CODIGO FORUM
+                    'cCardCode'     : me.formWOperativo.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data'          : me.arrayTemporal
@@ -1454,6 +1397,7 @@
                                 'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
                                 'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'fDocRate'          :   parseFloat(me.jsonRespuesta.DocRate),
                                 'cLogRespuesta'     :   response.data.toString()
                             });
 
@@ -1479,7 +1423,7 @@
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
                             setTimeout(function() {
                                 me.registroSgcFacturaProveedor();
-                            }, 3800);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -1501,7 +1445,9 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        me.registroSapBusinessActividad();
+                        setTimeout(function() {
+                            me.registroSapBusinessActividad();
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1550,7 +1496,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1568,9 +1514,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        //me.confirmarWO();
                         me.registroSapBusinessSolucion();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1619,7 +1564,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1638,7 +1583,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getFacturaProveedorActividad();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1679,7 +1624,7 @@
                 });
                 setTimeout(function() {
                     me.registroSapBusinessLlamadaServicio();
-                }, 1200);
+                }, 800);
             },
             registroSapBusinessLlamadaServicio(){
                 let me = this;
@@ -1711,7 +1656,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1729,9 +1674,69 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
+                        me.generaSapAsientoContable();
+                    }, 800);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //====== REGISTRO ASIENTO CONTABLE
+            generaSapAsientoContable(){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
+                axios.post(url, {
+                    'data' : me.arraySapAsiento
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Si el valor de respuesta Code tiene un valor
+                        if(me.jsonRespuesta.ProjectCode){
+                            me.arraySapUpdSgc.push({
+                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                'cTipo'         : 'WO',
+                                'cLogRespuesta' : response.data.toString()
+                            });
+                        }
+                    });
+                    //==============================================================================
+                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                    setTimeout(function() {
+                        me.registroSgcAsientoContable();
+                    }, 800);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcAsientoContable(){
+                let me = this;
+                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1) {
                         me.obtenerWOTblCosto();
-                        //me.confirmarWO();
-                    }, 1200);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1771,7 +1776,7 @@
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoWO();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1900,92 +1905,28 @@
 
                 let me = this;
 
-                me.arraySapAsiento = [];
-                me.arraySapAsiento.push({
-                    'cNumeroVin'    : objWO.cNumeroVin,
-                    'cProjectCode'  : objWO.cNumeroVin,
-                    'fCredit'       : "0",
-                    'fDebit'        : objWO.fValorWarrant,
-                    'fCredit1'      : objWO.fValorWarrant,
-                    'fDebit1'       : "0",
-                    'fTotalCompra'  : objWO.fValorWarrant
-                })
+                me.arrayTemporal = [];
+                me.arrayTemporal.push({
+                    'cNumeroVin'        : objWO.cNumeroVin,
+                    'cProjectCode'      : objWO.cNumeroVin,
+                    'fDocRate'          : objWO.fDocRate,
+                    'fTotalCompra'      : objWO.fValorWarrant,
+                    'cSerieComprobante' : objWO.cSerieComprobante,
+                    'cNumeroComprobante': objWO.cNumeroComprobante
+                });
 
                 //Verifico Si existe Asiento
-                if(objWO.nJdtNum==0){
+                if(objWO.nDocEntryComprobante==0){
                     //==============================================================
                     //================== REGISTRO ARTICULO EN SAP ===============
-                    me.integraSapAsientoContable(objWO);
+                    me.integraSapFacturaProveedor(objWO);
                 }
                 else{
                     //==============================================================
                     //================== REGISTRO COMPRA EN SAP ===============
-                    me.integraSapFacturaProveedor(objWO);
+                    me.integraSapBusinessActividad(objWO);
                 }
-            },
-            integraSapAsientoContable(objWO){
-                let me = this;
-                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
-
-                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
-                axios.post(url, {
-                    'data' : me.arraySapAsiento
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ProjectCode){
-                            me.arraySapUpdSgc.push({
-                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
-                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
-                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
-                                'cTipo'         : 'WO',
-                                'cLogRespuesta' : response.data.toString()
-                            });
-                        }
-                    });
-
-                    //==============================================================================
-                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
-                    setTimeout(function() {
-                        me.actualizaSgcAsientoContable(objWO);
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            actualizaSgcAsientoContable(objWO){
-                let me = this;
-                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1) {
-                         setTimeout(function() {
-                            me.integraSapFacturaProveedor(objWO);
-                        }, 1200);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
+            },            
             integraSapFacturaProveedor(objWO){
                 let me = this;
 
@@ -2024,7 +1965,7 @@
                                 me.arraySapActividad.push({
                                     'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                     'hActivityTime' :   '08:13:00',
-                                    'cCardCode'     :   me.ccustomercode,
+                                    'cCardCode'     :   objWO.cCustomerCode,
                                     'cNotes'        :   'WarranOperativo',
                                     'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                     'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
@@ -2125,7 +2066,7 @@
                         //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                         setTimeout(function() {
                             me.actualizaSgcActividad(objWO);
-                        }, 1200);
+                        }, 800);
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -2141,7 +2082,7 @@
                     //============= REGISTRO SOLUCION EN SAP ============
                     setTimeout(function() {
                             me.integraSapBusinessSolucion(objWO);
-                    }, 1200);
+                    }, 800);
                 }
             },
             actualizaSgcActividad(objWO){
@@ -2151,9 +2092,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        // me.confirmarWF();
                         me.integraSapBusinessSolucion(objWO);
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2200,7 +2140,7 @@
                         //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                         setTimeout(function() {
                             me.actualizaSgcSolucion(objWO);
-                        }, 1200);
+                        }, 800);
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -2216,7 +2156,7 @@
                     //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
                     setTimeout(function() {
                         me.obtenerFacturaProveedorActividad(objWO);
-                    }, 1200);
+                    }, 800);
                 }
             },
             actualizaSgcSolucion(objWO){
@@ -2227,7 +2167,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerFacturaProveedorActividad(objWO);
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2268,7 +2208,7 @@
 
                 setTimeout(function() {
                     me.integraSapBusinessLlamadaServicio(objWO);
-                }, 1200);
+                }, 800);
             },
             integraSapBusinessLlamadaServicio(objWO){
                 let me = this;
@@ -2329,8 +2269,8 @@
                     });
                 }else{
                     setTimeout(function() {
-                        me.confirmarWFDetalle();
-                    }, 1200);
+                        me.integraSapAsientoContable();
+                    }, 800);
                 }
             },
             actualizaSgcLlamadaServicio(objWO){
@@ -2340,8 +2280,8 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.confirmarWFDetalle();
-                    }, 1200);
+                        //me.integraSapAsientoContable();
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2352,7 +2292,86 @@
                     }
                 });
             },
-            confirmarWFDetalle(){
+            //========== Integra Asiento Contable ============
+            integraSapAsientoContable(objWO){
+                let me = this;
+
+                if(objWO.nDocEntryAsiento==0){
+                    me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
+                    me.arraySapAsiento = [];
+                    me.arraySapAsiento.push({
+                        'cCardCode'     : objWO.cCardCodeCompra,
+                        'cNumeroVin'    : objWO.cNumeroVin,
+                        'cProjectCode'  : objWO.cNumeroVin,
+                        'fCredit'       : "0",
+                        'fDebit'        : objWO.fValorWarrant,
+                        'fCredit1'      : objWO.fValorWarrant,
+                        'fDebit1'       : "0",
+                        'fTotalCompra'  : objWO.fValorWarrant
+                    });
+
+                    var url = me.ruta + '/asiento/SapSetAsientoContableWO';
+                    axios.post(url, {
+                        'data' : me.arraySapAsiento
+                    }).then(response => {
+                        me.arraySapRespuesta = [];
+                        me.arraySapUpdSgc = [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta = '';
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Si el valor de respuesta Code tiene un valor
+                            if(me.jsonRespuesta.ProjectCode){
+                                me.arraySapUpdSgc.push({
+                                    'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
+                                    'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
+                                    'nNumber'       : parseInt(me.jsonRespuesta.Number),
+                                    'cTipo'         : 'WO',
+                                    'cLogRespuesta' : response.data.toString()
+                                });
+                            }
+                        });
+
+                        //==============================================================================
+                        //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
+                        setTimeout(function() {
+                            me.actualizaSgcAsientoContable(objWO);
+                        }, 1200);
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+                else{
+                    me.confirmarWODetalle();
+                }
+            },
+            actualizaSgcAsientoContable(objWO){
+                let me = this;
+                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1) {
+                        me.confirmarWODetalle();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            confirmarWODetalle(){
                 let me = this;
                 me.loading.close();
                 $("#myBar").hide();
