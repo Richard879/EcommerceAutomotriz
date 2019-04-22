@@ -116,6 +116,8 @@
                                                                                 <th>Hora Inspección</th>
                                                                                 <th>Placa</th>
                                                                                 <th>Vin</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Año Modelo</th>
                                                                                 <th>Encargado</th>
                                                                                 <th>Ref.Solicitud Entrega</th>
                                                                                 <th>Fecha Entrega</th>
@@ -129,6 +131,8 @@
                                                                                 <td v-text="entrega.cHoraInspeccion"></td>
                                                                                 <td v-text="entrega.cPlaca"></td>
                                                                                 <td v-text="entrega.cNumeroVin"></td>
+                                                                                <td v-text="entrega.cNombreComercial"></td>
+                                                                                <td v-text="entrega.nAnioModelo"></td>
                                                                                 <td v-text="entrega.encargado"></td>
                                                                                 <td v-text="entrega.cNumeroSolicitud"></td>
                                                                                 <td v-text="entrega.dFechaEntregaVehiculo"></td>
@@ -142,8 +146,8 @@
                                                                                         </el-tooltip>
                                                                                     </template>
                                                                                     <template v-if="entrega.cFlagEntregado == null">
-                                                                                        <el-tooltip class="item" :content="'Editar'" effect="dark" placement="top-start">
-                                                                                            <i @click="tabEntregaVehiculo(entrega)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        <el-tooltip class="item" :content="'Entrega Vehículo'" effect="dark" placement="top-start">
+                                                                                            <i @click="tabEntregaVehiculo(entrega)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
                                                                                 </td>
@@ -1070,7 +1074,7 @@
                 var url = this.ruta + '/entregavehiculo/SetGenerarEntregaVehiculo';
                 axios.post(url, this.form, config).
                 then(response => {
-                    me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
+                    /*me.loadingProgressBar("INTEGRANDO ENTREGA VEHÍCULO CON SAP BUSINESS ONE...");
 
                     me.arraySapActividad.push({
                         'dActivityDate' :   moment().format('YYYY-MM-DD'),
@@ -1090,8 +1094,11 @@
 
                     setTimeout(function() {
                         me.generaSapActividadEntregaVeh();
-                    }, 1600);
-
+                    }, 1600);*/
+                    swal('Se generó la entrega del vehículo');
+                    this.attachments = [];
+                    this.form = new FormData;
+                    this.tabMisInspecciones();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1102,7 +1109,7 @@
                     }
                 });
             },
-            generaSapActividadEntregaVeh(){
+            /*generaSapActividadEntregaVeh(){
                 let me = this;
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -1206,7 +1213,7 @@
                         }
                     }
                 });
-            },
+            },*/
             /*generaSapLlamadaServicioEntregaVeh(){
                 let me = this;
 

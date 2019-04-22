@@ -55,13 +55,24 @@ class SapComprobanteController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $data = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
-                                                            [   1300528,
+        //=====================================================================
+        //================== Obtener Cuentas contables ========================
+        //Obtener Cuenta Asociada
+        $dataCcAsociada = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+                                                            [   1300564,
                                                                 '',
-                                                                69
+                                                                72
                                                             ]);
-        //Obtener Cuenta Servicio
-        $cAccountCode   =   $data[0]->cDatoParDescripcion;
+        $cCuentaAsociada   =   $dataCcAsociada[0]->cDatoParDescripcion;
+
+        //Obtener Cuenta Puente Asiento Contable
+        $dataCServicio = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+                                                            [   1300526,
+                                                                '',
+                                                                66
+                                                            ]);
+        $cAccountCode   =   $dataCServicio[0]->cDatoParDescripcion;
+        //=================================================================
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -73,6 +84,7 @@ class SapComprobanteController extends Controller
                     "DocCurrency"   =>  "US$",
                     "DocRate"       =>  $value['fDocRate'],
                     "DocType"       =>  "dDocument_Service",
+                    "ControlAccount"=>  (string)$cCuentaAsociada,
                     "U_SYP_MDMT"    =>  "01",
                     "U_SYP_MDTD"    =>  "WO",
                     "U_SYP_MDSD"    =>  (string)$value['cSerieComprobante'],
