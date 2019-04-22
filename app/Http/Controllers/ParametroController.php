@@ -264,6 +264,30 @@ class ParametroController extends Controller
         return ['arrayParametro'=>$arrayParametro];
     }
 
+    public function GetListParametroByGrupoTodos(Request $request)
+    {
+        $nIdGrupoPar = $request->ngrupoparid;
+        $cParNombre = $request->cparnombre;
+        $nParTipo   = $request->npartipo;
+        $variable   = $request->opcion;
+
+        $nIdGrupoPar = ($nIdGrupoPar == NULL) ? ($nIdGrupoPar = 0) : $nIdGrupoPar;
+        $cParNombre = ($cParNombre == NULL) ? ($cParNombre = '') : $cParNombre;
+        $nParTipo = ($nParTipo == NULL) ? ($nParTipo = 0) : $nParTipo;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayParametro = DB::select('exec [usp_Par_GetListParametroByGrupoTodos] ?, ?, ?',
+                                            [   $nIdGrupoPar,
+                                                $cParNombre,
+                                                $nParTipo
+                                            ]);
+
+        if($variable == "0"){
+            $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
+        }
+        return ['arrayParametro'=>$arrayParametro];
+    }
+
     public function SetParametro(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

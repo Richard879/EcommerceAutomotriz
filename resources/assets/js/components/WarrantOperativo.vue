@@ -424,7 +424,6 @@
                                                                                 <th>OC</th>
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Nombre Comercial</th>
-                                                                                <th>Año Fab.</th>
                                                                                 <th>Año Modelo</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
@@ -443,7 +442,6 @@
                                                                                 <td v-text="temporal.nOrdenCompra"></td>
                                                                                 <td v-text="temporal.cNumeroVin"></td>
                                                                                 <td v-text="temporal.cNombreComercial"></td>
-                                                                                <td v-text="temporal.nAnioFabricacion"></td>
                                                                                 <td v-text="temporal.nAnioVersion"></td>
                                                                                 <td v-text="temporal.cFormaPago"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
@@ -683,7 +681,6 @@
                                                             <th>Seleccione</th>
                                                             <th>Nro VIN</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año Fab.</th>
                                                             <th>Año Modelo</th>
                                                             <th>Forma Pago</th>
                                                             <th>Moneda</th>
@@ -709,7 +706,6 @@
                                                             </td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
-                                                            <td v-text="vehiculo.nAnioFabricacion"></td>
                                                             <td v-text="vehiculo.nAnioVersion"></td>
                                                             <td v-text="vehiculo.cFormaPago"></td>
                                                             <td v-text="vehiculo.cSimboloMoneda"></td>

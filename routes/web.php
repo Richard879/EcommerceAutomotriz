@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/parametro/GetDocumentoJuridica', 'ParametroController@GetDocumentoJuridica');
     Route::get('/parametro/GetParametroById', 'ParametroController@GetParametroById');
     Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
+    Route::get('/parametro/GetListParametroByGrupoTodos', 'ParametroController@GetListParametroByGrupoTodos');
     Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/parametro/GetListParametroByNombre', 'ParametroController@GetListParametroByNombre');
     Route::get('/parametro/GetParametroByNombre', 'ParametroController@GetParametroByNombre');

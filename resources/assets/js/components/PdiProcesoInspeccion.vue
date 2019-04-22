@@ -121,9 +121,11 @@
                                                         <th>Fecha</th>
                                                         <th>Hora</th>
                                                         <th>Solicitud</th>
-                                                        <th>Tipo Movimiento</th>
+                                                        <th>Tpo Mov.</th>
                                                         <th v-text="fillPdi.ncriterio==1 ? 'Nro VIN' : 'Nro Placa'"></th>
                                                         <th v-if="fillPdi.ncriterio==2" v-text="'Nro VIN'"></th>
+                                                        <th>Nombre Comercial</th>
+                                                        <th>Año Modelo</th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
@@ -138,6 +140,8 @@
                                                         <td v-text="pdi.cNombreSolicitud"></td>
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
+                                                        <td v-text="pdi.cNombreComercial"></td>
+                                                        <td v-text="pdi.nAnioModelo"></td>
                                                         <td v-if="fillPdi.ncriterio==2" v-text="pdi.cNumeroVin"></td>
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
@@ -1162,7 +1166,13 @@
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="10">No existen registros!</td>
+                                                        <!-- Si es Entrega Vehiculo y no existe datos, verificar Pdi de Entrada-->
+                                                        <template v-if="formPdi.nidtipoinspeccion == 5">
+                                                            <td colspan="10">No Tiene Pdi de Entrada!</td>
+                                                        </template>
+                                                        <template v-else>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </template>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -2836,7 +2846,7 @@
                     //================== ACTUALIZAR DOCENTRY ===============
                     setTimeout(function() {
                         me.generaSgcMercanciaEntry();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Entrada Mercancía SapB1!");
                     console.log(error);
@@ -2857,7 +2867,7 @@
                     if (response.data[0].nFlagMsje == 1) {
                         setTimeout(function() {
                             me.generaSapActividadPdiEntrada();
-                        }, 1200);
+                        }, 800);
                     } else {
                         swal({
                             type: 'error',
@@ -2908,7 +2918,7 @@
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrada();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -2935,7 +2945,7 @@
                         //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
                         setTimeout(function() {
                              me.obtenerSapTarjetaEquipo();
-                        }, 1600);
+                        }, 800);
                         //me.loading.close();
                         //me.confirmaPdi();
                     }
@@ -2976,7 +2986,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
                                 me.generaSapSolucion();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3057,7 +3067,7 @@
                         //=========== REGISTRO LLAMADA DE SERVICIO PDI ENTRADA EN SAP ==============
                         setTimeout(function() {
                             me.generaSapLlamadaServicioPdiEntrada();
-                        }, 1600);
+                        }, 800);
                     }
                     //Si es Pdi Entrega Vehiculo
                     else if(me.formPdi.nidtipoinspeccion == 5){
@@ -3065,7 +3075,7 @@
                         //=========== REGISTRO LLAMADA DE SERVICIO PDI SALIDA EN SAP ==============
                         setTimeout(function() {
                             me.generaSapLlamadaServicioPdiSalida();
-                        }, 1600);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3107,7 +3117,7 @@
                             //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                             setTimeout(function() {
                                 me.generaSgcLlamadaServicioPdiEntrada();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {

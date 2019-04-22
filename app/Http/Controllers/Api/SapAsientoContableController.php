@@ -31,12 +31,12 @@ class SapAsientoContableController extends Controller
         //Obtener AccountCode
         $cAccountCode1   =   $data1[0]->cDatoParDescripcion;
 
+        //Obtener Cuenta Puente Asiento Contable
         $data2 = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   1300526,
-                                                                'D',
+                                                                '',
                                                                 66
                                                             ]);
-        //Obtener AccountCode
         $cAccountCode2   =   $data2[0]->cDatoParDescripcion;
         //=================================================================
 
