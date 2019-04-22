@@ -2003,7 +2003,7 @@
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
                         me.integraSapBusinessActividad(objWO);
-                    }, 1200);
+                    }, 800);
                 }
             },
             actualizaSgcFacturaProveedor(objWO){
@@ -2014,7 +2014,11 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        me.integraSapBusinessActividad(objWO);
+                        //===================================================
+                        //============= REGISTRO ACTIVIDAD EN SAP ============
+                        setTimeout(function() {
+                                me.integraSapBusinessActividad(objWO);
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2257,7 +2261,7 @@
                         //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                         setTimeout(function() {
                             me.actualizaSgcLlamadaServicio(objWO);
-                        }, 1200);
+                        }, 800);
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -2280,7 +2284,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        //me.integraSapAsientoContable();
+                        me.integraSapAsientoContable();
                     }, 800);
                 }).catch(error => {
                     console.log(error);
