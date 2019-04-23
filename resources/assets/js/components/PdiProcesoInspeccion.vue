@@ -1762,19 +1762,19 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnombre': '',
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnombre'       : '',
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
-                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
-                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
-                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
-                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
-                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
+                    this.arrayPuntoInspeccion           = response.data.arrayPuntoInspeccion.data;
+                    this.paginationModal.current_page   = response.data.arrayPuntoInspeccion.current_page;
+                    this.paginationModal.total          = response.data.arrayPuntoInspeccion.total;
+                    this.paginationModal.per_page       = response.data.arrayPuntoInspeccion.per_page;
+                    this.paginationModal.last_page      = response.data.arrayPuntoInspeccion.last_page;
+                    this.paginationModal.from           = response.data.arrayPuntoInspeccion.from;
+                    this.paginationModal.to             = response.data.arrayPuntoInspeccion.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
