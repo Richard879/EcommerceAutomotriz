@@ -64,21 +64,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <!--<div class="col-sm-6">
+                                            <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Tipo Solicitud</label>
+                                                    <label class="col-sm-4 form-control-label">Tipo Inspección</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="fillPdi.nidtipoinspeccion" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
-                                                            v-for="item in arrayMarca"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                            v-for="item in arrayBusTipoInspeccion"
+                                                            :key="item.nIdTipoInspeccion"
+                                                            :label="item.cNombreTipoInspeccion"
+                                                            :value="item.nIdTipoInspeccion">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
-                                            </div>-->
+                                            </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Estado PDI</label>
@@ -97,8 +97,12 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPdi(1)"><i class="fa fa-search"></i> Buscar</button>
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('pdi','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPdi(1)">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('pdi','registrar')">
+                                                    <i class="fa fa-file-o"></i> Nuevo
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -1370,7 +1374,8 @@
                     cdescripcioncriterio: '',
                     dfechainicio: '',
                     dfechafin: '',
-                    nidestadopdi: ''
+                    nidestadopdi: '',
+                    nidtipoinspeccion: ''
                 },
                 arrayEstatoPdi: [],
                 arrayTipoBusquedaVehiculo: [
@@ -1537,6 +1542,7 @@
             this.llenarComboEstadoPdi();
             this.llenarTipoInspeccion();
             this.obtenerCodigoSapEmpresa();
+            this.llenarTipoInspeccionBusqueda();
         },
         computed:{
             isActived: function(){
@@ -1594,6 +1600,27 @@
             obtenerCodigoSapEmpresa(){
                 this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
+            llenarTipoInspeccionBusqueda(page){
+                var url = this.ruta + '/tipoinspeccion/GetListTipoInspeccion';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'cnombre': '',
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayBusTipoInspeccion = response.data.arrayTipoInspeccion.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             //===================================================================
             //================= BUSCAR PROCESO DE INSPECCION ====================
             llenarComboEstadoPdi(){
@@ -1625,23 +1652,24 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'ncriterio': this.fillPdi.ncriterio,
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'ncriterio'         : this.fillPdi.ncriterio,
                         'cdescripcioncriterio': this.fillPdi.cdescripcioncriterio,
-                        'dfechainicio': this.fillPdi.dfechainicio,
-                        'dfechafin': this.fillPdi.dfechafin,
-                        'nidestadopdi': this.fillPdi.nidestadopdi,
-                        'page': page
+                        'dfechainicio'      : this.fillPdi.dfechainicio,
+                        'dfechafin'         : this.fillPdi.dfechafin,
+                        'nidtipoinspeccion' : this.fillPdi.nidtipoinspeccion,
+                        'nidestadopdi'      : this.fillPdi.nidestadopdi,
+                        'page'              : page
                     }
                 }).then(response => {
-                    this.arrayPdi = response.data.arrayPdi.data;
-                    this.pagination.current_page =  response.data.arrayPdi.current_page;
-                    this.pagination.total = response.data.arrayPdi.total;
+                    this.arrayPdi               = response.data.arrayPdi.data;
+                    this.pagination.current_page= response.data.arrayPdi.current_page;
+                    this.pagination.total       = response.data.arrayPdi.total;
                     this.pagination.per_page    = response.data.arrayPdi.per_page;
                     this.pagination.last_page   = response.data.arrayPdi.last_page;
                     this.pagination.from        = response.data.arrayPdi.from;
-                    this.pagination.to           = response.data.arrayPdi.to;
+                    this.pagination.to          = response.data.arrayPdi.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

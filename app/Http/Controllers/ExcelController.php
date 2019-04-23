@@ -52,7 +52,7 @@ class ExcelController extends Controller
                     'cNombreModelo' => $value[7],
                     'cNombreComercial' => $value[8],
                     'cNombreColor' => ($value[9] == NULL) ? ($value[9] = '') : $value[9],
-                    'nAnioFabricacion' => $value[10],
+                    'nAnioFabricacion' => ($value[10] == NULL) ? ($value[10] = 0) : $value[10],
                     'nAnioVersion' => $value[11],
                     'cSimboloMoneda' => $value[12],
                     'fTotalCompra' => $value[13],

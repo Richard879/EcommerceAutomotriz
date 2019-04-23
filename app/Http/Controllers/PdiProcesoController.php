@@ -175,17 +175,20 @@ class PdiProcesoController extends Controller
         $cDescripcionCiterio    =   $request->cdescripcioncriterio;
         $dFechaInicio           =   $request->dfechainicio;
         $dFechaFin              =   $request->dfechafin;
+        $nIdTipoInspeccion      =   $request->nidtipoinspeccion;
         $nIdEstadoPdi           =   $request->nidestadopdi;
 
+        $nIdTipoInspeccion   = ($nIdTipoInspeccion == NULL) ? ($nIdTipoInspeccion = 0) : $nIdTipoInspeccion;
         $nIdEstadoPdi   = ($nIdEstadoPdi == NULL) ? ($nIdEstadoPdi = 0) : $nIdEstadoPdi;
 
-        $arrayPdi = DB::select('exec [usp_Pdi_GetListPdi] ?, ?, ?, ?, ?, ?, ?',
+        $arrayPdi = DB::select('exec [usp_Pdi_GetListPdi] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nCriterio,
                                                                 $cDescripcionCiterio,
                                                                 $dFechaInicio,
                                                                 $dFechaFin,
+                                                                $nIdTipoInspeccion,
                                                                 $nIdEstadoPdi
                                                             ]);
 
