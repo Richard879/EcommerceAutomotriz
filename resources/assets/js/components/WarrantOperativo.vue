@@ -715,7 +715,7 @@
                                                                     </el-tooltip>
                                                                 </template>&nbsp;&nbsp;
                                                             </td>
-                                                            <td v-text="vehiculo.nDocNum"></td>
+                                                            <td v-text="vehiculo.nDocNumCompra"></td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreProveedor"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
