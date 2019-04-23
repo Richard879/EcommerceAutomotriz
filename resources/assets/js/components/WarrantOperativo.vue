@@ -1370,9 +1370,9 @@
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
-                        setTimeout(function() {
+                        /*setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 800);
+                        }, 800);*/
                     }
                 }).catch(error => {
                     console.log(error);
