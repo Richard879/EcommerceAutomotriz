@@ -943,7 +943,7 @@
                     return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
                         return valorAnterior + parseFloat(valorActual.fComisionSol);
                     }, 0);
-                } else {
+                }else{
                     return 0;
                 }
             },

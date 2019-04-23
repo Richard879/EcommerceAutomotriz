@@ -2025,13 +2025,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayMisPedido = response.data.arrayPedido.data;
-                    this.pagination.current_page =  response.data.arrayPedido.current_page;
-                    this.pagination.total = response.data.arrayPedido.total;
+                    this.arrayMisPedido         = response.data.arrayPedido.data;
+                    this.pagination.current_page= response.data.arrayPedido.current_page;
+                    this.pagination.total       = response.data.arrayPedido.total;
                     this.pagination.per_page    = response.data.arrayPedido.per_page;
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
-                    this.pagination.to           = response.data.arrayPedido.to;
+                    this.pagination.to          = response.data.arrayPedido.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2082,19 +2082,19 @@
             // VER DETALLE PEDIDO
             // =================================================================
             verPedido(pedido){
-                this.fillDetallePedido.nidcabecerapedido = pedido.nIdCabeceraPedido,
-                this.fillDetallePedido.cnumeropedido = pedido.cNumeroPedido,
-                this.fillDetallePedido.cnumerocotizacion = pedido.cNumeroCotizacion,
-                this.fillDetallePedido.cdocumentocliente = pedido.cPerDocumento,
-                this.fillDetallePedido.cnombrecliente = pedido.cContacto,
-                this.fillDetallePedido.nidversionvehiculo = pedido.nIdVersionVeh,
-                this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo,
-                this.fillDetallePedido.cnumerovin = pedido.cNumeroVin,
-                this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
-                this.fillDetallePedido.cnombrevendedor = pedido.cNombreVendedor,
-                this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
-                this.fillDetallePedido.ftotalpedidosoles = pedido.fTotalPedidoSoles,
-                this.fillDetallePedido.ftotalpedidodolares = pedido.fTotalPedidoDolares,
+                this.fillDetallePedido.nidcabecerapedido    = pedido.nIdCabeceraPedido,
+                this.fillDetallePedido.cnumeropedido        = pedido.cNumeroPedido,
+                this.fillDetallePedido.cnumerocotizacion    = pedido.cNumeroCotizacion,
+                this.fillDetallePedido.cdocumentocliente    = pedido.cPerDocumento,
+                this.fillDetallePedido.cnombrecliente       = pedido.cContacto,
+                this.fillDetallePedido.nidversionvehiculo   = pedido.nIdVersionVeh,
+                this.fillDetallePedido.cvehiculo            = pedido.cNombreComercial + ' ' + pedido.nAnioModelo,
+                this.fillDetallePedido.cnumerovin           = pedido.cNumeroVin,
+                this.fillDetallePedido.cnombreproveedor     = pedido.cNombreProveedor,
+                this.fillDetallePedido.cnombrevendedor      = pedido.cNombreVendedor,
+                this.fillDetallePedido.dfechapedido         = pedido.dFechaPedido,
+                this.fillDetallePedido.ftotalpedidosoles    = pedido.fTotalPedidoSoles,
+                this.fillDetallePedido.ftotalpedidodolares  = pedido.fTotalPedidoDolares,
                 this.verDetallePedido(pedido);
                 this.verDocumentosPedido(pedido);
             },
@@ -2103,9 +2103,9 @@
                 var url = this.ruta + '/pedido/GetLstDetallePedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': pedido.nIdCabeceraPedido
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido' : pedido.nIdCabeceraPedido
                     }
                 }).then(response => {
                     this.arrayDetallePedido = response.data.arrayDetallePedido.data;
@@ -2143,10 +2143,10 @@
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
-                        'opcion': 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido' : pedido.nIdCabeceraPedido,
+                        'opcion'            : 1
                     }
                 }).then(response => {
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
@@ -2280,16 +2280,16 @@
             // VER DETALLE COTIZACION
             // =================================================================
             verCotizacion(cotizacion){
-                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
-                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
-                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
-                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
-                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
-                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
-                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
-                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
-                this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
+                this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.ftotalcotizaciondolares= cotizacion.fTotalCotizacionDolares,
                 this.verDetalleCotizacion(cotizacion);
             },
             verDetalleCotizacion(cotizacion){
@@ -2415,20 +2415,20 @@
                 var url = this.ruta + '/pedido/GetLstCompraByIdModelo';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
-                        'cnumerovin' : this.formCompra.cnumerovin,
-                        'page' : page
+                        'cnumerovin'    : this.formCompra.cnumerovin,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
+                    this.arrayCompra            = response.data.arrayCompra.data;
+                    this.pagination.current_page=  response.data.arrayCompra.current_page;
+                    this.pagination.total       = response.data.arrayCompra.total;
                     this.pagination.per_page    = response.data.arrayCompra.per_page;
                     this.pagination.last_page   = response.data.arrayCompra.last_page;
                     this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
+                    this.pagination.to          = response.data.arrayCompra.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -2653,14 +2653,14 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
-                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
-                    'nIdCompra': this.formDocRef.nidcompra,
-                    'cNumeroPedido': 'PEDIDO-001',
-                    'dFechaPedido': moment().format('YYYY-MM-DD'),
-                    'nIdFormaPago': this.formDocRef.nidformapago,
-                    'cGlosa': 'REGISTRO DE PEDIDO'
+                    'nIdCompra'     : this.formDocRef.nidcompra,
+                    'cNumeroPedido' : 'PEDIDO-001',
+                    'dFechaPedido'  : moment().format('YYYY-MM-DD'),
+                    'nIdFormaPago'  : this.formDocRef.nidformapago,
+                    'cGlosa'        : 'REGISTRO DE PEDIDO'
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
