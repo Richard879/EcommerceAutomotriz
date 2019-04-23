@@ -2118,7 +2118,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2139,7 +2139,7 @@
                     //================== REGITRO DE TARJETA EQUIPO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessTarjetaEquipo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2193,7 +2193,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION TRAJETA EQUIPO SGC ===============
                     setTimeout(function() {
                         me.registroSgcTarjetaEquipo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2214,7 +2214,7 @@
                     //================== REGITRO DE LLAMADA SERVICIO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessCompra();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2290,7 +2290,7 @@
                     //================== ACTUALIZAR DOCENTRY ===============
                     setTimeout(function() {
                         me.registroSgcCompra();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2311,7 +2311,7 @@
                     //================== REGITRO DE ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2353,7 +2353,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2372,7 +2372,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.registroSapBusinessSolucion();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2419,7 +2419,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2438,7 +2438,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getOrdenCompraActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2521,7 +2521,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2540,8 +2540,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoCabecera();
-                        // me.verResultados();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2591,7 +2590,7 @@
 
                     setTimeout(function() {
                         me.registroSgcTblCostoCabecera();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
