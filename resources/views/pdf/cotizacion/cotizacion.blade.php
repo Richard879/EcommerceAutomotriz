@@ -67,6 +67,11 @@
             position:relative;
             border: 1px solid;
         }
+        .tblBanco {
+            font-size: .5rem;
+            border: 1px solid black;
+            width: 100% !important;
+        }
     </style>
 </head>
 <body>
@@ -143,11 +148,11 @@
         <br/>
 
         <div class="invoice">
+            <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
+
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
             </div>
-
-            <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
 
             <div class="center">
                 <table width="100%">
@@ -210,7 +215,7 @@
                 </tr>
             </table>
 
-            <table width="100%">
+            <table class="tblBanco" border="2px">
                 <thead style="background-color: lightgray;">
                     <tr align="center" valign="middle" >
                         <th colspan="5">CUENTAS CORRIENTES - CODIGOS DE CUENTA BANCARIA - GPS</th >
@@ -235,7 +240,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <table width="100%">
+            <table class="tblBanco"  border="2px">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>

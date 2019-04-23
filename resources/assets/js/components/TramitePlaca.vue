@@ -1487,6 +1487,7 @@
             },
             obtenerPedidoSeleccionado(pedido){
                 let me = this;
+                me.arrayPedidosChecked = [];
                 me.arrayPedidosChecked.push(pedido)
             },
             obtenerFechaInicioTramite(){
@@ -1620,17 +1621,20 @@
                                 'cRutaDocumento'            :   value.cRutaDocumento,
                                 'cCaracter'                 :   value.cCaracter,
                                 'cFlagDocumento'            :   (value.cFlagDocumento == 0) ? false : true,
-                                'fMontoDocumento'           :   (value.fMontoDocumento == '.0000') ? 0 : value.fMontoDocumento,
+                                'fMontoDocumento'           :   (value.fMontoDocumento == '.0000') ? 0 : ((value.fMontoDocumento == null) ? 0 : value.fMontoDocumento) ,
                                 'nValida'                   :   value.nValida
                             });
                         }
                     });
                     if(me.arrayPedidoDoumentoNew.length) {
                         let acumulador = 0;
+                        let monto = 0;
+
                         //Recorrer y acumular monto
                         me.arrayPedidoDoumentoNew.map(function(value, key){
                             if(value.cFlagDocumento == true){
-                                acumulador = acumulador + parseFloat(value.fMontoDocumento);
+                                monto       =   (value.fMontoDocumento == null) ? 0 : value.fMontoDocumento;
+                                acumulador  =   acumulador + parseFloat(monto);
                             }
                         });
                         me.montoSubTotalTramiteAdicional = acumulador;

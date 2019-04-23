@@ -455,11 +455,11 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     =   $request->nidempresa;
-        $nIdSucursal    =   $request->nidsucursal;
-        $nIdCabeceraPedido  = $request->nidcabecerapedido;
-        $variable   = $request->opcion;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
+        $variable           =   $request->opcion;
+        $variable           =   ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
                                     [
