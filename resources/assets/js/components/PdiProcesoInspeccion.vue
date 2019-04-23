@@ -3036,7 +3036,6 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.EquipmentCardNum){
                             me.ccustomercode = me.jsonRespuesta.CustomerCode.toString();
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
@@ -3097,7 +3096,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
                                 me.generaActualizarSolucion();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3443,6 +3442,7 @@
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrega();
                             }, 800);
