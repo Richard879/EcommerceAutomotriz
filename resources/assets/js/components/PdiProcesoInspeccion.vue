@@ -2767,14 +2767,16 @@
                     //Si es Pdi Entrada
                     if(me.formPdi.nidtipoinspeccion == 4){
                         setTimeout(function() {
-                            me.generaSapMercanciaEntry();
-                        }, 1600);
+                            //me.generaSapMercanciaEntry();
+                            me.generaSapActividadPdiEntrada();
+                        }, 800);
                     }
                     //Si es Pdi Entrega Vehiculo
                     else if(me.formPdi.nidtipoinspeccion == 5){
                         setTimeout(function() {
-                            me.generaSapMercanciaExit();
-                        }, 1600);
+                            //me.generaSapMercanciaExit();
+                            me.generaSapActividadPdiEntrega();
+                        }, 800);
                     }
                     else{
                         me.confirmaPdi();
@@ -2791,7 +2793,7 @@
             },
             //=========================================================
             //=============== Generar Sap Entrada Mercancia ===========
-            generaSapMercanciaEntry(){
+            /*generaSapMercanciaEntry(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -2912,9 +2914,33 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapActividadPdiEntrada(){
                 let me = this;
+
+                //===============================================================================
+                me.loadingProgressBar("INTEGRANDO PDI ENTRADA CON SAP BUSINESS ONE...");
+                me.arraySapActividad = [];
+                me.arraySapActividad.push({
+                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                    'hActivityTime' :   moment().format('HH:mm:ss'),
+                    'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
+                    'cNotes'        :   'PdiEntrada',
+                    'nDocEntry'     :   0,
+                    'nDocNum'       :   0,
+                    'nDocType'      :   '59',
+                    'nDuration'     :   '15',
+                    'cDurationType' :   'du_Minuts',
+                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                    'cReminder'     :   'tYES',
+                    'nReminderPeriod':  '15',
+                    'cReminderType' :   'du_Minuts',
+                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                    'hStartTime'    :   moment().format('HH:mm:ss')
+                });
+                //==============================================================================
+
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
                 var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
@@ -2974,8 +3000,6 @@
                         setTimeout(function() {
                              me.obtenerSapTarjetaEquipo();
                         }, 800);
-                        //me.loading.close();
-                        //me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3179,7 +3203,7 @@
             },
             //==============================================================
             //================ Generar Sap Entrega Vehiculo ================
-            generaSapMercanciaExit(){
+            /*generaSapMercanciaExit(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -3324,7 +3348,7 @@
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiSalida();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3361,10 +3385,12 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapActividadPdiEntrega(){
                 let me = this;
 
+                //=================================================================================
+                me.loadingProgressBar("INTEGRANDO PDI ENTREGA CON SAP BUSINESS ONE...");
                 me.arraySapActividad = [];
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
@@ -3384,6 +3410,7 @@
                     'dStartDate'    :   moment().format('YYYY-MM-DD'),
                     'hStartTime'    :   moment().format('HH:mm:ss')
                 });
+                //=====================================================================================
 
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -3415,7 +3442,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrega();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3441,9 +3468,7 @@
                         //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
                         setTimeout(function() {
                              me.obtenerSapTarjetaEquipo();
-                        }, 1600);
-                        //me.loading.close();
-                        //me.confirmaPdi();
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3485,7 +3510,7 @@
                             //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                             setTimeout(function() {
                                 me.generaSgcLlamadaServicioPdiSalida();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
