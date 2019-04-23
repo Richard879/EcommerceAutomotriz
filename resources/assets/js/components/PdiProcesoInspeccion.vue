@@ -1383,6 +1383,7 @@
                     { value: '2', text: 'PLACA'}
                 ],
                 arrayPdi: [],
+                arrayBusTipoInspeccion: [],
                 // ============ Variables Flag Tipo Inspeccion =================
                 nflagalmacen: 0,
                 nflagaccesorio: 0,
@@ -2928,7 +2929,7 @@
                     'cNotes'        :   'PdiEntrada',
                     'nDocEntry'     :   0,
                     'nDocNum'       :   0,
-                    'nDocType'      :   '59',
+                    'nDocType'      :   0,
                     'nDuration'     :   '15',
                     'cDurationType' :   'du_Minuts',
                     'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
@@ -2962,8 +2963,10 @@
                                 'nActividadTipo'    : 4,
                                 'cActividadTipo'    : 'PdiEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
+                                //'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
+                                //'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
+                                'nDocEntry'         : 0,
+                                'nDocNum'           : 0,
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
