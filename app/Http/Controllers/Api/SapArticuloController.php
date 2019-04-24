@@ -195,7 +195,7 @@ class SapArticuloController extends Controller
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
         $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
-        $nidaniofabricacion     =   $request->fillNuevoVehiculo['nidaniofabricacion'];
+        $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
