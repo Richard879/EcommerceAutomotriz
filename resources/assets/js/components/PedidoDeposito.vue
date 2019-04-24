@@ -781,7 +781,7 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio SUNAT</label>
                                                                                     <div class="col-sm-8">
                                                                                         <!-- <input type="number" v-model="formNuevoDeposito.ftipocambiosunat" class="form-control form-control-sm"> -->
                                                                                         <label v-text="formNuevoDeposito.ftipocambiosunat" class="form-control-label-readonly"></label>
@@ -1824,7 +1824,7 @@
             obtenerSapTipoCamcioByFecha(){
                 let me = this;
 
-                me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
+                //me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
 
                 var url = me.ruta + '/tipocambio/SapGetTipoCambioByFecha';
 
@@ -1841,7 +1841,7 @@
                         });
                     }
 
-                    me.loading.close();
+                    //me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
