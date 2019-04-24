@@ -412,7 +412,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayTemporal.length">
+                                                            <template v-if="arrayWarrant.length">
                                                                 <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -431,20 +431,20 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
+                                                                            <tr v-for="(wo, index)  in arrayWarrant" :key="wo.nIdCompra">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Eliminar {{ temporal.cNumeroVin }}</div>
+                                                                                        <div slot="content">Eliminar {{ wo.cNumeroVin }}</div>
                                                                                         <i @click="eliminaItemTempVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </el-tooltip>
                                                                                 </td>
-                                                                                <td v-text="temporal.nIdCompra"></td>
-                                                                                <td v-text="temporal.cNumeroVin"></td>
-                                                                                <td v-text="temporal.cNombreComercial"></td>
-                                                                                <td v-text="temporal.nAnioVersion"></td>
-                                                                                <td v-text="temporal.cFormaPago"></td>
-                                                                                <td v-text="temporal.cSimboloMoneda"></td>
-                                                                                <td v-text="temporal.fTotalCompra"></td>
+                                                                                <td v-text="wo.nIdCompra"></td>
+                                                                                <td v-text="wo.cNumeroVin"></td>
+                                                                                <td v-text="wo.cNombreComercial"></td>
+                                                                                <td v-text="wo.nAnioVersion"></td>
+                                                                                <td v-text="wo.cFormaPago"></td>
+                                                                                <td v-text="wo.cSimboloMoneda"></td>
+                                                                                <td v-text="wo.fTotalCompra"></td>
                                                                                 <td>
                                                                                     <el-date-picker
                                                                                         v-model="arrayIndexFecInicio[index]"
@@ -454,8 +454,8 @@
                                                                                         placeholder="dd/mm/aaaa">
                                                                                     </el-date-picker>
                                                                                 </td>
-                                                                                <td v-text="temporal.fComisionDolar"></td>
-                                                                                <td v-text="temporal.fComisionSol"></td>
+                                                                                <td v-text="wo.fComisionDolar"></td>
+                                                                                <td v-text="wo.fComisionSol"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -786,16 +786,8 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                ccustomercode: '',
-                arrayEstadoWarrant: [],
-                arrayWOperativo: [],
-                arrayWOperativoDetalle: [],
-                arrayTemporal: [],
-                arrayVersionVehiculo: [],
-                arrayIndexFecInicio: [],
-                fTotalValor: 0,
-                fTotalComisionSol: 0,
-                fTotalComisionDolar: 0,
+                ccustomercode: '',                
+                //================ TAB BUSCAR WO ==============
                 fillWOperativo:{
                     nidwarrantoperativo: 0,
                     nidestadowarrant: '',
@@ -807,6 +799,10 @@
                     cnumerovin: '',
                     nidestadowarrant: ''
                 },
+                arrayWOperativo: [],
+                arrayWOperativoDetalle: [],
+                arrayEstadoWarrant: [],
+                //============= TAB GENERAR WO ===============
                 formWOperativo:{
                     nidproveedor: 0,
                     cproveedornombre: '',
@@ -815,10 +811,19 @@
                     dfechafin: '',
                     ccarcode: ''
                 },
+                arrayWarrant: [],
+                arrayTemporal: [],
+                arrayIndexFecInicio: [],
+                fTotalValor: 0,
+                fTotalComisionSol: 0,
+                fTotalComisionDolar: 0,
+                //=============== MODAL VEHICULOS ==============
                 fillVersionVehiculo:{
                     cnumerovin: '',
                     cnombrecomercial: ''
                 },
+                arrayVersionVehiculo: [],
+                //=============== MODAL PROVEEDOR ==============
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
@@ -919,8 +924,8 @@
             },
             totalVehiculo: function(){
                 let me = this;
-                if(me.arrayTemporal.length > 0) {
-                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                if(me.arrayWarrant.length > 0) {
+                    return me.arrayWarrant.reduce(function(valorAnterior, valorActual){
                         return valorAnterior + parseFloat(valorActual.fTotalCompra);
                     }, 0);
                 } else {
@@ -929,8 +934,8 @@
             },
             totalComisionDolar: function(){
                 let me = this;
-                if(me.arrayTemporal.length > 0) {
-                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                if(me.arrayWarrant.length > 0) {
+                    return me.arrayWarrant.reduce(function(valorAnterior, valorActual){
                         return valorAnterior + parseFloat(valorActual.fComisionDolar);
                     }, 0);
                 } else {
@@ -939,8 +944,8 @@
             },
             totalComisionSol: function(){
                 let me = this;
-                if(me.arrayTemporal.length > 0) {
-                    return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
+                if(me.arrayWarrant.length > 0) {
+                    return me.arrayWarrant.reduce(function(valorAnterior, valorActual){
                         return valorAnterior + parseFloat(valorActual.fComisionSol);
                     }, 0);
                 }else{
@@ -1223,25 +1228,30 @@
                 this.listarVersionVehiculo(page);
             },
             asignarVehiculo(objCompra){
-                if(this.encuentra(objCompra)) {
+                let me = this;
+                if(me.encuentra(objCompra)) {
                     swal({
                         type: 'error',
                         title: 'Error...',
                         text: 'El Vehículo seleccionado ya se encuentra agregado!',
                     })
                 } else {
-                    this.arrayTemporal.push(objCompra);
+                    me.arrayWarrant.push(objCompra);
                     toastr.success('Se Agregó Vehículo ' + objCompra.cNumeroVin);
+
+                    me.arrayWarrant.map(function(value, key){
+                        me.arrayIndexFecInicio[key] = !me.arrayIndexFecInicio[key] ? moment().format('YYYY-MM-DD') : me.arrayIndexFecInicio[key]
+                    });
                 }
             },
             eliminaItemTempVehiculo(index){
-                this.$delete(this.arrayTemporal, index);
+                this.$delete(this.arrayWarrant, index);
                 toastr.success('Se Eliminó Item Vehículo');
             },
             encuentra(objCompra){
                 var sw=0;
-                for(var i=0;i<this.arrayTemporal.length;i++){
-                    if(this.arrayTemporal[i].nIdCompra==objCompra.nIdCompra){
+                for(var i=0;i<this.arrayWarrant.length;i++){
+                    if(this.arrayWarrant[i].nIdCompra==objCompra.nIdCompra){
                         sw=true;
                     }
                 }
@@ -1337,6 +1347,21 @@
             registrar(){
                 let me = this;
 
+                me.arrayTemporal = [];
+
+                me.arrayWarrant.map(function(value, key){
+                        me.arrayTemporal.push({
+                            'nIdCompra'         : value.nIdCompra,
+                            'cNumeroVin'        : value.cNumeroVin,
+                            'fTotalCompra'      : value.fTotalCompra,
+                            'fComisionDolar'    : value.fComisionDolar,
+                            'fComisionSol'      : value.fComisionSol,
+                            'fValorTipoCambio'  : value.fValorTipoCambio,
+                            'fValorBeneficio'   : !me.arrayIndexFecInicio[key] ? '' : me.arrayIndexFecInicio[key]
+                        });
+                });
+
+
                 if(me.validar()){
                     me.accionmodal=1;
                     me.modal = 1;
@@ -1370,9 +1395,9 @@
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
-                        /*setTimeout(function() {
+                        setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 800);*/
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1900,16 +1925,24 @@
                 me.limpiarFormulario();
             },
             validar(){
-                this.error = 0;
-                this.mensajeError =[];
+                let me = this;
+                me.error = 0;
+                me.mensajeError =[];
 
-                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
-                    this.mensajeError.push('Debe seleecionar un Proveedor');
+                if(me.formWOperativo.nidproveedor == 0 || !me.formWOperativo.nidproveedor){
+                    me.mensajeError.push('Debe seleecionar un Proveedor');
                 };
-                if(this.mensajeError.length){
-                    this.error = 1;
+                if(me.arrayTemporal.length > 0){
+                    me.arrayTemporal.map(function(value, key){
+                        if(!value.dFechaInicio){
+                            me.mensajeError.push('Seleccione Fecha para ' + value.cNumeroVin);
+                        }
+                    });
                 }
-                return this.error;
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
             },
             //===============================================================
             //=============== REGISTRO SAP INDIVIDUAL POR VIN ===============
