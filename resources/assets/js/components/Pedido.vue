@@ -945,7 +945,7 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Forma de Pago</label>
+                                                                                                    <label class="col-sm-4 form-control-label">* Tipo de Cancelación</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <el-select v-model="formDocRef.nidformapago" filterable clearable placeholder="SELECCIONE" @change="changeFormaPago()" >
                                                                                                             <el-option
