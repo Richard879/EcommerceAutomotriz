@@ -177,6 +177,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/gescontacto/desactivarSeguimiento', 'GestionContactoController@desactivarSeguimiento');
     Route::post('/gescontacto/SetAmpliacionFechaVenceAsignacion', 'GestionContactoController@SetAmpliacionFechaVenceAsignacion');
     Route::post('/gescontacto/UpdCardCodeContacto', 'GestionContactoController@UpdCardCodeContacto');
+    Route::post('/gescontacto/SetPatchContactoPerNatural', 'GestionContactoController@SetPatchContactoPerNatural');
 
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
