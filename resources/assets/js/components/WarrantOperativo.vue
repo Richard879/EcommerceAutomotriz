@@ -456,7 +456,7 @@
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
-                                                                                        @change="cambiarFechaVence()"
+                                                                                        @change="cambiarFechaVence(wo)"
                                                                                         placeholder="dd/mm/aaaa">
                                                                                     </el-date-picker>
                                                                                 </td>
@@ -1280,7 +1280,7 @@
                         'nidcompra'     : objCompra.nIdCompra,
                         'cnumerovin'    : objCompra.cNumeroVin,
                         'nidlinea'      : objCompra.nIdLinea,
-                        'dfechainicio'  : moment().format('YYYY-MM-DD')
+                        'dfechainicio'  : objCompra.dFechaInicio ? objCompra.dFechaInicio : moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     me.arrayWarrant.map(function(value, key){
@@ -1311,8 +1311,8 @@
                 }
                 return sw;
             },
-            cambiarFechaVence(){
-                alert('aqui');
+            cambiarFechaVence(objCompra){
+                this.obtnerFechaVencimiento(objCompra);
             },
             //================= INTEGRA FACTURA DE RESERVA ==================
             validarSapFacturaReserva(objVehiculo){
