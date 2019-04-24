@@ -1414,8 +1414,8 @@
                             'fComisionDolar'    : value.fComisionDolar,
                             'fComisionSol'      : value.fComisionSol,
                             'fValorTipoCambio'  : value.fValorTipoCambio,
-                            'dFechaInicio'      : !me.arrayIndexFecInicio[key] ? '' : me.arrayIndexFecInicio[key],
-                            'dFechaFin'         : !me.arrayIndexFecFin[key] ? ''    : me.arrayIndexFecFin[key]
+                            'dFechaInicio'      : value.dFechaInicio,
+                            'dFechaFin'         : value.dFechaFin
                         });
                 });
 
