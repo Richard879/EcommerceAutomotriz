@@ -35,14 +35,17 @@ class ParParametroController extends Controller
         $nIdPar = $request->nidpar;
         $nIdGrupoPar = $request->nidgrupopar;
         $nIdSubGrupoPar = $request->nidsubgrupopar;
+        $cParNombre = $request->cparnombre;
         $variable   = $request->opcion;
 
+        $cParNombre = ($cParNombre == NULL) ? ($cParNombre = '') : $cParNombre;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayParParametro = DB::select('exec [usp_ParParametro_GetListParametroByGrupoTodos] ?, ?, ?', 
+        $arrayParParametro = DB::select('exec [usp_ParParametro_GetListParametroByGrupoTodos] ?, ?, ?, ?', 
                                                                 [   $nIdPar, 
                                                                     $nIdGrupoPar,
-                                                                    $nIdSubGrupoPar
+                                                                    $nIdSubGrupoPar,
+                                                                    $cParNombre,
                                                                 ]);
         if($variable == "0"){
             $arrayParParametro = ParametroController::arrayPaginator($arrayParParametro, $request);

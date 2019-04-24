@@ -126,7 +126,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Detalle {{ operativo.nIdWarrantOperativo }}</div>
-                                                                                            <i @click="asignaIdWOperativo(operativo)" :style="'color:#796AEE'" class="fa-spin fa-md fa fa-eye"></i>
+                                                                                            <i @click="asignaIdWOperativo(operativo)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
                                                                                 </tr>

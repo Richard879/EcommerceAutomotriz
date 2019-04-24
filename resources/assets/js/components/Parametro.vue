@@ -24,7 +24,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Grupo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" >
+                                                        <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" v-on:change="listarParametroByGrupo(1)">
                                                             <el-option
                                                             v-for="item in arrayGrupoParametro"
                                                             :key="item.nIdGrupoPar"

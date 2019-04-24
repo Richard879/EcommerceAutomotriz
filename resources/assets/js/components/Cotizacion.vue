@@ -3232,6 +3232,7 @@
                 axios.get(url, {
                     params: {
                         'nidlinea': this.fillAsignarContacto.nidlinea,
+                        'nidmodelo': this.fillAsignarContacto.nidmodelo,
                         'opcion': 1
                     }
                 }).then(response => {
