@@ -179,6 +179,10 @@
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
                                                                                             <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
@@ -2122,83 +2126,180 @@
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
-                                            <vs-divider border-style="solid" color="dark">
-                                                Datos Personales
-                                            </vs-divider>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                        <div class="col-sm-8">
-                                                            <input  type="text"
-                                                                    v-model="fillEditarContacto.cnrodocumento"
-                                                                    @keyup.enter="actualizarContacto()"
-                                                                    class="form-control form-control-sm">
+                                            <template v-if="cFlagOp = 1">
+                                                <vs-divider border-style="solid" color="dark">
+                                                    Datos Personales
+                                                </vs-divider>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnrodocumento"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.capellidopaterno"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                        <div class="col-sm-8">
-                                                            <input  type="text"
-                                                                    v-model="fillEditarContacto.capellidopaterno"
-                                                                    @keyup.enter="actualizarContacto()"
-                                                                    class="form-control form-control-sm">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.capellidomaterno"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                        <div class="col-sm-8">
-                                                            <input  type="text"
-                                                                    v-model="fillEditarContacto.capellidomaterno"
-                                                                    @keyup.enter="actualizarContacto()"
-                                                                    class="form-control form-control-sm">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                            <div class="col-sm-8">
+                                                                <el-date-picker
+                                                                    v-model="fillEditarContacto.dfecnacimiento"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa">
+                                                                </el-date-picker>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                        <div class="col-sm-8">
-                                                            <input  type="text"
-                                                                    v-model="fillEditarContacto.cnombre"
-                                                                    @keyup.enter="actualizarContacto()"
-                                                                    class="form-control form-control-sm">
+                                                <vs-divider border-style="solid" color="dark">
+                                                    Datos Contacto
+                                                </vs-divider>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Email</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.cmailprincipal" class="form-control form-control-sm">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                        <div class="col-sm-8">
-                                                            <el-date-picker
-                                                                v-model="fillEditarContacto.dfecnacimiento"
-                                                                type="date"
-                                                                value-format="yyyy-MM-dd"
-                                                                format="dd/MM/yyyy"
-                                                                placeholder="dd/mm/aaaa">
-                                                            </el-date-picker>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Celular</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ncelular" class="form-control form-control-sm">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <vs-divider border-style="solid" color="dark">
-                                                Datos Contacto
-                                            </vs-divider>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
-                                                        <i class="fa fa-edit"></i> ACTUALIZAR
-                                                    </button>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                            <i class="fa fa-edit"></i> ACTUALIZAR
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </template>
+                                            <template v-else>
+                                                <vs-divider border-style="solid" color="dark">
+                                                    Datos Personales
+                                                </vs-divider>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnrodocumento"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Razón Social</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <vs-divider border-style="solid" color="dark">
+                                                    Datos Contacto
+                                                </vs-divider>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Email</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.cmailprincipal" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Celular</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ncelular" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                            <i class="fa fa-edit"></i> ACTUALIZAR
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </template>
                                         </form>
                                     </div>
                                 </div>
@@ -2244,11 +2345,17 @@
                     nidcontacto: '',
                     nidpernatural: '',
                     nidperjudirica: '',
+                    //Datos Personales
                     cnrodocumento: '',
                     capellidopaterno: '',
                     capellidomaterno: '',
                     cnombre: '',
-                    dfecnacimiento: ''
+                    dfecnacimiento: '',
+                    //Datos Contacto
+                    cdireccion: '',
+                    cmailprincipal: '',
+                    ncelular: '',
+                    cFlagOp: ''
                 },
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
@@ -2608,13 +2715,17 @@
             actualizarContacto(){
                 var url = this.ruta + '/gescontacto/SetPatchContactoPerNatural';
                 axios.post(url, {
-                    'nIdContacto'       : this.fillEditarContacto.nidcontacto,
-                    'nIdPernatural'     : this.fillEditarContacto.nidpernatural,
-                    'cNumeroDocumento'  : String(this.fillEditarContacto.cnrodocumento),
-                    'cNombre'           : this.fillEditarContacto.cnombre.toUpperCase().toString(),
-                    'cApellidoPaterno'  : this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
-                    'cApellidoMaterno'  : this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
-                    'dFechaNacimiento'  : this.fillEditarContacto.dfecnacimiento
+                    'cFlagOp'           :   this.cFlagOp,
+                    'nIdContacto'       :   this.fillEditarContacto.nidcontacto,
+                    'nIdPernatural'     :   this.fillEditarContacto.nidpernatural,
+                    'nIdPerjudirica'     :   this.fillEditarContacto.nidperjudirica,
+                    'cNumeroDocumento'  :   String(this.fillEditarContacto.cnrodocumento),
+                    'cNombre'           :   this.fillEditarContacto.cnombre.toUpperCase().toString(),
+                    'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
+                    'cApellidoMaterno'  :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
+                    'cDireccion'        :   this.fillEditarContacto.cdireccion,
+                    'cEmail'            :   this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
+                    'nTelefonoMovil'    :   this.fillEditarContacto.ncelular
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Los Datos de la Persona Natural se Actualizaron Correctamente');
@@ -2635,13 +2746,18 @@
                 });
             },
             limpiarModalEditarPersona(){
+                this.fillEditarContacto.cFlagOp             = '';
                 this.fillEditarContacto.nidcontacto         = '';
                 this.fillEditarContacto.nidpernatural       = '';
+                this.fillEditarContacto.nidperjudirica      = '';
                 this.fillEditarContacto.cnrodocumento       = '';
                 this.fillEditarContacto.capellidopaterno    = '';
                 this.fillEditarContacto.capellidomaterno    = '';
-                this.fillEditarContacto.cnombre            = '';
+                this.fillEditarContacto.cnombre             = '';
                 this.fillEditarContacto.dfecnacimiento      = '';
+                this.fillEditarContacto.cdireccion          = '';
+                this.fillEditarContacto.cmailprincipal      = '';
+                this.fillEditarContacto.ncelular            = '';
             },
             // ==========================================================
             // =============  TAB CARTERA DEL MES =======================
@@ -4314,7 +4430,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'contacto':
                     {
                         switch(accion){
@@ -4336,19 +4453,42 @@
                             }
                             case 'editar':
                             {
+                                this.fillEditarContacto.cFlagOp = 1;
                                 this.accionmodal=6;
                                 this.modal = 1;
                                 this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                //Datos Personales
                                 this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
                                 this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
                                 this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                 this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
                                 this.fillEditarContacto.cnombre             =   data.cNombre;
                                 this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
+                                //Datos de Contacto
+                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                break;
+                            }
+                            case 'editarJ':
+                            {
+                                this.fillEditarContacto.cFlagOp = 2;
+                                this.accionmodal=6;
+                                this.modal = 1;
+                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                //Datos Personales
+                                this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
+                                this.fillEditarContacto.cnombre             =   data.cRazonSocial;
+                                //Datos de Contacto
+                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                     case 'ubigeo':
                     {
                         switch(accion){
@@ -4359,7 +4499,8 @@
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                 }
             },
             // ===========================================================
