@@ -30,11 +30,6 @@
                                             <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
                                         </a>
                                     </li>-->
-                                    <!--<li class="nav-item">
-                                        <a class="nav-link" href="#TabForum" @click="tabForum()" role="tab" data-toggle="tab">
-                                            <i class="fa fa fa-signal"></i> LÍNEA FORUM
-                                        </a>
-                                    </li>-->
                                 </ul>
 
                                 <div class="tab-content">
@@ -536,7 +531,6 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">EN MANTENIMIENTO</div>
 
                                     <div role="tabpanel" class="tab-pane fade" id="TabLineaCredito">
                                         <section class="forms">
@@ -648,162 +642,6 @@
                                                                     </tbody>
                                                                 </table>
                                                             </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
-
-                                    <div role="tabpanel" class="tab-pane fade" id="TabForum">
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">GENERAR WARRANT OPERATIVO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formWOperativo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Proveedor </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedorWO','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-8">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Descargar Formato</label>
-                                                                            <div class="col-sm-8">
-                                                                                <a href="#" @click="descargaFormatoForum">
-                                                                                    <i class="fa-md fa fa-file-excel-o"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-8">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Importar Forum</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="file" id="file-upload" @change="getFileForum" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="row">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileForum()">
-                                                                                <i class="fa fa-retweet"></i> Procesar
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayWOperativo.length">
-                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Modelo</th>
-                                                                                    <th>VIN</th>
-                                                                                    <th>Nro. Motor</th>
-                                                                                    <th>Color</th>
-                                                                                    <th>Moneda</th>
-                                                                                    <th>Monto</th>
-                                                                                    <th>Fecha</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="(forum, index) in arrayWOperativo" :key="forum.cNumeroVin">
-                                                                                    <td>
-                                                                                        <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
-                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
-                                                                                    </td>
-                                                                                    <td v-text="forum.cNombreModelo"></td>
-                                                                                    <td v-text="forum.cNumeroVin"></td>
-                                                                                    <td v-text="forum.cNumeroMotor"></td>
-                                                                                    <td v-text="forum.cNombreColor"></td>
-                                                                                    <td v-text="forum.cMoneda"></td>
-                                                                                    <td v-text="forum.fTotalCompra"></td>
-                                                                                    <td v-text="forum.dFecha"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-7">
-                                                                            </div>
-                                                                            <div class="col-sm-5">
-                                                                                <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarForum()">
-                                                                                <i class="fa fa-save"></i> Registrar
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <table>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td colspan="10">No existen registros!</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </template>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1486,108 +1324,6 @@
                 </div>
             </div>
 
-            <!-- MODAL Proveedores WO -->
-            <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <form @submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarProveedorWO(1)" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarProveedorWO(1)">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <br/>
-                                        <template v-if="arrayProveedorForum.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="proveedor in arrayProveedorForum" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedorWO(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedorWO(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedorWO(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </main>
     </transition>
 </template>
@@ -1671,19 +1407,6 @@
                 arrayLineaCredito: [],
                 arrayTempLineaCredito: [],
                 checkBoxLinea: [],
-                // ============================================================
-                // =========== TAB FORUM ============
-                formWOperativo:{
-                    nidproveedor: 0,
-                    cproveedornombre: '',
-                    cnrowarrant: '',
-                    dfechainicio: '',
-                    dfechafin: '',
-                    ccarcode: ''
-                },
-                arrayProveedorForum: [],
-                arrayWOperativo: [],
-                arrayTemporal: [],
                 // ==========================================================
                 // =============  BUSCAR PROVEEDORES ========================
                 fillProveedor:{
@@ -1745,7 +1468,6 @@
             this.llenarComboMarca();
             this.llenarComboModelo();
             this.obtenerAlmacenPorDefecto();
-            //this.obtenerIgv();
             this.obtenerCodigoSapEmpresa();
         },
         computed:{
@@ -2078,26 +1800,6 @@
                     }
                 });
             },
-            /*obtenerIgv(){
-                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
-                axios.get(url, {
-                    params: {
-                        'nidpar': 1300477,
-                        'ctipoparametro': 'P',
-                        'nidtipopar': 51
-                    }
-                }).then(response => {
-                    this.formCompra.igv = response.data.arrayTipoParametro.data[0].fDatoParPorcentual;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             //=================== Proceso Carga de Formato Compra Excel
             getFile(e){
                 //console.log(e);
@@ -2416,7 +2118,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2437,7 +2139,7 @@
                     //================== REGITRO DE TARJETA EQUIPO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessTarjetaEquipo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2491,7 +2193,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION TRAJETA EQUIPO SGC ===============
                     setTimeout(function() {
                         me.registroSgcTarjetaEquipo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2512,7 +2214,7 @@
                     //================== REGITRO DE LLAMADA SERVICIO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessCompra();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2588,7 +2290,7 @@
                     //================== ACTUALIZAR DOCENTRY ===============
                     setTimeout(function() {
                         me.registroSgcCompra();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2609,7 +2311,7 @@
                     //================== REGITRO DE ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2651,7 +2353,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2670,7 +2372,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.registroSapBusinessSolucion();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2717,7 +2419,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2736,7 +2438,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.getOrdenCompraActividad();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2819,7 +2521,7 @@
                     //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                     setTimeout(function() {
                         me.registroSgcLlamadaServicio();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2838,8 +2540,7 @@
                 }).then(response => {
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoCabecera();
-                        // me.verResultados();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2889,7 +2590,7 @@
 
                     setTimeout(function() {
                         me.registroSgcTblCostoCabecera();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4175,22 +3876,19 @@
 
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
-                    nIdEmpresa          :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal         :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCompra           :   this.formModalCompra.nidcompra,
-                    cNumeroVin          :   this.formModalCompra.cnumerovin,
-                    cNumeroMotor        :   this.formModalCompra.cnumeromotor,
-                    cNumeroDua          :   this.formModalCompra.cnumerodua,
-                    cNombreColor        :   this.formModalCompra.cnombrecolor,
-                    cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
-                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
-                    cCodigoNaciones     :   this.formModalCompra.codigonacionesunidas
+                    'nIdEmpresa'          :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'         :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCompra'           :   this.formModalCompra.nidcompra,
+                    'cNumeroVin'          :   this.formModalCompra.cnumerovin,
+                    'cNumeroMotor'        :   this.formModalCompra.cnumeromotor,
+                    'cNumeroDua'          :   this.formModalCompra.cnumerodua,
+                    'cNombreColor'        :   this.formModalCompra.cnombrecolor,
+                    'cSerieComprobante'   :   this.formModalCompra.cseriecomprobante,
+                    'cNumeroComprobante'  :   this.formModalCompra.cnumerocomprobante,
+                    'cCodigoNaciones'     :   this.formModalCompra.codigonacionesunidas
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         this.actualizarSapSetArticulo()
-                        // swal('Compra actualizada correctamente');
-                        // this.cerrarModal();
-                        // this.listarCompras(1);
                     } else {
                         swal('Ya existe VIN');
                     }
@@ -4206,7 +3904,7 @@
             },
             actualizarSapSetArticulo(){
                 let me = this;
-                this.mostrarProgressBar();
+                me.mostrarProgressBar();
                 me.loadingProgressBar("ACTUALIZANDO DATOS DE LA COMPRA EN SAP BUSINESS ONE...");
 
                 var url = this.ruta + '/articulo/SapPatchArticulo';
@@ -4237,17 +3935,15 @@
 
                 var url = this.ruta + '/compra/SapPatchCompra';
                 axios.post(url, {
-                    nDocEntry           :   this.formModalCompra.ndocentry,
-                    cSerieComprobante   :   this.formModalCompra.cseriecomprobante,
-                    cNumeroComprobante  :   this.formModalCompra.cnumerocomprobante,
-                    nIdCompra           :   this.formModalCompra.nidcompra,
-                    cNumeroDua          :   this.formModalCompra.cnumerodua,
-                    dFechaDua           :   moment().format('YYYY-MM-DD'),
-                    cNumeroMotor        :   this.formModalCompra.cnumeromotor,
-                    cNombreColor        :   this.formModalCompra.cnombrecolor
+                    'nDocEntry'           :   this.formModalCompra.ndocentry,
+                    'cSerieComprobante'   :   this.formModalCompra.cseriecomprobante,
+                    'cNumeroComprobante'  :   this.formModalCompra.cnumerocomprobante,
+                    'nIdCompra'           :   this.formModalCompra.nidcompra,
+                    'cNumeroDua'          :   this.formModalCompra.cnumerodua,
+                    'dFechaDua'           :   moment().format('YYYY-MM-DD'),
+                    'cNumeroMotor'        :   this.formModalCompra.cnumeromotor,
+                    'cNombreColor'        :   this.formModalCompra.cnombrecolor
                 }).then(response => {
-                    // console.log(response.data);
-                    console.log("ACUTALIZACIÓN DE LA COMPRA - SAP : OK");
                     swal('COMPRA ACTUALIZADA CORRECTAMENTE');
                     $("#myBar").hide();
                     me.loading.close();
@@ -4400,609 +4096,6 @@
                     me.checkBoxLinea[key] == false;
                 });
             },
-            // ====================================================
-            // =============  TAB FORUM ======================
-            tabForum(){
-                this.listarProveedorWO();
-                this.limpiarFormulario();
-            },
-            listarProveedorWO(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar'       : 110023,
-                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
-                        'npartipo'          : 1001,
-                        'opcion'            : 0,
-                        'page'              : page
-                    }
-                }).then(response => {
-                    this.arrayProveedorForum = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaProveedorWO(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedorWO(page);
-            },
-            asignarProveedorWO(objProveedor){
-                this.formWOperativo.nidproveedor = objProveedor.nIdPar;
-                this.formWOperativo.cproveedornombre = objProveedor.cParNombre;
-                this.formWOperativo.ccarcode = objProveedor.cParJerarquia;
-                this.cerrarModal();
-            },
-            descargaFormatoForum(){
-                window.open(this.ruta + '/storage/FormatosDescarga/FormatoForum.xlsx');
-            },
-            getFileForum(e){
-                let selectFile = e.target.files[0];
-                this.attachment = selectFile;
-            },
-            importFileForum(){
-                if(this.validarReadFileForum()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.form.append('file', this.attachment);
-                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-                var url = this.ruta + '/compra/importFileForum';
-                axios.post(url, this.form, config).then(response=>{
-                    this.readFileForum(response.data);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            readFileForum(nameFile){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/compra/readFileForum';
-                axios.post(url, {
-                    'nameFile': nameFile
-                }).then(response => {
-                    /*if(this.validaCamposExcel(response.data)){
-                        this.accionmodal=1;
-                        this.modal = 1;
-                        return;
-                    }*/
-
-                    this.$delete(response.data, 0);
-                    this.arrayWOperativo = response.data;
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            validarReadFileForum(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(!this.attachment || this.attachment==[] || this.attachment==''){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            validaCamposExcelForum(foo){
-                this.error = 0;
-                this.mensajeError = [];
-                var list=[];
-
-                foo.map(function(value, key) {
-                    if(key==0){
-                        if(value.nOrdenCompra != "OC"){
-                            list.push('Falta celda OC, verifique el archivo.');
-                        };
-                        if(value.cNombreLinea != "Línea"){
-                            list.push('Falta celda Línea, verifique el archivo.');
-                        };
-                        if(value.cNombreAlmacen != "Almacén"){
-                            list.push('Falta celda Almacén, verifique el archivo.');
-                        };
-                        if(value.nNumeroReserva != "Nro Reserva"){
-                            list.push('Falta celda Nro Reserva, verifique el archivo.');
-                        };
-                        if(value.fTotalCompra != "Total"){
-                            list.push('Falta celda Total, verifique el archivo.');
-                        };
-                    };
-                    /*if(key != 0){
-                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
-                            list.push('Existe un error en el campo Total, verifique el archivo.');
-                        }
-                    };*/
-                });
-
-                if(list.length){
-                    this.mensajeError = list;
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            eliminarItemForum(index){
-                this.$delete(this.arrayWOperativo, index);
-                toastr.success('Se Eliminó Item Vehículo');
-            },
-            validarRegistroForum(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.arrayWOperativo == []){
-                    this.mensajeError.push('No hay Datos a Registrar');
-                };
-                if(this.formWOperativo.nidproveedor == 0 || !this.formWOperativo.nidproveedor){
-                    this.mensajeError.push('Seleccione Proveedor');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            registrarForum(){
-                let me = this;
-
-                if(me.validarRegistroForum()){
-                    me.accionmodal=1;
-                    me.modal = 1;
-                    return;
-                }
-
-                me.mostrarProgressBar();
-
-                me.arrayWOperativo.map(function(value, key) {
-                    me.arrayTemporal.push({
-                        'cNumeroVin'    : value.cNumeroVin,
-                        'fTotalCompra'  : value.fTotalCompra
-                    })
-                });
-
-                var url = me.ruta + '/woperativo/SetWOperativoCompra';
-                axios.post(url, {
-                    'nIdProveedor'      : me.formWOperativo.nidproveedor,
-                    'fTotalValor'       : me.fTotalValor,
-                    'data'              : me.arrayTemporal
-                }).then(response => {
-                    me.confirmarWO();
-
-                    me.nIdWarrantOperativo = response.data;
-
-                    if(me.nIdWarrantOperativo > 0){
-                        me.arrayTemporal.map(function(value, key) {
-                            me.arrayAsiento.push({
-                                'cNumeroVin'    : value.cNumeroVin,
-                                'cProjectCode'  : value.cNumeroVin,
-                                'fCredit'       : "0",
-                                'fDebit'        : value.fTotalCompra,
-                                'fCredit1'      : value.fTotalCompra,
-                                'fDebit1'       : "0"
-                            })
-                        });
-
-                        //==============================================================
-                        //================== GENERAR ASIENTO CONTABLE SAP ===============
-                        setTimeout(function() {
-                            me.generaSapAsientoContable();
-                        }, 1200);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapAsientoContable(){
-                let me = this;
-                me.loadingProgressBar("INTEGRANDO ASIENTO CONTABLE CON SAP BUSINESS ONE...");
-
-                var url = me.ruta + '/asiento/SapSetAsientoContableWO';
-                axios.post(url, {
-                    'data' : me.arraySapAsiento
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ProjectCode){
-                            me.arraySapUpdSgc.push({
-                                'cProjectCode'  : me.jsonRespuesta.ProjectCode.toString(),
-                                'nJdtNum'       : parseInt(me.jsonRespuesta.JdtNum),
-                                'nNumber'       : parseInt(me.jsonRespuesta.Number),
-                                'cTipo'         : 'WO',
-                                'cLogRespuesta' : response.data.toString()
-                            });
-                        }
-                    });
-                    //==============================================================================
-                    //================== ACTUALIZO TABLA INTEGRACION ASIENTO CONTABLE ===============
-                    setTimeout(function() {
-                        me.registroSgcAsientoContable();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSgcAsientoContable(){
-                let me = this;
-                var sapUrl = me.ruta + '/woperativo/SetIntegraAsientoContableWO';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1) {
-                         setTimeout(function() {
-                            me.generaSapFacturaProveedor();
-                        }, 1200);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapFacturaProveedor(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
-                axios.post(sapUrl, {
-                    'cCardCode' : me.formWOperativo.ccarcode,
-                    'fDocDate'  : moment().format('YYYY-MM-DD'),
-                    'data'      : me.arrayTemporal
-                }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            me.arraySapUpdSgc.push({
-                                'cFlagTipo'         :   "FP",
-                                'cTipo'             :   'WO',
-                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
-                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta'     :   response.data.toString()
-                            });
-
-                            me.arraySapActividad.push({
-                                'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hActivityTime' :   '08:13:00',
-                                'cCardCode'     :   me.ccustomercode,
-                                'cNotes'        :   'WarranOperativo',
-                                'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
-                                'nDocType'      :   '18',
-                                'nDuration'     :   '15',
-                                'cDurationType' :   'du_Minuts',
-                                'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hEndTime'      :   '08:28:00',
-                                'cReminder'     :   'tYES',
-                                'nReminderPeriod':  '15',
-                                'cReminderType' :   'du_Minuts',
-                                'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
-                                'hStartTime'    :   '08:13:00'
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                            setTimeout(function() {
-                                me.registroSgcFacturaProveedor();
-                            }, 3800);
-                        }
-                    });
-                }).catch(error => {
-                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registroSgcFacturaProveedor(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteWO';
-                axios.post(sapUrl, {
-                    'data'  : me.arraySapUpdSgc
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        me.generaSapBusinessActividad();
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapBusinessActividad(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
-                axios.post(sapUrl, {
-                    'data'       : me.arraySapActividad
-                }).then(response => {
-                    // ======================================================================
-                    // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
-                    // ======================================================================
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    if(me.arraySapRespuesta.length > 0) {
-                        me.arraySapRespuesta.map(function(value, key){
-                            me.jsonRespuesta = '';
-                            me.jsonRespuesta= JSON.parse(value);
-                            //Si el valor de respuesta Code tiene un valor
-                            if(me.jsonRespuesta.ActivityCode){
-                                me.arraySapUpdSgc.push({
-                                    'nActividadTipo':   18,
-                                    'cActividadTipo':   'WarranOperativo',
-                                    'nActivityCode' :   parseInt(me.jsonRespuesta.ActivityCode),
-                                    'cCardCode'     :   me.jsonRespuesta.CardCode.toString(),
-                                    'nDocEntry'     :   parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum'       :   parseInt(me.jsonRespuesta.DocNum),
-                                    'cLogRespuesta' :   me.arraySapRespuesta[key].toString()
-                                });
-                            }
-                        });
-                    }
-
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                    setTimeout(function() {
-                        me.generaSgcActividad();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcActividad(){
-                let me = this;
-                var sapUrl = me.ruta + '/actividad/SetIntegraActividadCompra';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    setTimeout(function() {
-                        //me.confirmarWO();
-                        me.generaSapBusinessSolucion();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSapBusinessSolucion(){
-                let me = this;
-
-                //Depurar Array para registrar en SAP
-                me.arraySapAsiento.map(function(value, key){
-                    me.arraySapSolucion.push({
-                        'cItemCode' : value.cNumeroVin,
-                        'cSubject'  : "Cierre De Servicio"
-                    });
-                });
-
-                var sapUrl = me.ruta + '/solucion/SapSetSolucion';
-                axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.SolutionCode){
-                            me.arraySapUpdSgc.push({
-                                'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
-                                'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                'cFlagTipo'     : 'WO',
-                                'cLogRespuesta' : me.arraySapRespuesta[key].toString()
-                            });
-
-                            me.nSolutionCode = me.jsonRespuesta.SolutionCode;
-                        }
-                    });
-                    //================================================================
-                    //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
-                    setTimeout(function() {
-                        me.generaSgcSolucion();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcSolucion(){
-                let me = this;
-                var sapUrl = me.ruta + '/solucion/SetIntegraSolucion';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    setTimeout(function() {
-                        me.getFacturaProveedorActividad();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            getFacturaProveedorActividad(){
-                let me = this;
-                me.arraySapSolucion.map(function(x, y){
-                    var sapUrl = me.ruta + '/actividad/GetIntegraActividadWOByItemCode';
-                    axios.get(sapUrl, {
-                        params: {
-                            'citemcode'     : x.cItemCode,
-                            'nactividadtipo': 18
-                        }
-                    }).then(response => {
-                        me.arraySapLlamadaServicio.push({
-                            'nActivityCode'     : response.data[0].nActivityCode,
-                            'cCustomerCode'     : response.data[0].cCustomerCode,
-                            'cInternalSerialNum': response.data[0].cItemCode,
-                            'cItemCode'         : response.data[0].cItemCode,
-                            'nSolutionCode'     : response.data[0].nSolutionCode,
-                            'cSubject'          : 'WOPERATIVO'
-                        });
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
-                        }
-                    });
-                });
-                setTimeout(function() {
-                    me.generaSapBusinessLlamadaServicio();
-                }, 1200);
-            },
-            generaSapBusinessLlamadaServicio(){
-                let me = this;
-
-                var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
-                }).then(response => {
-                    me.arraySapRespuesta = [];
-                    me.arraySapUpdSgc = [];
-
-                    me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(value, key){
-                        me.jsonRespuesta = '';
-                        me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
-                        if(me.jsonRespuesta.ItemCode){
-                            me.arraySapUpdSgc.push({
-                                'nServiceCallID'    : me.jsonRespuesta.ServiceCallID.toString(),
-                                'cFlagTipo'         : 'WO',
-                                'nActivityCode'     : me.jsonRespuesta.ServiceCallActivities[0].ActivityCode.toString(),
-                                'cInternalSerialNum': me.jsonRespuesta.InternalSerialNum.toString(),
-                                'cItemCode'         : me.jsonRespuesta.ItemCode.toString(),
-                                'cLogRespuesta'     : me.arraySapRespuesta[key].toString()
-                            });
-                        }
-                    });
-                    //=========================================================================
-                    //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
-                    setTimeout(function() {
-                        me.generaSgcLlamadaServicio();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            generaSgcLlamadaServicio(){
-                let me = this;
-                var sapUrl = me.ruta + '/llamadaservicio/SetIntegraLlamadaServicio';
-                axios.post(sapUrl, {
-                    'data': me.arraySapUpdSgc
-                }).then(response => {
-                    setTimeout(function() {
-                        me.confirmarWO();
-                    }, 1200);
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            confirmarWO(){
-                let me = this;
-                //me.loading.close();
-                $("#myBar").hide();
-                swal('Warrant Operativo registrado');
-                me.limpiarFormulario();
-            },
             // =============  LISTAR ALMACEN ======================
             listarAlmacen(page){
                 var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
@@ -5141,13 +4234,6 @@
                 this.formCompra.nidproveedor = 0,
                 this.formCompra.cproveedornombre = '',
                 this.arrayExcel = [],
-                this.formWOperativo.dfechainicio = '',
-                this.formWOperativo.ccarcode= '',
-                this.formWOperativo.nidproveedor= '',
-                this.formWOperativo.cproveedornombre= '',
-                this.formWOperativo.cnrowarrant= '',
-                this.arrayWOperativo = [];
-                this.arrayTemporal = [];
                 this.attachment = [];
                 this.form = new FormData,
                 $("#file-upload").val("");

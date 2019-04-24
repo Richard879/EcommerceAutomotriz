@@ -124,13 +124,10 @@
                                                                                     <td v-text="operativo.fTotalComisionSol"></td>-->
                                                                                     <td v-text="operativo.cParNombre"></td>
                                                                                     <td>
-                                                                                        <a  href="#"
-                                                                                            @click="asignaIdWOperativo(operativo)"
-                                                                                            data-toggle="tooltip"
-                                                                                            data-placement="top"
-                                                                                            :title="'Ver Detalle ' + operativo.nIdWarrantOperativo">
-                                                                                            <i class="fa-md fa fa-eye"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Ver Detalle {{ operativo.nIdWarrantOperativo }}</div>
+                                                                                            <i @click="asignaIdWOperativo(operativo)" :style="'color:#796AEE'" class="fa-spin fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -252,13 +249,13 @@
                                                                                 <tr>
                                                                                     <th>Acciones</th>
                                                                                     <th>Código</th>
-                                                                                    <th>O/C</th>
                                                                                     <th>Nombre Comercial</th>
+                                                                                    <th>Año Modelo</th>
                                                                                     <th>Nro VIN</th>
                                                                                     <th>Moneda</th>
                                                                                     <th>Valor Warrant</th>
                                                                                     <th>DocNum Asiento</th>
-                                                                                    <th>DocNum Comprobante</th>
+                                                                                    <th>DocNum Comprob.</th>
                                                                                     <!--<th>Comisión Dolar</th>
                                                                                     <th>Comisión Sol</th>-->
                                                                                     <th>Estado</th>
@@ -281,8 +278,8 @@
                                                                                         </template>&nbsp;&nbsp;
                                                                                     </td>
                                                                                     <td v-text="odetalle.nIdDetalleWarrant"></td>
-                                                                                    <td v-text="odetalle.nOrdenCompra"></td>
                                                                                     <td v-text="odetalle.cNombreComercial"></td>
+                                                                                    <td v-text="odetalle.nAnioModelo"></td>
                                                                                     <td v-text="odetalle.cNumeroVin"></td>
                                                                                     <td v-text="odetalle.cSimboloMoneda"></td>
                                                                                     <td v-text="odetalle.fValorWarrant"></td>
@@ -421,31 +418,42 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>OC</th>
+                                                                                <th>Código</th>
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Comisión Dolares</th>
-                                                                                <th>Comisión Soles</th>
+                                                                                <th>Fecha Inicio Línea</th>
+                                                                                <th>Comisión Dolar</th>
+                                                                                <th>Comisión Sol</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
-                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ temporal.cNumeroVin }}</div>
+                                                                                        <i @click="eliminaItemTempVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
-                                                                                <td v-text="temporal.nOrdenCompra"></td>
+                                                                                <td v-text="temporal.nIdCompra"></td>
                                                                                 <td v-text="temporal.cNumeroVin"></td>
                                                                                 <td v-text="temporal.cNombreComercial"></td>
                                                                                 <td v-text="temporal.nAnioVersion"></td>
                                                                                 <td v-text="temporal.cFormaPago"></td>
                                                                                 <td v-text="temporal.cSimboloMoneda"></td>
                                                                                 <td v-text="temporal.fTotalCompra"></td>
+                                                                                <td>
+                                                                                    <el-date-picker
+                                                                                        v-model="arrayIndexFecInicio[index]"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </td>
                                                                                 <td v-text="temporal.fComisionDolar"></td>
                                                                                 <td v-text="temporal.fComisionSol"></td>
                                                                             </tr>
@@ -679,6 +687,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>NroDoc SAP</th>
                                                             <th>Nro VIN</th>
                                                             <th>Proveedor</th>
                                                             <th>Nombre Comercial</th>
@@ -686,6 +695,7 @@
                                                             <th>Forma Pago</th>
                                                             <th>Moneda</th>
                                                             <th>Costo</th>
+                                                            <th>Disponible</th>
                                                             <th>Sap Factura Res.</th>
                                                         </tr>
                                                     </thead>
@@ -700,11 +710,12 @@
                                                                 </template>
                                                                 <template v-else>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">{{ vehiculo.cNumeroVin }}</div>
+                                                                        <div slot="content">Agregar {{ vehiculo.cNumeroVin }}</div>
                                                                         <i @click="asignarVehiculo(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                     </el-tooltip>
                                                                 </template>&nbsp;&nbsp;
                                                             </td>
+                                                            <td v-text="vehiculo.nDocNumCompra"></td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreProveedor"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
@@ -712,6 +723,7 @@
                                                             <td v-text="vehiculo.cFormaPago"></td>
                                                             <td v-text="vehiculo.cSimboloMoneda"></td>
                                                             <td v-text="vehiculo.fTotalCompra"></td>
+                                                            <td v-text="vehiculo.cFlagVehiculoLibre"></td>
                                                             <td v-text="vehiculo.nDocNumFacturaReserva"></td>
                                                         </tr>
                                                     </tbody>
@@ -780,6 +792,7 @@
                 arrayWOperativoDetalle: [],
                 arrayTemporal: [],
                 arrayVersionVehiculo: [],
+                arrayIndexFecInicio: [],
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
@@ -930,7 +943,7 @@
                     return me.arrayTemporal.reduce(function(valorAnterior, valorActual){
                         return valorAnterior + parseFloat(valorActual.fComisionSol);
                     }, 0);
-                } else {
+                }else{
                     return 0;
                 }
             },
@@ -1209,26 +1222,26 @@
                 this.paginationModal.current_page=page;
                 this.listarVersionVehiculo(page);
             },
-            asignarVehiculo(data){
-                if(this.encuentra(data.nIdCompra)) {
+            asignarVehiculo(objCompra){
+                if(this.encuentra(objCompra)) {
                     swal({
                         type: 'error',
                         title: 'Error...',
                         text: 'El Vehículo seleccionado ya se encuentra agregado!',
                     })
                 } else {
-                    this.arrayTemporal.push(data);
-                    toastr.success('Se Agregó Vehículo');
+                    this.arrayTemporal.push(objCompra);
+                    toastr.success('Se Agregó Vehículo ' + objCompra.cNumeroVin);
                 }
             },
             eliminaItemTempVehiculo(index){
                 this.$delete(this.arrayTemporal, index);
                 toastr.success('Se Eliminó Item Vehículo');
             },
-            encuentra(nIdCompra){
+            encuentra(objCompra){
                 var sw=0;
                 for(var i=0;i<this.arrayTemporal.length;i++){
-                    if(this.arrayTemporal[i].nIdCompra==nIdCompra){
+                    if(this.arrayTemporal[i].nIdCompra==objCompra.nIdCompra){
                         sw=true;
                     }
                 }
@@ -1357,9 +1370,9 @@
 
                         //==============================================================
                         //================== GENERAR ASIENTO CONTABLE SAP ===============
-                        setTimeout(function() {
+                        /*setTimeout(function() {
                             me.generaSapFacturaProveedor();
-                        }, 800);
+                        }, 800);*/
                     }
                 }).catch(error => {
                     console.log(error);

@@ -1383,6 +1383,7 @@
                     { value: '2', text: 'PLACA'}
                 ],
                 arrayPdi: [],
+                arrayBusTipoInspeccion: [],
                 // ============ Variables Flag Tipo Inspeccion =================
                 nflagalmacen: 0,
                 nflagaccesorio: 0,
@@ -1761,19 +1762,19 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cnombre': '',
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnombre'       : '',
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
-                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
-                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
-                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
-                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
-                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
+                    this.arrayPuntoInspeccion           = response.data.arrayPuntoInspeccion.data;
+                    this.paginationModal.current_page   = response.data.arrayPuntoInspeccion.current_page;
+                    this.paginationModal.total          = response.data.arrayPuntoInspeccion.total;
+                    this.paginationModal.per_page       = response.data.arrayPuntoInspeccion.per_page;
+                    this.paginationModal.last_page      = response.data.arrayPuntoInspeccion.last_page;
+                    this.paginationModal.from           = response.data.arrayPuntoInspeccion.from;
+                    this.paginationModal.to             = response.data.arrayPuntoInspeccion.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2767,14 +2768,16 @@
                     //Si es Pdi Entrada
                     if(me.formPdi.nidtipoinspeccion == 4){
                         setTimeout(function() {
-                            me.generaSapMercanciaEntry();
-                        }, 1600);
+                            //me.generaSapMercanciaEntry();
+                            me.generaSapActividadPdiEntrada();
+                        }, 800);
                     }
                     //Si es Pdi Entrega Vehiculo
                     else if(me.formPdi.nidtipoinspeccion == 5){
                         setTimeout(function() {
-                            me.generaSapMercanciaExit();
-                        }, 1600);
+                            //me.generaSapMercanciaExit();
+                            me.generaSapActividadPdiEntrega();
+                        }, 800);
                     }
                     else{
                         me.confirmaPdi();
@@ -2791,7 +2794,7 @@
             },
             //=========================================================
             //=============== Generar Sap Entrada Mercancia ===========
-            generaSapMercanciaEntry(){
+            /*generaSapMercanciaEntry(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -2912,9 +2915,33 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapActividadPdiEntrada(){
                 let me = this;
+
+                //===============================================================================
+                me.loadingProgressBar("INTEGRANDO PDI ENTRADA CON SAP BUSINESS ONE...");
+                me.arraySapActividad = [];
+                me.arraySapActividad.push({
+                    'dActivityDate' :   moment().format('YYYY-MM-DD'),
+                    'hActivityTime' :   moment().format('HH:mm:ss'),
+                    'cCardCode'     :   !me.ccustomercode ? sessionStorage.getItem("cCustomerCode") : me.ccustomercode,
+                    'cNotes'        :   'PdiEntrada',
+                    'nDocEntry'     :   0,
+                    'nDocNum'       :   0,
+                    'nDocType'      :   0,
+                    'nDuration'     :   '15',
+                    'cDurationType' :   'du_Minuts',
+                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),
+                    'hEndTime'      :   moment().add(15, 'minutes').format('HH:mm:ss'),
+                    'cReminder'     :   'tYES',
+                    'nReminderPeriod':  '15',
+                    'cReminderType' :   'du_Minuts',
+                    'dStartDate'    :   moment().format('YYYY-MM-DD'),
+                    'hStartTime'    :   moment().format('HH:mm:ss')
+                });
+                //==============================================================================
+
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
                 var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
@@ -2936,8 +2963,10 @@
                                 'nActividadTipo'    : 4,
                                 'cActividadTipo'    : 'PdiEntrada',
                                 'cCardCode'         : me.jsonRespuesta.CardCode.toString(),
-                                'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
-                                'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
+                                //'nDocEntry'         : me.jsonRespuesta.DocEntry.toString(),
+                                //'nDocNum'           : me.jsonRespuesta.DocNum.toString(),
+                                'nDocEntry'         : 0,
+                                'nDocNum'           : 0,
                                 'cLogRespuesta'     : response.data.toString()
                             });
 
@@ -2974,8 +3003,6 @@
                         setTimeout(function() {
                              me.obtenerSapTarjetaEquipo();
                         }, 800);
-                        //me.loading.close();
-                        //me.confirmaPdi();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3009,7 +3036,6 @@
                         //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.EquipmentCardNum){
                             me.ccustomercode = me.jsonRespuesta.CustomerCode.toString();
-
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
@@ -3070,7 +3096,7 @@
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                             setTimeout(function() {
                                 me.generaActualizarSolucion();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3179,7 +3205,7 @@
             },
             //==============================================================
             //================ Generar Sap Entrega Vehiculo ================
-            generaSapMercanciaExit(){
+            /*generaSapMercanciaExit(){
                 let me = this;
 
                 me.arrayTempAccesorio.map(function(value, key) {
@@ -3324,7 +3350,7 @@
                             me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiSalida();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3361,10 +3387,12 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapActividadPdiEntrega(){
                 let me = this;
 
+                //=================================================================================
+                me.loadingProgressBar("INTEGRANDO PDI ENTREGA CON SAP BUSINESS ONE...");
                 me.arraySapActividad = [];
                 me.arraySapActividad.push({
                     'dActivityDate' :   moment().format('YYYY-MM-DD'),
@@ -3384,6 +3412,7 @@
                     'dStartDate'    :   moment().format('YYYY-MM-DD'),
                     'hStartTime'    :   moment().format('HH:mm:ss')
                 });
+                //=====================================================================================
 
                 //==============================================================
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
@@ -3413,9 +3442,10 @@
 
                             //================================================================
                             //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                            me.nactivitycode = me.jsonRespuesta.ActivityCode;
                             setTimeout(function() {
                                 me.generaSgcActividadPdiEntrega();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {
@@ -3441,9 +3471,7 @@
                         //================== OBTENER DATOS DE LA TARJETA DE EQUIPO EN SAP ===============
                         setTimeout(function() {
                              me.obtenerSapTarjetaEquipo();
-                        }, 1600);
-                        //me.loading.close();
-                        //me.confirmaPdi();
+                        }, 800);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3485,7 +3513,7 @@
                             //============ ACTUALIZO TABLA INTEGRACION LLAMADA SERVICIO SGC ===========
                             setTimeout(function() {
                                 me.generaSgcLlamadaServicioPdiSalida();
-                            }, 1600);
+                            }, 800);
                         }
                     });
                 }).catch(error => {

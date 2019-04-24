@@ -69,46 +69,14 @@ class WarrantOperativoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?',
+                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?, ?',
                                                     [   $nIdWarrantOperativo,
                                                         $det['nIdCompra'],
                                                         $det['fTotalCompra'],
                                                         $det['fComisionDolar'],
                                                         $det['fComisionSol'],
                                                         $det['fValorTipoCambio'],
-                                                        Auth::user()->id
-                                                    ]);
-            }
-            DB::commit();
-            return $nIdWarrantOperativo;
-        }catch (Exception $e){
-            DB::rollBack();
-        }
-    }
-
-    public function SetWOperativoCompra(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        try{
-           DB::beginTransaction();
-
-            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?, ?, ?',
-                                                    [   $request->nIdProveedor,
-                                                        $request->fTotalValor,
-                                                        0,
-                                                        0,
-                                                        Auth::user()->id
-                                                    ]);
-            $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
-
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
-                DB::select('exec [usp_WO_SetWOperativoDetalleCompra] ?, ?, ?, ?',
-                                                    [   $nIdWarrantOperativo,
-                                                        $det['cNumeroVin'],
-                                                        $det['fTotalCompra'],
+                                                        $det['dFechaInicio'],
                                                         Auth::user()->id
                                                     ]);
             }
