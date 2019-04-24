@@ -834,14 +834,14 @@
                 var url = this.ruta + '/objComercial/GetDetalleVehiculoCompra';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma': this.fillObjComercialCompra.nidcronograma,
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidlinea': this.fillObjComercialCompra.nidlinea,
-                        'nidmarca': this.fillObjComercialCompra.nidmarca,
-                        'nidmodelo': this.fillObjComercialCompra.nidmodelo,
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : this.fillObjComercialCompra.nidcronograma,
+                        'nidproveedor'  : this.fillProveedor.nidproveedor,
+                        'nidlinea'      : this.fillObjComercialCompra.nidlinea,
+                        'nidmarca'      : this.fillObjComercialCompra.nidmarca,
+                        'nidmodelo'     : this.fillObjComercialCompra.nidmodelo,
+                        'page'          : page
                     }
                 }).then(response => {
                     $("#myBar").hide();
@@ -865,13 +865,13 @@
 
                 me.arrayListaVehiculoCompra.map(function(value, key){
                     me.arrayDetalleVehiculoCompra.push({
-                            nIdVersionVeh   : value.nIdVersionVeh,
-                            Proveedor       : value.Proveedor,
-                            Linea           : value.Linea,
-                            Marca           : value.Marca,
-                            Modelo          : value.Modelo,
-                            cNombreComercial: value.cNombreComercial,
-                            nCantidadVehiculo: value.nCantidadVehiculo
+                        'nIdVersionVeh'     : value.nIdVersionVeh,
+                        'Proveedor'         : value.Proveedor,
+                        'Linea'             : value.Linea,
+                        'Marca'             : value.Marca,
+                        'Modelo'            : value.Modelo,
+                        'cNombreComercial'  : value.cNombreComercial,
+                        'nCantidadVehiculo' : value.nCantidadVehiculo
                     });
 
                     me.arrayIndexTipoBeneficioId[key] = value.nIdFlagTipoBeneficio == 0 ? '' : value.nIdFlagTipoBeneficio,
@@ -902,12 +902,12 @@
                 me.arrayDetalleVehiculoCompra.map(function(value, key){
                     if(value.nCantidadVehiculo > 0){
                         me.arrayTempDetalleVehiculoCompra.push({
-                            nIdVersionVeh       : value.nIdVersionVeh,
-                            cNombreComercial    : value.cNombreComercial,
-                            nCantidadVehiculo   : value.nCantidadVehiculo,
-                            nIdFlagTipoBeneficio  : !me.arrayIndexTipoBeneficioId[key] ? 0 : me.arrayIndexTipoBeneficioId[key],
-                            nIdFlagTipoValor      : !me.arrayIndexFlagTipoValorId[key] ? 0 : me.arrayIndexFlagTipoValorId[key],
-                            fValorBeneficio     : !me.arrayIndexValorBeneficio[key] ? 0 : me.arrayIndexValorBeneficio[key]
+                            'nIdVersionVeh'         : value.nIdVersionVeh,
+                            'cNombreComercial'      : value.cNombreComercial,
+                            'nCantidadVehiculo'     : value.nCantidadVehiculo,
+                            'nIdFlagTipoBeneficio'  : !me.arrayIndexTipoBeneficioId[key] ? 0 : me.arrayIndexTipoBeneficioId[key],
+                            'nIdFlagTipoValor'      : !me.arrayIndexFlagTipoValorId[key] ? 0 : me.arrayIndexFlagTipoValorId[key],
+                            'fValorBeneficio'       : !me.arrayIndexValorBeneficio[key] ? 0 : me.arrayIndexValorBeneficio[key]
                         });
                         //console.log(me.arrayIndexFlagTipoValorId[key]);
                     }
@@ -1014,13 +1014,13 @@
                 var url = this.ruta + '/objComercial/GetDetalleVehiculoVenta';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma': this.fillObjComercialVenta.nidcronograma,
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidlinea': this.fillObjComercialVenta.nidlinea,
-                        'nidmarca': this.fillObjComercialVenta.nidmarca,
-                        'nidmodelo': this.fillObjComercialVenta.nidmodelo,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : this.fillObjComercialVenta.nidcronograma,
+                        'nidproveedor'  : this.fillProveedor.nidproveedor,
+                        'nidlinea'      : this.fillObjComercialVenta.nidlinea,
+                        'nidmarca'      : this.fillObjComercialVenta.nidmarca,
+                        'nidmodelo'     : this.fillObjComercialVenta.nidmodelo,
                         'page' : page
                     }
                 }).then(response => {
@@ -1045,13 +1045,13 @@
 
                 me.arrayListaVehiculoVenta.map(function(value, key){
                     me.arrayDetalleVehiculoVenta.push({
-                            nIdVersionVeh   : value.nIdVersionVeh,
-                            Proveedor       : value.Proveedor,
-                            Linea           : value.Linea,
-                            Marca           : value.Marca,
-                            Modelo          : value.Modelo,
-                            cNombreComercial: value.cNombreComercial,
-                            nCantidadVehiculo: value.nCantidadVehiculo
+                        'nIdVersionVeh'   : value.nIdVersionVeh,
+                        'Proveedor'       : value.Proveedor,
+                        'Linea'           : value.Linea,
+                        'Marca'           : value.Marca,
+                        'Modelo'          : value.Modelo,
+                        'cNombreComercial': value.cNombreComercial,
+                        'nCantidadVehiculo': value.nCantidadVehiculo
                     });
 
                     me.arrayIndexFlagTipoValorIdVenta[key] = value.nIdFlagTipoValor == 0 ? '' : value.nIdFlagTipoValor,
@@ -1081,11 +1081,11 @@
                 me.arrayDetalleVehiculoVenta.map(function(value, key){
                     if(value.nCantidadVehiculo > 0){
                         me.arrayTempDetalleVehiculoVenta.push({
-                            nIdVersionVeh       : value.nIdVersionVeh,
-                            cNombreComercial    : value.cNombreComercial,
-                            nCantidadVehiculo   : value.nCantidadVehiculo,
-                            nIdFlagTipoValor    : !me.arrayIndexFlagTipoValorIdVenta[key] ? 0 : me.arrayIndexFlagTipoValorIdVenta[key],
-                            fValorBeneficio     : !me.arrayIndexValorBeneficioVenta[key] ? 0 : me.arrayIndexValorBeneficioVenta[key]
+                            'nIdVersionVeh'       : value.nIdVersionVeh,
+                            'cNombreComercial'    : value.cNombreComercial,
+                            'nCantidadVehiculo'   : value.nCantidadVehiculo,
+                            'nIdFlagTipoValor'    : !me.arrayIndexFlagTipoValorIdVenta[key] ? 0 : me.arrayIndexFlagTipoValorIdVenta[key],
+                            'fValorBeneficio'     : !me.arrayIndexValorBeneficioVenta[key] ? 0 : me.arrayIndexValorBeneficioVenta[key]
                         });
                     }
                 });
