@@ -1419,7 +1419,6 @@
                         });
                 });
 
-
                 if(me.validar()){
                     me.accionmodal=1;
                     me.modal = 1;
