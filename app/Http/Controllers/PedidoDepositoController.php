@@ -359,6 +359,10 @@ class PedidoDepositoController extends Controller
         $fMontoDepositado   =   $request->fMontoDepositado;
         $fMontoCancelado    =   $request->fMontoCancelado;
 
+        $fMontoPedido       =   ($fMontoPedido == NULL) ? ($fMontoPedido = 0) : $fMontoPedido;
+        $fMontoDepositado   =   ($fMontoDepositado == NULL) ? ($fMontoDepositado = 0) : $fMontoDepositado;
+        $fMontoCancelado    =   ($fMontoCancelado == NULL) ? ($fMontoCancelado = 0) : $fMontoCancelado;
+
         $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 

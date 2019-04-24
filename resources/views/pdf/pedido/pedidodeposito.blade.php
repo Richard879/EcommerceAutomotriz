@@ -121,63 +121,67 @@
 
     <br/>
 
-    <div class="invoice">
-        <table width="100%">
-            <thead style="background-color: lightgray;">
-                <tr align="center" align="middle" >
-                    <th colspan="8">BANDEJA DE DEPOSITOS</th >
-                </tr>
-                <tr>
-                    <th>BANCO</th>
-                    <th>N° OPERACIÓN</th>
-                    <th>MONEDA</th>
-                    <th>FECHA</th>
-                    <th>TC</th>
-                    <th>MONTO S/</th>
-                    <th>MONTO USD/</th>
-                    <th>ESTADO</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (count($arrayDepositosPorPedido) > 0)
-                    @foreach ($arrayDepositosPorPedido as $deposito)
-                        <tr>
-                            <td> {{ $deposito->cNombreBanco }} </td>
-                            <td> {{ $deposito->nNumeroOperacion }} </td>
-                            <td> {{ $deposito->cNombreMoneda }} </td>
-                            <td> {{ $deposito->dFechaDeposito }} </td>
-                            <td> {{ $deposito->fTipoCambio }} </td>
-                            <td> {{ $deposito->fMontoSoles }} </td>
-                            <td> {{ $deposito->fMontoDolares }} </td>
-                            <td> {{ $deposito->cEstadoDeposito }} </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
+    @if (count($arrayDepositosPorPedido) > 0)
+        <div class="invoice">
+            <table width="100%">
+                <thead style="background-color: lightgray;">
+                    <tr align="center" align="middle" >
+                        <th colspan="8">BANDEJA DE DEPOSITOS</th >
+                    </tr>
+                    <tr>
+                        <th>BANCO</th>
+                        <th>N° OPERACIÓN</th>
+                        <th>MONEDA</th>
+                        <th>FECHA</th>
+                        <th>TC</th>
+                        <th>MONTO S/</th>
+                        <th>MONTO USD/</th>
+                        <th>ESTADO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (count($arrayDepositosPorPedido) > 0)
+                        @foreach ($arrayDepositosPorPedido as $deposito)
+                            <tr>
+                                <td> {{ $deposito->cNombreBanco }} </td>
+                                <td> {{ $deposito->nNumeroOperacion }} </td>
+                                <td> {{ $deposito->cNombreMoneda }} </td>
+                                <td> {{ $deposito->dFechaDeposito }} </td>
+                                <td> {{ $deposito->fTipoCambio }} </td>
+                                <td> {{ number_format($deposito->fMontoSoles, 2)  }} </td>
+                                <td> {{ number_format($deposito->fMontoDolares, 2) }} </td>
+                                <td> {{ $deposito->cEstadoDeposito }} </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
 
-        <table width="100%" >
-            <tr>
-                <td align="right" colspan="1">
-                    <span>Monto Depositado</span>
-                    <br>
-                    <strong><span>{{ number_format($fMontoDepositado, 2) }}</span></strong>
-                </td>
-            </tr>
-            <tr>
-                <td align="right" colspan="1">
-                    <span>Monto del Pedido</span>
-                    <br>
-                    <strong><span>{{ number_format($fMontoPedido, 2) }}</span></strong>
-                </td>
-            </tr>
-            <tr>
-                <td align="right" colspan="1">
-                    <span>Saldo Cancelado</span>
-                    <br>
-                    <strong><span>{{ number_format($fMontoCancelado, 2) }}</span></strong>
-                </td>
-            </tr>
-        </table>
-    </div>
+            @if ($fMontoPedido > 0)
+                <table width="100%" >
+                    <tr>
+                        <td align="right" colspan="1">
+                            <span>Monto Depositado</span>
+                            <br>
+                            <strong><span>{{ number_format($fMontoDepositado, 2) }}</span></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" colspan="1">
+                            <span>Monto del Pedido</span>
+                            <br>
+                            <strong><span>{{ number_format($fMontoPedido, 2) }}</span></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" colspan="1">
+                            <span>Saldo Cancelado</span>
+                            <br>
+                            <strong><span>{{ number_format($fMontoCancelado, 2) }}</span></strong>
+                        </td>
+                    </tr>
+                </table>
+            @endif
+        </div>
+    @endif
 </body>
