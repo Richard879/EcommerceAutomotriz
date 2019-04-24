@@ -124,4 +124,25 @@ class WarrantOperativoController extends Controller
                                                 ]);
         return response()->json($arrayWO);
     }
+
+    public function GetFechaVenceByLinea(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCompra      =   $request->nidcompra;
+        $cNumeroVin     =   $request->cnumerovin;
+        $nIdLinea       =   $request->nidlinea;
+        $dFechaInicio   =   $request->dfechainicio;
+
+        $nIdCompra      =   ($nIdCompra == NULL) ? ($nIdCompra = 0) : $nIdCompra;
+        $cNumeroVin     =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+
+        $arrayWOperativo = DB::select('exec [usp_WO_GetFechaVenceByLinea] ?, ?, ?, ?',
+                                                        [   $nIdCompra,
+                                                            $cNumeroVin,
+                                                            $nIdLinea,
+                                                            $dFechaInicio,
+                                                        ]);
+        return ['arrayWOperativo'=>$arrayWOperativo];
+    }
 }

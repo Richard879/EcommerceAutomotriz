@@ -1334,7 +1334,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                ccustomercode: 'C20480683839',
                 canio: '',
                 cmes: '',
                 nidcronograma: 0,
@@ -1468,7 +1467,6 @@
             this.llenarComboMarca();
             this.llenarComboModelo();
             this.obtenerAlmacenPorDefecto();
-            this.obtenerCodigoSapEmpresa();
         },
         computed:{
             isActived: function(){
@@ -1621,9 +1619,6 @@
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.listarCompras(page);
-            },
-            obtenerCodigoSapEmpresa(){
-                this.ccustomercode = sessionStorage.getItem("cCustomerCode");
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
@@ -2158,7 +2153,7 @@
                     //Sino se encuentra no pase a TarjetaEquipo
                     if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapTarjetaEquipo.push({
-                            'cCustomerCode'     : me.ccustomercode,
+                            'cCustomerCode'     : sessionStorage.getItem("cCustomerCode"),
                             'cInternalSerialNum': x.cNumeroVin,
                             'cItemCode'         : x.cNumeroVin
                         });
@@ -2269,7 +2264,7 @@
                             me.arraySapActividad.push({
                                 'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
                                 'hActivityTime' :   moment().format('HH:mm:ss'),
-                                'cCardCode'     :   me.ccustomercode,
+                                'cCardCode'     :   sessionStorage.getItem("cCustomerCode"),
                                 'cNotes'        :   'OrdenCompra',
                                 'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
                                 'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
