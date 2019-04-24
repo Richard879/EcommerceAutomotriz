@@ -37,6 +37,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row" v-if="fillParametro.nidgrupopar!= 0">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Descripción</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillParametro.cparnombre" @keyup.enter="listarParametroByGrupo(1)" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-4">
                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
@@ -142,6 +152,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row" v-if="fillParametro.nidsubgrupopar!= 0">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Descripción</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillParametro.csubparnombre" @keyup.enter="listarParParametro(1)" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-4">
                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParParametro(1);">
@@ -242,7 +262,9 @@
                 // =========== VARIABLES PARAMETRO ===========
                 fillParametro:{
                     nidgrupopar: '',
-                    nidsubgrupopar: ''
+                    nidsubgrupopar: '',
+                    cparnombre: '',
+                    csubparnombre: ''
                 },
                 formParametro:{
                     nidpar: 0,
@@ -442,9 +464,10 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : this.fillParametro.nidgrupopar,
-                        'opcion' : 1,
-                        'page' : page
+                        'ngrupoparid'   : this.fillParametro.nidgrupopar,
+                        'cparnombre'    : this.fillParametro.cparnombre,
+                        'opcion'        : 1,
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayParametro = response.data.arrayParametro;
@@ -482,10 +505,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidpar' : this.formParametro.nidpar,
-                        'nidgrupopar': this.fillParametro.nidgrupopar,
-                        'nidsubgrupopar' : this.fillParametro.nidsubgrupopar,
-                        'opcion' : 1
+                        'nidpar'        : this.formParametro.nidpar,
+                        'nidgrupopar'   : this.fillParametro.nidgrupopar,
+                        'nidsubgrupopar': this.fillParametro.nidsubgrupopar,
+                        'cparnombre'    : this.fillParametro.csubparnombre,
+                        'opcion'        : 1
                     }
                 }).then(response => {
                     this.arrayParParametro = response.data.arrayParParametro;
