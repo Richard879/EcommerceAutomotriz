@@ -44,6 +44,17 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input  type="text"
+                                                                                        v-model="fillBusquedaPedidos.cnumvin"
+                                                                                        @keyup.enter="buscarMisPedidos(1)"
+                                                                                        class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="col-md-6">
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">*Estado</label>
@@ -121,16 +132,17 @@
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
-                                                                        <div class="col-lg-12">
+
+                                                                        <div class="col-sm-12">
                                                                             <div class="row">
-                                                                                <div class="col-lg-7">
+                                                                                <div class="col-sm-7">
                                                                                     <nav>
                                                                                         <ul class="pagination">
                                                                                             <li v-if="pagination.current_page > 1" class="page-item">
                                                                                                 <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                             </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
                                                                                                 <a class="page-link"
                                                                                                 href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
                                                                                                 v-text="page"></a>
@@ -141,7 +153,7 @@
                                                                                         </ul>
                                                                                     </nav>
                                                                                 </div>
-                                                                                <div class="col-lg-5">
+                                                                                <div class="col-sm-5">
                                                                                     <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
@@ -1189,6 +1201,7 @@
                 // =============================================================
                 arrayEstadoTramite: [],
                 fillBusquedaPedidos: {
+                    cnumvin: '',
                     nidestadotramite: ''
                 },
                 arrayPedidosCancelados: [],
@@ -1426,8 +1439,9 @@
                 var url = this.ruta + '/tramite/GetPedidosCanceladosByEstadoTramite';
                 axios.get(url, {
                     params: {
-                        'nIdEstadoTramite' : (this.fillBusquedaPedidos.nidestadotramite == '') ? '0' : this.fillBusquedaPedidos.nidestadotramite,
-                        'page' : page
+                        'nIdEstadoTramite'  :   (this.fillBusquedaPedidos.nidestadotramite == '') ? '0' : this.fillBusquedaPedidos.nidestadotramite,
+                        'cnumvin'           :   this.fillBusquedaPedidos.cnumvin,
+                        'page'              :   page
                     }
                 }).then(response => {
                     let me = this;

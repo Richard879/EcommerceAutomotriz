@@ -15,13 +15,16 @@ class TramiteController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEstadoTramite   = $request->nIdEstadoTramite;
+        $cnumvin            = $request->cnumvin;
         $nIdTramitador      = Auth::user()->id;
 
         $nIdEstadoTramite   = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $cnumvin            = ($cnumvin == NULL) ? ($cnumvin = '') : $cnumvin;
 
-        $arrayPedidosCancelados = DB::select('exec usp_Tramite_GetPedidosCanceladosByEstadoTramite ?, ?',
+        $arrayPedidosCancelados = DB::select('exec usp_Tramite_GetPedidosCanceladosByEstadoTramite ?, ?, ?',
                                                             [
                                                                 $nIdEstadoTramite,
+                                                                $cnumvin,
                                                                 $nIdTramitador
                                                             ]);
 
