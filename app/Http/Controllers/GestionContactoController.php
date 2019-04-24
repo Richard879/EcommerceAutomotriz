@@ -82,8 +82,8 @@ class GestionContactoController extends Controller
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Contacto_GetLineasByUsuario] ?, ?, ?',
-                                            [   $nIdEmpresa, 
-                                                $nIdProveedor, 
+                                            [   $nIdEmpresa,
+                                                $nIdProveedor,
                                                 $nIdUsuario
                                             ]);
 
@@ -104,7 +104,7 @@ class GestionContactoController extends Controller
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayMarca = DB::select('exec [usp_Contacto_GetMarcasByLinea] ?, ?',
-                                            [   $nIdLinea, 
+                                            [   $nIdLinea,
                                                 $nIdUsuario
                                             ]);
 
@@ -623,9 +623,9 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdAsignacionContactoVendedor = $request->nidasignacioncontactovendedor;
+        $nIdEmpresa                     = $request->nidempresa;
+        $nIdSucursal                    = $request->nidsucursal;
+        $nIdAsignacionContactoVendedor  = $request->nidasignacioncontactovendedor;
 
         $arrayEstadoSeguimiento = DB::select('exec [usp_Contacto_GetEstadoAsignacionSeguimiento] ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -682,5 +682,40 @@ class GestionContactoController extends Controller
                                                             ]);
 
         return response()->json($data);
+    }
+
+    public function SetPatchContactoPerNatural(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto        =   $request->nIdContacto;
+        $nIdPernatural      =   $request->nIdPernatural;
+        $cNumeroDocumento   =   $request->cNumeroDocumento;
+        $cNombre            =   $request->cNombre;
+        $cApellidoPaterno   =   $request->cApellidoPaterno;
+        $cApellidoMaterno   =   $request->cApellidoMaterno;
+        $dFechaNacimiento   =   $request->dFechaNacimiento;
+
+        $nIdContacto        =   ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
+        $nIdPernatural      =   ($nIdPernatural == NULL) ? ($nIdPernatural = 0) : $nIdPernatural;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $cNombre            =   ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
+        $cApellidoPaterno   =   ($cApellidoPaterno == NULL) ? ($cApellidoPaterno = '') : $cApellidoPaterno;
+        $cApellidoMaterno   =   ($cApellidoMaterno == NULL) ? ($cApellidoMaterno = '') : $cApellidoMaterno;
+        $dFechaNacimiento   =   ($dFechaNacimiento == NULL) ? ($dFechaNacimiento = '') : $dFechaNacimiento;
+
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdContacto,
+                                                                $nIdPernatural,
+                                                                $cNumeroDocumento,
+                                                                $cNombre,
+                                                                $cApellidoPaterno,
+                                                                $cApellidoMaterno,
+                                                                $dFechaNacimiento,
+                                                                Auth::user()->id
+                                                            ]);
+
+        return response()->json($arrayContacto);
     }
 }
