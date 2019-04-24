@@ -429,8 +429,8 @@
                                                                                 <th>Total</th>
                                                                                 <th>Fecha Inicio Línea</th>
                                                                                 <th>Fecha Venc. Línea</th>
-                                                                                <th>Comisión Dolar</th>
-                                                                                <th>Comisión Sol</th>
+                                                                                <th>Comis Dolar</th>
+                                                                                <th>Comis Sol</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -452,16 +452,17 @@
                                                                                 <td v-text="wo.fTotalCompra"></td>
                                                                                 <td>
                                                                                     <el-date-picker
-                                                                                        v-model="arrayIndexFecInicio[index]"
+                                                                                        v-model="wo.dFechaInicio"
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
+                                                                                        @change="cambiarFechaVence()"
                                                                                         placeholder="dd/mm/aaaa">
                                                                                     </el-date-picker>
                                                                                 </td>
                                                                                 <td>
                                                                                     <el-date-picker
-                                                                                        v-model="arrayIndexFecFin[index]"
+                                                                                        v-model="wo.dFechaFin"
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
@@ -827,8 +828,6 @@
                 },
                 arrayWarrant: [],
                 arrayTemporal: [],
-                arrayIndexFecInicio: [],
-                arrayIndexFecFin: [],
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
@@ -1251,13 +1250,23 @@
                         text: 'El Vehículo seleccionado ya se encuentra agregado!',
                     })
                 } else {
-                    me.arrayWarrant.push(objCompra);
-                    toastr.success('Se Agregó Vehículo ' + objCompra.cNumeroVin);
-
-                    me.arrayWarrant.map(function(value, key){
-                        me.arrayIndexFecInicio[key] = !me.arrayIndexFecInicio[key] ? moment().format('YYYY-MM-DD') : me.arrayIndexFecInicio[key]
+                    console.log(objCompra)
+                    me.arrayWarrant.push({
+                        'nIdCompra'         : objCompra.nIdCompra,
+                        'cNumeroVin'        : objCompra.cNumeroVin,
+                        'cNombreComercial'  : objCompra.cNombreComercial,
+                        'nAnioVersion'      : objCompra.nAnioVersion,
+                        'nIdLinea'          : objCompra.nIdLinea,
+                        'cNombreLinea'      : objCompra.cNombreLinea,
+                        'cFormaPago'        : objCompra.cFormaPago,
+                        'cSimboloMoneda'    : objCompra.cSimboloMoneda,
+                        'fTotalCompra'      : objCompra.fTotalCompra,
+                        'fComisionDolar'    : objCompra.fComisionDolar,
+                        'fComisionSol'      : objCompra.fComisionSol,
+                        'dFechaInicio'      : moment().format('YYYY-MM-DD'),
+                        'dFechaFin'         : moment().format('YYYY-MM-DD')
                     });
-
+                    toastr.success('Se Agregó Vehículo ' + objCompra.cNumeroVin);
                     me.obtnerFechaVencimiento(objCompra);
                 }
             },
@@ -1271,10 +1280,14 @@
                         'nidcompra'     : objCompra.nIdCompra,
                         'cnumerovin'    : objCompra.cNumeroVin,
                         'nidlinea'      : objCompra.nIdLinea,
-                        'dfechainicio'  : objCompra.dFechaInicio
+                        'dfechainicio'  : moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
-                    //me.arrayIndexFecFin[key] = !me.arrayIndexFecFin[key] ? moment().format('YYYY-MM-DD') : me.arrayIndexFecFin[key]
+                    me.arrayWarrant.map(function(value, key){
+                        if(value.cNumeroVin == response.data.arrayFechVenceWO[0].cNumeroVin){
+                            me.arrayWarrant[key].dFechaFin = response.data.arrayFechVenceWO[0].dFechaVencimiento;
+                        }
+                    });
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1297,6 +1310,9 @@
                     }
                 }
                 return sw;
+            },
+            cambiarFechaVence(){
+                alert('aqui');
             },
             //================= INTEGRA FACTURA DE RESERVA ==================
             validarSapFacturaReserva(objVehiculo){
@@ -2555,5 +2571,8 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        min-width: 150px;
     }
 </style>

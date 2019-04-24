@@ -137,12 +137,12 @@ class WarrantOperativoController extends Controller
         $nIdCompra      =   ($nIdCompra == NULL) ? ($nIdCompra = 0) : $nIdCompra;
         $cNumeroVin     =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
-        $arrayWOperativo = DB::select('exec [usp_WO_GetFechaVenceByLinea] ?, ?, ?, ?',
+        $arrayFechVenceWO = DB::select('exec [usp_WO_GetFechaVenceByLinea] ?, ?, ?, ?',
                                                         [   $nIdCompra,
                                                             $cNumeroVin,
                                                             $nIdLinea,
                                                             $dFechaInicio,
                                                         ]);
-        return ['arrayWOperativo'=>$arrayWOperativo];
+        return ['arrayFechVenceWO'=>$arrayFechVenceWO];
     }
 }
