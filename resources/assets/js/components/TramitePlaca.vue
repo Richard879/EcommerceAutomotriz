@@ -544,6 +544,8 @@
                                                                                                     <thead>
                                                                                                         <tr>
                                                                                                             <th>N° Solicitud T</th>
+                                                                                                            <th>N° Pedido</th>
+                                                                                                            <th>VIN</th>
                                                                                                             <th>Estado Tramite</th>
                                                                                                             <th>Total Vehiculo</th>
                                                                                                             <th>Total General</th>
@@ -555,6 +557,8 @@
                                                                                                     <tbody>
                                                                                                         <tr v-for="(solicitud, index) in arraySolicitudesTramites" :key="index">
                                                                                                             <td v-text="solicitud.cNumeroSolicitudTramite"></td>
+                                                                                                            <td v-text="solicitud.cNumeroPedido"></td>
+                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
                                                                                                             <td v-text="solicitud.cEstadoTramite"></td>
                                                                                                             <td v-text="solicitud.nNumeroVehiculos"></td>
                                                                                                             <td v-text="solicitud.fTotalTramite"></td>
@@ -1515,7 +1519,7 @@
                 });
             },
             obtenerNroVehiculos(){
-                this.fillBusquedaPedidosSeleccionados.nroVehiculos = this.arrayPedidosCancelados.length;
+                this.fillBusquedaPedidosSeleccionados.nroVehiculos = 1;
             },
             //Sección 01
             listarFiltros(page, jerarquia){
@@ -1579,7 +1583,7 @@
                 this.fillConceptosDocumentos.nIdFiltro03            = '';
                 this.fillConceptosDocumentos.cDescripcionFiltro03   = '';
                 this.fillConceptosDocumentos.cMontoFiltro03         = '';
-                this.montoSubTotalTramiteTarjeta                       = '';
+                this.montoSubTotalTramiteTarjeta                    = 0;
             },
             //Sección 02
             obtenerDocumentosPedido(pedido){
@@ -1645,6 +1649,7 @@
                 let me = this;
                 me.arrayPedidoDoumentoNew.map(function(value, key){
                     if(value.cFlagDocumento == false){
+                        me.montoSubTotalTramiteAdicional = me.montoSubTotalTramiteAdicional - value.fMontoDocumento;
                         value.fMontoDocumento = 0;
                     }
                 });
@@ -1681,7 +1686,7 @@
                     'dFechaInicioTramite'       :   this.fillBusquedaPedidosSeleccionados.fechaInicioTramite,
                     'dFechaFinTramite'          :   this.fillBusquedaPedidosSeleccionados.fechaFinRealTramite,
                     'nNroVehiculoTramite'       :   this.fillBusquedaPedidosSeleccionados.nroVehiculos,
-                    'fTotalTramiteTarjeta'     :   this.montoSubTotalTramiteTarjeta,
+                    'fTotalTramiteTarjeta'      :   this.montoSubTotalTramiteTarjeta,
                     // 'fTotalConTramitePlaca' :   this.montoSubTotalTramitePlaca,
                     'fTotalTramiteAdicional'    :   this.montoSubTotalTramiteAdicional,
                     'fTotalTramite'             :   this.montoTotalGeneralTramite,
@@ -1811,9 +1816,10 @@
                 this.fillConceptosDocumentos.nIdFiltro03 = '';
                 this.fillConceptosDocumentos.cDescripcionFiltro03 = '';
                 this.fillConceptosDocumentos.cMontoFiltro03 = '';
+                this.fillIntegracionTarjetaEquipo = '';
             },
             buscarMisTramites(page){
-                this.loading = true;
+                // this.loading = true;
                 var url = this.ruta + '/tramite/GetSolicitudesTramites';
                 axios.get(url, {
                     params: {
@@ -1825,14 +1831,14 @@
                 }).then(response => {
                     let me = this;
                     let info = response.data.arraySolicitudesTramites;
-                    this.arraySolicitudesTramites  = info.data;
-                    this.pagination.current_page = info.current_page;
-                    this.pagination.total        = info.total;
-                    this.pagination.per_page     = info.per_page;
-                    this.pagination.last_page    = info.last_page;
-                    this.pagination.from         = info.from;
-                    this.pagination.to           = info.to;
-                    this.loading = false;
+                    this.arraySolicitudesTramites   =   info.data;
+                    this.pagination.current_page    =   info.current_page;
+                    this.pagination.total           =   info.total;
+                    this.pagination.per_page        =   info.per_page;
+                    this.pagination.last_page       =   info.last_page;
+                    this.pagination.from            =   info.from;
+                    this.pagination.to              =   info.to;
+                    // this.loading = false;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1857,20 +1863,20 @@
                     }
                 }).then(response => {
                     let me = this;
-                    let info = response.data.arrayDetalleSolicitudTramite;
-                    this.arrayDetalleSolicitudTramite  = info.data;
-                    this.pagination.current_page = info.current_page;
-                    this.pagination.total        = info.total;
-                    this.pagination.per_page     = info.per_page;
-                    this.pagination.last_page    = info.last_page;
-                    this.pagination.from         = info.from;
-                    this.pagination.to           = info.to;
+                    let info                            =   response.data.arrayDetalleSolicitudTramite;
+                    this.arrayDetalleSolicitudTramite   =   info.data;
+                    this.pagination.current_page        =   info.current_page;
+                    this.pagination.total               =   info.total;
+                    this.pagination.per_page            =   info.per_page;
+                    this.pagination.last_page           =   info.last_page;
+                    this.pagination.from                =   info.from;
+                    this.pagination.to                  =   info.to;
                     this.loading = false;
 
-                    this.fillDetalleSolTramite.nroSolicitud = this.arrayDetalleSolicitudTramite[0].cNumeroSolicitudTramite;
-                    this.fillDetalleSolTramite.nroVehiculos = this.arrayDetalleSolicitudTramite[0].nNumeroVehiculoTramite;
-                    this.fillDetalleSolTramite.fechaInicioTramite = this.arrayDetalleSolicitudTramite[0].FechaInicioTramite;
-                    this.fillDetalleSolTramite.fechaFinRealTramite = this.arrayDetalleSolicitudTramite[0].FechaFinRealTramite;
+                    this.fillDetalleSolTramite.nroSolicitud         =   this.arrayDetalleSolicitudTramite[0].cNumeroSolicitudTramite;
+                    this.fillDetalleSolTramite.nroVehiculos         =   this.arrayDetalleSolicitudTramite[0].nNumeroVehiculoTramite;
+                    this.fillDetalleSolTramite.fechaInicioTramite   =   this.arrayDetalleSolicitudTramite[0].FechaInicioTramite;
+                    this.fillDetalleSolTramite.fechaFinRealTramite  =   this.arrayDetalleSolicitudTramite[0].FechaFinRealTramite;
                     this.tabBandejaDetalleSolicitudTramite()
                 }).catch(error => {
                     console.log(error);
@@ -1914,6 +1920,7 @@
                     }
                 }).then(response => {
                     this.arrayEstadoTramiteTarjetaPlaca = response.data;
+                    //Elimino el Primer Registro (Elimino Estado en Tarjeta)
                     this.$delete(this.arrayEstadoTramiteTarjetaPlaca, 0);
                 }).catch(error => {
                     console.log(error);
@@ -1929,21 +1936,21 @@
                 var url = this.ruta + '/tramite/GetEstadosTarjetasPlaca';
                 axios.get(url, {
                     params: {
-                        'flagOpcion' : this.fillModalTarjetaPlaca.flagOpcion,
-                        'nIdTramiteTarjeta': this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
-                        'nIdTramitePlaca': this.fillModalTarjetaPlaca.nIdTramitePlaca,
+                        'flagOpcion'        : this.fillModalTarjetaPlaca.flagOpcion,
+                        'nIdTramiteTarjeta' : this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
+                        'nIdTramitePlaca'   : this.fillModalTarjetaPlaca.nIdTramitePlaca,
                         'page' : page
                     }
                 }).then(response => {
                     let me = this;
                     let info = response.data.arrayListadoEstadosTarjetaPlaca;
-                    this.arrayListadoEstadosTarjetaPlaca  = info.data;
-                    this.paginationModal.current_page = info.current_page;
-                    this.paginationModal.total        = info.total;
-                    this.paginationModal.per_page     = info.per_page;
-                    this.paginationModal.last_page    = info.last_page;
-                    this.paginationModal.from         = info.from;
-                    this.paginationModal.to           = info.to;
+                    this.arrayListadoEstadosTarjetaPlaca    = info.data;
+                    this.paginationModal.current_page       = info.current_page;
+                    this.paginationModal.total              = info.total;
+                    this.paginationModal.per_page           = info.per_page;
+                    this.paginationModal.last_page          = info.last_page;
+                    this.paginationModal.from               = info.from;
+                    this.paginationModal.to                 = info.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2056,10 +2063,17 @@
                     'cObservacion'          : this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    // console.log(response.data);
-                    this.fillIntegracionTarjetaEquipo = response.data;
-                    this.actualizarTarjetaEquipo();
-                    // this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
+                    console.log(response.data);
+                    if(response.data['cEstadoRecibido'] == 0) {
+                        $("#myBar").hide();
+                        me.loading.close();
+                        this.tabBandejaSolicitudes();
+                        this.cerrarModalTramiteTarjetaPlaca();
+                    } else {
+                        this.fillIntegracionTarjetaEquipo = response.data;
+                        this.actualizarTarjetaEquipo();
+                        // this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2144,13 +2158,13 @@
                         switch(accion){
                             case 'abrir':
                             {
-                                this.accionmodal=2;
+                                this.accionmodal = 2;
                                 this.modal = 1;
                                 this.vistaEstado = 2;//Inputs Ocultos
-                                this.arrayListadoEstadosTarjetaPlaca = [];//Setear Listado de Estados Observados
-                                this.fillModalTarjetaPlaca.flagOpcion = 1;//Flag para bucar Listado de Observaciones de Tarjetas
-                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta = data['nIdTramiteTarjeta'];
-                                this.fillModalTarjetaPlaca.nIdCabeceraTramite = data['nIdCabeceraTramite'];
+                                this.arrayListadoEstadosTarjetaPlaca            =   [];//Setear Listado de Estados Observados
+                                this.fillModalTarjetaPlaca.flagOpcion           =   1;//Flag para buScar Listado de Observaciones de Tarjetas
+                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta    =   data['nIdTramiteTarjeta'];
+                                this.fillModalTarjetaPlaca.nIdCabeceraTramite   =   data['nIdCabeceraTramite'];
                                 this.llenarEstadosTramiteTarjetaPlaca();
                                 this.buscarMisObservaciones(1);
                                 break;
@@ -2163,16 +2177,16 @@
                         switch(accion){
                             case 'abrir':
                             {
-                                this.accionmodal=3;
+                                this.accionmodal = 3;
                                 this.modal = 1;
                                 this.vistaEstado = 2;//Inputs Ocultos
-                                this.arrayListadoEstadosTarjetaPlaca    = [];//Setear Listado de Estados Observados
-                                this.fillModalTarjetaPlaca.flagOpcion   = 2;//Flag para bucar Listado de Observaciones de Placas
-                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta    = data['nIdTramiteTarjeta'];
-                                this.fillModalTarjetaPlaca.nIdTramitePlaca      = data['nIdTramitePlaca'];
-                                this.fillModalTarjetaPlaca.nIdCabeceraTramite   = data['nIdCabeceraTramite'];
-                                this.fillModalTarjetaPlaca.dFechaInicioTramite  = data['dFechaInicioTramite'];
-                                this.fillModalTarjetaPlaca.dFechaFinTramite     = data['dFechaFinTramite'];
+                                this.arrayListadoEstadosTarjetaPlaca            =   [];//Setear Listado de Estados Observados
+                                this.fillModalTarjetaPlaca.flagOpcion           =   2;//Flag para buScar Listado de Observaciones de Placas
+                                this.fillModalTarjetaPlaca.nIdTramiteTarjeta    =   data['nIdTramiteTarjeta'];
+                                this.fillModalTarjetaPlaca.nIdTramitePlaca      =   data['nIdTramitePlaca'];
+                                this.fillModalTarjetaPlaca.nIdCabeceraTramite   =   data['nIdCabeceraTramite'];
+                                this.fillModalTarjetaPlaca.dFechaInicioTramite  =   data['dFechaInicioTramite'];
+                                this.fillModalTarjetaPlaca.dFechaFinTramite     =   data['dFechaFinTramite'];
                                 this.llenarEstadosTramiteTarjetaPlaca();
                                 this.buscarMisObservaciones(1);
                                 break;
