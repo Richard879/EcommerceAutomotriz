@@ -688,31 +688,47 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $cFlagOp            =   $request->cFlagOp;
         $nIdContacto        =   $request->nIdContacto;
         $nIdPernatural      =   $request->nIdPernatural;
+        $nIdPerjudirica     =   $request->nIdPerjudirica;
+        //Datos Personales
         $cNumeroDocumento   =   $request->cNumeroDocumento;
         $cNombre            =   $request->cNombre;
         $cApellidoPaterno   =   $request->cApellidoPaterno;
         $cApellidoMaterno   =   $request->cApellidoMaterno;
         $dFechaNacimiento   =   $request->dFechaNacimiento;
+        //Datos de Contacto
+        $cDireccion         =   $request->cDireccion;
+        $cEmail             =   $request->cEmail;
+        $nTelefonoMovil     =   $request->nTelefonoMovil;
 
         $nIdContacto        =   ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
         $nIdPernatural      =   ($nIdPernatural == NULL) ? ($nIdPernatural = 0) : $nIdPernatural;
+        $nIdPerjudirica     =   ($nIdPerjudirica == NULL) ? ($nIdPerjudirica = 0) : $nIdPerjudirica;
         $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $cNombre            =   ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
         $cApellidoPaterno   =   ($cApellidoPaterno == NULL) ? ($cApellidoPaterno = '') : $cApellidoPaterno;
         $cApellidoMaterno   =   ($cApellidoMaterno == NULL) ? ($cApellidoMaterno = '') : $cApellidoMaterno;
         $dFechaNacimiento   =   ($dFechaNacimiento == NULL) ? ($dFechaNacimiento = '') : $dFechaNacimiento;
+        $cDireccion         =   ($cDireccion == NULL) ? ($cDireccion = '') : $cDireccion;
+        $cEmail             =   ($cEmail == NULL) ? ($cEmail = '') : $cEmail;
+        $nTelefonoMovil     =   ($nTelefonoMovil == NULL) ? ($nTelefonoMovil = '') : $nTelefonoMovil;
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [
+                                                                $cFlagOp,
                                                                 $nIdContacto,
                                                                 $nIdPernatural,
+                                                                $nIdPerjudirica,
                                                                 $cNumeroDocumento,
                                                                 $cNombre,
                                                                 $cApellidoPaterno,
                                                                 $cApellidoMaterno,
                                                                 $dFechaNacimiento,
+                                                                $cDireccion,
+                                                                $cEmail,
+                                                                $nTelefonoMovil,
                                                                 Auth::user()->id
                                                             ]);
 
