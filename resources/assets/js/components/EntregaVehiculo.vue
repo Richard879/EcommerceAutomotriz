@@ -118,7 +118,7 @@
                                                                                 <th>Vin</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
-                                                                                <th>Encargado</th>
+                                                                                <th>Contacto</th>
                                                                                 <th>Ref.Solicitud Entrega</th>
                                                                                 <th>Fecha Entrega</th>
                                                                                 <th>Hora de Entrega</th>
@@ -133,7 +133,7 @@
                                                                                 <td v-text="entrega.cNumeroVin"></td>
                                                                                 <td v-text="entrega.cNombreComercial"></td>
                                                                                 <td v-text="entrega.nAnioModelo"></td>
-                                                                                <td v-text="entrega.encargado"></td>
+                                                                                <td v-text="entrega.cContacto"></td>
                                                                                 <td v-text="entrega.cNumeroSolicitud"></td>
                                                                                 <td v-text="entrega.dFechaEntregaVehiculo"></td>
                                                                                 <td v-text="entrega.cHoraEntregaVehiculo"></td>

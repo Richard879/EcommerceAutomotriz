@@ -1243,6 +1243,10 @@
                     }
                 });
             },
+            cambiarPagina(page){
+                this.pagination.current_page=page;
+                this.listarPedidosAprobados(page);
+            },
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapPedido(objPedido){
