@@ -2063,7 +2063,7 @@
                     'cObservacion'          : this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     if(response.data['cEstadoRecibido'] == 0) {
                         $("#myBar").hide();
                         me.loading.close();
