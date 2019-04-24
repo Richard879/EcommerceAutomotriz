@@ -422,10 +422,13 @@
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
+                                                                                <th>Cod. Línea</th>
+                                                                                <th>Línea</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Fecha Inicio Línea</th>
+                                                                                <th>Fecha Venc. Línea</th>
                                                                                 <th>Comisión Dolar</th>
                                                                                 <th>Comisión Sol</th>
                                                                             </tr>
@@ -442,12 +445,23 @@
                                                                                 <td v-text="wo.cNumeroVin"></td>
                                                                                 <td v-text="wo.cNombreComercial"></td>
                                                                                 <td v-text="wo.nAnioVersion"></td>
+                                                                                <td v-text="wo.nIdLinea"></td>
+                                                                                <td v-text="wo.cNombreLinea"></td>
                                                                                 <td v-text="wo.cFormaPago"></td>
                                                                                 <td v-text="wo.cSimboloMoneda"></td>
                                                                                 <td v-text="wo.fTotalCompra"></td>
                                                                                 <td>
                                                                                     <el-date-picker
                                                                                         v-model="arrayIndexFecInicio[index]"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <el-date-picker
+                                                                                        v-model="arrayIndexFecFin[index]"
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
@@ -814,6 +828,7 @@
                 arrayWarrant: [],
                 arrayTemporal: [],
                 arrayIndexFecInicio: [],
+                arrayIndexFecFin: [],
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
@@ -1033,7 +1048,7 @@
                 axios.get(url, {
                     params: {
                         'nidestadowarrant'  : this.fillWOperativo.nidestadowarrant,
-                        'cnumerovin'       : this.fillWOperativo.cnumerovin,
+                        'cnumerovin'        : this.fillWOperativo.cnumerovin,
                         'page'              : page
                     }
                 }).then(response => {
@@ -1242,7 +1257,33 @@
                     me.arrayWarrant.map(function(value, key){
                         me.arrayIndexFecInicio[key] = !me.arrayIndexFecInicio[key] ? moment().format('YYYY-MM-DD') : me.arrayIndexFecInicio[key]
                     });
+
+                    me.obtnerFechaVencimiento(objCompra);
                 }
+            },
+            obtnerFechaVencimiento(objCompra){
+                let me = this;
+
+                var url = this.ruta + '/woperativo/GetFechaVenceByLinea';
+
+                axios.get(url, {
+                    params: {
+                        'nidcompra'     : objCompra.nIdCompra,
+                        'cnumerovin'    : objCompra.cNumeroVin,
+                        'nidlinea'      : objCompra.nIdLinea,
+                        'dfechainicio'  : objCompra.dFechaInicio
+                    }
+                }).then(response => {
+                    //me.arrayIndexFecFin[key] = !me.arrayIndexFecFin[key] ? moment().format('YYYY-MM-DD') : me.arrayIndexFecFin[key]
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             eliminaItemTempVehiculo(index){
                 this.$delete(this.arrayWarrant, index);
@@ -1357,7 +1398,8 @@
                             'fComisionDolar'    : value.fComisionDolar,
                             'fComisionSol'      : value.fComisionSol,
                             'fValorTipoCambio'  : value.fValorTipoCambio,
-                            'fValorBeneficio'   : !me.arrayIndexFecInicio[key] ? '' : me.arrayIndexFecInicio[key]
+                            'dFechaInicio'      : !me.arrayIndexFecInicio[key] ? '' : me.arrayIndexFecInicio[key],
+                            'dFechaFin'         : !me.arrayIndexFecFin[key] ? ''    : me.arrayIndexFecFin[key]
                         });
                 });
 

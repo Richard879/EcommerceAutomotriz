@@ -121,6 +121,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/woperativo/SetWOperativoCompra', 'WarrantOperativoController@SetWOperativoCompra');
     Route::get('/woperativo/GetWOperativoDetalle', 'WarrantOperativoController@GetWOperativoDetalle');
     Route::post('/woperativo/UpdEstadoWoDetalle', 'WarrantOperativoController@UpdEstadoWoDetalle');
+    Route::get('/woperativo/GetFechaVenceByLinea', 'WarrantOperativoController@GetFechaVenceByLinea');
 
     Route::get('/wfinanciero/GetWFinanciero', 'WarrantFinancieroController@GetWFinanciero');
     Route::post('/wfinanciero/SetWFinanciero', 'WarrantFinancieroController@SetWFinanciero');
