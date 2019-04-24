@@ -20,7 +20,7 @@ class MaestroVehiculoController extends Controller
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
         $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
-        $nidaniofabricacion     =   $request->fillNuevoVehiculo['nidaniofabricacion'];
+        $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
@@ -44,6 +44,7 @@ class MaestroVehiculoController extends Controller
         $nidmarca               =   ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
         $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
         $nidcolor               =   ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
+        $nidaniomodelo          =   ($nidaniomodelo == NULL)       ? ($nidaniomodelo = ' ')         : $nidaniomodelo;
         $nidcombustible         =   ($nidcombustible == NULL) ? ($nidcombustible = ' ')   : $nidcombustible;
         $dfechaventa            =   ($dfechaventa == NULL)    ? ($dfechaventa = ' ')      : $dfechaventa;
         $cnromotor              =   ($cnromotor == NULL)      ? ($cnromotor = ' ')        : $cnromotor;
@@ -74,7 +75,7 @@ class MaestroVehiculoController extends Controller
                                         $nidmarca,
                                         $nidmodelo,
                                         $nidcolor,
-                                        $nidaniofabricacion,
+                                        $nidaniomodelo,
                                         $nidcombustible,
                                         $dfechaventa,
                                         $cnromotor,
@@ -258,21 +259,21 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $nIdMarca = $request->nidmarca;
-        $nIdModelo = $request->nidmodelo;
-        $nIdAnioFabricacion = $request->nidaniofabricacion;
-        $dFechaVenta = $request->dfechaventa;
-        $nIdVendedor = Auth::user()->id;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $nIdAnioModelo      =   $request->nidaniomodelo;
+        $dFechaVenta        =   $request->dfechaventa;
+        $nIdVendedor        =   Auth::user()->id;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = ' ') : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = ' ') : $nIdModelo;
-        $nIdAnioFabricacion = ($nIdAnioFabricacion == NULL) ? ($nIdAnioFabricacion = ' ') : $nIdAnioFabricacion;
-        $dFechaVenta = ($dFechaVenta == NULL) ? ($dFechaVenta = ' ') : $dFechaVenta;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = ' ') : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = ' ') : $nIdModelo;
+        $nIdAnioModelo      =   ($nIdAnioModelo == NULL) ? ($nIdAnioModelo = ' ') : $nIdAnioModelo;
+        $dFechaVenta        =   ($dFechaVenta == NULL) ? ($dFechaVenta = ' ') : $dFechaVenta;
 
         $arrayVehiculo = DB::select('exec usp_MaestroVehiculo_GetDetalleMaestroVehiculo ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
@@ -281,7 +282,7 @@ class MaestroVehiculoController extends Controller
                                                                             $cFiltroDescripcion,
                                                                             $nIdMarca,
                                                                             $nIdModelo,
-                                                                            $nIdAnioFabricacion,
+                                                                            $nIdAnioModelo,
                                                                             $dFechaVenta,
                                                                             $nIdVendedor
                                                                         ]);

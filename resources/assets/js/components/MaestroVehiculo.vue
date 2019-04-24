@@ -110,14 +110,14 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                                            <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillBusquedaVehiculo.nidaniofabricacion"
+                                                                                <el-select v-model="fillBusquedaVehiculo.nidaniomodelo"
                                                                                             filterable
                                                                                             clearable
                                                                                             placeholder="SELECCIONE">
                                                                                     <el-option
-                                                                                    v-for="item in arrayAnioFabricacion"
+                                                                                    v-for="item in arrayAnioModelo"
                                                                                     :key="item.nIdPar"
                                                                                     :label="item.cParNombre"
                                                                                     :value="item.nIdPar">
@@ -174,7 +174,7 @@
                                                                                         <th>Serie</th>
                                                                                         <th>Tarjeta</th>
                                                                                         <th>Placa</th>
-                                                                                        <th>Año Fabricación</th>
+                                                                                        <th>Año Modelo</th>
                                                                                         <th>Propietario</th>
                                                                                         <th>D.Identificación</th>
                                                                                         <th>Celular</th>
@@ -194,7 +194,7 @@
                                                                                         <td v-text="vehiculo.cNroSerie"></td>
                                                                                         <td v-text="vehiculo.cNroTarjeta"></td>
                                                                                         <td v-text="vehiculo.cPlaca"></td>
-                                                                                        <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                                        <td v-text="vehiculo.nAnioModelo"></td>
                                                                                         <td v-text="vehiculo.cPropietario"></td>
                                                                                         <td v-text="vehiculo.cNroIdentificacion"></td>
                                                                                         <td v-text="vehiculo.cNroCelular"></td>
@@ -380,17 +380,17 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Año Fabricacion</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="fillNuevoVehiculo.nidaniofabricacion"
+                                                                                            <el-select v-model="fillNuevoVehiculo.nidaniomodelo"
                                                                                                         filterable
                                                                                                         clearable
-                                                                                                        placeholder="SELECCIONE">
+                                                                                                        placeholder="SELECCIONE AÑO MODELO">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayAnioFabricacion"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayAnioModelo"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1528,12 +1528,12 @@
                     cfiltrodescripcion: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidaniofabricacion: '',
+                    nidaniomodelo: '',
                     dfechaventa: ''
                 },
                 arrayMarca: [],
                 arrayModelo: [],
-                arrayAnioFabricacion: [],
+                arrayAnioModelo: [],
                 arrayVehiculoBuscar: [],
                 // =============================================================
                 // VARIABLES TAB NUEVO VEHÍCULOS
@@ -1551,7 +1551,7 @@
                     nidmarca: '',
                     nidmodelo: '',
                     nidcolor: '',
-                    nidaniofabricacion: '',
+                    nidaniomodelo: '',
                     dfechaventa: '',
                     nidcombustible: '',
                     cnromotor: '',
@@ -1689,7 +1689,7 @@
             }
         },
         mounted() {
-            //this.tabBuscarVehiculo();
+            this.tabBuscarVehiculo();
         },
         computed:{
             isActived: function(){
@@ -1750,8 +1750,8 @@
             tabBuscarVehiculo(){
                 this.llenarComboMarca(1);
                 this.llenarComboModelo(1);
-                this.llenarComboAnioFabricacion();
-                this.buscarVehiculo();
+                this.llenarComboAnioModelo();
+                // this.buscarVehiculo();
             },
             llenarComboMarca(data){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1793,14 +1793,14 @@
                     }
                 });
             },
-            llenarComboAnioFabricacion(){
+            llenarComboAnioModelo(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url,{
                     params: {
-                        'ngrupoparid' : 110034
+                        'ngrupoparid' : 110035
                     }
                 }).then(response => {
-                    this.arrayAnioFabricacion = response.data;
+                    this.arrayAnioModelo = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1816,25 +1816,25 @@
                 var url = this.ruta + '/maestrovehiculo/GetDetalleMaestroVehiculo';
                 axios.get(url, {
                     params: {
-                        'ntipopersona' : this.fillBusquedaVehiculo.ntipopersona,
-                        'cnrodocumento' : String(this.fillBusquedaVehiculo.cnrodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillBusquedaVehiculo.cfiltrodescripcion.toString(),
-                        'nidmarca' : this.fillBusquedaVehiculo.nidmarca,
-                        'nidmodelo' : this.fillBusquedaVehiculo.nidmodelo,
-                        'nidaniofabricacion' : this.fillBusquedaVehiculo.nidaniofabricacion,
-                        'dfechaventa' : this.fillBusquedaVehiculo.dfechaventa,
+                        'ntipopersona'          :   this.fillBusquedaVehiculo.ntipopersona,
+                        'cnrodocumento'         :   String(this.fillBusquedaVehiculo.cnrodocumento.toString()),
+                        'cfiltrodescripcion'    :   this.fillBusquedaVehiculo.cfiltrodescripcion.toString(),
+                        'nidmarca'              :   this.fillBusquedaVehiculo.nidmarca,
+                        'nidmodelo'             :   this.fillBusquedaVehiculo.nidmodelo,
+                        'nidaniomodelo'         :   this.fillBusquedaVehiculo.nidaniomodelo,
+                        'dfechaventa'           :   this.fillBusquedaVehiculo.dfechaventa,
                         'page' : page
                     }
                 }).then(response => {
                     let info = response.data.arrayVehiculo;
-                    this.arrayVehiculoBuscar    = info.data;
+                    this.arrayVehiculoBuscar        =   info.data;
                     //Pagination
-                    this.pagination.current_page   =   info.current_page;
-                    this.pagination.total          =   info.total;
-                    this.pagination.per_page       =   info.per_page;
-                    this.pagination.last_page      =   info.last_page;
-                    this.pagination.from           =   info.from;
-                    this.pagination.to             =   info.to;
+                    this.pagination.current_page    =   info.current_page;
+                    this.pagination.total           =   info.total;
+                    this.pagination.per_page        =   info.per_page;
+                    this.pagination.last_page       =   info.last_page;
+                    this.pagination.from            =   info.from;
+                    this.pagination.to              =   info.to;
                     this.loading = false;
                 }).catch(error => {
                     console.log(error);
@@ -1856,7 +1856,7 @@
                 this.fillBusquedaVehiculo.cfiltrodescripcion = '';
                 this.fillBusquedaVehiculo.nidmarca = '';
                 this.fillBusquedaVehiculo.nidmodelo = '';
-                this.fillBusquedaVehiculo.nidaniofabricacion = '';
+                this.fillBusquedaVehiculo.nidaniomodelo = '';
                 this.fillBusquedaVehiculo.dfechaventa = '';
             },
             // =================================================================
@@ -1872,7 +1872,7 @@
                 this.limpiarTabBusquedaVehiculo();
                 //this.llenarComboModelo(2);
                 this.llenarComboColor();
-                this.llenarComboAnioFabricacion();
+                this.llenarComboAnioModelo();
                 this.llenarComboCombustible();
                 (this.nFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
                 this.llenarComboClase();
@@ -2607,7 +2607,7 @@
                 this.fillNuevoVehiculo.nidmarca = '';
                 this.fillNuevoVehiculo.nidmodelo = '';
                 this.fillNuevoVehiculo.nidcolor = '';
-                this.fillNuevoVehiculo.nidaniofabricacion = '';
+                this.fillNuevoVehiculo.nidaniomodelo = '';
                 this.fillNuevoVehiculo.nidcombustible = '';
                 this.fillNuevoVehiculo.dfechaventa = '';
                 this.fillNuevoVehiculo.cnrocilindros = '';
@@ -2621,6 +2621,7 @@
                 this.fillNuevoVehiculo.faltura = '';
                 this.fillNuevoVehiculo.fancho = '';
                 this.fillNuevoVehiculo.fcargautil = '';
+                this.fillNuevoVehiculo.cnacionesunidas = '';
             },
             reiniciarTabs(){
                 $('#tab01').removeClass('nav-link active');
@@ -2672,7 +2673,7 @@
                 this.fillNuevoVehiculo.nidmarca             =   (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
                 this.fillNuevoVehiculo.nidmodelo            =   (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
                 this.fillNuevoVehiculo.nidcolor             =   (data['nIdColor'] == 0) ? '' : data['nIdColor'];
-                this.fillNuevoVehiculo.nidaniofabricacion   =   data['nAnioFabricacion'];
+                this.fillNuevoVehiculo.nidaniomodelo        =   data['nAnioModelo'];
                 this.fillNuevoVehiculo.dfechaventa          =   data['dFechaVenta'];
                 this.fillNuevoVehiculo.nidcombustible       =   (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
                 this.fillNuevoVehiculo.cnromotor            =   (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
