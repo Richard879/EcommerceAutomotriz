@@ -1547,13 +1547,13 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.paginationModal.total = response.data.arrayVersionVehiculo.total;
-                    this.paginationModal.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
-                    this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
+                    this.arrayVersionVehiculo           = response.data.arrayVersionVehiculo.data;
+                    this.paginationModal.current_page   = response.data.arrayVersionVehiculo.current_page;
+                    this.paginationModal.total          = response.data.arrayVersionVehiculo.total;
+                    this.paginationModal.per_page       = response.data.arrayVersionVehiculo.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVersionVehiculo.last_page;
+                    this.paginationModal.from           = response.data.arrayVersionVehiculo.from;
+                    this.paginationModal.to             = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2820,7 +2820,7 @@
             tabGeneraOS(){
             },
             listarVehiculosWoSinServicio(page){
-                  var url = this.ruta + '/compra/GetCompraSinWOperativo';
+                  var url = this.ruta + '/compra/GetVehiculosWoSinOS';
 
                 axios.get(url, {
                     params: {
@@ -2831,13 +2831,13 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.paginationModal.total = response.data.arrayVersionVehiculo.total;
-                    this.paginationModal.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
-                    this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
+                    this.arrayVersionVehiculo           = response.data.arrayVersionVehiculo.data;
+                    this.paginationModal.current_page   =  response.data.arrayVersionVehiculo.current_page;
+                    this.paginationModal.total          = response.data.arrayVersionVehiculo.total;
+                    this.paginationModal.per_page       = response.data.arrayVersionVehiculo.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVersionVehiculo.last_page;
+                    this.paginationModal.from           = response.data.arrayVersionVehiculo.from;
+                    this.paginationModal.to             = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
