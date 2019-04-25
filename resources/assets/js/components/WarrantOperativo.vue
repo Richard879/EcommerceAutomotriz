@@ -1565,6 +1565,7 @@
                         'fValorTipoCambio'  : objCompra.fValorTipoCambio,
                         'fComisionDolar'    : objCompra.fComisionDolar,
                         'fComisionSol'      : objCompra.fComisionSol,
+                        'cCardCode'         : objCompra.cCardCode,
                         'fDocRate'          : objCompra.fDocRate,
                         'cSerieComprobante' : objCompra.cSerieComprobante,
                         'cNumeroComprobante': objCompra.cNumeroComprobante,
@@ -1719,6 +1720,7 @@
                             'fComisionDolar'    : value.fComisionDolar,
                             'fComisionSol'      : value.fComisionSol,
                             'fValorTipoCambio'  : value.fValorTipoCambio,
+                            'cCardCode'         : value.cCardCode,
                             'fDocRate'          : value.fDocRate,
                             'cSerieComprobante' : value.cSerieComprobante,
                             'cNumeroComprobante': value.cNumeroComprobante,
@@ -1782,7 +1784,6 @@
                 axios.post(sapUrl, {
                     'cCardCode'     : me.formWOperativo.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data'          : me.arrayTemporal
                 }).then(response => {
                     me.arraySapRespuesta= [];
@@ -2352,8 +2353,7 @@
                     axios.post(sapUrl, {
                         'cCardCode'     : objWO.cCardCode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
-                        'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'data'          : me.arraySapAsiento
+                        'data'          : me.arrayTemporal
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -2684,7 +2684,7 @@
                     });
                 }else{
                     setTimeout(function() {
-                        me.integraSapAsientoContable();
+                        me.integraSapAsientoContable(objWO);
                     }, 800);
                 }
             },
@@ -2695,7 +2695,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.integraSapAsientoContable();
+                        me.integraSapAsientoContable(objWO);
                     }, 800);
                 }).catch(error => {
                     console.log(error);
