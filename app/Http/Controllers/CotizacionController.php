@@ -636,12 +636,20 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        $ip_address = request()->ip();
+
         if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
             if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
                 //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
                 $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
                 //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-                $contents   =   Storage::get('public/'. $cadena);
+
+                //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
+                if($ip_address == '::1') {
+                    $contents   =   \File::get($arrayDetalleDocs[0]->cFichaImageUrl);
+                } else {
+                    $contents   =   Storage::get('public/'. $cadena);
+                }
             } else {
                 //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
                 $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
