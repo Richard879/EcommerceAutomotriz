@@ -89,7 +89,7 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo()">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -841,11 +841,11 @@
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="listarVersionVehiculo(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVersionVehiculo(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -859,11 +859,11 @@
                                                         <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="listarVersionVehiculo(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVersionVehiculo(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -987,11 +987,11 @@
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="listarVehiculosWoSinServicio(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVehiculosWoSinServicio(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -1005,11 +1005,11 @@
                                                         <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="listarVehiculosWoSinServicio(1)()" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVehiculosWoSinServicio(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -1534,9 +1534,6 @@
                         }
                     }
                 }
-            },
-            buscarVersionVehiculo(){
-                this.listarVersionVehiculo(1);
             },
             listarVersionVehiculo(page){
                 var url = this.ruta + '/compra/GetCompraSinWOperativo';
@@ -2822,8 +2819,34 @@
             // =================================================================
             tabGeneraOS(){
             },
-            listarVehiculosWoSinServicio(){
-                
+            listarVehiculosWoSinServicio(page){
+                  var url = this.ruta + '/compra/GetCompraSinWOperativo';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin'        : this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial'  : this.fillVersionVehiculo.cnombrecomercial,
+                        'page'              : page
+                    }
+                }).then(response => {
+                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
+                    this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
+                    this.paginationModal.total = response.data.arrayVersionVehiculo.total;
+                    this.paginationModal.per_page    = response.data.arrayVersionVehiculo.per_page;
+                    this.paginationModal.last_page   = response.data.arrayVersionVehiculo.last_page;
+                    this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
+                    this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             generaOrdenServicio(){
                 let me = this;
