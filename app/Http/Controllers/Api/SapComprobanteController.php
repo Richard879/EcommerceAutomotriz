@@ -91,7 +91,7 @@ class SapComprobanteController extends Controller
                     "U_SYP_MDCD"    =>  (string)$value['cNumeroComprobante'],
                     "DocumentLines" =>  [
                         [
-                            "ItemDescription"   =>  "Warrant Operativo - ".$value['cNumeroVin'],
+                            "ItemDescription"   =>  "Warrant Operativo",
                             "TaxCode"           =>  "EXE_IGV",
                             "PriceAfterVAT"     =>  $value['fTotalCompra'],
                             "Currency"          =>  "US$",

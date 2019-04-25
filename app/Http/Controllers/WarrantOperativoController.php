@@ -146,4 +146,25 @@ class WarrantOperativoController extends Controller
                                                         ]);
         return ['arrayFechVenceWO'=>$arrayFechVenceWO];
     }
+
+    public function GetVehiculosWoSinOS(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdWarrantOperativo    =   $request->nidwarrantoperativo;
+        $cNumeroVin             =   $request->cnumerovin;
+        $nIdEstadoWarrant       =   $request->nidestadowarrant;
+
+        $nIdEstadoWarrant       =   ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
+        $cNumeroVin             =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+
+        $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetVehiculosWoSinOS] ?, ?, ?',
+                                                                    [   $nIdWarrantOperativo,
+                                                                        $cNumeroVin,
+                                                                        $nIdEstadoWarrant
+                                                                    ]);
+
+        $arrayWOperativoDetalle = ParametroController::arrayPaginator($arrayWOperativoDetalle, $request);
+        return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];
+    }
 }

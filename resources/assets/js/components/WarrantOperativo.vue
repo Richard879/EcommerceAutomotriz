@@ -597,6 +597,7 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
+                                                                                <th>Código SAP</th>
                                                                                 <th>Código</th>
                                                                                 <th>Nro VIN</th>
                                                                                 <th>Nombre Comercial</th>
@@ -606,8 +607,6 @@
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Fecha Inicio Línea</th>
-                                                                                <th>Fecha Venc. Línea</th>
                                                                                 <th>Comis Dolar</th>
                                                                                 <th>Comis Sol</th>
                                                                             </tr>
@@ -620,6 +619,7 @@
                                                                                         <i @click="eliminaItemTempVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </el-tooltip>
                                                                                 </td>
+                                                                                <td v-text="wo.nDocEntry"></td>
                                                                                 <td v-text="wo.nIdCompra"></td>
                                                                                 <td v-text="wo.cNumeroVin"></td>
                                                                                 <td v-text="wo.cNombreComercial"></td>
@@ -629,25 +629,6 @@
                                                                                 <td v-text="wo.cFormaPago"></td>
                                                                                 <td v-text="wo.cSimboloMoneda"></td>
                                                                                 <td v-text="wo.fTotalCompra"></td>
-                                                                                <td>
-                                                                                    <el-date-picker
-                                                                                        v-model="wo.dFechaInicio"
-                                                                                        type="date"
-                                                                                        value-format="yyyy-MM-dd"
-                                                                                        format="dd/MM/yyyy"
-                                                                                        @change="cambiarFechaVence(wo)"
-                                                                                        placeholder="dd/mm/aaaa">
-                                                                                    </el-date-picker>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <el-date-picker
-                                                                                        v-model="wo.dFechaFin"
-                                                                                        type="date"
-                                                                                        value-format="yyyy-MM-dd"
-                                                                                        format="dd/MM/yyyy"
-                                                                                        placeholder="dd/mm/aaaa">
-                                                                                    </el-date-picker>
-                                                                                </td>
                                                                                 <td v-text="wo.fComisionDolar"></td>
                                                                                 <td v-text="wo.fComisionSol"></td>
                                                                             </tr>
@@ -970,7 +951,7 @@
             </div>
 
             <!-- MODAL VEHICULOS CON WO SIN O/S-->
-            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -1021,13 +1002,13 @@
                                             </div>
                                         </form>
                                         <br/>
-                                        <template v-if="arrayVersionVehiculo.length">
+                                        <template v-if="arrayVehOS.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
-                                                            <th>NroDoc SAP</th>
+                                                            <th>Codigo SAP</th>
                                                             <th>Nro VIN</th>
                                                             <th>Proveedor</th>
                                                             <th>Nombre Comercial</th>
@@ -1035,27 +1016,19 @@
                                                             <th>Forma Pago</th>
                                                             <th>Moneda</th>
                                                             <th>Costo</th>
-                                                            <th>Disponible</th>
-                                                            <th>Sap Factura Res.</th>
+                                                            <th>Comis Dolar</th>
+                                                            <th>Comis Sol</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
+                                                        <tr v-for="vehiculo in arrayVehOS" :key="vehiculo.nIdCompra">
                                                             <td>
-                                                                <template v-if="vehiculo.nValidaIntegracion==0">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">{{ vehiculo.cFlagVistaIntegracion + ' ' + vehiculo.cNumeroVin }}</div>
-                                                                        <i @click="validarSapFacturaReserva(vehiculo)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                    </el-tooltip>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Agregar {{ vehiculo.cNumeroVin }}</div>
-                                                                        <i @click="asignarVehiculo(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </template>&nbsp;&nbsp;
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Agregar {{ vehiculo.cNumeroVin }}</div>
+                                                                    <i @click="asignarVehOS(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
                                                             </td>
-                                                            <td v-text="vehiculo.nDocNumCompra"></td>
+                                                            <td v-text="vehiculo.nDocEntry"></td>
                                                             <td v-text="vehiculo.cNumeroVin"></td>
                                                             <td v-text="vehiculo.cNombreProveedor"></td>
                                                             <td v-text="vehiculo.cNombreComercial"></td>
@@ -1063,8 +1036,8 @@
                                                             <td v-text="vehiculo.cFormaPago"></td>
                                                             <td v-text="vehiculo.cSimboloMoneda"></td>
                                                             <td v-text="vehiculo.fTotalCompra"></td>
-                                                            <td v-text="vehiculo.cFlagVehiculoLibre"></td>
-                                                            <td v-text="vehiculo.nDocNumFacturaReserva"></td>
+                                                            <td v-text="vehiculo.fComisionDolar"></td>
+                                                            <td v-text="vehiculo.fComisionSol"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1156,6 +1129,8 @@
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
+                //============= TAB GENERAR O/S ================
+                arrayVehOS: [],
                 //=============== MODAL VEHICULOS ==============
                 fillVersionVehiculo:{
                     cnumerovin: '',
@@ -1524,13 +1499,13 @@
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
-                            };
+                            }break;
                             case 'wo':
                             {
                                 this.accionmodal=4;
                                 this.modal = 1;
                                 break;
-                            }
+                            }break;
                         }
                     }
                 }
@@ -1577,7 +1552,6 @@
                         text: 'El Vehículo seleccionado ya se encuentra agregado!',
                     })
                 } else {
-                    console.log(objCompra)
                     me.arrayWarrant.push({
                         'nIdCompra'         : objCompra.nIdCompra,
                         'cNumeroVin'        : objCompra.cNumeroVin,
@@ -1591,6 +1565,9 @@
                         'fValorTipoCambio'  : objCompra.fValorTipoCambio,
                         'fComisionDolar'    : objCompra.fComisionDolar,
                         'fComisionSol'      : objCompra.fComisionSol,
+                        'fDocRate'          : objCompra.fDocRate,
+                        'cSerieComprobante' : objCompra.cSerieComprobante,
+                        'cNumeroComprobante': objCompra.cNumeroComprobante,
                         'dFechaInicio'      : moment().format('YYYY-MM-DD'),
                         'dFechaFin'         : moment().format('YYYY-MM-DD')
                     });
@@ -1742,6 +1719,9 @@
                             'fComisionDolar'    : value.fComisionDolar,
                             'fComisionSol'      : value.fComisionSol,
                             'fValorTipoCambio'  : value.fValorTipoCambio,
+                            'fDocRate'          : value.fDocRate,
+                            'cSerieComprobante' : value.cSerieComprobante,
+                            'cNumeroComprobante': value.cNumeroComprobante,
                             'dFechaInicio'      : value.dFechaInicio,
                             'dFechaFin'         : value.dFechaFin
                         });
@@ -2820,7 +2800,7 @@
             tabGeneraOS(){
             },
             listarVehiculosWoSinServicio(page){
-                  var url = this.ruta + '/compra/GetVehiculosWoSinOS';
+                  var url = this.ruta + '/woperativo/GetVehiculosWoSinOS';
 
                 axios.get(url, {
                     params: {
@@ -2831,13 +2811,13 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo           = response.data.arrayVersionVehiculo.data;
-                    this.paginationModal.current_page   =  response.data.arrayVersionVehiculo.current_page;
-                    this.paginationModal.total          = response.data.arrayVersionVehiculo.total;
-                    this.paginationModal.per_page       = response.data.arrayVersionVehiculo.per_page;
-                    this.paginationModal.last_page      = response.data.arrayVersionVehiculo.last_page;
-                    this.paginationModal.from           = response.data.arrayVersionVehiculo.from;
-                    this.paginationModal.to             = response.data.arrayVersionVehiculo.to;
+                    this.arrayVehOS                     = response.data.arrayVehOS.data;
+                    this.paginationModal.current_page   = response.data.arrayVehOS.current_page;
+                    this.paginationModal.total          = response.data.arrayVehOS.total;
+                    this.paginationModal.per_page       = response.data.arrayVehOS.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVehOS.last_page;
+                    this.paginationModal.from           = response.data.arrayVehOS.from;
+                    this.paginationModal.to             = response.data.arrayVehOS.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
