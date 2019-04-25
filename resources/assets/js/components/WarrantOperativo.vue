@@ -16,13 +16,18 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaWOperativo" @click="tabBuscarWOperativo();" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" href="#TabBuscaWOperativo" @click="tabBuscarWOperativo()" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR W. OPERATIVO
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabGeneraWOperativo" @click="tabGeneraWOperativo();" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabGeneraWOperativo" @click="tabGeneraWOperativo()" role="tab" data-toggle="tab">
                                             <i class="fa fa-file-text-o"></i> GENERAR W. OPERATIVO
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabGeneraOS" @click="tabGeneraOS()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-file-text-o"></i> GENERAR O/S
                                         </a>
                                     </li>
                                 </ul>
@@ -1261,6 +1266,7 @@
                         'cFormaPago'        : objCompra.cFormaPago,
                         'cSimboloMoneda'    : objCompra.cSimboloMoneda,
                         'fTotalCompra'      : objCompra.fTotalCompra,
+                        'fValorTipoCambio'  : objCompra.fValorTipoCambio,
                         'fComisionDolar'    : objCompra.fComisionDolar,
                         'fComisionSol'      : objCompra.fComisionSol,
                         'dFechaInicio'      : moment().format('YYYY-MM-DD'),
@@ -2487,6 +2493,9 @@
                 me.listarDetalleWOperativo(1);
             },
             //=================================================================
+            tabGeneraOS(){
+
+            },
             limpiarFormulario(){
                 this.fillWOperativo.nidwarrantoperativo= 0,
                 this.fillWOperativo.nordencompra= '',
