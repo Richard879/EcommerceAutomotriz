@@ -268,15 +268,15 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdCronograma = $request->nidcronograma;
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCronograma      =   $request->nidcronograma;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
         $arrayContactoCarteraMes = DB::select('exec usp_Contacto_GetContactoCarteraMes ?, ?, ?, ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,

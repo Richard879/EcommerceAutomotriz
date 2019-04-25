@@ -22,15 +22,9 @@ class VerifyUserAuthenticate
             // Auth::logout();
 
             // remueve todas las sesiones realacionas al usuario actual
-<<<<<<< HEAD
-            /*app('db')->table('sessions')
-                    ->where('user_id', Auth::user()->id)
-                    ->delete();*/
-=======
             // app('db')->table('sessions')
             //         ->where('user_id', Auth::user()->id)
             //         ->delete();
->>>>>>> 7809a66b415a60d378a054c45cea1ce0d9cb077b
 
             Auth::logout();
             $request->session()->invalidate();

@@ -324,6 +324,10 @@
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
@@ -368,6 +372,10 @@
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cRazonSocial }}</div>
                                                                                             <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
@@ -2314,6 +2322,7 @@
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
@@ -2746,6 +2755,7 @@
                 });
             },
             limpiarModalEditarPersona(){
+                this.arrayContactoCarteraMes                = [];
                 this.fillEditarContacto.cFlagOp             = '';
                 this.fillEditarContacto.nidcontacto         = '';
                 this.fillEditarContacto.nidpernatural       = '';
