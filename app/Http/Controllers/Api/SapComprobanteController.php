@@ -80,7 +80,7 @@ class SapComprobanteController extends Controller
                 'json' => [
                     "CardCode"      =>  $request->cCardCode,
                     "DocDate"       =>  (string)$request->fDocDate,
-                    "DocDueDate"    =>  (string)$request->fDocDueDate,
+                    "DocDueDate"    =>  (string)$value['dFechaFin'],
                     "DocCurrency"   =>  "US$",
                     "DocRate"       =>  $value['fDocRate'],
                     "DocType"       =>  "dDocument_Service",

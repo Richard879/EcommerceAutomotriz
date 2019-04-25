@@ -69,7 +69,7 @@ class WarrantOperativoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?, ?',
+                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                     [   $nIdWarrantOperativo,
                                                         $det['nIdCompra'],
                                                         $det['fTotalCompra'],
@@ -77,6 +77,7 @@ class WarrantOperativoController extends Controller
                                                         $det['fComisionSol'],
                                                         $det['fValorTipoCambio'],
                                                         $det['dFechaInicio'],
+                                                        $det['dFechaFin'],
                                                         Auth::user()->id
                                                     ]);
             }
@@ -137,12 +138,12 @@ class WarrantOperativoController extends Controller
         $nIdCompra      =   ($nIdCompra == NULL) ? ($nIdCompra = 0) : $nIdCompra;
         $cNumeroVin     =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
-        $arrayWOperativo = DB::select('exec [usp_WO_GetFechaVenceByLinea] ?, ?, ?, ?',
+        $arrayFechVenceWO = DB::select('exec [usp_WO_GetFechaVenceByLinea] ?, ?, ?, ?',
                                                         [   $nIdCompra,
                                                             $cNumeroVin,
                                                             $nIdLinea,
                                                             $dFechaInicio,
                                                         ]);
-        return ['arrayWOperativo'=>$arrayWOperativo];
+        return ['arrayFechVenceWO'=>$arrayFechVenceWO];
     }
 }
