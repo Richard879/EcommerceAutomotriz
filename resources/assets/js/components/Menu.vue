@@ -1,8 +1,8 @@
 <template>
     <nav class="side-navbar">
-        <span class="heading">
+        <!--<span class="heading">
             <vs-divider color="dark">MENÚ PRINCIPAL</vs-divider>
-        </span>
+        </span>-->
         <ul class="list-unstyled">
             <transition-group tag="ul" name="bounce" mode="out-in" appear>
                 <li v-for="menu in arrayMenu" :key="menu.nIdPar">

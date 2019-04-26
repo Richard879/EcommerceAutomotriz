@@ -152,7 +152,7 @@ class SapCompraController extends Controller
                     "U_SYP_TCOMPRA"     =>  "01",
                     "DocumentLines" => [
                             [
-                                "ItemDescription"   =>  "Comisión por Manejo Línea ".$value['cNumeroVin'],
+                                "ItemDescription"   =>  "Comisión por Manejo Línea",
                                 "TaxCode"           => "IGV",
                                 "PriceAfterVAT"     => (string)$value['fTotalCompra'],
                                 "Currency"          => "US$",

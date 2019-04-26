@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#TabGeneraWOperativo" @click="tabGeneraWOperativo()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-file-text-o"></i> GENERAR W. OPERATIVO
+                                            <i class="fa fa-qrcode"></i> GENERAR W. OPERATIVO
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -89,7 +89,7 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo()">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -179,7 +179,6 @@
                                                 </div>
                                             </section>
                                         </template>
-
                                         <template v-else>
                                             <section class="forms">
                                                 <div class="container-fluid">
@@ -514,6 +513,162 @@
                                             </div>
                                         </section>
                                     </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabGeneraOS">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">GENERAR WARRANT OPERATIVO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="text" v-model="formWOperativo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Proveedor </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-sm-9">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 form-control-label">* Buscar Vehiculos</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <input type="text" value="VEHICULOS WARRANTEADOS" class="form-control form-control-sm" readonly>
+                                                                            <div class="input-group-prepend">
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Buscar Vehículos con Warrant Operativo</div>
+                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','wo')">
+                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                    </button>
+                                                                                </el-tooltip>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayWarrant.length">
+                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Código SAP</th>
+                                                                                <th>Código</th>
+                                                                                <th>Nro VIN</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Año Modelo</th>
+                                                                                <th>Cod. Línea</th>
+                                                                                <th>Línea</th>
+                                                                                <th>Forma Pago</th>
+                                                                                <th>Moneda</th>
+                                                                                <th>Total</th>
+                                                                                <th>Comis Dolar</th>
+                                                                                <th>Comis Sol</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(wo, index)  in arrayWarrant" :key="wo.nIdCompra">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ wo.cNumeroVin }}</div>
+                                                                                        <i @click="eliminaItemTempVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
+                                                                                </td>
+                                                                                <td v-text="wo.nDocEntry"></td>
+                                                                                <td v-text="wo.nIdCompra"></td>
+                                                                                <td v-text="wo.cNumeroVin"></td>
+                                                                                <td v-text="wo.cNombreComercial"></td>
+                                                                                <td v-text="wo.nAnioVersion"></td>
+                                                                                <td v-text="wo.nIdLinea"></td>
+                                                                                <td v-text="wo.cNombreLinea"></td>
+                                                                                <td v-text="wo.cFormaPago"></td>
+                                                                                <td v-text="wo.cSimboloMoneda"></td>
+                                                                                <td v-text="wo.fTotalCompra"></td>
+                                                                                <td v-text="wo.fComisionDolar"></td>
+                                                                                <td v-text="wo.fComisionSol"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Total: US$ <strong>{{ fTotalValor = totalVehiculo }}</strong></div>
+                                                                            <div class="datatable-info">Total Comision Dolares: US$ <strong>{{ fTotalComisionDolar = totalComisionDolar }}</strong></div>
+                                                                            <div class="datatable-info">Total Comision Soles: s./ <strong>{{ fTotalComisionSol = totalComisionSol }}</strong></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -667,11 +822,11 @@
                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="listarVersionVehiculo(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVersionVehiculo(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -685,11 +840,11 @@
                                                         <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="listarVersionVehiculo(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Vehículos </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVersionVehiculo(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -795,6 +950,144 @@
                 </div>
             </div>
 
+            <!-- MODAL VEHICULOS CON WO SIN O/S-->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="listarVehiculosWoSinServicio(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Vehículos </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVehiculosWoSinServicio(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="listarVehiculosWoSinServicio(1)()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Vehículos </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVehiculosWoSinServicio(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVehOS.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Codigo SAP</th>
+                                                            <th>Nro VIN</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Año Modelo</th>
+                                                            <th>Forma Pago</th>
+                                                            <th>Moneda</th>
+                                                            <th>Costo</th>
+                                                            <th>Comis Dolar</th>
+                                                            <th>Comis Sol</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayVehOS" :key="vehiculo.nIdCompra">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Agregar {{ vehiculo.cNumeroVin }}</div>
+                                                                    <i @click="asignarVehOS(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </td>
+                                                            <td v-text="vehiculo.nDocEntry"></td>
+                                                            <td v-text="vehiculo.cNumeroVin"></td>
+                                                            <td v-text="vehiculo.cNombreProveedor"></td>
+                                                            <td v-text="vehiculo.cNombreComercial"></td>
+                                                            <td v-text="vehiculo.nAnioVersion"></td>
+                                                            <td v-text="vehiculo.cFormaPago"></td>
+                                                            <td v-text="vehiculo.cSimboloMoneda"></td>
+                                                            <td v-text="vehiculo.fTotalCompra"></td>
+                                                            <td v-text="vehiculo.fComisionDolar"></td>
+                                                            <td v-text="vehiculo.fComisionSol"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVehiculos(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -836,6 +1129,8 @@
                 fTotalValor: 0,
                 fTotalComisionSol: 0,
                 fTotalComisionDolar: 0,
+                //============= TAB GENERAR O/S ================
+                arrayVehOS: [],
                 //=============== MODAL VEHICULOS ==============
                 fillVersionVehiculo:{
                     cnumerovin: '',
@@ -1203,15 +1498,17 @@
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                //this.listarVersionVehiculo(1);
                                 break;
-                            }
+                            }break;
+                            case 'wo':
+                            {
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }break;
                         }
                     }
                 }
-            },
-            buscarVersionVehiculo(){
-                this.listarVersionVehiculo(1);
             },
             listarVersionVehiculo(page){
                 var url = this.ruta + '/compra/GetCompraSinWOperativo';
@@ -1225,13 +1522,13 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.paginationModal.total = response.data.arrayVersionVehiculo.total;
-                    this.paginationModal.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
-                    this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
+                    this.arrayVersionVehiculo           = response.data.arrayVersionVehiculo.data;
+                    this.paginationModal.current_page   = response.data.arrayVersionVehiculo.current_page;
+                    this.paginationModal.total          = response.data.arrayVersionVehiculo.total;
+                    this.paginationModal.per_page       = response.data.arrayVersionVehiculo.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVersionVehiculo.last_page;
+                    this.paginationModal.from           = response.data.arrayVersionVehiculo.from;
+                    this.paginationModal.to             = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1255,7 +1552,6 @@
                         text: 'El Vehículo seleccionado ya se encuentra agregado!',
                     })
                 } else {
-                    console.log(objCompra)
                     me.arrayWarrant.push({
                         'nIdCompra'         : objCompra.nIdCompra,
                         'cNumeroVin'        : objCompra.cNumeroVin,
@@ -1269,6 +1565,10 @@
                         'fValorTipoCambio'  : objCompra.fValorTipoCambio,
                         'fComisionDolar'    : objCompra.fComisionDolar,
                         'fComisionSol'      : objCompra.fComisionSol,
+                        'cCardCode'         : objCompra.cCardCode,
+                        'fDocRate'          : objCompra.fDocRate,
+                        'cSerieComprobante' : objCompra.cSerieComprobante,
+                        'cNumeroComprobante': objCompra.cNumeroComprobante,
                         'dFechaInicio'      : moment().format('YYYY-MM-DD'),
                         'dFechaFin'         : moment().format('YYYY-MM-DD')
                     });
@@ -1420,6 +1720,10 @@
                             'fComisionDolar'    : value.fComisionDolar,
                             'fComisionSol'      : value.fComisionSol,
                             'fValorTipoCambio'  : value.fValorTipoCambio,
+                            'cCardCode'         : value.cCardCode,
+                            'fDocRate'          : value.fDocRate,
+                            'cSerieComprobante' : value.cSerieComprobante,
+                            'cNumeroComprobante': value.cNumeroComprobante,
                             'dFechaInicio'      : value.dFechaInicio,
                             'dFechaFin'         : value.dFechaFin
                         });
@@ -1480,7 +1784,6 @@
                 axios.post(sapUrl, {
                     'cCardCode'     : me.formWOperativo.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
-                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data'          : me.arrayTemporal
                 }).then(response => {
                     me.arraySapRespuesta= [];
@@ -2050,8 +2353,7 @@
                     axios.post(sapUrl, {
                         'cCardCode'     : objWO.cCardCode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
-                        'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'data'          : me.arraySapAsiento
+                        'data'          : me.arrayTemporal
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -2382,7 +2684,7 @@
                     });
                 }else{
                     setTimeout(function() {
-                        me.integraSapAsientoContable();
+                        me.integraSapAsientoContable(objWO);
                     }, 800);
                 }
             },
@@ -2393,7 +2695,7 @@
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     setTimeout(function() {
-                        me.integraSapAsientoContable();
+                        me.integraSapAsientoContable(objWO);
                     }, 800);
                 }).catch(error => {
                     console.log(error);
@@ -2492,10 +2794,119 @@
                 me.limpiarFormulario();
                 me.listarDetalleWOperativo(1);
             },
-            //=================================================================
+            // =================================================================
+            // METODOS TAB GENERAR WARRANT OPERATIVO
+            // =================================================================
             tabGeneraOS(){
-
             },
+            listarVehiculosWoSinServicio(page){
+                  var url = this.ruta + '/woperativo/GetVehiculosWoSinOS';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin'        : this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial'  : this.fillVersionVehiculo.cnombrecomercial,
+                        'page'              : page
+                    }
+                }).then(response => {
+                    this.arrayVehOS                     = response.data.arrayVehOS.data;
+                    this.paginationModal.current_page   = response.data.arrayVehOS.current_page;
+                    this.paginationModal.total          = response.data.arrayVehOS.total;
+                    this.paginationModal.per_page       = response.data.arrayVehOS.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVehOS.last_page;
+                    this.paginationModal.from           = response.data.arrayVehOS.from;
+                    this.paginationModal.to             = response.data.arrayVehOS.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaOrdenServicio(){
+                let me = this;
+                setTimeout(function() {
+                    me.generaSapCompraWO();
+                }, 800);
+            },
+            /*generaSapCompraWO(){
+                let me = this;
+
+                //==============================================================
+                //================== REGISTRO COMPRA EN SAP ===============
+                var sapUrl = me.ruta + '/compra/SapSetCompra';
+                axios.post(sapUrl, {
+                    'cCardCode'     : me.formCompra.ccarcode,
+                    'fDocDate'      : moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode' : me.formAlmacen.cwhscode,
+                    'Igv'           : 1 + parseFloat((me.formCompra.igv)),
+                    'data'          : me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+                    me.arraySapActividad= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta = '';
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+
+                            me.arraySapUpdSgc.push({
+                                'nDocEntry': parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum': parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType': me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                me.generaActualizarDocEntryWO(objCompra);
+                            }, 1200);
+                        }
+                    });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración Compra SapB1!");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryWO(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SetIntegraCompra';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },*/
+            //=================================================================
             limpiarFormulario(){
                 this.fillWOperativo.nidwarrantoperativo= 0,
                 this.fillWOperativo.nordencompra= '',
