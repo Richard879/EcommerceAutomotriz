@@ -348,6 +348,10 @@
                                                                                     <i @click="abrirModal('Incidencia','abrir', deposito)" :style="'color:#ffc107'" class="fa fa-exclamation-triangle"></i>
                                                                                 </el-tooltip>
                                                                             </template>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Voucher del Deposito {{ deposito.nNumeroOperacion }}</div>
+                                                                                <i @click="descargaVoucher(deposito.cRutaDocumento)" class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="deposito.cNombreBanco"></td>
                                                                         <td v-text="deposito.nNumeroOperacion"></td>
@@ -1193,6 +1197,9 @@
                     {
                     }
                 })
+            },
+            descargaVoucher(cRutaDocumento){
+                window.open(cRutaDocumento);
             },
             // =================================================================
             // METODOS MODAL ACTUALIZAR TCE

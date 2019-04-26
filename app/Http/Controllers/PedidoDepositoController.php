@@ -48,11 +48,13 @@ class PedidoDepositoController extends Controller
     {
         $file = $request->file;
         $bandera = str_random(10);
+        $nombreArchivoServidor = $bandera .'_'. $file->getClientOriginalName();
 
-        $ruta = Storage::putFileAs('uploads/Depositos', $file, $bandera .'_'. $file->getClientOriginalName());
+        $ruta = Storage::putFileAs('public/Depositos', $file, $nombreArchivoServidor);
 
         $arrayDocumento = DB::select('exec usp_DocumentoAdjunto_SetArchivo ?, ?, ?',
-                                                        [  asset($ruta),
+                                                        [
+                                                            asset('storage/Depositos/' . $nombreArchivoServidor),
                                                             $file->getClientOriginalName(),
                                                             Auth::user()->id
                                                         ]);
