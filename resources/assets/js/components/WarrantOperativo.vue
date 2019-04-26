@@ -2830,6 +2830,14 @@
             },
             generaOrdenServicio(){
                 let me = this;
+
+                me.arraySapCompra.push({
+                    'AddressID'     : 'Dirección Fiscal',
+                    'AddressName'   : '',
+                    'Street'        : '',
+                    'cUbigeo'       : ''
+                });
+
                 setTimeout(function() {
                     me.generaSapCompraWO();
                 }, 800);

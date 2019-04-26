@@ -2000,19 +2000,19 @@
                 let me = this;
                 if (op == 1) {
                     me.arrayDireccionesFiscales.push({
-                        AddressID : 'Dirección Fiscal ',
-                        AddressName : '',
-                        Street: '',
-                        cUbigeo: ''
+                        'AddressID'     : 'Dirección Fiscal',
+                        'AddressName'   : '',
+                        'Street'        : '',
+                        'cUbigeo'       : ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Fiscal');
                 }
                 if (op == 2) {
                     me.arrayDireccionesDespacho.push({
-                        AddressID : 'Dirección Despacho ',
-                        AddressName : '',
-                        Street: '',
-                        cUbigeo: ''
+                        'AddressID'     : 'Dirección Despacho',
+                        'AddressName'   : '',
+                        'Street'        : '',
+                        'cUbigeo'       : ''
                     });
                     toastr.success('Se Agregó una Nueva Dirección Despacho');
                 }
