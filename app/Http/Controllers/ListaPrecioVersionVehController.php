@@ -20,6 +20,7 @@ class ListaPrecioVersionVehController extends Controller
         $dFechaFin      = $request->dfechafin;
         $nIdProveedor   = $request->nidproveedor;
 
+        $nIdProveedor   = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
         $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
 

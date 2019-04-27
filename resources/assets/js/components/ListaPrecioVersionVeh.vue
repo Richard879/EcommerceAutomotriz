@@ -1114,6 +1114,7 @@
                 this.formListaPrecioVh.nidproveedor = nProveedorId;
                 this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
+                this.arrayListaPrecioVh = [];
             },
             listarTipoLista(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
