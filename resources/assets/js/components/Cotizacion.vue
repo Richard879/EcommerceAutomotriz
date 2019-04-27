@@ -1651,7 +1651,6 @@
                                                             <th>Seleccione</th>
                                                             <th>Codigo</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año Fabricación</th>
                                                             <th>Año Modelo</th>
                                                             <th>Precio Base</th>
                                                             <th>Bono</th>
@@ -1670,7 +1669,6 @@
                                                             </td>
                                                             <td v-text="vehiculo.codListaPrecioVD"></td>
                                                             <td v-text="vehiculo.NombreComercial"></td>
-                                                            <td v-text="vehiculo.AnioFab"></td>
                                                             <td v-text="vehiculo.AnioMod"></td>
                                                             <td v-text="vehiculo.PrecioBase"></td>
                                                             <td v-text="vehiculo.Bono"></td>
@@ -3441,16 +3439,18 @@
                 var url = this.ruta + '/gescotizacion/GetListVehiculos';
                 axios.get(url, {
                     params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidtipolista': this.fillBusqVehiculo.nidtipolista,
-                        'nidlinea' : this.fillBusqVehiculo.nidlinea,
-                        'nidmarca' : this.fillBusqVehiculo.nidmarca,
-                        'nidmodelo' : this.fillBusqVehiculo.nidmodelo,
-                        'cnombrecomercial' : this.fillBusqVehiculo.cnombrecomercial,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'      : this.fillProveedor.nidproveedor,
+                        'nidtipolista'      : this.fillBusqVehiculo.nidtipolista,
+                        'nidlinea'          : this.fillBusqVehiculo.nidlinea,
+                        'nidmarca'          : this.fillBusqVehiculo.nidmarca,
+                        'nidmodelo'         : this.fillBusqVehiculo.nidmodelo,
+                        'cnombrecomercial'  : this.fillBusqVehiculo.cnombrecomercial,
+                        'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVehiculoModal = response.data.arrayListaVehiculos.data;
+                    this.arrayVehiculoModal             = response.data.arrayListaVehiculos.data;
                     this.paginationModal.current_page   =  response.data.arrayListaVehiculos.current_page;
                     this.paginationModal.total          = response.data.arrayListaVehiculos.total;
                     this.paginationModal.per_page       = response.data.arrayListaVehiculos.per_page;

@@ -690,7 +690,6 @@
                                                                                 <th>Código Det.</th>
                                                                                 <th>Código Veh.</th>
                                                                                 <th>Nombre Comercial</th>
-                                                                                <th>Año Fabricación</th>
                                                                                 <th>Año Modelo</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Costo Dealer</th>
@@ -707,7 +706,6 @@
                                                                                 <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
                                                                                 <td v-text="lpd.nIdVersionVeh"></td>
                                                                                 <td v-text="lpd.cNombreComercial"></td>
-                                                                                <td v-text="lpd.nAnioFabricacion"></td>
                                                                                 <td v-text="lpd.nAnioModelo"></td>
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
                                                                                 <td v-text="lpd.fCostoDealer"></td>
