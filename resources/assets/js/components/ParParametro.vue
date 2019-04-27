@@ -177,10 +177,10 @@
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
+                                                            <th>Acciones</th>
                                                             <th>Codigo</th>
                                                             <th>Grupo</th>
                                                             <th>Nombre</th>
-                                                            <th>Acciones</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
