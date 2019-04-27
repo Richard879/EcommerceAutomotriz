@@ -39,11 +39,12 @@ class CotizacionController extends Controller
         $nIdLinea           = $request->nidlinea;
         $nIdMarca           = $request->nidmarca;
         $nIdModelo          = $request->nidmodelo;
+        $nAnioModelo          = $request->naniomodelo;
         $cNombreComercial   = $request->cnombrecomercial;
 
         $cNombreComercial   = ($cNombreComercial == "") ? ($cNombreComercial = '') : $cNombreComercial;
 
-        $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [   $nIdEmpresa,
                                                                             $nIdSucursal,
                                                                             $nIdProveedor,
@@ -51,6 +52,7 @@ class CotizacionController extends Controller
                                                                             $nIdLinea,
                                                                             $nIdMarca,
                                                                             $nIdModelo,
+                                                                            $nAnioModelo,
                                                                             $cNombreComercial
                                                                         ]);
 
