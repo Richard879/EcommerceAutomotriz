@@ -573,6 +573,7 @@
                     if(this.vistaFormulario){
                         this.formVersion.nidmodelo = '';
                     }
+                    this.arrayVersionVehiculo= [];
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
