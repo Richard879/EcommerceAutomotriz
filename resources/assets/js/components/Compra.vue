@@ -167,7 +167,7 @@
                                                                                 <th>NroDoc SAP</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
-                                                                                <th>OC</th>
+                                                                                <th>Nota Pedido</th>
                                                                                 <th>Línea</th>
                                                                                 <th>Almacén<nav></nav></th>
                                                                                 <th>Disponible</th>
@@ -213,7 +213,7 @@
                                                                                 <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
                                                                                 <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.nNumeroReserva"></td>
                                                                                 <td v-text="compra.cNombreLinea"></td>
                                                                                 <td v-text="compra.cNombreAlmacen"></td>
                                                                                 <td v-text="compra.cFlagVehiculoLibre"></td>
