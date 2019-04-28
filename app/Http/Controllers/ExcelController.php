@@ -40,26 +40,25 @@ class ExcelController extends Controller
 
         $data = [];
         foreach ($sheetData as $key => $value) {
-            if($value[4]!='' || $value[4]!=null){
+            if($value[3]!='' || $value[3]!=null){
                 $data[$key+1] =[
-                    'nOrdenCompra'   => $value[0],
-                    'cNombreLinea' => $value[1],
-                    'cNombreAlmacen' => $value[2],
-                    'nNumeroReserva' => $value[3],
-                    'cNumeroVin' => $value[4],
-                    'cFormaPago' => $value[5],
-                    'cNombreMarca' => $value[6],
-                    'cNombreModelo' => $value[7],
-                    'cNombreComercial' => $value[8],
-                    'cNombreColor' => ($value[9] == NULL) ? ($value[9] = '') : $value[9],
-                    'nAnioFabricacion' => ($value[10] == NULL) ? ($value[10] = 0) : $value[10],
-                    'nAnioVersion' => $value[11],
-                    'cSimboloMoneda' => $value[12],
-                    'fTotalCompra' => $value[13],
-                    'cSerieComprobante' => ($value[14] == NULL) ? ($value[14] = '') : $value[14],
-                    'cNumeroComprobante' => ($value[15] == NULL) ? ($value[15] = '') : $value[15],
-                    'dFechaFacturado' => $value[16],
-                    'cItemType' => 'itItems'
+                    'cNombreLinea'      => $value[0],
+                    'cNombreAlmacen'    => $value[1],
+                    'nNumeroReserva'    => $value[2],
+                    'cNumeroVin'        => $value[3],
+                    'cFormaPago'        => $value[4],
+                    'cNombreMarca'      => $value[5],
+                    'cNombreModelo'     => $value[6],
+                    'cNombreComercial'  => $value[7],
+                    'cNombreColor'      => ($value[8] == NULL) ? ($value[8] = '') : $value[8],
+                    'nAnioFabricacion'  => ($value[9] == NULL) ? ($value[9] = 0) : $value[9],
+                    'nAnioVersion'      => $value[10],
+                    'cSimboloMoneda'    => $value[11],
+                    'fTotalCompra'      => $value[12],
+                    'cSerieComprobante' => ($value[13] == NULL) ? ($value[13] = '') : $value[13],
+                    'cNumeroComprobante'=> ($value[14] == NULL) ? ($value[14] = '') : $value[14],
+                    'dFechaFacturado'   => $value[15],
+                    'cItemType'         => 'itItems'
                 ];
             }
         }

@@ -450,7 +450,6 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
-                                                                                    <th>OC</th>
                                                                                     <th>Línea</th>
                                                                                     <th>Almacén<nav></nav></th>
                                                                                     <th>Nro Reserva</th>
@@ -470,14 +469,13 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
+                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nNumeroReserva">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Eliminar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                            <div slot="content">Eliminar Compra  {{ compra.nNumeroReserva }}</div>
                                                                                             <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
-                                                                                    <td v-text="compra.nOrdenCompra"></td>
                                                                                     <td v-text="compra.cNombreLinea"></td>
                                                                                     <td v-text="compra.cNombreAlmacen"></td>
                                                                                     <td v-text="compra.nNumeroReserva"></td>
@@ -599,7 +597,7 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
-                                                                                <th>OC</th>
+                                                                                <th>Nota Pedido</th>
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
@@ -616,7 +614,7 @@
                                                                                 </td>
                                                                                 <td v-text="compra.nIdCompra"></td>
                                                                                 <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.nNumeroReserva"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
                                                                                 <td v-text="compra.nAnioFabricacion"></td>
@@ -864,7 +862,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* O/C</label>
+                                                    <label class="col-sm-4 form-control-label">* Nota de Pedido</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formModalCompra.nordencompra" class="form-control form-control-sm" readonly>
                                                     </div>
@@ -1068,10 +1066,9 @@
                                                             <th>Seleccione</th>
                                                             <th>Código</th>
                                                             <th>Periodo</th>
-                                                            <th>OC</th>
                                                             <th>Línea</th>
                                                             <th>Almacén<nav></nav></th>
-                                                            <th>Nro Reserva</th>
+                                                            <th>Nota Pedido</th>
                                                             <th>Nro Vin</th>
                                                             <th>Forma Pago</th>
                                                             <th>Nombre Comercial</th>
@@ -1094,7 +1091,6 @@
                                                             </td>
                                                             <td v-text="compra.nIdCompra"></td>
                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                            <td v-text="compra.nOrdenCompra"></td>
                                                             <td v-text="compra.cNombreLinea"></td>
                                                             <td v-text="compra.cNombreAlmacen"></td>
                                                             <td v-text="compra.nNumeroReserva"></td>
@@ -1865,9 +1861,6 @@
 
                 me.arrayExcel.map(function(value, key) {
                     if(key==0){
-                        if(value.nOrdenCompra != "OC"){
-                            me.mensajeError.push('Falta celda OC, verifique el archivo.');
-                        };
                         if(value.cNombreLinea != "Línea"){
                             me.mensajeError.push('Falta celda Línea, verifique el archivo.');
                         };
@@ -2842,7 +2835,6 @@
                     'nIdCompra'         : objCompra.nIdCompra,
                     'nIdCronograma'     : objCompra.nIdCronograma,
                     'cCronograma'       : objCompra.cNumeroMes + '-' + objCompra.cAnio,
-                    'nOrdenCompra'      : objCompra.nOrdenCompra,
                     'cNombreLinea'      : objCompra.cNombreLinea,
                     'cNombreAlmacen'    : objCompra.cNombreAlmacen,
                     'nNumeroReserva'    : objCompra.nNumeroReserva,
@@ -4040,7 +4032,6 @@
                             cNumeroVin: compra.cNumeroVin,
                             cNumeroMes: compra.cNumeroMes,
                             cAnio: compra.cAnio,
-                            nOrdenCompra: compra.nOrdenCompra,
                             cNumeroVin: compra.cNumeroVin,
                             cNombreComercial: compra.cNombreComercial,
                             nAnioFabricacion: compra.nAnioFabricacion,
@@ -4158,7 +4149,7 @@
                                 this.modal = 1;
                                 this.formModalCompra.ndocentry              =   data['nDocEntry'];
                                 this.formModalCompra.nidcompra              =   data['nIdCompra'];
-                                this.formModalCompra.nordencompra           =   data['nOrdenCompra'];
+                                this.formModalCompra.nordencompra           =   data['nNumeroReserva'];
                                 this.formModalCompra.cnombrecomercial       =   data['cNombreComercial'];
                                 this.formModalCompra.cnumerovin             =   data['cNumeroVin'];
                                 this.formModalCompra.cnumeromotor           =   data['cNumeroMotor'];
