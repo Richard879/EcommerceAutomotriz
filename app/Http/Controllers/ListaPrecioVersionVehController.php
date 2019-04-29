@@ -79,7 +79,7 @@ class ListaPrecioVersionVehController extends Controller
         return response()->json($versionvehiculo);
     }
 
-    public function store(Request $request)
+    public function SetListaPrecioVhDetalle(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
