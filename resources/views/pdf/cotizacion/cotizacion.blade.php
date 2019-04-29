@@ -209,6 +209,59 @@
                 <PRICE>$5.49</PRICE>
             </BOOK> --}}
 
+            {{-- $xml    =   simplexml_load_file($contents);
+            $tabla  =   '<table  border="1" align="center" cellspacing="0" cellpadding="0" style="font-size:10px;width:100px;">';
+            $fila   =   0;
+            $j      =   0; --}}
+
+            {{-- @foreach ($xml as $z => $a )
+                @if ($j == 2)
+                    @foreach ($a as $x => $b)
+                        @for ($l = 0;  $l < count($b) ; $l++)
+                            @for ($m = 0; $m < count($b->table1_Group1[$l]) ; $m++)
+                                $art            =   (array)$b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2;
+                                $art_detalle    =   $art['Detail_Collection'];
+                                if(strlen($art['@attributes']['textbox3']) == 0) break;
+                                $tabla.='<tr><th colspan="2" align="center">'.utf8_decode($art['@attributes']['textbox3']).'</th></tr>';
+                                $fila++;
+                                @for ($n = 0; $n < count($art_detalle[$m]); $n++)
+                                    $art_detalle2 = (array)$art_detalle[$m]->Detail[$n];
+                                    $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
+                                    $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+                                    $fila++;
+                                @endfor
+                                unset($art);
+                                unset($art_detalle);
+                                unset($art_detalle2);
+                            @endfor
+                        @endfor
+                    @endforeach
+                @endif
+                $j++;
+            @endforeach --}}
+
+            {{-- $tabla.='</table>';
+            $num_filas  =   ($fila-17);
+            $num_veces  =   (int)(($fila-17)/17);
+            $ord        =   $num_filas/$num_veces;
+            $sw         =   false;
+
+            @if ($ord > 28)
+                $r= round(($ord/28),2);
+                @if (($r>=1.01 && $r<=1.3) || ($r>=2.01 && $r<=2.3))
+                    $sw=true;
+                @endif
+            @endif --}}
+
+            {{-- <h1>Hola</h1>
+            <pre> {{ $tabla }} </pre>
+            <pre lang="xml" style="white-space:normal;">{{ $tabla }}</pre>
+            <pre lang="html" style="white-space:normal;">{{ $tabla }}</pre>
+            <iframe width="100%" height="100%">
+                {{ $tabla }}
+            </iframe> --}}
+
+
             <table width="100%">
                 <tr>
                     <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>

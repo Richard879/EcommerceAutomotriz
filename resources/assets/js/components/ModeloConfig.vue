@@ -256,7 +256,7 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Ficha Tecnica</label>
+                                                                                    <label class="col-sm-4 form-control-label">* Ficha Tecnica (XML)</label>
                                                                                     <div class="col-sm-8">
                                                                                         <input type="file" id="file-upload" @change="getFileFichaTecnica" accept="xml" class="form-control form-control-sm"/>
                                                                                     </div>
@@ -265,6 +265,16 @@
                                                                                     </div> -->
                                                                                     <!-- <div id="xml"></div> -->
                                                                                     <!-- <pre lang="xml" >{{formConfigurador.attachmentFichaTecnica}}</pre> -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Ficha Tecnica (PDF)</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnicaPDF" accept="pdf" class="form-control form-control-sm"/>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -466,8 +476,10 @@
                 formConfigurador: {
                     urlImageFotografia: '',
                     urlImageFichaTecnica: '',
+                    urlImageFichaTecnicaPDF: '',
                     attachmentFotografia: '',// Archivo a almacenar
                     attachmentFichaTecnica: '',// Archivo a almacenar
+                    attachmentFichaTecnicaPDF: '',
                 },
                 cFlagAccion: 1,
                 form: new FormData,// El archivo tendrá que ser enviado como elemento FormData
@@ -753,13 +765,15 @@
             },
             limpiarTabBsqConfigurar(){
                 //Registrar
-                this.formConfigModelo.nidmodelo = '';
-                this.formConfigModelo.naniomodelo = '';
-                this.formConfigModelo.cnombremodelo = '';
-                this.formConfigurador.urlImageFotografia = '';
-                this.formConfigurador.urlImageFichaTecnica = '';
-                this.formConfigurador.attachmentFotografia = '';
-                this.formConfigurador.attachmentFichaTecnica = '';
+                this.formConfigModelo.nidmodelo                 =   '';
+                this.formConfigModelo.naniomodelo               =   '';
+                this.formConfigModelo.cnombremodelo             =   '';
+                this.formConfigurador.urlImageFotografia        =   '';
+                this.formConfigurador.urlImageFichaTecnica      =   '';
+                this.formConfigurador.urlImageFichaTecnicaPDF   =   '';
+                this.formConfigurador.attachmentFotografia      =   '';
+                this.formConfigurador.attachmentFichaTecnica    =   '';
+                this.formConfigurador.attachmentFichaTecnicaPDF =   '';
                 this.form = '';//Seteo a vacio
                 this.form = new FormData;//Inicializo el Obj FormData
             },
@@ -820,6 +834,16 @@
                     this.formConfigurador.urlImageFichaTecnica   = '';
                 }
             },
+            getFileFichaTecnicaPDF(e){
+                let selectFile  = e.target.files[0];
+                if(selectFile) {
+                    this.formConfigurador.attachmentFichaTecnicaPDF = selectFile;
+                    this.formConfigurador.urlImageFichaTecnicaPDF   = URL.createObjectURL(selectFile);
+                } else {
+                    this.formConfigurador.attachmentFichaTecnicaPDF = '';
+                    this.formConfigurador.urlImageFichaTecnicaPDF   = '';
+                }
+            },
             registrarDocsForModelo(){
                 if(this.validarRegistrarDocForModelo()){
                     this.accionmodal=1;
@@ -831,6 +855,7 @@
                 //AGREGAR ARCHIVO AL FORM DATA
                 this.form.append('fileFotografia', this.formConfigurador.attachmentFotografia);
                 this.form.append('fileFichaTecnica', this.formConfigurador.attachmentFichaTecnica);
+                this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
 
@@ -867,8 +892,8 @@
                 me.error = 0;
                 me.mensajeError =[];
 
-                if(!this.formConfigurador.attachmentFotografia && !this.formConfigurador.attachmentFichaTecnica) {
-                    me.mensajeError.push('Debe Seleccionar al menos un documento para el Modelo ');
+                if(!this.formConfigurador.attachmentFotografia && !this.formConfigurador.attachmentFichaTecnica && !this.formConfigurador.attachmentFichaTecnicaPDF) {
+                    me.mensajeError.push('Debe Subir los documentos para el modelo ');
                 }
 
                 if(me.mensajeError.length){
@@ -891,6 +916,7 @@
                 //AGREGAR ARCHIVO AL FORM DATA
                 this.form.append('fileFotografia', this.formConfigurador.attachmentFotografia);
                 this.form.append('fileFichaTecnica', this.formConfigurador.attachmentFichaTecnica);
+                this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
 

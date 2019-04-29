@@ -14,8 +14,8 @@ class MaestroVehiculoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nidvehiculo            =   $request->fillNuevoVehiculo['nidvehiculo'];
-        $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
-        $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
+        // $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
+        // $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
@@ -38,8 +38,8 @@ class MaestroVehiculoController extends Controller
         $cnacionesunidas        =   $request->fillNuevoVehiculo['cnacionesunidas'];
 
         $nidvehiculo            =   ($nidvehiculo == NULL)   ? ($nidvehiculo = ' ') : $nidvehiculo;
-        $cnroplaca              =   ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
-        $cnrotarjetapropiedad   =   ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
+        // $cnroplaca              =   ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
+        // $cnrotarjetapropiedad   =   ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
         $nidclase               =   ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
         $nidmarca               =   ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
         $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
@@ -64,13 +64,13 @@ class MaestroVehiculoController extends Controller
         $nFlagEditar = $request->nFlagEditar;
 
         $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca]
-                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         NULL,
                                         NULL,
                                         $nidvehiculo,
-                                        $cnroplaca,
-                                        $cnrotarjetapropiedad,
+                                        // $cnroplaca,
+                                        // $cnrotarjetapropiedad,
                                         $nidclase,
                                         $nidmarca,
                                         $nidmodelo,

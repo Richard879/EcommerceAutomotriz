@@ -189,8 +189,8 @@ class SapArticuloController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
-        $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
+        // $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
+        // $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
