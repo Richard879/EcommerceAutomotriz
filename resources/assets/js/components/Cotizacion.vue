@@ -4215,8 +4215,10 @@
                     'nIdCabeceraCotizacion' :   nIdCabeCoti
                 }, config).then(response => {
                     //Create a Blob from the PDF Stream
+                    // console.log(response.data);
                     const file = new Blob(
                         [response.data],
+                        // {type: 'text/html'}
                         {type: 'application/pdf'}
                     );
                     //Construye la URL del Archivo

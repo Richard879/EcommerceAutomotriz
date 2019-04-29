@@ -274,7 +274,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
-                                                                            <div class="form-group row">
+                                                                            <!--<div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* N° Placa</label>
@@ -300,6 +300,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            -->
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
@@ -931,6 +932,9 @@
                                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab0203();">
                                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
                                                                                                     </button>
+                                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarMaestroVehiculo(1)">
+                                                                                                        <i class="fa fa-save"></i> Registrar
+                                                                                                    </button>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -963,6 +967,9 @@
                                                                                 <div class="col-sm-12 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab0203();">
                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                    </button>
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarMaestroVehiculo(1)">
+                                                                                        <i class="fa fa-save"></i> Registrar
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
@@ -1545,8 +1552,8 @@
                 cFlagTipoPersona: null,
                 fillNuevoVehiculo: {
                     nidvehiculo: '',
-                    cnroplaca: '',
-                    cnrotarjetapropiedad: '',
+                    // cnroplaca: '',
+                    // cnrotarjetapropiedad: '',
                     nidclase: '',
                     nidmarca: '',
                     nidmodelo: '',
@@ -1980,14 +1987,14 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillNuevoVehiculo.cnroplaca){
-                    this.mensajeError.push('Debes ingresar un número de placa');
-                };
-                if(this.fillNuevoVehiculo.cnroplaca){
-                    if(this.fillNuevoVehiculo.cnroplaca.length != 7){
-                        this.mensajeError.push('Ingrese un número de placa válido');
-                    };
-                }
+                // if(!this.fillNuevoVehiculo.cnroplaca){
+                //     this.mensajeError.push('Debes ingresar un número de placa');
+                // };
+                // if(this.fillNuevoVehiculo.cnroplaca){
+                //     if(this.fillNuevoVehiculo.cnroplaca.length != 7){
+                //         this.mensajeError.push('Ingrese un número de placa válido');
+                //     };
+                // }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -2463,11 +2470,11 @@
                     'nFlagEditar'       : this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        //Si el Contacto esta marcado como nuevo
+                        //Si el Contacto esta marcado como nuevo, se registra en la DB
                         if(this.checked == true) {
                             this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
                         } else {
-                            //Sino se encuentra el propietario en la bandeja
+                            //Sino se encuentra el propietario en la bandeja de contactos
                             this.registrarPropietario(response.data[0].nIdVehiculoPlaca);
                         }
                     } else {
@@ -2504,7 +2511,12 @@
                     nFlagEditar         :   this.nFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        this.registrarSOAT(data);
+                        if(this.arraySOAT.length > 0) {
+                            this.registrarSOAT(data);
+                        } else {
+                            this.actualizarSapSetArticulo();
+                            swal('El proceso fue registrado existosamente');
+                        }
                     }else{
                         swal('El contacto ya se encuentra en nuestro registros');
                     }
@@ -2601,8 +2613,8 @@
             },
             limpiarVehiculo(){
                 this.fillNuevoVehiculo.nidvehiculo = '';
-                this.fillNuevoVehiculo.cnroplaca = '';
-                this.fillNuevoVehiculo.cnrotarjetapropiedad = '';
+                // this.fillNuevoVehiculo.cnroplaca = '';
+                // this.fillNuevoVehiculo.cnrotarjetapropiedad = '';
                 this.fillNuevoVehiculo.nidclase = '';
                 this.fillNuevoVehiculo.nidmarca = '';
                 this.fillNuevoVehiculo.nidmodelo = '';
@@ -2648,9 +2660,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arraySOAT.length == 0){
-                    this.mensajeError.push('Debe agregar un SOAT');
-                };
+                // if(this.arraySOAT.length > 0){
+                //     this.mensajeError.push('Debe agregar un SOAT');
+                // };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2667,8 +2679,8 @@
 
                 //CAPTURAR DATOS DEL VEHICULO
                 this.fillNuevoVehiculo.nidvehiculo          =   data['nIdVehiculoPlaca'];
-                this.fillNuevoVehiculo.cnroplaca            =   data['cPlaca'];
-                this.fillNuevoVehiculo.cnrotarjetapropiedad =   data['cNroTarjeta'];
+                // this.fillNuevoVehiculo.cnroplaca            =   data['cPlaca'];
+                // this.fillNuevoVehiculo.cnrotarjetapropiedad =   data['cNroTarjeta'];
                 this.fillNuevoVehiculo.nidclase             =   (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
                 this.fillNuevoVehiculo.nidmarca             =   (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
                 this.fillNuevoVehiculo.nidmodelo            =   (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
@@ -2824,6 +2836,11 @@
              * REGISTRA PROPIETARIO
              */
             registrarPropietario(data){
+                if(this.validarRegistroPropietario()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPropietario';
                 axios.post(url, {
                     'cFlagTipoPersona'    : this.fillPropietario.cflagtipopersona,
@@ -2832,7 +2849,12 @@
                     'nIdVehiculoPlaca'    : data,
                     'nFlagEditar'         : this.nFlagEditar
                 }).then(response => {
-                    this.registrarSOAT(data);
+                    if(this.arraySOAT.length > 0) {
+                        this.registrarSOAT(data);
+                    } else {
+                        this.actualizarSapSetArticulo();
+                        swal('El proceso fue registrado existosamente');
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2842,6 +2864,22 @@
                         }
                     }
                 });
+            },
+            validarRegistroPropietario(){
+                $("#myBar").hide();
+                this.error = 0;
+                this.mensajeError =[];
+
+                // if(this.arraySOAT.length > 0){
+                //     this.mensajeError.push('Debe agregar un SOAT');
+                // };
+                if(!this.fillPropietario.cnombrecontacto){
+                    this.mensajeError.push('Debe seleccionar un Propietario');
+                }
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =================================================================
             // METODOS GENERICOS

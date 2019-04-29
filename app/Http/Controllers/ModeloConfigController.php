@@ -46,16 +46,18 @@ class ModeloConfigController extends Controller
         try{
             DB::beginTransaction();
 
-            $fileFotografia     =   $request->fileFotografia;
-            $fileFichaTecnica   =   $request->fileFichaTecnica;
-            $nIdModelo          =   $request->nidmodelo;
-            $nAnioModelo        =   $request->naniomodelo;
-            $nIdUsuario         =   Auth::user()->id;
+            $fileFotografia         =   $request->fileFotografia;
+            $fileFichaTecnica       =   $request->fileFichaTecnica;
+            $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
+            $nIdModelo              =   $request->nidmodelo;
+            $nAnioModelo            =   $request->naniomodelo;
+            $nIdUsuario             =   Auth::user()->id;
 
-            $fileFotografia     =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
-            $fileFichaTecnica   =   ($fileFichaTecnica == NULL)  ? ($fileFichaTecnica = '') : $fileFichaTecnica;
-            $nIdModelo          =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
-            $nAnioModelo        =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+            $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
+            $fileFichaTecnica       =   ($fileFichaTecnica == NULL)  ? ($fileFichaTecnica = '') : $fileFichaTecnica;
+            $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
+            $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
+            $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -67,7 +69,7 @@ class ModeloConfigController extends Controller
             //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
             $pcNombreRutaFotografia = ($fileFotografia) ? (asset('storage/ModeloAnio/Foto/' . $nombreArchivoServidorFoto)) : '';
 
-            //VERIFICO SI EXISTE ARCHIVO
+            //VERIFICO SI EXISTE ARCHIVO XML
             if($fileFichaTecnica) {
                 $banderaFicha = str_random(10);
 
@@ -82,10 +84,26 @@ class ModeloConfigController extends Controller
             //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
             $pcNombreRutaFichaTecnica = ($fileFichaTecnica) ? (asset('storage/ModeloAnio/Ficha/' . $nombreArchivoServidorFicha)) : '';
 
-            $data = DB::select('exec usp_Modelo_SetRegistrarModeloDocs ?, ?, ?, ?, ?',
+            //VERIFICO SI EXISTE ARCHIVO PDF
+            if($fileFichaTecnicaPDF) {
+                $banderaFicha = str_random(10);
+
+                //PARSEAR ESPACIO BLANCO
+                $archivo        = $fileFichaTecnicaPDF->getClientOriginalName();
+                $archivoLimpio  = str_replace(" ", "_", $archivo);
+
+                $nombreArchivoServidorFicha = $banderaFicha .'_'. $archivoLimpio;
+                //Almaceno el archivo en un ruta especifica
+                $ruta = Storage::putFileAs('public/ModeloAnio/FichaPDF/', $fileFichaTecnicaPDF, $nombreArchivoServidorFicha);
+            }
+            //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
+            $pcNombreRutaFichaTecnicaPDF = ($fileFichaTecnicaPDF) ? (asset('storage/ModeloAnio/FichaPDF/' . $nombreArchivoServidorFicha)) : '';
+
+            $data = DB::select('exec usp_Modelo_SetRegistrarModeloDocs ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $pcNombreRutaFotografia,
                                                                 $pcNombreRutaFichaTecnica,
+                                                                $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
                                                                 $nIdUsuario
@@ -120,16 +138,18 @@ class ModeloConfigController extends Controller
         try{
             DB::beginTransaction();
 
-            $fileFotografia     =   $request->fileFotografia;
-            $fileFichaTecnica   =   $request->fileFichaTecnica;
-            $nIdModelo          =   $request->nidmodelo;
-            $nAnioModelo        =   $request->naniomodelo;
-            $nIdUsuario         =   Auth::user()->id;
+            $fileFotografia         =   $request->fileFotografia;
+            $fileFichaTecnica       =   $request->fileFichaTecnica;
+            $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
+            $nIdModelo              =   $request->nidmodelo;
+            $nAnioModelo            =   $request->naniomodelo;
+            $nIdUsuario             =   Auth::user()->id;
 
-            $fileFotografia     =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
-            $fileFichaTecnica   =   ($fileFichaTecnica == NULL)  ? ($fileFichaTecnica = '') : $fileFichaTecnica;
-            $nIdModelo          =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
-            $nAnioModelo        =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+            $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
+            $fileFichaTecnica       =   ($fileFichaTecnica == NULL)  ? ($fileFichaTecnica = '') : $fileFichaTecnica;
+            $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
+            $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
+            $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -156,10 +176,26 @@ class ModeloConfigController extends Controller
             //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
             $pcNombreRutaFichaTecnica = ($fileFichaTecnica) ? (asset('storage/ModeloAnio/Ficha/' . $nombreArchivoServidorFicha)) : '';
 
-            $data = DB::select('exec usp_Modelo_SetActualizarModeloDocs ?, ?, ?, ?, ?',
+            //VERIFICO SI EXISTE ARCHIVO PDF
+            if($fileFichaTecnicaPDF) {
+                $banderaFicha = str_random(10);
+
+                //PARSEAR ESPACIO BLANCO
+                $archivo        = $fileFichaTecnicaPDF->getClientOriginalName();
+                $archivoLimpio  = str_replace(" ", "_", $archivo);
+
+                $nombreArchivoServidorFicha = $banderaFicha .'_'. $archivoLimpio;
+                //Almaceno el archivo en un ruta especifica
+                $ruta = Storage::putFileAs('public/ModeloAnio/FichaPDF/', $fileFichaTecnicaPDF, $nombreArchivoServidorFicha);
+            }
+            //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
+            $pcNombreRutaFichaTecnicaPDF = ($fileFichaTecnicaPDF) ? (asset('storage/ModeloAnio/FichaPDF/' . $nombreArchivoServidorFicha)) : '';
+
+            $data = DB::select('exec usp_Modelo_SetActualizarModeloDocs ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $pcNombreRutaFotografia,
                                                                 $pcNombreRutaFichaTecnica,
+                                                                $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
                                                                 $nIdUsuario
