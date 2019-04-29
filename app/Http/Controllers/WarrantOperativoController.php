@@ -159,10 +159,10 @@ class WarrantOperativoController extends Controller
         $cNumeroVin             =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
         $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetVehiculosWoSinOS] ?, ?, ?',
-                                                                    [   $nIdWarrantOperativo,
-                                                                        $cNumeroVin,
-                                                                        $nIdEstadoWarrant
-                                                                    ]);
+                                                                [   $nIdWarrantOperativo,
+                                                                    $cNumeroVin,
+                                                                    $nIdEstadoWarrant
+                                                                ]);
 
         $arrayWOperativoDetalle = ParametroController::arrayPaginator($arrayWOperativoDetalle, $request);
         return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];

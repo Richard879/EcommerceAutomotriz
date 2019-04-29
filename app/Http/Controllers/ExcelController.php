@@ -40,26 +40,25 @@ class ExcelController extends Controller
 
         $data = [];
         foreach ($sheetData as $key => $value) {
-            if($value[4]!='' || $value[4]!=null){
+            if($value[3]!='' || $value[3]!=null){
                 $data[$key+1] =[
-                    'nOrdenCompra'   => $value[0],
-                    'cNombreLinea' => $value[1],
-                    'cNombreAlmacen' => $value[2],
-                    'nNumeroReserva' => $value[3],
-                    'cNumeroVin' => $value[4],
-                    'cFormaPago' => $value[5],
-                    'cNombreMarca' => $value[6],
-                    'cNombreModelo' => $value[7],
-                    'cNombreComercial' => $value[8],
-                    'cNombreColor' => ($value[9] == NULL) ? ($value[9] = '') : $value[9],
-                    'nAnioFabricacion' => ($value[10] == NULL) ? ($value[10] = 0) : $value[10],
-                    'nAnioVersion' => $value[11],
-                    'cSimboloMoneda' => $value[12],
-                    'fTotalCompra' => $value[13],
-                    'cSerieComprobante' => ($value[14] == NULL) ? ($value[14] = '') : $value[14],
-                    'cNumeroComprobante' => ($value[15] == NULL) ? ($value[15] = '') : $value[15],
-                    'dFechaFacturado' => $value[16],
-                    'cItemType' => 'itItems'
+                    'cNombreLinea'      => $value[0],
+                    'cNombreAlmacen'    => $value[1],
+                    'nNumeroReserva'    => $value[2],
+                    'cNumeroVin'        => $value[3],
+                    'cFormaPago'        => $value[4],
+                    'cNombreMarca'      => $value[5],
+                    'cNombreModelo'     => $value[6],
+                    'cNombreComercial'  => $value[7],
+                    'cNombreColor'      => ($value[8] == NULL) ? ($value[8] = '') : $value[8],
+                    'nAnioFabricacion'  => ($value[9] == NULL) ? ($value[9] = 0) : $value[9],
+                    'nAnioVersion'      => $value[10],
+                    'cSimboloMoneda'    => $value[11],
+                    'fTotalCompra'      => $value[12],
+                    'cSerieComprobante' => ($value[13] == NULL) ? ($value[13] = '') : $value[13],
+                    'cNumeroComprobante'=> ($value[14] == NULL) ? ($value[14] = '') : $value[14],
+                    'dFechaFacturado'   => $value[15],
+                    'cItemType'         => 'itItems'
                 ];
             }
         }
@@ -85,31 +84,33 @@ class ExcelController extends Controller
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
+        $cont = 0;
         $data = [];
         foreach ($sheetData as $key => $value) {
-            if($value[1]!='' || $value[1]!=null){
+            if($value[0]!='' || $value[0]!=null){
                 //$value[15] = ($value[15] == NULL) ? ($value[15]= 0) : $value[15];
                 $data[$key+1] =[
-                    'nIdVersionVeh'   => $value[0],
-                    'cNombreComercial' => $value[1],
-                    'nAnioFabricacion' => $value[2],
-                    'nAnioModelo' => $value[3],
-                    'cUnidadMedida' => $value[4],
-                    'cMoneda' => $value[5],
-                    'fPrecioBase' => $value[6],
-                    'fDescuento' => $value[7],
-                    'fPrecioCierre' => $value[8],
-                    'fPlaca' => $value[9],
-                    'fMargen' => $value[10],
-                    'fCostoDealer' => $value[11],
-                    'fBono' => $value[12],
-                    'fPrecioCierre2' => $value[13],
-                    'fFlete' => $value[14],
-                    'fTYP' => $value[15],
-                    'fPrecioVentaP' => $value[16],
-                    'fPrecioBonoDealer' => $value[17],
-                    'fBonoEspecial' => $value[18]
+                    'nIdVersionVeh'     => $cont,
+                    'cNombreComercial'  => $value[0],
+                    'nAnioFabricacion'  => $value[1],
+                    'nAnioModelo'       => $value[2],
+                    'cUnidadMedida'     => $value[3],
+                    'cMoneda'           => $value[4],
+                    'fPrecioBase'       => $value[5],
+                    'fDescuento'        => $value[6],
+                    'fPrecioCierre'     => $value[7],
+                    'fPlaca'            => $value[8],
+                    'fMargen'           => $value[9],
+                    'fCostoDealer'      => $value[10],
+                    'fBono'             => $value[11],
+                    'fPrecioCierre2'    => $value[12],
+                    'fFlete'            => $value[13],
+                    'fTYP'              => $value[14],
+                    'fPrecioVentaP'     => $value[15],
+                    'fPrecioBonoDealer' => $value[16],
+                    'fBonoEspecial'     => $value[17]
                 ];
+                $cont++;
             }
         }
 

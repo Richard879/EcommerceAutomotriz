@@ -62,9 +62,9 @@
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                                 v-for="item in arrayMarca"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                :key="item.nParDstCodigo"
+                                                                :label="item.cParDstNombre"
+                                                                :value="item.nParDstCodigo">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -224,9 +224,9 @@
                                                         <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                                 v-for="item in arrayMarca"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                :key="item.nParDstCodigo"
+                                                                :label="item.cParDstNombre"
+                                                                :value="item.nParDstCodigo">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -239,9 +239,9 @@
                                                         <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                                 v-for="item in arrayModelo"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
+                                                                :key="item.nParDstCodigo"
+                                                                :label="item.cParDstNombre"
+                                                                :value="item.nParDstCodigo">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -305,11 +305,11 @@
                                                         <label class="col-sm-4 form-control-label">Nombre</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="listarProveedores(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarProveedores(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -517,6 +517,7 @@
                         this.formVersion.nidlinea = '';
                     }
                     this.llenarComboMarca();
+                    this.arrayVersionVehiculo= [];
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -528,20 +529,24 @@
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parparametro/GetParParametro';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion': 1
+                        'nparsrccodigo'         : this.formVersion.nidlinea,
+                        'nparsrcgrupoarametro'  : 110031,
+                        'npardstcodigo'         : 0,
+                        'npardstgrupoarametro'  : 110032,
+                        'opcion'                : 1
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data.arrayParametro;
+                    this.arrayMarca = response.data.arrayParParametro;
                     if(this.vistaFormulario){
                         this.formVersion.nidmarca = '';
                     }
+                    this.formVersion.nidmarca = '';
                     this.arrayModelo = [];
-                    //this.llenarComboModelo();
+                    this.arrayVersionVehiculo= [];
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -553,18 +558,22 @@
                 });
             },
             llenarComboModelo(){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parparametro/GetParParametro';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110033,
-                        'opcion': 1
+                        'nparsrccodigo'         : this.formVersion.nidmarca,
+                        'nparsrcgrupoarametro'  : 110032,
+                        'npardstcodigo'         : 0,
+                        'npardstgrupoarametro'  : 110033,
+                        'opcion'                : 1
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data.arrayParametro;
+                    this.arrayModelo = response.data.arrayParParametro;
                     if(this.vistaFormulario){
                         this.formVersion.nidmodelo = '';
                     }
+                    this.arrayVersionVehiculo= [];
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -574,9 +583,6 @@
                         }
                     }
                 });
-            },
-            buscaProveedores(){
-                this.listarProveedores(1);
             },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
@@ -618,6 +624,7 @@
                 this.arrayMarca = [];
                 this.arrayModelo = [];
                 this.llenarComboLinea();
+                this.arrayVersionVehiculo= [];
             },
             buscarLineaMarcaModelo(){
                 if(this.validarBusqueda()){
@@ -658,13 +665,13 @@
                         'page'          : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayLineaMarcaModelo.data;
-                    this.pagination.current_page =  response.data.arrayLineaMarcaModelo.current_page;
-                    this.pagination.total = response.data.arrayLineaMarcaModelo.total;
+                    this.arrayVersionVehiculo   = response.data.arrayLineaMarcaModelo.data;
+                    this.pagination.current_page= response.data.arrayLineaMarcaModelo.current_page;
+                    this.pagination.total       = response.data.arrayLineaMarcaModelo.total;
                     this.pagination.per_page    = response.data.arrayLineaMarcaModelo.per_page;
                     this.pagination.last_page   = response.data.arrayLineaMarcaModelo.last_page;
                     this.pagination.from        = response.data.arrayLineaMarcaModelo.from;
-                    this.pagination.to           = response.data.arrayLineaMarcaModelo.to;
+                    this.pagination.to          = response.data.arrayLineaMarcaModelo.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -697,9 +704,9 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Registrado Correctamente');
-                        this.limpiarFormulario();
-                        this.listarLineaMarcaModelo(1);
-                        this.vistaFormulario = 1;
+                        //this.limpiarFormulario();
+                        //this.listarLineaMarcaModelo(1);
+                        //this.vistaFormulario = 1;
                     }
                     else if(response.data[0].nFlagMsje == 2){
                         swal('El Modelo ya ha sido Asignado');
@@ -831,11 +838,7 @@
                     })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
@@ -879,6 +882,7 @@
                 if(this.accion == 1){
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
+                    this.arrayLineaMarcaModelo = [];
                 }else{
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;

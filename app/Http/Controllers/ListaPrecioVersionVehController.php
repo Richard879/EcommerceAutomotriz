@@ -20,6 +20,7 @@ class ListaPrecioVersionVehController extends Controller
         $dFechaFin      = $request->dfechafin;
         $nIdProveedor   = $request->nidproveedor;
 
+        $nIdProveedor   = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
         $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
 
@@ -78,7 +79,7 @@ class ListaPrecioVersionVehController extends Controller
         return response()->json($versionvehiculo);
     }
 
-    public function store(Request $request)
+    public function SetListaPrecioVhDetalle(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -158,8 +159,11 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaById] ?, ?',
-                                                [  $request->nIdListaPrecioVersionVeh,
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaById] ?, ?, ?, ?, ?',
+                                                [   $request->nIdEmpresa,
+                                                    $request->nIdSucursal,
+                                                    $request->nIdProveedor,
+                                                    $request->nIdListaPrecioVersionVeh,
                                                     Auth::user()->id
                                                 ]);
         return response()->json($listapreciovh);
@@ -169,9 +173,11 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_ActivaById] ?, ?, ?, ?',
-                                                    [   $request->nIdListaPrecioVersionVeh,
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_ActivaById] ?, ?, ?, ?, ?, ?',
+                                                    [   $request->nIdEmpresa,
+                                                        $request->nIdSucursal,
                                                         $request->nIdProveedor,
+                                                        $request->nIdListaPrecioVersionVeh,
                                                         $request->nIdTipoLista,
                                                         Auth::user()->id
                                                     ]);

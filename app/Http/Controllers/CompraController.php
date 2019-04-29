@@ -74,14 +74,13 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
                                                                 $request->nIdProveedor,
                                                                 $request->nIdTipoLista,
                                                                 $request->nIdListaPrecioVeh,
-                                                                $det['nOrdenCompra'],
                                                                 $det['cNombreLinea'],
                                                                 $det['cNombreAlmacen'],
                                                                 $det['nNumeroReserva'],

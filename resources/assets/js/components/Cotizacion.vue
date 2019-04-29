@@ -443,7 +443,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <hr/>
+                                                                <br/>
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayReferenciavehiculo.length">
                                                                         <div class="table-responsive">
@@ -593,16 +593,15 @@
                                                                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                                                 <div class="col-sm-8">
                                                                                                     <div class="input-group">
-                                                                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
                                                                                                         <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                                        <div class="input-group-prepend">
+                                                                                                        <!--<div class="input-group-prepend">
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Buscar Proveedor </div>
                                                                                                                 <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
                                                                                                                     <i class="fa-lg fa fa-search"></i>
                                                                                                                 </button>
                                                                                                             </el-tooltip>
-                                                                                                        </div>
+                                                                                                        </div>-->
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -637,7 +636,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <hr/>
+                                                                                    <br/>
                                                                                     <template v-if="arrayVehiculo.length">
                                                                                         <div class="table-responsive">
                                                                                             <table class="table table-striped table-sm">
@@ -663,7 +662,7 @@
                                                                                                                 <i @click="removerVehiculoLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                                             </el-tooltip>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
+                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioModelo"></td>
                                                                                                         <td v-html="vehiculo.cantidad"></td>
                                                                                                         <td>US$ {{ vehiculo.PrecioBase }} </td>
                                                                                                         <td>
@@ -1582,14 +1581,15 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Linea</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidlinea" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
+                                                            <input type="text" v-model="fillBusqVehiculo.clinea" class="form-control form-control-sm" readonly>
+                                                            <!--<el-select v-model="fillBusqVehiculo." filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                 <el-option
                                                                     v-for="item in arrayLinea"
                                                                     :key="item.nIdLinea"
                                                                     :label="item.cLineaNombre"
                                                                     :value="item.nIdLinea">
                                                                 </el-option>
-                                                            </el-select>
+                                                            </el-select>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1597,14 +1597,15 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmarca" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                            <input type="text" v-model="fillBusqVehiculo.cmarca" class="form-control form-control-sm" readonly>
+                                                            <!--<el-select v-model="fillBusqVehiculo.nidmarca" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                 <el-option
                                                                     v-for="marca in arrayMarca"
                                                                     :key="marca.nIdMarca"
                                                                     :label="marca.cMarcaNombre"
                                                                     :value="marca.nIdMarca">
                                                                 </el-option>
-                                                            </el-select>
+                                                            </el-select>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1614,17 +1615,28 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmodelo" filterable disabled="disabled" clearable placeholder="SELECCIONE" >
+                                                            <input type="text" v-model="fillBusqVehiculo.cmodelo" class="form-control form-control-sm" readonly>
+                                                            <!--<el-select v-model="fillBusqVehiculo.nidmodelo" filterable disabled="disabled" clearable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                     v-for="item in arrayModelo"
                                                                     :key="item.nIdModelo"
                                                                     :label="item.cModeloNombre"
                                                                     :value="item.nIdModelo">
                                                                 </el-option>
-                                                            </el-select>
+                                                            </el-select>-->
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Año Modelo</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" v-model="fillBusqVehiculo.naniomodelo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Nombre Comercial</label>
@@ -1651,7 +1663,6 @@
                                                             <th>Seleccione</th>
                                                             <th>Codigo</th>
                                                             <th>Nombre Comercial</th>
-                                                            <th>Año Fabricación</th>
                                                             <th>Año Modelo</th>
                                                             <th>Precio Base</th>
                                                             <th>Bono</th>
@@ -1670,7 +1681,6 @@
                                                             </td>
                                                             <td v-text="vehiculo.codListaPrecioVD"></td>
                                                             <td v-text="vehiculo.NombreComercial"></td>
-                                                            <td v-text="vehiculo.AnioFab"></td>
                                                             <td v-text="vehiculo.AnioMod"></td>
                                                             <td v-text="vehiculo.PrecioBase"></td>
                                                             <td v-text="vehiculo.Bono"></td>
@@ -2500,7 +2510,11 @@
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    cnombrecomercial: ''
+                    cnombrecomercial: '',
+                    naniomodelo: '',
+                    clinea: '',
+                    cmarca: '',
+                    cmodelo: ''
                 },
                 arrayVehiculoModal : [],
                 // ================= SUB TAB VEHICULO =================
@@ -3176,6 +3190,13 @@
                 this.fillAsignarContacto.nidlinea           =   r.nIdLinea;
                 this.fillAsignarContacto.nidmarca           =   r.nIdMarca;
                 this.fillAsignarContacto.nidmodelo          =   r.nIdModelo;
+                this.fillBusqVehiculo.nidlinea              = r.nIdLinea;
+                this.fillBusqVehiculo.nidmarca              = r.nIdMarca;
+                this.fillBusqVehiculo.nidmodelo             = r.nIdModelo;
+                this.fillBusqVehiculo.clinea              = r.cLineaNombre;
+                this.fillBusqVehiculo.cmarca              = r.cMarcaNombre;
+                this.fillBusqVehiculo.cmodelo             = r.cModeloNombre;
+                this.fillBusqVehiculo.naniomodelo         = r.nAnioModelo;
                 this.tabDetalleCotización();
                 this.llenarComboSubLinea();
             },
@@ -3350,8 +3371,10 @@
                 var url = this.ruta + '/gescotizacion/GetTipoLista';
                 axios.get(url, {
                     params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidtipolista' : this.fillBusqVehiculo.nidtipolista
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'  : this.fillProveedor.nidproveedor,
+                        'nidtipolista'  : this.fillBusqVehiculo.nidtipolista
                     }
                 }).then(response => {
                     var varnro = (response.data[0].NRO) == null ? '' : response.data[0].NRO + ' - ';
@@ -3441,16 +3464,19 @@
                 var url = this.ruta + '/gescotizacion/GetListVehiculos';
                 axios.get(url, {
                     params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidtipolista': this.fillBusqVehiculo.nidtipolista,
-                        'nidlinea' : this.fillBusqVehiculo.nidlinea,
-                        'nidmarca' : this.fillBusqVehiculo.nidmarca,
-                        'nidmodelo' : this.fillBusqVehiculo.nidmodelo,
-                        'cnombrecomercial' : this.fillBusqVehiculo.cnombrecomercial,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'      : this.fillProveedor.nidproveedor,
+                        'nidtipolista'      : this.fillBusqVehiculo.nidtipolista,
+                        'nidlinea'          : this.fillBusqVehiculo.nidlinea,
+                        'nidmarca'          : this.fillBusqVehiculo.nidmarca,
+                        'nidmodelo'         : this.fillBusqVehiculo.nidmodelo,
+                        'naniomodelo'       :this.fillBusqVehiculo.naniomodelo,
+                        'cnombrecomercial'  : this.fillBusqVehiculo.cnombrecomercial,
+                        'page'              : page
                     }
                 }).then(response => {
-                    this.arrayVehiculoModal = response.data.arrayListaVehiculos.data;
+                    this.arrayVehiculoModal             = response.data.arrayListaVehiculos.data;
                     this.paginationModal.current_page   =  response.data.arrayListaVehiculos.current_page;
                     this.paginationModal.total          = response.data.arrayListaVehiculos.total;
                     this.paginationModal.per_page       = response.data.arrayListaVehiculos.per_page;

@@ -52,13 +52,13 @@ class SapPedidoController extends Controller
                             "ItemCode"      =>  (string)$value['cNumeroVin'],
                             "Quantity"      =>  "1",
                             "TaxCode"       =>  "IGV",
-                            "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
+                            "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
                             //"UnitPrice"     =>  (string)$SubTotal,
                             "Currency"      =>  "US$",
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
                             "ProjectCode"   =>  (string)$value['cNumeroVin'],
                             "CostingCode2"  =>  "01", //UnidadDeNegocio
-                            "CostingCode3"      =>  (string)$request->nIdSapSucursal,
+                            "CostingCode3"  =>  (string)$request->nIdSapSucursal,
                             'SerialNumbers' =>  array()
                         ]
                     ]

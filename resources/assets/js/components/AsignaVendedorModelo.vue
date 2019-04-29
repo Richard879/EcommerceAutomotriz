@@ -656,6 +656,7 @@
                     if(this.vistaFormulario){
                         this.fillVendedor.nidmodelo = '';
                     }
+                    this.arrayVendedorModelo=[];
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

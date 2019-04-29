@@ -17,12 +17,16 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor = $request->nidproveedor;
-        $tipoLista = $request->nidtipolista;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdTipoLista   = $request->nidtipolista;
 
-        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?',
-                                                        [   $nidproveedor,
-                                                            $tipoLista
+        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdSucursal,
+                                                            $nIdProveedor,
+                                                            $nIdTipoLista
                                                         ]);
 
         return response()->json($arrayTipoLista);
@@ -32,22 +36,28 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor       = $request->nidproveedor;
-        $nidtipolista       = $request->nidtipolista;
-        $nidlinea           = $request->nidlinea;
-        $nidmarca           = $request->nidmarca;
-        $nidmodelo          = $request->nidmodelo;
-        $cnombrecomercial   = $request->cnombrecomercial;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $nIdProveedor       = $request->nidproveedor;
+        $nIdTipoLista       = $request->nidtipolista;
+        $nIdLinea           = $request->nidlinea;
+        $nIdMarca           = $request->nidmarca;
+        $nIdModelo          = $request->nidmodelo;
+        $nAnioModelo          = $request->naniomodelo;
+        $cNombreComercial   = $request->cnombrecomercial;
 
-        $cnombrecomercial   = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
+        $cNombreComercial   = ($cNombreComercial == "") ? ($cNombreComercial = '') : $cNombreComercial;
 
-        $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?',
-                                                                        [   $nidproveedor,
-                                                                            $nidtipolista,
-                                                                            $nidlinea,
-                                                                            $nidmarca,
-                                                                            $nidmodelo,
-                                                                            $cnombrecomercial
+        $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $nIdProveedor,
+                                                                            $nIdTipoLista,
+                                                                            $nIdLinea,
+                                                                            $nIdMarca,
+                                                                            $nIdModelo,
+                                                                            $nAnioModelo,
+                                                                            $cNombreComercial
                                                                         ]);
 
         $arrayListaVehiculos = ParametroController::arrayPaginator($arrayListaVehiculos, $request);

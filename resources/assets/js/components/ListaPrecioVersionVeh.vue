@@ -164,7 +164,7 @@
                                                                                         <template v-if="lista.cListaEstado=='A'">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
-                                                                                                <i @click="desactivar(lista.nIdListaPrecioVh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                <i @click="desactivar(lista)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                                             </el-tooltip>
                                                                                         </template>
                                                                                         <template v-else>
@@ -488,7 +488,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
+                                                                                <tr v-for="(lista, index) in arrayExcel" :key="lista.nIdVersionVeh">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
@@ -690,7 +690,6 @@
                                                                                 <th>Código Det.</th>
                                                                                 <th>Código Veh.</th>
                                                                                 <th>Nombre Comercial</th>
-                                                                                <th>Año Fabricación</th>
                                                                                 <th>Año Modelo</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Costo Dealer</th>
@@ -707,7 +706,6 @@
                                                                                 <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
                                                                                 <td v-text="lpd.nIdVersionVeh"></td>
                                                                                 <td v-text="lpd.cNombreComercial"></td>
-                                                                                <td v-text="lpd.nAnioFabricacion"></td>
                                                                                 <td v-text="lpd.nAnioModelo"></td>
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
                                                                                 <td v-text="lpd.fCostoDealer"></td>
@@ -1116,6 +1114,7 @@
                 this.formListaPrecioVh.nidproveedor = nProveedorId;
                 this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
+                this.arrayListaPrecioVh = [];
             },
             listarTipoLista(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1141,12 +1140,12 @@
                 var url = this.ruta + '/listapreciovh/GetListaVh';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.formListaPrecioVh.dfechainicio,
-                        'dfechafin': this.formListaPrecioVh.dfechafin,
-                        'nidproveedor': this.formListaPrecioVh.nidproveedor,
-                        'page': page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.formListaPrecioVh.dfechainicio,
+                        'dfechafin'     : this.formListaPrecioVh.dfechafin,
+                        'nidproveedor'  : this.formListaPrecioVh.nidproveedor,
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayListaPrecioVh         = response.data.arrayListaPrecioVh.data;
@@ -1180,13 +1179,13 @@
 
                 var url = this.ruta + '/listapreciovh/SetListaVh';
                 axios.post(url, {
-                    nIdEmpresa      : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal     : parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor    : parseInt(this.formListaPrecioVh.nidproveedor),
-                    nIdCronograma   : parseInt(this.nidcronograma),
-                    nNroListaPrecio : parseInt(this.formListaPrecioVh.nnrolistaprecio),
-                    dFechaInicio    : this.formListaPrecioVh.dfechainicio,
-                    nIdTipoLista    : this.formListaPrecioVh.nidtipolista
+                    'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'     : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdProveedor'    : parseInt(this.formListaPrecioVh.nidproveedor),
+                    'nIdCronograma'   : parseInt(this.nidcronograma),
+                    'nNroListaPrecio' : parseInt(this.formListaPrecioVh.nnrolistaprecio),
+                    'dFechaInicio'    : this.formListaPrecioVh.dfechainicio,
+                    'nIdTipoLista'    : this.formListaPrecioVh.nidtipolista
                 }).then(response => {
                     swal('Lista de Precio registrada'),
                     this.limpiarFormulario();
@@ -1254,7 +1253,7 @@
                     }
                 });
             },*/
-            activar(lista){
+            activar(objLista){
                 swal({
                     title: 'Estas seguro de activar esta Lista?',
                     type: 'warning',
@@ -1267,9 +1266,11 @@
                     if (result.value) {
                         var url = this.ruta + '/listapreciovh/activar';
                         axios.put(url, {
-                            nIdListaPrecioVersionVeh: lista.nIdListaPrecioVh,
-                            nIdProveedor: lista.nIdProveedor,
-                            nIdTipoLista: lista.nIdTipoLista
+                            'nIdEmpresa'            : objLista.nIdEmpresa,
+                            'nIdSucursal'           : objLista.nIdSucursal,
+                            'nIdProveedor'          : objLista.nIdProveedor,
+                            'nIdListaPrecioVersionVeh': objLista.nIdListaPrecioVh,
+                            'nIdTipoLista'          : objLista.nIdTipoLista
                         }).then(response =>{
                             if(response.data[0].nFlagMsje == 1)
                             {
@@ -1297,7 +1298,7 @@
                     }
                 })
             },
-            desactivar(nIdListaPrecioVersionVeh){
+            desactivar(objLista){
                 swal({
                     title: 'Estás seguro de desactivar esta Lista?',
                     type: 'warning',
@@ -1310,7 +1311,10 @@
                         if (result.value) {
                             var url = this.ruta + '/listapreciovh/desactivar';
                             axios.put(url, {
-                                nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh
+                                'nIdEmpresa'            : objLista.nIdEmpresa,
+                                'nIdSucursal'           : objLista.nIdSucursal,
+                                'nIdProveedor'          : objLista.nIdProveedor,
+                                'nIdListaPrecioVersionVeh': objLista.nIdListaPrecioVh
                             }).then(response =>{
                                 swal(
                                     'Desactivado!',
@@ -1434,11 +1438,11 @@
                     nameFile: nameFile
                 }).then(response => {
 
-                    if(this.validaCamposExcel(response.data)){
+                    /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
-                    }
+                    }*/
 
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
@@ -1534,6 +1538,7 @@
                         swal('Detalle de Lista registrada');
                         me.attachment = [];
                         me.limpiarFormulario();
+                        me.arrayListaPrecioVh=[];
                     }
                 }).catch(error => {
                     console.log(error);
