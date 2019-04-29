@@ -196,12 +196,18 @@ class SapArticuloController extends Controller
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
         $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
         $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
+        $nidtranccion           =   $request->fillNuevoVehiculo['nidtranccion'];
+        $nidcategoria           =   $request->fillNuevoVehiculo['nidcategoria'];
+        $nidcilindrada          =   $request->fillNuevoVehiculo['nidcilindrada'];
+        $nidtransmision         =   $request->fillNuevoVehiculo['nidtransmision'];
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
         $cnroserie              =   $request->fillNuevoVehiculo['cnroserie'];
         $cnrocilindros          =   $request->fillNuevoVehiculo['cnrocilindros'];
         $cnrorueda              =   $request->fillNuevoVehiculo['cnrorueda'];
+        $cnroeje                =   $request->fillNuevoVehiculo['cnroeje'];
+        $cpotencia              =   $request->fillNuevoVehiculo['cpotencia'];
         $cnropasajeros          =   $request->fillNuevoVehiculo['cnropasajeros'];
         $cnroasiento            =   $request->fillNuevoVehiculo['cnroasiento'];
         $cpesoseco              =   $request->fillNuevoVehiculo['fpesoseco'];
@@ -226,6 +232,13 @@ class SapArticuloController extends Controller
                                                                         ]);
         $nidcolor = $color[0]->cParNombre;//Setear por el Nombre
 
+        //OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO
+        $cilindrada = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                        [
+                                                                            $nidcilindrada
+                                                                        ]);
+        $nidcilindrada = $cilindrada[0]->cParNombre;//Setear por el Nombre
+
         //OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO
         $combustible = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                         [
@@ -241,7 +254,7 @@ class SapArticuloController extends Controller
                 'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
                 'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
                 'U_SYP_NROCHASIS'   =>  (string)$cnroserie,//Numero de Chasis
-                'U_SYP_CILINDRADA'  =>  (string)$cnrocilindros,//Cilindrada
+                'U_SYP_CILINDRADA'  =>  (string)$nidcilindrada,//Cilindrada
                 'U_SYP_COMBUSTIBLE' =>  (string)$nidcombustible,//Combustible
                 'U_SYP_NROCLINDRO'  =>  (string)$cnrocilindros,//Nro Cilindos
                 'U_SYP_NROPASAJERO' =>  (string)$cnropasajeros,//Nro Pasajeros

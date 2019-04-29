@@ -21,12 +21,18 @@ class MaestroVehiculoController extends Controller
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
         $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
         $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
+        $nidtranccion           =   $request->fillNuevoVehiculo['nidtranccion'];
+        $nidcategoria           =   $request->fillNuevoVehiculo['nidcategoria'];
+        $nidcilindrada          =   $request->fillNuevoVehiculo['nidcilindrada'];
+        $nidtransmision         =   $request->fillNuevoVehiculo['nidtransmision'];
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
         $cnroserie              =   $request->fillNuevoVehiculo['cnroserie'];
         $cnrocilindros          =   $request->fillNuevoVehiculo['cnrocilindros'];
         $cnrorueda              =   $request->fillNuevoVehiculo['cnrorueda'];
+        $cnroeje                =   $request->fillNuevoVehiculo['cnroeje'];
+        $cpotencia              =   $request->fillNuevoVehiculo['cpotencia'];
         $cnropasajeros          =   $request->fillNuevoVehiculo['cnropasajeros'];
         $cnroasiento            =   $request->fillNuevoVehiculo['cnroasiento'];
         $cpesoseco              =   $request->fillNuevoVehiculo['fpesoseco'];
@@ -45,12 +51,18 @@ class MaestroVehiculoController extends Controller
         $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
         $nidcolor               =   ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
         $nidaniomodelo          =   ($nidaniomodelo == NULL)       ? ($nidaniomodelo = ' ')         : $nidaniomodelo;
+        $nidtranccion           =   ($nidtranccion == NULL) ? ($nidtranccion = ' ')   : $nidtranccion;
+        $nidcategoria           =   ($nidcategoria == NULL) ? ($nidcategoria = ' ')   : $nidcategoria;
+        $nidcilindrada          =   ($nidcilindrada == NULL) ? ($nidcilindrada = ' ')   : $nidcilindrada;
+        $nidtransmision         =   ($nidtransmision == NULL) ? ($nidtransmision = ' ')   : $nidtransmision;
         $nidcombustible         =   ($nidcombustible == NULL) ? ($nidcombustible = ' ')   : $nidcombustible;
         $dfechaventa            =   ($dfechaventa == NULL)    ? ($dfechaventa = ' ')      : $dfechaventa;
         $cnromotor              =   ($cnromotor == NULL)      ? ($cnromotor = ' ')        : $cnromotor;
         $cnroserie              =   ($cnroserie == NULL)      ? ($cnroserie = ' ')        : $cnroserie;
         $cnrocilindros          =   ($cnrocilindros == NULL)  ? ($cnrocilindros = ' ')    : $cnrocilindros;
         $cnrorueda              =   ($cnrorueda == NULL)      ? ($cnrorueda = ' ')        : $cnrorueda;
+        $cnroeje                =   ($cnroeje == NULL)      ? ($cnroeje = ' ')        : $cnroeje;
+        $cpotencia              =   ($cpotencia == NULL)      ? ($cpotencia = ' ')        : $cpotencia;
         $cnropasajeros          =   ($cnropasajeros == NULL)  ? ($cnropasajeros = ' ')    : $cnropasajeros;
         $cnroasiento            =   ($cnroasiento == NULL)    ? ($cnroasiento = ' ')      : $cnroasiento;
         $cpesoseco              =   ($cpesoseco == NULL)      ? ($cpesoseco = ' ')        : $cpesoseco;
@@ -64,24 +76,28 @@ class MaestroVehiculoController extends Controller
         $nFlagEditar = $request->nFlagEditar;
 
         $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca]
-                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         NULL,
                                         NULL,
                                         $nidvehiculo,
-                                        // $cnroplaca,
-                                        // $cnrotarjetapropiedad,
                                         $nidclase,
                                         $nidmarca,
                                         $nidmodelo,
                                         $nidcolor,
                                         $nidaniomodelo,
+                                        $nidtranccion,
+                                        $nidcategoria,
+                                        $nidcilindrada,
+                                        $nidtransmision,
                                         $nidcombustible,
                                         $dfechaventa,
                                         $cnromotor,
                                         $cnroserie,
                                         $cnrocilindros,
                                         $cnrorueda,
+                                        $cnroeje,
+                                        $cpotencia,
                                         $cnropasajeros,
                                         $cnroasiento,
                                         $cpesoseco,

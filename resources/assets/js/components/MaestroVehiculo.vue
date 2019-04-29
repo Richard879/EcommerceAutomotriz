@@ -304,7 +304,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Clase</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Carroceria</label>
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="fillNuevoVehiculo.nidclase"
                                                                                                         filterable
@@ -399,19 +399,80 @@
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">*Fecha Venta</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Tracción</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-date-picker
-                                                                                                v-model="fillNuevoVehiculo.dfechaventa"
-                                                                                                value-format="yyyy-MM-dd"
-                                                                                                format="yyyy/MM/dd"
-                                                                                                placeholder="">
-                                                                                            </el-date-picker>
+                                                                                            <el-select v-model="fillNuevoVehiculo.nidtranccion"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE LA TRACCIÓN">
+                                                                                                <el-option
+                                                                                                    v-for="item in arrayTraccion"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Categoria</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="fillNuevoVehiculo.nidcategoria"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE LA CATEGORÍA">
+                                                                                                <el-option
+                                                                                                    v-for="item in arrayCategoria"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Cilindrada</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="fillNuevoVehiculo.nidcilindrada"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE EL CILINDRADO">
+                                                                                                <el-option
+                                                                                                    v-for="item in arrayCilindrada"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Transmisión</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="fillNuevoVehiculo.nidtransmision"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE UNA TRANSMISIÓN">
+                                                                                                <el-option
+                                                                                                    v-for="item in arrayTransmision"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Combustible</label>
@@ -421,12 +482,27 @@
                                                                                                         clearable
                                                                                                         placeholder="SELECCIONE">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayCombustible"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayCombustible"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
                                                                                                 </el-option>
                                                                                             </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">*Fecha Venta</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-date-picker
+                                                                                                v-model="fillNuevoVehiculo.dfechaventa"
+                                                                                                value-format="yyyy-MM-dd"
+                                                                                                format="yyyy/MM/dd"
+                                                                                                placeholder="">
+                                                                                            </el-date-picker>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -453,6 +529,24 @@
                                                                                         <label class="col-sm-4 form-control-label">* N° Rueda</label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="number" v-model="fillNuevoVehiculo.cnrorueda" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* N° Eje</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cnroeje" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Potencia</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="number" v-model="fillNuevoVehiculo.cpotencia" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1559,11 +1653,17 @@
                     nidmodelo: '',
                     nidcolor: '',
                     nidaniomodelo: '',
-                    dfechaventa: '',
+                    nidtranccion: '',
+                    nidcategoria: '',
+                    nidcilindrada: '',
+                    nidtransmision:'',
                     nidcombustible: '',
+                    dfechaventa: '',
                     cnromotor: '',
                     cnroserie: '',
                     cnrorueda: '',
+                    cnroeje: '',
+                    cpotencia: '',
                     cnrocilindros: '',
                     cnroasiento: '',
                     cnropasajeros: '',
@@ -1577,6 +1677,10 @@
                 },
                 arrayClase: [],
                 arrayColor: [],
+                arrayTraccion: [],
+                arrayCategoria: [],
+                arrayCilindrada: [],
+                arrayTransmision: [],
                 arrayCombustible: [],
                 // ======================================
                 // VARIABLES SUBTAB PROPIETARIO
@@ -1880,6 +1984,10 @@
                 //this.llenarComboModelo(2);
                 this.llenarComboColor();
                 this.llenarComboAnioModelo();
+                this.llenarComboTraccion();
+                this.llenarComboCategoria();
+                this.llenarComboCilindrada();
+                this.llenarComboTransmision();
                 this.llenarComboCombustible();
                 (this.nFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
                 this.llenarComboClase();
@@ -1914,7 +2022,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110029
+                        'ngrupoparid' : 110113
                     }
                 }).then(response => {
                     this.arrayClase = response.data;
@@ -1936,6 +2044,78 @@
                     }
                 }).then(response => {
                     this.arrayColor = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboTraccion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110111
+                    }
+                }).then(response => {
+                    this.arrayTraccion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboCategoria(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110117
+                    }
+                }).then(response => {
+                    this.arrayCategoria = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboCilindrada(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110114
+                    }
+                }).then(response => {
+                    this.arrayCilindrada = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboTransmision(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110115
+                    }
+                }).then(response => {
+                    this.arrayTransmision = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2620,10 +2800,16 @@
                 this.fillNuevoVehiculo.nidmodelo = '';
                 this.fillNuevoVehiculo.nidcolor = '';
                 this.fillNuevoVehiculo.nidaniomodelo = '';
+                this.fillNuevoVehiculo.nidtranccion = '';
+                this.fillNuevoVehiculo.nidcategoria = '';
+                this.fillNuevoVehiculo.nidcilindrada = '';
+                this.fillNuevoVehiculo.nidtransmision = '';
                 this.fillNuevoVehiculo.nidcombustible = '';
                 this.fillNuevoVehiculo.dfechaventa = '';
                 this.fillNuevoVehiculo.cnrocilindros = '';
                 this.fillNuevoVehiculo.cnrorueda = '';
+                this.fillNuevoVehiculo.cnroeje = '';
+                this.fillNuevoVehiculo.cpotencia = '';
                 this.fillNuevoVehiculo.cnroserie = '';
                 this.fillNuevoVehiculo.cnropasajeros = '';
                 this.fillNuevoVehiculo.cnroasiento = '';
@@ -2669,6 +2855,7 @@
                 return this.error;
             },
             cargarDatosEditar(data){
+                // console.log(data);
                 this.limpiarVehiculo();
                 this.limpiarPropietario();
                 this.limpiarSOAT();
@@ -2686,11 +2873,17 @@
                 this.fillNuevoVehiculo.nidmodelo            =   (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
                 this.fillNuevoVehiculo.nidcolor             =   (data['nIdColor'] == 0) ? '' : data['nIdColor'];
                 this.fillNuevoVehiculo.nidaniomodelo        =   data['nAnioModelo'];
-                this.fillNuevoVehiculo.dfechaventa          =   data['dFechaVenta'];
+                this.fillNuevoVehiculo.nidtranccion         =   (data['nIdTraccion'] == 0) ? '' : data['nIdTraccion'];
+                this.fillNuevoVehiculo.nidcategoria         =   (data['nIdCategoria'] == 0) ? '' : data['nIdCategoria'];
+                this.fillNuevoVehiculo.nidcilindrada        =   (data['nIdCilindrada'] == 0) ? '' : data['nIdCilindrada'];
+                this.fillNuevoVehiculo.nidtransmision       =   (data['nIdTransmision'] == 0) ? '' : data['nIdTransmision'];
                 this.fillNuevoVehiculo.nidcombustible       =   (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
+                this.fillNuevoVehiculo.dfechaventa          =   data['dFechaVenta'];
                 this.fillNuevoVehiculo.cnromotor            =   (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
                 this.fillNuevoVehiculo.cnroserie            =   (data['cNroSerie'] == 0) ? '' : data['cNroSerie'] ;
                 this.fillNuevoVehiculo.cnrorueda            =   (data['nNumeroRueda'] == 0) ? '' : data['nNumeroRueda'];
+                this.fillNuevoVehiculo.cnroeje              =   (data['nNumeroEje'] == 0) ? '' : data['nNumeroEje'];
+                this.fillNuevoVehiculo.cpotencia            =   (data['nPotencia'] == 0) ? '' : data['nPotencia'];
                 this.fillNuevoVehiculo.cnrocilindros        =   (data['nNumeroCilindro'] == 0) ? '' : data['nNumeroCilindro'];
                 this.fillNuevoVehiculo.cnroasiento          =   (data['nNumeroAsiento'] == 0) ? '' : data['nNumeroAsiento'];
                 this.fillNuevoVehiculo.cnropasajeros        =   (data['nNumeroPasajero'] == 0) ? '' : data['nNumeroPasajero'] ;
