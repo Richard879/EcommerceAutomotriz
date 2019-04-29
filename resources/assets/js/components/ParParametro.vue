@@ -366,6 +366,9 @@
         methods:{
             limpiarGrupo(){
                 this.arrayParametro = [];
+                this.arrayIndex= [];
+                this.formParametro.nidpar='';
+                this.arrayParParametro = [];
             },
             limpiarSubGrupo(){
                 this.arrayParParametro = [];
@@ -407,50 +410,6 @@
                         }
                     }
                 });
-            },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 0,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formVersion.nidproveedor = nProveedorId;
-                this.formVersion.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
             },
             listarParametroByGrupo(page){
                 if(this.validarBusqueda()){
@@ -572,11 +531,11 @@
 
                 var url = this.ruta + '/parparametro/SetParParametro';
                 axios.post(url, {
-                    nParSrcCodigo: parseInt(this.formParametro.nidpar),
-                    nParSrcGrupoParametro: parseInt(this.fillParametro.nidgrupopar),
-                    nParDstCodigo: parseInt(p.nIdPar),
-                    nParDstGrupoParametro: parseInt(this.fillParametro.nidsubgrupopar),
-                    cValor: ''
+                    'nParSrcCodigo'         : parseInt(this.formParametro.nidpar),
+                    'nParSrcGrupoParametro' : parseInt(this.fillParametro.nidgrupopar),
+                    'nParDstCodigo'         : parseInt(p.nIdPar),
+                    'nParDstGrupoParametro' : parseInt(this.fillParametro.nidsubgrupopar),
+                    'cValor'                : ''
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -625,11 +584,11 @@
 
                 var url = this.ruta + '/parparametro/ElmParParametro';
                 axios.post(url, {
-                    nParSrcCodigo: parseInt(this.formParametro.nidpar),
-                    nParSrcGrupoParametro: parseInt(this.fillParametro.nidgrupopar),
-                    nParDstCodigo: parseInt(p.nIdPar),
-                    nParDstGrupoParametro: parseInt(this.fillParametro.nidsubgrupopar),
-                    cValor: ''
+                    'nParSrcCodigo'         : parseInt(this.formParametro.nidpar),
+                    'nParSrcGrupoParametro' : parseInt(this.fillParametro.nidgrupopar),
+                    'nParDstCodigo'         : parseInt(p.nIdPar),
+                    'nParDstGrupoParametro' : parseInt(this.fillParametro.nidsubgrupopar),
+                    'cValor'                : ''
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -652,11 +611,7 @@
                 });
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
