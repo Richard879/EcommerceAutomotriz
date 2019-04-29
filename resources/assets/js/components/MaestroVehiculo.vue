@@ -2022,7 +2022,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110113
+                        'ngrupoparid' : 110030
                     }
                 }).then(response => {
                     this.arrayClase = response.data;

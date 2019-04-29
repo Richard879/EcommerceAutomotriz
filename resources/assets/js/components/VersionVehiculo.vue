@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">SubClase</label>
+                                                    <label class="col-sm-4 form-control-label">Carroceria</label>
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
@@ -183,6 +183,11 @@
                                                             <template v-if="vehiculo.cVersionVehEstado=='A'">
                                                                 <el-tooltip class="item" :content="'Desactivar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                     <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                </el-tooltip>
+                                                            </template>
+                                                            <template v-if="vehiculo.cVersionVehEstado=='A'">
+                                                                <el-tooltip class="item" :content="'Plantilla ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
+                                                                    <i @click="abrirModal('plantilla', 'abrir', vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-cogs"></i>
                                                                 </el-tooltip>
                                                             </template>
                                                             <template v-else>
@@ -509,7 +514,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
@@ -850,14 +854,14 @@
 
                 var url = this.ruta + '/versionvehiculo/SetVersion';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdProveedor: parseInt(this.formVersion.nidproveedor),
-                    nIdClase: parseInt(this.formVersion.nidclase),
-                    nIdSubClase: parseInt(this.formVersion.nidsubclase),
-                    nIdLinea: parseInt(this.formVersion.nidlinea),
-                    nIdMarca: parseInt(this.formVersion.nidmarca),
-                    nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
+                    nIdEmpresa      :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdProveedor    :   parseInt(this.formVersion.nidproveedor),
+                    nIdClase        :   parseInt(this.formVersion.nidclase),
+                    nIdSubClase     :   parseInt(this.formVersion.nidsubclase),
+                    nIdLinea        :   parseInt(this.formVersion.nidlinea),
+                    nIdMarca        :   parseInt(this.formVersion.nidmarca),
+                    nIdModelo       :   parseInt(this.formVersion.nidmodelo),
+                    cNombreComercial:   this.formVersion.cnombrecomercial.toUpperCase().toString()
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -891,12 +895,12 @@
                 if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formVersion.nidclase == 0 || !this.formVersion.nidclase){
-                    this.mensajeError.push('Debes Ingresar una Clase');
-                };
-                if(this.formVersion.nidsubclase == 0 || !this.formVersion.nidsubclase){
-                    this.mensajeError.push('Debes Ingresar una Sub clase');
-                };
+                // if(this.formVersion.nidclase == 0 || !this.formVersion.nidclase){
+                //     this.mensajeError.push('Debes Ingresar una Clase');
+                // };
+                // if(this.formVersion.nidsubclase == 0 || !this.formVersion.nidsubclase){
+                //     this.mensajeError.push('Debes Ingresar una Sub clase');
+                // };
                 if(this.formVersion.nidlinea == 0 || !this.formVersion.nidlinea){
                     this.mensajeError.push('Debes Ingresar una Línea');
                 };
@@ -1043,6 +1047,18 @@
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'plantilla':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
                                 break;
                             }
                         }

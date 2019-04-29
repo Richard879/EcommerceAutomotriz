@@ -33,21 +33,21 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     = $request->nidempresa;
-        $nIdProveedor   = $request->nidproveedor;
-        $nIdClase       = $request->nidclase;
-        $nIdSubClase    = $request->nidsubclase;
-        $nIdLinea       = $request->nidlinea;
-        $nIdMarca       = $request->nidmarca;
-        $nIdModelo      = $request->nidmodelo;
-        $cNombreComercial = $request->cnombrecomercial;
-        
-        $nIdClase = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;
-        $nIdSubClase = ($nIdSubClase == NULL) ? ($nIdSubClase = 0) : $nIdSubClase;
-        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdProveedor       = $request->nidproveedor;
+        $nIdClase           = $request->nidclase;
+        $nIdSubClase        = $request->nidsubclase;
+        $nIdLinea           = $request->nidlinea;
+        $nIdMarca           = $request->nidmarca;
+        $nIdModelo          = $request->nidmodelo;
+        $cNombreComercial   = $request->cnombrecomercial;
+
+        $nIdClase           = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;
+        $nIdSubClase        = ($nIdSubClase == NULL) ? ($nIdSubClase = 0) : $nIdSubClase;
+        $nIdLinea           = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNombreComercial   = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
 
         $arrayVersionVeh = DB::select('exec [usp_VersionVeh_GetVersionVehiculo] ?, ?, ?, ? ,? ,?, ?, ?',
                                                                             [   $nIdEmpresa,
@@ -145,7 +145,7 @@ class VersionVehiculoController extends Controller
         $nIdLinea   = $request->nidlinea;
         $nIdModelo  = $request->nidmodelo;
         $variable   = $request->opcion;
-        
+
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
