@@ -636,7 +636,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <hr/>
+                                                                                    <br/>
                                                                                     <template v-if="arrayVehiculo.length">
                                                                                         <div class="table-responsive">
                                                                                             <table class="table table-striped table-sm">
@@ -662,7 +662,7 @@
                                                                                                                 <i @click="removerVehiculoLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                                             </el-tooltip>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
+                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioModelo"></td>
                                                                                                         <td v-html="vehiculo.cantidad"></td>
                                                                                                         <td>US$ {{ vehiculo.PrecioBase }} </td>
                                                                                                         <td>
