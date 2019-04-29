@@ -15033,6 +15033,7 @@ a>code {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
     color: #fff;
+    cursor: pointer;
     background-color: #3b5998;
 }
 
