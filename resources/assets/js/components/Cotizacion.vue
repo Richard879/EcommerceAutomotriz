@@ -3371,8 +3371,10 @@
                 var url = this.ruta + '/gescotizacion/GetTipoLista';
                 axios.get(url, {
                     params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'nidtipolista' : this.fillBusqVehiculo.nidtipolista
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'  : this.fillProveedor.nidproveedor,
+                        'nidtipolista'  : this.fillBusqVehiculo.nidtipolista
                     }
                 }).then(response => {
                     var varnro = (response.data[0].NRO) == null ? '' : response.data[0].NRO + ' - ';

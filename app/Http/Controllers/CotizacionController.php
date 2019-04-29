@@ -17,12 +17,16 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor = $request->nidproveedor;
-        $tipoLista = $request->nidtipolista;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdTipoLista   = $request->nidtipolista;
 
-        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?',
-                                                        [   $nidproveedor,
-                                                            $tipoLista
+        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdSucursal,
+                                                            $nIdProveedor,
+                                                            $nIdTipoLista
                                                         ]);
 
         return response()->json($arrayTipoLista);
