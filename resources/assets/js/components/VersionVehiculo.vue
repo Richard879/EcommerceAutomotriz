@@ -344,7 +344,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                             <el-option
                                                                 v-for="item in arrayModelo"
                                                                 :key="item.nIdModelo"
@@ -697,9 +697,11 @@
                 }).then(response => {
                     this.arrayMarca = response.data.arrayMarca;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmarca = '';
+                        this.arrayVersionVehiculo=[];
                     }
+                    this.formVersion.nidmarca = '';
                     this.arrayModelo = [];
+                    this.formVersion.nidmodelo = '';
                     //this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
@@ -723,8 +725,9 @@
                 }).then(response => {
                     this.arrayModelo = response.data.arrayModelo;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmodelo = '';
+                        this.arrayVersionVehiculo=[];
                     }
+                    this.formVersion.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -805,24 +808,24 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor' : this.formVersion.nidproveedor,
-                        'nidclase' : this.formVersion.nidclase,
-                        'nidsubclase' : this.formVersion.nidsubclase,
-                        'nidlinea' : this.formVersion.nidlinea,
-                        'nidmarca' : this.formVersion.nidmarca,
-                        'nidmodelo' : this.formVersion.nidmodelo,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidproveedor'  : this.formVersion.nidproveedor,
+                        'nidclase'      : this.formVersion.nidclase,
+                        'nidsubclase'   : this.formVersion.nidsubclase,
+                        'nidlinea'      : this.formVersion.nidlinea,
+                        'nidmarca'      : this.formVersion.nidmarca,
+                        'nidmodelo'     : this.formVersion.nidmodelo,
                         'cnombrecomercial' : this.formVersion.cnombrecomercial.toString(),
-                        'page' : page
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.pagination.total = response.data.arrayVersionVehiculo.total;
+                    this.arrayVersionVehiculo   = response.data.arrayVersionVehiculo.data;
+                    this.pagination.current_page= response.data.arrayVersionVehiculo.current_page;
+                    this.pagination.total       = response.data.arrayVersionVehiculo.total;
                     this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
                     this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
                     this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to           = response.data.arrayVersionVehiculo.to;
+                    this.pagination.to          = response.data.arrayVersionVehiculo.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -860,8 +863,9 @@
                     {
                         swal('Versión Vehículo registrado');
                         this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
-                        this.vistaFormulario = 1;
+                        this.arrayVersionVehiculo= [];
+                        //this.listarVersionVehiculo(1);
+                        //this.vistaFormulario = 1;
                     }
                     else{
                         swal('Ya existe Vehiculo');
@@ -934,8 +938,8 @@
                     {
                         swal('Versión Vehículo Actualizado');
                         this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
-                        this.vistaFormulario = 1;
+                        //this.listarVersionVehiculo(1);
+                        //this.vistaFormulario = 1;
                     }
                     else{
                         swal('Ya existe Vehiculo');
@@ -1098,15 +1102,12 @@
                 }
             },
             limpiarFormulario(){
-                //this.formVersion.nidproveedor= 0,
-                //this.formVersion.cproveedornombre= '',
-                this.formVersion.nidclase=  '',
+                /*this.formVersion.nidclase=  '',
                 this.formVersion.nidsubclase= '',
                 this.formVersion.nidlinea= '',
                 this.formVersion.nidmarca= '',
-                this.formVersion.nidmodelo= '',
+                this.formVersion.nidmodelo= '',*/
                 this.formVersion.cnombrecomercial= ''
-                //this.arrayVersionVehiculo = []
             },
             mostrarProgressBar(){
                 $("#myBar").show();
