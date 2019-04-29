@@ -488,7 +488,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
+                                                                                <tr v-for="(lista, index) in arrayExcel" :key="lista.nIdVersionVeh">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
@@ -1438,11 +1438,11 @@
                     nameFile: nameFile
                 }).then(response => {
 
-                    if(this.validaCamposExcel(response.data)){
+                    /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
-                    }
+                    }*/
 
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
@@ -1538,6 +1538,7 @@
                         swal('Detalle de Lista registrada');
                         me.attachment = [];
                         me.limpiarFormulario();
+                        me.arrayListaPrecioVh=[];
                     }
                 }).catch(error => {
                     console.log(error);

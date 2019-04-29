@@ -84,31 +84,33 @@ class ExcelController extends Controller
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
+        $cont = 0;
         $data = [];
         foreach ($sheetData as $key => $value) {
-            if($value[1]!='' || $value[1]!=null){
+            if($value[0]!='' || $value[0]!=null){
                 //$value[15] = ($value[15] == NULL) ? ($value[15]= 0) : $value[15];
                 $data[$key+1] =[
-                    'nIdVersionVeh'   => $value[0],
-                    'cNombreComercial' => $value[1],
-                    'nAnioFabricacion' => $value[2],
-                    'nAnioModelo' => $value[3],
-                    'cUnidadMedida' => $value[4],
-                    'cMoneda' => $value[5],
-                    'fPrecioBase' => $value[6],
-                    'fDescuento' => $value[7],
-                    'fPrecioCierre' => $value[8],
-                    'fPlaca' => $value[9],
-                    'fMargen' => $value[10],
-                    'fCostoDealer' => $value[11],
-                    'fBono' => $value[12],
-                    'fPrecioCierre2' => $value[13],
-                    'fFlete' => $value[14],
-                    'fTYP' => $value[15],
-                    'fPrecioVentaP' => $value[16],
-                    'fPrecioBonoDealer' => $value[17],
-                    'fBonoEspecial' => $value[18]
+                    'nIdVersionVeh'     => $cont,
+                    'cNombreComercial'  => $value[0],
+                    'nAnioFabricacion'  => $value[1],
+                    'nAnioModelo'       => $value[2],
+                    'cUnidadMedida'     => $value[3],
+                    'cMoneda'           => $value[4],
+                    'fPrecioBase'       => $value[5],
+                    'fDescuento'        => $value[6],
+                    'fPrecioCierre'     => $value[7],
+                    'fPlaca'            => $value[8],
+                    'fMargen'           => $value[9],
+                    'fCostoDealer'      => $value[10],
+                    'fBono'             => $value[11],
+                    'fPrecioCierre2'    => $value[12],
+                    'fFlete'            => $value[13],
+                    'fTYP'              => $value[14],
+                    'fPrecioVentaP'     => $value[15],
+                    'fPrecioBonoDealer' => $value[16],
+                    'fBonoEspecial'     => $value[17]
                 ];
+                $cont++;
             }
         }
 
