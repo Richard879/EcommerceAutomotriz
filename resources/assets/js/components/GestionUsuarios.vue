@@ -848,8 +848,10 @@
                 if(!this.fillUsuario.cusuario) {
                     me.mensajeError.push('Debe Ingresar un Usuario, es un campo obligatorio ');
                 }
-                if(!this.fillUsuario.cpassword) {
-                    me.mensajeError.push('Debe Ingresar una Contraseña, es un campo obligatorio ');
+                if (this.flagRegistrarEditar == 1) {
+                    if(!this.fillUsuario.cpassword) {
+                        me.mensajeError.push('Debe Ingresar una Contraseña, es un campo obligatorio ');
+                    }
                 }
                 if(!this.fillUsuario.nrol && !this.fillUsuario.cnombrerol) {
                     me.mensajeError.push('Debe seleccionar un Rol, es un campo obligatorio ');

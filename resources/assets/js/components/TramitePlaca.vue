@@ -55,7 +55,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <!--<div class="col-md-6">
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">*Estado</label>
                                                                             <div class="col-md-8 widthFull">
@@ -73,7 +73,7 @@
                                                                                 </el-select>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
@@ -510,6 +510,17 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">VIN</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input  type="text"
+                                                                                                    v-model="fillBusquedaSolTramite.cnumvin"
+                                                                                                    @keyup.enter="buscarMisTramites(1)"
+                                                                                                    class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                                 <div class="col-md-6">
                                                                                     <div class="row">
                                                                                         <label class="col-md-4 form-control-label">*Estado Tramite</label>
@@ -1244,6 +1255,7 @@
                 fillBusquedaSolTramite: {
                     fechaInicioTramite: '',
                     fechaFinRealTramite: '',
+                    cnumvin: '',
                     nidestadotramite: ''
                 },
                 arraySolicitudesTramites: [],
@@ -1439,7 +1451,8 @@
                 var url = this.ruta + '/tramite/GetPedidosCanceladosByEstadoTramite';
                 axios.get(url, {
                     params: {
-                        'nIdEstadoTramite'  :   (this.fillBusquedaPedidos.nidestadotramite == '') ? '0' : this.fillBusquedaPedidos.nidestadotramite,
+                        // 'nIdEstadoTramite'  :   (this.fillBusquedaPedidos.nidestadotramite == '') ? '0' : this.fillBusquedaPedidos.nidestadotramite,
+                        'nIdEstadoTramite'  :   '0',
                         'cnumvin'           :   this.fillBusquedaPedidos.cnumvin,
                         'page'              :   page
                     }
@@ -1838,6 +1851,7 @@
                 axios.get(url, {
                     params: {
                         'nIdEstadoTramite'      :   (this.fillBusquedaSolTramite.nidestadotramite == '') ? '0' : this.fillBusquedaSolTramite.nidestadotramite,
+                        'cnumvin'               :   this.fillBusquedaSolTramite.cnumvin,
                         'fechaInicioTramite'    :   this.fillBusquedaSolTramite.fechaInicioTramite,
                         'fechaFinRealTramite'   :   this.fillBusquedaSolTramite.fechaFinRealTramite,
                         'page' : page
