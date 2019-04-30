@@ -723,22 +723,6 @@
                 if(this.arrayExcel == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.formCompra.nidproveedor == 0){
-                    this.mensajeError.push('Debes seleccionar un Proveedor');
-                };
-                if(this.formCompra.nidtipolista == 0 || !this.formCompra.nidtipolista){
-                    this.mensajeError.push('Debes seleccionar un Tipo Lista');
-                };
-                if(this.formCompra.nidlistaprecio == 0){
-                    this.mensajeError.push('Debes seleccionar una Lista');
-                };
-                if(this.formCompra.ccarcode == '' || !this.formCompra.ccarcode)
-                {
-                    this.mensajeError.push('El Proveedor no tiene codigo Sap');
-                };
-                if(this.nidcronograma == 0){
-                    this.mensajeError.push('No existe Periodo Compra Activo');
-                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
