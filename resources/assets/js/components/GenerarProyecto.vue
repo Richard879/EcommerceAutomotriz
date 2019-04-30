@@ -246,7 +246,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.cNumeroVin">
+                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nIdProyecto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Eliminar Compra  {{ compra.cNumeroVin }}</div>
@@ -371,7 +371,7 @@
                 arrayTempVinNombreComercial: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
-                arraySapArticulo: [],
+                arraySapVin: [],
                 arraySapItemCode: [],
                 arraySapRespuesta: [],
                 jsonRespuesta: '',
@@ -555,7 +555,7 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/SetCompra';
+                var url = this.ruta + '/compra/SetProyecto';
                 axios.post(url, {
                     'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'data'            : this.arrayExcel
@@ -563,17 +563,9 @@
                     let me = this;
 
                     me.arrayTempVinExiste = [];
-                    me.arrayTempVinListaPrecio = [];
-                    me.arrayTempVinNombreComercial = [];
-
                     me.arrayCompraExisteVin = [];
-                    me.arrayCompraPrecioLista = [];
-                    me.arrayCompraNombreComercial = [];
-
-                    //ARRAY PARA DEPURAR
                     me.arrayVinDepura = [];
 
-                    //Si el VIN existe
                     if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
@@ -585,20 +577,13 @@
                         });
                     }
 
-                    //==============================================================
-                    //================== REGITRO DE ARTICULO EN SAP ===============
-                    //Depurar Array para registrar en SAP
                     me.arrayExcel.map(function(x, y){
-                        //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
-                            // console.log("VIN depurados: " + x.cNumeroVin);
-                            me.arraySapArticulo.push(x);
+                            me.arraySapVin.push(x);
                         }
                     });
 
-                    // console.log("N° articulos a registrar" + me.arraySapArticulo.length);
-                    //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
-                    if(me.arraySapArticulo.length){
+                    if(me.arraySapVin.length){
                         me.registroSapBusinessProyecto();
                     }
                     else{
@@ -618,9 +603,7 @@
             registroSapBusinessProyecto(){
                 let me = this;
                 //Depurar Array para registrar en SAP
-                me.arraySapArticulo.map(function(x, y){
-                    //Si el VIN del arraySapArticulo se encuentra en arraySapItemCode => guardar en Proyecto
-                    //Sino se encuentra no pase a Proyecto
+                me.arraySapVin.map(function(x, y){
                     if (me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapProyecto.push({
                             'cCode': x.cNumeroVin,
@@ -656,7 +639,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 1000);
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -772,7 +755,7 @@
 
                     me.arraySapProyecto.push({
                         'cCode': objCompra.cNumeroVin,
-                        'cName': objCompra.cName
+                        'cName': objCompra.cNumeroVin
                     });
 
                     var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
@@ -863,7 +846,7 @@
 
                 //========= VARIABLES SAP =============
                 //Limpiar variables Sap Articulo
-                this.arraySapArticulo= [],
+                this.arraySapVin= [],
                 this.arraySapItemCode= [],
                 this.arraySapRespuesta= [],
                 this.jsonRespuesta= '',

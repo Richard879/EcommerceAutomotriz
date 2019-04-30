@@ -256,12 +256,15 @@ class ExcelController extends Controller
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
+        $cont = 0;
         $data = [];
         foreach ($sheetData as $key => $value) {
             if($value[0]!='' || $value[0]!=null){
                 $data[$key+1] =[
-                    'cNumeroVin' => $value[0]
+                    'nIdProyecto'   => $cont,
+                    'cNumeroVin'    => $value[0]
                 ];
+                $cont++;
             }
         }
 
