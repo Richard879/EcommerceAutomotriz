@@ -183,7 +183,7 @@ class VersionVehiculoController extends Controller
 
     public function SetPlantillaVersionVeh(Request $request)
     {
-        $versionvehiculo = DB::select('exec [usp_VersionVeh_SetPlantillaVersionVeh] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $versionvehiculo = DB::select('exec [usp_VersionVeh_SetPlantillaVersionVeh] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [
                                                                     $request->nidversionveh,
                                                                     $request->nidclase,
@@ -194,6 +194,7 @@ class VersionVehiculoController extends Controller
                                                                     $request->nidcombustible,
                                                                     $request->cnrorueda,
                                                                     $request->cnroeje,
+                                                                    $request->cpotencia,
                                                                     $request->cnrocilindros,
                                                                     $request->cnroasiento,
                                                                     $request->faltura,

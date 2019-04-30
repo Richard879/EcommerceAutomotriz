@@ -1195,9 +1195,7 @@
                 });
             },
             guardarPlantilla(){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                if(this.validarPlantilla()){
                     return;
                 }
 
@@ -1221,7 +1219,8 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Plantilla Versión Vehículo registrado exitosamente');
+                        swal(response.data[0].nFlagMsj);
+                        this.cerrarModal();
                         this.limpiarPlantilla();
                     }
                     else{
@@ -1236,6 +1235,35 @@
                         }
                     }
                 });
+            },
+            validarPlantilla(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formVersion.nidversionveh == 0){
+                    this.mensajeError.push('No ha seleccionado el Vehiculo');
+                }
+                if(!this.formVersion.cnombrecomercial){
+                    this.mensajeError.push('No ha seleccionado el Vehiculo');
+                };
+                if(this.formVersion.nidclase == 0 || !this.formVersion.nidclase){
+                    this.mensajeError.push('Debe seleccionar una Carroceria');
+                };
+                if(this.formVersion.nidtranccion == 0 || !this.formVersion.nidtranccion){
+                    this.mensajeError.push('Debe seleccionar una Traccion');
+                };
+                if(this.formVersion.nidcategoria == 0 || !this.formVersion.nidcategoria){
+                    this.mensajeError.push('Debe seleccionar una Categoria');
+                };
+                if(this.formVersion.nidcilindrada == 0 || !this.formVersion.nidcilindrada){
+                    this.mensajeError.push('Debe seleccionar una Cilindrada');
+                };
+                if(this.formVersion.nidtransmision == 0 || !this.formVersion.nidtransmision){
+                    this.mensajeError.push('Debe seleccionar una Transmision');
+                };
+                if(this.formVersion.nidcombustible == 0 || !this.formVersion.nidcombustible){
+                    this.mensajeError.push('Debe seleccionar una Combustible');
+                };
             },
             limpiarPlantilla(){
                 this.fillNuevoVehiculo.nidversionveh    = '';
