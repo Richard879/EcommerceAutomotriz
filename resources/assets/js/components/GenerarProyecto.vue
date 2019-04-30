@@ -118,7 +118,7 @@
                                                                                     <template v-if="proyecto.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">{{ proyecto.cFlagVistaIntegracion + ' ' + proyecto.cNumeroVin }}</div>
-                                                                                            <i @click="validarSapArticulo(proyecto)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            <i @click="validarAddonProyecto(proyecto)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -641,7 +641,7 @@
 
                     if(me.arraySapVin.length){
                         setTimeout(function() {
-                            me.registroSapBusinessProyecto();
+                            me.registroSapBusinessProyectoAddon();
                         }, 1200);
                     }
                     else{
@@ -658,7 +658,7 @@
                     }
                 });
             },
-            registroSapBusinessProyecto(){
+            registroSapBusinessProyectoAddon(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO PROYECTO CON SAP BUSINESS ONE...");
                 
@@ -703,7 +703,7 @@
                     }
                 });
             },
-            registroSgcProyecto(){
+            registroSgcProyectoAddon(){
                 let me = this;
                 
                 var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
@@ -767,23 +767,23 @@
             },
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
-            validarSapArticulo(objCompra){
+            validarAddonProyecto(objCompra){
                 this.mostrarProgressBar();
 
                 let me = this;
 
                 me.arraySapCompra.push({
-                    'cNumeroVin'        : objCompra.cNumeroVin
+                    'cNumeroVin'  : objCompra.cNumeroVin
                 });
 
-                //Verifico Si existe Artículo
-                if(!objCompra.cNumeroVin){
+                //Verifico Si existe Proyecto
+                if(!objCompra.cCode){
                     //==============================================================
                     //================== REGISTRO ARTICULO EN SAP ===============
-                    me.generarSapProyecto(objCompra);
+                    me.generarSapProyectoAddon(objCompra);
                 }
             },
-            generarSapProyecto(objCompra){
+            generarSapProyectoAddon(objCompra){
                 let me = this;
                 //Verifico Si NO existe Proyecto De EXCEL
                 if(!objCompra.cCode){
@@ -818,7 +818,7 @@
                                 //==============================================================
                                 //================== ACTUALIZO TABLA PROYECTO SGC ===============
                                 setTimeout(function() {
-                                    me.generaActualizaProyecto(objCompra);
+                                    me.generaActualizaProyectoAddon(objCompra);
                                 }, 1200);
                             }
                         });
@@ -834,16 +834,12 @@
                     });
                 }
                 else{
-                    //==============================================================
-                    //================== REGISTRO TARJETA EQUIPO ===============
-                    setTimeout(function() {
-                        me.generarSapTarjetaEquipo(objCompra);
-                    }, 800);
+                    me.confirmaProyecto(objCompra);
                 }
             },
-            generaActualizaProyecto(objCompra){
+            generaActualizaProyectoAddon(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/proyecto/SetIntegraProyecto';
+                var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
