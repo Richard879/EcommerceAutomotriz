@@ -17,22 +17,22 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $dFechaInicio = $request->dfechainicio;
-        $dFechaFin = $request->dfechafin;
-        $nOrdenCompra = $request->nordencompra;
-        $cNumeroVin = $request->cnumerovin;
-        $nIdMarca   = $request->nidmarca;
-        $nIdModelo  = $request->nidmodelo;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $dFechaInicio   = $request->dfechainicio;
+        $dFechaFin      = $request->dfechafin;
+        $nOrdenCompra   = $request->nordencompra;
+        $cNumeroVin     = $request->cnumerovin;
+        $nIdMarca       = $request->nidmarca;
+        $nIdModelo      = $request->nidmodelo;
+        $variable       = $request->opcion;
 
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-
-
+        $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroVin     = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
@@ -44,8 +44,9 @@ class CompraController extends Controller
                                                                 $nIdMarca,
                                                                 $nIdModelo
                                                             ]);
-
-        $arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
+        if($variable == "0"){
+            //$arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
+        }
         return ['arrayCompra'=>$arrayCompra];
     }
 
