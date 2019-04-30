@@ -623,7 +623,7 @@
                                                                                 <el-select  v-model="formListaPrecioVh.nidmarca"
                                                                                             filterable
                                                                                             clearable
-                                                                                            placeholder="SELECCIONE MARCa"
+                                                                                            placeholder="SELECCIONE MARCA"
                                                                                             @change="llenarComboModelo">
                                                                                     <el-option
                                                                                         v-for="item in arrayMarca"
@@ -1589,6 +1589,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
+                    this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
