@@ -321,4 +321,18 @@ class MaestroVehiculoController extends Controller
                                                 ]);
         return response()->json($arrayPropietario);
     }
+
+    public function GetDataPlantilla(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCompra  =   $request->nIdCompra;
+
+        $arrayVehiculo = DB::select('exec usp_VersionVeh_GetVehiculoVerPlantilla ?',
+                                                                        [
+                                                                            $nIdCompra
+                                                                        ]);
+
+        return response()->json($arrayVehiculo);
+    }
 }

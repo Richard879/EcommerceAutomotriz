@@ -335,6 +335,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/maestrovehiculo/SetRegistrarSoat', 'MaestroVehiculoController@SetRegistrarSoat');
     Route::post('/maestrovehiculo/SetRegistrarPropietario', 'MaestroVehiculoController@SetRegistrarPropietario');
     Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
+    Route::get('/maestrovehiculo/GetDataPlantilla', 'MaestroVehiculoController@GetDataPlantilla');
 
     Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
     Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');

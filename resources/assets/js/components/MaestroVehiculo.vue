@@ -2893,6 +2893,7 @@
                 this.fillNuevoVehiculo.fpesobruto           =   data['fPesoBruto'];
                 this.fillNuevoVehiculo.fpesoseco            =   data['fPesoSeco'];
                 this.fillNuevoVehiculo.faltura              =   data['fAltura'];
+                this.fillNuevoVehiculo.fancho               =   data['fAncho'];
                 this.fillNuevoVehiculo.flongitud            =   data['fLongitud'];
                 this.fillNuevoVehiculo.fcargautil           =   data['fCargaUtil'];
                 this.fillNuevoVehiculo.cnacionesunidas      =   data['cCodigoNaciones'];
@@ -2964,13 +2965,54 @@
                         nidestado           : this.fillSOAT.nidestado
                     });
                 }
+
+                this.cargarDataPlantilla(data.nIdCompra);
             },
             setearTipoDocumento(data){
                 let me = this;
                 this.$nextTick().then(function () {
-                    console.log(me.arrayTipoDocumento[1]);
+                    // console.log(me.arrayTipoDocumento[1]);
                     me.fillPropietario.ntpodocumento = me.arrayTipoDocumento[1].nIdPar;//asigno el tipo de documento RUC
                 })
+            },
+            cargarDataPlantilla(nIdCompra){
+                var url = this.ruta + '/maestrovehiculo/GetDataPlantilla';
+                axios.get(url, {
+                    params: {
+                        'nIdCompra' : nIdCompra
+                    }
+                }).then(response => {
+                    // console.log(response.data[0])
+                    // console.log(response.data[0].nIdCarroceria)
+                    // console.log(response.data[0]['nIdCarroceria'])
+
+                    if (response.data.length > 0) {
+                        //CAPTURAR DATOS DEL VEHICULO
+                        this.fillNuevoVehiculo.nidclase             =   (response.data[0]['nIdCarroceria'] == 0) ? '' : response.data[0]['nIdCarroceria'];
+                        this.fillNuevoVehiculo.nidtranccion         =   (response.data[0]['nIdTraccion'] == 0) ? '' : response.data[0]['nIdTraccion'];
+                        this.fillNuevoVehiculo.nidcategoria         =   (response.data[0]['nIdCategoria'] == 0) ? '' : response.data[0]['nIdCategoria'];
+                        this.fillNuevoVehiculo.nidcilindrada        =   (response.data[0]['nIdCilindrada'] == 0) ? '' : response.data[0]['nIdCilindrada'];
+                        this.fillNuevoVehiculo.nidtransmision       =   (response.data[0]['nIdTransmision'] == 0) ? '' : response.data[0]['nIdTransmision'];
+                        this.fillNuevoVehiculo.nidcombustible       =   (response.data[0]['nIdCombustible'] == 0) ? '' : response.data[0]['nIdCombustible'];
+                        this.fillNuevoVehiculo.cnrorueda            =   (response.data[0]['nNroRuedas'] == 0) ? '' : response.data[0]['nNroRuedas'];
+                        this.fillNuevoVehiculo.cnroeje              =   (response.data[0]['nNroEjes'] == 0) ? '' : response.data[0]['nNroEjes'];
+                        this.fillNuevoVehiculo.cpotencia            =   (response.data[0]['nNroPotencia'] == 0) ? '' : response.data[0]['nNroPotencia'];
+                        this.fillNuevoVehiculo.cnrocilindros        =   (response.data[0]['nNroCilindros'] == 0) ? '' : response.data[0]['nNroCilindros'];
+                        this.fillNuevoVehiculo.cnroasiento          =   (response.data[0]['nNroAsientos'] == 0) ? '' : response.data[0]['nNroAsientos'];
+                        this.fillNuevoVehiculo.faltura              =   response.data[0]['fAltura'];
+                        this.fillNuevoVehiculo.flongitud            =   response.data[0]['fLongitud'];
+                        this.fillNuevoVehiculo.facncho              =   response.data[0]['fAncho'];
+                    }
+
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // ======================
             // MODAL BUSCAR CONTACTOS
