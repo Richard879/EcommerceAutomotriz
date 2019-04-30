@@ -406,6 +406,7 @@
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
                 arraySapProyecto: [],
+                arraySapProyectoAddon: [],
                 // ============================================================
                 page: 1,
                 perPage: 10,
@@ -772,10 +773,6 @@
 
                 let me = this;
 
-                me.arraySapCompra.push({
-                    'cNumeroVin'  : objCompra.cNumeroVin
-                });
-
                 //Verifico Si existe Proyecto
                 if(!objCompra.cCode){
                     //==============================================================
@@ -888,7 +885,7 @@
                 this.arraySapProyecto= [],
                 this.arraySapTarjetaEquipo= [],
                 this.arraySapLlamadaServicio= [],
-                this.arraySapCompra= [],
+                this.arraySapProyectoAddon= [],
                 this.arraySapActividad= [],
                 this.arraySapSolucion= [],
                 //Tbls Costo
