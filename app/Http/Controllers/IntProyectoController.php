@@ -33,7 +33,7 @@ class IntProyectoController extends Controller
     }
 
 
-    public function SetProyecto(Request $request)
+    public function SetProyectoAddon(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -65,5 +65,26 @@ class IntProyectoController extends Controller
         }
     }
 
-    
+    public function SetIntegraProyectoAddon(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraProyecto] ?, ?, ?, ?',
+                                                            [   $det['cCode'],
+                                                                $det['cName'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objProyecto);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

@@ -322,6 +322,43 @@
                 </div>
             </div>
 
+            <!-- MODAL RESPUESTAS DE GENERAR PROYECTO-->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div v-if="arrayCompraExisteVin.length" class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="compra in arrayCompraExisteVin" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -555,7 +592,7 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/SetProyecto';
+                var url = this.ruta + '/proyecto/SetProyectoAddon';
                 axios.post(url, {
                     'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'data'            : this.arrayExcel
@@ -584,7 +621,9 @@
                     });
 
                     if(me.arraySapVin.length){
-                        me.registroSapBusinessProyecto();
+                        setTimeout(function() {
+                            me.registroSapBusinessProyecto();
+                        }, 1200);
                     }
                     else{
                         me.loadingProgressBar("OCURRIO UN PROBLEMA...");
@@ -602,14 +641,11 @@
             },
             registroSapBusinessProyecto(){
                 let me = this;
-                //Depurar Array para registrar en SAP
                 me.arraySapVin.map(function(x, y){
-                    if (me.arraySapItemCode.includes(x.cNumeroVin)) {
-                        me.arraySapProyecto.push({
-                            'cCode': x.cNumeroVin,
-                            'cName': x.cNumeroVin
-                        });
-                    }
+                    me.arraySapProyecto.push({
+                        'cCode': x.cNumeroVin,
+                        'cName': x.cNumeroVin
+                    });
                 });
 
                 var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
@@ -652,15 +688,15 @@
             },
             registroSgcProyecto(){
                 let me = this;
-                var sapUrl = me.ruta + '/proyecto/SetIntegraProyecto';
+                var sapUrl = me.ruta + '/proyecto/SetIntegraProyectoAddon';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
                     //===================================================================
                     //================== REGITRO DE TARJETA EQUIPO EN SAP ===============
                     setTimeout(function() {
-                        me.registroSapBusinessTarjetaEquipo();
-                    }, 1000);
+                        me.verResultados();
+                    }, 1200);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -674,9 +710,9 @@
             verResultados(){
                 let me = this;
                 me.attachment = [];
-                me.confirmaCompra();
+                me.confirmaProyecto();
                 //============= RESULTADO PARA MOSTRAR ================
-                if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                if(me.arrayCompraExisteVin.length){
                     me.accionmodal=3;
                     me.modal = 1;
                     me.attachment = [];
@@ -811,7 +847,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        me.confirmaCompra();
+                        me.confirmaProyecto();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -823,7 +859,7 @@
                     }
                 });
             },
-            confirmaCompra(){
+            confirmaProyecto(){
                 let me = this;
                 $("#myBar").hide();
                 me.loading.close();
