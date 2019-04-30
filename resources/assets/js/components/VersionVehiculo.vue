@@ -221,7 +221,7 @@
                                                     </nav>
                                                 </div>
                                                 <div class="col-sm-5">
-                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                    <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -762,6 +762,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 arrayVersionVehiculo: [],
+                arrayVersionVehiculoRpta: [],
                 arrayClase: [],
                 arraySubClase: [],
                 arrayLinea: [],
@@ -809,6 +810,10 @@
                 arrayCilindrada: [],
                 arrayTransmision: [],
                 arrayCombustible: [],
+                // ============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total' : 0,
                     'current_page' : 0,
@@ -1092,13 +1097,14 @@
                         'page'          : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo   = response.data.arrayVersionVehiculo.data;
-                    this.pagination.current_page= response.data.arrayVersionVehiculo.current_page;
+                    this.arrayVersionVehiculoRpta   = response.data.arrayVersionVehiculo;
+                    this.paginateVersionVehiculo(this.arrayVersionVehiculoRpta, page);
+                    /*this.pagination.current_page= response.data.arrayVersionVehiculo.current_page;
                     this.pagination.total       = response.data.arrayVersionVehiculo.total;
                     this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
                     this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
                     this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to          = response.data.arrayVersionVehiculo.to;
+                    this.pagination.to          = response.data.arrayVersionVehiculo.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1110,9 +1116,18 @@
                     }
                 });
             },
+            paginateVersionVehiculo(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayVersionVehiculo   = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarVersionVehiculo(page);
+                this.paginateVersionVehiculo(this.arrayVersionVehiculoRpta, page);
             },
             llenarComboTraccion(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';

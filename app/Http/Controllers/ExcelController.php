@@ -239,4 +239,37 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+
+    public function importFileProyecto(Request $request)
+    {
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelProyecto', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+    }
+
+    public function readFileProyecto(Request $request)
+    {
+        $nameFile = $request->nameFile;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls = storage_path('app/'.$nameFile);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+        $cont = 0;
+        $data = [];
+        foreach ($sheetData as $key => $value) {
+            if($value[0]!='' || $value[0]!=null){
+                $data[$key+1] =[
+                    'nIdProyecto'   => $cont,
+                    'cNumeroVin'    => $value[0]
+                ];
+                $cont++;
+            }
+        }
+
+        $data = new Collection($data);
+        $data = $data->values()->all();
+        return response()->json($data);
+    }
 }

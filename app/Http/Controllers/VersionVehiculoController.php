@@ -59,7 +59,7 @@ class VersionVehiculoController extends Controller
                                                                                 $cNombreComercial
                                                                             ]);
 
-        $arrayVersionVeh = ParametroController::arrayPaginator($arrayVersionVeh, $request);
+        //$arrayVersionVeh = ParametroController::arrayPaginator($arrayVersionVeh, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVeh];
     }
 

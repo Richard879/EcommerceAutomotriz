@@ -169,4 +169,8 @@
     <template v-if="menu==1300364">
         <reportecotizacion :ruta="ruta"></reportecotizacion>
     </template>
+
+    <template v-if="menu==1300684">
+        <generaproyecto :ruta="ruta"></generaproyecto>
+    </template>
 @endsection

@@ -96,7 +96,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -104,7 +104,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -143,7 +143,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompras(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -1348,6 +1348,7 @@
                     nidmodelo: ''
                 },
                 arrayCompra: [],
+                arrayCompraRpta: [],
                 arrayMarca: [],
                 arrayModelo: [],
                 // ===============================================
@@ -1428,6 +1429,9 @@
                 arrayTCCostoVehiculo: [],
                 arraySapCosto: [],
                 // ============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -1534,9 +1538,6 @@
                 this.fillCompra.dfechafin = '';
                 this.limpiarFormulario();
             },
-            buscarCompras(){
-                this.listarCompras(1);
-            },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -1583,24 +1584,25 @@
                 var url = this.ruta + '/compra/GetCompra';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillCompra.dfechainicio,
-                        'dfechafin': this.fillCompra.dfechafin,
-                        'nordencompra': this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin': this.fillCompra.cnumerovin,
-                        'nidmarca': this.fillCompra.nidmarca,
-                        'nidmodelo': this.fillCompra.nidmodelo,
-                        'page': page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.fillCompra.dfechainicio,
+                        'dfechafin'     : this.fillCompra.dfechafin,
+                        'nordencompra'  : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin'    : this.fillCompra.cnumerovin,
+                        'nidmarca'      : this.fillCompra.nidmarca,
+                        'nidmodelo'     : this.fillCompra.nidmodelo,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
+                    this.arrayCompraRpta = response.data.arrayCompra;
+                    this.paginateCompra(this.arrayCompraRpta, page);
+                    /*this.pagination.current_page =  response.data.arrayCompra.current_page;
                     this.pagination.total = response.data.arrayCompra.total;
                     this.pagination.per_page    = response.data.arrayCompra.per_page;
                     this.pagination.last_page   = response.data.arrayCompra.last_page;
                     this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
+                    this.pagination.to           = response.data.arrayCompra.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1612,9 +1614,18 @@
                     }
                 });
             },
+            paginateCompra(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayCompra            = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarCompras(page);
+                this.paginateCompra(this.arrayCompraRpta, page);
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
@@ -2013,7 +2024,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION ARTICULO SGC ===============
                     setTimeout(function() {
                         me.registroSgcArticulo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2034,7 +2045,7 @@
                     //================== REGITRO DE PROYECTO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessProyecto();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2106,7 +2117,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 1000);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
