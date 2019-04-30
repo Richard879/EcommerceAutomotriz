@@ -257,6 +257,13 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidclase = $carroceria[0]->cParNombre;//Setear por el Nombre
 
+        //=================== OBTENER EL NOMBRE DE LA CATEGORIA ===================
+        $categoria = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                [
+                                                                    $nidcategoria
+                                                                ]);
+        $nidcategoria = $categoria[0]->cParNombre;//Setear por el Nombre
+
         $json = [
             'json' => [
                 "ItemCode"          =>  (string)$cnroserie,
@@ -271,15 +278,16 @@ class SapArticuloController extends Controller
                 'U_SYP_NROPASAJERO' =>  (string)$cnropasajeros,//Nro Pasajeros
                 'U_SYP_NROASIENTO'  =>  (string)$cnroasiento,//Nro Asiento
                 'U_SYP_NRORUEDA'    =>  (string)$cnrorueda,//Nro Rueda
-                // 'U_SYP_CCARROCERIA' =>  (string)$nidclase,//Carroceria
-                // 'U_SYP_NEJE'        =>  (string)$cnroeje,//Nro Eje
-                // 'U_SYP_NPOTENCIA'   =>  (string)$cpotencia,//Nro Potencia
                 'U_SYP_PBRUTO'      =>  (string)$cpesobruto,//Nro Rueda
                 'U_SYP_PSECO'       =>  (string)$cpesoseco,//Nro Rueda
                 'U_SYP_ALTURA'      =>  (string)$caltura,//Nro Rueda
                 'U_SYP_LONGITUD'    =>  (string)$clongitud,//Nro Rueda
                 'U_SYP_ANCHO'       =>  (string)$cancho,//Nro Rueda
-                'U_SYP_CUTIL'       =>  (string)$ccargautil
+                'U_SYP_CUTIL'       =>  (string)$ccargautil,//Carga Util
+                'U_SYP_CARR'        =>  (string)$nidclase,//Carroceria
+                'U_SYP_PTNC'        =>  (string)$cpotencia,//Nro Potencia
+                'U_SYP_NEJE'        =>  (string)$cnroeje,//Nro Eje
+                'U_SYP_CATE'        =>  (string)$nidcategoria,//Categoria
             ]
         ];
 

@@ -1099,12 +1099,12 @@
                 }).then(response => {
                     this.arrayVersionVehiculoRpta   = response.data.arrayVersionVehiculo;
                     this.paginateVersionVehiculo(this.arrayVersionVehiculoRpta, page);
-                    /*this.pagination.current_page= response.data.arrayVersionVehiculo.current_page;
-                    this.pagination.total       = response.data.arrayVersionVehiculo.total;
-                    this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to          = response.data.arrayVersionVehiculo.to;*/
+                    // this.pagination.current_page =   response.data.arrayVersionVehiculo.current_page;
+                    // this.pagination.total        =   response.data.arrayVersionVehiculo.total;
+                    // this.pagination.per_page     =   response.data.arrayVersionVehiculo.per_page;
+                    // this.pagination.last_page    =   response.data.arrayVersionVehiculo.last_page;
+                    // this.pagination.from         =   response.data.arrayVersionVehiculo.from;
+                    // this.pagination.to           =   response.data.arrayVersionVehiculo.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1117,18 +1117,21 @@
                 });
             },
             paginateVersionVehiculo(data, page){
-                this.pagination.current_page= page;
-                this.pagination.total       = data.length;
-                this.pagination.per_page    = this.perPage;
-                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayVersionVehiculo   = data.slice(this.pagination.from, this.pagination.to);
+                this.pagination.current_page    =   page;
+                this.pagination.total           =   data.length;
+                this.pagination.per_page        =   this.perPage;
+                this.pagination.last_page       =   Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            =   (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to              =   (this.pagination.current_page * this.pagination.per_page);
+                this.arrayVersionVehiculo       =   data.slice(this.pagination.from, this.pagination.to);
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.paginateVersionVehiculo(this.arrayVersionVehiculoRpta, page);
             },
+            // ================================
+            // METODOS PLANTILLA VERSION
+            // ================================
             llenarComboTraccion(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -1634,7 +1637,7 @@
                 if(this.accion == 1){
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
-                }else{
+                } else {
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
