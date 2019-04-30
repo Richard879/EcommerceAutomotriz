@@ -816,7 +816,7 @@
                                 //================== ACTUALIZO TABLA PROYECTO SGC ===============
                                 setTimeout(function() {
                                     me.generaActualizaProyectoAddon(objCompra);
-                                }, 1200);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
