@@ -180,4 +180,27 @@ class VersionVehiculoController extends Controller
                                                         ]);
         return response()->json($versionvehiculo);
     }
+
+    public function SetPlantillaVersionVeh(Request $request)
+    {
+        $versionvehiculo = DB::select('exec [usp_VersionVeh_SetPlantillaVersionVeh] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $request->nidversionveh,
+                                                                    $request->nidclase,
+                                                                    $request->nidtranccion,
+                                                                    $request->nidcategoria,
+                                                                    $request->nidcilindrada,
+                                                                    $request->nidtransmision,
+                                                                    $request->nidcombustible,
+                                                                    $request->cnrorueda,
+                                                                    $request->cnroeje,
+                                                                    $request->cnrocilindros,
+                                                                    $request->cnroasiento,
+                                                                    $request->faltura,
+                                                                    $request->flongitud,
+                                                                    $request->fancho,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($versionvehiculo);
+    }
 }

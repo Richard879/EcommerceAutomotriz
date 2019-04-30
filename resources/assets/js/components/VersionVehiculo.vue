@@ -187,7 +187,7 @@
                                                             </template>
                                                             <template v-if="vehiculo.cVersionVehEstado=='A'">
                                                                 <el-tooltip class="item" :content="'Plantilla ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
-                                                                    <i @click="abrirModal('plantilla', 'abrir', vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-cogs"></i>
+                                                                    <i @click="abrirModal('plantilla', 'abrir', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-cogs"></i>
                                                                 </el-tooltip>
                                                             </template>
                                                             <template v-else>
@@ -514,6 +514,238 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Plantilla -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">PLANTILLA DEL :  {{ fillNuevoVehiculo.cnombrecomercial }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Carroceria</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidclase"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE">
+                                                                <el-option
+                                                                v-for="item in arraySubClase"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Tracción</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidtranccion"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE LA TRACCIÓN">
+                                                                <el-option
+                                                                    v-for="item in arrayTraccion"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Categoria</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidcategoria"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE LA CATEGORÍA">
+                                                                <el-option
+                                                                    v-for="item in arrayCategoria"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cilindrada</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidcilindrada"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE EL CILINDRADO">
+                                                                <el-option
+                                                                    v-for="item in arrayCilindrada"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Transmisión</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidtransmision"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UNA TRANSMISIÓN">
+                                                                <el-option
+                                                                    v-for="item in arrayTransmision"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Combustible</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillNuevoVehiculo.nidcombustible"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE TIPO COMBUSTIBLE">
+                                                                <el-option
+                                                                    v-for="item in arrayCombustible"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* N° Ruedas</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="fillNuevoVehiculo.cnrorueda" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* N° Eje</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillNuevoVehiculo.cnroeje" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Potencia</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="fillNuevoVehiculo.cpotencia" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* N° Cilindros</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="fillNuevoVehiculo.cnrocilindros" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* N° Asientos</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="fillNuevoVehiculo.cnroasiento" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Altura</label>
+                                                        <div class="col-sm-8">
+                                                            <el-input-number
+                                                                placeholder="Altura"
+                                                                v-model="fillNuevoVehiculo.faltura"
+                                                                :min="1"
+                                                                clearable>
+                                                            </el-input-number>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Longitud</label>
+                                                        <div class="col-sm-8">
+                                                            <el-input-number
+                                                                placeholder="Longitud"
+                                                                v-model="fillNuevoVehiculo.flongitud"
+                                                                :min="1"
+                                                                clearable>
+                                                            </el-input-number>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Ancho</label>
+                                                        <div class="col-sm-8">
+                                                            <el-input-number
+                                                                placeholder="Ancho"
+                                                                v-model="fillNuevoVehiculo.fancho"
+                                                                :min="1"
+                                                                clearable>
+                                                            </el-input-number>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-9 offset-md-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="guardarPlantilla">
+                                                        <i class="fa fa-save"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -546,6 +778,30 @@
                     nidversionveh: 0,
                     cnombrecomercial:''
                 },
+                fillNuevoVehiculo: {
+                    nidversionveh: '',
+                    cnombrecomercial: '',
+                    nidclase: '',
+                    nidtranccion: '',
+                    nidcategoria: '',
+                    nidcilindrada: '',
+                    nidtransmision:'',
+                    nidcombustible: '',
+                    cnrorueda: '',
+                    cnroeje: '',
+                    cpotencia: '',
+                    cnrocilindros: '',
+                    cnroasiento: '',
+                    faltura: 0,
+                    flongitud: 0,
+                    fancho: 0
+                },
+                arrayClase: [],
+                arrayTraccion: [],
+                arrayCategoria: [],
+                arrayCilindrada: [],
+                arrayTransmision: [],
+                arrayCombustible: [],
                 pagination: {
                     'total' : 0,
                     'current_page' : 0,
@@ -627,6 +883,9 @@
             }
         },
         methods:{
+            // ================================
+            // METODOS SUBTAB LISTAR VERSIONES
+            // ================================
             llenarComboClase(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -845,6 +1104,156 @@
                 this.pagination.current_page=page;
                 this.listarVersionVehiculo(page);
             },
+            llenarComboTraccion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110111
+                    }
+                }).then(response => {
+                    this.arrayTraccion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboCategoria(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110117
+                    }
+                }).then(response => {
+                    this.arrayCategoria = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboCilindrada(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110114
+                    }
+                }).then(response => {
+                    this.arrayCilindrada = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboTransmision(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110115
+                    }
+                }).then(response => {
+                    this.arrayTransmision = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboCombustible(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110075
+                    }
+                }).then(response => {
+                    this.arrayCombustible = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            guardarPlantilla(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/versionvehiculo/SetPlantillaVersionVeh';
+                axios.post(url, {
+                    nidversionveh   :   parseInt(this.fillNuevoVehiculo.nidversionveh),
+                    nidclase        :   parseInt(this.fillNuevoVehiculo.nidclase),
+                    nidtranccion    :   parseInt(this.fillNuevoVehiculo.nidtranccion),
+                    nidcategoria    :   parseInt(this.fillNuevoVehiculo.nidcategoria),
+                    nidcilindrada   :   parseInt(this.fillNuevoVehiculo.nidcilindrada),
+                    nidtransmision  :   parseInt(this.fillNuevoVehiculo.nidtransmision),
+                    nidcombustible  :   parseInt(this.fillNuevoVehiculo.nidcombustible),
+                    cnrorueda       :   parseInt(this.fillNuevoVehiculo.cnrorueda),
+                    cnroeje         :   parseInt(this.fillNuevoVehiculo.cnroeje),
+                    cpotencia       :   parseInt(this.fillNuevoVehiculo.cpotencia),
+                    cnrocilindros   :   parseInt(this.fillNuevoVehiculo.cnrocilindros),
+                    cnroasiento     :   parseInt(this.fillNuevoVehiculo.cnroasiento),
+                    faltura         :   this.fillNuevoVehiculo.faltura,
+                    flongitud       :   this.fillNuevoVehiculo.flongitud,
+                    fancho          :   this.fillNuevoVehiculo.fancho
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Plantilla Versión Vehículo registrado exitosamente');
+                        this.limpiarPlantilla();
+                    }
+                    else{
+                        swal('Ya existe Vehiculo');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            limpiarPlantilla(){
+                this.fillNuevoVehiculo.nidversionveh    = '';
+                this.fillNuevoVehiculo.nidclase         = '';
+                this.fillNuevoVehiculo.nidtranccion     = '';
+                this.fillNuevoVehiculo.nidcategoria     = '';
+                this.fillNuevoVehiculo.nidcilindrada    = '';
+                this.fillNuevoVehiculo.nidtransmision   = '';
+                this.fillNuevoVehiculo.nidcombustible   = '';
+                this.fillNuevoVehiculo.cnrorueda        = '';
+                this.fillNuevoVehiculo.cnroeje          = '';
+                this.fillNuevoVehiculo.cpotencia        = '';
+                this.fillNuevoVehiculo.cnrocilindros    = '';
+                this.fillNuevoVehiculo.cnroasiento      = '';
+            },
+            // ================================
+            // METODOS SUBTAB REGISTRAR/ACTUALIZAR
+            // ================================
             registrar(){
                 if(this.validar()){
                     this.accionmodal=1;
@@ -1057,6 +1466,15 @@
                         switch(accion){
                             case 'abrir':
                             {
+                                this.fillNuevoVehiculo.nidversionveh    = data.nIdVersionVeh;
+                                this.fillNuevoVehiculo.cnombrecomercial = data.cNombreComercial;
+
+                                this.llenarComboSubClase();
+                                this.llenarComboTraccion();
+                                this.llenarComboCategoria();
+                                this.llenarComboCilindrada();
+                                this.llenarComboTransmision();
+                                this.llenarComboCombustible();
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
