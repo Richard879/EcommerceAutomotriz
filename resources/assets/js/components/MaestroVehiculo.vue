@@ -43,7 +43,7 @@
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">*Tipo Persona</label>
                                                                             <div class="col-md-8">
-                                                                                <el-radio-group v-model="fillBusquedaVehiculo.ntipopersona">
+                                                                                <el-radio-group v-model="fillBusquedaVehiculo.ntipopersona" @change="limpiarTabVehiculos()">
                                                                                     <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
                                                                                 </el-radio-group>
                                                                             </div>
@@ -1863,6 +1863,9 @@
                 this.llenarComboModelo(1);
                 this.llenarComboAnioModelo();
                 // this.buscarVehiculo();
+            },
+            limpiarTabVehiculos(){
+                this.arrayVehiculoBuscar = [];
             },
             llenarComboMarca(data){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
