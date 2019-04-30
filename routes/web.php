@@ -441,6 +441,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::get('/persona/GetLstPersona','PersonaController@GetLstPersona');
 
+    Route::post('/proyecto/importFileProyecto','ExcelController@importFileProyecto');
+    Route::post('/proyecto/readFileProyecto', 'ExcelController@readFileProyecto');
+
     //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
     Route::post('/proyecto/SetIntegraProyecto','IntProyectoController@SetIntegraProyecto');

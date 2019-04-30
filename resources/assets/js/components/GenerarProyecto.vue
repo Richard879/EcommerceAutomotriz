@@ -16,25 +16,25 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" href="#TabBuscaProyecto" @click="tabBuscarProyecto()" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR PROYECTO
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra()" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabGeneraProyecto" @click="tabGenerarProyecto()" role="tab" data-toggle="tab">
                                             <i class="fa fa-bus"></i> GENERAR PROYECTO
                                         </a>
                                     </li>
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div class="tab-pane fade in active show" id="TabBuscaCompra">
+                                    <div class="tab-pane fade in active show" id="TabBuscaProyecto">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR COMPRA</h3>
+                                                            <h3 class="h4">BUSCAR PROYECTOS</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -49,9 +49,9 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -87,56 +87,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Marca</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayMarca"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                        v-for="item in arrayModelo"
-                                                                                        :key="item.nIdModelo"
-                                                                                        :label="item.cModeloNombre"
-                                                                                        :value="item.nIdModelo">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompras(1)">
                                                                             <i class="fa fa-search"></i> Buscar
@@ -153,76 +103,26 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayCompra.length">
+                                                            <template v-if="arrayProyecto.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>NroDoc SAP</th>
-                                                                                <th>Código</th>
-                                                                                <th>Periodo</th>
-                                                                                <th>Nota Pedido</th>
-                                                                                <th>Línea</th>
-                                                                                <th>Almacén<nav></nav></th>
-                                                                                <th>Disponible</th>
                                                                                 <th>Nro Vin</th>
-                                                                                <th>Forma Pago</th>
-                                                                                <th>Nombre Comercial</th>
-                                                                                <th>Año Fab</th>
-                                                                                <th>Año Mod</th>
-                                                                                <th>Moneda</th>
-                                                                                <th>Total</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Fecha Facturado</th>
-                                                                                <th>Fecha Compra</th>
-                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra"
-                                                                                    :style="{ background : compra.cFlagColor }">
+                                                                            <tr v-for="proyecto in arrayProyecto" :key="proyecto.cNumeroVin">
                                                                                 <td>
-                                                                                    <template v-if="compra.cSituacionRegistro=='A'">
+                                                                                    <template v-if="proyecto.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Desactivar Compra {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="desactivar(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <el-tooltip class="item" :content="'Activar ' + compra.cNumeroVin" effect="dark" placement="top-start">
-                                                                                            <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar Compra  {{ compra.cNumeroVin }}</div>
-                                                                                        <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;<!---->
-                                                                                    <template v-if="compra.nValidaIntegracion==0">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">{{ compra.cFlagVistaIntegracion + ' ' + compra.cNumeroVin }}</div>
-                                                                                            <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            <div slot="content">{{ proyecto.cFlagVistaIntegracion + ' ' + proyecto.cNumeroVin }}</div>
+                                                                                            <i @click="validarSapArticulo(proyecto)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
-                                                                                <td v-text="compra.nDocNum"></td>
-                                                                                <td v-text="compra.nIdCompra"></td>
-                                                                                <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                                <td v-text="compra.nNumeroReserva"></td>
-                                                                                <td v-text="compra.cNombreLinea"></td>
-                                                                                <td v-text="compra.cNombreAlmacen"></td>
-                                                                                <td v-text="compra.cFlagVehiculoLibre"></td>
-                                                                                <td v-text="compra.cNumeroVin"></td>
-                                                                                <td v-text="compra.cFormaPago"></td>
-                                                                                <td v-text="compra.cNombreComercial"></td>
-                                                                                <td v-text="compra.nAnioFabricacion"></td>
-                                                                                <td v-text="compra.nAnioVersion"></td>
-                                                                                <td v-text="compra.cSimboloMoneda"></td>
-                                                                                <td v-text="compra.fTotalCompra"></td>
-                                                                                <td v-text="compra.cNumeroFactura"></td>
-                                                                                <td v-text="compra.dFechaFacturado"></td>
-                                                                                <td v-text="compra.dFechaCompra"></td>
-                                                                                <td v-text="compra.nDocEntry"></td>
+                                                                                <td v-text="proyecto.cNumeroVin"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -268,13 +168,13 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabGeneraCompra">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabGeneraProyecto">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">GENERAR COMPRA</h3>
+                                                            <h3 class="h4">GENERAR PROYECTO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -284,109 +184,6 @@
                                                                             <label class="col-sm-4 form-control-label">* Empresa</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Año</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Mes</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Almacén</label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formAlmacen.cwhsname" class="form-control form-control-sm" readonly>
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Almacén </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('almacen','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formCompra.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Proveedor </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row" v-if="formCompra.nidproveedor>0">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Lista</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="formCompra.nidtipolista"
-                                                                                            filterable
-                                                                                            clearable
-                                                                                            placeholder="SELECCIONE"
-                                                                                            @change="obtenerListaPrecioActiva()">
-                                                                                    <el-option
-                                                                                        v-for="item in arrayTipoLista"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row" v-if="formCompra.nidtipolista">
-                                                                            <label class="col-sm-4 form-control-label">* Nro Lista</label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formCompra.nnumerolista" class="form-control form-control-sm" readonly>
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Lista </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('lista','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
-                                                                                    </div>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -430,7 +227,7 @@
                                                                         <div class="row">
                                                                             <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
                                                                             <div class="col-sm-6">-->
-                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileProyecto()">
                                                                                     <i class="fa fa-retweet"></i> Procesar
                                                                                 </button>
                                                                             <!--</div>-->
@@ -445,48 +242,18 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
-                                                                                    <th>Línea</th>
-                                                                                    <th>Almacén<nav></nav></th>
-                                                                                    <th>Nro Reserva</th>
                                                                                     <th>Nro Vin</th>
-                                                                                    <th>Forma Pago</th>
-                                                                                    <th>Marca</th>
-                                                                                    <th>Modelo</th>
-                                                                                    <th>Nombre Comercial</th>
-                                                                                    <th>Color</th>
-                                                                                    <th>Año Fab</th>
-                                                                                    <th>Año Mod</th>
-                                                                                    <th>Mon</th>
-                                                                                    <th>Total</th>
-                                                                                    <th>Serie Comprobante</th>
-                                                                                    <th>Nro Comprobante</th>
-                                                                                    <th>Fecha Facturado</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nNumeroReserva">
+                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.cNumeroVin">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Eliminar Compra  {{ compra.nNumeroReserva }}</div>
+                                                                                            <div slot="content">Eliminar Compra  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
-                                                                                    <td v-text="compra.cNombreLinea"></td>
-                                                                                    <td v-text="compra.cNombreAlmacen"></td>
-                                                                                    <td v-text="compra.nNumeroReserva"></td>
                                                                                     <td v-text="compra.cNumeroVin"></td>
-                                                                                    <td v-text="compra.cFormaPago"></td>
-                                                                                    <td v-text="compra.cNombreMarca"></td>
-                                                                                    <td v-text="compra.cNombreModelo"></td>
-                                                                                    <td v-text="compra.cNombreComercial"></td>
-                                                                                    <td v-text="compra.cNombreColor"></td>
-                                                                                    <td v-text="compra.nAnioFabricacion"></td>
-                                                                                    <td v-text="compra.nAnioVersion"></td>
-                                                                                    <td v-text="compra.cSimboloMoneda"></td>
-                                                                                    <td v-text="compra.fTotalCompra"></td>
-                                                                                    <td v-text="compra.cSerieComprobante"></td>
-                                                                                    <td v-text="compra.cNumeroComprobante"></td>
-                                                                                    <td v-text="compra.dFechaFacturado"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -565,13 +332,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '',
-                cmes: '',
-                nidcronograma: 0,
-                nservicecallid: 0,
-                nactivitycode: 0,
-                fTotalValor: 0,
-                nIdWarrantOperativo: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -582,7 +342,7 @@
                     nidmarca: '',
                     nidmodelo: ''
                 },
-                arrayCompra: [],
+                arrayProyecto: [],
                 arrayCompraRpta: [],
                 arrayMarca: [],
                 arrayModelo: [],
@@ -602,30 +362,6 @@
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
                 arrayListaPrecio: [],
-                //===========================================================
-                // =============  VARIABLES ALMACEN ========================
-                formAlmacen:{
-                    nidlocalidad: 0,
-                    cwhscode: '',
-                    cwhsname: ''
-                },
-                arrayAlmacen: [],
-                // ==========================================================
-                // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
-                formModalCompra:{
-                    ndocentry: '',
-                    ccardcode: '',
-                    nidcompra: 0,
-                    nordencompra: '',
-                    cnombrecomercial:'',
-                    cnumerovin:'',
-                    cnumeromotor: '',
-                    cnumerodua: '',
-                    cnombrecolor: '',
-                    cseriecomprobante: '',
-                    cnumerocomprobante: '',
-                    codigonacionesunidas: ''
-                },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
                 arrayCompraExisteVin: [],
@@ -633,17 +369,6 @@
                 arrayTempVinExiste: [],
                 arrayTempVinListaPrecio:[],
                 arrayTempVinNombreComercial: [],
-                // ============================================================
-                // =========== TAB LINEA CREDITO ============
-                arrayLineaCredito: [],
-                arrayTempLineaCredito: [],
-                checkBoxLinea: [],
-                // ==========================================================
-                // =============  BUSCAR PROVEEDORES ========================
-                fillProveedor:{
-                    cnombreproveedor: ''
-                },
-                arrayProveedor: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapArticulo: [],
@@ -699,9 +424,6 @@
             }
         },
         mounted(){
-            this.llenarComboMarca();
-            this.llenarComboModelo();
-            this.obtenerAlmacenPorDefecto();
         },
         computed:{
             isActived: function(){
@@ -754,288 +476,15 @@
                 }
                 return pagesArray;
             },
-            totalVehiculo: function(){
-                let me = this;
-                if(me.arrayWOperativo.length > 0) {
-                    return me.arrayWOperativo.reduce(function(valorAnterior, valorActual){
-                        return valorAnterior + parseFloat(valorActual.fTotalCompra);
-                    }, 0);
-                } else {
-                    return 0;
-                }
-            },
         },
         methods:{
-            tabBuscarCompra(){
-                this.fillCompra.nidmarca = '';
-                this.fillCompra.nidmodelo = '';
-                this.fillCompra.dfechainicio = '';
-                this.fillCompra.dfechafin = '';
+            tabBuscarProyecto(){
                 this.limpiarFormulario();
-            },
-            llenarComboMarca(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110032
-                    }
-                }).then(response => {
-                    this.arrayMarca = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
-
-                axios.get(url,{
-                    params: {
-                        'nidmarca' : this.fillCompra.nidmarca,
-                        'opcion': 1
-                    }
-                }).then(response => {
-                    this.arrayModelo = response.data.arrayModelo;
-                    this.fillCompra.nidmodelo = '';
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            listarCompras(page){
-                this.mostrarProgressBar();
-
-                var url = this.ruta + '/compra/GetCompra';
-                axios.get(url, {
-                    params: {
-                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio'  : this.fillCompra.dfechainicio,
-                        'dfechafin'     : this.fillCompra.dfechafin,
-                        'nordencompra'  : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin'    : this.fillCompra.cnumerovin,
-                        'nidmarca'      : this.fillCompra.nidmarca,
-                        'nidmodelo'     : this.fillCompra.nidmodelo,
-                        'page'          : page
-                    }
-                }).then(response => {
-                    this.arrayCompraRpta = response.data.arrayCompra;
-                    this.paginateCompra(this.arrayCompraRpta, page);
-                    /*this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
-                    this.pagination.per_page    = response.data.arrayCompra.per_page;
-                    this.pagination.last_page   = response.data.arrayCompra.last_page;
-                    this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;*/
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            paginateCompra(data, page){
-                this.pagination.current_page= page;
-                this.pagination.total       = data.length;
-                this.pagination.per_page    = this.perPage;
-                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayCompra            = data.slice(this.pagination.from, this.pagination.to);
-            },
-            cambiarPagina(page){
-                this.pagination.current_page=page;
-                this.paginateCompra(this.arrayCompraRpta, page);
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
-            tabGenerarCompra(){
-                this.obtenerCronogramaCompraActivo();
-                this.listarTipoLista();
+            tabGenerarProyecto(){
                 this.limpiarFormulario();
-            },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar'       : 110023,
-                        'cnombreproveedor'  : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion'            : 0,
-                        'page'              : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(proveedor){
-                this.formCompra.nidproveedor = proveedor.nIdPar;
-                this.formCompra.cproveedornombre = proveedor.cParNombre;
-                this.formCompra.ccarcode = proveedor.cParJerarquia;
-                this.cerrarModal();
-            },
-            listarTipoLista(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110044
-                    }
-                }).then(response => {
-                    this.arrayTipoLista = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            obtenerListaPrecioActiva(){
-                var url = this.ruta + '/compra/GetListaPrecioByProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
-                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
-                        'nidentificador': 0,
-                        'opcion' : 1
-                    }
-                }).then(response => {
-                    this.formCompra.nidlistaprecio = (!response.data.arrayListaPrecio.length) ? '' : response.data.arrayListaPrecio[0].nIdListaPrecioVersionVeh;
-                    this.formCompra.nnumerolista = (!response.data.arrayListaPrecio.length) ? '' : response.data.arrayListaPrecio[0].nNroListaPrecio;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            listarListaPrecioVersionVeh(page){
-                var url = this.ruta + '/compra/GetListaPrecioByProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
-                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
-                        'nidentificador': 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayListaPrecio = response.data.arrayListaPrecio.data;
-                    this.paginationModal.current_page =  response.data.arrayListaPrecio.current_page;
-                    this.paginationModal.total = response.data.arrayListaPrecio.total;
-                    this.paginationModal.per_page    = response.data.arrayListaPrecio.per_page;
-                    this.paginationModal.last_page   = response.data.arrayListaPrecio.last_page;
-                    this.paginationModal.from        = response.data.arrayListaPrecio.from;
-                    this.paginationModal.to           = response.data.arrayListaPrecio.to;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaListaPrecio(page){
-                this.paginationModal.current_page=page;
-                this.listarListaPrecioVersionVeh(page);
-            },
-            asignarListaPrecio(lista){
-                this.formCompra.nidlistaprecio = lista.nIdListaPrecioVersionVeh;
-                this.formCompra.nnumerolista = lista.nNroListaPrecio;
-                this.cerrarModal();
-            },
-            obtenerCronogramaCompraActivo(){
-                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
-
-                axios.get(url,{
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
-                    }
-                }).then(response => {
-                    this.canio = response.data.arrayCronograma[0].cAnio;
-                    this.cmes = response.data.arrayCronograma[0].cMes;
-                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            obtenerAlmacenPorDefecto(){
-                var url = this.ruta + '/almacen/GetAlmacenPorDefecto';
-                axios.get(url, {
-                    params: {
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
-                    }
-                }).then(response => {
-                    if(response.data.length){
-                        this.formAlmacen.cwhscode = response.data[0].cWhsCode;
-                        this.formAlmacen.cwhsname = response.data[0].cWhsName;
-                    }
-                    else{
-                        this.formAlmacen.cwhscode = '';
-                        this.formAlmacen.cwhsname = 'Sin Almacén Definido';
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
             },
             //=================== Proceso Carga de Formato Compra Excel
             getFile(e){
@@ -1045,7 +494,7 @@
                 this.arrayExcel = [];
                 //this.textFile = e.target.files[0].name;
             },
-            importFileCompra(){
+            importFileProyecto(){
                 if(this.validarReadFileCompra()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1054,11 +503,9 @@
 
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-                //var fd = new FormData();
-                //fd.append('file', this.fileExcel, this.fileExcel.name);
-                var url = this.ruta + '/compra/importFileCompra';
+                var url = this.ruta + '/proyecto/importFileProyecto';
                 axios.post(url, this.form, config).then(response=>{
-                    this.readFileCompra(response.data);
+                    this.readFileProyecto(response.data);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1069,22 +516,16 @@
                     }
                 });
             },
-            readFileCompra(nameFile){
+            readFileProyecto(nameFile){
                 // console.log(nameFile);
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/readFileCompra';
+                var url = this.ruta + '/proyecto/readFileProyecto';
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
 
                     this.arrayExcel = response.data;
-
-                    if(this.validaCamposExcel()){
-                        this.accionmodal=1;
-                        this.modal = 1;
-                        return;
-                    }
 
                     this.$delete(this.arrayExcel, 0)
                     this.contadorArrayExcel = this.arrayExcel.length;
@@ -1098,39 +539,6 @@
                         }
                     }
                 });
-            },
-            validaCamposExcel(){
-                let me = this;
-                me.error = 0;
-                me.mensajeError = [];
-                var i = 1;
-
-                me.arrayExcel.map(function(value, key) {
-                    if(key==0){
-                        if(value.cNombreLinea != "Línea"){
-                            me.mensajeError.push('Falta celda Línea, verifique el archivo.');
-                        };
-                        if(value.cNombreAlmacen != "Almacén"){
-                            me.mensajeError.push('Falta celda Almacén, verifique el archivo.');
-                        };
-                        if(value.nNumeroReserva != "Nro Reserva"){
-                            me.mensajeError.push('Falta celda Nro Reserva, verifique el archivo.');
-                        };
-                        if(value.fTotalCompra != "Total"){
-                            me.mensajeError.push('Falta celda Total, verifique el archivo.');
-                        };
-                    };
-                    /*if(key != 0){
-                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
-                            list.push('Existe un error en el campo Total, verifique el archivo.');
-                        }
-                    };*/
-                });
-
-                if(me.mensajeError.length){
-                    me.error = 1;
-                }
-                return me.error;
             },
             eliminarItemExcel(index){
                 this.$delete(this.arrayExcel, index);
@@ -1334,7 +742,7 @@
                 return this.error;
             },
             descargaFormatoCompra(){
-                window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoProyecto.xlsx');
             },
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
