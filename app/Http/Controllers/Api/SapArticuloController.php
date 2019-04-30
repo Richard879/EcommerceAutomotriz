@@ -218,33 +218,44 @@ class SapArticuloController extends Controller
         $ccargautil             =   $request->fillNuevoVehiculo['fcargautil'];
         $cnacionesunidas        =   $request->fillNuevoVehiculo['cnacionesunidas'];
 
-        //OBTENER LA MARCA DEL VEHÍCULO
+        //=================== OBTENER LA MARCA DEL VEHÍCULO ===================
         $marca = DB::select('exec [usp_Par_GetParametroById] ?',
-                                                                        [
-                                                                            $nidmarca
-                                                                        ]);
+                                                                [
+                                                                    $nidmarca
+                                                                ]);
         $nidmarca = $marca[0]->cParNombre;//Setear por el Nombre
 
-        //OBTENER EL COLOR EXT DEL VEHÍCULO
+
+        //=================== OBTENER EL COLOR EXT DEL VEHÍCULO ===================
         $color = DB::select('exec [usp_Par_GetParametroById] ?',
-                                                                        [
-                                                                            $nidcolor
-                                                                        ]);
+                                                                [
+                                                                    $nidcolor
+                                                                ]);
         $nidcolor = $color[0]->cParNombre;//Setear por el Nombre
 
-        //OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO
+
+        //=================== OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO ===================
         $cilindrada = DB::select('exec [usp_Par_GetParametroById] ?',
-                                                                        [
-                                                                            $nidcilindrada
-                                                                        ]);
+                                                                [
+                                                                    $nidcilindrada
+                                                                ]);
         $nidcilindrada = $cilindrada[0]->cParNombre;//Setear por el Nombre
 
-        //OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO
+
+        //=================== OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO ===================
         $combustible = DB::select('exec [usp_Par_GetParametroById] ?',
-                                                                        [
-                                                                            $nidcombustible
-                                                                        ]);
+                                                                [
+                                                                    $nidcombustible
+                                                                ]);
         $nidcombustible = $combustible[0]->cParNombre;//Setear por el Nombre
+
+
+        //=================== OBTENER EL NOMBRE DE LA CARROCERIA ===================
+        $carroceria = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                [
+                                                                    $nidclase
+                                                                ]);
+        $nidclase = $carroceria[0]->cParNombre;//Setear por el Nombre
 
         $json = [
             'json' => [
@@ -260,6 +271,9 @@ class SapArticuloController extends Controller
                 'U_SYP_NROPASAJERO' =>  (string)$cnropasajeros,//Nro Pasajeros
                 'U_SYP_NROASIENTO'  =>  (string)$cnroasiento,//Nro Asiento
                 'U_SYP_NRORUEDA'    =>  (string)$cnrorueda,//Nro Rueda
+                // 'U_SYP_CCARROCERIA' =>  (string)$nidclase,//Carroceria
+                // 'U_SYP_NEJE'        =>  (string)$cnroeje,//Nro Eje
+                // 'U_SYP_NPOTENCIA'   =>  (string)$cpotencia,//Nro Potencia
                 'U_SYP_PBRUTO'      =>  (string)$cpesobruto,//Nro Rueda
                 'U_SYP_PSECO'       =>  (string)$cpesoseco,//Nro Rueda
                 'U_SYP_ALTURA'      =>  (string)$caltura,//Nro Rueda

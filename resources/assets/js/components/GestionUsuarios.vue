@@ -708,7 +708,7 @@
                             nIdUsuario : usuario.nIdUsuario,
                             opcion : op
                         }).then(response => {
-                            console.log(response)
+                            // console.log(response)
                             me.listarUsuarios(1);
                             $("#myBar").hide();
                             swal(
