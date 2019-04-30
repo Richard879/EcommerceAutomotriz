@@ -84,6 +84,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/versionvehiculo/GetModeloByMarca', 'VersionVehiculoController@GetModeloByMarca');
     Route::get('/versionvehiculo/GetSubLineaByLinea', 'VersionVehiculoController@GetSubLineaByLinea');
     Route::post('/versionvehiculo/SetPlantillaVersionVeh', 'VersionVehiculoController@SetPlantillaVersionVeh');
+    Route::get('/versionvehiculo/GetDataPlantillaVerVeh', 'VersionVehiculoController@GetDataPlantillaVerVeh');
 
     Route::post('/compra/importFileCompra', 'ExcelController@importFileCompra');
     Route::post('/compra/readFileCompra', 'ExcelController@readFileCompra');

@@ -523,16 +523,22 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">PLANTILLA DEL :  {{ fillNuevoVehiculo.cnombrecomercial }} </h3>
+                                        <h3 class="h4">PLANTILLA DEL :  {{ fillPlantillaVerVeh.cnombrecomercial }} </h3>
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
+                                            <div class="form-group row" style="justify-content: center;">
+                                                <div class="text-center">
+                                                    <div v-for="e in mensajeError" :key="e" v-text="e">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Carroceria</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidclase"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidclase"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE">
@@ -550,7 +556,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Tracción</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidtranccion"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidtranccion"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE LA TRACCIÓN">
@@ -570,7 +576,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Categoria</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidcategoria"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidcategoria"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE LA CATEGORÍA">
@@ -588,7 +594,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cilindrada</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidcilindrada"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidcilindrada"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE EL CILINDRADO">
@@ -608,7 +614,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Transmisión</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidtransmision"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidtransmision"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE UNA TRANSMISIÓN">
@@ -626,7 +632,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Combustible</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillNuevoVehiculo.nidcombustible"
+                                                            <el-select v-model="fillPlantillaVerVeh.nidcombustible"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE TIPO COMBUSTIBLE">
@@ -646,7 +652,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* N° Ruedas</label>
                                                         <div class="col-sm-8">
-                                                            <input type="number" v-model="fillNuevoVehiculo.cnrorueda" class="form-control form-control-sm">
+                                                            <input type="number" v-model="fillPlantillaVerVeh.cnrorueda" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -654,7 +660,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* N° Eje</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillNuevoVehiculo.cnroeje" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillPlantillaVerVeh.cnroeje" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -664,7 +670,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Potencia</label>
                                                         <div class="col-sm-8">
-                                                            <input type="number" v-model="fillNuevoVehiculo.cpotencia" class="form-control form-control-sm">
+                                                            <input type="number" v-model="fillPlantillaVerVeh.cpotencia" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -672,7 +678,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* N° Cilindros</label>
                                                         <div class="col-sm-8">
-                                                            <input type="number" v-model="fillNuevoVehiculo.cnrocilindros" class="form-control form-control-sm">
+                                                            <input type="number" v-model="fillPlantillaVerVeh.cnrocilindros" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -682,7 +688,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* N° Asientos</label>
                                                         <div class="col-sm-8">
-                                                            <input type="number" v-model="fillNuevoVehiculo.cnroasiento" class="form-control form-control-sm">
+                                                            <input type="number" v-model="fillPlantillaVerVeh.cnroasiento" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -692,7 +698,7 @@
                                                         <div class="col-sm-8">
                                                             <el-input-number
                                                                 placeholder="Altura"
-                                                                v-model="fillNuevoVehiculo.faltura"
+                                                                v-model="fillPlantillaVerVeh.faltura"
                                                                 :min="1"
                                                                 clearable>
                                                             </el-input-number>
@@ -707,7 +713,7 @@
                                                         <div class="col-sm-8">
                                                             <el-input-number
                                                                 placeholder="Longitud"
-                                                                v-model="fillNuevoVehiculo.flongitud"
+                                                                v-model="fillPlantillaVerVeh.flongitud"
                                                                 :min="1"
                                                                 clearable>
                                                             </el-input-number>
@@ -720,7 +726,7 @@
                                                         <div class="col-sm-8">
                                                             <el-input-number
                                                                 placeholder="Ancho"
-                                                                v-model="fillNuevoVehiculo.fancho"
+                                                                v-model="fillPlantillaVerVeh.fancho"
                                                                 :min="1"
                                                                 clearable>
                                                             </el-input-number>
@@ -778,7 +784,7 @@
                     nidversionveh: 0,
                     cnombrecomercial:''
                 },
-                fillNuevoVehiculo: {
+                fillPlantillaVerVeh: {
                     nidversionveh: '',
                     cnombrecomercial: '',
                     nidclase: '',
@@ -796,6 +802,7 @@
                     flongitud: 0,
                     fancho: 0
                 },
+                cFlagAccion: 1,
                 arrayClase: [],
                 arrayTraccion: [],
                 arrayCategoria: [],
@@ -1198,33 +1205,33 @@
                 });
             },
             guardarPlantilla(){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                if(this.validarPlantilla()){
                     return;
                 }
 
                 var url = this.ruta + '/versionvehiculo/SetPlantillaVersionVeh';
                 axios.post(url, {
-                    nidversionveh   :   parseInt(this.fillNuevoVehiculo.nidversionveh),
-                    nidclase        :   parseInt(this.fillNuevoVehiculo.nidclase),
-                    nidtranccion    :   parseInt(this.fillNuevoVehiculo.nidtranccion),
-                    nidcategoria    :   parseInt(this.fillNuevoVehiculo.nidcategoria),
-                    nidcilindrada   :   parseInt(this.fillNuevoVehiculo.nidcilindrada),
-                    nidtransmision  :   parseInt(this.fillNuevoVehiculo.nidtransmision),
-                    nidcombustible  :   parseInt(this.fillNuevoVehiculo.nidcombustible),
-                    cnrorueda       :   parseInt(this.fillNuevoVehiculo.cnrorueda),
-                    cnroeje         :   parseInt(this.fillNuevoVehiculo.cnroeje),
-                    cpotencia       :   parseInt(this.fillNuevoVehiculo.cpotencia),
-                    cnrocilindros   :   parseInt(this.fillNuevoVehiculo.cnrocilindros),
-                    cnroasiento     :   parseInt(this.fillNuevoVehiculo.cnroasiento),
-                    faltura         :   this.fillNuevoVehiculo.faltura,
-                    flongitud       :   this.fillNuevoVehiculo.flongitud,
-                    fancho          :   this.fillNuevoVehiculo.fancho
+                    nidversionveh   :   parseInt(this.fillPlantillaVerVeh.nidversionveh),
+                    nidclase        :   parseInt(this.fillPlantillaVerVeh.nidclase),
+                    nidtranccion    :   parseInt(this.fillPlantillaVerVeh.nidtranccion),
+                    nidcategoria    :   parseInt(this.fillPlantillaVerVeh.nidcategoria),
+                    nidcilindrada   :   parseInt(this.fillPlantillaVerVeh.nidcilindrada),
+                    nidtransmision  :   parseInt(this.fillPlantillaVerVeh.nidtransmision),
+                    nidcombustible  :   parseInt(this.fillPlantillaVerVeh.nidcombustible),
+                    cnrorueda       :   parseInt(this.fillPlantillaVerVeh.cnrorueda),
+                    cnroeje         :   parseInt(this.fillPlantillaVerVeh.cnroeje),
+                    cpotencia       :   parseInt(this.fillPlantillaVerVeh.cpotencia),
+                    cnrocilindros   :   parseInt(this.fillPlantillaVerVeh.cnrocilindros),
+                    cnroasiento     :   parseInt(this.fillPlantillaVerVeh.cnroasiento),
+                    faltura         :   this.fillPlantillaVerVeh.faltura,
+                    flongitud       :   this.fillPlantillaVerVeh.flongitud,
+                    fancho          :   this.fillPlantillaVerVeh.fancho,
+                    cFlagAccion     :   this.cFlagAccion
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Plantilla Versión Vehículo registrado exitosamente');
+                        swal(response.data[0].cMensaje);
+                        this.cerrarModal();
                         this.limpiarPlantilla();
                     }
                     else{
@@ -1240,19 +1247,81 @@
                     }
                 });
             },
+            validarPlantilla(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillPlantillaVerVeh.nidversionveh == 0){
+                    this.mensajeError.push('No ha seleccionado el Vehiculo');
+                }
+                if(!this.fillPlantillaVerVeh.cnombrecomercial){
+                    this.mensajeError.push('No ha seleccionado el Vehiculo');
+                };
+                if(this.fillPlantillaVerVeh.nidclase == 0 || !this.fillPlantillaVerVeh.nidclase){
+                    this.mensajeError.push('Debe seleccionar una Carroceria');
+                };
+                if(this.fillPlantillaVerVeh.nidtranccion == 0 || !this.fillPlantillaVerVeh.nidtranccion){
+                    this.mensajeError.push('Debe seleccionar una Traccion');
+                };
+                if(this.fillPlantillaVerVeh.nidcategoria == 0 || !this.fillPlantillaVerVeh.nidcategoria){
+                    this.mensajeError.push('Debe seleccionar una Categoria');
+                };
+                if(this.fillPlantillaVerVeh.nidcilindrada == 0 || !this.fillPlantillaVerVeh.nidcilindrada){
+                    this.mensajeError.push('Debe seleccionar una Cilindrada');
+                };
+                if(this.fillPlantillaVerVeh.nidtransmision == 0 || !this.fillPlantillaVerVeh.nidtransmision){
+                    this.mensajeError.push('Debe seleccionar una Transmision');
+                };
+                if(this.fillPlantillaVerVeh.nidcombustible == 0 || !this.fillPlantillaVerVeh.nidcombustible){
+                    this.mensajeError.push('Debe seleccionar una Combustible');
+                };
+                if(this.fillPlantillaVerVeh.cnrorueda == 0 || !this.fillPlantillaVerVeh.cnrorueda){
+                    this.mensajeError.push('Debe seleccionar una Numero de rueda');
+                };
+                if(this.fillPlantillaVerVeh.cnroeje == 0 || !this.fillPlantillaVerVeh.cnroeje){
+                    this.mensajeError.push('Debe seleccionar una Numero de Eje');
+                };
+                if(this.fillPlantillaVerVeh.cpotencia == 0 || !this.fillPlantillaVerVeh.cpotencia){
+                    this.mensajeError.push('Debe seleccionar un Numero Potencia');
+                };
+                if(this.fillPlantillaVerVeh.cnrocilindros == 0 || !this.fillPlantillaVerVeh.cnrocilindros){
+                    this.mensajeError.push('Debe seleccionar un Numero de Cilindros');
+                };
+                if(this.fillPlantillaVerVeh.cnroasiento == 0 || !this.fillPlantillaVerVeh.cnroasiento){
+                    this.mensajeError.push('Debe seleccionar un Numero de Asiento');
+                };
+                if(this.fillPlantillaVerVeh.faltura == 0 || !this.fillPlantillaVerVeh.faltura){
+                    this.mensajeError.push('Debe seleccionar una Altura');
+                };
+                if(this.fillPlantillaVerVeh.flongitud == 0 || !this.fillPlantillaVerVeh.flongitud){
+                    this.mensajeError.push('Debe seleccionar una Longitud');
+                };
+                if(this.fillPlantillaVerVeh.fancho == 0 || !this.fillPlantillaVerVeh.fancho){
+                    this.mensajeError.push('Debe seleccionar una Ancho');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             limpiarPlantilla(){
-                this.fillNuevoVehiculo.nidversionveh    = '';
-                this.fillNuevoVehiculo.nidclase         = '';
-                this.fillNuevoVehiculo.nidtranccion     = '';
-                this.fillNuevoVehiculo.nidcategoria     = '';
-                this.fillNuevoVehiculo.nidcilindrada    = '';
-                this.fillNuevoVehiculo.nidtransmision   = '';
-                this.fillNuevoVehiculo.nidcombustible   = '';
-                this.fillNuevoVehiculo.cnrorueda        = '';
-                this.fillNuevoVehiculo.cnroeje          = '';
-                this.fillNuevoVehiculo.cpotencia        = '';
-                this.fillNuevoVehiculo.cnrocilindros    = '';
-                this.fillNuevoVehiculo.cnroasiento      = '';
+                this.arrayVersionVehiculo = [];
+                this.fillPlantillaVerVeh.nidversionveh    = '';
+                this.fillPlantillaVerVeh.nidclase         = '';
+                this.fillPlantillaVerVeh.nidtranccion     = '';
+                this.fillPlantillaVerVeh.nidcategoria     = '';
+                this.fillPlantillaVerVeh.nidcilindrada    = '';
+                this.fillPlantillaVerVeh.nidtransmision   = '';
+                this.fillPlantillaVerVeh.nidcombustible   = '';
+                this.fillPlantillaVerVeh.cnrorueda        = '';
+                this.fillPlantillaVerVeh.cnroeje          = '';
+                this.fillPlantillaVerVeh.cpotencia        = '';
+                this.fillPlantillaVerVeh.cnrocilindros    = '';
+                this.fillPlantillaVerVeh.cnroasiento      = '';
+                this.fillPlantillaVerVeh.faltura          = '';
+                this.fillPlantillaVerVeh.flongitud        = '';
+                this.fillPlantillaVerVeh.fancho           = '';
             },
             // ================================
             // METODOS SUBTAB REGISTRAR/ACTUALIZAR
@@ -1465,8 +1534,29 @@
                         switch(accion){
                             case 'abrir':
                             {
-                                this.fillNuevoVehiculo.nidversionveh    = data.nIdVersionVeh;
-                                this.fillNuevoVehiculo.cnombrecomercial = data.cNombreComercial;
+                                this.fillPlantillaVerVeh.nidversionveh    = data.nIdVersionVeh;
+                                this.fillPlantillaVerVeh.cnombrecomercial = data.cNombreComercial;
+                                //PLANTILLA
+                                this.fillPlantillaVerVeh.nidclase       = data.nIdCarroceria;
+                                this.fillPlantillaVerVeh.nidtranccion   = data.nIdTraccion;
+                                this.fillPlantillaVerVeh.nidcategoria   = data.nIdCategoria;
+                                this.fillPlantillaVerVeh.nidcilindrada  = data.nIdCilindrada;
+                                this.fillPlantillaVerVeh.nidtransmision = data.nIdTransmision;
+                                this.fillPlantillaVerVeh.nidcombustible = data.nIdCombustible;
+                                this.fillPlantillaVerVeh.cnrorueda      = data.nNroRuedas;
+                                this.fillPlantillaVerVeh.cnroeje        = data.nNroEjes;
+                                this.fillPlantillaVerVeh.cpotencia      = data.nNroPotencia;
+                                this.fillPlantillaVerVeh.cnrocilindros  = data.nNroCilindros;
+                                this.fillPlantillaVerVeh.cnroasiento    = data.nNroAsientos;
+                                this.fillPlantillaVerVeh.faltura        = data.fAltura;
+                                this.fillPlantillaVerVeh.flongitud      = data.fLongitud;
+                                this.fillPlantillaVerVeh.fancho         = data.fAncho;
+
+                                if(this.fillPlantillaVerVeh.nidclase == 0 || !this.fillPlantillaVerVeh.nidclase) {
+                                    this.cFlagAccion = 1;
+                                } else {
+                                    this.cFlagAccion = 2;
+                                }
 
                                 this.llenarComboSubClase();
                                 this.llenarComboTraccion();
@@ -1556,6 +1646,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
