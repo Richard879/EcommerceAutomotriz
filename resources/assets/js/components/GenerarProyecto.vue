@@ -608,7 +608,7 @@
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
                             me.arrayCompraExisteVin.push({
-                                cNumeroVin: me.arrayTempVinExiste[key]
+                                'cNumeroVin': me.arrayTempVinExiste[key]
                             });
                             me.arrayVinDepura.push(me.arrayTempVinExiste[key]);
                         });
@@ -653,17 +653,13 @@
                     'data': me.arraySapProyecto
                 }).then(response => {
                     me.arraySapRespuesta = [];
-                    me.arraySapItemCode = [];
                     me.arraySapUpdSgc = [];
 
                     me.arraySapRespuesta = response.data;
                     me.arraySapRespuesta.map(function(value, key){
                         me.jsonRespuesta = '';
                         me.jsonRespuesta= JSON.parse(value);
-                        //Si el valor de respuesta Code tiene un valor
                         if(me.jsonRespuesta.Code){
-                            me.arraySapItemCode.push(me.jsonRespuesta.Code); //PARA DEPURAR
-
                             me.arraySapUpdSgc.push({
                                 'cCode'         : me.jsonRespuesta.Code.toString(),
                                 'cName'         : me.jsonRespuesta.Name.toString(),

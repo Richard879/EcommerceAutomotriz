@@ -46,7 +46,7 @@ class IntProyectoController extends Controller
             foreach($detalles as $ep=>$det)
             {
 
-                $objProyecto = DB::select('exec [usp_Proyecto_SetProyecto] ?, ?, ?',
+                $objProyecto = DB::select('exec [usp_ProyectoAddon_SetProyecto] ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $det['cNumeroVin'],
                                                                 Auth::user()->id
@@ -74,7 +74,7 @@ class IntProyectoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraProyecto] ?, ?, ?, ?',
+                $objProyecto = DB::select('exec [usp_Integra_SetIntegraProyectoAddon] ?, ?, ?, ?',
                                                             [   $det['cCode'],
                                                                 $det['cName'],
                                                                 $det['cLogRespuesta'],
