@@ -3878,13 +3878,13 @@
                         title: 'Error...',
                         text: 'El elemento de venta ya se encuentra agregado!',
                     });
-                }else if(elemento.nIdTipoElemento == 1300512){
+                } else if(elemento.nIdTipoElemento == 1300512){
                     swal({
                         type: 'error',
                         title: 'Error...',
                         text: 'No puede agregar este Tipo de Elemento!',
                     });
-                }else {
+                } else {
                     this.arrayElementoVenta.push({
                         'cCodigoERP'              : elemento.cCodigoERP,
                         'cElemenNombre'           : elemento.cElemenNombre,

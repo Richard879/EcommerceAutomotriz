@@ -156,9 +156,18 @@
                                                                                         <td>
                                                                                             <template v-if="modelo.cFichaImageUrl">
                                                                                                 <el-tooltip class="item" effect="dark">
-                                                                                                    <div slot="content">Ver Ficha Tecnica del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                    <div slot="content">Ver Ficha Tecnica del Modelo (XML) {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
                                                                                                     <a href="#" @click="descargaFichaTecnica(modelo.cFichaImageUrl)">
                                                                                                         <i class="fa-md fa fa-file-excel-o"></i>
+                                                                                                    </a>
+                                                                                                </el-tooltip>
+                                                                                            </template>
+
+                                                                                            <template v-if="modelo.cFichaImagePDFUrl">
+                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                    <div slot="content">Ver Ficha Tecnica del Modelo (PDF)  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                    <a href="#" @click="descargaFichaTecnicaPDF(modelo.cFichaImagePDFUrl)">
+                                                                                                        <i class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
                                                                                                     </a>
                                                                                                 </el-tooltip>
                                                                                             </template>
@@ -641,6 +650,9 @@
             },
             descargaFichaTecnica(cFichaImageUrl){
                 window.open(cFichaImageUrl);
+            },
+            descargaFichaTecnicaPDF(cFichaImageUrlPDF){
+                window.open(cFichaImageUrlPDF);
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================

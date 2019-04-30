@@ -200,17 +200,20 @@ class TramiteController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEstadoTramite       =   $request->nIdEstadoTramite;
+        $cnumvin                =   $request->cnumvin;
         $fechaInicioTramite     =   $request->fechaInicioTramite;
         $fechaFinRealTramite    =   $request->fechaFinRealTramite;
         $nIdTramitador          =   Auth::user()->id;
 
         $nIdEstadoTramite       =   ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $cnumvin                =   ($cnumvin == NULL) ? ($cnumvin = 0) : $cnumvin;
         $fechaInicioTramite     =   ($fechaInicioTramite == NULL) ? ($fechaInicioTramite = '') : $fechaInicioTramite;
         $fechaFinRealTramite    =   ($fechaFinRealTramite == NULL) ? ($fechaFinRealTramite = '') : $fechaFinRealTramite;
 
-        $arraySolicitudesTramites = DB::select('exec usp_Tramite_GetSolicitudesTramites ?, ?, ?, ?',
+        $arraySolicitudesTramites = DB::select('exec usp_Tramite_GetSolicitudesTramites ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEstadoTramite,
+                                                                $cnumvin,
                                                                 $nIdTramitador,
                                                                 $fechaInicioTramite,
                                                                 $fechaFinRealTramite
