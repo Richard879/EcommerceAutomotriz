@@ -385,6 +385,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/cronograma/GetCronogramaActivoByTipo','CronogramaController@GetCronogramaActivoByTipo');
     Route::post('/cronograma/SetActivarCronograma','CronogramaController@SetActivarCronograma');
     Route::get('/cronograma/GetCronogramaFechasByMes','CronogramaController@GetCronogramaFechasByMes');
+    Route::post('/cronograma/SetCronograma','CronogramaController@SetCronograma');
 
     Route::post('/flete/SetFlete', 'FleteController@SetFlete');
     Route::get('/flete/GetListFlete', 'FleteController@GetListFlete');

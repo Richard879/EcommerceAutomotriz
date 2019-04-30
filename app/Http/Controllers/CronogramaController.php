@@ -84,4 +84,20 @@ class CronogramaController extends Controller
                                                         ]);
         return ['arrayCronograma'=>$arrayCronograma];
     }
+
+    public function SetCronograma(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $objCronograma = DB::select('exec [usp_Cronograma_SetCronograma] ?, ?, ?, ?, ?, ?, ?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdTipoCronograma,
+                                                                $request->nIdAnio, 
+                                                                $request->nIdMes,
+                                                                $request->dFechaInicio,
+                                                                $request->dFechaFin,
+                                                                Auth::user()->id
+                                                            ]);
+        return response()->json($objCronograma);         
+    }
 }

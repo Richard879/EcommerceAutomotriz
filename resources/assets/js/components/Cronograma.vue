@@ -469,16 +469,16 @@
                 }
 
                 swal({
-                    title: 'Estas seguro de activar este Cronograma?',
+                    title: 'Estas seguro de registrar este Cronograma?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Activar!',
+                    confirmButtonText: 'Si, Registrar!',
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/cronograma/SetActivarCronograma';
+                        var url = this.ruta + '/cronograma/SetCronograma';
                         axios.post(url, {
                             'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
                             'nIdTipoCronograma' : this.fillParametro.nidtipocronograma,
@@ -489,9 +489,8 @@
                         }).then(response => {
                             swal(
                                 'Activado!',
-                                'El cronograma fue activado.'
+                                'El cronograma fue registrado.'
                             );
-                            this.obtenerCronogramaActivo();
                         })
                         .catch(function (error) {
                             console.log(error);
