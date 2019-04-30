@@ -51,7 +51,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarProyectos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -88,7 +88,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompras(1)">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarProyectos(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -380,9 +380,7 @@
                     nidmodelo: ''
                 },
                 arrayProyecto: [],
-                arrayCompraRpta: [],
-                arrayMarca: [],
-                arrayModelo: [],
+                arrayProyectoRpta: [],
                 // ===============================================
                 // ============ REGISTRAR COMPRA =================
                 formCompra:{
@@ -397,15 +395,9 @@
                 },
                 arrayExcel: [],
                 contadorArrayExcel: 0,
-                arrayTipoLista: [],
-                arrayListaPrecio: [],
                 // ============ VARIABLES DE RESPUESTA =================
-                arrayCompraPrecioLista: [],
                 arrayCompraExisteVin: [],
-                arrayCompraNombreComercial: [],
                 arrayTempVinExiste: [],
-                arrayTempVinListaPrecio:[],
-                arrayTempVinNombreComercial: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
                 arraySapVin: [],
@@ -414,17 +406,6 @@
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
                 arraySapProyecto: [],
-                arraySapTarjetaEquipo: [],
-                arraySapLlamadaServicio: [],
-                arraySapCompra: [],
-                arraySapActividad: [],
-                arraySapSolucion: [],
-                arraySapAsiento: [],
-                nSolutionCode:  0,
-                //Tbls Costo
-                arrayTCTipoBeneficio: [],
-                arrayTCCostoVehiculo: [],
-                arraySapCosto: [],
                 // ============================================================
                 page: 1,
                 perPage: 10,
@@ -517,6 +498,45 @@
         methods:{
             tabBuscarProyecto(){
                 this.limpiarFormulario();
+            },
+            listarProyectos(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/proyecto/GetAddonProyecto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfechainicio'  : this.fillCompra.dfechainicio,
+                        'dfechafin'     : this.fillCompra.dfechafin,
+                        'cnumerovin'    : this.fillCompra.cnumerovin,
+                        'page'          : page
+                    }
+                }).then(response => {
+                    this.arrayProyectoRpta = response.data.arrayCompra;
+                    this.paginateProyecto(this.arrayProyectoRpta, page);
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            paginateProyecto(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayCompra            = data.slice(this.pagination.from, this.pagination.to);
+            },
+            cambiarPagina(page){
+                this.pagination.current_page=page;
+                this.paginateProyecto(this.arrayProyectoRpta, page);
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
@@ -846,9 +866,9 @@
                 let me = this;
                 $("#myBar").hide();
                 me.loading.close();
-                swal('Compra registrada correctamente');
+                swal('Proyecto registrada correctamente');
                 me.limpiarFormulario();
-                me.listarCompras(1);
+                me.listarProyectos(1);
             },
             // ===========================================================
             limpiarFormulario(){
@@ -898,7 +918,7 @@
                 });
                 this.loading.close();
                 this.limpiarFormulario();
-                this.listarCompras(1);
+                this.listarProyectos(1);
             },
             mostrarProgressBar(){
                 $("#myBar").show();
