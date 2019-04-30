@@ -368,9 +368,9 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa':  parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidgrupopar': 110039,
-                        'nidpar': this.fillParametro.nidtipocronograma
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'   : 110039,
+                        'nidpar'        : this.fillParametro.nidtipocronograma
                     }
                 }).then(response => {
                     if(response.data.arrayCronograma.length)
@@ -380,6 +380,10 @@
                     else{
                         this.fillParametro.cdetallecronograma = "SIN CRONOGRAMA ACTIVO";
                     }
+                    this.fillParametro.nidanio      = '';
+                    this.fillParametro.nidmes       = '';
+                    this.fillParametro.dfechainicio = '';
+                    this.fillParametro.dfechafin    = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
