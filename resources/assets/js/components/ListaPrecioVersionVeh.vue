@@ -708,7 +708,7 @@
                                                                                 <td v-text="lpd.cNombreComercial"></td>
                                                                                 <td v-text="lpd.nAnioModelo"></td>
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
-                                                                                <td v-text="lpd.fCostoDealer"></td>
+                                                                                <td><input type="number" v-model="lpd.fCostoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1230,29 +1230,6 @@
                 this.formListaPrecioVh.dfechafin = '',
                 this.formListaPrecioVh.nidtipolista = ''
             },
-            /*actualizar(){
-                var url = this.ruta + '//categoria/actualizar';
-                if(this.validar()){
-                    return;
-                }
-
-                axios.put(url, {
-                    nombre: this.nombre,
-                    descripcion: this.descripcion,
-                    id: this.id
-                }).then(response => {
-                    this.cerrarModal();
-                    this.listar();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },*/
             activar(objLista){
                 swal({
                     title: 'Estas seguro de activar esta Lista?',
@@ -1594,6 +1571,7 @@
                 this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
                 this.formListaPrecioVh.nnrolistaprecio  = lista.nNroListaPrecio;
                 this.llenarComboMarca();
+                this.formListaPrecioVh.nidmarca = '';
                 this.listarListaPrecioVhDetalle(1);
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
@@ -1715,6 +1693,51 @@
                     } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
+                })
+            },
+            actualizarCostoDealer(objLista){
+                swal({
+                    title: 'Estas seguro de activar esta Lista?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/listapreciovh/UpdListaPrecioDetalle';
+                        axios.post(url, {
+                            'nIdEmpresa'                        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdSucursal'                       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nIdListaPrecioVersionVeh'          : objLista.nIdListaPrecioVersionVeh,
+                            'nIdListaPrecioVersionVehDetalle'   : objLista.nIdListaPrecioVersionVehDetalle,
+                            'fCostoDealer'                      : objLista.fCostoDealer
+                        }).then(response =>{
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal(
+                                'Activado!',
+                                'El Costo Dealer fue actualizado.'
+                                );
+                                this.listarListaPrecioVhDetalle(1);
+                            }
+                            else{
+                                swal('No existe Detalle Lista');
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
                 })
             },
             // =============================================
