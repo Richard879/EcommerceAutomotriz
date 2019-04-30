@@ -4251,6 +4251,7 @@
                     const fileURL = URL.createObjectURL(file);
                     //Abre la URL en una nueva Ventana
                     window.open(fileURL);
+                    this.obtenerFichaPDF(nIdCabeCoti);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4260,6 +4261,27 @@
                         }
                     }
                 });
+            },
+            obtenerFichaPDF(nIdCabeCoti){
+                var url = this.ruta + '/gescotizacion/GetLisDocsModelo';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeCoti
+                    }
+                }).then(response => {
+                    this.verFichaPDF(response.data[0]['cFichaImagePDFUrl']);
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            verFichaPDF(cRutaDocumento){
+                window.open(cRutaDocumento);
             },
             cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';

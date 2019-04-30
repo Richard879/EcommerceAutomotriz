@@ -36,17 +36,17 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa         = $request->nidempresa;
-        $nIdSucursal        = $request->nidsucursal;
-        $nIdProveedor       = $request->nidproveedor;
-        $nIdTipoLista       = $request->nidtipolista;
-        $nIdLinea           = $request->nidlinea;
-        $nIdMarca           = $request->nidmarca;
-        $nIdModelo          = $request->nidmodelo;
-        $nAnioModelo          = $request->naniomodelo;
-        $cNombreComercial   = $request->cnombrecomercial;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdProveedor       =   $request->nidproveedor;
+        $nIdTipoLista       =   $request->nidtipolista;
+        $nIdLinea           =   $request->nidlinea;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $nAnioModelo        =   $request->naniomodelo;
+        $cNombreComercial   =   $request->cnombrecomercial;
 
-        $cNombreComercial   = ($cNombreComercial == "") ? ($cNombreComercial = '') : $cNombreComercial;
+        $cNombreComercial   =   ($cNombreComercial == "") ? ($cNombreComercial = '') : $cNombreComercial;
 
         $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [   $nIdEmpresa,
@@ -264,8 +264,8 @@ class CotizacionController extends Controller
         $nAnioModelo        = $request->naniomodelo;
         $nTipo              = $request->tipo;
 
-        $nAnioFabricacion = ($nAnioFabricacion == NULL) ? ($nAnioFabricacion = 0) : $nAnioFabricacion;
-        $nAnioModelo = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+        $nAnioFabricacion   = ($nAnioFabricacion == NULL) ? ($nAnioFabricacion = 0) : $nAnioFabricacion;
+        $nAnioModelo        = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
 
         $arrayEventoCampania = DB::select('exec [usp_Cotizacion_GetListCampañasByVehiculo] ?, ?, ?, ?, ?, ?',
                                                                         [   $nIdProveedor,
@@ -338,9 +338,9 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdContacto = $request->nidcontacto;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdContacto    =   $request->nidcontacto;
 
         $arraySegReferenciavehiculo = DB::select('exec [usp_Cotizacion_GetRefVehiculoByContacto] ?, ?, ?, ?',
                                                                             [   $nIdEmpresa,
@@ -357,11 +357,11 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa   = $request->nidempresa;
-        $nIdTipoElemento = $request->nidtipoelemen;
-        $cElemenNombre = $request->celementonombre;
-        $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
-        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdTipoElemento    =   $request->nidtipoelemen;
+        $cElemenNombre      =   $request->celementonombre;
+        $nIdTipoElemento    =   ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
+        $cElemenNombre      =   ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
 
         $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementoByTipo] ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -747,10 +747,25 @@ class CotizacionController extends Controller
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
                                                                 'hyundai'               =>  $hyundai,
-                                                                'tabla'   =>  $tabla
+                                                                'tabla'                 =>  $tabla
                                                             ]);
 
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
+    }
+
+    public function GetLisDocsModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
+
+        //OBTENGO LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
+        $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
+                                    [
+                                        $nIdCabeceraCotizacion
+                                    ]);
+
+        return response()->json($arrayDetalleDocs);
     }
 
     public function GetListObsequiosByVehiculo(Request $request)
