@@ -31,4 +31,39 @@ class IntProyectoController extends Controller
             DB::rollBack();
         }
     }
+
+
+    public function SetProyecto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            $arrayVinExiste = [];
+
+            foreach($detalles as $ep=>$det)
+            {
+
+                $objProyecto = DB::select('exec [usp_Proyecto_SetProyecto] ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $det['cNumeroVin'],
+                                                                Auth::user()->id
+                                                            ]);
+                if($objProyecto[0]->nFlagMsje == 0){
+                    array_push($arrayVinExiste,$objProyecto[0]->cNumeroVin);
+                }
+            }
+            $data = [
+                'arrayVinExiste'        =>  $arrayVinExiste
+            ];
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    
 }
