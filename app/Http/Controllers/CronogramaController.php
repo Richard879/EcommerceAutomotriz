@@ -66,4 +66,22 @@ class CronogramaController extends Controller
                                                             ]);
         return response()->json($objCronograma);         
     }
+
+    public function GetCronogramaFechasByMes(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdTipoCronograma  = $request->nidtipocronograma;
+        $nIdAnio            = $request->nidanio;
+        $nIdMes             = $request->nidmes;
+
+        $arrayCronograma = DB::select('exec [usp_Cronog_GetFechasByMes] ?, ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdTipoCronograma,
+                                                            $nIdAnio,
+                                                            $nIdMes
+                                                        ]);
+        return ['arrayCronograma'=>$arrayCronograma];
+    }
 }

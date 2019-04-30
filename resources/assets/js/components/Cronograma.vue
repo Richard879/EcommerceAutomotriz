@@ -58,7 +58,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Mes</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillParametro.nidmes" filterable clearable placeholder="SELECCIONE" >
+                                                        <el-select v-model="fillParametro.nidmes" filterable clearable placeholder="SELECCIONE" @change="obtenerFecha()">
                                                             <el-option
                                                                 v-for="item in arrayMes"
                                                                 :key="item.nParDstCodigo"
@@ -296,6 +296,32 @@
                     }
                 });
             },
+            obtenerFecha(){
+                var url = this.ruta + '/cronograma/GetCronogramaFechasByMes';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipocronograma' : this.fillParametro.nidtipocronograma,
+                        'nidanio'           : this.fillParametro.nidanio,
+                        'nidmes'            : this.fillParametro.nidmes
+                    }
+                }).then(response => {
+                    if(response.data.arrayCronograma.length)
+                    {
+                        this.fillParametro.dfechainicio = response.data.arrayCronograma[0].dFechaInicio;
+                        this.fillParametro.dfechafin    = response.data.arrayCronograma[0].dFechaFin;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             validarBusqueda(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -468,11 +494,7 @@
                     })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
