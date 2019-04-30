@@ -299,6 +299,29 @@
                     }
                 });
             },
+            listarMesesPorAnio(){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo'         : this.fillParametro.nidanio,
+                        'nparsrcgrupoarametro'  : 110040,
+                        'npardstcodigo'         : 0,
+                        'npardstgrupoarametro'  : 110041,
+                        'opcion'                : 1
+                    }
+                }).then(response => {
+                    this.arrayMes = response.data.arrayParParametro;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             obtenerFecha(){
                 var url = this.ruta + '/cronograma/GetCronogramaFechasByMes';
 
@@ -339,35 +362,7 @@
                     this.error = 1;
                 }
                 return this.error;
-            },
-            listarMesesPorAnio(){
-                /*if(this.validarBusqueda()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }*/
-                var url = this.ruta + '/parparametro/GetParParametro';
-
-                axios.get(url, {
-                    params: {
-                        'nparsrccodigo': this.fillParametro.nidanio,
-                        'nparsrcgrupoarametro': 110040,
-                        'npardstcodigo': 0,
-                        'npardstgrupoarametro': 110041,
-                        'opcion' : 1
-                    }
-                }).then(response => {
-                    this.arrayMes = response.data.arrayParParametro;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
+            },            
             obtenerCronogramaActivo(){
                 var url = this.ruta + '/cronograma/GetCronogramaActivoByTipo';
 
