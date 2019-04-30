@@ -461,7 +461,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click="asignarProveedor(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="proveedor.cParNombre"></td>
@@ -962,10 +962,10 @@
                     if(this.vistaFormulario){
                         this.arrayVersionVehiculo=[];
                     }
-                    this.formVersion.nidmarca = '';
-                    this.arrayModelo = [];
-                    this.formVersion.nidmodelo = '';
-                    //this.llenarComboModelo();
+                    if(this.accion != 2){
+                        this.formVersion.nidmarca = '';
+                    }
+                    this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -990,7 +990,9 @@
                     if(this.vistaFormulario){
                         this.arrayVersionVehiculo=[];
                     }
-                    this.formVersion.nidmodelo = '';
+                    if(this.accion != 2){
+                        this.formVersion.nidmodelo = '';
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1037,13 +1039,14 @@
                 this.paginationModal.current_page=page;
                 this.listarProveedores(page);
             },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formVersion.nidproveedor = nProveedorId;
-                this.formVersion.cproveedornombre = cProveedorNombre;
+            asignarProveedor(objProveedor){
+                this.formVersion.nidproveedor       = objProveedor.nIdPar;
+                this.formVersion.cproveedornombre   = objProveedor.cParNombre;
                 this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
+                //this.arrayMarca = [];
+                //this.arrayModelo = [];
                 this.llenarComboLinea();
+                this.arrayVersionVehiculo = [];
             },
             buscarVersionVehiculo(){
                 if(this.validarBusqueda()){
@@ -1263,14 +1266,14 @@
 
                 var url = this.ruta + '/versionvehiculo/SetVersion';
                 axios.post(url, {
-                    nIdEmpresa      :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdProveedor    :   parseInt(this.formVersion.nidproveedor),
-                    nIdClase        :   parseInt(this.formVersion.nidclase),
-                    nIdSubClase     :   parseInt(this.formVersion.nidsubclase),
-                    nIdLinea        :   parseInt(this.formVersion.nidlinea),
-                    nIdMarca        :   parseInt(this.formVersion.nidmarca),
-                    nIdModelo       :   parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial:   this.formVersion.cnombrecomercial.toUpperCase().toString()
+                    'nIdEmpresa'      :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdProveedor'    :   parseInt(this.formVersion.nidproveedor),
+                    'nIdClase'        :   parseInt(this.formVersion.nidclase),
+                    'nIdSubClase'     :   parseInt(this.formVersion.nidsubclase),
+                    'nIdLinea'        :   parseInt(this.formVersion.nidlinea),
+                    'nIdMarca'        :   parseInt(this.formVersion.nidmarca),
+                    'nIdModelo'       :   parseInt(this.formVersion.nidmodelo),
+                    'cNombreComercial':   this.formVersion.cnombrecomercial.toUpperCase().toString()
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -1337,15 +1340,15 @@
                 }
 
                 axios.post(url, {
-                    nIdVersionVeh: parseInt(this.formVersion.nidversionveh),
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdProveedor: parseInt(this.formVersion.nidproveedor),
-                    nIdClase: parseInt(this.formVersion.nidclase),
-                    nIdSubClase: parseInt(this.formVersion.nidsubclase),
-                    nIdLinea: parseInt(this.formVersion.nidlinea),
-                    nIdMarca: parseInt(this.formVersion.nidmarca),
-                    nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
+                    'nIdVersionVeh' : parseInt(this.formVersion.nidversionveh),
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdProveedor'  : parseInt(this.formVersion.nidproveedor),
+                    'nIdClase'      : parseInt(this.formVersion.nidclase),
+                    'nIdSubClase'   : parseInt(this.formVersion.nidsubclase),
+                    'nIdLinea'      : parseInt(this.formVersion.nidlinea),
+                    'nIdMarca'      : parseInt(this.formVersion.nidmarca),
+                    'nIdModelo'     : parseInt(this.formVersion.nidmodelo),
+                    'cNombreComercial': this.formVersion.cnombrecomercial.toUpperCase().toString()
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -1438,11 +1441,7 @@
                     })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
