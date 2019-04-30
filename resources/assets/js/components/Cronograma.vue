@@ -103,12 +103,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
+                                            <div class="col-sm-9 offset-sm-4">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarCronograma()">
                                                     <i class="fa fa-save"></i> Registrar
                                                 </button>
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarCronograma()">
-                                                    <i class="fa fa-save"></i> Activar
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="activarCronograma()">
+                                                    <i class="fa fa-check"></i> Activar
                                                 </button>
                                             </div>
                                         </div>
@@ -314,6 +314,10 @@
                     {
                         this.fillParametro.dfechainicio = response.data.arrayCronograma[0].dFechaInicio;
                         this.fillParametro.dfechafin    = response.data.arrayCronograma[0].dFechaFin;
+                    }
+                    else{
+                        this.fillParametro.dfechainicio = '';
+                        this.fillParametro.dfechafin    = '';
                     }
                 }).catch(error => {
                     console.log(error);
