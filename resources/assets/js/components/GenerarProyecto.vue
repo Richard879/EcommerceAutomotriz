@@ -118,7 +118,7 @@
                                                                                     <template v-if="proyecto.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">{{ proyecto.cFlagVistaIntegracion + ' ' + proyecto.cNumeroVin }}</div>
-                                                                                            <i @click="validarSapArticulo(proyecto)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                            <i @click="validarAddonProyecto(proyecto)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -148,7 +148,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -406,6 +406,7 @@
                 jsonRespuesta: '',
                 arraySapUpdSgc: [],
                 arraySapProyecto: [],
+                arraySapProyectoAddon: [],
                 // ============================================================
                 page: 1,
                 perPage: 10,
@@ -502,17 +503,16 @@
             listarProyectos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/proyecto/GetAddonProyecto';
+                var url = this.ruta + '/proyecto/AddonGetProyecto';
                 axios.get(url, {
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfechainicio'  : this.fillCompra.dfechainicio,
                         'dfechafin'     : this.fillCompra.dfechafin,
-                        'cnumerovin'    : this.fillCompra.cnumerovin,
-                        'page'          : page
+                        'cnumerovin'    : this.fillCompra.cnumerovin
                     }
                 }).then(response => {
-                    this.arrayProyectoRpta = response.data.arrayCompra;
+                    this.arrayProyectoRpta = response.data.arrayAddonProyecto;
                     this.paginateProyecto(this.arrayProyectoRpta, page);
                     $("#myBar").hide();
                 }).catch(error => {
@@ -532,7 +532,7 @@
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
                 this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayCompra            = data.slice(this.pagination.from, this.pagination.to);
+                this.arrayProyecto          = data.slice(this.pagination.from, this.pagination.to);
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
@@ -642,7 +642,7 @@
 
                     if(me.arraySapVin.length){
                         setTimeout(function() {
-                            me.registroSapBusinessProyecto();
+                            me.registroSapBusinessProyectoAddon();
                         }, 1200);
                     }
                     else{
@@ -659,7 +659,7 @@
                     }
                 });
             },
-            registroSapBusinessProyecto(){
+            registroSapBusinessProyectoAddon(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO PROYECTO CON SAP BUSINESS ONE...");
                 
@@ -704,7 +704,7 @@
                     }
                 });
             },
-            registroSgcProyecto(){
+            registroSgcProyectoAddon(){
                 let me = this;
                 
                 var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
@@ -768,23 +768,19 @@
             },
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
-            validarSapArticulo(objCompra){
+            validarAddonProyecto(objCompra){
                 this.mostrarProgressBar();
 
                 let me = this;
 
-                me.arraySapCompra.push({
-                    'cNumeroVin'        : objCompra.cNumeroVin
-                });
-
-                //Verifico Si existe Artículo
-                if(!objCompra.cNumeroVin){
+                //Verifico Si existe Proyecto
+                if(!objCompra.cCode){
                     //==============================================================
                     //================== REGISTRO ARTICULO EN SAP ===============
-                    me.generarSapProyecto(objCompra);
+                    me.generarSapProyectoAddon(objCompra);
                 }
             },
-            generarSapProyecto(objCompra){
+            generarSapProyectoAddon(objCompra){
                 let me = this;
                 //Verifico Si NO existe Proyecto De EXCEL
                 if(!objCompra.cCode){
@@ -819,8 +815,8 @@
                                 //==============================================================
                                 //================== ACTUALIZO TABLA PROYECTO SGC ===============
                                 setTimeout(function() {
-                                    me.generaActualizaProyecto(objCompra);
-                                }, 1200);
+                                    me.generaActualizaProyectoAddon(objCompra);
+                                }, 800);
                             }
                         });
                     }).catch(error => {
@@ -835,16 +831,12 @@
                     });
                 }
                 else{
-                    //==============================================================
-                    //================== REGISTRO TARJETA EQUIPO ===============
-                    setTimeout(function() {
-                        me.generarSapTarjetaEquipo(objCompra);
-                    }, 800);
+                    me.confirmaProyecto(objCompra);
                 }
             },
-            generaActualizaProyecto(objCompra){
+            generaActualizaProyectoAddon(objCompra){
                 let me = this;
-                var sapUrl = me.ruta + '/proyecto/SetIntegraProyecto';
+                var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
@@ -893,7 +885,7 @@
                 this.arraySapProyecto= [],
                 this.arraySapTarjetaEquipo= [],
                 this.arraySapLlamadaServicio= [],
-                this.arraySapCompra= [],
+                this.arraySapProyectoAddon= [],
                 this.arraySapActividad= [],
                 this.arraySapSolucion= [],
                 //Tbls Costo

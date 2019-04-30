@@ -87,4 +87,26 @@ class IntProyectoController extends Controller
             DB::rollBack();
         }
     }
+
+    public function AddonGetProyecto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nidempresa;
+        $dFechaInicio   = $request->dfechainicio;
+        $dFechaFin      = $request->dfechafin;
+        $cNumeroVin     = $request->cnumerovin;
+
+        $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroVin     = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+
+        $arrayAddonProyecto = DB::select('exec [usp_Addon_GetProyectoAddon] ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $cNumeroVin
+                                                            ]);
+        return ['arrayAddonProyecto'=>$arrayAddonProyecto];
+    }
 }
