@@ -592,7 +592,7 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/proyecto/SetProyectoAddon';
+                var url = this.ruta + '/proyecto/AddonSetProyecto';
                 axios.post(url, {
                     'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'data'            : this.arrayExcel
@@ -684,7 +684,7 @@
             },
             registroSgcProyecto(){
                 let me = this;
-                var sapUrl = me.ruta + '/proyecto/SetIntegraProyectoAddon';
+                var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {

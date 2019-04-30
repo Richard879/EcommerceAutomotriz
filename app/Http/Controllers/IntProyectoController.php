@@ -33,7 +33,7 @@ class IntProyectoController extends Controller
     }
 
 
-    public function SetProyectoAddon(Request $request)
+    public function AddonSetProyecto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -46,7 +46,7 @@ class IntProyectoController extends Controller
             foreach($detalles as $ep=>$det)
             {
 
-                $objProyecto = DB::select('exec [usp_ProyectoAddon_SetProyecto] ?, ?, ?',
+                $objProyecto = DB::select('exec [usp_Addon_SetProyectoAddon] ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $det['cNumeroVin'],
                                                                 Auth::user()->id
@@ -65,7 +65,7 @@ class IntProyectoController extends Controller
         }
     }
 
-    public function SetIntegraProyectoAddon(Request $request)
+    public function AddonIntegraSetProyecto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -74,7 +74,7 @@ class IntProyectoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objProyecto = DB::select('exec [usp_Integra_SetIntegraProyectoAddon] ?, ?, ?, ?',
+                $objProyecto = DB::select('exec [usp_AddonIntegra_SetIntegraProyectoAddon] ?, ?, ?, ?',
                                                             [   $det['cCode'],
                                                                 $det['cName'],
                                                                 $det['cLogRespuesta'],

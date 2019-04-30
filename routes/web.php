@@ -443,8 +443,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::post('/proyecto/importFileProyecto','ExcelController@importFileProyecto');
     Route::post('/proyecto/readFileProyecto', 'ExcelController@readFileProyecto');
-    Route::post('/proyecto/SetProyectoAddon', 'IntProyectoController@SetProyectoAddon');
-    Route::post('/proyecto/SetIntegraProyectoAddon','IntProyectoController@SetIntegraProyectoAddon');
+    Route::post('/proyecto/AddonSetProyecto', 'IntProyectoController@AddonSetProyecto');
+    Route::post('/proyecto/AddonIntegraSetProyecto','IntProyectoController@AddonIntegraSetProyecto');
 
     //INTEGRACION SQL SERVER
     Route::post('/articulo/SetIntegraArticulo','IntArticuloController@SetIntegraArticulo');
