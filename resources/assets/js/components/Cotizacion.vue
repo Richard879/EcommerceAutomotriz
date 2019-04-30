@@ -258,7 +258,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2429,6 +2429,7 @@
                     ntipopersona: 1
                 },
                 arrayCotizaciones: [],
+                arrayCotizacionesRpta: [],
                 arrayEstadoCotizacion: [],
                 // =============================================================
                 // MODAL DETALLE COTIZACION
@@ -2601,6 +2602,10 @@
                     { value: '1', text: 'NATURAL'},
                     { value: '2', text: 'JURIDICA'}
                 ],
+                // ============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -2880,26 +2885,27 @@
                 var url = this.ruta + '/gescotizacion/GetListCotizacionesByIdVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio'          :   this.fillMisCotizaciones.dfechainicio,
-                        'dfechafin'             :   this.fillMisCotizaciones.dfechafin,
-                        'nidmarca'              :   this.fillMisCotizaciones.nidmarca,
-                        'nidmodelo'             :   this.fillMisCotizaciones.nidmodelo,
-                        'cnumerocotizacion'     :   this.fillMisCotizaciones.cnumerocotizacion,
-                        'nidestadocotizacion'   :   this.fillMisCotizaciones.nidestadocotizacion,
-                        'ccontacto'             :   this.fillMisCotizaciones.ccontacto,
-                        'ntipopersona'          :   this.fillMisCotizaciones.ntipopersona,
-                        'page' : page
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'          : this.fillMisCotizaciones.dfechainicio,
+                        'dfechafin'             : this.fillMisCotizaciones.dfechafin,
+                        'nidmarca'              : this.fillMisCotizaciones.nidmarca,
+                        'nidmodelo'             : this.fillMisCotizaciones.nidmodelo,
+                        'cnumerocotizacion'     : this.fillMisCotizaciones.cnumerocotizacion,
+                        'nidestadocotizacion'   : this.fillMisCotizaciones.nidestadocotizacion,
+                        'ccontacto'             : this.fillMisCotizaciones.ccontacto,
+                        'ntipopersona'          : this.fillMisCotizaciones.ntipopersona,
+                        'page'                  : page
                     }
                 }).then(response => {
-                    this.arrayCotizaciones          = response.data.arrayCotizaciones.data;
-                    this.pagination.current_page    =  response.data.arrayCotizaciones.current_page;
+                    this.arrayCotizacionesRpta      = response.data.arrayCotizaciones;
+                    this.paginateCotizacion(this.arrayCotizacionesRpta, page);
+                    /*this.pagination.current_page    = response.data.arrayCotizaciones.current_page;
                     this.pagination.total           = response.data.arrayCotizaciones.total;
                     this.pagination.per_page        = response.data.arrayCotizaciones.per_page;
                     this.pagination.last_page       = response.data.arrayCotizaciones.last_page;
                     this.pagination.from            = response.data.arrayCotizaciones.from;
-                    this.pagination.to              = response.data.arrayCotizaciones.to;
+                    this.pagination.to              = response.data.arrayCotizaciones.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2911,9 +2917,19 @@
                     }
                 });
             },
+            paginateCotizacion(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayCotizaciones      = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPaginaCotizacion(page){
                 this.pagination.current_page=page;
-                this.listarMisCotizaciones(page);
+                this.paginateCotizacion(this.arrayCotizacionesRpta, page);
+                //this.listarMisCotizaciones(page);
             },
             // =================================================================
             // VER DETALLE COTIZACION

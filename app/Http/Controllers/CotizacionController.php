@@ -330,7 +330,7 @@ class CotizacionController extends Controller
                                                                     Auth::user()->id
                                                                 ]);
 
-        $arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
+        //$arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
         return ['arrayCotizaciones'=>$arrayCotizaciones];
     }
 
