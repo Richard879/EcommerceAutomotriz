@@ -111,6 +111,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/listapreciovh/activar','ListaPrecioVersionVehController@activar');
     Route::put('/listapreciovh/desactivar','ListaPrecioVersionVehController@desactivar');
     Route::put('/listapreciovh/desactivarDetalle','ListaPrecioVersionVehController@desactivarDetalle');
+    Route::post('/listapreciovh/UpdListaPrecioDetalle','ListaPrecioVersionVehController@UpdListaPrecioDetalle');
 
     // Configurador Modelos
     Route::get('/modeloconfig/GetListModelos', 'ModeloConfigController@GetListModelos');

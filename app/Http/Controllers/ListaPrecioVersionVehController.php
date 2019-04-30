@@ -194,4 +194,19 @@ class ListaPrecioVersionVehController extends Controller
                                                 ]);
         return response()->json($listapreciovh);
     }
+
+    public function UpdListaPrecioDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $versionvehiculo = DB::select('exec [usp_ListaPrecioVh_UpdListaPrecioDetalle] ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $request->nIdListaPrecioVersionVeh,
+                                                                $request->nIdListaPrecioVersionVehDetalle,
+                                                                $request->fCostoDealer,
+                                                                Auth::user()->id
+                                                            ]);
+        return response()->json($versionvehiculo);
+    }
 }
