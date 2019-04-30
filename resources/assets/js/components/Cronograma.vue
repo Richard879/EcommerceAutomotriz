@@ -104,6 +104,9 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarCronograma()">
+                                                    <i class="fa fa-save"></i> Registrar
+                                                </button>
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarCronograma()">
                                                     <i class="fa fa-save"></i> Activar
                                                 </button>
@@ -427,36 +430,82 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/cronograma/SetActivarCronograma';
-                            axios.post(url, {
-                                'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                                'nIdTipoCronograma': this.fillParametro.nidtipocronograma,
-                                'nIdAnio': this.fillParametro.nidanio,
-                                'nIdMes': this.fillParametro.nidmes,
-                                'dFechaInicio': this.fillParametro.dfechainicio,
-                                'dFechaFin': this.fillParametro.dfechafin
-                            }).then(response => {
-                                swal(
-                                    'Activado!',
-                                    'El cronograma fue activado.'
-                                );
-                                this.obtenerCronogramaActivo();
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/cronograma/SetActivarCronograma';
+                        axios.post(url, {
+                            'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdTipoCronograma' : this.fillParametro.nidtipocronograma,
+                            'nIdAnio'           : this.fillParametro.nidanio,
+                            'nIdMes'            : this.fillParametro.nidmes,
+                            'dFechaInicio'      : this.fillParametro.dfechainicio,
+                            'dFechaFin'         : this.fillParametro.dfechafin
+                        }).then(response => {
+                            swal(
+                                'Activado!',
+                                'El cronograma fue activado.'
+                            );
+                            this.obtenerCronogramaActivo();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                });
+            },
+            registrarCronograma(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                swal({
+                    title: 'Estas seguro de activar este Cronograma?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/cronograma/SetActivarCronograma';
+                        axios.post(url, {
+                            'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdTipoCronograma' : this.fillParametro.nidtipocronograma,
+                            'nIdAnio'           : this.fillParametro.nidanio,
+                            'nIdMes'            : this.fillParametro.nidmes,
+                            'dFechaInicio'      : this.fillParametro.dfechainicio,
+                            'dFechaFin'         : this.fillParametro.dfechafin
+                        }).then(response => {
+                            swal(
+                                'Activado!',
+                                'El cronograma fue activado.'
+                            );
+                            this.obtenerCronogramaActivo();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                });
             },
             desactivar(parametro){
                 swal({
