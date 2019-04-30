@@ -92,6 +92,7 @@ Vue.component('tipocambio', require('./components/TipoCambio.vue'));
 Vue.component('almacen', require('./components/AlmacenConfig.vue'));
 Vue.component('accesorioconfig', require('./components/AccesorioModeloConfig.vue'));
 Vue.component('modeloconfig', require('./components/ModeloConfig.vue'));
+Vue.component('generaproyecto', require('./components/GenerarProyecto.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -2024,7 +2024,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION ARTICULO SGC ===============
                     setTimeout(function() {
                         me.registroSgcArticulo();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2045,7 +2045,7 @@
                     //================== REGITRO DE PROYECTO EN SAP ===============
                     setTimeout(function() {
                         me.registroSapBusinessProyecto();
-                    }, 1200);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2117,7 +2117,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 1000);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
