@@ -148,7 +148,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -502,17 +502,16 @@
             listarProyectos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/proyecto/GetAddonProyecto';
+                var url = this.ruta + '/proyecto/AddonGetProyecto';
                 axios.get(url, {
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfechainicio'  : this.fillCompra.dfechainicio,
                         'dfechafin'     : this.fillCompra.dfechafin,
-                        'cnumerovin'    : this.fillCompra.cnumerovin,
-                        'page'          : page
+                        'cnumerovin'    : this.fillCompra.cnumerovin
                     }
                 }).then(response => {
-                    this.arrayProyectoRpta = response.data.arrayCompra;
+                    this.arrayProyectoRpta = response.data.arrayAddonProyecto;
                     this.paginateProyecto(this.arrayProyectoRpta, page);
                     $("#myBar").hide();
                 }).catch(error => {
@@ -532,7 +531,7 @@
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
                 this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayCompra            = data.slice(this.pagination.from, this.pagination.to);
+                this.arrayProyecto          = data.slice(this.pagination.from, this.pagination.to);
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
