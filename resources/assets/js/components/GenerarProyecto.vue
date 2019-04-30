@@ -641,6 +641,8 @@
             },
             registroSapBusinessProyecto(){
                 let me = this;
+                me.loadingProgressBar("INTEGRANDO PROYECTO CON SAP BUSINESS ONE...");
+                
                 me.arraySapVin.map(function(x, y){
                     me.arraySapProyecto.push({
                         'cCode': x.cNumeroVin,
@@ -684,6 +686,7 @@
             },
             registroSgcProyecto(){
                 let me = this;
+                
                 var sapUrl = me.ruta + '/proyecto/AddonIntegraSetProyecto';
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
