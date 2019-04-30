@@ -58,7 +58,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Mes</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillParametro.nidmes" filterable clearable placeholder="SELECCIONE" >
+                                                        <el-select v-model="fillParametro.nidmes" filterable clearable placeholder="SELECCIONE" @change="obtenerFecha()">
                                                             <el-option
                                                                 v-for="item in arrayMes"
                                                                 :key="item.nParDstCodigo"
@@ -103,9 +103,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarCronograma()">
-                                                    <i class="fa fa-save"></i> Activar
+                                            <div class="col-sm-9 offset-sm-4">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarCronograma()">
+                                                    <i class="fa fa-save"></i> Registrar
+                                                </button>
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="activarCronograma()">
+                                                    <i class="fa fa-check"></i> Activar
                                                 </button>
                                             </div>
                                         </div>
@@ -296,32 +299,16 @@
                     }
                 });
             },
-            validarBusqueda(){
-                this.error = 0;
-                this.mensajeError =[];
-                if(this.fillParametro.nidgrupopar == 0 || !this.fillParametro.nidgrupopar){
-                    this.mensajeError.push('Debes Seleccionar un Grupo');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
             listarMesesPorAnio(){
-                /*if(this.validarBusqueda()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }*/
                 var url = this.ruta + '/parparametro/GetParParametro';
 
                 axios.get(url, {
                     params: {
-                        'nparsrccodigo': this.fillParametro.nidanio,
-                        'nparsrcgrupoarametro': 110040,
-                        'npardstcodigo': 0,
-                        'npardstgrupoarametro': 110041,
-                        'opcion' : 1
+                        'nparsrccodigo'         : this.fillParametro.nidanio,
+                        'nparsrcgrupoarametro'  : 110040,
+                        'npardstcodigo'         : 0,
+                        'npardstgrupoarametro'  : 110041,
+                        'opcion'                : 1
                     }
                 }).then(response => {
                     this.arrayMes = response.data.arrayParParametro;
@@ -335,6 +322,47 @@
                     }
                 });
             },
+            obtenerFecha(){
+                var url = this.ruta + '/cronograma/GetCronogramaFechasByMes';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipocronograma' : this.fillParametro.nidtipocronograma,
+                        'nidanio'           : this.fillParametro.nidanio,
+                        'nidmes'            : this.fillParametro.nidmes
+                    }
+                }).then(response => {
+                    if(response.data.arrayCronograma.length)
+                    {
+                        this.fillParametro.dfechainicio = response.data.arrayCronograma[0].dFechaInicio;
+                        this.fillParametro.dfechafin    = response.data.arrayCronograma[0].dFechaFin;
+                    }
+                    else{
+                        this.fillParametro.dfechainicio = '';
+                        this.fillParametro.dfechafin    = '';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarBusqueda(){
+                this.error = 0;
+                this.mensajeError =[];
+                if(this.fillParametro.nidgrupopar == 0 || !this.fillParametro.nidgrupopar){
+                    this.mensajeError.push('Debes Seleccionar un Grupo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },            
             obtenerCronogramaActivo(){
                 var url = this.ruta + '/cronograma/GetCronogramaActivoByTipo';
 
@@ -401,36 +429,81 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/cronograma/SetActivarCronograma';
-                            axios.post(url, {
-                                'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                                'nIdTipoCronograma': this.fillParametro.nidtipocronograma,
-                                'nIdAnio': this.fillParametro.nidanio,
-                                'nIdMes': this.fillParametro.nidmes,
-                                'dFechaInicio': this.fillParametro.dfechainicio,
-                                'dFechaFin': this.fillParametro.dfechafin
-                            }).then(response => {
-                                swal(
-                                    'Activado!',
-                                    'El cronograma fue activado.'
-                                );
-                                this.obtenerCronogramaActivo();
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/cronograma/SetActivarCronograma';
+                        axios.post(url, {
+                            'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdTipoCronograma' : this.fillParametro.nidtipocronograma,
+                            'nIdAnio'           : this.fillParametro.nidanio,
+                            'nIdMes'            : this.fillParametro.nidmes,
+                            'dFechaInicio'      : this.fillParametro.dfechainicio,
+                            'dFechaFin'         : this.fillParametro.dfechafin
+                        }).then(response => {
+                            swal(
+                                'Activado!',
+                                'El cronograma fue activado.'
+                            );
+                            this.obtenerCronogramaActivo();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                });
+            },
+            registrarCronograma(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                swal({
+                    title: 'Estas seguro de registrar este Cronograma?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Registrar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/cronograma/SetCronograma';
+                        axios.post(url, {
+                            'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdTipoCronograma' : this.fillParametro.nidtipocronograma,
+                            'nIdAnio'           : this.fillParametro.nidanio,
+                            'nIdMes'            : this.fillParametro.nidmes,
+                            'dFechaInicio'      : this.fillParametro.dfechainicio,
+                            'dFechaFin'         : this.fillParametro.dfechafin
+                        }).then(response => {
+                            swal(
+                                'Activado!',
+                                'El cronograma fue registrado.'
+                            );
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                });
             },
             desactivar(parametro){
                 swal({
@@ -468,11 +541,7 @@
                     })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },

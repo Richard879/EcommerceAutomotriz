@@ -18,12 +18,12 @@ class SapPedidoController extends Controller
             'base_uri'  => 'http://172.20.0.10/'
         ]);
 
-        $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
+        /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
                                                     [
                                                         Auth::user()->id
                                                     ]);
         // Obtener el EmployeeCode del Usuario Autenticado
-        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
+        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;*/
 
         // ======================================================================
         // GENERAR ORDEN VENTA PARA VEHÍCULO
@@ -31,7 +31,7 @@ class SapPedidoController extends Controller
         //Setear arreglos para Pedido (Vehiculo)
         $arrayVehiculo  = [];
         $rptaSap        = [];
-        $ReceptionDate              =   date('Y-m-d');
+        $ReceptionDate  = date('Y-m-d');
 
         $arraySapPedido = $request->arraySapPedido;
         foreach ($arraySapPedido as $key => $value) {
@@ -45,7 +45,7 @@ class SapPedidoController extends Controller
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
                     //"DocTotal"          =>  (string)$value['fSubTotalDolares'],
-                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    "SalesPersonCode"   =>  (string)$value['nSalesEmployeeCode'],
                     "U_SYP_MDMT"        =>  "01",
                     "DocumentLines" => [
                         [
