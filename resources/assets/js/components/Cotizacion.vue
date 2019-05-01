@@ -3122,13 +3122,13 @@
                 });
             },
             paginateContactosPorVendedor(data, page){
-                this.pagination.current_page    = page;
-                this.pagination.total           = data.length;
-                this.pagination.per_page        = this.perPage;
-                this.pagination.last_page       = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from            = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to              = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayContactosPorVendedor  = data.slice(this.pagination.from, this.pagination.to);
+                this.paginationModal.current_page    = page;
+                this.paginationModal.total           = data.length;
+                this.paginationModal.per_page        = this.perPage;
+                this.paginationModal.last_page       = Math.ceil(data.length / this.paginationModal.per_page);
+                this.paginationModal.from            = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page;
+                this.paginationModal.to              = (this.paginationModal.current_page * this.paginationModal.per_page);
+                this.arrayContactosPorVendedor  = data.slice(this.paginationModal.from, this.paginationModal.to);
             },
             cambiarPaginaContactosPorVendedor(page){
                 this.pagination.current_page=page;
