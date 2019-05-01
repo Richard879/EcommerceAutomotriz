@@ -330,7 +330,7 @@ class CotizacionController extends Controller
                                                                     Auth::user()->id
                                                                 ]);
 
-        $arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
+        //$arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
         return ['arrayCotizaciones'=>$arrayCotizaciones];
     }
 
@@ -832,7 +832,7 @@ class CotizacionController extends Controller
                                                                                 $nIdVendedor
                                                                                 ));
 
-        $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
+        //$arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
     }
 }

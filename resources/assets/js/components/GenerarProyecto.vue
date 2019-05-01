@@ -643,7 +643,7 @@
                     if(me.arraySapVin.length){
                         setTimeout(function() {
                             me.registroSapBusinessProyectoAddon();
-                        }, 1200);
+                        }, 20000);
                     }
                     else{
                         me.loadingProgressBar("OCURRIO UN PROBLEMA...");
@@ -692,8 +692,8 @@
                     //===========================================================================
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
-                        me.registroSgcProyecto();
-                    }, 1200);
+                        me.registroSgcProyectoAddon();
+                    }, 20000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -711,11 +711,9 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    //===================================================================
-                    //================== REGITRO DE TARJETA EQUIPO EN SAP ===============
                     setTimeout(function() {
                         me.verResultados();
-                    }, 1200);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -736,7 +734,7 @@
                     me.modal = 1;
                     me.attachment = [];
                 }else{
-                    swal('Compra registrada correctamente');
+                    swal('Proyectos registrados correctamente');
                 }
             },
             validarRegistro(){
