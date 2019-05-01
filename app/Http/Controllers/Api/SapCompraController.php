@@ -56,6 +56,8 @@ class SapCompraController extends Controller
 
         $data = $request->data;
         foreach ($data as $key => $value) {
+            $value['fTotalCompra']= str_replace(",", "", $value['fTotalCompra']);
+
             $json = [
                 'json' => [
                     "CardCode"          =>  $request->cCardCode,
