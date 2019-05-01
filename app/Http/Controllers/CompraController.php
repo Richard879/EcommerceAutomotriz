@@ -73,7 +73,7 @@ class CompraController extends Controller
                 //$fTotalCompra = preg_replace("[^0-9]", '', $det['fTotalCompra']);
                 //$fTotalCompra = str_replace("$", "", $det['fTotalCompra']);
                 //$fTotalCompra = str_replace(",", ".", $fTotalCompra);
-                $det['fTotalCompra']= str_replace(",", ".", $det['fTotalCompra']);
+                $det['fTotalCompra']= str_replace(",", "", $det['fTotalCompra']);
                 //echo $fTotalCompra. " ";
 
                 $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
