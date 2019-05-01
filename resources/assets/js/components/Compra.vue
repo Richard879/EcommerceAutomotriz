@@ -154,13 +154,16 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="card">
-                                                        <div class="card-header">
+                                                        <div class="card-header" style="display: flex;align-items: center;">
                                                             <h3 class="h4">LISTADO</h3>
+                                                            &nbsp;&nbsp;
                                                             <template v-if="arrayCompra.length">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Exportar Compra(s)</div>
-                                                                    <i @click="exportarExcel()" :style="'color:#796AEE'" class="fa-md fa fa-file-export"></i>
-                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarExcel()">
+                                                                        <i :style="'color:#796AEE'" class="fa-md fa fa-file"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </template>
                                                         </div>
                                                         <div class="card-body">

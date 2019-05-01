@@ -4,10 +4,11 @@ namespace App\Exports;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-class CompraExport implements FromQuery
+class CompraExport implements FromQuery, ShouldQueue
 {
     use Exportable;
 
