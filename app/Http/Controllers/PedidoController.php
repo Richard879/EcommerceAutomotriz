@@ -53,11 +53,12 @@ class PedidoController extends Controller
 
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayCompra = DB::select('exec [usp_Pedido_GetLstCompraByIdModelo] ?, ?, ?, ?',
+        $arrayCompra = DB::select('exec [usp_Pedido_GetLstCompraByIdModelo] ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $nIdCabeceraCotizacion,
-                                                                    $cNumeroVin
+                                                                    $cNumeroVin,
+                                                                    Auth::user()->id
                                                                     ));
 
         $arrayCompra = ParametroController::arrayPaginator($arrayCompra, $request);
