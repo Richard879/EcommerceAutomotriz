@@ -1652,6 +1652,19 @@
                         'nidmodelo'     : this.fillCompra.nidmodelo
                     }
                 }).then(response => {
+                    //Create a Blob from the PDF Stream
+                    // console.log(response.data);
+                    const file = new Blob(
+                        [response.data],
+                        // {type: 'text/html'}
+                        {type: 'application/vnd.ms-excel'}
+                        // {type: 'application/pdf'}
+                        // {type: 'text/csv'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
