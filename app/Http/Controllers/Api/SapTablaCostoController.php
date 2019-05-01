@@ -14,7 +14,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -28,7 +28,7 @@ class SapTablaCostoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/TblCosto/SapSetTblCosto/", $json);
+            $response = $client->request('POST', "/pruebas/TblCosto/SapSetTblCosto/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -39,7 +39,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rptaBeneficio = [];
@@ -79,7 +79,7 @@ class SapTablaCostoController extends Controller
                             ]
                         ];
 
-                        $rptaBeneficio = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+                        $rptaBeneficio = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
                         $rptaSapBeneficio = json_decode($rptaBeneficio->getBody());
                         array_push($array_rptaBeneficio, $rptaSapBeneficio);
                     }
@@ -111,7 +111,7 @@ class SapTablaCostoController extends Controller
                         ]
                     ];
 
-                    $rptaCostoVehiculo = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+                    $rptaCostoVehiculo = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
                     $rptaSAPCostoVehiculo = json_decode($rptaCostoVehiculo->getBody());
                     array_push($array_rptaCostoVehiculo, $rptaSAPCostoVehiculo);
                 }
@@ -130,7 +130,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -158,7 +158,7 @@ class SapTablaCostoController extends Controller
                 ]
             ];
 
-            $rpta = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+            $rpta = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
             $rptaSap = json_decode($rpta->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -174,7 +174,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // =====================================================================================================
@@ -199,7 +199,7 @@ class SapTablaCostoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+        $response = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
         return $response->getBody();
     }
 
@@ -207,7 +207,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // =====================================================================================================
@@ -235,7 +235,7 @@ class SapTablaCostoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/TblCosto/SapPachTblCostoDet/", $json);
+        $response = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
         return $response->getBody();
     }
 }

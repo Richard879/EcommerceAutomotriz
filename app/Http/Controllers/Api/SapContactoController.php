@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\DB;
 class SapContactoController extends Controller
 {
     ////=================== SERVER PUBLISH =====================
-    //'base_uri' => 'http://172.20.0.10/'
-    //$response = $client->request('GET', "/api/Contacto/SapGetValidarContacto", $json);
+    //'base_uri' => 'http://172.20.0.10:8020/'
+    //$response = $client->request('GET', "/pruebas/Contacto/SapGetValidarContacto", $json);
     ////=================== LOCAL SERVER =====================
     //'base_uri' => 'http://172.20.6.55/'
-    //$response = $client->request('GET', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
+    //$response = $client->request('GET', "/Sap/pruebas/Contacto/SapGetValidarContacto/", $json);
     ////=================== LOCAL DEBUG =====================
     //'base_uri' => 'http://localhost:49454/'
-    //$response = $client->request('GET', "/api/Contacto/SapGetValidarContacto/", $json);
+    //$response = $client->request('GET', "/pruebas/Contacto/SapGetValidarContacto/", $json);
 
     /// ============================================================
     /// METODOS SERVICES LAYER
@@ -29,7 +29,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // $User       = Auth::user()->id;
@@ -42,7 +42,7 @@ class SapContactoController extends Controller
                     ]
                 ];
 
-        $response = $client->request('POST', "/api/Contacto/SapGetValidarContacto/", $json);
+        $response = $client->request('POST', "/pruebas/Contacto/SapGetValidarContacto/", $json);
         return $response->getBody();
     }
 
@@ -50,7 +50,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -181,7 +181,7 @@ class SapContactoController extends Controller
             }
         }
 
-        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', "/pruebas/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 
@@ -190,7 +190,7 @@ class SapContactoController extends Controller
         $client = new Client([
             'verify'    => false,
             // 'base_uri'  => 'http://localhost:49454/'
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -222,7 +222,7 @@ class SapContactoController extends Controller
             ];
         }
 
-        $response = $client->request('POST', "/api/Contacto/SapSetContactoUpd/", $json);
+        $response = $client->request('POST', "/pruebas/Contacto/SapSetContactoUpd/", $json);
         return $response->getBody();
     }
 
@@ -230,7 +230,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $CardCode       =   "C". $request->nIdContacto;
@@ -255,7 +255,7 @@ class SapContactoController extends Controller
                ]
            ];
 
-        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', "/pruebas/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 }

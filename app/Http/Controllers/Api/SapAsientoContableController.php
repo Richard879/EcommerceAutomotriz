@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\pruebas;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
@@ -15,7 +15,7 @@ class SapAsientoContableController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -74,7 +74,7 @@ class SapAsientoContableController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/AsientoContable/SapSetAsientoContable/", $json);
+            $response = $client->request('POST', "/pruebas/AsientoContable/SapSetAsientoContable/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -85,7 +85,7 @@ class SapAsientoContableController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -138,7 +138,7 @@ class SapAsientoContableController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/AsientoContable/SapSetAsientoContable/", $json);
+            $response = $client->request('POST', "/pruebas/AsientoContable/SapSetAsientoContable/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

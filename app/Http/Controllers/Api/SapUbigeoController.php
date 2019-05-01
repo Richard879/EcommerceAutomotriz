@@ -14,7 +14,7 @@ class SapUbigeoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $nOpcion     = $request->nopcion;
@@ -22,7 +22,7 @@ class SapUbigeoController extends Controller
         $nOpcion = ($nOpcion == NULL) ? ($nOpcion = 0) : $nOpcion;
         $cFiltro = ($cFiltro == NULL) ? ($cFiltro = '0') : $cFiltro;
 
-        $response = $client->request('GET', "/api/Ubigeo/GetUbigeo/", [
+        $response = $client->request('GET', "/pruebas/Ubigeo/GetUbigeo/", [
                                                                         'query' => ['nOpcion' => $nOpcion,
                                                                                     'cFiltro' => $cFiltro]
                                                                       ]);

@@ -14,7 +14,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -63,7 +63,7 @@ class SapMercanciaController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaByOC/", $json);
+            $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaByOC/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -74,7 +74,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $json = [
@@ -103,7 +103,7 @@ class SapMercanciaController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaEntry/", $json);
+        $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaEntry/", $json);
         $rptaSap = json_decode($response->getBody());
         array_push($array_rpta, $rptaSap);
         return $array_rpta;
@@ -113,7 +113,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -146,7 +146,7 @@ class SapMercanciaController extends Controller
             }
         }
 
-        $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaExit/", $json);
+        $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaExit/", $json);
         $rptaSap = json_decode($response->getBody());
         array_push($array_rpta, $rptaSap);
         return $array_rpta;

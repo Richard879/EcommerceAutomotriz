@@ -14,7 +14,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -42,7 +42,7 @@ class SapLlamadaServicioController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+            $response = $client->request('POST', "/pruebas/LlamadaServicio/SapSetLlamadaServicio/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -53,7 +53,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // ======================================================================
@@ -92,7 +92,7 @@ class SapLlamadaServicioController extends Controller
             }
         }
 
-        $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+        $response = $client->request('POST', "/pruebas/LlamadaServicio/SapSetLlamadaServicio/", $json);
         $rptaSap = json_decode($response->getBody());
         array_push($arrayVehiculo, $rptaSap);
 
@@ -105,7 +105,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -133,7 +133,7 @@ class SapLlamadaServicioController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/LlamadaServicio/SapSetLlamadaServicio/", $json);
+            $response = $client->request('POST', "/pruebas/LlamadaServicio/SapSetLlamadaServicio/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -144,7 +144,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -160,7 +160,7 @@ class SapLlamadaServicioController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/LlamadaServicio/SapPatchLlamadaServicio/", $json);
+            $response = $client->request('POST', "/pruebas/LlamadaServicio/SapPatchLlamadaServicio/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -171,7 +171,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -187,7 +187,7 @@ class SapLlamadaServicioController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/LlamadaServicio/SapSetSolucion/", $json);
+            $response = $client->request('POST', "/pruebas/LlamadaServicio/SapSetSolucion/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

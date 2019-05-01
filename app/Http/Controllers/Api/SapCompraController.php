@@ -17,21 +17,21 @@ class SapCompraController extends Controller
             'base_uri' => 'http://172.20.6.54/',// URI Ejem: https://jsonplaceholder.typicode.com
         ]);
 
-        $response = $client->request('GET', "/Sap/api/Compra/GetListCompraByVin");
+        $response = $client->request('GET', "/Sap/pruebas/Compra/GetListCompraByVin");
 
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
     }*/
 
     ////=================== SERVER PUBLISH =====================
-    //'base_uri' => 'http://172.20.0.10/'
-    //$response = $client->request('POST', "/api/Compra/SapSetCompra", $json);
+    //'base_uri' => 'http://172.20.0.10:8020/'
+    //$response = $client->request('POST', "/pruebas/Compra/SapSetCompra", $json);
     ////=================== LOCAL SERVER =====================
     //'base_uri' => 'http://172.20.6.55/'
-    //$response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
+    //$response = $client->request('POST', "/Sap/pruebas/Compra/SapSetCompra/", $json);
     ////=================== LOCAL DEBUG =====================
     //'base_uri' => 'http://localhost:49454/'
-    //$response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+    //$response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
 
     /// ============================================================
     /// METODOS SERVICES LAYER
@@ -41,7 +41,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -83,7 +83,7 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -94,7 +94,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $nDocEntry          = $request->nDocEntry;
@@ -118,7 +118,7 @@ class SapCompraController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/Compra/SapPatchCompra/", $json);
+        $response = $client->request('POST', "/pruebas/Compra/SapPatchCompra/", $json);
         return $response->getBody();
     }
 
@@ -126,7 +126,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -166,7 +166,7 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

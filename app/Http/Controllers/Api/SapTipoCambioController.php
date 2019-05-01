@@ -15,12 +15,12 @@ class SapTipoCambioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
         
         $dFecha     = $request->dfecha;
 
-        $response = $client->request('GET', "/api/TipoCambio/GetTipoCambio/", [
+        $response = $client->request('GET', "/pruebas/TipoCambio/GetTipoCambio/", [
                                                                                 'query' => ['fecha' => $dFecha]
                                                                             ]);
         return $response->getBody();

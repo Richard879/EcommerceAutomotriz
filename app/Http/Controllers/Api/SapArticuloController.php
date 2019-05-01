@@ -15,7 +15,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $json = [
@@ -24,7 +24,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/Articulo/SapGetValidarArticulo/", $json);
+        $response = $client->request('POST', "/pruebas/Articulo/SapGetValidarArticulo/", $json);
         return $response->getBody();
     }
 
@@ -32,7 +32,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -70,7 +70,7 @@ class SapArticuloController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
+            $response = $client->request('POST', "/pruebas/Articulo/SapSetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -81,7 +81,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -93,7 +93,7 @@ class SapArticuloController extends Controller
             $nWhsCode     = $value['nWhsCode'];
             $cItemCode    = $value['cItemCode'];
 
-            $response = $client->request('POST', "/api/Articulo/SapGetCostoPromedio/", [
+            $response = $client->request('POST', "/pruebas/Articulo/SapGetCostoPromedio/", [
                                                                                         'query' => ['nWhsCode' => $nWhsCode,
                                                                                                     'cItemCode' => $cItemCode]
                                                                                     ]);
@@ -107,12 +107,12 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         /*$cItemCode    = $request->cItemCode;
 
-        $response = $client->request('POST', "/api/Articulo/SapSetSerialNumber/", [
+        $response = $client->request('POST', "/pruebas/Articulo/SapSetSerialNumber/", [
                                                                         'query' => ['cItemCode' => $cItemCode]
                                                                       ]);
         return $response->getBody();*/
@@ -123,7 +123,7 @@ class SapArticuloController extends Controller
         $data = $request->data;
         foreach ($data as $key => $value){
 
-            $response = $client->request('POST', "/api/Articulo/SapSetSerialNumber/", [
+            $response = $client->request('POST', "/pruebas/Articulo/SapSetSerialNumber/", [
                                                                     'query' => ['cItemCode' => (string)$value['cNumeroVin'],
                                                                                 'cItemName' => (string)$value['cNombreComercial']
                                                                                 ]
@@ -139,7 +139,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $cNumeroVin         = $request->cNumeroVin;
@@ -152,7 +152,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/Articulo/SapPatchArticulo/", $json);
+        $response = $client->request('POST', "/pruebas/Articulo/SapPatchArticulo/", $json);
         return $response->getBody();
     }
 
@@ -160,7 +160,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -175,7 +175,7 @@ class SapArticuloController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Articulo/SapGetArticulo/", $json);
+            $response = $client->request('POST', "/pruebas/Articulo/SapGetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -186,7 +186,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
@@ -291,7 +291,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/Articulo/SapPatchArticulo/", $json);
+        $response = $client->request('POST', "/pruebas/Articulo/SapPatchArticulo/", $json);
         return $response->getBody();
     }
 }

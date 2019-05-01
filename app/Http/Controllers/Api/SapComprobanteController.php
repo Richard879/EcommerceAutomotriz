@@ -15,7 +15,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -38,7 +38,7 @@ class SapComprobanteController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Comprobante/SapSetFactura/", $json);
+            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFactura/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -49,7 +49,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -103,7 +103,7 @@ class SapComprobanteController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Comprobante/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -114,7 +114,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -152,7 +152,7 @@ class SapComprobanteController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Comprobante/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -163,7 +163,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -176,7 +176,7 @@ class SapComprobanteController extends Controller
             $nBaseType  = $value['nBaseType'];
             $cItemCode  = $value['cItemCode'];
 
-            $response = $client->request('POST', "/api/Comprobante/SapGetComprobanteByTipo/", [
+            $response = $client->request('POST', "/pruebas/Comprobante/SapGetComprobanteByTipo/", [
                                                                                         'query' => ['nBaseEntry' => $nBaseEntry,
                                                                                                     'nBaseType' => $nBaseType,
                                                                                                     'cItemCode' => $cItemCode]

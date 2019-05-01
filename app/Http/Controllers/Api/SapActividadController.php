@@ -14,7 +14,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -45,7 +45,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -56,7 +56,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -87,7 +87,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -98,7 +98,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         // ======================================================================
@@ -135,7 +135,7 @@ class SapActividadController extends Controller
                     ]
                 ];
 
-                $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
+                $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
                 $rptaSap = json_decode($response->getBody());
                 array_push($arrayVehiculo, $rptaSap);
             }
@@ -175,7 +175,7 @@ class SapActividadController extends Controller
                     ]
                 ];
 
-                $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
+                $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
                 $rptaSap = json_decode($response->getBody());
                 array_push($arrayEV, $rptaSap);
             }
@@ -191,7 +191,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -222,7 +222,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

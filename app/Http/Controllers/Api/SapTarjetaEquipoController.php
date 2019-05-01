@@ -14,7 +14,7 @@ class SapTarjetaEquipoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -31,7 +31,7 @@ class SapTarjetaEquipoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/TarjetaEquipo/SapSetTarjetaEquipo/", $json);
+            $response = $client->request('POST', "/pruebas/TarjetaEquipo/SapSetTarjetaEquipo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -42,7 +42,7 @@ class SapTarjetaEquipoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -58,7 +58,7 @@ class SapTarjetaEquipoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/TarjetaEquipo/SapPatchTarjetaEquipo/", $json);
+            $response = $client->request('POST', "/pruebas/TarjetaEquipo/SapPatchTarjetaEquipo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -69,7 +69,7 @@ class SapTarjetaEquipoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $json = [
@@ -79,7 +79,7 @@ class SapTarjetaEquipoController extends Controller
             ]
         ];
 
-        $response   =   $client->request('POST', "/api/TarjetaEquipo/SapPatchTarjetaEquipo/", $json);
+        $response   =   $client->request('POST', "/pruebas/TarjetaEquipo/SapPatchTarjetaEquipo/", $json);
         $rptaSap    =   json_decode($response->getBody());
         return $rptaSap;
     }
@@ -88,7 +88,7 @@ class SapTarjetaEquipoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $array_rpta = [];
@@ -103,7 +103,7 @@ class SapTarjetaEquipoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/api/TarjetaEquipo/SapGetTarjetaEquipo/", $json);
+            $response = $client->request('POST', "/pruebas/TarjetaEquipo/SapGetTarjetaEquipo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

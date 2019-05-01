@@ -15,7 +15,7 @@ class SapPedidoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
@@ -89,7 +89,7 @@ class SapPedidoController extends Controller
                 $json['json']['DocumentLines'][0]['SerialNumbers'] = [];
             }
 
-            $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
+            $response = $client->request('POST', "/pruebas/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($arrayVehiculo, $rptaSap);
         }
@@ -140,7 +140,7 @@ class SapPedidoController extends Controller
                 ];
             }
 
-            $response = $client->request('POST', "/api/Pedido/SapSetPedido/", $json);
+            $response = $client->request('POST', "/pruebas/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($arrayEV, $rptaSap);
         }
@@ -156,7 +156,7 @@ class SapPedidoController extends Controller
         $client = new Client([
             'verify'    => false,
             // 'base_uri'  => 'http://localhost:49454/'
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
@@ -194,7 +194,7 @@ class SapPedidoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/api/Pedido/SapSetPedidoDscto/", $json);
+        $response = $client->request('POST', "/pruebas/Pedido/SapSetPedidoDscto/", $json);
         return $response->getBody();
     }
 }
