@@ -734,7 +734,7 @@
                     me.modal = 1;
                     me.attachment = [];
                 }else{
-                    swal('Compra registrada correctamente');
+                    swal('Proyectos registrados correctamente');
                 }
             },
             validarRegistro(){
