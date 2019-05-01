@@ -44,8 +44,9 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        // Sesion TiempoReal
         // remueve todas las sesiones realacionas al usuario actual
-        /*app('db')->table('sessions')
+        app('db')->table('sessions')
                   ->where('user_id', Auth::user()->id)
                   ->delete();
         Auth::logout();
@@ -53,10 +54,11 @@ class LoginController extends Controller
         return redirect('/');
 
         //broadcast(new LogoutFromEveryWhere(Auth::user()));
-        event(new LogoutFromEveryWhere(Auth::user()));*/
+        event(new LogoutFromEveryWhere(Auth::user()));
 
-        Auth::logout();
-        $request->session()->invalidate();
-        return redirect('/');
+        // Sesion Local
+        // Auth::logout();
+        // $request->session()->invalidate();
+        // return redirect('/');
     }
 }

@@ -30,7 +30,7 @@ class UserEventSubscriber
      */
     public function subscribe($events)
     {
-        /*$events->listen(
+        $events->listen(
             'Illuminate\Auth\Events\Login',
             'App\Listeners\UserEventSubscriber@onUserLogin'
         );
@@ -38,6 +38,6 @@ class UserEventSubscriber
         $events->listen(
             'Illuminate\Auth\Events\Logout',
             'App\Listeners\UserEventSubscriber@onUserLogout'
-        );*/
+        );
     }
 }

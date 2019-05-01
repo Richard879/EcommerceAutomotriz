@@ -103,12 +103,12 @@ const app = new Vue({
         notifications: []
     },
     mounted() {
-        /*var userId = $('meta[name="userId"]').attr('content');
+        var userId = $('meta[name="userId"]').attr('content');
         Echo.private(`userlogout.${userId}`)
             .listen('LogoutFromEveryWhere', (e) => {
                 // console.log(e);
                 location.reload()
-            })*/
+            })
         this.obtenerRolUsuario();
     },
     created() {
