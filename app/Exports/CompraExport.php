@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\DB;
 // use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromArray;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class CompraExport implements FromArray
+class CompraExport implements FromView
 {
     use Exportable;
 
@@ -25,7 +27,32 @@ class CompraExport implements FromArray
         $this->nIdModelo      = $request->nidmodelo;
     }
 
-    public function array(): array
+    // public function array(): array
+    // {
+    //     $nIdEmpresa     =   $this->nIdEmpresa;
+    //     $nIdSucursal    =   $this->nIdSucursal;
+    //     $nOrdenCompra   =   $this->nOrdenCompra;
+
+    //     $dFechaInicio   =   ($this->dFechaInicio == NULL) ? ($this->dFechaInicio = '') : $dFechaInicio;
+    //     $dFechaFin      =   ($this->dFechaFin == NULL) ? ($this->dFechaFin = '') : $this->dFechaFin;
+    //     $cNumeroVin     =   ($this->cNumeroVin == NULL) ? ($this->cNumeroVin = '') : $this->cNumeroVin;
+    //     $nIdMarca       =   ($this->nIdMarca == NULL) ? ($this->nIdMarca = 0) : $this->nIdMarca;
+    //     $nIdModelo      =   ($this->nIdModelo == NULL) ? ($this->nIdModelo = 0) : $this->nIdModelo;
+
+    //     $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
+    //                                                         [   $nIdEmpresa,
+    //                                                             $nIdSucursal,
+    //                                                             $dFechaInicio,
+    //                                                             $dFechaFin,
+    //                                                             $nOrdenCompra,
+    //                                                             $cNumeroVin,
+    //                                                             $nIdMarca,
+    //                                                             $nIdModelo
+    //                                                         ]);
+    //     return $arrayCompra;
+    // }
+
+    public function view(): View
     {
         $nIdEmpresa     =   $this->nIdEmpresa;
         $nIdSucursal    =   $this->nIdSucursal;
@@ -47,6 +74,8 @@ class CompraExport implements FromArray
                                                                 $nIdMarca,
                                                                 $nIdModelo
                                                             ]);
-        return $arrayCompra;
+        return view('pdf.compra.compra', [
+            'compras' => $arrayCompra
+        ]);
     }
 }

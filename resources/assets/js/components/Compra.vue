@@ -1651,7 +1651,11 @@
                     const file = new Blob(
                         [response.data],
                         // {type: 'text/html'}
-                        {type: 'application/vnd.ms-excel'}
+                        {
+                            name:   'data.csv',
+                            type:   'application/vnd.ms-excel'
+                        }
+                        // {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
                         // {type: 'application/pdf'}
                         // {type: 'text/csv'}
                     );
