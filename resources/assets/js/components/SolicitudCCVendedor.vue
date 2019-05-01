@@ -1737,6 +1737,8 @@
                 if(this.validarAprobacionNoAprobacionSCC()){
                     return;
                 }
+                this.mostrarProgressBar();
+
                 this.form.append('file', this.attachment);
 
                 this.form.append('nIdScartaC', this.fillCartaDetalleSolicitud.nIdSCC);
@@ -1747,12 +1749,13 @@
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
                 var url = this.ruta + '/cartacaracteristica/SetAprobadoNoAprobado';
                 axios.post(url, this.form, config).then(response => {
-                    console.log(response);
+                    // console.log(response);
                     this.buscarMisCartas(1);
                     this.cerrarModalSolicitud();
                     this.limpiarProcesoRegistrarCC();
                     this.attachment = '';
                     this.form = new FormData;
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1852,6 +1855,8 @@
                 if(this.validarRegistrarAnulacion()){
                     return;
                 }
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/cartacaracteristica/SetAnularSCC';
                 axios.put(url, {
                     'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
@@ -1864,6 +1869,7 @@
                     this.buscarMisCartasAnuladas(1);
                     this.fillCartaCaracteristica.nidmotivo = '',
                     this.fillCartaCaracteristica.cdescripcion = ''
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1983,6 +1989,10 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         }
     }
