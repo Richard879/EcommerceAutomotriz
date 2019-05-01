@@ -113,6 +113,20 @@ class ListaPrecioVersionVehController extends Controller
                 $det['fPrecioBonoDealer'] = ($det['fPrecioBonoDealer'] == NULL) ? ($det['fPrecioBonoDealer']= 0) : $det['fPrecioBonoDealer'];
                 $det['fBonoEspecial'] = ($det['fBonoEspecial'] == NULL) ? ($det['fBonoEspecial']= 0) : $det['fBonoEspecial'];
 
+                $det['fPrecioBase'] = str_replace(",", ".", $det['fPrecioBase']);
+                $det['fDescuento'] = str_replace(",", ".", $det['fDescuento']);
+                $det['fPrecioCierre'] = str_replace(",", ".", $det['fPrecioCierre']);
+                $det['fPlaca'] = str_replace(",", ".", $det['fPlaca']);
+                $det['fMargen'] = str_replace(",", ".", $det['fMargen']);
+                $det['fCostoDealer'] = str_replace(",", ".", $det['fCostoDealer']);
+                $det['fBono'] = str_replace(",", ".", $det['fBono']);
+                $det['fPrecioCierre2'] = str_replace(",", ".", $det['fPrecioCierre2']);
+                $det['fFlete'] = str_replace(",", ".", $det['fFlete']);
+                $det['fTYP'] = str_replace(",", ".", $det['fTYP']);
+                $det['fPrecioVentaP'] = str_replace(",", ".", $det['fPrecioVentaP']);
+                $det['fPrecioBonoDealer'] = str_replace(",", ".", $det['fPrecioBonoDealer']);
+                $det['fBonoEspecial'] = str_replace(",", ".", $det['fBonoEspecial']);
+
                 $objLista = DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],
