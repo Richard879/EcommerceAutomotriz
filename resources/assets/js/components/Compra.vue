@@ -165,7 +165,7 @@
                                                                             <tr>
                                                                                 <th>Acciones&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Compra(s)</div>
+                                                                                        <div slot="content">Exportar Compra(s) XLS</div>
                                                                                             <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarExcel()"></i>
                                                                                     </el-tooltip>
                                                                                 </th>
@@ -1633,7 +1633,7 @@
             exportarExcel(){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/exportCompra';
+                var url = this.ruta + '/compra/exportCompraXLS';
                 axios.get(url, {
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
