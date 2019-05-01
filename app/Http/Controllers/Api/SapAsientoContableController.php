@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\pruebas;
+namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
