@@ -1403,7 +1403,7 @@
                                                         </nav>
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from + 1 }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2476,6 +2476,7 @@
                     ccontactodocumento: ''
                 },
                 arrayContactosPorVendedor: [],
+                arrayContactosPorVendedorRpta: [],
                 fillAsignarContacto:{
                     nidasignarcontacto: 0,
                     nidcontacto: 0,
@@ -3093,27 +3094,23 @@
                 var url = this.ruta + '/getcotizacion/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillBusqContacto.ntipopersona,
-                        'cnrodocumento' : String(this.fillBusqContacto.ccontactodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillBusqContacto.ccontactonombre.toString(),
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'     : 220016,
+                        'ntipopersona'      : this.fillBusqContacto.ntipopersona,
+                        'cnrodocumento'     : String(this.fillBusqContacto.ccontactodocumento.toString()),
+                        'cfiltrodescripcion': this.fillBusqContacto.ccontactonombre.toString(),
+                        'page'              : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContactosPorVendedor;
-                    //Data
-                    this.arrayContactosPorVendedor = info.data;
-                    //Pagination
-                    this.paginationModal.current_page   =   info.current_page;
-                    this.paginationModal.total          =   info.total;
-                    this.paginationModal.per_page       =   info.per_page;
-                    this.paginationModal.last_page      =   info.last_page;
-                    this.paginationModal.from           =   info.from;
-                    this.paginationModal.to             =   info.to;
-                    //Limpiar caja busqueda
-                    this.limpiarfillBusqContacto();
+                    this.arrayContactosPorVendedorRpta  = response.data.arrayContactosPorVendedor;
+                    this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
+                    /*this.paginationModal.current_page   = info.current_page;
+                    this.paginationModal.total          = info.total;
+                    this.paginationModal.per_page       = info.per_page;
+                    this.paginationModal.last_page      = info.last_page;
+                    this.paginationModal.from           = info.from;
+                    this.paginationModal.to             = info.to;*/
                 }).catch(error => {
                     this.errors = error.response.data
                     if (error.response) {
@@ -3124,9 +3121,19 @@
                     }
                 });
             },
+            paginateContactosPorVendedor(data, page){
+                this.pagination.current_page    = page;
+                this.pagination.total           = data.length;
+                this.pagination.per_page        = this.perPage;
+                this.pagination.last_page       = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to              = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContactosPorVendedor  = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPaginaContactosPorVendedor(page){
                 this.pagination.current_page=page;
-                this.buscarContactosPorVendedor(page);
+                this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
+                //this.buscarContactosPorVendedor(page);
             },
             cambiarTipoPersona(){
                 if (this.fillBusqContacto.ntipopersona == 1) {
@@ -3141,6 +3148,7 @@
             limpiarfillBusqContacto(){
                 this.fillBusqContacto.ccontactonombre = '';
                 this.fillBusqContacto.ccontactodocumento = '';
+                this.arrayContactosPorVendedor =[];
             },
             llenarTipoMedio(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -4591,6 +4599,7 @@
                 this.arrayVehiculoModal = [];
                 //SubTab - Modal Elemento Venta
                 this.arrayElementoVentaModal = [];
+                this.limpiarfillBusqContacto();
             },
             siguienteTabDConfirmarcotizacion(){
                 if(this.validarTabDCElementoVentaPorRegalar()){

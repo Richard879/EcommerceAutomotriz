@@ -832,7 +832,7 @@ class CotizacionController extends Controller
                                                                                 $nIdVendedor
                                                                                 ));
 
-        $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
+        //$arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
     }
 }
