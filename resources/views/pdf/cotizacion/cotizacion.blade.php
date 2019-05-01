@@ -26,7 +26,7 @@
         .information {
             /*background-color: #60A7A6;*/
             background-color: #FEFEFE;
-            color: #FFF;
+            color: #000;
             padding: 2rem;
             padding-bottom: 0px;
         }
