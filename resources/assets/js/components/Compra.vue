@@ -156,15 +156,6 @@
                                                     <div class="card">
                                                         <div class="card-header" style="display: flex;align-items: center;">
                                                             <h3 class="h4">LISTADO</h3>
-                                                            &nbsp;&nbsp;
-                                                            <template v-if="arrayCompra.length">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Exportar Compra(s)</div>
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarExcel()">
-                                                                        <i :style="'color:#796AEE'" class="fa-md fa fa-file"></i>
-                                                                    </button>
-                                                                </el-tooltip>
-                                                            </template>
                                                         </div>
                                                         <div class="card-body">
                                                             <template v-if="arrayCompra.length">
@@ -172,7 +163,12 @@
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Acciones</th>
+                                                                                <th>Acciones&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Compra(s)</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarExcel()"></i>
+                                                                                    </el-tooltip>
+                                                                                </th>
                                                                                 <th>NroDoc SAP</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
@@ -183,8 +179,7 @@
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Nombre Comercial</th>
-                                                                                <th>Año Fab</th>
-                                                                                <th>Año Mod</th>
+                                                                                <th>Año Modelo</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
@@ -229,7 +224,6 @@
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
-                                                                                <td v-text="compra.nAnioFabricacion"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
                                                                                 <td v-text="compra.cSimboloMoneda"></td>
                                                                                 <td v-text="compra.fTotalCompra"></td>

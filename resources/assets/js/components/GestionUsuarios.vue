@@ -78,7 +78,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Nombre</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillBsqUsuario.cdescripcion" class="form-control form-control-sm">
+                                                        <input type="text" v-model="fillBsqUsuario.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
