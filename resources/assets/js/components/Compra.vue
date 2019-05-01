@@ -156,6 +156,12 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">LISTADO</h3>
+                                                            <template v-if="arrayCompra.length">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Exportar Compra(s)</div>
+                                                                    <i @click="exportarExcel()" :style="'color:#796AEE'" class="fa-md fa fa-file-export"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </template>
                                                         </div>
                                                         <div class="card-body">
                                                             <template v-if="arrayCompra.length">
@@ -1319,10 +1325,10 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
@@ -1627,6 +1633,33 @@
                 this.pagination.current_page=page;
                 this.paginateCompra(this.arrayCompraRpta, page);
             },
+            exportarExcel(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/compra/exportCompra';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.fillCompra.dfechainicio,
+                        'dfechafin'     : this.fillCompra.dfechafin,
+                        'nordencompra'  : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin'    : this.fillCompra.cnumerovin,
+                        'nidmarca'      : this.fillCompra.nidmarca,
+                        'nidmodelo'     : this.fillCompra.nidmodelo
+                    }
+                }).then(response => {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // ====================================================
             // =============  GENERAR COMPRA ======================
             tabGenerarCompra(){
@@ -1842,15 +1875,12 @@
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
-
                     this.arrayExcel = response.data;
-
                     if(this.validaCamposExcel()){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
                     }
-
                     this.$delete(this.arrayExcel, 0)
                     this.contadorArrayExcel = this.arrayExcel.length;
                     $("#myBar").hide();

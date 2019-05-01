@@ -6,19 +6,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use App\Compra;
+// use App\Compra;
 use App\ListaPrecioVersionVeh;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
+use App\Exports\CompraExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ExcelController extends Controller
 {
-
     public function importFileCompra(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelCompra', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelCompra', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
 
         /*$nameFile = $request->file->store('uploads/ExcelCompra');
@@ -32,11 +34,11 @@ class ExcelController extends Controller
 
     public function readFileCompra(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $data = [];
         foreach ($sheetData as $key => $value) {
@@ -68,21 +70,26 @@ class ExcelController extends Controller
         return response()->json($data);
     }
 
+    public function exportCompra(Request $request)
+    {
+        return (new CompraExport($request))->download('comprasexportadas.xlsx');
+    }
+
     public function importFileListaPrecioVh(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
 
     public function readFileListaPrecioVh(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $cont = 0;
         $data = [];
@@ -121,19 +128,19 @@ class ExcelController extends Controller
 
     public function importFileLeads(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelLeads', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelLeads', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
 
     public function readFileLeads(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $data = [];
         foreach ($sheetData as $key => $value) {
@@ -166,19 +173,19 @@ class ExcelController extends Controller
 
     public function importFileForum(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelForum', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelForum', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
 
     public function readFileForum(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $data = [];
         foreach ($sheetData as $key => $value) {
@@ -202,19 +209,19 @@ class ExcelController extends Controller
 
     public function importFileExhibicion(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelExhibicion', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelExhibicion', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
 
     public function readFileExhibicion(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $data = [];
         foreach ($sheetData as $key => $value) {
@@ -242,19 +249,19 @@ class ExcelController extends Controller
 
     public function importFileProyecto(Request $request)
     {
-        $file = $request->file;
-        $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelProyecto', $file, $bandera .'_'. $file->getClientOriginalName());
+        $file       =   $request->file;
+        $bandera    =   str_random(10);
+        $ruta       =   Storage::putFileAs('uploads/ExcelProyecto', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
 
     public function readFileProyecto(Request $request)
     {
-        $nameFile = $request->nameFile;
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $fxls = storage_path('app/'.$nameFile);
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        $nameFile       =   $request->nameFile;
+        $reader         =   new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls           =   storage_path('app/'.$nameFile);
+        $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
         $cont = 0;
         $data = [];
