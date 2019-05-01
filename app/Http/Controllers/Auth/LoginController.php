@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-// use App\Events\LogoutFromEveryWhere;
+use App\Events\LogoutFromEveryWhere;
 
 class LoginController extends Controller
 {
@@ -45,18 +45,18 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // remueve todas las sesiones realacionas al usuario actual
-        // app('db')->table('sessions')
-        //          ->where('user_id', Auth::user()->id)
-        //          ->delete();
-        // Auth::logout();
-        // $request->session()->invalidate();
-        // return redirect('/');
-
-        // broadcast(new LogoutFromEveryWhere(Auth::user()));
-        // event(new LogoutFromEveryWhere(Auth::user()));
-
+        app('db')->table('sessions')
+                  ->where('user_id', Auth::user()->id)
+                  ->delete();
         Auth::logout();
         $request->session()->invalidate();
+        return redirect('/');
+
+        //broadcast(new LogoutFromEveryWhere(Auth::user()));
+        event(new LogoutFromEveryWhere(Auth::user()));
+
+        //Auth::logout();
+        //$request->session()->invalidate();
         // return redirect('/');
     }
 }
