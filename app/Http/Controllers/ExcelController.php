@@ -72,7 +72,17 @@ class ExcelController extends Controller
 
     public function exportCompra(Request $request)
     {
-        return (new CompraExport($request))->download('comprasexportadas.xlsx');
+        // return (new CompraExport($request))->download('invoices.csv', \Maatwebsite\Excel\Excel::CSV);
+        return (new CompraExport($request))->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+
+        // custom mime type text/csv
+        // return (new CompraExport($request))->download(
+        //     'invoices.csv',
+        //     \Maatwebsite\Excel\Excel::CSV,
+        //     [
+        //         'Content-Type' => 'text/csv',
+        //     ]
+        // );
     }
 
     public function importFileListaPrecioVh(Request $request)

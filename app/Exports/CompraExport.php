@@ -4,11 +4,12 @@ namespace App\Exports;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\FromQuery;
+// use Illuminate\Contracts\Queue\ShouldQueue;
+// use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class CompraExport implements FromQuery, ShouldQueue
+class CompraExport implements FromArray
 {
     use Exportable;
 
@@ -24,7 +25,7 @@ class CompraExport implements FromQuery, ShouldQueue
         $this->nIdModelo      = $request->nidmodelo;
     }
 
-    public function query()
+    public function array(): array
     {
         $nIdEmpresa     =   $this->nIdEmpresa;
         $nIdSucursal    =   $this->nIdSucursal;
@@ -46,7 +47,6 @@ class CompraExport implements FromQuery, ShouldQueue
                                                                 $nIdMarca,
                                                                 $nIdModelo
                                                             ]);
-
         return $arrayCompra;
     }
 }
