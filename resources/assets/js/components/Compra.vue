@@ -2147,7 +2147,7 @@
                     //================== ACTUALIZO TABLA INTEGRACION PROYECTO SGC ===============
                     setTimeout(function() {
                         me.registroSgcProyecto();
-                    }, 800);
+                    }, 1000);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
