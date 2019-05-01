@@ -3483,6 +3483,7 @@
                 }
 
                 if(objCompra.nServiceCallID==0){
+                    me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
                     var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                     axios.post(sapUrl, {
                         'data': me.arraySapLlamadaServicio
