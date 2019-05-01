@@ -94,7 +94,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <label class="col-sm-4 form-control-label">Cotización</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">

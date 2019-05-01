@@ -19,9 +19,8 @@ class CartaCaracteristicaController extends Controller
         $cNumeroVin  = $request->cnumberovin;
         $cNumeroVin  = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayCompra = DB::select('exec usp_CartaCaracteristica_GetListCompras ?, ?, ?',
-                                                            [
-                                                                $nIdEmpresa,
+        $arrayCompra = DB::select('exec [usp_CartaCaracteristica_GetListCompras] ?, ?, ?',
+                                                            [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $cNumeroVin
                                                             ]);
