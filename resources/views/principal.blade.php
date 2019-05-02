@@ -52,7 +52,7 @@
                             <!-- Navbar Menu -->
                             <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center parteDer">
                                 @include('cabecera.cabecera')
-                                <div style="display: flex; justify-content: center;">
+                                {{--  <div style="display: flex; justify-content: center;">
                                     <!-- Notifications-->
                                     <li class="nav-item dropdown">
                                         <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
@@ -137,7 +137,7 @@
                                             </li>
                                         </ul>
                                     </li>-->
-                                </div>
+                                </div>  --}}
                                 <li class="nav-item dropdown">
                                     <cabeceralogin :ruta="ruta" :usuario="{{ auth()->user() }}"></cabeceralogin>
                                 </li>
