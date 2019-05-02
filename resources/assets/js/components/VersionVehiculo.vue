@@ -1641,6 +1641,7 @@
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
+                this.arrayVersionVehiculo=[];
             },
             limpiarFormulario(){
                 /*this.formVersion.nidclase=  '',
