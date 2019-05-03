@@ -336,4 +336,42 @@ class GestionUsuariosController extends Controller
 
         return response()->json($usuario);
     }
+
+    public function SetEditarMiUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $file           =   $request->file;
+            $nIdEmpleado    =   $request->nidusuario;
+            $cusuario       =   $request->cusuario;
+            $cpassword      =   ($request->cpassword == null) ? '' : bcrypt($request->cpassword);
+            $nIdUsuario     =   Auth::user()->id;
+
+            if($file) {
+                $bandera = str_random(10);
+                $nombreArchivoServidor = $bandera .'_'. $file->getClientOriginalName();
+                //Almaceno el archivo en un ruta especifica
+                $ruta = Storage::putFileAs('public/Usuario', $file, $nombreArchivoServidor);
+            }
+
+            $pcNombreRuta = ($file) ? (asset('storage/Usuario/' . $nombreArchivoServidor)) : '';
+
+            $usuario = DB::select('exec usp_Usuario_SetEditarMiUsuario ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpleado,
+                                                                $cusuario,
+                                                                $cpassword,
+                                                                $pcNombreRuta,
+                                                                $nIdUsuario
+                                                            ]);
+
+            DB::commit();
+            return response()->json($usuario);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
