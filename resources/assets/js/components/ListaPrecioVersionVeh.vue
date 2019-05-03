@@ -1076,6 +1076,7 @@
             tabBuscaListaPrecioVh(){
                 this.formListaPrecioVh.nidproveedor = 0;
                 this.formListaPrecioVh.cproveedornombre = '';
+                this.arrayListaPrecioVh = [];
                 this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
                 //this.listarListaPrecioVh(1);
