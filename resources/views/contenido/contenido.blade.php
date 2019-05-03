@@ -73,7 +73,7 @@
     <template v-if="menu==1300525">
         <modeloconfig :ruta="ruta"></modeloconfig>
     </template>
-    <template v-if="menu==1300691">
+    <template v-if="menu==1300692">
         <gestionmiusuarios :ruta="ruta" :usuario="{{ auth()->user() }}"></gestionmiusuarios>
     </template>
 
