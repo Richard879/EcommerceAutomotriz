@@ -1078,6 +1078,8 @@
                 this.formListaPrecioVh.cproveedornombre = '';
                 this.arrayListaPrecioVh = [];
                 this.arrayListaPrecioVhDet = [];
+                this.formListaPrecioVh.nidmarca = '';
+                this.formListaPrecioVh.nidmodelo = '';
                 this.desactivarTabs();
                 //this.listarListaPrecioVh(1);
             },
