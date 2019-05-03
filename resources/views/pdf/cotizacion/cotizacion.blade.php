@@ -129,22 +129,6 @@
             </tr>
         </table>
 
-        {{-- <table width="100%" border="2px">
-            <tr>
-                <td>Campo 1</td>
-                <td>Campo 2</td>
-                <td>Campo 3</td>
-            </tr>
-            <tr>
-                <td colspan="2">Campos 4 y 5</td>
-                <td>Campo 6</td>
-            </tr>
-            <tr>
-                <td>Campo 7</td>
-                <td>Campo 8</td>
-                <td>Campo 9</td>
-            </tr>
-        </table> --}}
 
         <br/>
 
@@ -153,6 +137,7 @@
 
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
+                <span>(Foto Referencial)</span>
             </div>
 
             <div class="center">
@@ -169,100 +154,7 @@
                     </tr>
                 </table>
             </div>
-
-            {{-- <pre lang="xml" style="white-space:normal; word-break: break-word">{{ $arrayDetalleDocs[0]->cFichaImageUrl }}</pre> --}}
-
-            {{--
-            <xml id="fichatecnica" src="{{ $arrayDetalleDocs[0]->cFichaImageUrl }}"></xml>
-            <table width="100%" border="1" datasrc="#fichatecnica">
-                <thead>
-                    <tr>
-                        <th>DIMENSIONES</th>
-                        <th>EQUIPAMIENTO</th>
-                        <th>FRENOS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span datafld="textbox21"></span></td>
-                        <td><span datafld="textbox21"></span></td>
-                        <td><span datafld="textbox21"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-            --}}
-
-            {{-- Contenido del XML --}}
-            {{-- <pre lang="xml" style="white-space:normal;">{{ $contents }}</pre> --}}
-            {{-- <pre lang="xml" style="white-space:normal;">
-                @foreach($data as $d)
-                    <p>{{ $d }}</p>
-                @endforeach
-            </pre --}}
-
-            {{-- <?xml version="1.0"?>
-            <!-- File Name: Book.xml -->
-            <BOOK>
-                <TITLE>The Adventures of Huckleberry Finn</TITLE>
-                <AUTHOR>Mark Twain</AUTHOR>
-                <BINDING>mass market paperback</BINDING>
-                <PAGES>298</PAGES>
-                <PRICE>$5.49</PRICE>
-            </BOOK> --}}
-
-            {{-- $xml    =   simplexml_load_file($contents);
-            $tabla  =   '<table  border="1" align="center" cellspacing="0" cellpadding="0" style="font-size:10px;width:100px;">';
-            $fila   =   0;
-            $j      =   0; --}}
-
-            {{-- @foreach ($xml as $z => $a )
-                @if ($j == 2)
-                    @foreach ($a as $x => $b)
-                        @for ($l = 0;  $l < count($b) ; $l++)
-                            @for ($m = 0; $m < count($b->table1_Group1[$l]) ; $m++)
-                                $art            =   (array)$b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2;
-                                $art_detalle    =   $art['Detail_Collection'];
-                                if(strlen($art['@attributes']['textbox3']) == 0) break;
-                                $tabla.='<tr><th colspan="2" align="center">'.utf8_decode($art['@attributes']['textbox3']).'</th></tr>';
-                                $fila++;
-                                @for ($n = 0; $n < count($art_detalle[$m]); $n++)
-                                    $art_detalle2 = (array)$art_detalle[$m]->Detail[$n];
-                                    $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
-                                    $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
-                                    $fila++;
-                                @endfor
-                                unset($art);
-                                unset($art_detalle);
-                                unset($art_detalle2);
-                            @endfor
-                        @endfor
-                    @endforeach
-                @endif
-                $j++;
-            @endforeach --}}
-
-            {{-- $tabla.='</table>';
-            $num_filas  =   ($fila-17);
-            $num_veces  =   (int)(($fila-17)/17);
-            $ord        =   $num_filas/$num_veces;
-            $sw         =   false;
-
-            @if ($ord > 28)
-                $r= round(($ord/28),2);
-                @if (($r>=1.01 && $r<=1.3) || ($r>=2.01 && $r<=2.3))
-                    $sw=true;
-                @endif
-            @endif --}}
-
-            {{-- <h1>Hola</h1>
-            <pre> {{ $tabla }} </pre>
-            <pre lang="xml" style="white-space:normal;">{{ $tabla }}</pre>
-            <pre lang="html" style="white-space:normal;">{{ $tabla }}</pre>
-            <iframe width="100%" height="100%">
-                {{ $tabla }}
-            </iframe> --}}
-
-
+        
             <table width="100%">
                 <tr>
                     <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>
