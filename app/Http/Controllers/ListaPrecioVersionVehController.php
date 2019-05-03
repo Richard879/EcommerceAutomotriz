@@ -58,7 +58,7 @@ class ListaPrecioVersionVehController extends Controller
                                                             $cNombreComercial
                                                         ]);
 
-        $arrayListaPrecioVhDet = ParametroController::arrayPaginator($arrayListaPrecioVhDet, $request);
+        //$arrayListaPrecioVhDet = ParametroController::arrayPaginator($arrayListaPrecioVhDet, $request);
         return ['arrayListaPrecioVhDet'=>$arrayListaPrecioVhDet];
     }
 

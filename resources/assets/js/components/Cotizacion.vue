@@ -72,7 +72,7 @@
                                                                             <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                                             <div class="col-sm-8">
                                                                                 <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                    <input type="radio" class="radio-template" v-model="fillMisCotizaciones.ntipopersona" :value="tipo.value">
+                                                                                    <input type="radio" class="radio-template" v-model="fillMisCotizaciones.ntipopersona" :value="tipo.value" @change="limpiarMisCotizaciones()">
                                                                                     <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                 </label>
                                                                             </div>
@@ -2932,6 +2932,9 @@
                 this.paginateCotizacion(this.arrayCotizacionesRpta, page);
                 //this.listarMisCotizaciones(page);
             },
+            limpiarMisCotizaciones(){
+                this.arrayCotizaciones=[];
+            },
             // =================================================================
             // VER DETALLE COTIZACION
             // =================================================================
@@ -2940,7 +2943,7 @@
                 this.fillDetalleCotizacion.cdocumentocliente        = cotizacion.cPerDocumento,
                 this.fillDetalleCotizacion.cnombrecliente           = cotizacion.cContacto,
                 this.fillDetalleCotizacion.nidversionvehiculo       = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo                = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cvehiculo                = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
                 this.fillDetalleCotizacion.cnombreproveedor         = cotizacion.cNombreProveedor,
                 this.fillDetalleCotizacion.cnombrevendedor          = cotizacion.cNombreVendedor,
                 this.fillDetalleCotizacion.dfechacotizacion         = cotizacion.dFechaCotizacion,

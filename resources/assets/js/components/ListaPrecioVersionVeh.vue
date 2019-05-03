@@ -692,6 +692,7 @@
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
                                                                                 <th>Moneda</th>
+                                                                                <th>Precio Lista</th>
                                                                                 <th>Costo Dealer</th>
                                                                             </tr>
                                                                         </thead>
@@ -708,6 +709,7 @@
                                                                                 <td v-text="lpd.cNombreComercial"></td>
                                                                                 <td v-text="lpd.nAnioModelo"></td>
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
+                                                                                <td v-text="lpd.fPrecioLista"></td>
                                                                                 <td><input type="number" v-model="lpd.fCostoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -734,7 +736,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -969,6 +971,7 @@
                 arrayListaPrecioVh: [],
                 arrayProveedor: [],
                 arrayListaPrecioVhDet: [],
+                arrayListaPrecioVhDetRpta: [],
                 arrayTipoLista: [],
                 arrayExcel: [],
                 arrayMarca: [],
@@ -980,6 +983,9 @@
                 arrayTempListaExiste: [],
                 arrayTempListaNombreComercial: [],
                 // ====================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1632,13 +1638,14 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayListaPrecioVhDet = response.data.arrayListaPrecioVhDet.data;
-                    this.pagination.current_page =  response.data.arrayListaPrecioVhDet.current_page;
-                    this.pagination.total = response.data.arrayListaPrecioVhDet.total;
-                    this.pagination.per_page    = response.data.arrayListaPrecioVhDet.per_page;
-                    this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
-                    this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
-                    this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
+                    this.arrayListaPrecioVhDetRpta  = response.data.arrayListaPrecioVhDet;
+                    this.paginateListaPrecioVehDetalle(this.arrayListaPrecioVhDetRpta, page);
+                    /*this.pagination.current_page    =  response.data.arrayListaPrecioVhDet.current_page;
+                    this.pagination.total           = response.data.arrayListaPrecioVhDet.total;
+                    this.pagination.per_page        = response.data.arrayListaPrecioVhDet.per_page;
+                    this.pagination.last_page       = response.data.arrayListaPrecioVhDet.last_page;
+                    this.pagination.from            = response.data.arrayListaPrecioVhDet.from;
+                    this.pagination.to              = response.data.arrayListaPrecioVhDet.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1650,9 +1657,19 @@
                     }
                 });
             },
+            paginateListaPrecioVehDetalle(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayListaPrecioVhDet  = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPaginaDetalle(page){
                 this.pagination.current_page=page;
-                this.listarListaPrecioVhDetalle(page);
+                this.paginateListaPrecioVehDetalle(this.arrayListaPrecioVhDetRpta, page);
+                //this.listarListaPrecioVhDetalle(page);
             },
             desactivarDetalle(lista){
                 swal({
