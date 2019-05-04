@@ -51,7 +51,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
             $nIdModelo              =   $request->nidmodelo;
             $nAnioModelo            =   $request->naniomodelo;
-            $cNombreComercial       =   $request->cnombrecomercial;
+            $nIdVersionVeh          =   $request->nidversionveh;
             $nIdUsuario             =   Auth::user()->id;
 
             $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
@@ -59,7 +59,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
             $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
             $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
-            $cNombreComercial       =   ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
+            $nIdVersionVeh       =   ($nIdVersionVeh == NULL) ? ($nIdVersionVeh = 0) : $nIdVersionVeh;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -108,7 +108,7 @@ class ModeloConfigController extends Controller
                                                                 $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
-                                                                $cNombreComercial,
+                                                                $nIdVersionVeh,
                                                                 $nIdUsuario
                                                             ]);
             DB::commit();
@@ -122,16 +122,16 @@ class ModeloConfigController extends Controller
     {
         $nIdModelo          = $request->nidmodelo;
         $nAnioModelo        = $request->naniomodelo;
-        $cNombreComercial   = $request->cnombrecomercial;
+        $nIdVersionVeh      = $request->nidversionveh;
 
         $nIdModelo          = ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
         $nAnioModelo        = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
-        $cNombreComercial   = ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
+        $nIdVersionVeh      = ($nIdVersionVeh == NULL) ? ($nIdVersionVeh = 0) : $nIdVersionVeh;
 
         $data = DB::select('exec [usp_Modelo_GetInfoDocsModelo] ?, ?, ?',
                                                 [   $nIdModelo,
                                                     $nAnioModelo,
-                                                    $cNombreComercial
+                                                    $nIdVersionVeh
                                                 ]);
         return response()->json($data);
     }
@@ -148,7 +148,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
             $nIdModelo              =   $request->nidmodelo;
             $nAnioModelo            =   $request->naniomodelo;
-            $cNombreComercial       =   $request->cnombrecomercial;
+            $nIdVersionVeh          =   $request->nidversionveh;
             $nIdUsuario             =   Auth::user()->id;
 
             $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
@@ -156,7 +156,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
             $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
             $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
-            $cNombreComercial       =   ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
+            $nIdVersionVeh          =   ($nIdVersionVeh == NULL) ? ($nIdVersionVeh = 0) : $nIdVersionVeh;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -205,7 +205,7 @@ class ModeloConfigController extends Controller
                                                                 $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
-                                                                $cNombreComercial,
+                                                                $nIdVersionVeh,
                                                                 $nIdUsuario
                                                             ]);
             DB::commit();
