@@ -138,7 +138,8 @@
 
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
-                <span>(Foto Referencial)</span>
+                <br>
+                <span style="margin-left: 14rem">(Foto Referencial)</span>
             </div>
 
             <div class="center">
@@ -155,7 +156,7 @@
                     </tr>
                 </table>
             </div>
-        
+
             <table width="100%">
                 <tr>
                     <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>

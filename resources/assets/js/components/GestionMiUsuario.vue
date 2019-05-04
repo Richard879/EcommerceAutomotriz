@@ -126,9 +126,7 @@
                 loading: false
             }
         },
-        computed:{
-
-        },
+        computed:{},
         mounted(){
             this.obtenerInfoUsuario();
         },

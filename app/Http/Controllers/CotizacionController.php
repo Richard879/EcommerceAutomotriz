@@ -648,25 +648,25 @@ class CotizacionController extends Controller
 
         $ip_address = request()->ip();
 
-        if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
-            if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
-                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
-                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        // if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
+        //     if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
+        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
+        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
 
-                //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
-                if($ip_address == '::1') {
-                    $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
-                } else {
-                    $contents   =   Storage::get('public/'. $cadena);
-                }
-            } else {
-                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
-                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-                $contents   =   Storage::get('public/'. $cadena);
-            }
-        }
+        //         //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
+        //         if($ip_address == '::1') {
+        //             $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
+        //         } else {
+        //             $contents   =   Storage::get('public/'. $cadena);
+        //         }
+        //     } else {
+        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
+        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        //         $contents   =   Storage::get('public/'. $cadena);
+        //     }
+        // }
 
         // $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
         // $data_xml->loadXML($contents); //cargo el xml, en este caso es una cadena codificada
@@ -743,7 +743,7 @@ class CotizacionController extends Controller
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
                                                                 'arrayDetalleDocs'      =>  $arrayDetalleDocs,
-                                                                'contents'              =>  $contents,
+                                                                // 'contents'              =>  $contents,
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
                                                                 'hyundai'               =>  $hyundai

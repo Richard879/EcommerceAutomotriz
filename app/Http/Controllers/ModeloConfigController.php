@@ -17,14 +17,14 @@ class ModeloConfigController extends Controller
         $nIdLinea           = $request->nIdLinea;
         $nIdMarca           = $request->nIdMarca;
         $nIdModelo          = $request->nIdModelo;
-        $cNombreModelo      = $request->cNombreModelo;
+        $cNombreComercial   = $request->cNombreComercial;
 
         $nIdEmpresa         = ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
         $nIdProveedor       = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
         $nIdLinea           = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $cNombreModelo      = ($cNombreModelo == NULL) ? ($cNombreModelo = '') : $cNombreModelo;
+        $cNombreComercial      = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
 
         $data = DB::select('exec [usp_Modelo_GetListModelosByAnioModelo] ?, ?, ?, ?, ?, ?',
                                                 [   $nIdEmpresa,
@@ -32,7 +32,7 @@ class ModeloConfigController extends Controller
                                                     $nIdLinea,
                                                     $nIdMarca,
                                                     $nIdModelo,
-                                                    $cNombreModelo
+                                                    $cNombreComercial
                                                 ]);
 
         $arrayListModelos = ParametroController::arrayPaginator($data, $request);
@@ -51,6 +51,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
             $nIdModelo              =   $request->nidmodelo;
             $nAnioModelo            =   $request->naniomodelo;
+            $cNombreComercial       =   $request->cnombrecomercial;
             $nIdUsuario             =   Auth::user()->id;
 
             $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
@@ -58,6 +59,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
             $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
             $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+            $cNombreComercial       =   ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -99,13 +101,14 @@ class ModeloConfigController extends Controller
             //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
             $pcNombreRutaFichaTecnicaPDF = ($fileFichaTecnicaPDF) ? (asset('storage/ModeloAnio/FichaPDF/' . $nombreArchivoServidorFicha)) : '';
 
-            $data = DB::select('exec usp_Modelo_SetRegistrarModeloDocs ?, ?, ?, ?, ?, ?',
+            $data = DB::select('exec usp_Modelo_SetRegistrarModeloDocs ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $pcNombreRutaFotografia,
                                                                 $pcNombreRutaFichaTecnica,
                                                                 $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
+                                                                $cNombreComercial,
                                                                 $nIdUsuario
                                                             ]);
             DB::commit();
@@ -117,17 +120,19 @@ class ModeloConfigController extends Controller
 
     public function GetInfoDocsModelo(Request $request)
     {
-        $nIdModelo      = $request->nidmodelo;
-        $nAnioModelo    = $request->naniomodelo;
+        $nIdModelo          = $request->nidmodelo;
+        $nAnioModelo        = $request->naniomodelo;
+        $cNombreComercial   = $request->cnombrecomercial;
 
-        $nIdModelo      = ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
-        $nAnioModelo    = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+        $nIdModelo          = ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
+        $nAnioModelo        = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+        $cNombreComercial   = ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
 
-        $data = DB::select('exec [usp_Modelo_GetInfoDocsModelo] ?, ?',
+        $data = DB::select('exec [usp_Modelo_GetInfoDocsModelo] ?, ?, ?',
                                                 [   $nIdModelo,
-                                                    $nAnioModelo
+                                                    $nAnioModelo,
+                                                    $cNombreComercial
                                                 ]);
-
         return response()->json($data);
     }
 
@@ -143,6 +148,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   $request->fileFichaTecnicaPDF;
             $nIdModelo              =   $request->nidmodelo;
             $nAnioModelo            =   $request->naniomodelo;
+            $cNombreComercial       =   $request->cnombrecomercial;
             $nIdUsuario             =   Auth::user()->id;
 
             $fileFotografia         =   ($fileFotografia == NULL)  ? ($fileFotografia = '') : $fileFotografia;
@@ -150,6 +156,7 @@ class ModeloConfigController extends Controller
             $fileFichaTecnicaPDF    =   ($fileFichaTecnicaPDF == NULL)  ? ($fileFichaTecnicaPDF = '') : $fileFichaTecnicaPDF;
             $nIdModelo              =   ($nIdModelo == NULL)  ? ($nIdModelo = 0) : $nIdModelo;
             $nAnioModelo            =   ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+            $cNombreComercial       =   ($cNombreComercial == NULL) ? ($cNombreComercial = 0) : $cNombreComercial;
 
             //VERIFICO SI EXISTE ARCHIVO
             if($fileFotografia) {
@@ -191,13 +198,14 @@ class ModeloConfigController extends Controller
             //GUARDO LA RUTA DEL ARCHIVO SI EXISTE
             $pcNombreRutaFichaTecnicaPDF = ($fileFichaTecnicaPDF) ? (asset('storage/ModeloAnio/FichaPDF/' . $nombreArchivoServidorFicha)) : '';
 
-            $data = DB::select('exec usp_Modelo_SetActualizarModeloDocs ?, ?, ?, ?, ?, ?',
+            $data = DB::select('exec usp_Modelo_SetActualizarModeloDocs ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $pcNombreRutaFotografia,
                                                                 $pcNombreRutaFichaTecnica,
                                                                 $pcNombreRutaFichaTecnicaPDF,
                                                                 $nIdModelo,
                                                                 $nAnioModelo,
+                                                                $cNombreComercial,
                                                                 $nIdUsuario
                                                             ]);
             DB::commit();

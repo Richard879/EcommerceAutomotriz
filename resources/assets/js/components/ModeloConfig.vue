@@ -115,9 +115,9 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Vehículo</label>
+                                                                                <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="formBsqModelo.cnombremodelo" class="form-control">
+                                                                                    <input type="text" v-model="formBsqModelo.cnombrecomercial" class="form-control">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -148,6 +148,7 @@
                                                                                         <th>Acción</th>
                                                                                         <th>Marca</th>
                                                                                         <th>Modelo</th>
+                                                                                        <th>Nombre Comercial</th>
                                                                                         <th>Año</th>
                                                                                     </tr>
                                                                                 </thead>
@@ -188,6 +189,7 @@
                                                                                         </td>
                                                                                         <td v-text="modelo.cNombreMarca"></td>
                                                                                         <td v-text="modelo.cNombreModelo"></td>
+                                                                                        <td v-text="modelo.cNombreComercial"></td>
                                                                                         <td v-text="modelo.nAnioModelo"></td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -244,7 +246,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">CONFIGURADOR DEL MODELO/AÑO{{ formConfigModelo.cnombremodelo }} </h3>
+                                                                <h3 class="h4">CONFIGURADOR DEL NOMBRE COMERCIAL - {{ formConfigModelo.cnombrecomercial }} - {{ formConfigModelo.cnombremodelo }} </h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
@@ -468,7 +470,7 @@
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    cnombremodelo: ''
+                    cnombrecomercial: ''
                 },
                 arrayLinea: [],
                 arrayMarca: [],
@@ -480,7 +482,8 @@
                 formConfigModelo:{
                     nidmodelo: '',
                     naniomodelo: '',
-                    cnombremodelo: ''
+                    cnombremodelo: '',
+                    cnombrecomercial: ''
                 },
                 formConfigurador: {
                     urlImageFotografia: '',
@@ -591,6 +594,7 @@
                 this.formBsqModelo.nidlinea           = '';
                 this.formBsqModelo.nidmarca           = '';
                 this.formBsqModelo.nidmodelo          = '';
+                this.formBsqModelo.cnombrecomercial   = '';
                 this.arrayListModelos = [];
             },
             validarBsqModelo(){
@@ -615,22 +619,22 @@
                 var url = this.ruta + '/modeloconfig/GetListModelos';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdProveedor'  :   this.formBsqModelo.nidproveedor,
-                        'nIdLinea'      :   this.formBsqModelo.nidlinea,
-                        'nIdMarca'      :   this.formBsqModelo.nidmarca,
-                        'nIdModelo'     :   this.formBsqModelo.nidmodelo,
-                        'cNombreModelo' :   this.formBsqModelo.cnombremodelo,
+                        'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdProveedor'      :   this.formBsqModelo.nidproveedor,
+                        'nIdLinea'          :   this.formBsqModelo.nidlinea,
+                        'nIdMarca'          :   this.formBsqModelo.nidmarca,
+                        'nIdModelo'         :   this.formBsqModelo.nidmodelo,
+                        'cNombreComercial'  :   this.formBsqModelo.cnombrecomercial,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayListModelos        =   response.data.arrayListModelos.data;
-                    this.pagination.current_page   =   response.data.arrayListModelos.current_page;
-                    this.pagination.total          =   response.data.arrayListModelos.total;
-                    this.pagination.per_page       =   response.data.arrayListModelos.per_page;
-                    this.pagination.last_page      =   response.data.arrayListModelos.last_page;
-                    this.pagination.from           =   response.data.arrayListModelos.from;
-                    this.pagination.to             =   response.data.arrayListModelos.to;
+                    this.arrayListModelos           =   response.data.arrayListModelos.data;
+                    this.pagination.current_page    =   response.data.arrayListModelos.current_page;
+                    this.pagination.total           =   response.data.arrayListModelos.total;
+                    this.pagination.per_page        =   response.data.arrayListModelos.per_page;
+                    this.pagination.last_page       =   response.data.arrayListModelos.last_page;
+                    this.pagination.from            =   response.data.arrayListModelos.from;
+                    this.pagination.to              =   response.data.arrayListModelos.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -780,6 +784,7 @@
                 this.formConfigModelo.nidmodelo                 =   '';
                 this.formConfigModelo.naniomodelo               =   '';
                 this.formConfigModelo.cnombremodelo             =   '';
+                this.formConfigModelo.cnombrecomercial          =   '';
                 this.formConfigurador.urlImageFotografia        =   '';
                 this.formConfigurador.urlImageFichaTecnica      =   '';
                 this.formConfigurador.urlImageFichaTecnicaPDF   =   '';
@@ -792,19 +797,21 @@
             generarConfiguracion(op, modelo = null){
                 this.tabConfigurador(op);
                 if(op == 0) {
-                    this.formConfigModelo.nidmodelo     =   modelo.nIdModelo
-                    this.formConfigModelo.naniomodelo   =   modelo.nAnioModelo
-                    this.formConfigModelo.cnombremodelo =   modelo.cNombreModelo + ' - ' + modelo.nAnioModelo
+                    this.formConfigModelo.nidmodelo         =   modelo.nIdModelo
+                    this.formConfigModelo.naniomodelo       =   modelo.nAnioModelo
+                    this.formConfigModelo.cnombremodelo     =   modelo.cNombreModelo + ' - ' + modelo.nAnioModelo;
+                    this.formConfigModelo.cnombrecomercial  =   modelo.cNombreComercial;
                     this.verificarDosc(modelo);
                 }
             },
-            verificarDosc(){
+            verificarDosc(modelo){
                 var url = this.ruta + '/modeloconfig/GetInfoDocsModelo';
 
                 axios.get(url, {
                     params: {
-                        'nidmodelo'     : this.formConfigModelo.nidmodelo,
-                        'naniomodelo'   : this.formConfigModelo.naniomodelo
+                        'nidmodelo'         : this.formConfigModelo.nidmodelo,
+                        'naniomodelo'       : this.formConfigModelo.naniomodelo,
+                        'cnombrecomercial'  : this.formConfigModelo.cnombrecomercial
                     }
                 }).then(response => {
                     if(response.data != ''){
@@ -870,6 +877,7 @@
                 this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
+                this.form.append('cnombrecomercial', this.formConfigModelo.cnombrecomercial);
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
@@ -904,8 +912,10 @@
                 me.error = 0;
                 me.mensajeError =[];
 
-                if(!this.formConfigurador.attachmentFotografia && !this.formConfigurador.attachmentFichaTecnica && !this.formConfigurador.attachmentFichaTecnicaPDF) {
-                    me.mensajeError.push('Debe Subir los documentos para el modelo ');
+                if (this.cFlagAccion == 1) {
+                    if(!this.formConfigurador.attachmentFotografia && !this.formConfigurador.attachmentFichaTecnica && !this.formConfigurador.attachmentFichaTecnicaPDF) {
+                        me.mensajeError.push('Debe Subir los documentos para el Nombre Comercial ');
+                    }
                 }
 
                 if(me.mensajeError.length){
@@ -931,6 +941,7 @@
                 this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
+                this.form.append('cnombrecomercial', this.formConfigModelo.cnombrecomercial);
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
