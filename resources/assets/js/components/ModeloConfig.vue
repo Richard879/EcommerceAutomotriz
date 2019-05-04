@@ -483,7 +483,8 @@
                     nidmodelo: '',
                     naniomodelo: '',
                     cnombremodelo: '',
-                    cnombrecomercial: ''
+                    cnombrecomercial: '',
+                    nidversionveh: ''
                 },
                 formConfigurador: {
                     urlImageFotografia: '',
@@ -801,6 +802,7 @@
                     this.formConfigModelo.naniomodelo       =   modelo.nAnioModelo
                     this.formConfigModelo.cnombremodelo     =   modelo.cNombreModelo + ' - ' + modelo.nAnioModelo;
                     this.formConfigModelo.cnombrecomercial  =   modelo.cNombreComercial;
+                    this.formConfigModelo.nidversionveh     =   modelo.nIdVersionVeh;
                     this.verificarDosc(modelo);
                 }
             },
@@ -811,7 +813,7 @@
                     params: {
                         'nidmodelo'         : this.formConfigModelo.nidmodelo,
                         'naniomodelo'       : this.formConfigModelo.naniomodelo,
-                        'cnombrecomercial'  : this.formConfigModelo.cnombrecomercial
+                        'nidversionveh'     : this.formConfigModelo.nidversionveh
                     }
                 }).then(response => {
                     if(response.data != ''){
@@ -877,7 +879,7 @@
                 this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
-                this.form.append('cnombrecomercial', this.formConfigModelo.cnombrecomercial);
+                this.form.append('nidversionveh', this.formConfigModelo.nidversionveh);
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
@@ -941,7 +943,7 @@
                 this.form.append('fileFichaTecnicaPDF', this.formConfigurador.attachmentFichaTecnicaPDF);
                 this.form.append('nidmodelo', this.formConfigModelo.nidmodelo);
                 this.form.append('naniomodelo', this.formConfigModelo.naniomodelo);
-                this.form.append('cnombrecomercial', this.formConfigModelo.cnombrecomercial);
+                this.form.append('nidversionveh', this.formConfigModelo.nidversionveh);
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 

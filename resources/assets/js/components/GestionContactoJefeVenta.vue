@@ -3359,7 +3359,7 @@
                     'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
                     'cApellidoMaterno'  :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
                     'cDireccion'        :   this.fillEditarContacto.cdireccion,
-                    'cEmail'            :   this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
+                    'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
                     'nTelefonoMovil'    :   this.fillEditarContacto.ncelular
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
