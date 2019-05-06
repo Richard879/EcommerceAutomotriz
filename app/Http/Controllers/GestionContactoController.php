@@ -231,7 +231,7 @@ class GestionContactoController extends Controller
                                                                                     Auth::user()->id
                                                                                 ]);
 
-        $arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
+        //$arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
         return ['arrayContacto'=>$arrayContacto];
     }
 
