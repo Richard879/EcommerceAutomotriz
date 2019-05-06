@@ -108,7 +108,8 @@
                                                                                     <th>Apellidos</th>
                                                                                     <th>Nombres</th>
                                                                                     <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
+                                                                                    <th>Celular</th>
+                                                                                    <th>Telef. Fijo</th>
                                                                                     <th>Dirección</th>
                                                                                     <th>Email</th>
                                                                                     <th>Vendedor</th>
@@ -140,6 +141,7 @@
                                                                                     <td v-text="c.cNombre"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cVendedor"></td>
@@ -153,7 +155,8 @@
                                                                                     <th>#Codigo SAP</th>
                                                                                     <th>Razon Social</th>
                                                                                     <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
+                                                                                    <th>Celular</th>
+                                                                                    <th>Telef. Fijo</th>
                                                                                     <th>Email</th>
                                                                                     <th>Persona Contacto</th>
                                                                                     <th>Vendedor</th>
@@ -167,6 +170,7 @@
                                                                                     <td v-text="c.cRazonSocial"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cContacto"></td>
                                                                                     <td v-text="c.cVendedor"></td>
@@ -214,7 +218,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2349,6 +2353,7 @@
                     { value: '2', text: 'JURIDICA'}
                 ],
                 arrayContacto: [],
+                arrayContactoRpta: [],
                 arrayAsignacionReferenciavehiculo: [],
                 fillEditarContacto: {
                     nidcontacto: '',
@@ -2491,6 +2496,9 @@
                 arrayTipoSeguimiento: [],
                 arrayFormaPago: [],
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -2619,30 +2627,40 @@
             },
             cambiarPaginaMisContactos(page){
                 this.pagination.current_page=page;
-                this.listarContactoSinCarteraMes(page);
+                this.paginateContactoSinCarteraMes(this.arrayContactoRpta, page);
+                //this.listarContactoSinCarteraMes(page);
+            },
+            paginateContactoSinCarteraMes(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContacto          = data.slice(this.pagination.from, this.pagination.to);
             },
             listarContactoSinCarteraMes(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetListContactoBySinCarteraMes';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillMisContactos.ntipopersona,
+                        'ntipopersona'  : this.fillMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
-                        'page' : page
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayContacto = response.data.arrayContacto.data;
-                    this.pagination.current_page =  response.data.arrayContacto.current_page;
-                    this.pagination.total = response.data.arrayContacto.total;
+                    this.arrayContactoRpta      = response.data.arrayContacto;
+                    this.paginateContactoSinCarteraMes(this.arrayContactoRpta, page);
+                    /*this.pagination.current_page =  response.data.arrayContacto.current_page;
+                    this.pagination.total       = response.data.arrayContacto.total;
                     this.pagination.per_page    = response.data.arrayContacto.per_page;
                     this.pagination.last_page   = response.data.arrayContacto.last_page;
                     this.pagination.from        = response.data.arrayContacto.from;
-                    this.pagination.to           = response.data.arrayContacto.to;
-                }).then(function (response) {
+                    this.pagination.to          = response.data.arrayContacto.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

@@ -33,7 +33,7 @@ class IntProyectoController extends Controller
     }
 
 
-    public function AddonSetProyecto(Request $request)
+    /*public function AddonSetProyecto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -60,6 +60,40 @@ class IntProyectoController extends Controller
             ];
             DB::commit();
             return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }*/
+
+    public function AddonSetProyecto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+
+                $objProyecto = DB::select('exec [usp_Migracion_CarteraClientes] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $det['nIdTipoDocumento'],
+                                                                $det['cNumeroDocumento'],
+                                                                $det['cNombre'],
+                                                                $det['cApellidoPaterno'],
+                                                                $det['cApellidoMaterno'],
+                                                                $det['cUbigeo'],
+                                                                $det['cDireccion'],
+                                                                $det['cEmail'],
+                                                                $det['cTelefonoFijo'],
+                                                                $det['nTelefonoMovil'],
+                                                                $det['nIdVendedor'],
+                                                                $det['cNombreVendedor']
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objProyecto);
         } catch (Exception $e){
             DB::rollBack();
         }
