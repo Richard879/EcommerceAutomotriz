@@ -140,8 +140,8 @@
                                                                                     <td v-text="c.cPerApellidos"></td>
                                                                                     <td v-text="c.cNombre"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cVendedor"></td>
@@ -169,8 +169,8 @@
                                                                                     <td v-text="c.CardCode"></td>
                                                                                     <td v-text="c.cRazonSocial"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cContacto"></td>
                                                                                     <td v-text="c.cVendedor"></td>
