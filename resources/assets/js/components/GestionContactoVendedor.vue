@@ -1447,7 +1447,7 @@
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
+                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="index">
                                                                                                     <td>
                                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                                             <div slot="content">Eliminar Referencia  {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>

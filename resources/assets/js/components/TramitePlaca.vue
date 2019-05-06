@@ -230,7 +230,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
+                                                            <h3 class="h4">PEDIDO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -269,7 +269,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <vs-divider border-style="solid" color="dark">
-                                                                                Costo TYP
+                                                                                Costo LESGISLACIÓN
                                                                             </vs-divider>
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-12">
@@ -341,7 +341,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-12">
                                                                                     <el-row :gutter="10">
-                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total TYP</div></el-col>
+                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total Costo Legislación</div></el-col>
                                                                                         <el-col :span="8">
                                                                                             <div class="grid-content bg-purple">
                                                                                                 S/. {{ montoSubTotalTramiteTarjeta }}
@@ -351,8 +351,8 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-12">
-                                                                            <!-- DETALLE DOCUMENTOS -->
+                                                                        <!-- <div class="col-md-12">
+                                                                            DETALLE DOCUMENTOS
                                                                             <template v-if="arrayPedidoDoumentoNew.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Documentos Asociados
@@ -412,8 +412,20 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </template>
-                                                                        </div>
-                                                                        <div class="col-sm-12">
+                                                                        </div> -->
+                                                                        <!-- <div class="col-sm-12">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-12">
+                                                                                    <el-row :gutter="10">
+                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
+                                                                                        <el-col :span="8">
+                                                                                            <div class="grid-content bg-purple">
+                                                                                                S/. {{ montoSubTotalTramiteAdicional }}
+                                                                                            </div>
+                                                                                        </el-col>
+                                                                                    </el-row>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-12">
                                                                                     <el-row :gutter="10">
@@ -427,7 +439,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
