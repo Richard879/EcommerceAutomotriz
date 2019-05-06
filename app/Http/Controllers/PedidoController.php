@@ -546,19 +546,19 @@ class PedidoController extends Controller
                                         $nIdCabeceraPedido
                                     ]);
 
-        if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
-            if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
-                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
-                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-                $contents   =   Storage::get('public/'. $cadena);
-            } else {
-                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
-                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-                $contents   =   Storage::get('public/'. $cadena);
-            }
-        }
+        // if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
+        //     if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
+        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
+        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        //         $contents   =   Storage::get('public/'. $cadena);
+        //     } else {
+        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
+        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        //         $contents   =   Storage::get('public/'. $cadena);
+        //     }
+        // }
 
         $pdf = \PDF::loadView('pdf.pedido.pedido', [
                                                         'arrayDetallePedido'    => $arrayDetallePedido,

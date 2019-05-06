@@ -1919,7 +1919,7 @@
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
+                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="index">
                                                                                                     <td>
                                                                                                         <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top"
                                                                                                             :title="'Eliminar Referencia'">
