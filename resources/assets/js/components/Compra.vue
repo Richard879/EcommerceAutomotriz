@@ -1747,10 +1747,12 @@
 
                 axios.get(url, {
                     params: {
-                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
-                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
-                        'nidentificador': 0,
-                        'opcion' : 1
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'      : parseInt(this.formCompra.nidproveedor),
+                        'nidtipolista'      : parseInt(this.formCompra.nidtipolista),
+                        'nidentificador'    : 0,
+                        'opcion'            : 1
                     }
                 }).then(response => {
                     this.formCompra.nidlistaprecio = (!response.data.arrayListaPrecio.length) ? '' : response.data.arrayListaPrecio[0].nIdListaPrecioVersionVeh;
@@ -1770,10 +1772,12 @@
 
                 axios.get(url, {
                     params: {
-                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
-                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
-                        'nidentificador': 1,
-                        'page' : page
+                        'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdSucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidproveedor'      : parseInt(this.formCompra.nidproveedor),
+                        'nidtipolista'      : parseInt(this.formCompra.nidtipolista),
+                        'nidentificador'    : 1,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayListaPrecio = response.data.arrayListaPrecio.data;

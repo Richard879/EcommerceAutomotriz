@@ -270,15 +270,19 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdProveedor = $request->nidproveedor;
-        $nIdTipoLista = $request->nidtipolista;
-        $nIdentificador  = $request->nidentificador;
-        $variable   = $request->opcion;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdTipoLista   = $request->nidtipolista;
+        $nIdentificador = $request->nidentificador;
+        $variable       = $request->opcion;
 
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayListaPrecio = DB::select('exec [usp_Compra_GetListaPrecioByProveedor] ?, ?, ?',
-                                                            [   $nIdProveedor,
+        $arrayListaPrecio = DB::select('exec [usp_Compra_GetListaPrecioByProveedor] ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdProveedor,
                                                                 $nIdTipoLista,
                                                                 $nIdentificador
                                                             ]);

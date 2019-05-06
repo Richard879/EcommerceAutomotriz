@@ -33,7 +33,7 @@ class IntProyectoController extends Controller
     }
 
 
-    public function AddonSetProyecto(Request $request)
+    /*public function AddonSetProyecto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -58,6 +58,30 @@ class IntProyectoController extends Controller
             $data = [
                 'arrayVinExiste'        =>  $arrayVinExiste
             ];
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }*/
+
+    public function AddonSetProyecto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+
+                $objProyecto = DB::select('exec [usp_Migracion_CarteraClientes] ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $det['cNumeroVin'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
             DB::commit();
             return response()->json($data);
         } catch (Exception $e){

@@ -217,9 +217,6 @@
                                                                             <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                                <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
-                                                                                    <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
-                                                                                </label>-->
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -242,18 +239,40 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
-                                                                                    <th>Nro Vin</th>
+                                                                                    <th>Tipo Doc</th>
+                                                                                    <th>Nro Doc</th>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Apellido Paterno</th>
+                                                                                    <th>Apellido Materno</th>
+                                                                                    <th>Ubigeo</th>
+                                                                                    <th>Direccion</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Tel. Fijo</th>
+                                                                                    <th>Tel. Movil</th>
+                                                                                    <th>Cod. Vendedor</th>
+                                                                                    <th>Nombre Vendedor</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nIdProyecto">
+                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nIdContador">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Eliminar Compra  {{ compra.cNumeroVin }}</div>
+                                                                                            <div slot="content">Eliminar Persona  {{ compra.cNumeroDocumento }}</div>
                                                                                             <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
-                                                                                    <td v-text="compra.cNumeroVin"></td>
+                                                                                    <td v-text="compra.nIdTipoDocumento"></td>
+                                                                                    <td v-text="compra.cNumeroDocumento"></td>
+                                                                                    <td v-text="compra.cNombre"></td>
+                                                                                    <td v-text="compra.cApellidoPaterno"></td>
+                                                                                    <td v-text="compra.cApellidoMaterno"></td>
+                                                                                    <td v-text="compra.cUbigeo"></td>
+                                                                                    <td v-text="compra.cDireccion"></td>
+                                                                                    <td v-text="compra.cEmail"></td>
+                                                                                    <td v-text="compra.cTelefonoFijo"></td>
+                                                                                    <td v-text="compra.nTelefonoMovil"></td>
+                                                                                    <td v-text="compra.nIdVendedor"></td>
+                                                                                    <td v-text="compra.cNombreVendedor"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -617,6 +636,31 @@
                     'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'data'            : this.arrayExcel
                 }).then(response => {
+                    this.confirmaRegistro();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            /*registrar(){
+                if(this.validarRegistro()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/proyecto/AddonSetProyecto';
+                axios.post(url, {
+                    'nIdEmpresa'      : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'            : this.arrayExcel
+                }).then(response => {
                     let me = this;
 
                     me.arrayTempVinExiste = [];
@@ -736,6 +780,14 @@
                 }else{
                     swal('Proyectos registrados correctamente');
                 }
+            },*/
+            confirmaRegistro(){
+                let me = this;
+                $("#myBar").hide();
+                me.loading.close();
+                swal('Proyecto registrada correctamente');
+                me.limpiarFormulario();
+                me.listarProyectos(1);
             },
             validarRegistro(){
                 this.error = 0;
