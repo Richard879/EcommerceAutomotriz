@@ -440,6 +440,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div> -->
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
