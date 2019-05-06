@@ -76,14 +76,24 @@ class IntProyectoController extends Controller
             foreach($detalles as $ep=>$det)
             {
 
-                $objProyecto = DB::select('exec [usp_Migracion_CarteraClientes] ?, ?, ?',
+                $objProyecto = DB::select('exec [usp_Migracion_CarteraClientes] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
-                                                                $det['cNumeroVin'],
-                                                                Auth::user()->id
+                                                                $det['nIdTipoDocumento'],
+                                                                $det['cNumeroDocumento'],
+                                                                $det['cNombre'],
+                                                                $det['cApellidoPaterno'],
+                                                                $det['cApellidoMaterno'],
+                                                                $det['cUbigeo'],
+                                                                $det['cDireccion'],
+                                                                $det['cEmail'],
+                                                                $det['cTelefonoFijo'],
+                                                                $det['nTelefonoMovil'],
+                                                                $det['nIdVendedor'],
+                                                                $det['cNombreVendedor']
                                                             ]);
             }
             DB::commit();
-            return response()->json($data);
+            return response()->json($objProyecto);
         } catch (Exception $e){
             DB::rollBack();
         }

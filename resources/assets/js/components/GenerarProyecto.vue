@@ -784,10 +784,12 @@
             confirmaRegistro(){
                 let me = this;
                 $("#myBar").hide();
-                me.loading.close();
                 swal('Proyecto registrada correctamente');
-                me.limpiarFormulario();
-                me.listarProyectos(1);
+                me.arrayExcel = [],
+                me.attachment = [];
+                me.form = new FormData,
+                $("#file-upload").val("");
+
             },
             validarRegistro(){
                 this.error = 0;
