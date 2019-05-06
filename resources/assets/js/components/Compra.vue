@@ -2013,26 +2013,27 @@
                         });
                     }
 
+                    me.verResultados();
                     //==============================================================
                     //================== REGITRO DE ARTICULO EN SAP ===============
                     //Depurar Array para registrar en SAP
-                    me.arrayExcel.map(function(x, y){
+                    /*me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
                             // console.log("VIN depurados: " + x.cNumeroVin);
                             me.arraySapArticulo.push(x);
                         }
-                    });
+                    });*/
 
                     // console.log("N° articulos a registrar" + me.arraySapArticulo.length);
                     //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
-                    if(me.arraySapArticulo.length){
+                    /*if(me.arraySapArticulo.length){
                         me.registroSapBusinessArticulo();
                     }
                     else{
                         me.loadingProgressBar("OCURRIO UN PROBLEMA...");
                         me.verResultados();
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2043,7 +2044,7 @@
                     }
                 });
             },
-            registroSapBusinessArticulo(){
+            /*registroSapBusinessArticulo(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
@@ -2103,7 +2104,7 @@
                         }
                     }
                 });
-            },
+            },*/
             /*generarSerieSap(){
                 let me = this;
                 var sapUrl = me.ruta + '/articulo/SapSetSerialNumber';
@@ -2124,7 +2125,7 @@
                     }
                 });
             },*/
-            registroSapBusinessProyecto(){
+            /*registroSapBusinessProyecto(){
                 let me = this;
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
@@ -2694,19 +2695,6 @@
                     });
                     // ====================== CONCEPTO =========================
                     // ====================  COSTO DEL VEHICULO ================
-                    /*let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
-                    arrayCostoVehiculo.map(function (x) {
-                        me.arrayTCCostoVehiculo.push({
-                            'U_SYP_VIN'           :   x.U_SYP_VIN,
-                            'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
-                            'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
-                            'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
-                            'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
-                            'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
-                            'U_SYP_COSTO'         :   x.U_SYP_COSTO,
-                            'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
-                        });
-                    });*/
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoDetalle();
@@ -2727,8 +2715,7 @@
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
                     'dataCabecera'  : me.arraySapCosto,
-                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio/*,
-                    'dataCostoVehiculo'  : me.arrayTCCostoVehiculo*/
+                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio
                 }).then(response => {
                     me.verResultados();
                 }).catch(error => {
@@ -2740,18 +2727,21 @@
                         }
                     }
                 });
-            },
+            },*/
             verResultados(){
                 let me = this;
-                me.attachment = [];
-                me.confirmaCompra();
+                //me.attachment = [];
+                //me.confirmaCompra();
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                    //me.loading.close();
                     me.accionmodal=3;
                     me.modal = 1;
                     me.attachment = [];
+                    me.limpiarFormulario();
+                    me.listarCompras(1);
                 }else{
-                    swal('Compra registrada correctamente');
+                    me.confirmaCompra();
                 }
             },
             validarRegistro(){
@@ -3717,7 +3707,7 @@
             confirmaCompra(){
                 let me = this;
                 $("#myBar").hide();
-                me.loading.close();
+                //me.loading.close();
                 swal('Compra registrada correctamente');
                 me.limpiarFormulario();
                 me.listarCompras(1);
