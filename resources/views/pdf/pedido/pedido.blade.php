@@ -198,11 +198,11 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tblBanco" border="2px">
+            <table class="tblBanco"  border="2px">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
-                        <th>Agente</th>
+                        <th>Agente (CUENTAS RECAUDADORAS)</th>
                         <th>Banco</th>
                         <th>Moneda</th>
                         <th>Código a indicar  </th>
@@ -210,18 +210,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Sociedad de Automotores Inka sac</td>
-                        <td>AGENTE BCP (cta recaudadora, con código DNI vendedor) </td>
+                        <td>Sociedad de Automotores INKA</td>
+                        <td>AGENTE BCP (cta recaudadora, y código vendedor) </td>
                         <td>Bcp</td>
                         <td>Soles/dolares</td>
                         <td>17262</td>
                     </tr>
                     <tr>
-                        <td>Sociedad de Automotores Inka sac</td>
-                        <td>AGENTE CONTINENTAL (cta recaudadora, con código DNI vendedor) </td>
+                        <td>Sociedad de Automotores INKA</td>
+                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
                         <td>Bbva</td>
                         <td>Soles</td>
                         <td>10300</td>
+                    </tr>
+                    <tr>
+                        <td>Sociedad de Automotores INKA</td>
+                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
+                        <td>Bbva</td>
+                        <td>Dolares</td>
+                        <td>10301</td>
                     </tr>
                 </tbody>
             </table>
