@@ -112,7 +112,7 @@
                                                                                     <th>Telef. Fijo</th>
                                                                                     <th>Dirección</th>
                                                                                     <th>Email</th>
-                                                                                    <th>Vendedor</th>
+                                                                                    <!--<th>Vendedor</th>-->
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -121,6 +121,10 @@
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Referencias Sin Cartera {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                        <el-tooltip class="item" effect="dark">
+                                                                                            <div slot="content">Asignar Referencia  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
@@ -144,7 +148,7 @@
                                                                                     <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
+                                                                                    <!--<td v-text="c.cVendedor"></td>-->
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
@@ -159,7 +163,7 @@
                                                                                     <th>Telef. Fijo</th>
                                                                                     <th>Email</th>
                                                                                     <th>Persona Contacto</th>
-                                                                                    <th>Vendedor</th>
+                                                                                    <!--<th>Vendedor</th>-->
                                                                                     <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
@@ -173,7 +177,7 @@
                                                                                     <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cContacto"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
+                                                                                    <!--<td v-text="c.cVendedor"></td>-->
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Referencias Sin Cartera {{ c.cRazonSocial }}</div>
@@ -2904,10 +2908,13 @@
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
             activarTab3(nIdContacto, nIdPersona, nTipoPersona){
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link active');
                 $('#Tab2').addClass("nav-link");
                 $('#Tab3').removeClass('nav-link disabled');
                 $('#Tab3').addClass("nav-link active");
+                $('#TabMisContactos').removeClass('in active show');
                 $('#TabCarteraMes').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
                 this.formNuevoContacto.nidcontacto = nIdContacto;
