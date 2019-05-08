@@ -40,10 +40,12 @@ class ExcelController extends Controller
         $spreadsheet    =   \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
         $sheetData      =   $spreadsheet->getActiveSheet()->toArray();
 
+        $cont = 0;
         $data = [];
         foreach ($sheetData as $key => $value) {
             if($value[3]!='' || $value[3]!=null){
                 $data[$key+1] =[
+                    'nItem'             => $cont,
                     'cNombreLinea'      => $value[0],
                     'cNombreAlmacen'    => $value[1],
                     'nNumeroReserva'    => $value[2],
@@ -62,6 +64,7 @@ class ExcelController extends Controller
                     'dFechaFacturado'   => $value[15],
                     'cItemType'         => 'itItems'
                 ];
+                $cont++;
             }
         }
 

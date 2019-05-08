@@ -479,6 +479,7 @@
                                                                                             <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
+                                                                                    <td v-text="compra.nItem"></td>
                                                                                     <td v-text="compra.cNombreLinea"></td>
                                                                                     <td v-text="compra.cNombreAlmacen"></td>
                                                                                     <td v-text="compra.nNumeroReserva"></td>
@@ -1772,8 +1773,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidproveedor'      : parseInt(this.formCompra.nidproveedor),
                         'nidtipolista'      : parseInt(this.formCompra.nidtipolista),
                         'nidentificador'    : 1,
@@ -2016,7 +2017,7 @@
                     //==============================================================
                     //================== REGITRO DE ARTICULO EN SAP ===============
                     //Depurar Array para registrar en SAP
-                    me.arrayExcel.map(function(x, y){
+                    /*me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
                             // console.log("VIN depurados: " + x.cNumeroVin);
@@ -2032,9 +2033,9 @@
                     else{
                         me.loadingProgressBar("OCURRIO UN PROBLEMA...");
                         me.verResultados();
-                    }
+                    }*/
 
-                    //me.verResultados();
+                    me.verResultados();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2045,7 +2046,7 @@
                     }
                 });
             },
-            registroSapBusinessArticulo(){
+            /*registroSapBusinessArticulo(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
@@ -2719,8 +2720,8 @@
                 }else{
                     swal('Compra registrada correctamente');
                 }
-            },
-            /*verResultados(){
+            },*/
+            verResultados(){
                 let me = this;
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
@@ -2733,7 +2734,7 @@
                 }else{
                     me.confirmaCompra();
                 }
-            },*/
+            },
             validarRegistro(){
                 this.error = 0;
                 this.mensajeError =[];
