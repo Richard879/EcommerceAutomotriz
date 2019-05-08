@@ -155,6 +155,7 @@
                                                                         <template v-else>
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>#Codigo SAP</th>
                                                                                     <th>Razon Social</th>
@@ -164,24 +165,18 @@
                                                                                     <th>Email</th>
                                                                                     <th>Persona Contacto</th>
                                                                                     <!--<th>Vendedor</th>-->
-                                                                                    <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cRazonSocial"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cTelefonoFijo"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cContacto"></td>
-                                                                                    <!--<td v-text="c.cVendedor"></td>-->
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Referencias Sin Cartera {{ c.cRazonSocial }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                        <el-tooltip class="item" effect="dark">
+                                                                                            <div slot="content">Asignar Referencia  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
@@ -196,6 +191,15 @@
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>-->
                                                                                     </td>
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.CardCode"></td>
+                                                                                    <td v-text="c.cRazonSocial"></td>
+                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cTelefonoFijo"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td v-text="c.cContacto"></td>
+                                                                                    <!--<td v-text="c.cVendedor"></td>-->
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
