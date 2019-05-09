@@ -453,6 +453,7 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
+                                                                                    <th>Item</th>
                                                                                     <th>Línea</th>
                                                                                     <th>Almacén<nav></nav></th>
                                                                                     <th>Nro Reserva</th>
