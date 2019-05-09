@@ -694,6 +694,7 @@
                                                                                 <th>Moneda</th>
                                                                                 <th>Precio Lista</th>
                                                                                 <th>Costo Dealer</th>
+                                                                                <th>Precio Bono Dealer</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -710,7 +711,9 @@
                                                                                 <td v-text="lpd.nAnioModelo"></td>
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
                                                                                 <td v-text="lpd.fPrecioLista"></td>
-                                                                                <td><input type="number" v-model="lpd.fCostoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>
+                                                                                <td v-text="lpd.fCostoDealer"></td>
+                                                                                <!--<td><input type="number" v-model="lpd.fCostoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>-->
+                                                                                <td v-text="lpd.fPrecioBonoDealer"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
