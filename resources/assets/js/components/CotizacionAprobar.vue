@@ -1061,12 +1061,14 @@
                 var url = this.ruta + '/getcotizacion/GetLstCotizacionPendientes';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidmarca' : this.fillCotizacionesPendiente.nidmarca,
-                        'nidmodelo' : this.fillCotizacionesPendiente.nidmodelo,
-                        'dfechainicio': this.fillCotizacionesPendiente.dfechainicio,
-                        'dfechafin': this.fillCotizacionesPendiente.dfechafin,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidmarca'      : this.fillCotizacionesPendiente.nidmarca,
+                        'nidmodelo'     : this.fillCotizacionesPendiente.nidmodelo,
+                        'dfechainicio'  : this.fillCotizacionesPendiente.dfechainicio,
+                        'dfechafin'     : this.fillCotizacionesPendiente.dfechafin,
+                        'ccontacto'     : this.fillCotizacionesPendiente.ccontacto,
+                        'ntipopersona'  : this.fillCotizacionesPendiente.ntipopersona,
                         'page' : page
                     }
                 }).then(response => {
