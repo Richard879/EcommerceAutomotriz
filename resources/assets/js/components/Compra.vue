@@ -3699,7 +3699,7 @@
             confirmaCompra(){
                 let me = this;
                 $("#myBar").hide();
-                me.loading.close();
+                //me.loading.close();
                 swal('Compra registrada correctamente');
                 me.limpiarFormulario();
                 me.listarCompras(1);

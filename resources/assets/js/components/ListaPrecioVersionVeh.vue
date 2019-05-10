@@ -712,8 +712,7 @@
                                                                                 <td v-text="lpd.cSimboloMoneda"></td>
                                                                                 <td v-text="lpd.fPrecioLista"></td>
                                                                                 <td v-text="lpd.fCostoDealer"></td>
-                                                                                <!--<td><input type="number" v-model="lpd.fCostoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>-->
-                                                                                <td v-text="lpd.fPrecioBonoDealer"></td>
+                                                                                <td><input type="number" v-model="lpd.fPrecioBonoDealer" @keyup.enter="actualizarCostoDealer(lpd)" class="form-control form-control-sm"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1736,7 +1735,7 @@
                             'nIdSucursal'                       : parseInt(sessionStorage.getItem("nIdSucursal")),
                             'nIdListaPrecioVersionVeh'          : objLista.nIdListaPrecioVersionVeh,
                             'nIdListaPrecioVersionVehDetalle'   : objLista.nIdListaPrecioVersionVehDetalle,
-                            'fCostoDealer'                      : objLista.fCostoDealer
+                            'fPrecioBonoDealer'                 : objLista.fPrecioBonoDealer
                         }).then(response =>{
                             if(response.data[0].nFlagMsje == 1)
                             {

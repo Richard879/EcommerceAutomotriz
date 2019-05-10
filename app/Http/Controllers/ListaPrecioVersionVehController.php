@@ -218,7 +218,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $request->nIdSucursal,
                                                                 $request->nIdListaPrecioVersionVeh,
                                                                 $request->nIdListaPrecioVersionVehDetalle,
-                                                                $request->fCostoDealer,
+                                                                $request->fPrecioBonoDealer,
                                                                 Auth::user()->id
                                                             ]);
         return response()->json($versionvehiculo);
