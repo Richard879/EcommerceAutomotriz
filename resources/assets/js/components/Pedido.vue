@@ -426,6 +426,10 @@
                                                                                             <div slot="content">Generar Pedido {{ cotizacion.cNumeroCotizacion }}</div>
                                                                                             <i @click="generarPedido(cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Generar Requerimiento {{ cotizacion.cNumeroCotizacion }}</div>
+                                                                                            <i @click="generarRequerimiento(cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                     <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                     <td v-text="cotizacion.cContacto"></td>
@@ -2341,6 +2345,36 @@
                 this.formDocRef.cnrocotizacion          =   cotizacion.cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
+            },
+            generarRequerimiento(cotizacion){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetGenerarRequerimiento';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraCotizacion' :   parseInt(cotizacion)
+                }, config).then(response => {
+                    // console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =================================================================
             // TAB ASIGNAR CONTACTO

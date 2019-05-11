@@ -572,6 +572,33 @@ class PedidoController extends Controller
         return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
     }
 
+    public function GetGenerarRequerimiento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             =   $request->nIdEmpresa;
+        $nIdSucursal            =   $request->nIdSucursal;
+        $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
+
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetRequerimientoPedido] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraCotizacion
+                                    ]);
+
+        $pdf = \PDF::loadView('pdf.pedido.pedido', [
+                                                        'arrayDetallePedido'    => $arrayDetallePedido,
+                                                        'logo'                  => $logo,
+                                                        'hyundai'               => $hyundai
+                                                    ]);
+
+        return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
+    }
+
     public function GetListPedidoForDscto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
