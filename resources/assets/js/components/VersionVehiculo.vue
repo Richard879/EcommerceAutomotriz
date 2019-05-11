@@ -298,7 +298,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Sub Clase</label>
+                                                    <label class="col-sm-4 form-control-label">* Carrocería</label>
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
@@ -594,7 +594,8 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cilindrada</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillPlantillaVerVeh.nidcilindrada"
+                                                            <input type="number" v-model="fillPlantillaVerVeh.nidcilindrada" class="form-control form-control-sm">
+                                                            <!--<el-select v-model="fillPlantillaVerVeh.nidcilindrada"
                                                                         filterable
                                                                         clearable
                                                                         placeholder="SELECCIONE EL CILINDRADO">
@@ -604,7 +605,7 @@
                                                                     :label="item.cParNombre"
                                                                     :value="item.nIdPar">
                                                                 </el-option>
-                                                            </el-select>
+                                                            </el-select>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1229,22 +1230,22 @@
 
                 var url = this.ruta + '/versionvehiculo/SetPlantillaVersionVeh';
                 axios.post(url, {
-                    nidversionveh   :   parseInt(this.fillPlantillaVerVeh.nidversionveh),
-                    nidclase        :   parseInt(this.fillPlantillaVerVeh.nidclase),
-                    nidtranccion    :   parseInt(this.fillPlantillaVerVeh.nidtranccion),
-                    nidcategoria    :   parseInt(this.fillPlantillaVerVeh.nidcategoria),
-                    nidcilindrada   :   parseInt(this.fillPlantillaVerVeh.nidcilindrada),
-                    nidtransmision  :   parseInt(this.fillPlantillaVerVeh.nidtransmision),
-                    nidcombustible  :   parseInt(this.fillPlantillaVerVeh.nidcombustible),
-                    cnrorueda       :   parseInt(this.fillPlantillaVerVeh.cnrorueda),
-                    cnroeje         :   parseInt(this.fillPlantillaVerVeh.cnroeje),
-                    cpotencia       :   parseInt(this.fillPlantillaVerVeh.cpotencia),
-                    cnrocilindros   :   parseInt(this.fillPlantillaVerVeh.cnrocilindros),
-                    cnroasiento     :   parseInt(this.fillPlantillaVerVeh.cnroasiento),
-                    faltura         :   this.fillPlantillaVerVeh.faltura,
-                    flongitud       :   this.fillPlantillaVerVeh.flongitud,
-                    fancho          :   this.fillPlantillaVerVeh.fancho,
-                    cFlagAccion     :   this.cFlagAccion
+                    'nidversionveh'   :   parseInt(this.fillPlantillaVerVeh.nidversionveh),
+                    'nidclase'        :   parseInt(this.fillPlantillaVerVeh.nidclase),
+                    'nidtranccion'    :   parseInt(this.fillPlantillaVerVeh.nidtranccion),
+                    'nidcategoria'    :   parseInt(this.fillPlantillaVerVeh.nidcategoria),
+                    'nidcilindrada'   :   parseInt(this.fillPlantillaVerVeh.nidcilindrada),
+                    'nidtransmision'  :   parseInt(this.fillPlantillaVerVeh.nidtransmision),
+                    'nidcombustible'  :   parseInt(this.fillPlantillaVerVeh.nidcombustible),
+                    'cnrorueda'       :   parseInt(this.fillPlantillaVerVeh.cnrorueda),
+                    'cnroeje'         :   parseInt(this.fillPlantillaVerVeh.cnroeje),
+                    'cpotencia'       :   parseInt(this.fillPlantillaVerVeh.cpotencia),
+                    'cnrocilindros'   :   parseInt(this.fillPlantillaVerVeh.cnrocilindros),
+                    'cnroasiento'     :   parseInt(this.fillPlantillaVerVeh.cnroasiento),
+                    'faltura'         :   this.fillPlantillaVerVeh.faltura,
+                    'flongitud'       :   this.fillPlantillaVerVeh.flongitud,
+                    'fancho'          :   this.fillPlantillaVerVeh.fancho,
+                    'cFlagAccion'     :   this.cFlagAccion
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {

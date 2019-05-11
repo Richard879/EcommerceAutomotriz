@@ -3615,7 +3615,7 @@
                 this.fillDetallePedido.cdocumentocliente = pedido.cPerDocumento,
                 this.fillDetallePedido.cnombrecliente = pedido.cContacto,
                 this.fillDetallePedido.nidversionvehiculo = pedido.nIdVersionVeh,
-                this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo,
+                this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioModelo,
                 this.fillDetallePedido.cnumerovin = pedido.cNumeroVin,
                 this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
                 this.fillDetallePedido.cnombrevendedor = pedido.cNombreVendedor,
