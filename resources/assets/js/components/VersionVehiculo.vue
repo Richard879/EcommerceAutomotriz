@@ -671,7 +671,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Potencia</label>
                                                         <div class="col-sm-8">
-                                                            <input type="number" v-model="fillPlantillaVerVeh.cpotencia" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillPlantillaVerVeh.cpotencia" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1239,7 +1239,7 @@
                     'nidcombustible'  :   parseInt(this.fillPlantillaVerVeh.nidcombustible),
                     'cnrorueda'       :   parseInt(this.fillPlantillaVerVeh.cnrorueda),
                     'cnroeje'         :   parseInt(this.fillPlantillaVerVeh.cnroeje),
-                    'cpotencia'       :   parseInt(this.fillPlantillaVerVeh.cpotencia),
+                    'cpotencia'       :   this.fillPlantillaVerVeh.cpotencia,
                     'cnrocilindros'   :   parseInt(this.fillPlantillaVerVeh.cnrocilindros),
                     'cnroasiento'     :   parseInt(this.fillPlantillaVerVeh.cnroasiento),
                     'faltura'         :   this.fillPlantillaVerVeh.faltura,
