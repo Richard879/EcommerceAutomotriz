@@ -1525,6 +1525,7 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+                this.listDistribucionDescuento = [];
             },
             //Limpiar Paginación
             limpiarPaginacion(){

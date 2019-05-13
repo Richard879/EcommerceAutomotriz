@@ -28,7 +28,7 @@ class PedidoController extends Controller
         $cNumeroCotizacion = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
 
         $arrayPedido = DB::select('exec [usp_Pedido_GetLstCotizacionIngresadas] ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array(  $nIdEmpresa,
+                                                                [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
@@ -36,9 +36,9 @@ class PedidoController extends Controller
                                                                     $nIdModelo,
                                                                     $cNumeroCotizacion,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
 
-        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+        //$arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
