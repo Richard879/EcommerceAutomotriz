@@ -121,6 +121,11 @@
             <tr>
                 <td>Telf. Celular:</td>
                 <td><strong>{{ $arrayDetallePedido[0]->cTelefonoMovil }}</strong></td>
+            </tr>
+            <tr>
+                <td>VIN</td>
+                <td><strong> {{ $arrayDetallePedido[0]->cNumeroVin }} </strong></td>
+            </tr>
         </table>
 
         <br/>
@@ -143,9 +148,6 @@
                             <h2>PRECIO ESPECIAL:</h2>
                             <strong> <h2> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioEspecial }} </h2></strong>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"> {{ $arrayDetallePedido[0]->cNumeroVin }} </td>
                     </tr>
                 </table>
             </div>
