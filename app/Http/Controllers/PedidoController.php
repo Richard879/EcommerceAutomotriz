@@ -605,7 +605,7 @@ class PedidoController extends Controller
                                                         'hyundai'               => $hyundai
                                                     ]);
 
-        return $pdf->download('Pedido Vehicular -'.$nIdCabeceraCotizacion.'.pdf');
+        return $pdf->download('Pedido Vehicular -'.$nIdCabeceraCotizacion.' - '.$cNumeroVin.'.pdf');
     }
 
     public function GetListPedidoForDscto(Request $request)
