@@ -217,7 +217,7 @@
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
-                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioFabricacion + '-' + cotizacionpendiente.nAnioModelo"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioModelo"></td>
                                                                     <td v-text="cotizacionpendiente.cDireccion"></td>
                                                                     <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
                                                                     <td v-text="cotizacionpendiente.cEmail"></td>
@@ -309,14 +309,6 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="text-center">
-                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            </div>
                                             <template v-if="cflagVerificaDistribucionAprobacion">
                                                 <template v-if="listDistribucionDescuento.length">
                                                     <vs-divider border-style="solid" color="dark">
@@ -329,8 +321,8 @@
                                                                     <th>Código</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Precio de Venta Soles</th>
-                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
                                                                     <th>Descuento</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
@@ -368,7 +360,7 @@
                                                         </table>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-4">
+                                                        <div class="col-sm-9 offset-sm-5">
                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
                                                                 <i class="fa fa-save"></i> DISTRIBUIR
                                                             </button>
@@ -463,8 +455,8 @@
                                                                     <th>Código</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Precio de Venta Soles</th>
-                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
                                                                     <th>Descuento</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
@@ -502,7 +494,7 @@
                                                         </table>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-4">
+                                                        <div class="col-sm-9 offset-sm-5">
                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
                                                                 <i class="fa fa-save"></i> DISTRIBUIR
                                                             </button>
@@ -529,6 +521,14 @@
                                                     </div>
                                                 </template>
                                             </template>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="text-center">
+                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -1399,28 +1399,28 @@
                 });
             },
             validarRegistrarDistribucion(){
-                this.error = 0;
-                this.mensajeError =[];
                 let me = this;
+                me.error = 0;
+                me.mensajeError =[];
 
                 //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE SUPERA DESCUENTO
-                if(this.listDistribucionDescuento.length > 0) {
-                    this.listDistribucionDescuento.map(function (x) {
+                if(me.listDistribucionDescuento.length > 0) {
+                    me.listDistribucionDescuento.map(function (x) {
                         if(x.nIdProveedor == ''){
-                            this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
+                            me.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
                         }
                         if(parseFloat(x.fDistribucion) < 0 || parseFloat(x.fDistribucion) > 100){
-                            this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
+                            me.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
                             x.fDistribucion = 0;//Seteado a 0
                         }
                         me.$forceUpdate();
                     });
                 }
 
-                if(this.mensajeError.length){
-                    this.error = 1;
+                if(me.mensajeError.length){
+                    me.error = 1;
                 }
-                return this.error;
+                return me.error;
             },
             limpiarModalDistribucion(){
                 this.arrayDistribucionDescuento = [];
