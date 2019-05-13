@@ -218,7 +218,7 @@
                                                                                             <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="activarTabDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
-                                                                                    </template>
+                                                                                    </template>&nbsp;&nbsp;
                                                                                     <template>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
@@ -234,7 +234,7 @@
                                                                                 <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>

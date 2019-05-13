@@ -571,9 +571,7 @@
                                                                                                     <tr>
                                                                                                         <th>Acciones</th>
                                                                                                         <th>Cód Comp.</th>
-                                                                                                        <th>O/C</th>
                                                                                                         <th>Nombre Comercial</th>
-                                                                                                        <th>Año Fab.</th>
                                                                                                         <th>Año Modelo</th>
                                                                                                         <th>Nro VIN</th>
                                                                                                         <th>Color</th>
@@ -594,9 +592,7 @@
                                                                                                             </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="compra.nIdCompra"></td>
-                                                                                                        <td v-text="compra.nOrdenCompra"></td>
                                                                                                         <td v-text="compra.cNombreComercial"></td>
-                                                                                                        <td v-text="compra.nAnioFabricacion"></td>
                                                                                                         <td v-text="compra.nAnioVersion"></td>
                                                                                                         <td v-text="compra.cNumeroVin"></td>
                                                                                                         <td v-text="compra.cNombreColor"></td>
