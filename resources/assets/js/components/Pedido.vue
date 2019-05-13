@@ -585,7 +585,7 @@
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Seleccionar Compra {{ compra.cNumeroVin }}</div>
                                                                                                                 <i @click="activarTabDocReferencias(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                                            </el-tooltip>
+                                                                                                            </el-tooltip>&nbsp;&nbsp;
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Generar Requerimiento {{ compra.cNumeroCotizacion }}</div>
                                                                                                                 <i @click="generarRequerimiento(compra)" :style="'color:#796AEE'" class="fa-md fa fa-file-pdf-o"></i>

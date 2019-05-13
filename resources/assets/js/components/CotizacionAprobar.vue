@@ -937,7 +937,7 @@
                 this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
                 this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
                 this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
                 this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
                 this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
                 this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
@@ -1208,6 +1208,7 @@
                 }).then(response => {
                     me.arrayDistribucionDescuento = response.data;
                     me.cargarDistribucionSuperaDscto();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1489,11 +1490,12 @@
                             case 'abrir':
                             {
                                 let me = this;
-                                this.verificarDatosCotizacion(data);
-                                this.listarProveedores(1);
+                                me.verificarDatosCotizacion(data);
+                                me.listarProveedores(1);
+                                me.loadingProgressBar("VERIFICANDO DESCUENTOS...");
                                 setTimeout(function() {
                                     me.listarDistribucionDescuento(data);
-                                }, 2800);
+                                }, 1200);
 
                                 // this.listarDistribucionEVPorRegalar(data);
                                 this.accionmodal=2;
@@ -1544,6 +1546,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
