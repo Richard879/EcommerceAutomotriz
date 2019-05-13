@@ -561,12 +561,12 @@ class PedidoController extends Controller
         // }
 
         $pdf = \PDF::loadView('pdf.pedido.pedido', [
-                                                        'arrayDetallePedido'    => $arrayDetallePedido,
+                                                        'arrayDetallePedido'    =>  $arrayDetallePedido,
                                                         'arrayDetalleDocs'      =>  $arrayDetalleDocs,
-                                                        'arrayPedidoDoumento'   => $arrayPedidoDoumento,
-                                                        'arrayDatosBanco'       => $arrayDatosBanco,
-                                                        'logo'                  => $logo,
-                                                        'hyundai'               => $hyundai
+                                                        'arrayPedidoDoumento'   =>  $arrayPedidoDoumento,
+                                                        'arrayDatosBanco'       =>  $arrayDatosBanco,
+                                                        'logo'                  =>  $logo,
+                                                        'hyundai'               =>  $hyundai
                                                     ]);
 
         return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');

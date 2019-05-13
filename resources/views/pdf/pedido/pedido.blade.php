@@ -144,6 +144,9 @@
                             <strong> <h2> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioEspecial }} </h2></strong>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2"> {{ $arrayDetallePedido[0]->cNumeroVin }} </td>
+                    </tr>
                 </table>
             </div>
 
