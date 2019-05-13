@@ -579,24 +579,33 @@ class PedidoController extends Controller
         $nIdEmpresa             =   $request->nIdEmpresa;
         $nIdSucursal            =   $request->nIdSucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
+        $cNumeroVin             =   $request->cNumeroVin;
 
         $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
-        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetRequerimientoPedido] ?, ?, ?',
+        $arrayDetallePedido = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,
                                         $nIdCabeceraCotizacion
                                     ]);
 
-        $pdf = \PDF::loadView('pdf.pedido.pedido', [
+        $arrayDetalleVIN = DB::select('exec [usp_Cotizacion_GetRequerimientoVehicular] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $cNumeroVin
+                                    ]);
+
+        $pdf = \PDF::loadView('pdf.pedido.pedidorequerimiento', [
                                                         'arrayDetallePedido'    => $arrayDetallePedido,
+                                                        'arrayDetalleVIN'       => $arrayDetalleVIN,
                                                         'logo'                  => $logo,
                                                         'hyundai'               => $hyundai
                                                     ]);
 
-        return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
+        return $pdf->download('Pedido Vehicular -'.$nIdCabeceraCotizacion.'.pdf');
     }
 
     public function GetListPedidoForDscto(Request $request)

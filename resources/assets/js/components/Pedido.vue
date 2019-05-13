@@ -426,10 +426,6 @@
                                                                                             <div slot="content">Generar Pedido {{ cotizacion.cNumeroCotizacion }}</div>
                                                                                             <i @click="generarPedido(cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Generar Requerimiento {{ cotizacion.cNumeroCotizacion }}</div>
-                                                                                            <i @click="generarRequerimiento(cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                     <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                     <td v-text="cotizacion.cContacto"></td>
@@ -591,6 +587,10 @@
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Seleccionar Compra {{ compra.cNumeroVin }}</div>
                                                                                                                 <i @click="activarTabDocReferencias(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                                            </el-tooltip>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Generar Requerimiento {{ compra.cNumeroCotizacion }}</div>
+                                                                                                                <i @click="generarRequerimiento(compra)" :style="'color:#796AEE'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                                             </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="compra.nIdCompra"></td>
@@ -2346,7 +2346,7 @@
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
             },
-            generarRequerimiento(cotizacion){
+            generarRequerimiento(compra){
                 var config = {
                     responseType: 'blob'
                 };
@@ -2354,7 +2354,9 @@
                 axios.post(url, {
                     'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdCabeceraCotizacion' :   parseInt(cotizacion)
+                    'nIdCabeceraCotizacion' :   parseInt(this.formCompra.nidcabeceracotizacion),
+                    'cNumeroVin'            :   compra.cNumeroVin,
+                    'nIdCompra'             :   compra.nIdCompra
                 }, config).then(response => {
                     // console.log(response.data);
                     //Create a Blob from the PDF Stream
