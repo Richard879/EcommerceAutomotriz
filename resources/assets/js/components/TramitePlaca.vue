@@ -269,71 +269,97 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <vs-divider border-style="solid" color="dark">
-                                                                                Costo LESGISLACIÓN
+                                                                                LEGALIZACION DE FIRMAS
                                                                             </vs-divider>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-12">
-                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="limpiarFiltro">
-                                                                                        <i class="fa fa-clear"></i> Limpiar Filtros
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 01</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Costo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <div class="input-group">
-                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro01" disabled="disabled" class="form-control form-control-sm">
-                                                                                                <div class="input-group-prepend">
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Buscar FILTRO 01 </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 1)">
-                                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                                        </button>
-                                                                                                    </el-tooltip>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCostoLegalizacion" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-8 widthFull">
+                                                                                            <el-select v-model="fillConceptosDocumentos.nIdTipoPersona"
+                                                                                                    filterable
+                                                                                                    clearable
+                                                                                                    loading-text
+                                                                                                    placeholder="Seleccione un Tipo de Persona">
+                                                                                                <el-option
+                                                                                                    v-for="tipoPersona in arrayTipoPersona"
+                                                                                                    :key="tipoPersona.nIdPar"
+                                                                                                    :label="tipoPersona.cParNombre"
+                                                                                                    :value="tipoPersona.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                TRAMITE DE TARJETAS
+                                                                            </vs-divider>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 02</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Costo Tramite</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <div class="input-group">
-                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro02" disabled="disabled" class="form-control form-control-sm">
-                                                                                                <div class="input-group-prepend">
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Buscar FILTRO 02 </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 2)">
-                                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                                        </button>
-                                                                                                    </el-tooltip>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCostoTramiteTarjeta" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                PLACAS
+                                                                            </vs-divider>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* FILTRO 03</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Costo Placa</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <div class="input-group">
-                                                                                                <input type="text" v-model="fillConceptosDocumentos.cDescripcionFiltro03" disabled="disabled" class="form-control form-control-sm">
-                                                                                                <div class="input-group-prepend">
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Buscar FILTRO 03 </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('filtro','buscar', 3)">
-                                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                                        </button>
-                                                                                                    </el-tooltip>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCostoPlaca" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                GARANTÍA INMOBILIARIA
+                                                                            </vs-divider>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Costo Garantía</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCostoGarantiaI" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                F. NOTARIALES
+                                                                            </vs-divider>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Costo Notariales</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCostoNotariales" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <vs-divider border-style="solid" color="dark">
+                                                                                CAMBIO DE CARACTERISTICAS
+                                                                            </vs-divider>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Costo Caracteristicas</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="number" v-model="fillConceptosDocumentos.dCambioCaracteristicas" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -351,115 +377,17 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- <div class="col-md-12">
-                                                                            DETALLE DOCUMENTOS
-                                                                            <template v-if="arrayPedidoDoumentoNew.length">
-                                                                                <vs-divider border-style="solid" color="dark">
-                                                                                    Documentos Asociados
-                                                                                </vs-divider>
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Nombre</th>
-                                                                                                <th>Archivo</th>
-                                                                                                <th>Ver Documento</th>
-                                                                                                <th>Conformidad</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="(documento, index) in arrayPedidoDoumentoNew" :key="documento.nIdPar">
-                                                                                                <template v-if="documento.nValida==1">
-                                                                                                    <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
-                                                                                                    <td v-text="documento.cArchivo"></td>
-                                                                                                    <td>
-                                                                                                        <el-tooltip class="item" :content="'Ver Pdf ' + documento.cArchivo" effect="dark" placement="top-start">
-                                                                                                            <a :href="documento.cRutaDocumento" v-if="documento.cRutaDocumento !=''" target="_blank">
-                                                                                                                <i class='fa-md fa fa-file'></i>
-                                                                                                            </a>
-                                                                                                        </el-tooltip>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <span v-text="documento.cFlagDocumento ? 'CONFORME' : 'NO CONFORME'"></span>
-                                                                                                        <span class="switch">
-                                                                                                            <el-switch  v-model="documento.cFlagDocumento"
-                                                                                                                        @change="verificarConformidad">
-                                                                                                            </el-switch>
-                                                                                                        </span>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <input  type="number"
-                                                                                                                v-if="documento.cFlagDocumento"
-                                                                                                                v-model="documento.fMontoDocumento"
-                                                                                                                @keyup="verificarMontoCero(documento.fMontoDocumento, index)"
-                                                                                                                class="form-control form-control-sm inputMonto">
-                                                                                                    </td>
-                                                                                                </template>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <el-row :gutter="10">
-                                                                                            <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
-                                                                                            <el-col :span="8">
-                                                                                                <div class="grid-content bg-purple">
-                                                                                                    S/. {{ montoSubTotalTramiteAdicional }}
-                                                                                                </div>
-                                                                                            </el-col>
-                                                                                        </el-row>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </template>
-                                                                        </div> -->
-                                                                        <!-- <div class="col-sm-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-12">
-                                                                                    <el-row :gutter="10">
-                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total Docs.</div></el-col>
-                                                                                        <el-col :span="8">
-                                                                                            <div class="grid-content bg-purple">
-                                                                                                S/. {{ montoSubTotalTramiteAdicional }}
-                                                                                            </div>
-                                                                                        </el-col>
-                                                                                    </el-row>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-12">
-                                                                                    <el-row :gutter="10">
-                                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total General.</div></el-col>
-                                                                                        <el-col :span="8">
-                                                                                            <div class="grid-content bg-purple">
-                                                                                                S/. {{ montoTotalGeneralTramite = verificarMontoGeneral }}
-                                                                                            </div>
-                                                                                        </el-col>
-                                                                                    </el-row>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
-                                                                        <div v-if="montoTotalGeneralTramite > 0 && verificarConformidadTramite" class="form-group row">
+                                                                        <div v-if="montoTotalGeneralTramite > 0" class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabRegistrarTramite">
                                                                                     <i class="fa fa-save"></i> Generar Tramite
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- <div v-else>
-                                                                            <div v-if="montoTotalGeneralTramite > 0 && !verificarConformidadTramite" class="form-group row">
-                                                                                <div class="col-md-9 offset-md-5">
-                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="tabRegistrarTramite">
-                                                                                        <i class="fa fa-save"></i> Tramite Pendiente
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div> -->
                                                                     </form>
                                                                 </div>
                                                             </form>
@@ -1238,10 +1166,21 @@
                     nroVehiculos: 0
                 },
                 arrayPedidosChecked: [],
-                arrayPedidoDoumento: [],
-                arrayPedidoDoumentoNew: [],
-                arrayFiltros: [],
+                arrayTipoPersona: [],
                 fillConceptosDocumentos: {
+                    //COSTO DE LEGALIZACION DE FIRMAS
+                    dCostoLegalizacion: 0,
+                    nIdTipoPersona: '',
+                    //COSTO TRAMITE TARJETA
+                    dCostoTramiteTarjeta: 0,
+                    //COSTO PLACA
+                    dCostoPlaca: 0,
+                    //COSTO GARANTIA INMOBILIARIA
+                    dCostoGarantiaI: 0,
+                    //COSTO NOTARILES
+                    dCostoNotariales: 0,
+                    //CAMBIO DE CARACTERISTICAS
+                    dCambioCaracteristicas: 0,
                     //PN/PJ
                     nIdFiltro01: '',
                     cDescripcionFiltro01: '',
@@ -1385,39 +1324,39 @@
                 }
                 return pagesArray;
             },
-            verificarMontoGeneral: function(){
-                let me = this;
-                if(me.montoSubTotalTramiteTarjeta > 0 || me.montoSubTotalTramiteAdicional > 0) {
-                    return parseFloat(me.montoSubTotalTramiteTarjeta) + parseFloat(me.montoSubTotalTramiteAdicional);
-                } else {
-                    return 0;
-                }
-            },
+            // verificarMontoGeneral: function(){
+            //     let me = this;
+            //     if(me.montoSubTotalTramiteTarjeta > 0 || me.montoSubTotalTramiteAdicional > 0) {
+            //         return parseFloat(me.montoSubTotalTramiteTarjeta) + parseFloat(me.montoSubTotalTramiteAdicional);
+            //     } else {
+            //         return 0;
+            //     }
+            // },
             //Verificar que se hayan marcado todas las conformidades de los docs
-            verificarConformidadTramite: {
-                // getter
-                get: function () {
-                    let me = this;
-                    let condicion = 0;
+            // verificarConformidadTramite: {
+            //     // getter
+            //     get: function () {
+            //         let me = this;
+            //         let condicion = 0;
 
-                    if(me.arrayPedidoDoumentoNew.length > 0) {
-                        me.arrayPedidoDoumentoNew.map(function(value, key){
-                            if(value.cFlagDocumento == true){
-                                condicion = 1;
-                            } else {
-                                condicion = 0;
-                            }
-                        });
-                    } else {
-                        condicion = 1;
-                    }
-                    return condicion;
-                },
-                // setter
-                set: function (newValue) {
-                    var condicion = newValue;
-                }
-            }
+            //         if(me.arrayPedidoDoumentoNew.length > 0) {
+            //             me.arrayPedidoDoumentoNew.map(function(value, key){
+            //                 if(value.cFlagDocumento == true){
+            //                     condicion = 1;
+            //                 } else {
+            //                     condicion = 0;
+            //                 }
+            //             });
+            //         } else {
+            //             condicion = 1;
+            //         }
+            //         return condicion;
+            //     },
+            //     // setter
+            //     set: function (newValue) {
+            //         var condicion = newValue;
+            //     }
+            // }
         },
         methods: {
             // =================================================================
@@ -1524,10 +1463,10 @@
             },
             cargarDatosBusquedaSubGenerarTramite(pedido){
                 this.obtenerPedidoSeleccionado(pedido);
-                this.obtenerDocumentosPedido(pedido);
                 this.obtenerFechaInicioTramite();
                 this.obtenerFechaFinTramite();
                 this.obtenerNroVehiculos();
+                this.costoTipoPersona();
             },
             obtenerPedidoSeleccionado(pedido){
                 let me = this;
@@ -1561,20 +1500,17 @@
             obtenerNroVehiculos(){
                 this.fillBusquedaPedidosSeleccionados.nroVehiculos = 1;
             },
-            //Sección 01
-            listarFiltros(page, jerarquia){
+            //Costo de Legalizacion de Firmas
+            costoTipoPersona(){
                 var url = this.ruta + '/tramite/GetListFiltro';
-
                 axios.get(url, {
                     params: {
                         'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar'   :   110110,
-                        'jerarquia'     :   jerarquia,
-                        'opcion'        :   1,
-                        'page' : page
+                        'jerarquia'     :   1
                     }
                 }).then(response => {
-                    this.arrayFiltros = response.data.arrayFiltros;
+                    this.arrayTipoPersona = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1585,46 +1521,7 @@
                     }
                 });
             },
-            cambiarPaginaFiltro(page){
-                this.paginationModal.current_page=page;
-                this.listarFiltros(page);
-            },
-            asignarFiltro(filtro){
-                if(filtro.cParJerarquia == 1){
-                    this.fillConceptosDocumentos.nIdFiltro01            = filtro.nIdPar;
-                    this.fillConceptosDocumentos.cDescripcionFiltro01   = filtro.cParNombre;
-                    this.fillConceptosDocumentos.cMontoFiltro01         = filtro.nDatoParNumerico;
-                    //Costo
-                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
-                }
-                if(filtro.cParJerarquia == 2){
-                    this.fillConceptosDocumentos.nIdFiltro02            = filtro.nIdPar;
-                    this.fillConceptosDocumentos.cDescripcionFiltro02   = filtro.cParNombre;
-                    this.fillConceptosDocumentos.cMontoFiltro02         = filtro.nDatoParNumerico;
-                    //Costo
-                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
-                }
-                if(filtro.cParJerarquia == 3){
-                    this.fillConceptosDocumentos.nIdFiltro03            = filtro.nIdPar;
-                    this.fillConceptosDocumentos.cDescripcionFiltro03   = filtro.cParNombre;
-                    this.fillConceptosDocumentos.cMontoFiltro03         = filtro.nDatoParNumerico;
-                    //Costo
-                    this.montoSubTotalTramiteTarjeta = filtro.nDatoParNumerico;
-                }
-                this.cerrarModal();
-            },
-            limpiarFiltro(){
-                this.fillConceptosDocumentos.nIdFiltro01            = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro01   = '';
-                this.fillConceptosDocumentos.cMontoFiltro01         = '';
-                this.fillConceptosDocumentos.nIdFiltro02            = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro02   = '';
-                this.fillConceptosDocumentos.cMontoFiltro02         = '';
-                this.fillConceptosDocumentos.nIdFiltro03            = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro03   = '';
-                this.fillConceptosDocumentos.cMontoFiltro03         = '';
-                this.montoSubTotalTramiteTarjeta                    = 0;
-            },
+            /*
             //Sección 02
             obtenerDocumentosPedido(pedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';
@@ -1712,6 +1609,7 @@
                 });
                 me.montoSubTotalTramiteAdicional = acumulador;
             },
+            */
             tabRegistrarTramite(){
                 if(this.validarRegistrarTramite()){
                     this.accionmodal=1;
