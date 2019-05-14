@@ -525,8 +525,9 @@ class CotizacionController extends Controller
                 $listDistribucionDescuento = $request->listDistribucionDescuento;
                 foreach($listDistribucionDescuento as $ep=>$det)
                 {
-                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?, ?',
-                                                                    [   $det['nIdCabeceraCotizacion'],
+                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdEmpresa,
+                                                                        $det['nIdCabeceraCotizacion'],
                                                                         $det['nIdDetalleCotizacion'],
                                                                         $det['nIdProveedor'],
                                                                         $det['fDistribucion'],

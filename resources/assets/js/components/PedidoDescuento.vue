@@ -384,17 +384,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente US$</label>
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente s./</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculodolar" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculosol" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente s./</label>
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente US$</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculosol" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculodolar" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -504,7 +504,7 @@
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Precio Venta s/.</th>
                                                                     <th>Precio Venta US$</th>
-                                                                    <th>Descuento</th>
+                                                                    <th>Descuento US$</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
                                                                     <th>Proveedor Cancelar</th>
@@ -560,69 +560,6 @@
                                                         </tbody>
                                                     </table>
                                                 </template>
-                                                <!-- <template v-if="listDistribucionEVPorRegalar.length">
-                                                    <vs-divider border-style="solid" color="dark">
-                                                        Distribución de Elementos de Venta por Regalar
-                                                    </vs-divider>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Código</th>
-                                                                    <th>Proveedor</th>
-                                                                    <th>Tipo Elemento</th>
-                                                                    <th>Nombre Elemento</th>
-                                                                    <th>Moneda</th>
-                                                                    <th>Precio de Venta</th>
-                                                                    <th>Cantidad</th>
-                                                                    <th>SubTotalSoles</th>
-                                                                    <th>SubTotalDolares</th>
-                                                                    <th>Proveedor</th>
-                                                                    <th>% Distribución</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="elemento in listDistribucionEVPorRegalar" :key="elemento.nIdElementoVenta">
-                                                                    <td v-text="elemento.nIdElementoVenta"></td>
-                                                                    <td v-text="elemento.cProveedorNombre"></td>
-                                                                    <td v-text="elemento.cTipoElemenNombre"></td>
-                                                                    <td v-text="elemento.cElemenNombre"></td>
-                                                                    <td v-text="elemento.cNombreMoneda"></td>
-                                                                    <td v-text="elemento.fElemenValorVenta"></td>
-                                                                    <td v-text="elemento.nCantidad"></td>
-                                                                    <td v-text="elemento.fSubTotalSoles"></td>
-                                                                    <td v-text="elemento.fSubTotalDolares"></td>
-                                                                    <td>
-                                                                        <div class="input-group">
-                                                                            <el-select v-model="elemento.nIdProveedor"
-                                                                                    filterable clearable
-                                                                                    placeholder="SELECCIONE" >
-                                                                                <el-option
-                                                                                    v-for="item in arrayProveedor"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" v-model="elemento.fDistribucion" @keyup="validarDistribucionEV" min="0" max="100" maxlength="3" class="form-control form-control-sm">
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template> -->
                                             </template>
                                             <template v-else>
                                                 <template v-if="listDistribucionDescuento.length">
@@ -640,8 +577,8 @@
                                                                     <th>Precio Venta US$</th>
                                                                     <th>Descuento</th>
                                                                     <th>Proveedor</th>
-                                                                    <th>% Distribución</th>
-                                                                    <th>Proveedor Cancelar</th>
+                                                                    <th>US$ Proveedor</th>
+                                                                    <th>US$ Saisac</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -1590,7 +1527,8 @@
 
                 var url = this.ruta + '/setcotizacion/SetDistribucionCotizacion';
                 axios.post(url, {
-                    listDistribucionDescuento: this.listDistribucionDescuento
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'listDistribucionDescuento' : this.listDistribucionDescuento
                     // listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
                 }).then(response => {
                     // if (this.nIdGrupoUsuario == '110083') {
