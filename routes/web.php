@@ -214,6 +214,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
     Route::get('/pedido/GetLlamadasServiciosByPedido', 'PedidoController@GetLlamadasServiciosByPedido');
+    Route::get('/pedido/GetLstPedidoConDescuento', 'PedidoController@GetLstPedidoConDescuento');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');

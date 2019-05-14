@@ -675,35 +675,17 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <label v-text="formDocRef.cnrovin" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">O/C</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.nordencompra" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

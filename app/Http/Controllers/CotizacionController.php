@@ -805,7 +805,7 @@ class CotizacionController extends Controller
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
     }
 
-    public function GetDetalleCotizacionDistribucion()
+    public function GetDetalleCotizacionDistribucion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
