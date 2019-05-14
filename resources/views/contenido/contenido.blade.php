@@ -118,7 +118,7 @@
         <pedidodepositoaprobar :ruta="ruta"></pedidodepositoaprobar>
     </template>
     <template v-if="menu==1300468">
-        <pedidodescuento :ruta="ruta"></pedidodescuento>
+        <pedidodescuento :ruta="ruta" :usuario="{{ auth()->user() }}"></pedidodescuento>
     </template>
     <template v-if="menu==1300282">
         <solccjefeventa :ruta="ruta"></solccjefeventa>

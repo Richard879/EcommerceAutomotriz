@@ -214,6 +214,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
     Route::get('/pedido/GetOrdenVenta', 'PedidoController@GetOrdenVenta');
     Route::get('/pedido/GetLlamadasServiciosByPedido', 'PedidoController@GetLlamadasServiciosByPedido');
+    Route::get('/pedido/GetLstPedidoConDescuento', 'PedidoController@GetLstPedidoConDescuento');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
@@ -304,6 +305,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/getcotizacion/GetDetalleCotizacion', 'CotizacionController@GetDetalleCotizacion');
     Route::get('/getcotizacion/GetListContactoByVendedor', 'CotizacionController@GetListContactoByVendedor');
     Route::get('/gescotizacion/GetLisDocsModelo', 'CotizacionController@GetLisDocsModelo');
+    Route::get('/gescotizacion/GetDetalleCotizacionDistribucion', 'CotizacionController@GetDetalleCotizacionDistribucion');
 
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');

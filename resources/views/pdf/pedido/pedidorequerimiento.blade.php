@@ -142,11 +142,7 @@
                 <td><strong>{{ $arrayDetalleVIN[0]->cNumeroMotor }}</strong></td>
             </tr>
             <tr>
-                <td>AÑO DE FABRICACION</td>
-                <td><strong>{{ $arrayDetalleVIN[0]->nAnioFabricacion }}</strong></td>
-            </tr>
-            <tr>
-                <td>AÑO DE MODELO</td>
+                <td>AÑO MODELO</td>
                 <td><strong>{{ $arrayDetalleVIN[0]->nAnioVersion }}</strong></td>
             </tr>
             <tr>

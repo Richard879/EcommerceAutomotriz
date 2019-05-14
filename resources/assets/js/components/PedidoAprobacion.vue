@@ -564,35 +564,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.nidversionvehiculo" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
                                                             <input v-model="fillDetallePedido.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* VIN</label>
                                                         <div class="col-sm-8">
                                                             <input v-model="fillDetallePedido.cnumerovin" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>

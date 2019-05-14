@@ -217,24 +217,24 @@
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="activarTabDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                        </el-tooltip>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                     <template>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                        </el-tooltip>&nbsp;
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
@@ -941,8 +941,8 @@
                                                                     <th>MONEDA</th>
                                                                     <th>FECHA</th>
                                                                     <th>TTPO CAMBIO</th>
-                                                                    <th>MONTO S/</th>
-                                                                    <th>MONTO USD/</th>
+                                                                    <th>MONTO s./</th>
+                                                                    <th>MONTO US$</th>
                                                                     <th>ESTADO</th>
                                                                 </tr>
                                                             </thead>
@@ -961,35 +961,6 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-
-                                                    <!--<el-table
-                                                        :data="arrayDetalleDepositosPorPedido"
-                                                        style="width: 100%"
-                                                        :stripe="true"
-                                                        >
-                                                        <el-table-column type="expand">
-                                                            <template slot-scope="props">
-                                                                <p><strong> Estado :  {{ props.row.cEstadoAlerta }} </strong></p>
-                                                                <p><strong> Comentario :  {{ props.row.cComentario }} </strong></p>
-                                                            </template>
-                                                        </el-table-column>
-                                                        <el-table-column label="BANCO" prop="cNombreBanco"></el-table-column>
-                                                        <el-table-column label="N° OPERACIÓN" prop="nNumeroOperacion"></el-table-column>
-                                                        <el-table-column label="MONEDA" prop="cNombreMoneda"></el-table-column>
-                                                        <el-table-column label="FECHA" prop="dFechaDeposito"></el-table-column>
-                                                        <el-table-column label="TTPO CAMBIO" prop="fTipoCambio"></el-table-column>
-                                                        <el-table-column label="MONTO S/">
-                                                            <template slot-scope="props">
-                                                                <p>{{ Number((parseFloat(props.row.fMontoSoles)).toFixed(2)) }}</p>
-                                                            </template>
-                                                        </el-table-column>
-                                                        <el-table-column label="MONTO USD/">
-                                                            <template slot-scope="props">
-                                                                <p>{{ Number((parseFloat(props.row.fMontoDolares)).toFixed(2)) }}</p>
-                                                            </template>
-                                                        </el-table-column>
-                                                        <el-table-column label="ESTADO" prop="cEstadoDeposito"></el-table-column>
-                                                    </el-table>-->
                                                 </template>
                                                 <template v-else>
                                                     <table>
@@ -1006,7 +977,7 @@
                                                     <el-col :span="6" :offset="12"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalDepositos)).toFixed(2)) }}
+                                                            US$. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalDepositos)).toFixed(2)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -1014,7 +985,7 @@
                                                     <el-col :span="6" :offset="12"><div class="grid-content bg-purple"> MONTO PEDIDO</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                            US$. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>

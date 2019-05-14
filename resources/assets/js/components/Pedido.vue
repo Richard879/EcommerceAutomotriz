@@ -225,7 +225,7 @@
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
@@ -463,7 +463,7 @@
                                                                                 </nav>
                                                                             </div>
                                                                             <div class="col-sm-5">
-                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -571,9 +571,7 @@
                                                                                                     <tr>
                                                                                                         <th>Acciones</th>
                                                                                                         <th>Cód Comp.</th>
-                                                                                                        <th>O/C</th>
                                                                                                         <th>Nombre Comercial</th>
-                                                                                                        <th>Año Fab.</th>
                                                                                                         <th>Año Modelo</th>
                                                                                                         <th>Nro VIN</th>
                                                                                                         <th>Color</th>
@@ -587,16 +585,14 @@
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Seleccionar Compra {{ compra.cNumeroVin }}</div>
                                                                                                                 <i @click="activarTabDocReferencias(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                                            </el-tooltip>
+                                                                                                            </el-tooltip>&nbsp;&nbsp;
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Generar Requerimiento {{ compra.cNumeroCotizacion }}</div>
                                                                                                                 <i @click="generarRequerimiento(compra)" :style="'color:#796AEE'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                                             </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="compra.nIdCompra"></td>
-                                                                                                        <td v-text="compra.nOrdenCompra"></td>
                                                                                                         <td v-text="compra.cNombreComercial"></td>
-                                                                                                        <td v-text="compra.nAnioFabricacion"></td>
                                                                                                         <td v-text="compra.nAnioVersion"></td>
                                                                                                         <td v-text="compra.cNumeroVin"></td>
                                                                                                         <td v-text="compra.cNombreColor"></td>
@@ -679,35 +675,17 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <label v-text="formDocRef.cnrovin" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">O/C</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.nordencompra" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1112,35 +1090,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.nidversionvehiculo" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
                                                             <input v-model="fillDetallePedido.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* VIN</label>
                                                         <div class="col-sm-8">
                                                             <input v-model="fillDetallePedido.cnumerovin" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1371,9 +1331,9 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1392,24 +1352,6 @@
                                                         <label class="col-sm-4 form-control-label">* Cliente</label>
                                                         <div class="col-sm-8">
                                                             <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1812,6 +1754,7 @@
                 },
                 arrayMisPedido: [],
                 arrayPedido: [],
+                arrayPedidoRpta: [],
                 arrayMarca: [],
                 arrayModelo: [],
                 vistaFormularioPedido: 1,
@@ -1897,6 +1840,9 @@
                 jsonPedido: '',
                 arraySapUpdPedido: [],
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -2218,23 +2164,24 @@
                 var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.formPedido.dfechainicio,
-                        'dfechafin': this.formPedido.dfechafin,
-                        'nidmarca': this.formPedido.nidmarca,
-                        'nidmodelo': this.formPedido.nidmodelo,
-                        'cnumerocotizacion': this.formPedido.cnumerocotizacion,
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      : this.formPedido.dfechainicio,
+                        'dfechafin'         : this.formPedido.dfechafin,
+                        'nidmarca'          : this.formPedido.nidmarca,
+                        'nidmodelo'         : this.formPedido.nidmodelo,
+                        'cnumerocotizacion' : this.formPedido.cnumerocotizacion,
                         'page': page
                     }
                 }).then(response => {
-                    this.arrayPedido = response.data.arrayPedido.data;
-                    this.pagination.current_page =  response.data.arrayPedido.current_page;
-                    this.pagination.total = response.data.arrayPedido.total;
+                    this.arrayPedidoRpta        = response.data.arrayPedido;
+                    this.paginateCotizacion(this.arrayPedidoRpta, page);
+                    /*this.pagination.current_page=  response.data.arrayPedido.current_page;
+                    this.pagination.total       = response.data.arrayPedido.total;
                     this.pagination.per_page    = response.data.arrayPedido.per_page;
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
-                    this.pagination.to           = response.data.arrayPedido.to;
+                    this.pagination.to          = response.data.arrayPedido.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2246,9 +2193,19 @@
                     }
                 });
             },
+            paginateCotizacion(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPedido            = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPaginaCotizacion(page){
                 this.pagination.current_page=page;
-                this.listarCotizacionesIngresadas(page);
+                this.paginateCotizacion(this.arrayPedidoRpta, page);
+                //this.listarCotizacionesIngresadas(page);
             },
             desactivar(nIdPedido){
                 swal({

@@ -217,7 +217,7 @@
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
-                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioFabricacion + '-' + cotizacionpendiente.nAnioModelo"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioModelo"></td>
                                                                     <td v-text="cotizacionpendiente.cDireccion"></td>
                                                                     <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
                                                                     <td v-text="cotizacionpendiente.cEmail"></td>
@@ -310,13 +310,96 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="text-center">
-                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <br>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cliente</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/>
                                             <template v-if="cflagVerificaDistribucionAprobacion">
                                                 <template v-if="listDistribucionDescuento.length">
                                                     <vs-divider border-style="solid" color="dark">
@@ -329,8 +412,8 @@
                                                                     <th>Código</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Precio de Venta Soles</th>
-                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
                                                                     <th>Descuento</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
@@ -368,7 +451,7 @@
                                                         </table>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-4">
+                                                        <div class="col-sm-9 offset-sm-5">
                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
                                                                 <i class="fa fa-save"></i> DISTRIBUIR
                                                             </button>
@@ -463,8 +546,8 @@
                                                                     <th>Código</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Nombre Comercial</th>
-                                                                    <th>Precio de Venta Soles</th>
-                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
                                                                     <th>Descuento</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
@@ -502,7 +585,7 @@
                                                         </table>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-4">
+                                                        <div class="col-sm-9 offset-sm-5">
                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
                                                                 <i class="fa fa-save"></i> DISTRIBUIR
                                                             </button>
@@ -529,6 +612,14 @@
                                                     </div>
                                                 </template>
                                             </template>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="text-center">
+                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -933,15 +1024,15 @@
             //===========================================================
             // MODAL COTIZACION DETALLE
             verCotizacion(cotizacion){
-                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
-                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
-                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
-                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
-                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
-                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
-                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
-                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
                 this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
                 this.verDetalleCotizacion(cotizacion);
             },
@@ -1163,9 +1254,41 @@
                 this.fillCotizacionesPendiente.dfechafin = '';
                 this.$forceUpdate();
             },
+            //===========================================================
+            //=================== MODAL DISTRIBUCION ====================
             /**
              * MODAL DISTRIBUCIÓN SUPERA DSCTO
              */
+            getDetalleCotizacionDistribucion(nIdCabeceraCotizacion){
+                var url = me.ruta + '/gescotizacion/GetDetalleCotizacionDistribucion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion' : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion': op
+                    }
+                }).then(response => {
+                    this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                    this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                    this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                    this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                    this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                    this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                    this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                    this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                    this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
+                    this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             verificarDatosCotizacion(nIdCabeceraCotizacion){
                 var url = this.ruta + '/getcotizacion/GetDatosCotizacion';
                 axios.get(url, {
@@ -1208,6 +1331,7 @@
                 }).then(response => {
                     me.arrayDistribucionDescuento = response.data;
                     me.cargarDistribucionSuperaDscto();
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1399,28 +1523,28 @@
                 });
             },
             validarRegistrarDistribucion(){
-                this.error = 0;
-                this.mensajeError =[];
                 let me = this;
+                me.error = 0;
+                me.mensajeError =[];
 
                 //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE SUPERA DESCUENTO
-                if(this.listDistribucionDescuento.length > 0) {
-                    this.listDistribucionDescuento.map(function (x) {
+                if(me.listDistribucionDescuento.length > 0) {
+                    me.listDistribucionDescuento.map(function (x) {
                         if(x.nIdProveedor == ''){
-                            this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
+                            me.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
                         }
                         if(parseFloat(x.fDistribucion) < 0 || parseFloat(x.fDistribucion) > 100){
-                            this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
+                            me.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
                             x.fDistribucion = 0;//Seteado a 0
                         }
                         me.$forceUpdate();
                     });
                 }
 
-                if(this.mensajeError.length){
-                    this.error = 1;
+                if(me.mensajeError.length){
+                    me.error = 1;
                 }
-                return this.error;
+                return me.error;
             },
             limpiarModalDistribucion(){
                 this.arrayDistribucionDescuento = [];
@@ -1489,11 +1613,13 @@
                             case 'abrir':
                             {
                                 let me = this;
-                                this.verificarDatosCotizacion(data);
-                                this.listarProveedores(1);
+                                me.verificarDatosCotizacion(data);
+                                me.listarProveedores(1);
+                                me.loadingProgressBar("VERIFICANDO DESCUENTOS...");
                                 setTimeout(function() {
+                                    me.getDetalleCotizacionDistribucion(data);
                                     me.listarDistribucionDescuento(data);
-                                }, 2800);
+                                }, 1200);
 
                                 // this.listarDistribucionEVPorRegalar(data);
                                 this.accionmodal=2;
@@ -1523,6 +1649,7 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+                this.listDistribucionDescuento = [];
             },
             //Limpiar Paginación
             limpiarPaginacion(){
@@ -1544,6 +1671,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
