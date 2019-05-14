@@ -443,37 +443,6 @@ class CotizacionController extends Controller
         return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];
     }
 
-    /*public function GetLstCotizacionPendienteADV(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $nidempresa    =   $request->nidempresa;
-        $nidsucursal   =   $request->nidsucursal;
-        $nidmarca      =   $request->nidmarca;
-        $nidmodelo     =   $request->nidmodelo;
-        $dfechainicio  =   $request->dfechainicio;
-        $dfechafin     =   $request->dfechafin;
-
-        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
-        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
-        $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
-        $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
-
-        $arrayMisCotizacionesPendientes = DB::select('exec usp_Cotizacion_GetLstCotizacionPendienteADV ?, ?, ?, ?, ?, ?, ?',
-                                    [
-                                        $nidempresa,
-                                        $nidsucursal,
-                                        $nidmarca,
-                                        $nidmodelo,
-                                        $dfechainicio,
-                                        $dfechafin,
-                                        Auth::user()->id
-                                    ]);
-
-        $arrayMisCotizacionesPendientes = ParametroController::arrayPaginator($arrayMisCotizacionesPendientes, $request);
-        return ['arrayMisCotizacionesPendientes'=>$arrayMisCotizacionesPendientes];
-    }*/
-
     public function GetDistribucionByElementoVenta(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -823,16 +792,33 @@ class CotizacionController extends Controller
         $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
 
         $arrayContactosPorVendedor = DB::select('exec [usp_Cotizacion_GetListContactoByVendedor] ?, ?, ?, ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
-                                                                                $nIdSucursal,
-                                                                                $nIdCronograma,
-                                                                                $nTipoPersona,
-                                                                                $cNroDocumento,
-                                                                                $cFiltroDescripcion,
-                                                                                $nIdVendedor
-                                                                                ));
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $nIdCronograma,
+                                                                            $nTipoPersona,
+                                                                            $cNroDocumento,
+                                                                            $cFiltroDescripcion,
+                                                                            $nIdVendedor
+                                                                        ]);
 
         //$arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
+    }
+
+    public function GetDetalleCotizacionDistribucion()
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             = $request->nidempresa;
+        $nIdSucursal            = $request->nidsucursal;
+        $nIdCabeceraCotizacion  = $request->nidcabeceracotizacion;
+
+        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacionDistribucion] ?, ?, ?, ?',
+                                                                            [   $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $nIdCabeceraCotizacion,
+                                                                                Auth::user()->id
+                                                                            ]);
+        return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion];
     }
 }

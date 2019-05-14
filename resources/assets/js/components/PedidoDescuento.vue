@@ -3,378 +3,272 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">
-                        <vs-divider color="dark">MODULO PEDIDOS PARA REALIZAR DESCUENTO</vs-divider>
-                    </h2>
+                    <vs-divider color="dark">
+                        <h2 class="no-margin-bottom">MODULO APROBAR DESCUENTO PEDIDO</h2>
+                    </vs-divider>
                 </div>
             </header>
 
             <section class="forms">
-                <div class="container-fluid" v-if="cflagVer">
+                <div class="container-fluid">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">BUSCAR PEDIDO</h3>
-                            </div>
                             <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES DE CONFORMIDAD</h3>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Sucursal</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
-                                                <div class="col-sm-8">
-                                                    <el-date-picker
-                                                        v-model="fillBusquedaPedido.dfechainicio"
-                                                        type="date"
-                                                        value-format="yyyy-MM-dd"
-                                                        format="dd/MM/yyyy"
-                                                        placeholder="dd/mm/aaaa">
-                                                    </el-date-picker>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
-                                                <div class="col-sm-8">
-                                                    <el-date-picker
-                                                        v-model="fillBusquedaPedido.dfechafin"
-                                                        type="date"
-                                                        value-format="yyyy-MM-dd"
-                                                        format="dd/MM/yyyy"
-                                                        placeholder="dd/mm/aaaa">
-                                                    </el-date-picker>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Nro Pedido</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">Marca</label>
-                                                <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
-                                                        <el-option
-                                                        v-for="item in arrayMarca"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">Modelo</label>
-                                                <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
-                                                        <el-option
-                                                            v-for="item in arrayModelo"
-                                                            :key="item.nIdModelo"
-                                                            :label="item.cModeloNombre"
-                                                            :value="item.nIdModelo">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
-                                                <i class="fa fa-search"></i> Buscar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
-                            </div>
-                            <div class="card-body">
-                                <template v-if="arrayPedidos.length">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Acciones</th>
-                                                    <th>Nro Pedido</th>
-                                                    <th>#Doc SAP</th>
-                                                    <th>Contacto</th>
-                                                    <th>Vehiculo</th>
-                                                    <th>Número VIN</th>
-                                                    <th>Fecha Pedido</th>
-                                                    <th>Aprobación</th>
-                                                    <th>Estado Pedido</th>
-                                                    <th>Vendedor</th>
-                                                    <th>DocEntry</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
-                                                    <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Generar Dscto del Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="generarDsctoPedido(0, pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
-                                                        </el-tooltip>&nbsp;&nbsp;
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                        </el-tooltip>&nbsp;&nbsp;
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                        </el-tooltip>&nbsp;
-                                                    </td>
-                                                    <td v-text="pedido.cNumeroPedido"></td>
-                                                    <td v-text="pedido.nDocNum"></td>
-                                                    <td v-text="pedido.cContacto"></td>
-                                                    <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
-                                                    <td v-text="pedido.cNumeroVin"></td>
-                                                    <td v-text="pedido.dFechaPedido"></td>
-                                                    <td v-text="pedido.cEstadoAprobacion"></td>
-                                                    <td v-text="pedido.cEstadoPedido"></td>
-                                                    <td v-text="pedido.cNombreVendedor"></td>
-                                                    <td v-text="pedido.nDocEntryPedido"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-7">
-                                                <nav>
-                                                    <ul class="pagination">
-                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                        </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                        :class="[page==isActived?'active':'']">
-                                                            <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPaginaPedido(page)"
-                                                            v-text="page"></a>
-                                                        </li>
-                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="10">No existen registros!</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid" v-else>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">GENERAR DSCTO DEL PEDIDO {{ fillPedidoDscto.cNumeroPedido }} </h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-5">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Monto a Descontar</label>
+                                            <div class="card-body">
+                                                <form class="form-horizontal">
+                                                    <div class="form-group row">
                                                         <div class="col-sm-6">
-                                                            <input type="number"
-                                                                   min="0"
-                                                                   v-model="fillPedidoDscto.dMontoDescontar"
-                                                                   @keyup="calcularNuevoMonto(2, fillPedidoDscto.dMontoDescontar)"
-                                                                   class="form-control form-control-sm">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Empresa</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="form-control-label">
-                                                            <el-radio-group v-model="fillPedidoDscto.cTipoDscto" @change="cambiarTipoDscto">
-                                                                <el-radio v-for="tipodsct in arrayTipoDscto" :key="tipodsct.id" :label="tipodsct.value"> {{ tipodsct.text }} </el-radio>
-                                                            </el-radio-group>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Tipo de Cambio</label>
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label" v-text="fillPedidoDscto.dTipoCambioComercial"></label>
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <vs-divider border-style="solid" color="dark">
-                                                CALCULO
-                                            </vs-divider>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Monto a Actual</label>
+                                                    <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                    <div class="col-sm-8">
+                                                                        <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                            <input type="radio" class="radio-template" v-model="fillCotizacionesPendiente.ntipopersona" :value="tipo.value">
+                                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" v-model="fillCotizacionesPendiente.ccontacto" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <div class="form-group row">
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label">
-                                                                $ {{ fillPedidoDscto.dMontoPedido }}
-                                                            </label>
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-date-picker
+                                                                        v-model="fillCotizacionesPendiente.dfechainicio"
+                                                                        type="date"
+                                                                        value-format="yyyy-MM-dd"
+                                                                        format="dd/MM/yyyy"
+                                                                        placeholder="dd/mm/aaaa">
+                                                                    </el-date-picker>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Monto a Descontar</label>
                                                         <div class="col-sm-6">
-                                                            <label class="form-control-label">
-                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
-                                                            </label>
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-date-picker
+                                                                        v-model="fillCotizacionesPendiente.dfechafin"
+                                                                        type="date"
+                                                                        value-format="yyyy-MM-dd"
+                                                                        format="dd/MM/yyyy"
+                                                                        placeholder="dd/mm/aaaa">
+                                                                    </el-date-picker>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Monto Nuevo</label>
-                                                        <div class="col-sm-6">
-                                                            <label class="form-control-label">
-                                                                $ {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
-                                                            </label>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-4 form-control-label">Marca</label>
+                                                                <div class="col-md-8">
+                                                                    <el-select v-model="fillCotizacionesPendiente.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                        <el-option
+                                                                        v-for="item in arrayMarca"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-4 form-control-label">Modelo</label>
+                                                                <div class="col-md-8">
+                                                                    <el-select v-model="fillCotizacionesPendiente.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                        <el-option
+                                                                            v-for="item in arrayModelo"
+                                                                            :key="item.nIdModelo"
+                                                                            :label="item.cModeloNombre"
+                                                                            :value="item.nIdModelo">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-6 form-control-label">Monto Nuevo</label>
-                                                        <div class="col-sm-6">
-                                                            <label class="form-control-label" >
-                                                                S/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoSoles)).toFixed(2)) }}
-                                                            </label>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-5">
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesPendientes(1)">
+                                                                <i class="fa fa-search"></i> Buscar
+                                                            </button>
+                                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBusqCotizacionesPendientes">
+                                                                <i class="fa fa-recycle"></i> Limpiar
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="h4">HISTORIAL DE DESCUENTOS</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <template v-if="arrayHistorialPedidoDsctos.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Dolares</th>
-                                                                        <th>Soles</th>
-                                                                        <th>Descuento en $</th>
-                                                                        <th>Descuento en S/.</th>
-                                                                        <th>Porcentaje</th>
-                                                                        <th>Tipo Cambio</th>
-                                                                        <th>Tipo Historial</th>
-                                                                        <th>Fecha</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="(histodsctos, index) in arrayHistorialPedidoDsctos" :key="index">
-                                                                        <td>$ {{ ((parseFloat(histodsctos.fMontoDolares)).toFixed(2)) }}</td>
-                                                                        <td>S/. {{ ((parseFloat(histodsctos.fMontoSoles)).toFixed(2)) }}</td>
-                                                                        <td>$ {{ ((parseFloat(histodsctos.fDsctoActualDolares)).toFixed(2)) }}</td>
-                                                                        <td>S/. {{ ((parseFloat(histodsctos.fDsctoActualSoles)).toFixed(2)) }}</td>
-                                                                        <td>% {{ ((parseFloat(histodsctos.nPorcentaje)).toFixed(2)) }}</td>
-                                                                        <td>{{ ((parseFloat(histodsctos.cTipoCambio)).toFixed(2)) }}</td>
-                                                                        <td v-text="histodsctos.cTipoHistorial"></td>
-                                                                        <td v-text="histodsctos.dFechaGeneracionDscto"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <template v-if="arrayCotizacionesPendientes.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td colspan="10">No existen registros!</td>
+                                                                    <th>Acciones</th>
+                                                                    <th>Nro Cotizacion</th>
+                                                                    <th>Contacto</th>
+                                                                    <th>Vehiculo</th>
+                                                                    <th>Dirección</th>
+                                                                    <th>Celular</th>
+                                                                    <th>Email</th>
+                                                                    <th>Fecha Inicio</th>
+                                                                    <th>Fecha Venc.</th>
+                                                                    <th>Aprobación</th>
+                                                                    <th>Estado Cotización</th>
+                                                                    <th>Vendedor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraCotizacion">
+                                                                    <td>
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Ver Detalle Cotizacion {{ cotizacionpendiente.nIdCabeceraCotizacion }}</div>
+                                                                            <i  @click="abrirModal('cotizacion', 'detalle', cotizacionpendiente)"
+                                                                                :style="'color:#796AEE'"
+                                                                                class="fa-md fa fa-eye"></i>
+                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                        <!-- Opcion del Jefe de Ventas -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                        </template>
+                                                                        <!-- Opcion del ADV -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-usd"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                        </template>
+                                                                        <!-- Opción de Jefe de Ventas y ADV -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:red'"
+                                                                                    class="fa-md fa fa-trash"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                        </template>
+
+                                                                        <!-- Opción de Gerencia -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110096">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:red'"
+                                                                                    class="fa-md fa fa-trash"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                        </template>
+                                                                    </td>
+                                                                    <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cContacto"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioModelo"></td>
+                                                                    <td v-text="cotizacionpendiente.cDireccion"></td>
+                                                                    <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
+                                                                    <td v-text="cotizacionpendiente.cEmail"></td>
+                                                                    <td v-text="cotizacionpendiente.dFechaCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.dFechaVencimientoCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cEstadoAprobacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cEstadoCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreVendedor"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </template>
-                                                </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                        :class="[page==isActived?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaCotizacion(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <button v-if="fillPedidoDscto.dMontoDescontar > 0" type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarDsctoPedidoSAP()">
-                                                <i class="fa fa-save"></i> REGISTRAR
-                                            </button>
-                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="generarDsctoPedido(1)">
-                                                <i class="fa fa-arrow-left"></i> CANCELAR
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -403,32 +297,32 @@
                 </div>
             </div>
 
-            <!-- Detalle Pedido -->
-            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <!-- MODAL DISTRIBUCIÓN DE ELEMENTOS DE VENTA POR REGALAR Y DESCUENTO -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">DETALLE PEDIDO</h3>
+                                        <h3 class="h4">DISTRIBUCIÓN</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class="form-horizontal">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Pedido</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumeropedido" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -438,7 +332,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -446,7 +340,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cliente</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -456,7 +350,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,7 +358,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -472,27 +366,9 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumerovin" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombreproveedor" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Fecha Pedido</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.dfechapedido" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -500,7 +376,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -508,17 +384,352 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Pedido Soles</label>
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.ftotalpedidosoles" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Pedido Dolares</label>
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.ftotalpedidodolares" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <template v-if="cflagVerificaDistribucionAprobacion">
+                                                <template v-if="listDistribucionDescuento.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución del Descuento
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Nombre Comercial</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
+                                                                    <th>Descuento</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                    <th>Proveedor Cancelar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
+                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                    <td v-text="descuento.cProveedorNombre"></td>
+                                                                    <td v-text="descuento.cNombreComercial"></td>
+                                                                    <td v-text="descuento.fSubTotalSoles"></td>
+                                                                    <td v-text="descuento.fSubTotalDolares"></td>
+                                                                    <td v-text="descuento.fDescuento"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="descuento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE PROVEEDOR" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                    <td> <strong> {{ parseFloat(descuento.fMontoDesembolsar).toFixed(2) }} </strong> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-5">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
+                                                                <i class="fa fa-save"></i> DISTRIBUIR
+                                                            </button>
+                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
+                                                                <i class="fa fa-recycle"></i> LIMPIAR
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                                <!-- <template v-if="listDistribucionEVPorRegalar.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución de Elementos de Venta por Regalar
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Tipo Elemento</th>
+                                                                    <th>Nombre Elemento</th>
+                                                                    <th>Moneda</th>
+                                                                    <th>Precio de Venta</th>
+                                                                    <th>Cantidad</th>
+                                                                    <th>SubTotalSoles</th>
+                                                                    <th>SubTotalDolares</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="elemento in listDistribucionEVPorRegalar" :key="elemento.nIdElementoVenta">
+                                                                    <td v-text="elemento.nIdElementoVenta"></td>
+                                                                    <td v-text="elemento.cProveedorNombre"></td>
+                                                                    <td v-text="elemento.cTipoElemenNombre"></td>
+                                                                    <td v-text="elemento.cElemenNombre"></td>
+                                                                    <td v-text="elemento.cNombreMoneda"></td>
+                                                                    <td v-text="elemento.fElemenValorVenta"></td>
+                                                                    <td v-text="elemento.nCantidad"></td>
+                                                                    <td v-text="elemento.fSubTotalSoles"></td>
+                                                                    <td v-text="elemento.fSubTotalDolares"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="elemento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="elemento.fDistribucion" @keyup="validarDistribucionEV" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template> -->
+                                            </template>
+                                            <template v-else>
+                                                <template v-if="listDistribucionDescuento.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución del Descuento Inferior al PVP
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Nombre Comercial</th>
+                                                                    <th>Precio Venta s/.</th>
+                                                                    <th>Precio Venta US$</th>
+                                                                    <th>Descuento</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                    <th>Proveedor Cancelar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
+                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                    <td v-text="descuento.cProveedorNombre"></td>
+                                                                    <td v-text="descuento.cNombreComercial"></td>
+                                                                    <td v-text="descuento.fSubTotalSoles"></td>
+                                                                    <td v-text="descuento.fSubTotalDolares"></td>
+                                                                    <td v-text="descuento.fDescuento"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="descuento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE PROVEEDOR" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                    <td> <strong> {{ parseFloat(descuento.fMontoDesembolsar).toFixed(2) }} </strong> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-5">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
+                                                                <i class="fa fa-save"></i> DISTRIBUIR
+                                                            </button>
+                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
+                                                                <i class="fa fa-recycle"></i> LIMPIAR
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-4">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 1)">
+                                                                <i class="fa fa-check"></i> APROBAR
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="text-center">
+                                                        <div v-for="(e, index) in mensajeError" :key="index" v-text="e"></div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalle Cotizacion -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE COTIZACIÓN</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cliente</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -526,7 +737,7 @@
                                         </form>
                                         <br/>
                                         <!-- DETALLE VEHICULO -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="arrayDetalleCotizacion.length">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Vehículo
                                             </vs-divider>
@@ -543,7 +754,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
                                                             <template v-if="vehiculo.cFlagTipoItem=='V'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -558,7 +769,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaElemento">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Elementos Venta Vendidos
                                             </vs-divider>
@@ -574,7 +785,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -588,7 +799,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaObsequio">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Regalos
                                             </vs-divider>
@@ -604,7 +815,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -618,7 +829,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaCampania">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Campaña
                                             </vs-divider>
@@ -634,7 +845,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -647,47 +858,6 @@
                                                 </table>
                                             </div>
                                         </template>
-                                        <!-- DETALLE DOCUMENTOS -->
-                                        <template v-if="arrayPedidoDoumento.length">
-                                            <vs-divider border-style="solid" color="dark">
-                                                Documentos Asociados
-                                            </vs-divider>
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nombre</th>
-                                                            <th>Archivo</th>
-                                                            <th>Ver Documento</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar">
-                                                            <template v-if="documento.nValida==1">
-                                                                <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
-                                                                <td v-text="documento.cArchivo"></td>
-                                                                <td>
-                                                                    <el-tooltip class="item" :content="'Ver Pdf ' + documento.cArchivo" effect="dark" placement="top-start">
-                                                                        <a :href="documento.cRutaDocumento" v-if="documento.cRutaDocumento !=''" target="_blank">
-                                                                            <i class='fa-md fa fa-file'></i>
-                                                                        </a>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                            </template>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -698,13 +868,14 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
 
 <script>
     export default {
-        props:['ruta'],
+        props:['ruta', 'usuario'],
         data(){
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
@@ -717,28 +888,38 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
-                fillBusquedaPedido:{
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                fillCotizacionesPendiente:{
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: 0,
                     dfechainicio: '',
                     dfechafin: '',
-                    cnumeropedido: '',
-                    cnumerovin: '',
-                    nidmarca: '',
-                    nidmodelo: ''
+                    ntipopersona: 1,
+                    ccontacto: ''
                 },
-                arrayPedidos: [],
-                // MODAL DETALLE PEDIDO
-                fillDetallePedido:{
-                    nidcabecerapedido: 0,
-                    cnumeropedido: '',
+                arrayCotizacionesPendientes: [],
+                arrayMisCotizacionesPendientes: [],
+                //Modal Distribucion
+                arrayDistribucionDescuento: [],
+                listDistribucionDescuento: [],
+                arrayDistribucionEVPorRegalar: [],
+                // listDistribucionEVPorRegalar: [],
+                cflagVerificaDistribucionAprobacion: true,
+                nIdCabeceraCotizacion: '',
+                // =============================================================
+                // MODAL DETALLE COTIZACION
+                fillDetalleCotizacion:{
                     cnumerocotizacion: '',
                     cdocumentocliente: '',
                     cnombrecliente: '',
                     nidversionvehiculo: 0,
                     cvehiculo: '',
-                    cnumerovin: '',
                     cnombreproveedor: '',
-                    dfechapedido: '',
-                    nordencompra: '',
+                    dfechacotizacion: '',
                     cnombrevendedor: '',
                     fpreciocierrefinalcliente: 0,
                     fflete: 0,
@@ -746,37 +927,13 @@
                     fpreciocierresistema: 0,
                     fsobreprecio: 0,
                     fdscto: 0,
-                    ftotalpedidosoles: 0,
-                    ftotalpedidodolares: 0
+                    ftotalcotizacionsoles: 0,
+                    ftotalcotizaciondolares: 0
                 },
-                arrayDetallePedido: [],
-                arrayPedidoDoumento: [],
-                cflagVer: 1,
-                fillPedidoDscto: {
-                    nIdCabeceraPedido: '',
-                    cNumeroPedido: '',
-                    dMontoDescontar: 0,
-                    dMontoDescontarFlag: 0,
-                    dTipoCambioComercial: '',
-                    cTipoDscto: '2',
-                    dMontoPedido: '',
-                    dMontoNuevoDolares: '',
-                    dMontoNuevoSoles: '',
-                    //Integración Dscto
-                    cCardCode: '',
-                    nDocEntryPedido: '',
-                    cItemCode: '',
-                    nDocEntryTblCosto: ''
-                },
-                arrayTipoDscto: [
-                    // { value: '1', text: '%'},
-                    { value: '2', text: '%'}
-                ],
-                arrayHistorialPedidoDsctos: [],
-                arraySapRptPedido: [],
-                arraySapUpdPedido: [],
-                arraySapRespuesta: [],
-                jsonRespuesta: '',
+                arrayDetalleCotizacion: [],
+                cFlagActivaElemento: 0,
+                cFlagActivaObsequio: 0,
+                cFlagActivaCampania: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -796,14 +953,14 @@
                     'from' : 0,
                     'to' : 0,
                 },
+                nIdGrupoUsuario: '',
                 offset:3,
                 modal:0,
                 accionmodal: 0,
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: [],
-                loading: false
+                mensajeError: []
             }
         },
         computed:{
@@ -858,7 +1015,88 @@
                 return pagesArray;
             },
         },
+        mounted(){
+            this.informacionUsuario();
+            this.llenarComboMarca();
+            this.llenarComboModelo();
+        },
         methods: {
+            //===========================================================
+            // MODAL COTIZACION DETALLE
+            verCotizacion(cotizacion){
+                this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
+                this.verDetalleCotizacion(cotizacion);
+            },
+            verDetalleCotizacion(cotizacion){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    this.arrayDetalleCotizacion = response.data.arrayDetalleCotizacion.data;
+                    this.verificaDetalleCotizacion();
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            verificaDetalleCotizacion(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+
+                me.arrayDetalleCotizacion.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
+                });
+            },
+            //===========================================================
+            informacionUsuario(){
+                var url = this.ruta + '/parametro/GetParametroById';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : this.usuario.id,
+                        'nidgrupopar': 110083
+                    }
+                }).then(response => {
+                    this.nIdGrupoUsuario = response.data[0].nIdGrupoPar;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -868,7 +1106,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillBusquedaPedido.nidmarca = '';
+                    this.fillCotizacionesPendiente.nidmarca = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -885,12 +1123,12 @@
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url, {
                     params: {
-                        'nidmarca': this.fillBusquedaPedido.nidmarca,
+                        'nidmarca': this.fillCotizacionesPendiente.nidmarca,
                         'opcion': 1
                     }
                 }).then(response => {
                     this.arrayModelo = response.data.arrayModelo;
-                    this.fillBusquedaPedido.nidmodelo = '';
+                    this.fillCotizacionesPendiente.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -901,8 +1139,9 @@
                     }
                 });
             },
-            listarPedidos(page){
-                if(this.validarBuscarPedidos()){
+            // buscar cotizaciones
+            buscarCotizacionesPendientes(page){
+                if(this.validarbuscarCotizacionesPendientes()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -910,29 +1149,27 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetListPedidoForDscto';
+                var url = this.ruta + '/getcotizacion/GetLstCotizacionPendientes';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillBusquedaPedido.dfechainicio,
-                        'dfechafin': this.fillBusquedaPedido.dfechafin,
-                        'cnumeropedido': this.fillBusquedaPedido.cnumeropedido,
-                        'cnumerovin': this.fillBusquedaPedido.cnumerovin,
-                        'nidmarca' : this.fillBusquedaPedido.nidmarca,
-                        'nidmodelo': this.fillBusquedaPedido.nidmodelo,
-                        'nidestadopedido': '',
-                        'page': page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidmarca'      : this.fillCotizacionesPendiente.nidmarca,
+                        'nidmodelo'     : this.fillCotizacionesPendiente.nidmodelo,
+                        'dfechainicio'  : this.fillCotizacionesPendiente.dfechainicio,
+                        'dfechafin'     : this.fillCotizacionesPendiente.dfechafin,
+                        'ccontacto'     : this.fillCotizacionesPendiente.ccontacto,
+                        'ntipopersona'  : this.fillCotizacionesPendiente.ntipopersona,
+                        'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedidos              =    response.data.arrayPedido.data;
-                    this.pagination.current_page   =    response.data.arrayPedido.current_page;
-                    this.pagination.total          =    response.data.arrayPedido.total;
-                    this.pagination.per_page       =    response.data.arrayPedido.per_page;
-                    this.pagination.last_page      =    response.data.arrayPedido.last_page;
-                    this.pagination.from           =    response.data.arrayPedido.from;
-                    this.pagination.to             =    response.data.arrayPedido.to;
-                }).then(function (response) {
+                    this.arrayCotizacionesPendientes = response.data.arrayCotizacionesPendientes.data;
+                    this.pagination.current_page   =  response.data.arrayCotizacionesPendientes.current_page;
+                    this.pagination.total          = response.data.arrayCotizacionesPendientes.total;
+                    this.pagination.per_page       = response.data.arrayCotizacionesPendientes.per_page;
+                    this.pagination.last_page      = response.data.arrayCotizacionesPendientes.last_page;
+                    this.pagination.from           = response.data.arrayCotizacionesPendientes.from;
+                    this.pagination.to             = response.data.arrayCotizacionesPendientes.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -944,20 +1181,20 @@
                     }
                 });
             },
-            validarBuscarPedidos(){
+            validarbuscarCotizacionesPendientes(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(!this.fillBusquedaPedido.dfechainicio){
+                /*if(!this.fillCotizacionesPendiente.dfechainicio){
                     this.mensajeError.push('Debe ingresar una fecha de inicio');
                 }
 
-                if(!this.fillBusquedaPedido.dfechafin){
+                if(!this.fillCotizacionesPendiente.dfechafin){
                     this.mensajeError.push('Debe ingresar una fecha de fin');
                 }*/
 
-                let fecha_ini = moment(this.fillBusquedaPedido.dfechainicio);
-                let fecha_fin = moment(this.fillBusquedaPedido.dfechafin);
+                let fecha_ini = moment(this.fillCotizacionesPendiente.dfechainicio);
+                let fecha_fin = moment(this.fillCotizacionesPendiente.dfechafin);
 
                 if(fecha_fin.diff(fecha_ini, 'days') < 0){
                     this.mensajeError.push('La Fecha de Fin no puede ser menor a la fecha de inicio');
@@ -968,31 +1205,80 @@
                 }
                 return this.error;
             },
-            cambiarPaginaPedido(page){
+            cambiarPaginaCotizacion(page){
                 this.paginationModal.current_page=page;
-                this.listarPedidos(page);
+                this.buscarCotizacionesPendientes(page);
             },
-            //GENERAR REPORTE PEDIDO
-            generarPedidoPDF(nIdCabeceraPedido){
-                var config = {
-                    responseType: 'blob'
-                };
-                var url = this.ruta + '/pedido/GetDetallePedido';
-                axios.post(url, {
-                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
-                }, config).then(response => {
-                    console.log(response.data);
-                    //Create a Blob from the PDF Stream
-                    const file = new Blob(
-                        [response.data],
-                        {type: 'application/pdf'}
-                    );
-                    //Construye la URL del Archivo
-                    const fileURL = URL.createObjectURL(file);
-                    //Abre la URL en una nueva Ventana
-                    window.open(fileURL);
+            conformeNoConformeCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+                swal({
+                    title: '¿Esta seguro de' + ((op == 2) ? ' dar Conformidad a' : ' Rechazar ') + ' la cotización N°' + cNumeroCotizacion + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si,' + ((op == 2) ? 'Conforme' : ' Rechazar '),
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                        axios.put(url, {
+                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
+                            opcion : op
+                        }).then(response => {
+                            me.buscarCotizacionesPendientes(1);
+                            swal(
+                                ((op == 2) ? 'Conforme' : ' Rechazar'),
+                                'La Cotización ' + cNumeroCotizacion +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            limpiarBusqCotizacionesPendientes(){
+                this.fillCotizacionesPendiente.nidlinea = '';
+                this.fillCotizacionesPendiente.nidmarca = '';
+                this.fillCotizacionesPendiente.nidmodelo = '';
+                this.fillCotizacionesPendiente.dfechainicio = '';
+                this.fillCotizacionesPendiente.dfechafin = '';
+                this.$forceUpdate();
+            },
+            //===========================================================
+            //=================== MODAL DISTRIBUCION ====================
+            /**
+             * MODAL DISTRIBUCIÓN SUPERA DSCTO
+             */
+            getDetalleCotizacionDistribucion(nIdCabeceraCotizacion){
+                var url = me.ruta + '/gescotizacion/GetDetalleCotizacionDistribucion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion' : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion': op
+                    }
+                }).then(response => {
+                    this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                    this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                    this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                    this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                    this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                    this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                    this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                    this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                    this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
+                    this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1003,46 +1289,90 @@
                     }
                 });
             },
-            // =================================================================
-            // GENERAR DESCUENO DEL PEDIDO
-            // =================================================================
-            limpiarFormulario(){
-                this.fillPedidoDscto.nIdCabeceraPedido = '';
-                this.fillPedidoDscto.cNumeroPedido = '';
-                this.fillPedidoDscto.dMontoDescontar = 0;
-                this.fillPedidoDscto.dMontoDescontarFlag = 0;
-                this.fillPedidoDscto.dTipoCambioComercial = '';
-                this.fillPedidoDscto.cTipoDscto = '2';
-                this.fillPedidoDscto.dMontoPedido = '';
-                this.fillPedidoDscto.dMontoNuevoDolares = '';
-                this.fillPedidoDscto.dMontoNuevoSoles = '';
-                this.fillPedidoDscto.cCardCode = '';
-                this.fillPedidoDscto.nDocEntryPedido = '';
-                this.fillPedidoDscto.cItemCode = '';
-                this.arrayHistorialPedidoDsctos = [];
+            verificarDatosCotizacion(nIdCabeceraCotizacion){
+                var url = this.ruta + '/getcotizacion/GetDatosCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    //Si existen registros que van a generencia
+                    if (response.data.contGerencia > 0){
+                        //Mostrar formulario para dar conformidad y pase a Gerencia
+                        this.cflagVerificaDistribucionAprobacion = true;
+                    } else {
+                        //Mostrar formulario para aprobar cotización
+                        this.cflagVerificaDistribucionAprobacion = false;
+                        this.nIdCabeceraCotizacion = nIdCabeceraCotizacion;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
-            generarDsctoPedido(op, data = null){
+            listarDistribucionDescuento(nIdCabeceraCotizacion){
+                //Verifica si es Gerencia o ADV para listar los Dscto Correspondientes
+                let op = 1;
                 let me = this;
-                this.limpiarFormulario();
-                this.cflagVer = op;
-                // console.log(data);
+                (this.cflagVerificaDistribucionAprobacion) ? (op = 1) : (op = 0);
+                this.$forceUpdate();
 
-                if(op == 0) {
-                    this.mostrarProgressBar();
+                var url = me.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion': op
+                    }
+                }).then(response => {
+                    me.arrayDistribucionDescuento = response.data;
+                    me.cargarDistribucionSuperaDscto();
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarDistribucionSuperaDscto(){
+                let me = this;
+                me.listDistribucionDescuento = [];
 
-                    this.getTipoCambio();
-                    this.getHistorialDsctos(1, data);
-                    this.getDatosPedido(data);
-                    // this.calcularNuevoMonto(1);
-                    setTimeout(function() {
-                        me.calcularNuevoMonto(1);
-                    }, 1500);
+                this.cflagVerificaDistribucionAprobacion
+                if(me.arrayDistribucionDescuento.length > 0){
+                    me.arrayDistribucionDescuento.map(function(ec){
+                        me.listDistribucionDescuento.push({
+                            nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
+                            nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
+                            cProveedorNombre        :   ec.cProveedorNombre,
+                            cNombreComercial        :   ec.cNombreComercial,
+                            fSubTotalSoles          :   ec.fSubTotalSoles,
+                            fSubTotalDolares        :   ec.fSubTotalDolares,
+                            fDescuento              :   ec.fDescuento,
+                            fMontoDesembolsar       :   0,
+                            nIdProveedor            :   '',
+                            fDistribucion           :   0
+                        });
+                    });
                 }
             },
-            getTipoCambio(){
-                var url = this.ruta + '/gescotizacion/GetTipoCambio';
-                axios.get(url).then(response => {
-                    this.fillPedidoDscto.dTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
+            /*listarDistribucionEVPorRegalar(nIdCabeceraCotizacion){
+                var url = this.ruta + '/getcotizacion/GetDistribucionByElementoVenta';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    this.arrayDistribucionEVPorRegalar = response.data;
+                    this.cargarDistribucionEVPorRegalar();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1053,17 +1383,41 @@
                     }
                 });
             },
-            getHistorialDsctos(page, data = null){
-                var url = this.ruta + '/pedido/GetListHistorialPedidoDscto';
+            cargarDistribucionEVPorRegalar(){
+                let me = this;
+                me.listDistribucionEVPorRegalar = [];
+
+                if(me.arrayDistribucionEVPorRegalar.length > 0){
+                    me.arrayDistribucionEVPorRegalar.map(function(ec){
+                        me.listDistribucionEVPorRegalar.push({
+                            nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
+                            nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
+                            nIdElementoVenta    :   ec.nIdElementoVenta,
+                            cProveedorNombre    :   ec.cProveedorNombre,
+                            cTipoElemenNombre   :   ec.cTipoElemenNombre,
+                            cElemenNombre       :   ec.cElemenNombre,
+                            fElemenValorVenta   :   ec.fElemenValorVenta,
+                            nCantidad           :   ec.nCantidad,
+                            fSubTotalSoles      :   ec.fSubTotalSoles,
+                            fSubTotalDolares    :   ec.fSubTotalDolares,
+                            nIdProveedor        :   '',
+                            fDistribucion       :   0
+                        });
+                    });
+                }
+            },*/
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nIdCabeceraPedido': data.nIdCabeceraPedido,
-                        'page': page
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : '',
+                        'opcion' : 1,
+                        'page' : page
                     }
                 }).then(response => {
-                    this.arrayHistorialPedidoDsctos   =   response.data;
+                    this.arrayProveedor = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1074,188 +1428,66 @@
                     }
                 });
             },
-            getDatosPedido(data){
-                this.fillPedidoDscto.nIdCabeceraPedido  = data.nIdCabeceraPedido
-                this.fillPedidoDscto.cNumeroPedido      = data.cNumeroPedido
-                this.fillPedidoDscto.dMontoPedido       = data.fTotalPedidoVehiculoDolar
-                //Integración Dscto
-                this.fillPedidoDscto.cCardCode          = data.cCardCode
-                this.fillPedidoDscto.nDocEntryPedido    = data.nDocEntryPedido
-                this.fillPedidoDscto.cItemCode          = data.cItemCode
-                this.fillPedidoDscto.nDocEntryTblCosto  = data.nDocEntryTblCosto
+            validarDistribucionDscto(){
+                let me = this;
+                this.listDistribucionDescuento.map(function (x, y) {
+                    // console.log(x.fDistribucion, y);
+                    if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
+                        me.$message.error(`No puede superar los margenes del 0 - 100`);
+                        me.listDistribucionDescuento[y].fDistribucion = 0;//Seteado a 0.
+                        me.$forceUpdate();
+                    }
+                    if(x.fDistribucion == ''){
+                        me.listDistribucionDescuento[y].fDistribucion = 0;//Seteado a 0.
+                        me.$forceUpdate();
+                    }
+                    x.fMontoDesembolsar = (Number((parseFloat(x.fDescuento)).toFixed(2)) * (Number((parseFloat(x.fDistribucion)).toFixed(2)) / 100))
+                    me.$forceUpdate();
+                });
             },
-            calcularNuevoMonto(op, value = null){
-                //Al cargar la ventana
-                if(op == 1) {
-                    this.fillPedidoDscto.dMontoNuevoDolares = parseFloat(this.fillPedidoDscto.dMontoPedido) - parseFloat(this.fillPedidoDscto.dMontoDescontar);
-                    let montoDolares                        = this.fillPedidoDscto.dMontoNuevoDolares;
-                    this.fillPedidoDscto.dMontoNuevoSoles   = montoDolares * parseFloat(this.fillPedidoDscto.dTipoCambioComercial);
+            /*
+            validarDistribucionEV(){
+                let me = this;
+                this.listDistribucionEVPorRegalar.map(function (x, y) {
+                    // console.log(x.fDistribucion, y);
+                    if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
+                        me.$message.error(`No puede superar los margenes del 0 - 100`);
+                        me.listDistribucionEVPorRegalar[y].fDistribucion = 0;//Seteado a 0.
+                        me.$forceUpdate();
+                    }
+                    if(x.fDistribucion == ''){
+                        me.listDistribucionEVPorRegalar[y].fDistribucion = 0;//Seteado a 0.
+                        me.$forceUpdate();
+                    }
+                    me.$forceUpdate();
+                });
+            },*/
+            registrarDistribucion(){
+                if(this.validarRegistrarDistribucion()){
+                    return;
                 }
-                //Al realizar algun cambio en el input del monto
-                if (op == 2) {
-                    let me = this;
 
-                    //TIPO DSCTO ES 1 (DOLARES)
-                    if (me.fillPedidoDscto.cTipoDscto == '1') {
-
-                        // SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
-                        if(parseFloat(value) > parseFloat(me.fillPedidoDscto.dMontoPedido)) {
-                            // console.log(1, 1, value);
-                            me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
-                            me.fillPedidoDscto.dMontoDescontar = 0;
-                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                            value = 0;
-                            me.$forceUpdate();
-                        }
-                        // EL MONTO A DESCONTAR ES VACÍO // MENOR A 0
-                        if((parseInt(value) === '') || (parseInt(value) < 0)){
-                            // console.log(1, 2, value);
-                            me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
-                            me.fillPedidoDscto.dMontoDescontar = 0;
-                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                            value = 0;
-                            me.$forceUpdate();
-                        }
-
-                        me.fillPedidoDscto.dMontoDescontarFlag  = value;
-                        me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - parseFloat(me.fillPedidoDscto.dMontoDescontar);
-                        let montoDolares                        = me.fillPedidoDscto.dMontoNuevoDolares;
-                        me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
-
+                var url = this.ruta + '/setcotizacion/SetDistribucionCotizacion';
+                axios.post(url, {
+                    listDistribucionDescuento: this.listDistribucionDescuento
+                    // listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
+                }).then(response => {
+                    // if (this.nIdGrupoUsuario == '110083') {
+                    //     //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                    //     this.cambiarEstadoCotizacion(response.data, 4);
+                    // } else {
+                    //     //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                    //     this.cambiarEstadoCotizacion(response.data, 4);
+                    // }
+                    if (this.cflagVerificaDistribucionAprobacion) {
+                        // GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                        this.cambiarEstadoCotizacion(response.data, 4);
+                        swal('Cotización distribuida y pendiente de aprobación por Gerencia');
                     } else {
-                        //TIPO DSCTO ES 2 (% PORCENTAJE)
-
-                        //Calcular Porcentaje de Dscto
-                        let montoPorcent    =   parseFloat(me.fillPedidoDscto.dMontoDescontar) / 100;
-                        let montoNuevo      =   montoPorcent * parseFloat(me.fillPedidoDscto.dMontoPedido);
-
-                        //SI EL MONTO A DESCONTAR ES MAYOR AL MONTO ACTUAL DEL PEDIDO
-                        if(montoNuevo > me.fillPedidoDscto.dMontoPedido) {
-                            // console.log(2, 1, value);
-                            me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
-                            me.fillPedidoDscto.dMontoDescontar = 0;
-                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                            montoNuevo = 0;
-                            me.$forceUpdate();
-                        }
-                        //SI EL MONTO A DESCONTAR ES <0 // >100 // VACÍO
-                        if((parseInt(value) < 0) || (parseInt(value) > 100) || (parseInt(value) === '')){
-                            // console.log(parseInt(value) < 0)
-                            // console.log(parseInt(value) > 100)
-                            // console.log(parseInt(value) == '')
-                            // console.log(2, 2, value);
-
-                            me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
-                            me.fillPedidoDscto.dMontoDescontar = 0;
-                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                            montoNuevo = 0;
-                            me.$forceUpdate();
-                        }
-
-                        me.fillPedidoDscto.dMontoDescontarFlag  = montoNuevo;
-                        me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - montoNuevo;
-                        let montoDolares                        = me.fillPedidoDscto.dMontoNuevoDolares;
-                        me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
-                    }
-                }
-                $("#myBar").hide();
-            },
-            cambiarTipoDscto(){
-                this.fillPedidoDscto.dMontoDescontar = 0;
-                this.fillPedidoDscto.dMontoDescontarFlag = 0;
-                this.calcularNuevoMonto(2, this.fillPedidoDscto.dMontoDescontarFlag);
-            },
-            //REGISTRO DSCTO PEDIDO//NOTA CREDITO EN SAP
-            registrarDsctoPedidoSAP(){
-                let me = this;
-                this.mostrarProgressBar();
-                me.loadingProgressBar("GENERANDO DESCUENTO DEL PEDIDO EN SAP BUSINESS ONE...");
-
-                var url = this.ruta + '/pedido/SapSetPedidoDscto';
-                axios.post(url, {
-                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
-                    nDocEntryPedido     : this.fillPedidoDscto.nDocEntryPedido,
-                    cCardCode           : this.fillPedidoDscto.cCardCode,
-                    cItemCode           : this.fillPedidoDscto.cItemCode,
-                    dMontoNuevoDolares  : this.fillPedidoDscto.dMontoNuevoDolares,
-                    dMontoDescontar     : this.fillPedidoDscto.dMontoDescontar,
-                    dFechaModificacion  : moment().format('YYYY-MM-DD'),
-                }).then(response => {
-                    // console.log(response.data);
-                    console.log("Integración Descuento del Pedido - SAP : OK");
-                    this.registrarTblCostoSAP();
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error al Generar el Dscto del Pedido SapB1!',
-                    });
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            registrarTblCostoSAP(){
-                let me = this;
-
-                var url = this.ruta + '/tablacosto/SapPachTablaCostoDsctoPedidoDscto';
-                axios.post(url, {
-                    U_SYP_VIN           :   this.fillPedidoDscto.cItemCode,
-                    DocEntry            :   this.fillPedidoDscto.nDocEntryTblCosto,
-                    U_SYP_CCONCEPTO     :   '08',
-                    U_SYP_DCONCEPTO     :   'Descuento de Proveedor',
-                    U_SYP_CDOCUMENTO    :   '01',
-                    U_SYP_DDOCUMENTO    :   'Nota de Crédito',
-                    U_SYP_IMPORTE       :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
-                    U_SYP_COSTO         :   'Si',
-                    U_SYP_ESTADO        :   'Pendiente'
-                }).then(response => {
-                    // console.log(response.data);
-                    // me.arraySapRespuesta = response.data;
-                    // me.jsonRespuesta = '';
-                    // me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
-
-                    this.registrarDsctoPedido();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            //GENERAR DSCTO EN PEDIDO-HISTORIAL EN SQLSERVER
-            registrarDsctoPedido(){
-                let me = this;
-
-                var url = this.ruta + '/pedido/SetHistorialPedidoDscto';
-                axios.post(url, {
-                    nIdCabeceraPedido       :   this.fillPedidoDscto.nIdCabeceraPedido,
-                    dMontoNuevoDolares      :   this.fillPedidoDscto.dMontoNuevoDolares,
-                    dMontoNuevoSoles        :   this.fillPedidoDscto.dMontoNuevoSoles,
-                    dMontoDescontarDolares  :   this.fillPedidoDscto.dMontoDescontarFlag,
-                    dMontoDescontarSoles    :   this.fillPedidoDscto.dMontoDescontarFlag * this.fillPedidoDscto.dTipoCambioComercial,
-                    dPorcentaje             :   this.fillPedidoDscto.dMontoDescontar,
-                    dTipoCambioComercial    :   this.fillPedidoDscto.dTipoCambioComercial
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        swal(response.data[0].cMensaje);
-                        this.arrayPedidos = [];
-                        $("#myBar").hide();
-                        me.loading.close();
-                        this.generarDsctoPedido(1);
-                        //Forzar Actualización
-                        this.$forceUpdate();
-                    }else{
-                        swal('Ocurrio un error al generar el descuento del pedido' + this.fillPedidoDscto.cNumeroPedido);
-                    }
+                        // GENERAR LA APROVACIÓN DEL ADV
+                        this.cambiarEstadoCotizacion(response.data, 1);
+                        swal('Cotización Aprobada para Pedido');
+                    };
                     this.$forceUpdate();
                 }).catch(error => {
                     console.log(error);
@@ -1267,38 +1499,19 @@
                     }
                 });
             },
-            // =================================================================
-            // VER DETALLE PEDIDO
-            // =================================================================
-            verPedido(pedido){
-                this.fillDetallePedido.nidcabecerapedido = pedido.nIdCabeceraPedido,
-                this.fillDetallePedido.cnumeropedido = pedido.cNumeroPedido,
-                this.fillDetallePedido.cnumerocotizacion = pedido.cNumeroCotizacion,
-                this.fillDetallePedido.cdocumentocliente = pedido.cPerDocumento,
-                this.fillDetallePedido.cnombrecliente = pedido.cContacto,
-                this.fillDetallePedido.nidversionvehiculo = pedido.nIdVersionVeh,
-                this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo,
-                this.fillDetallePedido.cnumerovin = pedido.cNumeroVin,
-                this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
-                this.fillDetallePedido.cnombrevendedor = pedido.cNombreVendedor,
-                this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
-                this.fillDetallePedido.ftotalpedidosoles = pedido.fTotalPedidoSoles,
-                this.fillDetallePedido.ftotalpedidodolares = pedido.fTotalPedidoDolares,
-                this.verDetallePedido(pedido);
-                this.verDocumentosPedido(pedido);
-            },
-            verDetallePedido(pedido){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/pedido/GetLstDetallePedido';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': pedido.nIdCabeceraPedido
-                    }
+            cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
+                // console.log(nIdCabeceraCotizacion, op);
+                var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                axios.put(url, {
+                    nIdCabeceraCotizacion: nIdCabeceraCotizacion,
+                    opcion: op,
                 }).then(response => {
-                    this.arrayDetallePedido = response.data.arrayDetallePedido.data;
-                    $("#myBar").hide();
+                    //this.limpiarDistribucion();
+                    this.cerrarModal();
+                    this.limpiarModalDistribucion();
+                    this.buscarCotizacionesPendientes(1);
+                    this.cflagVerificaDistribucionAprobacion = true;
+                    this.nIdCabeceraCotizacion = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1309,44 +1522,126 @@
                     }
                 });
             },
-            verDocumentosPedido(pedido){
-                var url = this.ruta + '/pedido/GetDocumentosById';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
-                        'opcion': 1
-                    }
-                }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
+            validarRegistrarDistribucion(){
+                let me = this;
+                me.error = 0;
+                me.mensajeError =[];
+
+                //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE SUPERA DESCUENTO
+                if(me.listDistribucionDescuento.length > 0) {
+                    me.listDistribucionDescuento.map(function (x) {
+                        if(x.nIdProveedor == ''){
+                            me.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
                         }
-                    }
+                        if(parseFloat(x.fDistribucion) < 0 || parseFloat(x.fDistribucion) > 100){
+                            me.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
+                            x.fDistribucion = 0;//Seteado a 0
+                        }
+                        me.$forceUpdate();
+                    });
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            limpiarModalDistribucion(){
+                this.arrayDistribucionDescuento = [];
+                // this.arrayDistribucionEVPorRegalar = [];
+                this.listDistribucionDescuento = [];
+                // this.listDistribucionEVPorRegalar = [];
+            },
+            limpiarDistribucion(){
+                this.listDistribucionDescuento.map(function (x) {
+                    x.nIdProveedor = '';
+                    x.fDistribucion = 0;
                 });
+                // this.listDistribucionEVPorRegalar.map(function (x) {
+                //     x.nIdProveedor = '';
+                //     x.fDistribucion = 0;
+                // });
+            },
+            /**
+             * Aprobación Gerencia
+             */
+            aprobarNoaprobarCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+                swal({
+                    title: '¿Esta seguro de ' + ((op == 1) ? 'Aprobar' : ' Rechazar ') + ' la cotización N°' + cNumeroCotizacion + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, ' + ((op == 1) ? 'Aprobar' : ' Rechazar '),
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                        axios.put(url, {
+                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
+                            opcion : op
+                        }).then(response => {
+                            me.buscarCotizacionesPendientes(1);
+                            swal(
+                                ((op == 1) ? 'Aprobar' : ' Rechazar '),
+                                'La Cotización ' + cNumeroCotizacion +' ha sido ' + ((op == 1) ? 'Aprobada' : ' Rechazada ') + ' con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
             },
             // =================================================================
             // MODAL
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case "pedido":
+                    case "distribucion":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                let me = this;
+                                me.verificarDatosCotizacion(data);
+                                me.listarProveedores(1);
+                                me.loadingProgressBar("VERIFICANDO DESCUENTOS...");
+                                setTimeout(function() {
+                                    me.getDetalleCotizacionDistribucion(data);
+                                    me.listarDistribucionDescuento(data);
+                                }, 1200);
+
+                                // this.listarDistribucionEVPorRegalar(data);
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'cotizacion':
                     {
                         switch(accion){
                             case 'detalle':
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                this.verPedido(data);
+                                this.verCotizacion(data);
                                 break;
                             }
                         }
-                    }break;
+                    }
+                    break;
                 }
             },
             cerrarModal(){
@@ -1354,6 +1649,7 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+                this.listDistribucionDescuento = [];
             },
             //Limpiar Paginación
             limpiarPaginacion(){
@@ -1384,10 +1680,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            this.llenarComboMarca();
-            this.llenarComboModelo();
         }
     }
 </script>

@@ -309,6 +309,97 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cliente</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/>
                                             <template v-if="cflagVerificaDistribucionAprobacion">
                                                 <template v-if="listDistribucionDescuento.length">
                                                     <vs-divider border-style="solid" color="dark">
@@ -933,15 +1024,15 @@
             //===========================================================
             // MODAL COTIZACION DETALLE
             verCotizacion(cotizacion){
-                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
-                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
-                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
-                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
-                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
-                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
-                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
-                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
                 this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
                 this.verDetalleCotizacion(cotizacion);
             },
@@ -1163,9 +1254,41 @@
                 this.fillCotizacionesPendiente.dfechafin = '';
                 this.$forceUpdate();
             },
+            //===========================================================
+            //=================== MODAL DISTRIBUCION ====================
             /**
              * MODAL DISTRIBUCIÓN SUPERA DSCTO
              */
+            getDetalleCotizacionDistribucion(nIdCabeceraCotizacion){
+                var url = me.ruta + '/gescotizacion/GetDetalleCotizacionDistribucion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion' : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion': op
+                    }
+                }).then(response => {
+                    this.fillDetalleCotizacion.cnumerocotizacion    = cotizacion.cNumeroCotizacion,
+                    this.fillDetalleCotizacion.cdocumentocliente    = cotizacion.cPerDocumento,
+                    this.fillDetalleCotizacion.cnombrecliente       = cotizacion.cContacto,
+                    this.fillDetalleCotizacion.nidversionvehiculo   = cotizacion.nIdVersionVeh,
+                    this.fillDetalleCotizacion.cvehiculo            = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo,
+                    this.fillDetalleCotizacion.cnombreproveedor     = cotizacion.cNombreProveedor,
+                    this.fillDetalleCotizacion.cnombrevendedor      = cotizacion.cNombreVendedor,
+                    this.fillDetalleCotizacion.dfechacotizacion     = cotizacion.dFechaCotizacion,
+                    this.fillDetalleCotizacion.ftotalcotizacionsoles= cotizacion.fTotalCotizacionSoles,
+                    this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             verificarDatosCotizacion(nIdCabeceraCotizacion){
                 var url = this.ruta + '/getcotizacion/GetDatosCotizacion';
                 axios.get(url, {
@@ -1494,6 +1617,7 @@
                                 me.listarProveedores(1);
                                 me.loadingProgressBar("VERIFICANDO DESCUENTOS...");
                                 setTimeout(function() {
+                                    me.getDetalleCotizacionDistribucion(data);
                                     me.listarDistribucionDescuento(data);
                                 }, 1200);
 
