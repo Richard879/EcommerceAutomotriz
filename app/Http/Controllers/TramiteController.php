@@ -36,22 +36,16 @@ class TramiteController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     = $request->nidempresa;
-        $nIdGrupoPar    = $request->nidgrupopar;
-        $nJerarquia     = $request->jerarquia;
-        $variable       = $request->opcion;
-
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdGrupoPar    =   $request->nidgrupopar;
+        $nJerarquia     =   $request->jerarquia;
 
         $arrayFiltros = DB::select('exec [usp_Tramite_GetConceptosTramiteByTipo] ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdGrupoPar,
                                                             $nJerarquia
                                                         ]);
-        if($variable == "0"){
-            $arrayFiltros = $this->arrayPaginator($arrayFiltros, $request);
-        }
-        return ['arrayFiltros'=>$arrayFiltros];
+        return response()->json($arrayFiltros);
     }
 
     public function SetCabeceraTramite(Request $request)
