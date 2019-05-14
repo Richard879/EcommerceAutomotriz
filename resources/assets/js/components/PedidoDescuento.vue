@@ -184,7 +184,7 @@
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Pedido {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)"
+                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente)"
                                                                                     :style="'color:#796AEE'"
                                                                                     class="fa-md fa fa-usd"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
