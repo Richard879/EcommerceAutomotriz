@@ -1268,8 +1268,8 @@
 
                         var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                         axios.put(url, {
-                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
-                            opcion : op
+                            'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                            'opcion'                : op
                         }).then(response => {
                             me.buscarCotizacionesPendientes(1);
                             swal(
@@ -1382,8 +1382,8 @@
                 var url = me.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
-                        'cflagVerificaDistribucion': op
+                        'nIdCabeceraCotizacion'     : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion' : op
                     }
                 }).then(response => {
                     me.arrayDistribucionDescuento = response.data;
@@ -1407,16 +1407,16 @@
                 if(me.arrayDistribucionDescuento.length > 0){
                     me.arrayDistribucionDescuento.map(function(ec){
                         me.listDistribucionDescuento.push({
-                            nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
-                            nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
-                            cProveedorNombre        :   ec.cProveedorNombre,
-                            cNombreComercial        :   ec.cNombreComercial,
-                            fSubTotalSoles          :   ec.fSubTotalSoles,
-                            fSubTotalDolares        :   ec.fSubTotalDolares,
-                            fDescuento              :   ec.fDescuento,
-                            fMontoDesembolsar       :   0,
-                            nIdProveedor            :   '',
-                            fDistribucion           :   0
+                            'nIdCabeceraCotizacion'   :   ec.nIdCabeceraCotizacion,
+                            'nIdDetalleCotizacion'    :   ec.nIdDetalleCotizacion,
+                            'cProveedorNombre'        :   ec.cProveedorNombre,
+                            'cNombreComercial'        :   ec.cNombreComercial,
+                            'fSubTotalSoles'          :   ec.fSubTotalSoles,
+                            'fSubTotalDolares'        :   ec.fSubTotalDolares,
+                            'fDescuento'              :   ec.fDescuento,
+                            'fMontoDesembolsar'       :   0,
+                            'nIdProveedor'            :   '',
+                            'fDistribucion'           :   0
                         });
                     });
                 }
