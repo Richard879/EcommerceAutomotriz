@@ -463,10 +463,10 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Prec. Cierre Venta</th>
-                                                                    <th>Costo Dealer Compra</th>
-                                                                    <th>Costo Dealer Venta</th>
-                                                                    <th>Diferencia</th>
+                                                                    <th>Prec. Cierre Venta US$</th>
+                                                                    <th>Costo Dealer Compra US$</th>
+                                                                    <th>Costo Dealer Venta US$</th>
+                                                                    <th>Diferencia US$</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -504,7 +504,7 @@
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Precio Venta s/.</th>
                                                                     <th>Precio Venta US$</th>
-                                                                    <th>Descuento</th>
+                                                                    <th>Descuento US$</th>
                                                                     <th>Proveedor</th>
                                                                     <th>US$ Proveedor</th>
                                                                     <th>US$ Saisac</th>
@@ -575,7 +575,7 @@
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Precio Venta s/.</th>
                                                                     <th>Precio Venta US$</th>
-                                                                    <th>Descuento</th>
+                                                                    <th>Descuento US$</th>
                                                                     <th>Proveedor</th>
                                                                     <th>US$ Proveedor</th>
                                                                     <th>US$ Saisac</th>
