@@ -504,15 +504,15 @@
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Precio Venta s/.</th>
                                                                     <th>Precio Venta US$</th>
-                                                                    <th>Descuento US$</th>
+                                                                    <th>Descuento</th>
                                                                     <th>Proveedor</th>
-                                                                    <th>% Distribución</th>
-                                                                    <th>Proveedor Cancelar</th>
+                                                                    <th>US$ Proveedor</th>
+                                                                    <th>US$ Saisac</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
-                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdCabeceraPedido">
+                                                                    <td v-text="descuento.nIdCabeceraPedido"></td>
                                                                     <td v-text="descuento.cProveedorNombre"></td>
                                                                     <td v-text="descuento.cNombreComercial"></td>
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
@@ -582,8 +582,8 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
-                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdCabeceraPedido">
+                                                                    <td v-text="descuento.nIdCabeceraPedido"></td>
                                                                     <td v-text="descuento.cProveedorNombre"></td>
                                                                     <td v-text="descuento.cNombreComercial"></td>
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
