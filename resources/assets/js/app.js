@@ -94,7 +94,7 @@ Vue.component('accesorioconfig', require('./components/AccesorioModeloConfig.vue
 Vue.component('modeloconfig', require('./components/ModeloConfig.vue'));
 Vue.component('generaproyecto', require('./components/GenerarProyecto.vue'));
 Vue.component('gestionmiusuarios', require('./components/GestionMiUsuario.vue'));
-//Vue.component('reportes', require('./components/Reportes.vue'));
+Vue.component('reportes', require('./components/Reportes.vue'));
 
 const app = new Vue({
     el: '#app',
