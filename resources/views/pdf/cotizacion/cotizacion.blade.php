@@ -77,7 +77,7 @@
 </head>
 <body>
     <div class="information">
-        <table width="100%">
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td valign="top">
                     <img src="{{$logo}}" alt="" width="210" height="75"/>
@@ -122,11 +122,11 @@
                 <td>Telf. Celular:</td>
                 <td><strong>{{ $arrayDetalleCotizacion[0]->cTelefonoMovil }}</strong></td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="85">
                     <p>Estimado cliente de acuerdo con sus indicaciones se le extiende la cotización con los datos técnicos de su elección.</p>
                 </td>
-            </tr>
+            </tr>-->
         </table>
 
 
@@ -134,7 +134,6 @@
 
         <div class="invoice">
             <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
-            <br/>
 
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">
@@ -143,7 +142,7 @@
             </div>
 
             <div class="center">
-                <table width="100%">
+                <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
                             <h4>PRECIO DE LISTA:</h4>
@@ -157,7 +156,7 @@
                 </table>
             </div>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>
                 </tr>
