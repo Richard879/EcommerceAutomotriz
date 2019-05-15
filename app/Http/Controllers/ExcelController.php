@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 use App\Exports\CompraExport;
+use App\Exports\ExportDetalleVentaRetail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -303,5 +304,23 @@ class ExcelController extends Controller
         $data = new Collection($data);
         $data = $data->values()->all();
         return response()->json($data);
+    }
+
+    public function exportDetalleVentaRetail(Request $request)
+    {
+        return $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail]');
+
+        // $type = $request->type;
+        // return Excel::download(new ExportDetalleVentaRetail, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
+        // return Excel::download(new ExportDetalleVentaRetail,'users.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportarVentaHGSI(Request $request)
+    {
+        return $data = DB::select('exec [usp_Reporte_GetVentasHGSI]');
+
+        // $type = $request->type;
+        // return Excel::download(new ExportDetalleVentaRetail, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
+        // return Excel::download(new ExportDetalleVentaRetail,'users.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 }

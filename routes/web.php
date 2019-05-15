@@ -492,6 +492,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/comprobante/SetIntegraComprobante', 'IntComprobanteController@SetIntegraComprobante');
     Route::post('/comprobante/SetIntegraComprobanteWarrant', 'IntComprobanteController@SetIntegraComprobanteWarrant');
 
+    Route::get('/reportes/exportDetalleVentaRetail', 'ExcelController@exportDetalleVentaRetail');
+    Route::get('/reportes/exportarVentaHGSI', 'ExcelController@exportarVentaHGSI');
 
     ///========================================
     /////=================  ROUTES SAP
