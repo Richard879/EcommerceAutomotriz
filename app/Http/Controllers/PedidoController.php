@@ -892,4 +892,23 @@ class PedidoController extends Controller
         $arrayCotizacionesConDescuento = ParametroController::arrayPaginator($arrayCotizacionesConDescuento, $request);
         return ['arrayCotizacionesConDescuento'=>$arrayCotizacionesConDescuento];
     }
+
+    public function GetListDistribucionPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             = $request->nidempresa;
+        $nIdSucursal            = $request->nidsucursal;
+        $nIdCabeceraPedido      = $request->nidcabecerapedido;
+        $nIdCabeceraCotizacion  = $request->nidcabeceracotizacion;
+        
+        $arrayListDistribucion = DB::select('exec [usp_Pedido_GetLstDistribucionPedido] ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraPedido,
+                                                                $nIdCabeceraCotizacion,
+                                                                Auth::user()->id
+                                                            ]);
+        return ['arrayListDistribucion'=>$arrayListDistribucion];
+    }
 }
