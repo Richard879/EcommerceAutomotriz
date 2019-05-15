@@ -912,7 +912,7 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">DETALLE COTIZACIÓN</h3>
+                                        <h3 class="h4">DETALLE DISTRIBUCIÓN</h3>
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
@@ -921,7 +921,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cnumerocotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -929,7 +929,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -939,7 +939,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cdocumentocliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -947,7 +947,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cliente</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cnombrecliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -955,17 +955,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro VIN</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cnumerovin" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -975,7 +975,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.dfechacotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -983,7 +983,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.cnombrevendedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -991,24 +991,101 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente s./</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculosol" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Final Cliente US$</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleDistribucion.ftotalcotizacionvehiculodolar" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Flete</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.fflete" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* TyP</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.ftyp" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre LP</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.fpreciocierrelp" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Prec. Cierre Sistema</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.fpreciocierresistema" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Sobre Precio</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.fsobreprecio" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Descuento</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleDistribucion.fdescuento" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
                                         <br/>
-                                        
+                                        <!-- DETALLE DISTRIBUCIÓN -->
+                                        <template v-if="arrayListDistribucion.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Distribución
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nro Pedido</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Monto US$</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayListDistribucion" :key="vehiculo.nIdDistribucionCotizacion">
+                                                            <td v-text="vehiculo.cNumeroPedido"></td>
+                                                            <td v-text="vehiculo.cNombreProveedor"></td>
+                                                            <td v-text="vehiculo.fMontoDesembolsar"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -1440,7 +1517,6 @@
                         'cflagVerificaDistribucion': op
                     }
                 }).then(response => {
-                    this.arrayDetalleDistribucion                       = response.data.arrayDetalleCotizacion,
                     this.fillDetalleDistribucion.cnumerocotizacion      = response.data.arrayDetalleCotizacion[0].cNumeroCotizacion,
                     this.fillDetalleDistribucion.cdocumentocliente      = response.data.arrayDetalleCotizacion[0].cPerDocumento,
                     this.fillDetalleDistribucion.cnombrecliente         = response.data.arrayDetalleCotizacion[0].cContacto,
@@ -1847,7 +1923,7 @@
                             {
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                this.verCotizacion(data);
+                                this.getDetalleCotizacionDistribucion(data);
                                 this.verDistribucion(data);
                                 break;
                             }
