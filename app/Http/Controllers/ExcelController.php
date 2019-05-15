@@ -306,7 +306,7 @@ class ExcelController extends Controller
         return response()->json($data);
     }
 
-    public function exportDetalleVentaRetail(Request $request)
+    public function exportDetalleVentaRetail()
     {
         return $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail]');
 
@@ -315,12 +315,13 @@ class ExcelController extends Controller
         // return Excel::download(new ExportDetalleVentaRetail,'users.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
-    public function exportarVentaHGSI(Request $request)
+    public function exportarVentaHGSI()
     {
         return $data = DB::select('exec [usp_Reporte_GetVentasHGSI]');
+    }
 
-        // $type = $request->type;
-        // return Excel::download(new ExportDetalleVentaRetail, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
-        // return Excel::download(new ExportDetalleVentaRetail,'users.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    public function exportarVentaDiaria()
+    {
+        return $data = DB::select('exec [usp_Reporte_GetVentaDiaria]');
     }
 }

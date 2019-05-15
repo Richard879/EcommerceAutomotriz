@@ -9,7 +9,7 @@
                 </div>
             </header>
 
-            <!--REPORTES GERENCIA || ADV/Gerencia-->
+            <!--CONSULTAS/RETAIL || ADV/Gerencia-->
             <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
@@ -21,14 +21,35 @@
                         <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                              <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail('xlsx')"></i></div>
+                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i></div>
                                     <div class="title"><span><br>Detalle Venta Retail</span></div>
                                 </div>
                              </div>
                              <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI('xlsx')"></i></div>
+                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i></div>
                                     <div class="title"><span><br>Ventas HGSI</span></div>
+                                </div>
+                             </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!--Marketing y Ventas || ADV/Gerencia-->
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                <div class="container-fluid">
+                    <div class="row bg-white has-shadow">
+                        <div class="col-xs-12" style="width: 100%;">
+                            <h3>MARKETING Y VENTAS</h3>
+                        </div>
+
+                        <!-- ADV/Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarVentaDiaria()"></i></div>
+                                    <div class="title"><span><br>Venta Diaria</span></div>
                                 </div>
                              </div>
                         </template>
@@ -82,15 +103,11 @@
                     }
                 });
             },
-            exportarDetalleVentaRetail(tipo){
+            exportarDetalleVentaRetail(){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportDetalleVentaRetail';
-                axios.get(url, {
-                    params: {
-                        'type'    : tipo,
-                    }
-                }).then(response => {
+                axios.get(url).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Detalle Venta Retail'
@@ -108,18 +125,36 @@
                     $("#myBar").hide();
                 });
             },
-            exportarVentaHGSI(tipo){
+            exportarVentaHGSI(){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportarVentaHGSI';
-                axios.get(url, {
-                    params: {
-                        'type'    : tipo,
-                    }
-                }).then(response => {
+                axios.get(url).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Ventas HGSI'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            exportarVentaDiaria(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarVentaDiaria';
+                axios.get(url).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Detalle Venta Diaria'
                     XLSX.utils.book_append_sheet(workbook, data, filename)
                     XLSX.writeFile(workbook, `${filename}.xlsx`)
                     $("#myBar").hide();

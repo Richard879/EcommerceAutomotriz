@@ -495,6 +495,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::get('/reportes/exportDetalleVentaRetail', 'ExcelController@exportDetalleVentaRetail');
     Route::get('/reportes/exportarVentaHGSI', 'ExcelController@exportarVentaHGSI');
+    Route::get('/reportes/exportarVentaDiaria', 'ExcelController@exportarVentaDiaria');
 
     ///========================================
     /////=================  ROUTES SAP
