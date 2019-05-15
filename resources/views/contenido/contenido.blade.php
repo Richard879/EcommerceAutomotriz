@@ -76,7 +76,9 @@
     <template v-if="menu==1300692">
         <gestionmiusuarios :ruta="ruta" :usuario="{{ auth()->user() }}"></gestionmiusuarios>
     </template>
-
+    <template v-if="menu==1300698">
+        <reportes :ruta="ruta" :usuario="{{ auth()->user() }}"></reportes>
+    </template>
 
     <template v-if="menu==1300284">
         <listapreciovh :ruta="ruta"></listapreciovh>
