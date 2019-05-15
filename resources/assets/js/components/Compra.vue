@@ -2018,7 +2018,7 @@
                     //==============================================================
                     //================== REGITRO DE ARTICULO EN SAP ===============
                     //Depurar Array para registrar en SAP
-                    me.arrayExcel.map(function(x, y){
+                    /*me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
                             // console.log("VIN depurados: " + x.cNumeroVin);
@@ -2034,9 +2034,9 @@
                     else{
                         me.loadingProgressBar("OCURRIO UN PROBLEMA...");
                         me.verResultados();
-                    }
+                    }*/
 
-                    //me.verResultados();
+                    me.verResultados();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2047,7 +2047,7 @@
                     }
                 });
             },
-            registroSapBusinessArticulo(){
+            /*registroSapBusinessArticulo(){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
@@ -2708,7 +2708,7 @@
                         }
                     }
                 });
-            },
+            },*/
             /*verResultados(){
                 let me = this;
                 me.attachment = [];
@@ -3699,7 +3699,7 @@
             confirmaCompra(){
                 let me = this;
                 $("#myBar").hide();
-                me.loading.close();
+                //me.loading.close();
                 swal('Compra registrada correctamente');
                 me.limpiarFormulario();
                 me.listarCompras(1);

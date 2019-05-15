@@ -213,22 +213,20 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                                 <td>
-                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
+                                                                                    <template v-if="pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="activarTabDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <template>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
