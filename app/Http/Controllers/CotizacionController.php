@@ -462,11 +462,12 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdCabeceraCotizacion      =   $request->nIdCabeceraCotizacion;
-        $cflagVerificaDistribucion  =   $request->cflagVerificaDistribucion;
+        $nIdCabeceraPedido          = $request->nIdCabeceraPedido;
+        $nIdCabeceraCotizacion      = $request->nIdCabeceraCotizacion;
+        $cflagVerificaDistribucion  =  $request->cflagVerificaDistribucion;
 
-        $arrayDistribucionDescuento = DB::select('exec usp_Cotizacion_GetDistribucionBySuperaDscto ?, ?, ?',
-                                    [
+        $arrayDistribucionDescuento = DB::select('exec usp_Cotizacion_GetDistribucionBySuperaDscto ?, ?, ?, ?',
+                                    [   $nIdCabeceraPedido,
                                         $nIdCabeceraCotizacion,
                                         $cflagVerificaDistribucion,
                                         Auth::user()->id
@@ -525,8 +526,9 @@ class CotizacionController extends Controller
                 $listDistribucionDescuento = $request->listDistribucionDescuento;
                 foreach($listDistribucionDescuento as $ep=>$det)
                 {
-                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?, ?, ?',
+                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdEmpresa,
+                                                                        $det['nIdCabeceraPedido'],
                                                                         $det['nIdCabeceraCotizacion'],
                                                                         $det['nIdDetalleCotizacion'],
                                                                         $det['nIdProveedor'],

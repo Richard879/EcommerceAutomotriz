@@ -175,7 +175,7 @@
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Conformidad de Pedido {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                <i  @click="conformeNoConformeCotizacion(2, cotizacionpendiente)"
                                                                                     :style="'color:#796AEE'"
                                                                                     class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
@@ -193,7 +193,7 @@
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Pedido {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente)"
                                                                                     :style="'color:red'"
                                                                                     class="fa-md fa fa-trash"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
@@ -203,13 +203,13 @@
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110096">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Aprobar Pedido {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                <i  @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente)"
                                                                                     :style="'color:#796AEE'"
                                                                                     class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Pedido {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                <i  @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente)"
                                                                                     :style="'color:red'"
                                                                                     class="fa-md fa fa-trash"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
@@ -463,10 +463,10 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Prec. Cierre Venta</th>
-                                                                    <th>Costo Dealer Compra</th>
-                                                                    <th>Costo Dealer Venta</th>
-                                                                    <th>Diferencia</th>
+                                                                    <th>Prec. Cierre Venta US$</th>
+                                                                    <th>Costo Dealer Compra US$</th>
+                                                                    <th>Costo Dealer Venta US$</th>
+                                                                    <th>Diferencia US$</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -506,13 +506,13 @@
                                                                     <th>Precio Venta US$</th>
                                                                     <th>Descuento US$</th>
                                                                     <th>Proveedor</th>
-                                                                    <th>% Distribución</th>
-                                                                    <th>Proveedor Cancelar</th>
+                                                                    <th>US$ Proveedor</th>
+                                                                    <th>US$ Saisac</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
-                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdCabeceraPedido">
+                                                                    <td v-text="descuento.nIdCabeceraPedido"></td>
                                                                     <td v-text="descuento.cProveedorNombre"></td>
                                                                     <td v-text="descuento.cNombreComercial"></td>
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
@@ -575,15 +575,15 @@
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Precio Venta s/.</th>
                                                                     <th>Precio Venta US$</th>
-                                                                    <th>Descuento</th>
+                                                                    <th>Descuento US$</th>
                                                                     <th>Proveedor</th>
                                                                     <th>US$ Proveedor</th>
                                                                     <th>US$ Saisac</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
-                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdCabeceraPedido">
+                                                                    <td v-text="descuento.nIdCabeceraPedido"></td>
                                                                     <td v-text="descuento.cProveedorNombre"></td>
                                                                     <td v-text="descuento.cNombreComercial"></td>
                                                                     <td v-text="descuento.fSubTotalSoles"></td>
@@ -1252,9 +1252,9 @@
                 this.paginationModal.current_page=page;
                 this.buscarCotizacionesPendientes(page);
             },
-            conformeNoConformeCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+            conformeNoConformeCotizacion(op, objPedido){
                 swal({
-                    title: '¿Esta seguro de' + ((op == 2) ? ' dar Conformidad a' : ' Rechazar ') + ' la cotización N°' + cNumeroCotizacion + '?',
+                    title: '¿Esta seguro de' + ((op == 2) ? ' dar Conformidad a' : ' Rechazar ') + 'el pedido N°' + objPedido.cNumeroPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -1268,13 +1268,13 @@
 
                         var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                         axios.put(url, {
-                            'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                            'nIdCabeceraCotizacion' : objPedido.nIdCabeceraCotizacion,
                             'opcion'                : op
                         }).then(response => {
                             me.buscarCotizacionesPendientes(1);
                             swal(
                                 ((op == 2) ? 'Conforme' : ' Rechazar'),
-                                'La Cotización ' + cNumeroCotizacion +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
+                                'El Pedido ' + objPedido.cNumeroPedido +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
                                 'success'
                             )
                         }).catch(error => {
@@ -1302,7 +1302,7 @@
             /**
              * MODAL DISTRIBUCIÓN SUPERA DSCTO
              */
-            getDetalleCotizacionDistribucion(nIdCabeceraCotizacion){
+            getDetalleCotizacionDistribucion(objPedido){
                 //Verifica si es Gerencia o ADV para listar los Dscto Correspondientes
                 let op = 1;
                 let me = this;
@@ -1314,7 +1314,7 @@
                     params: {
                         'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabeceracotizacion' : nIdCabeceraCotizacion,
+                        'nidcabeceracotizacion' : objPedido.nIdCabeceraCotizacion,
                         'cflagVerificaDistribucion': op
                     }
                 }).then(response => {
@@ -1346,11 +1346,11 @@
                     }
                 });
             },
-            verificarDatosCotizacion(nIdCabeceraCotizacion){
+            verificarDatosCotizacion(objPedido){
                 var url = this.ruta + '/getcotizacion/GetDatosCotizacion';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                        'nIdCabeceraCotizacion' : objPedido.nIdCabeceraCotizacion
                     }
                 }).then(response => {
                     //Si existen registros que van a generencia
@@ -1360,7 +1360,7 @@
                     } else {
                         //Mostrar formulario para aprobar cotización
                         this.cflagVerificaDistribucionAprobacion = false;
-                        this.nIdCabeceraCotizacion = nIdCabeceraCotizacion;
+                        this.nIdCabeceraCotizacion = objPedido.nIdCabeceraCotizacion;
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1372,7 +1372,7 @@
                     }
                 });
             },
-            listarDistribucionDescuento(nIdCabeceraCotizacion){
+            listarDistribucionDescuento(objPedido){
                 //Verifica si es Gerencia o ADV para listar los Dscto Correspondientes
                 let op = 1;
                 let me = this;
@@ -1382,7 +1382,8 @@
                 var url = me.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraCotizacion'     : nIdCabeceraCotizacion,
+                        'nIdCabeceraPedido'         : objPedido.nIdCabeceraPedido,
+                        'nIdCabeceraCotizacion'     : objPedido.nIdCabeceraCotizacion,
                         'cflagVerificaDistribucion' : op
                     }
                 }).then(response => {
@@ -1407,6 +1408,7 @@
                 if(me.arrayDistribucionDescuento.length > 0){
                     me.arrayDistribucionDescuento.map(function(ec){
                         me.listDistribucionDescuento.push({
+                            'nIdCabeceraPedido'       :   ec.nIdCabeceraPedido,
                             'nIdCabeceraCotizacion'   :   ec.nIdCabeceraCotizacion,
                             'nIdDetalleCotizacion'    :   ec.nIdDetalleCotizacion,
                             'cProveedorNombre'        :   ec.cProveedorNombre,
@@ -1624,9 +1626,9 @@
             /**
              * Aprobación Gerencia
              */
-            aprobarNoaprobarCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+            aprobarNoaprobarCotizacion(op, objPedido){
                 swal({
-                    title: '¿Esta seguro de ' + ((op == 1) ? 'Aprobar' : ' Rechazar ') + ' la cotización N°' + cNumeroCotizacion + '?',
+                    title: '¿Esta seguro de ' + ((op == 1) ? 'Aprobar' : ' Rechazar ') + 'el pedido N°' + objPedido.cNumeroPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -1640,13 +1642,13 @@
 
                         var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                         axios.put(url, {
-                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
+                            nIdCabeceraCotizacion : objPedido.nIdCabeceraCotizacion,
                             opcion : op
                         }).then(response => {
                             me.buscarCotizacionesPendientes(1);
                             swal(
                                 ((op == 1) ? 'Aprobar' : ' Rechazar '),
-                                'La Cotización ' + cNumeroCotizacion +' ha sido ' + ((op == 1) ? 'Aprobada' : ' Rechazada ') + ' con éxito.',
+                                'El pedido ' + objPedido.cNumeroPedido +' ha sido ' + ((op == 1) ? 'Aprobada' : ' Rechazada ') + ' con éxito.',
                                 'success'
                             )
                         }).catch(error => {
