@@ -374,4 +374,25 @@ class GestionUsuariosController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetListUsuariosByRol(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdRol         =   $request->nidrol;
+
+        $nIdSucursal    =   ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+        $nIdRol         =   ($nIdRol == NULL) ? ($nIdRol = 0) : $nIdRol;
+
+        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuariosByRolReporte ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdRol
+                                                            ]);
+
+        return response()->json($arrayUsuarios);
+    }
 }

@@ -48,7 +48,7 @@
                         <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarVentaDiaria()"></i></div>
+                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"></i></div>
                                     <div class="title"><span><br>Venta Diaria</span></div>
                                 </div>
                              </div>
@@ -56,6 +56,95 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Show Venta Diaria -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Seleccione una Fecha</label>
+                                                        <div class="col-md-8">
+                                                            <el-date-picker
+                                                                v-model="formFiltro.dfechaventadiaria"
+                                                                type="date"
+                                                                value-format="yyyy-MM-dd"
+                                                                format="dd/MM/yyyy"
+                                                                placeholder="dd/mm/aaaa"
+                                                                :picker-options="pickerOptions">
+                                                            </el-date-picker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidvendedor"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UN ASESOR COMERCIAL">
+                                                                <el-option
+                                                                    v-for="ele in arrayVendedores"
+                                                                    :key="ele.nIdUsuario"
+                                                                    :label="ele.cNombreCompleto"
+                                                                    :value="ele.nIdUsuario">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarVentaDiaria()">
+                                                        <i class="fa fa-save"></i> Generar Reporte
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 </template>
 
@@ -73,7 +162,49 @@
                     cRol: '',
                     nIdRol: ''
                 },
-                loading: false
+                formFiltro: {
+                    dfechaventadiaria: '',
+                    nidvendedor: ''
+                },
+                arrayVendedores: [],
+                offset:3,
+                accionmodal: 0,
+                modal:0,
+                tituloModal:'',
+                tituloFormulario: '',
+                error: 0,
+                errors: [],
+                mensajeError: [],
+                loading: false,
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [
+                        {
+                            text: 'Hoy',
+                            onClick(picker) {
+                                picker.$emit('pick', new Date());
+                            }
+                        },
+                        {
+                            text: 'Ayer',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                                picker.$emit('pick', date);
+                            }
+                        },
+                        {
+                            text: 'Hace una semana',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                                picker.$emit('pick', date);
+                            }
+                        }
+                    ]
+                },
             }
         },
         mounted(){
@@ -151,7 +282,12 @@
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportarVentaDiaria';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'dfecha'        :   this.formFiltro.dfechaventadiaria,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor
+                    }
+                }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Detalle Venta Diaria'
@@ -168,6 +304,79 @@
                     }
                     $("#myBar").hide();
                 });
+            },
+            //DATA
+            listarVendedores(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/usuario/GetListUsuariosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidempresa':   '1300011',
+                        'nidempresa':   0,
+                        'nidrol'    :   '110026'
+                    }
+                }).then(response => {
+                    this.arrayVendedores = response.data;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'ventaretail':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'ventahgsi':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    case 'ventadiaria':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.listarVendedores();
+                                this.tituloModal = data;
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
             },
             mostrarProgressBar(){
                 $("#myBar").show();

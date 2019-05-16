@@ -274,7 +274,7 @@ class PedidoController extends Controller
         try{
             DB::beginTransaction();
 
-            $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+            $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -283,6 +283,7 @@ class PedidoController extends Controller
                                         $request->cNumeroPedido,
                                         $request->dFechaPedido,
                                         $request->nIdFormaPago,
+                                        $request->nIdBanco,
                                         $request->cGlosa,
                                         Auth::user()->id
                                     ]);
@@ -901,7 +902,7 @@ class PedidoController extends Controller
         $nIdSucursal            = $request->nidsucursal;
         $nIdCabeceraPedido      = $request->nidcabecerapedido;
         $nIdCabeceraCotizacion  = $request->nidcabeceracotizacion;
-        
+
         $arrayListDistribucion = DB::select('exec [usp_Pedido_GetLstDistribucionPedido] ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,

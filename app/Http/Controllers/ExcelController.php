@@ -350,8 +350,18 @@ class ExcelController extends Controller
         return $data = DB::select('exec [usp_Reporte_GetVentasHGSI]');
     }
 
-    public function exportarVentaDiaria()
+    public function exportarVentaDiaria(Request $request)
     {
-        return $data = DB::select('exec [usp_Reporte_GetVentaDiaria]');
+        $dfecha         =   $request->dfecha;
+        $nidvendedor    =   $request->nidvendedor;
+
+        $dfecha         =   ($dfecha == NULL) ? ($dfecha = '') : $dfecha;
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+
+        return $data = DB::select('exec [usp_Reporte_GetVentaDiaria] ?, ?',
+                                            [
+                                                $dfecha,
+                                                $nidvendedor
+                                            ]);
     }
 }

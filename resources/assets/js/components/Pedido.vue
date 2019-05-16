@@ -931,10 +931,10 @@
                                                                                                     <div class="col-sm-8">
                                                                                                         <el-select v-model="formDocRef.nidformapago" filterable clearable placeholder="SELECCIONE" @change="changeFormaPago()" >
                                                                                                             <el-option
-                                                                                                            v-for="item in arrayFormaPago"
-                                                                                                            :key="item.nIdPar"
-                                                                                                            :label="item.cParNombre"
-                                                                                                            :value="item.nIdPar">
+                                                                                                                v-for="item in arrayFormaPago"
+                                                                                                                :key="item.nIdPar"
+                                                                                                                :label="item.cParNombre"
+                                                                                                                :value="item.nIdPar">
                                                                                                             </el-option>
                                                                                                         </el-select>
                                                                                                     </div>
@@ -946,10 +946,10 @@
                                                                                                     <div class="col-sm-8">
                                                                                                         <el-select v-model="formDocRef.nidbanco" filterable clearable placeholder="SELECCIONE" >
                                                                                                             <el-option
-                                                                                                            v-for="item in arrayBanco"
-                                                                                                            :key="item.nIdPar"
-                                                                                                            :label="item.cParNombre"
-                                                                                                            :value="item.nIdPar">
+                                                                                                                v-for="item in arrayBanco"
+                                                                                                                :key="item.nIdPar"
+                                                                                                                :label="item.cParNombre"
+                                                                                                                :value="item.nIdPar">
                                                                                                             </el-option>
                                                                                                         </el-select>
                                                                                                     </div>
@@ -2653,6 +2653,7 @@
                     'cNumeroPedido' : 'PEDIDO-001',
                     'dFechaPedido'  : moment().format('YYYY-MM-DD'),
                     'nIdFormaPago'  : this.formDocRef.nidformapago,
+                    'nIdBanco'      : this.formDocRef.nidbanco,
                     'cGlosa'        : 'REGISTRO DE PEDIDO'
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
