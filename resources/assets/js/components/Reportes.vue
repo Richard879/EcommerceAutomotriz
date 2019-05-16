@@ -1,5 +1,5 @@
 <template>
-    <!--<transition tag="ul" name="bounce" mode="out-in" appear>-->
+    <transition tag="ul" name="bounce" mode="out-in" appear>
         <main>
             <header class="page-header">
                 <div class="container-fluid">
@@ -21,13 +21,13 @@
                         <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                              <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i></div>
+                                    <div class="icon bg-violet" @click="exportarDetalleVentaRetail()"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Detalle Venta Retail</span></div>
                                 </div>
                              </div>
                              <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i></div>
+                                    <div class="icon bg-violet" @click="exportarVentaHGSI()"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Ventas HGSI</span></div>
                                 </div>
                              </div>
@@ -48,7 +48,7 @@
                         <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="fa-md fa fa-file-excel-o" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Venta Diaria</span></div>
                                 </div>
                              </div>
@@ -146,6 +146,7 @@
                 </div>
             </div>
         </main>
+    </transition>
 </template>
 
 <script>

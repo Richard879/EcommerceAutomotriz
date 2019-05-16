@@ -942,6 +942,7 @@
                                                                     <th>MONTO s./</th>
                                                                     <th>MONTO US$</th>
                                                                     <th>ESTADO</th>
+                                                                    <th>VOUCHER</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -955,6 +956,12 @@
                                                                     <td v-text="Number((parseFloat(depositos.fMontoSoles)).toFixed(2))"></td>
                                                                     <td v-text="Number((parseFloat(depositos.fMontoDolares)).toFixed(2))"></td>
                                                                     <td v-text="depositos.cEstadoDeposito"></td>
+                                                                    <td>
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Voucher del Deposito {{ depositos.nNumeroOperacion }}</div>
+                                                                            <i @click="descargaVoucher(depositos.cRutaDocumento)" class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
+                                                                        </el-tooltip>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1423,6 +1430,9 @@
                         }
                     }
                 });
+            },
+            descargaVoucher(cRutaDocumento){
+                window.open(cRutaDocumento);
             },
             // ==========================================================
             // =============  TAB GENERAR DEPOSITO ========================
