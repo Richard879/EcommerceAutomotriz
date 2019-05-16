@@ -58,7 +58,7 @@ class CompraExport implements FromView
         $nIdSucursal    =   $this->nIdSucursal;
         $nOrdenCompra   =   $this->nOrdenCompra;
 
-        $dFechaInicio   =   ($this->dFechaInicio == NULL) ? ($this->dFechaInicio = '') : $dFechaInicio;
+        $dFechaInicio   =   ($this->dFechaInicio == NULL) ? ($this->dFechaInicio = '') : $this->dFechaInicio;
         $dFechaFin      =   ($this->dFechaFin == NULL) ? ($this->dFechaFin = '') : $this->dFechaFin;
         $cNumeroVin     =   ($this->cNumeroVin == NULL) ? ($this->cNumeroVin = '') : $this->cNumeroVin;
         $nIdMarca       =   ($this->nIdMarca == NULL) ? ($this->nIdMarca = 0) : $this->nIdMarca;

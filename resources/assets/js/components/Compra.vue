@@ -1329,6 +1329,8 @@
 </template>
 
 <script>
+    import XLSX from 'xlsx'
+
     export default {
         props:['ruta'],
         data(){
@@ -1648,23 +1650,29 @@
                         'nidmodelo'     : this.fillCompra.nidmodelo
                     }
                 }).then(response => {
-                    //Create a Blob from the PDF Stream
-                    // console.log(response.data);
-                    const file = new Blob(
-                        [response.data],
-                        // {type: 'text/html'}
-                        {
-                            name:   'data.csv',
-                            type:   'application/vnd.ms-excel'
-                        }
-                        // {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
-                        // {type: 'application/pdf'}
-                        // {type: 'text/csv'}
-                    );
-                    //Construye la URL del Archivo
-                    const fileURL = URL.createObjectURL(file);
-                    //Abre la URL en una nueva Ventana
-                    window.open(fileURL);
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Reporte de Compra'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+
+                    // //Create a Blob from the PDF Stream
+                    // // console.log(response.data);
+                    // const file = new Blob(
+                    //     [response.data],
+                    //     // {type: 'text/html'}
+                    //     {
+                    //         name:   'data.csv',
+                    //         type:   'application/vnd.ms-excel'
+                    //     }
+                    //     // {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
+                    //     // {type: 'application/pdf'}
+                    //     // {type: 'text/csv'}
+                    // );
+                    // //Construye la URL del Archivo
+                    // const fileURL = URL.createObjectURL(file);
+                    // //Abre la URL en una nueva Ventana
+                    // window.open(fileURL);
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

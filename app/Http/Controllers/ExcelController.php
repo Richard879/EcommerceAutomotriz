@@ -76,18 +76,48 @@ class ExcelController extends Controller
 
     public function exportCompraXLS(Request $request)
     {
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $dFechaInicio   =   $request->dfechainicio;
+        $dFechaFin      =   $request->dfechafin;
+        $nOrdenCompra   =   $request->nordencompra;
+        $cNumeroVIN     =   $request->cnumerovin;
+        $nIdMarca       =   $request->nidmarca;
+        $nIdModelo     =   $request->nidmodelo;
+
+
+        $dFechaInicio   =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin      =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nOrdenCompra   =   ($nOrdenCompra == NULL) ? ($nOrdenCompra = '') : $nOrdenCompra;
+        $cNumeroVin     =   ($cNumeroVIN == NULL) ? ($cNumeroVIN = '') : $cNumeroVIN;
+        $nIdMarca       =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo      =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+        $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $nOrdenCompra,
+                                                                $cNumeroVin,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                            ]);
+
+        return $arrayCompra;
+
         // return (new CompraExport($request))->download('invoices.csv', \Maatwebsite\Excel\Excel::CSV);
         // return (new CompraExport($request))->download('invoices.xlsx', \Maatwebsite\Excel\Excel::XLSX);
         // return (new CompraExport($request))->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
         // custom mime type text/csv
-        return (new CompraExport($request))->download(
-            'invoices.csv',
-            \Maatwebsite\Excel\Excel::CSV,
-            [
-                'Content-Type' => 'text/csv',
-            ]
-        );
+        // return (new CompraExport($request))->download(
+        //     'invoices.csv',
+        //     \Maatwebsite\Excel\Excel::CSV,
+        //     [
+        //         'Content-Type' => 'text/csv',
+        //     ]
+        // );
     }
 
     public function importFileListaPrecioVh(Request $request)
