@@ -861,23 +861,25 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidempresa     =   $request->nidempresa;
-        $nidsucursal    =   $request->nidsucursal;
-        $nidmarca       =   $request->nidmarca;
-        $nidmodelo      =   $request->nidmodelo;
-        $dfechainicio   =   $request->dfechainicio;
-        $dfechafin      =   $request->dfechafin;
-        $cContacto      =   $request->ccontacto;
-        $ntipopersona   =   $request->ntipopersona;
+        $nidempresa         =   $request->nidempresa;
+        $nidsucursal        =   $request->nidsucursal;
+        $nidmarca           =   $request->nidmarca;
+        $nidmodelo          =   $request->nidmodelo;
+        $dfechainicio       =   $request->dfechainicio;
+        $dfechafin          =   $request->dfechafin;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
+        $ntipopersona       =   $request->ntipopersona;
 
-        $nidmarca       =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
-        $nidmodelo      =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
-        $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
-        $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
-        $cContacto      =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
-        $ntipopersona   =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
+        $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $dfechainicio       =   ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin          =   ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayCotizacionesConDescuento = DB::select('exec [usp_Pedido_GetLstPedidoConDescuento] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizacionesConDescuento = DB::select('exec [usp_Pedido_GetLstPedidoConDescuento] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidempresa,
                                         $nidsucursal,
@@ -886,6 +888,7 @@ class PedidoController extends Controller
                                         $dfechainicio,
                                         $dfechafin,
                                         $cContacto,
+                                        $cNumeroDocumento,
                                         $ntipopersona,
                                         Auth::user()->id
                                     ]);

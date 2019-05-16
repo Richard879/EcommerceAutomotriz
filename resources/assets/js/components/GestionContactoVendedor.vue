@@ -64,17 +64,17 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                            <label class="col-sm-4 form-control-label">* Apellidos</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarContactoSinCarteraMes(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarContactoSinCarteraMes(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Apellidos</label>
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarContactoSinCarteraMes(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarContactoSinCarteraMes(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -272,17 +272,17 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                            <label class="col-sm-4 form-control-label">* Apellidos</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Apellidos</label>
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
