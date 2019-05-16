@@ -301,11 +301,12 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Integra_SetIntegraCompra] ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Integra_SetIntegraCompra] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
+                                                                $det['cWhsCode'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);
