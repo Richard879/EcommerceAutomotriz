@@ -59,6 +59,24 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
@@ -89,7 +107,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
+                                                                            <label class="col-sm-4 form-control-label">Nº Pedido</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
@@ -603,7 +621,9 @@
                     cnumerovin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidestadopedido: ''
+                    nidestadopedido: '',
+                    ccontacto: '',
+                    cnrodocumento: ''
                 },
                 arrayPedido: [],
                 arrayEstadoPedido: [],
@@ -816,15 +836,17 @@
                 var url = this.ruta + '/deposito/GetListPedidoConDeposito';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillPedido.dfechainicio,
-                        'dfechafin': this.fillPedido.dfechafin,
-                        'cnumeropedido': this.fillPedido.cnumeropedido,
-                        'cnumerovin': this.fillPedido.cnumerovin,
-                        'nidmarca': this.fillPedido.nidmarca,
-                        'nidmodelo': this.fillPedido.nidmodelo,
-                        'nidestadopedido': this.fillPedido.nidestadopedido,
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      : this.fillPedido.dfechainicio,
+                        'dfechafin'         : this.fillPedido.dfechafin,
+                        'cnumeropedido'     : this.fillPedido.cnumeropedido,
+                        'cnumerovin'        : this.fillPedido.cnumerovin,
+                        'nidmarca'          : this.fillPedido.nidmarca,
+                        'nidmodelo'         : this.fillPedido.nidmodelo,
+                        'nidestadopedido'   : this.fillPedido.nidestadopedido,
+                        'ccontacto'         : this.fillPedido.ccontacto,
+                        'cnrodocumento'     : this.fillPedido.cnrodocumento,
                         'page' : page
                     }
                 }).then(response => {

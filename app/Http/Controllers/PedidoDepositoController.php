@@ -141,28 +141,33 @@ class PedidoDepositoController extends Controller
         $nIdMarca           =   $request->nidmarca;
         $nIdModelo          =   $request->nidmodelo;
         $nIdEstadoPedido    =   $request->nidestadopedido;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
 
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
+        $dFechaInicio       = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido      = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin         = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido    = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
+        $cContacto          = ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   = ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
 
-        $arrayPedido = DB::select('exec usp_Deposito_GetListPedidoConDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                    [
-                                        $nIdEmpresa,
-                                        $nIdSucursal,
-                                        $dFechaInicio,
-                                        $dFechaFin,
-                                        $cNumeroPedido,
-                                        $cNumeroVin,
-                                        $nIdMarca,
-                                        $nIdModelo,
-                                        $nIdEstadoPedido,
-                                        Auth::user()->id
-                                    ]);
+        $arrayPedido = DB::select('exec [usp_Deposito_GetListPedidoConDeposito] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $cNumeroPedido,
+                                                                            $cNumeroVin,
+                                                                            $nIdMarca,
+                                                                            $nIdModelo,
+                                                                            $nIdEstadoPedido,
+                                                                            $cContacto,
+                                                                            $cNumeroDocumento,
+                                                                            Auth::user()->id
+                                                                        ]);
 
         $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];

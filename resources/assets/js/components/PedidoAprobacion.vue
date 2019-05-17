@@ -73,7 +73,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidosAprobados(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -81,7 +81,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidosAprobados(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -309,7 +309,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillBusquedaPedido.ccontacto" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillBusquedaPedido.ccontacto" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -317,7 +317,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillBusquedaPedido.cnrodocumento" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillBusquedaPedido.cnrodocumento" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
