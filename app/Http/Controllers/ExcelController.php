@@ -367,14 +367,23 @@ class ExcelController extends Controller
 
     public function exportarStock(Request $request)
     {
-        $nidmarca     =   $request->nidmarca;
-        $nidmodelo    =   $request->nidmodelo;
+        $nidsucursal        =   $request->nidsucursal;
+        $nidproveedor       =   $request->nidproveedor;
+        $nidlista           =   $request->nidlista;
+        $cflagdisponible    =   $request->cflagdisponible;
+        $nidmarca           =   $request->nidmarca;
+        $nidmodelo          =   $request->nidmodelo;
 
-        $nidmarca     =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
-        $nidmodelo    =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $cflagdisponible    =   ($cflagdisponible == NULL) ? ($cflagdisponible = '') : $cflagdisponible;
+        $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
-        return $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?',
+        return $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidsucursal,
+                                                $nidproveedor,
+                                                $nidlista,
+                                                $cflagdisponible,
                                                 $nidmarca,
                                                 $nidmodelo
                                             ]);

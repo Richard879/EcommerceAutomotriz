@@ -223,4 +223,17 @@ class ListaPrecioVersionVehController extends Controller
                                                             ]);
         return response()->json($versionvehiculo);
     }
+
+    public function GetListaPrecioActiva(Request $request)
+    {
+        $nidsucursal    =   $request->nidsucursal;
+        $nidproveedor   =   $request->nidproveedor;
+
+        $arraySucursal = DB::select('exec [usp_ListaPrecioVh_GetListaPrecioActivaBySucurProv] ?, ?',
+                                            [   $nidsucursal,
+                                                $nidproveedor
+                                            ]);
+
+        return response()->json($arraySucursal);
+    }
 }

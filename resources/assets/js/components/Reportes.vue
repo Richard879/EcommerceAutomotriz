@@ -181,6 +181,34 @@
                                     <div class="card-body">
                                         <form class="form-horizontal">
                                             <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidsucursal"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SUCURSAL"
+                                                                        @change="obtenerListaPrecioActiva">
+                                                                <el-option
+                                                                    v-for="item in arraySucursal"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
@@ -188,7 +216,7 @@
                                                             <el-select  v-model="formFiltro.nidproveedor"
                                                                         filterable
                                                                         clearable
-                                                                        placeholder="SELECCIONE PROVEEDOR"
+                                                                        placeholder="PROVEEDOR"
                                                                         @change="llenarComboLinea()">
                                                                 <el-option
                                                                     v-for="item in arrayProveedor"
@@ -200,6 +228,36 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Lista</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formFiltro.nrolista" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Disponible</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.cflagdisponible"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE">
+                                                                <el-option
+                                                                    v-for="item in arrayFlagDisponible"
+                                                                    :key="item.id"
+                                                                    :label="item.nombre"
+                                                                    :value="item.id">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
@@ -219,8 +277,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
@@ -240,6 +296,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
@@ -296,13 +354,24 @@
                     nIdRol: ''
                 },
                 formFiltro: {
+                    //modal 5
+                    nidsucursal: '',
                     nidproveedor: '',
+                    nidlista: '',
+                    nrolista: '',
+                    cflagdisponible: '',
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: '',
+                    //modal 4
                     dfechaventadiaria: '',
                     nidvendedor: ''
                 },
+                arrayFlagDisponible: [
+                    {'id': 'S', 'nombre': 'Disponibles'},
+                    {'id': 'N', 'nombre': 'No Disponibles'}
+                ],
+                arraySucursal: [],
                 arrayVendedores: [],
                 arrayProveedor: [],
                 arrayLinea: [],
@@ -447,13 +516,21 @@
                 });
             },
             exportarStock(){
+                if(this.validarExportarStock()){
+                    return;
+                }
+
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportarStock';
                 axios.get(url, {
                     params: {
-                        'nidmarca'  :   this.formFiltro.nidmarca,
-                        'nidmodelo' :   this.formFiltro.nidmodelo
+                        'nidsucursal'       :   this.formFiltro.nidsucursal,
+                        'nidproveedor'      :   this.formFiltro.nidproveedor,
+                        'nidlista'          :   this.formFiltro.nidlista,
+                        'cflagdisponible'   :   this.formFiltro.cflagdisponible,
+                        'nidmarca'          :   this.formFiltro.nidmarca,
+                        'nidmodelo'         :   this.formFiltro.nidmodelo
                     }
                 }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
@@ -473,6 +550,25 @@
                     $("#myBar").hide();
                 });
             },
+            validarExportarStock(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formFiltro.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar una Sucursal');
+                }
+                if(!this.formFiltro.nidproveedor){
+                    this.mensajeError.push('Debe seleccionar un Proveedor');
+                }
+                if(!this.formFiltro.nidlista){
+                    this.mensajeError.push('El nro de lista activa no se ha generado');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             //DATA
             listarVendedores(){
                 this.mostrarProgressBar();
@@ -480,7 +576,7 @@
                 var url = this.ruta + '/usuario/GetListUsuariosByRol';
                 axios.get(url, {
                     params: {
-                        'nidempresa':   '1300011',
+                        'nidempresa':   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidempresa':   0,
                         'nidrol'    :   '110026'
                     }
@@ -496,6 +592,26 @@
                         }
                     }
                     $("#myBar").hide();
+                });
+            },
+            listarSucursalByEmpresa(){
+                var url = this.ruta + '/perrelacion/GetLstSucursalByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidusuario': this.usuario.id,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
+                    }
+                }).then(response => {
+                    this.arraySucursal = response.data;
+                    this.obtenerListaPrecioActiva();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarProveedores(){
@@ -519,9 +635,33 @@
                     }
                 });
             },
+            obtenerListaPrecioActiva(){
+                if (this.formFiltro.nidsucursal && this.formFiltro.nidproveedor) {
+                    var url = this.ruta + '/listapreciovh/GetListaPrecioActiva';
+                    axios.get(url, {
+                        params: {
+                            'nidsucursal'   :   this.formFiltro.nidsucursal,
+                            'nidproveedor'  :   this.formFiltro.nidproveedor
+                        }
+                    }).then(response => {
+                        this.formFiltro.nidlista = response.data[0].nIdListaPrecioVersionVeh;
+                        this.formFiltro.nrolista = response.data[0].nNroListaPrecio;
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+            },
             llenarComboLinea(){
                 var url;
                 url = this.ruta + '/versionvehiculo/GetLineasByProveedor'
+
+                this.obtenerListaPrecioActiva();
 
                 axios.get(url, {
                     params: {
@@ -644,6 +784,7 @@
                         switch(accion){
                             case 'abrir':
                             {
+                                this.listarSucursalByEmpresa();
                                 this.listarProveedores();
                                 this.tituloModal = data;
                                 this.accionmodal = 5;
