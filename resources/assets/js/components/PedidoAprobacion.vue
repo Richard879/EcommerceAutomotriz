@@ -307,6 +307,24 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillBusquedaPedido.ccontacto" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillBusquedaPedido.cnrodocumento" @keyup.enter="listarCarteraMesPorVendedor(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
@@ -408,7 +426,9 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
+                                                                                <th>Código</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Nro Documento</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
@@ -439,7 +459,9 @@
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
+                                                                                <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
@@ -999,7 +1021,9 @@
                     cnumeropedido: '',
                     cnumerovin: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    ccontacto: '',
+                    cnrodocumento: ''
                 },
                 arrayPedidos: [],
                 // MODAL DETALLE PEDIDO
@@ -2167,14 +2191,16 @@
                 var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio': this.fillBusquedaPedido.dfechainicio,
-                        'dfechafin': this.fillBusquedaPedido.dfechafin,
-                        'cnumeropedido': this.fillBusquedaPedido.cnumeropedido,
-                        'cnumerovin': this.fillBusquedaPedido.cnumerovin,
-                        'nidmarca' : this.fillBusquedaPedido.nidmarca,
-                        'nidmodelo': this.fillBusquedaPedido.nidmodelo,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'  : this.fillBusquedaPedido.dfechainicio,
+                        'dfechafin'     : this.fillBusquedaPedido.dfechafin,
+                        'cnumeropedido' : this.fillBusquedaPedido.cnumeropedido,
+                        'cnumerovin'    : this.fillBusquedaPedido.cnumerovin,
+                        'nidmarca'      : this.fillBusquedaPedido.nidmarca,
+                        'nidmodelo'     : this.fillBusquedaPedido.nidmodelo,
+                        'ccontacto'     : this.fillBusquedaPedido.ccontacto,
+                        'cnrodocumento' : this.fillBusquedaPedido.cnrodocumento,
                         'page': page
                     }
                 }).then(response => {
