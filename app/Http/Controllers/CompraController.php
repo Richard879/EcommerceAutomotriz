@@ -30,6 +30,7 @@ class CompraController extends Controller
 
         $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nOrdenCompra   = ($nOrdenCompra == NULL) ? ($nOrdenCompra = 0) : $nOrdenCompra;
         $cNumeroVin     = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
         $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
