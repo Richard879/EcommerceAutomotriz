@@ -85,23 +85,27 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidempresa    =   $request->nidempresa;
-        $nidsucursal   =   $request->nidsucursal;
-        $cnumeropedido  =   $request->cnumeropedido;
-        $cnumerovin     =   $request->cnumerovin;
-        $dfechainicio  =   $request->dfechainicio;
-        $dfechafin     =   $request->dfechafin;
-        $nidmarca      =   $request->nidmarca;
-        $nidmodelo     =   $request->nidmodelo;
+        $nidempresa         =   $request->nidempresa;
+        $nidsucursal        =   $request->nidsucursal;
+        $cnumeropedido      =   $request->cnumeropedido;
+        $cnumerovin         =   $request->cnumerovin;
+        $dfechainicio       =   $request->dfechainicio;
+        $dfechafin          =   $request->dfechafin;
+        $nidmarca           =   $request->nidmarca;
+        $nidmodelo          =   $request->nidmodelo;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
 
-        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
-        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
-        $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
-        $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
-        $cnumeropedido = ($cnumeropedido == NULL) ? ($cnumeropedido = '') : $cnumeropedido;
-        $cnumerovin = ($cnumerovin == NULL) ? ($cnumerovin = '') : $cnumerovin;
+        $nidmarca           = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo          = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $dfechainicio       = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin          = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+        $cnumeropedido      = ($cnumeropedido == NULL) ? ($cnumeropedido = '') : $cnumeropedido;
+        $cnumerovin         = ($cnumerovin == NULL) ? ($cnumerovin = '') : $cnumerovin;
+        $cContacto          = ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   = ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
 
-        $arrayPedido = DB::select('exec [usp_Pedido_GetLstPedidosPendienteAprobacion] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec [usp_Pedido_GetLstPedidosPendienteAprobacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                                     [
                                                                                         $nidempresa,
                                                                                         $nidsucursal,
@@ -111,6 +115,8 @@ class PedidoController extends Controller
                                                                                         $cnumerovin,
                                                                                         $nidmarca,
                                                                                         $nidmodelo,
+                                                                                        $cContacto,
+                                                                                        $cNumeroDocumento,
                                                                                         Auth::user()->id
                                                                                     ]);
 
