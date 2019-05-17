@@ -57,7 +57,7 @@
                 </div>
             </section>
 
-            <!--Marketing y Ventas || JV/ADV/Gerencia ||| formLogin.nIdRol == 110026 || -->
+            <!--Marketing y Ventas || JV/ADV/Gerencia ||| formLogin.nIdRol == 110026 <= Vendedores || -->
             <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
@@ -65,7 +65,7 @@
                             <h3>REPORTES COMERCIALES</h3>
                         </div>
 
-                        <!-- ADV/Gerencia -->
+                        <!-- JV/ADV/Gerencia -->
                         <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
