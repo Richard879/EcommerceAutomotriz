@@ -2303,7 +2303,7 @@
                                 'cDocType'  : me.jsonRespuesta.DocType.toString(),
                                 'cLogRespuesta': me.arraySapRespuesta[key].toString(),
                                 'cItemCode' : me.jsonRespuesta.DocumentLines[0].ItemCode.toString(),
-                                'cWhsCode' : me.jsonRespuesta.DocumentLines[0].WarehouseCode.toString()
+                                'cWhsCode'  : me.jsonRespuesta.DocumentLines[0].WarehouseCode.toString()
                             });
 
                             me.arraySapActividad.push({
