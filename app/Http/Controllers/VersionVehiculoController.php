@@ -84,12 +84,12 @@ class VersionVehiculoController extends Controller
 
     public function GetLineasByProveedor(Request $request)
     {
-        $nIdEmpresa = $request->nidempresa;
-        $nIdProveedor = $request->nidproveedor;
-        $cLineaNombre = $request->clineanombre;
-        $variable   = $request->opcion;
-        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdProveedor   =   $request->nidproveedor;
+        $cLineaNombre   =   $request->clineanombre;
+        $variable       =   $request->opcion;
+        $cLineaNombre   =   ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
+        $variable       =   ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
                                                             [   $nIdEmpresa,

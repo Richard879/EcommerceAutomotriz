@@ -57,6 +57,28 @@
                 </div>
             </section>
 
+            <!--Marketing y Ventas || JV/ADV/Gerencia ||| formLogin.nIdRol == 110026 || -->
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                <div class="container-fluid">
+                    <div class="row bg-white has-shadow">
+                        <div class="col-xs-12" style="width: 100%;">
+                            <h3>REPORTES COMERCIALES</h3>
+                        </div>
+
+                        <!-- ADV/Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                     <!-- @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')" -->
+                                    <div class="icon bg-violet"  @click="abrirModal('stock', 'abrir', 'LISTA STOCK VEHICULOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Stock Vehiculos</span></div>
+                                </div>
+                             </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
             <!-- Modal Show Errors -->
             <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
@@ -145,6 +167,116 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Venta Diaria -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidproveedor"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE PROVEEDOR"
+                                                                        @change="llenarComboLinea()">
+                                                                <el-option
+                                                                    v-for="item in arrayProveedor"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidlinea"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE LINEA"
+                                                                        @change="llenarComboMarca()">
+                                                                <el-option
+                                                                    v-for="item in arrayLinea"
+                                                                    :key="item.nIdLinea"
+                                                                    :label="item.cLineaNombre"
+                                                                    :value="item.nIdLinea">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Marca</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidmarca"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UNA MARCA"
+                                                                        @change="llenarComboModelo()">
+                                                                <el-option
+                                                                    v-for="item in arrayMarca"
+                                                                    :key="item.nIdMarca"
+                                                                    :label="item.cMarcaNombre"
+                                                                    :value="item.nIdMarca">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Modelo</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidmodelo"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UN MODELO">
+                                                                <el-option
+                                                                    v-for="item in arrayModelo"
+                                                                    :key="item.nIdModelo"
+                                                                    :label="item.cModeloNombre"
+                                                                    :value="item.nIdModelo">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarStock()">
+                                                        <i class="fa fa-save"></i> Generar Reporte
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -164,10 +296,18 @@
                     nIdRol: ''
                 },
                 formFiltro: {
+                    nidproveedor: '',
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
                     dfechaventadiaria: '',
                     nidvendedor: ''
                 },
                 arrayVendedores: [],
+                arrayProveedor: [],
+                arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 offset:3,
                 accionmodal: 0,
                 modal:0,
@@ -306,6 +446,33 @@
                     $("#myBar").hide();
                 });
             },
+            exportarStock(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarStock';
+                axios.get(url, {
+                    params: {
+                        'nidmarca'  :   this.formFiltro.nidmarca,
+                        'nidmodelo' :   this.formFiltro.nidmodelo
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Lista de Stock de Vehiculos'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
             //DATA
             listarVendedores(){
                 this.mostrarProgressBar();
@@ -329,6 +496,100 @@
                         }
                     }
                     $("#myBar").hide();
+                });
+            },
+            listarProveedores(){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupopar'   :   110023,
+                        'opcion'        :   1
+                    }
+                }).then(response => {
+                    this.arrayProveedor = response.data.arrayProveedor;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboLinea(){
+                var url;
+                url = this.ruta + '/versionvehiculo/GetLineasByProveedor'
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidproveedor'  :   this.formFiltro.nidproveedor,
+                        'opcion'        :   1
+                    }
+                }).then(response => {
+                    this.arrayLinea             =   response.data.arrayLinea
+                    this.formFiltro.nidlinea    =   ''
+
+                    this.llenarComboMarca();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboMarca(){
+                var url;
+                url = this.ruta + '/versionvehiculo/GetMarcaByLinea'
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea'  :   this.formFiltro.nidlinea,
+                        'opcion'    :   1
+                    }
+                }).then(response => {
+                    this.arrayMarca             =   response.data.arrayMarca
+                    this.formFiltro.nidmarca    =   ''
+
+                    this.arrayModelo = [];
+                    this.llenarComboModelo();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url;
+                url = this.ruta + '/versionvehiculo/GetModeloByMarca'
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea'  :   this.formFiltro.nidlinea,
+                        'nidmarca'  :   this.formFiltro.nidmarca,
+                        'opcion'    :   1
+                    }
+                }).then(response => {
+                    this.arrayModelo            =   response.data.arrayModelo
+                    this.formFiltro.nidmodelo   =   ''
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============================================
@@ -363,6 +624,7 @@
                             }
                         }
                     }
+                    break;
                     case 'ventadiaria':
                     {
                         switch(accion){
@@ -371,6 +633,20 @@
                                 this.listarVendedores();
                                 this.tituloModal = data;
                                 this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'stock':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.listarProveedores();
+                                this.tituloModal = data;
+                                this.accionmodal = 5;
                                 this.modal = 1;
                                 break;
                             }

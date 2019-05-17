@@ -364,4 +364,19 @@ class ExcelController extends Controller
                                                 $nidvendedor
                                             ]);
     }
+
+    public function exportarStock(Request $request)
+    {
+        $nidmarca     =   $request->nidmarca;
+        $nidmodelo    =   $request->nidmodelo;
+
+        $nidmarca     =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo    =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+
+        return $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?',
+                                            [
+                                                $nidmarca,
+                                                $nidmodelo
+                                            ]);
+    }
 }
