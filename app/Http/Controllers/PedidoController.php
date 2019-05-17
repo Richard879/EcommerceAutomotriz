@@ -406,6 +406,7 @@ class PedidoController extends Controller
         $nIdModelo          =   $request->nidmodelo;
         $nIdEstadoPedido    =   $request->nidestadopedido;
         $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
         $ntipopersona       =   $request->ntipopersona;
 
         $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
@@ -416,9 +417,10 @@ class PedidoController extends Controller
         $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $nIdEstadoPedido    =   ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
         $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdEmpresa,
                                                                             $nIdSucursal,
@@ -430,6 +432,7 @@ class PedidoController extends Controller
                                                                             $nIdModelo,
                                                                             $nIdEstadoPedido,
                                                                             $cContacto,
+                                                                            $cNumeroDocumento,
                                                                             $ntipopersona,
                                                                             Auth::user()->id
                                                                         ]);
