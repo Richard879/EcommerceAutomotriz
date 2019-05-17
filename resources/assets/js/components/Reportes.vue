@@ -66,7 +66,7 @@
                         </div>
 
                         <!-- ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                      <!-- @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')" -->
@@ -168,7 +168,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Venta Diaria -->
+            <!-- Modal Show Stock -->
             <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
