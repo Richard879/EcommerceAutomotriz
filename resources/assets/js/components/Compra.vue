@@ -142,6 +142,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.cnombrecomercial" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompras(1)">
                                                                             <i class="fa fa-search"></i> Buscar
@@ -1352,7 +1362,8 @@
                     nordencompra: '',
                     cnumerovin: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    cnombrecomercial: ''
                 },
                 arrayCompra: [],
                 arrayCompraRpta: [],
@@ -1599,6 +1610,7 @@
                         'cnumerovin'    : this.fillCompra.cnumerovin,
                         'nidmarca'      : this.fillCompra.nidmarca,
                         'nidmodelo'     : this.fillCompra.nidmodelo,
+                        'cnombrecomercial': this.fillCompra.cnombrecomercial,
                         'page'          : page
                     }
                 }).then(response => {
