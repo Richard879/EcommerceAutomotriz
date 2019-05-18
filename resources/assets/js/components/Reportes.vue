@@ -74,6 +74,12 @@
                                     <div class="title"><span><br>Stock Vehiculos</span></div>
                                 </div>
                              </div>
+                             <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"  @click="abrirModal('stock-general', 'abrir', 'STOCK VEHICULOS GENERAL')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Stock Vehiculos General</span></div>
+                                </div>
+                             </div>
                         </template>
                     </div>
                 </div>
@@ -335,6 +341,164 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Stock -->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidsucursal"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SUCURSAL"
+                                                                        @change="obtenerListaPrecioActiva">
+                                                                <el-option
+                                                                    v-for="item in arraySucursal"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidproveedor"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="PROVEEDOR"
+                                                                        @change="llenarComboLinea()">
+                                                                <el-option
+                                                                    v-for="item in arrayProveedor"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Disponible</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.cflagdisponible"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE">
+                                                                <el-option
+                                                                    v-for="item in arrayFlagDisponible"
+                                                                    :key="item.id"
+                                                                    :label="item.nombre"
+                                                                    :value="item.id">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidlinea"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE LINEA"
+                                                                        @change="llenarComboMarca()">
+                                                                <el-option
+                                                                    v-for="item in arrayLinea"
+                                                                    :key="item.nIdLinea"
+                                                                    :label="item.cLineaNombre"
+                                                                    :value="item.nIdLinea">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Marca</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidmarca"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UNA MARCA"
+                                                                        @change="llenarComboModelo()">
+                                                                <el-option
+                                                                    v-for="item in arrayMarca"
+                                                                    :key="item.nIdMarca"
+                                                                    :label="item.cMarcaNombre"
+                                                                    :value="item.nIdMarca">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Modelo</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidmodelo"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UN MODELO">
+                                                                <el-option
+                                                                    v-for="item in arrayModelo"
+                                                                    :key="item.nIdModelo"
+                                                                    :label="item.cModeloNombre"
+                                                                    :value="item.nIdModelo">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarStockGeneral()">
+                                                        <i class="fa fa-save"></i> Generar Reporte
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -539,6 +703,7 @@
                     XLSX.utils.book_append_sheet(workbook, data, filename)
                     XLSX.writeFile(workbook, `${filename}.xlsx`)
                     $("#myBar").hide();
+                    this.limpiarStock();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -549,6 +714,50 @@
                     }
                     $("#myBar").hide();
                 });
+            },
+            exportarStockGeneral(){
+                if(this.validarExportarGeneral()){
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarStockGeneral';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'       :   this.formFiltro.nidsucursal,
+                        'nidproveedor'      :   this.formFiltro.nidproveedor,
+                        'cflagdisponible'   :   this.formFiltro.cflagdisponible,
+                        'nidmarca'          :   this.formFiltro.nidmarca,
+                        'nidmodelo'         :   this.formFiltro.nidmodelo
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Stock de Vehiculos General'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                    this.limpiarStock();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            limpiarStock(){
+                this.formFiltro.nidsucursal     = '';
+                this.formFiltro.nidproveedor    = '';
+                this.formFiltro.nidlista        = '';
+                this.formFiltro.nrolista        = '';
+                this.formFiltro.cflagdisponible = '';
+                this.formFiltro.nidmarca        = '';
+                this.formFiltro.nidmodelo       = '';
             },
             validarExportarStock(){
                 this.error = 0;
@@ -562,6 +771,22 @@
                 }
                 if(!this.formFiltro.nidlista){
                     this.mensajeError.push('El nro de lista activa no se ha generado');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validarExportarGeneral(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formFiltro.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar una Sucursal');
+                }
+                if(!this.formFiltro.nidproveedor){
+                    this.mensajeError.push('Debe seleccionar un Proveedor');
                 }
 
                 if(this.mensajeError.length){
@@ -794,6 +1019,20 @@
                         }
                     }
                     break;
+                    case 'stock-general':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.listarSucursalByEmpresa();
+                                this.listarProveedores();
+                                this.tituloModal = data;
+                                this.accionmodal = 6;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
                 }
             },
             mostrarProgressBar(){
