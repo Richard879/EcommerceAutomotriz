@@ -73,13 +73,13 @@
                                     <div class="icon bg-violet"  @click="abrirModal('stock', 'abrir', 'LISTA STOCK VEHICULOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Stock Vehiculos</span></div>
                                 </div>
-                             </div>
-                             <div class="col-xl-4 col-sm-6">
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet"  @click="abrirModal('stock-general', 'abrir', 'STOCK VEHICULOS GENERAL')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Stock Vehiculos General</span></div>
                                 </div>
-                             </div>
+                            </div>
                         </template>
                     </div>
                 </div>
