@@ -213,7 +213,7 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                                 <td>
-                                                                                    <template v-if="pedido.cEstadoPedido != 'CANCELADO'">
+                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="activarTabDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>

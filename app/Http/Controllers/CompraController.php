@@ -25,16 +25,19 @@ class CompraController extends Controller
         $cNumeroVin     = $request->cnumerovin;
         $nIdMarca       = $request->nidmarca;
         $nIdModelo      = $request->nidmodelo;
+        $cNombreComercial = $request->cnombrecomercial;
         $variable       = $request->opcion;
 
         $dFechaInicio   = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin      = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nOrdenCompra   = ($nOrdenCompra == NULL) ? ($nOrdenCompra = 0) : $nOrdenCompra;
         $cNumeroVin     = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
         $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
+        $cNombreComercial   = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
 
-        $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $dFechaInicio,
@@ -42,7 +45,8 @@ class CompraController extends Controller
                                                                 $nOrdenCompra,
                                                                 $cNumeroVin,
                                                                 $nIdMarca,
-                                                                $nIdModelo
+                                                                $nIdModelo,
+                                                                $cNombreComercial
                                                             ]);
         if($variable == "0"){
             //$arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);

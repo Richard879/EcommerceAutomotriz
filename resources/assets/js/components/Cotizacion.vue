@@ -69,20 +69,17 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                    <input type="radio" class="radio-template" v-model="fillMisCotizaciones.ntipopersona" :value="tipo.value" @change="limpiarMisCotizaciones()">
-                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                </label>
+                                                                                <input type="text" v-model="fillMisCotizaciones.ccontacto" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisCotizaciones.ccontacto" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisCotizaciones.cnrodocumento" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2408,6 +2405,7 @@
                     nidestadocotizacion: '',
                     cnumerocotizacion: '',
                     ccontacto: '',
+                    cnrodocumento: '',
                     ntipopersona: 1
                 },
                 arrayCotizaciones: [],
@@ -2877,6 +2875,7 @@
                         'cnumerocotizacion'     : this.fillMisCotizaciones.cnumerocotizacion,
                         'nidestadocotizacion'   : this.fillMisCotizaciones.nidestadocotizacion,
                         'ccontacto'             : this.fillMisCotizaciones.ccontacto,
+                        'cnrodocumento'         : this.fillMisCotizaciones.cnrodocumento,
                         'ntipopersona'          : this.fillMisCotizaciones.ntipopersona,
                         'page'                  : page
                     }

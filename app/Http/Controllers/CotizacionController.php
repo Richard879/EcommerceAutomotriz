@@ -305,6 +305,7 @@ class CotizacionController extends Controller
         $cNumeroCotizacion      =   $request->cnumerocotizacion;
         $nIdEstadoCotizacion    =   $request->nidestadocotizacion;
         $cContacto              =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
         $ntipopersona           =   $request->ntipopersona;
 
         $dFechaInicio           =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
@@ -314,9 +315,10 @@ class CotizacionController extends Controller
         $cNumeroCotizacion      =   ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
         $nIdEstadoCotizacion    =   ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
         $cContacto              =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $ntipopersona           =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
@@ -326,6 +328,7 @@ class CotizacionController extends Controller
                                                                     $cNumeroCotizacion,
                                                                     $nIdEstadoCotizacion,
                                                                     $cContacto,
+                                                                    $cNumeroDocumento,
                                                                     $ntipopersona,
                                                                     Auth::user()->id
                                                                 ]);

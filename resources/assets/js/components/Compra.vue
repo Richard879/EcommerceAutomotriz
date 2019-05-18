@@ -94,24 +94,6 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
@@ -137,6 +119,24 @@
                                                                                         :value="item.nIdModelo">
                                                                                     </el-option>
                                                                                 </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.cnombrecomercial" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="listarCompras(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1352,7 +1352,8 @@
                     nordencompra: '',
                     cnumerovin: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    cnombrecomercial: ''
                 },
                 arrayCompra: [],
                 arrayCompraRpta: [],
@@ -1599,6 +1600,7 @@
                         'cnumerovin'    : this.fillCompra.cnumerovin,
                         'nidmarca'      : this.fillCompra.nidmarca,
                         'nidmodelo'     : this.fillCompra.nidmodelo,
+                        'cnombrecomercial': this.fillCompra.cnombrecomercial,
                         'page'          : page
                     }
                 }).then(response => {
