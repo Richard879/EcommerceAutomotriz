@@ -206,7 +206,8 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
+                                                                            <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido"
+                                                                                :style="{ background : pedido.colorearPedido}">
                                                                                 <td>
                                                                                     <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
@@ -280,9 +281,17 @@
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
-                                                        <vs-divider border-style="solid" color="dark">
-                                                            {{ formDistribuirDeposito.cnombrecontacto }} - {{ formDistribuirDeposito.cNumeroPedido }}
-                                                        </vs-divider>
+                                                        <div>
+                                                            <h3 class="h4">{{ formDistribuirDeposito.cnombrecontacto }} - {{ formDistribuirDeposito.cNumeroPedido }}</h3>
+                                                        </div>
+                                                        <el-row :gutter="10">
+                                                            <el-col :span="6"><div class="grid-content bg-purple">ASESOR COMERCIAL</div></el-col>
+                                                            <el-col :span="8">
+                                                                <div class="grid-content bg-purple">
+                                                                    {{ formDistribuirDeposito.cvendedornombre }}
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
                                                         <el-row :gutter="10">
                                                             <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
                                                             <el-col :span="6">
@@ -639,7 +648,8 @@
                     flagMontoTotalDepositosRechazados: 0,
                     flagMontoTotalDepositosAprobados: 0,
                     flagMontoTotalCotizacion: 0,
-                    flagMontoTotalCancelarPendiente: 0
+                    flagMontoTotalCancelarPendiente: 0,
+                    cvendedornombre: ''
                 },
                 arrayDepositosPorPedido: [],
                 // =============================================================
@@ -905,6 +915,7 @@
                 this.formDistribuirDeposito.cNumeroPedido               = pedido.cNumeroPedido;
                 this.formDistribuirDeposito.cnombrecontacto             = pedido.cContacto;
                 this.formDistribuirDeposito.flagMontoTotalCotizacion    = pedido.fTotalPedido;
+                this.formDistribuirDeposito.cvendedornombre             = pedido.cVendedorNombre;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
