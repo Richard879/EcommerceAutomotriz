@@ -19,11 +19,26 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <!-- <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Fecha del Día</label>
                                                 <div class="col-sm-8">
                                                     <span v-text="fillTipoCambio.dFechaTipoCambio" class="form-label"></span>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">Seleccione una Fecha</label>
+                                                <div class="col-md-8">
+                                                    <el-date-picker
+                                                        v-model="fillTipoCambio.dFechaTipoCambio"
+                                                        @change="verificarTipoCambioByFecha"
+                                                        type="date"
+                                                        value-format="yyyy-MM-dd"
+                                                        format="yyyy-MM-dd"
+                                                        placeholder="dd/mm/aaaa">
+                                                    </el-date-picker>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,21 +171,21 @@
 
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'dfecha': this.fillTipoCambio.dFechaTipoCambio
                     }
                 }).then(response => {
                     //Variable bandera para saber si debo registrar o actualizar
                     this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
 
                     //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
-                    this.fillTipoCambio.dFechaTipoCambio = moment().format('DD/MM/YYYY');
-                    this.fillTipoCambio.fTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
-                    this.fillTipoCambio.fTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
-                    this.fillTipoCambio.fTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fillTipoCambio.dFechaTipoCambio        = moment().format('YYYY-MM-DD');
+                    this.fillTipoCambio.fTipoCambioComercial    = response.data[0].fValorTipoCambioComercial;
+                    this.fillTipoCambio.fTipoCambioCompra       = response.data[0].fValorTipoCambioCompra;
+                    this.fillTipoCambio.fTipoCambioVenta        = response.data[0].fValorTipoCambioVenta;
                     //Parseo a 0 si es ".000"
-                    this.fillTipoCambio.fTipoCambioComercial = parseFloat(this.fillTipoCambio.fTipoCambioComercial);
-                    this.fillTipoCambio.fTipoCambioCompra = parseFloat(this.fillTipoCambio.fTipoCambioCompra);
-                    this.fillTipoCambio.fTipoCambioVenta = parseFloat(this.fillTipoCambio.fTipoCambioVenta);
+                    this.fillTipoCambio.fTipoCambioComercial    = parseFloat(this.fillTipoCambio.fTipoCambioComercial);
+                    this.fillTipoCambio.fTipoCambioCompra       = parseFloat(this.fillTipoCambio.fTipoCambioCompra);
+                    this.fillTipoCambio.fTipoCambioVenta        = parseFloat(this.fillTipoCambio.fTipoCambioVenta);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -182,6 +197,12 @@
                 });
             },
             obtenerSapTipoCamcioByFecha(){
+                if(this.validarFechaTipoCambio()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
                 let me = this;
 
                 me.loadingProgressBar("OBTENIENDO TIPO CAMBIO DE SAP BUSINESS ONE...");
@@ -191,7 +212,7 @@
                 // moment().format('YYYY-MM-DD')
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'dfecha': this.fillTipoCambio.dFechaTipoCambio
                     }
                 }).then(response => {
                     if(response.data.length){
@@ -211,6 +232,20 @@
                         }
                     }
                 });
+            },
+            validarFechaTipoCambio(){
+                let me = this;
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.fillTipoCambio.dFechaTipoCambio || this.fillTipoCambio.dFechaTipoCambio == ''){
+                    this.mensajeError.push('Debe Seleccionar una Fecha antes de obtener el Tipo Cambio');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             guardarTipoCambio(){
                 if(this.validarTipoCambio()){
@@ -240,7 +275,7 @@
                 }).then(response => {
                     if (response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
-                        this.llenarTipoCambio();
+                        this.verificarTipoCambioByFecha();
 
                         this.$bus.$emit('tcc');//Evento BUS para actualizar el TCC en la Cabecera
 
@@ -251,6 +286,7 @@
                             title: 'Error...',
                             text: response.data[0].cMensaje,
                         })
+                        $("#myBar").hide();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -314,6 +350,36 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            verificarTipoCambioByFecha(){
+                var url = this.ruta + '/tipocambio/GetTipoCambioByFecha';
+
+                axios.get(url, {
+                    params: {
+                        'dfecha': this.fillTipoCambio.dFechaTipoCambio
+                    }
+                }).then(response => {
+                    //Variable bandera para saber si debo registrar o actualizar
+                    this.fillTipoCambio.cflagOp = response.data[0].fValorTipoCambioComercial;
+
+                    //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
+                    this.fillTipoCambio.dFechaTipoCambio        = this.fillTipoCambio.dFechaTipoCambio;
+                    this.fillTipoCambio.fTipoCambioComercial    = response.data[0].fValorTipoCambioComercial;
+                    this.fillTipoCambio.fTipoCambioCompra       = response.data[0].fValorTipoCambioCompra;
+                    this.fillTipoCambio.fTipoCambioVenta        = response.data[0].fValorTipoCambioVenta;
+                    //Parseo a 0 si es ".000"
+                    this.fillTipoCambio.fTipoCambioComercial    = parseFloat(this.fillTipoCambio.fTipoCambioComercial);
+                    this.fillTipoCambio.fTipoCambioCompra       = parseFloat(this.fillTipoCambio.fTipoCambioCompra);
+                    this.fillTipoCambio.fTipoCambioVenta        = parseFloat(this.fillTipoCambio.fTipoCambioVenta);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =================================================================
             // MODAL
