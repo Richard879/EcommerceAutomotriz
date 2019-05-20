@@ -1026,7 +1026,7 @@
                     cnrodocumento: ''
                 },
                 arrayPedidos: [],
-                // MODAL DETALLE PEDIDO
+                //=========================== MODAL DETALLE PEDIDO ===================
                 fillDetallePedido:{
                     nidcabecerapedido: 0,
                     cnumeropedido: '',
@@ -1054,6 +1054,7 @@
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
+                //====================================================================
                 // MODAL ASIGNACIÓN DIRECCIONES
                 cFlagOpcion: '',
                 arrayDireccionesExisten: [],
