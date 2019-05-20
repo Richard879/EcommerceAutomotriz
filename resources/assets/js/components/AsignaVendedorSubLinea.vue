@@ -46,7 +46,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <!--<div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                     <div class="col-sm-8">
@@ -60,11 +60,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarProveedorLinea()">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarSubLineas()">
                                                     <i class="fa fa-search"></i> Buscar
                                                 </button>
                                             </div>
@@ -76,10 +76,10 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">LISTADO LINEAS</h3>
+                                    <h3 class="h4">LISTADO SUB LINEAS</h3>
                                 </div>
                                 <div class="card-body">
-                                    <template v-if="arrayProveedorLinea.length">
+                                    <template v-if="arraySubLinea.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
                                                 <thead>
@@ -90,20 +90,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="proveedorlinea in arrayProveedorLinea" :key="proveedorlinea.nIdLinea">
+                                                    <tr v-for="linea in arraySubLinea" :key="linea.nIdPar">
                                                         <td>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Seleccionar {{ proveedorlinea.cLineaNombre }}</div>
-                                                                <i @click="abrirModalVendedor('vendedor','asignar',proveedorlinea)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                <div slot="content">Seleccionar {{ linea.cParNombre }}</div>
+                                                                <i @click="abrirModal('vendedor','asignar',linea)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                             </el-tooltip>
                                                         </td>
-                                                        <td v-text="proveedorlinea.nIdLinea"></td>
-                                                        <td v-text="proveedorlinea.cLineaNombre"></td>
+                                                        <td v-text="linea.nIdPar"></td>
+                                                        <td v-text="linea.cParNombre"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="col-sm-12">
+                                        <!--<div class="col-sm-12">
                                             <div class="row">
                                                 <div class="col-sm-7">
                                                     <nav>
@@ -127,7 +127,7 @@
                                                     <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </template>
                                     <template v-else>
                                         <table>
@@ -281,7 +281,7 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
+                                            <!--<div class="form-group row">
                                                 <label class="col-sm-2 form-control-label">Proveedor</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" v-model="fillVendedor.cnombreproveedor" class="form-control form-control-sm" readonly>
@@ -293,7 +293,7 @@
                                                     <input type="text" v-model="fillVendedor.cnombrelineaventa" class="form-control form-control-sm" readonly>
                                                     <input type="hidden" v-model="fillVendedor.nidlinea" class="form-control form-control-sm" readonly>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="form-group row">
                                                 <label class="col-sm-2 form-control-label">Jefe de ventas</label>
                                                 <div class="col-sm-4">
@@ -303,14 +303,15 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-2 form-control-label">SubLinea</label>
                                                 <div class="col-sm-4">
-                                                    <el-select v-model="fillVendedor.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="listarVendedorSubLinea(1);">
+                                                    <input type="text" v-model="fillVendedor.cnombresublinea" class="form-control form-control-sm" readonly>
+                                                    <!--<el-select v-model="fillVendedor.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="listarVendedorSubLinea(1);">
                                                         <el-option
                                                         v-for="sublinea in arraySubLinea"
                                                             :key="sublinea.nIdSubLinea"
                                                             :label="sublinea.cSubLineaNombre"
                                                             :value="sublinea.nIdSubLinea">
                                                         </el-option>
-                                                    </el-select>
+                                                    </el-select>-->
                                                 </div>
                                             </div>
                                         </form>
@@ -330,13 +331,13 @@
                                                                 <template v-if="vendedor.nIdVendedor == 0">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Asignar {{ vendedor.cNombreMiVendedor }}</div>
-                                                                        <i @click="asignar(vendedor.nIdMiVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                        <i @click="asignar(vendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                                 <template v-else>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Desasignar {{ vendedor.cNombreMiVendedor }}</div>
-                                                                        <i @click="designar(vendedor.nIdAsignacionVendedorSubLinea)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                        <i @click="designar(vendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                             </td>
@@ -414,6 +415,8 @@
                     cnombreproveedor: '',
                     cnombrelineaventa: '',
                     nidlinea: 0,
+                    nidsublinea: 0,
+                    cnombresublinea: '',
                     cnombrejefeventas: '',
                     nidsublinea: ''
                 },
@@ -510,9 +513,9 @@
                         'nidgrupopar': 110025
                     }
                 }).then(response => {
-                    this.formAsignaSubLinea.nJefeVentaId = response.data[0].nIdPar;
-                    this.formAsignaSubLinea.cJefeVentaNombre = response.data[0].cParNombre;
-                    this.fillVendedor.cnombrejefeventas = response.data[0].cParNombre;
+                    this.formAsignaSubLinea.nJefeVentaId        = response.data[0].nIdPar;
+                    this.formAsignaSubLinea.cJefeVentaNombre    = response.data[0].cParNombre;
+                    this.fillVendedor.cnombrejefeventas         = response.data[0].cParNombre;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -538,7 +541,7 @@
             },
             // ===============================================================
             // ===========  LISTAR LINEAS POR PROVEEDOR ================
-            buscarProveedorLinea(){
+            /*buscarProveedorLinea(){
                 if(this.validarbuscarProveedorLinea()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -562,13 +565,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayProveedorLinea = response.data.arrayLinea.data;
-                    this.pagination.current_page =  response.data.arrayLinea.current_page;
-                    this.pagination.total = response.data.arrayLinea.total;
+                    this.arrayProveedorLinea    = response.data.arrayLinea.data;
+                    this.pagination.current_page= response.data.arrayLinea.current_page;
+                    this.pagination.total       = response.data.arrayLinea.total;
                     this.pagination.per_page    = response.data.arrayLinea.per_page;
                     this.pagination.last_page   = response.data.arrayLinea.last_page;
                     this.pagination.from        = response.data.arrayLinea.from;
-                    this.pagination.to           = response.data.arrayLinea.to;
+                    this.pagination.to          = response.data.arrayLinea.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -597,10 +600,10 @@
                     this.error = 1;
                 }
                 return this.error;
-            },
+            },*/
             // ===============================================================
             // ===========  LISTAR VENEDEDOR MODELO ASIGNADOS ================
-            llenarComboSubLinea(){
+            /*llenarComboSubLinea(){
                 var url = this.ruta + '/versionvehiculo/GetSubLineaByLinea';
 
                 axios.get(url, {
@@ -622,39 +625,55 @@
                         }
                     }
                 });
+            },*/
+            listarSubLineas(){
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid'   : 110101,
+                        'opcion'        : 1
+                    }
+                }).then(response => {
+                    this.arraySubLinea = response.data.arrayParametro;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             listarVendedorSubLinea(page){
-                if(!this.fillVendedor.nidsublinea){
-                    this.arrayVendedorSubLinea = []
-                }else{
-                    var url = this.ruta + '/asignavendedorsublinea/GetLstVendedorSubLinea';
-                    axios.get(url, {
-                        params: {
-                            'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                            'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                            'nidproveedor': this.formAsignaSubLinea.nidproveedor,
-                            'nidlinea': this.fillVendedor.nidlinea,
-                            'nidsublinea': this.fillVendedor.nidsublinea,
-                            'nidjefeventas': this.formAsignaSubLinea.nJefeVentaId
+                var url = this.ruta + '/asignavendedorsublinea/GetLstVendedorSubLinea';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        /*'nidproveedor': this.formAsignaSubLinea.nidproveedor,
+                        'nidlinea': this.fillVendedor.nidlinea,*/
+                        'nidsublinea'   : this.fillVendedor.nidsublinea,
+                        'nidjefeventas' : this.formAsignaSubLinea.nJefeVentaId
+                    }
+                }).then(response => {
+                    this.arrayVendedorSubLinea          = response.data.arrayVendedorSubLinea.data;
+                    this.paginationModal.current_page   = response.data.arrayVendedorSubLinea.current_page;
+                    this.paginationModal.total          = response.data.arrayVendedorSubLinea.total;
+                    this.paginationModal.per_page       = response.data.arrayVendedorSubLinea.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVendedorSubLinea.last_page;
+                    this.paginationModal.from           = response.data.arrayVendedorSubLinea.from;
+                    this.paginationModal.to             = response.data.arrayVendedorSubLinea.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
                         }
-                    }).then(response => {
-                        this.arrayVendedorSubLinea = response.data.arrayVendedorSubLinea.data;
-                        this.paginationModal.current_page =  response.data.arrayVendedorSubLinea.current_page;
-                        this.paginationModal.total = response.data.arrayVendedorSubLinea.total;
-                        this.paginationModal.per_page    = response.data.arrayVendedorSubLinea.per_page;
-                        this.paginationModal.last_page   = response.data.arrayVendedorSubLinea.last_page;
-                        this.paginationModal.from        = response.data.arrayVendedorSubLinea.from;
-                        this.paginationModal.to           = response.data.arrayVendedorSubLinea.to;
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
-                        }
-                    });
-                }
+                    }
+                });
             },
             cambiarPaginaVendedor(page){
                 this.paginationModal.current_page=page;
@@ -673,11 +692,7 @@
                                 break;
                             }
                         }
-                    }
-                }
-            },
-            abrirModalVendedor(modelo, accion, data =[]){
-                switch(modelo){
+                    }break;
                     case 'vendedor':
                     {
                         switch(accion){
@@ -685,15 +700,13 @@
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                this.fillVendedor.cnombreproveedor= this.formAsignaSubLinea.cproveedornombre;
-                                this.fillVendedor.cnombrelineaventa = data['cLineaNombre'];
-                                this.fillVendedor.nidlinea = data['nIdLinea'];
-                                this.llenarComboSubLinea();
-                                this.arrayVendedorSubLinea=[];
+                                this.fillVendedor.cnombresublinea   = data['cParNombre'];
+                                this.fillVendedor.nidsublinea       = data['nIdPar'];
+                                this.listarVendedorSubLinea(1);
                                 break;
                             }
                         }
-                    }
+                    }break;
                 }
             },
             cerrarModal(){
@@ -703,7 +716,7 @@
             },
             // ==========================================================
             // =============  REGISTRO ========================
-            asignar(nIdMiVendedor){
+            asignar(objVendedor){
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -712,17 +725,17 @@
 
                 var url = this.ruta + '/asignavendedorsublinea/SetAsignaSubLinea';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor: parseInt(this.formAsignaSubLinea.nidproveedor),
-                    nIdVendedor: nIdMiVendedor,
-                    nIdLinea: parseInt(this.fillVendedor.nidlinea),
-                    nIdSubLinea: parseInt(this.fillVendedor.nidsublinea)
+                    'nIdEmpresa'  : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdProveedor': 0,
+                    'nIdVendedor' : objVendedor.nIdMiVendedor,
+                    'nIdLinea'    : 0,
+                    'nIdSubLinea' : parseInt(this.fillVendedor.nidsublinea)
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Asignación Vendedor SubLinea registrado Con Exito');
-                        this.listarVendedorSubLinea();
+                        this.listarVendedorSubLinea(1);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -734,7 +747,7 @@
                     }
                 });
             },
-            designar(nIdAsignacionVendedorSubLinea){
+            designar(objVendedor){
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -743,12 +756,12 @@
 
                 var url = this.ruta + '/asignavendedorsublinea/SetDesasignaSubLinea';
                 axios.post(url, {
-                    nIdAsignacion: nIdAsignacionVendedorSubLinea,
+                    'nIdAsignacion': objVendedor.nIdAsignacionVendedorSubLinea,
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Desasignación Vendedor SubLinea Realizado Con Exito');
-                        this.listarVendedorSubLinea();
+                        swal('Se eliminó asignación con éxito');
+                        this.listarVendedorSubLinea(1);
                     }
                 }).catch(error => {
                     console.log(error);

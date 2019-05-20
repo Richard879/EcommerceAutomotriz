@@ -19,6 +19,7 @@ class AsignaVendedorSubLineaController extends Controller
         $nIdSubLinea = $request->nidsublinea;
         $nIdJefeVentas = $request->nidjefeventas;
 
+        $nIdProveedor = ($nIdProveedor == NULL) ? ($nIdProveedor = 0) : $nIdProveedor;
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
         $nIdSubLinea = ($nIdSubLinea == NULL) ? ($nIdSubLinea = 0) : $nIdSubLinea;
 
