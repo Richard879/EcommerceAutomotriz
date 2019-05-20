@@ -79,7 +79,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillMisCotizaciones.cnrodocumento" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillMisCotizaciones.cnrodocumento" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>

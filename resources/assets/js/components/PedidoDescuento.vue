@@ -172,7 +172,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraCotizacion">
+                                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraPedido">
                                                                     <td>
                                                                         <!-- Opcion del Jefe de Ventas -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025">
@@ -192,8 +192,8 @@
                                                                                     class="fa-md fa fa-eye"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;-->
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                <div slot="content">Ver Detalle Pedido {{ cotizacionpendiente.cNumeroPedido }}</div>
+                                                                                <i @click="abrirModal('pedido', 'detalle', cotizacionpendiente)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Pedido {{ cotizacionpendiente.cNumeroPedido }}</div>
