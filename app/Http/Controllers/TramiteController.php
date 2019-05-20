@@ -55,65 +55,57 @@ class TramiteController extends Controller
         try{
             DB::beginTransaction();
 
-            $arrayPedidoDoumentoNew = $request->arrayPedidoDoumentoNew;
-            if(sizeof($arrayPedidoDoumentoNew) > 0) {
-                foreach($arrayPedidoDoumentoNew as $ep=>$det)
-                {
-                    $data = DB::select('exec usp_Tramite_SetActualizarDocumentoPedido ?, ?, ?, ?, ?',
-                                                                        [   $request->nIdCabeceraPedido,
-                                                                            $det['nIdDocumentoAdjuntoPedido'],
-                                                                            ($det['cFlagDocumento'] == false) ? 0 : 1,
-                                                                            floatval($det['fMontoDocumento']),
-                                                                            Auth::user()->id
-                                                                        ]);
-                }
-            }
+            // $arrayPedidoDoumentoNew = $request->arrayPedidoDoumentoNew;
+            // if(sizeof($arrayPedidoDoumentoNew) > 0) {
+            //     foreach($arrayPedidoDoumentoNew as $ep=>$det)
+            //     {
+            //         $data = DB::select('exec usp_Tramite_SetActualizarDocumentoPedido ?, ?, ?, ?, ?',
+            //                                                             [   $request->nIdCabeceraPedido,
+            //                                                                 $det['nIdDocumentoAdjuntoPedido'],
+            //                                                                 ($det['cFlagDocumento'] == false) ? 0 : 1,
+            //                                                                 floatval($det['fMontoDocumento']),
+            //                                                                 Auth::user()->id
+            //                                                             ]);
+            //     }
+            // }
 
-            $nIdFiltro01            =   $request->fillConceptosDocumentos['nIdFiltro01'];
-            $cDescripcionFiltro01   =   $request->fillConceptosDocumentos['cDescripcionFiltro01'];
-            $cMontoFiltro01         =   $request->fillConceptosDocumentos['cMontoFiltro01'];
-            $nIdFiltro02            =   $request->fillConceptosDocumentos['nIdFiltro02'];
-            $cDescripcionFiltro02   =   $request->fillConceptosDocumentos['cDescripcionFiltro02'];
-            $cMontoFiltro02         =   $request->fillConceptosDocumentos['cMontoFiltro02'];
-            $nIdFiltro03            =   $request->fillConceptosDocumentos['nIdFiltro03'];
-            $cDescripcionFiltro03   =   $request->fillConceptosDocumentos['cDescripcionFiltro03'];
-            $cMontoFiltro03         =   $request->fillConceptosDocumentos['cMontoFiltro03'];
+            $nIdTipoPersona         =   $request->fillConceptosDocumentos['nIdTipoPersona'];
+            $dCostoLegalizacion     =   $request->fillConceptosDocumentos['dCostoLegalizacion'];
+            $dCostoTramiteTarjeta   =   $request->fillConceptosDocumentos['dCostoTramiteTarjeta'];
+            $dCostoPlaca            =   $request->fillConceptosDocumentos['dCostoPlaca'];
+            $dCostoGarantiaI        =   $request->fillConceptosDocumentos['dCostoGarantiaI'];
+            $dCostoNotariales       =   $request->fillConceptosDocumentos['dCostoNotariales'];
+            $dCambioCaracteristicas =   $request->fillConceptosDocumentos['dCambioCaracteristicas'];
 
-            $nIdFiltro01            =   ($nIdFiltro01 == NULL) ? ($nIdFiltro01 = 0) : $nIdFiltro01;
-            $cDescripcionFiltro01   =   ($cDescripcionFiltro01 == NULL) ? ($cDescripcionFiltro01 = '') : $cDescripcionFiltro01;
-            $cMontoFiltro01         =   ($cMontoFiltro01 == NULL) ? ($cMontoFiltro01 = 0) : $cMontoFiltro01;
-            $nIdFiltro02            =   ($nIdFiltro02 == NULL) ? ($nIdFiltro02 = 0) : $nIdFiltro02;
-            $cDescripcionFiltro02   =   ($cDescripcionFiltro02 == NULL) ? ($cDescripcionFiltro02 = '') : $cDescripcionFiltro02;
-            $cMontoFiltro02         =   ($cMontoFiltro02 == NULL) ? ($cMontoFiltro02 = 0) : $cMontoFiltro02;
-            $nIdFiltro03            =   ($nIdFiltro03 == NULL) ? ($nIdFiltro03 = 0) : $nIdFiltro03;
-            $cDescripcionFiltro03   =   ($cDescripcionFiltro03 == NULL) ? ($cDescripcionFiltro03 = '') : $cDescripcionFiltro03;
-            $cMontoFiltro03         =   ($cMontoFiltro03 == NULL) ? ($cMontoFiltro03 = 0) : $cMontoFiltro03;
-
-
+            $nIdTipoPersona         =   ($nIdTipoPersona == NULL) ? ($nIdTipoPersona = 0) : $nIdTipoPersona;
+            $dCostoLegalizacion     =   ($dCostoLegalizacion == NULL) ? ($dCostoLegalizacion = '') : $dCostoLegalizacion;
+            $dCostoTramiteTarjeta   =   ($dCostoTramiteTarjeta == NULL) ? ($dCostoTramiteTarjeta = 0) : $dCostoTramiteTarjeta;
+            $dCostoPlaca            =   ($dCostoPlaca == NULL) ? ($dCostoPlaca = 0) : $dCostoPlaca;
+            $dCostoGarantiaI        =   ($dCostoGarantiaI == NULL) ? ($dCostoGarantiaI = '') : $dCostoGarantiaI;
+            $dCostoNotariales       =   ($dCostoNotariales == NULL) ? ($dCostoNotariales = 0) : $dCostoNotariales;
+            $dCambioCaracteristicas =   ($dCambioCaracteristicas == NULL) ? ($dCambioCaracteristicas = 0) : $dCambioCaracteristicas;
 
             // REGISTRAR CABECERA DE TRAMITE Y COSTOS SEGUN SEA EL CASO
-            $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+            $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdEmpresa,
                                                                         $request->nIdSucursal,
                                                                         $request->dFechaInicioTramite,
                                                                         $request->dFechaFinTramite,
                                                                         $request->nNroVehiculoTramite,
-                                                                        $request->fTotalTramiteTarjeta,
+                                                                        // $request->fTotalTramiteTarjeta,
                                                                         // $request->fTotalConTramitePlaca,
-                                                                        $request->fTotalTramiteAdicional,
+                                                                        // $request->fTotalTramiteAdicional,
                                                                         $request->fTotalTramite,
                                                                         $request->nIdEstadoTramite,
                                                                         $request->cFlagEstadoAprobacion,
                                                                         //
-                                                                        $nIdFiltro01,
-                                                                        $cDescripcionFiltro01,
-                                                                        $cMontoFiltro01,
-                                                                        $nIdFiltro02,
-                                                                        $cDescripcionFiltro02,
-                                                                        $cMontoFiltro02,
-                                                                        $nIdFiltro03,
-                                                                        $cDescripcionFiltro03,
-                                                                        $cMontoFiltro03,
+                                                                        $nIdTipoPersona,
+                                                                        $dCostoLegalizacion,
+                                                                        $dCostoTramiteTarjeta,
+                                                                        $dCostoPlaca,
+                                                                        $dCostoGarantiaI,
+                                                                        $dCostoNotariales,
+                                                                        $dCambioCaracteristicas,
                                                                         Auth::user()->id
                                                                     ]);
 
