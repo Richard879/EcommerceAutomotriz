@@ -160,6 +160,7 @@
                                                                     <th>Nro Pedido</th>
                                                                     <th>Nro Cotizacion</th>
                                                                     <th>Contacto</th>
+                                                                    <th>Nro Documento</th>
                                                                     <th>Vehiculo</th>
                                                                     <th>Dirección</th>
                                                                     <th>Celular</th>
@@ -237,6 +238,7 @@
                                                                     <td v-text="cotizacionpendiente.cNumeroPedido"></td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
+                                                                    <td v-text="cotizacionpendiente.cPerDocumento"></td>
                                                                     <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioModelo"></td>
                                                                     <td v-text="cotizacionpendiente.cDireccion"></td>
                                                                     <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
@@ -1438,7 +1440,35 @@
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
-                // =============================================================
+                //=========================== MODAL DETALLE PEDIDO ===================W
+                fillDetallePedido:{
+                    nidcabecerapedido: 0,
+                    cnumeropedido: '',
+                    cnumerocotizacion: '',
+                    cdocumentocliente: '',
+                    cnombrecliente: '',
+                    nidversionvehiculo: 0,
+                    cvehiculo: '',
+                    cnumerovin: '',
+                    cnombreproveedor: '',
+                    dfechapedido: '',
+                    nordencompra: '',
+                    cnombrevendedor: '',
+                    fpreciocierrefinalcliente: 0,
+                    fflete: 0,
+                    fpreciocierrelistaprecio: 0,
+                    fpreciocierresistema: 0,
+                    fsobreprecio: 0,
+                    fdscto: 0,
+                    ftotalpedidosoles: 0,
+                    ftotalpedidodolares: 0
+                },
+                arrayDetallePedido: [],
+                arrayPedidoDoumento: [],
+                cFlagActivaElemento: 0,
+                cFlagActivaObsequio: 0,
+                cFlagActivaCampania: 0,
+                //====================================================================
                 // MODAL DISTRIBUCION
                 fillDetalleDistribucion:{
                     cnumerocotizacion: '',
@@ -2163,7 +2193,7 @@
             // =================================================================
             // VER DETALLE PEDIDO
             // =================================================================
-            /*verPedido(pedido){
+            verPedido(pedido){
                 this.fillDetallePedido.nidcabecerapedido    = pedido.nIdCabeceraPedido,
                 this.fillDetallePedido.cnumeropedido        = pedido.cNumeroPedido,
                 this.fillDetallePedido.cnumerocotizacion    = pedido.cNumeroCotizacion,
@@ -2172,7 +2202,6 @@
                 this.fillDetallePedido.nidversionvehiculo   = pedido.nIdVersionVeh,
                 this.fillDetallePedido.cvehiculo            = pedido.cNombreComercial + ' ' + pedido.nAnioModelo,
                 this.fillDetallePedido.cnumerovin           = pedido.cNumeroVin,
-                this.fillDetallePedido.cnombreproveedor     = pedido.cNombreProveedor,
                 this.fillDetallePedido.cnombrevendedor      = pedido.cNombreVendedor,
                 this.fillDetallePedido.dfechapedido         = pedido.dFechaPedido,
                 this.fillDetallePedido.ftotalpedidosoles    = pedido.fTotalPedidoSoles,
@@ -2203,6 +2232,24 @@
                     }
                 });
             },
+            verificaDetallePedido(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+
+                me.arrayDetallePedido.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
+                });
+            },
             verDocumentosPedido(pedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
@@ -2223,7 +2270,7 @@
                         }
                     }
                 });
-            },*/
+            },
             // =================================================================
             // MODAL
             // =================================================================
