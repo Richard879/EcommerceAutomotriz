@@ -388,4 +388,26 @@ class ExcelController extends Controller
                                                 $nidmodelo
                                             ]);
     }
+
+    public function exportarStockGeneral(Request $request)
+    {
+        $nidsucursal        =   $request->nidsucursal;
+        $nidproveedor       =   $request->nidproveedor;
+        $cflagdisponible    =   $request->cflagdisponible;
+        $nidmarca           =   $request->nidmarca;
+        $nidmodelo          =   $request->nidmodelo;
+
+        $cflagdisponible    =   ($cflagdisponible == NULL) ? ($cflagdisponible = '') : $cflagdisponible;
+        $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+
+        return $data = DB::select('exec [usp_Reporte_GetStockGeneral] ?, ?, ?, ?, ?',
+                                            [
+                                                $nidsucursal,
+                                                $nidproveedor,
+                                                $cflagdisponible,
+                                                $nidmarca,
+                                                $nidmodelo
+                                            ]);
+    }
 }
