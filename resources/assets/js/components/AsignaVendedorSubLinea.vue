@@ -712,7 +712,8 @@
             cerrarModal(){
                 this.modal = 0
                 this.error = 0,
-                this.mensajeError = ''
+                this.mensajeError = '',
+                this.arrayVendedorSubLinea =[];
             },
             // ==========================================================
             // =============  REGISTRO ========================

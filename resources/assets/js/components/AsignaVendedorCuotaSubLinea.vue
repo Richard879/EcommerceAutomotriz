@@ -605,10 +605,10 @@
 
                 var url = this.ruta + '/asignacuota/SetRegistraAsignacionCuota';
                 axios.post(url, {
-                    'nidempresa'             : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nidsucursal'             : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nidempresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal'               : parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nidcronograma'             : this.fillAsigVendedorCuota.nidcronograma,
-                    'arrayFlagVendedoresByIdJV' :   this.arrayFlagVendedoresByIdJV
+                    'arrayFlagVendedoresByIdJV' : this.arrayFlagVendedoresByIdJV
                 }).then(response => {
                     swal('Se realizo correctamente la Asignación Vendedor Cuota');
                     this.buscarVendedoresAsignadosJV(1);
@@ -689,6 +689,7 @@
                 this.mensajeError = '';
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
+                this.arrayFlagVendedoresByIdJV=[];
                 //Modal Buscar Proveedores
                 this.arrayProveedor = [];
             },
