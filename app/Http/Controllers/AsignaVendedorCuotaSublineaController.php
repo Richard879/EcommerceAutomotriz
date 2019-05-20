@@ -24,8 +24,7 @@ class AsignaVendedorCuotaSublineaController extends Controller
         $nIdSubLinea = ($nIdSubLinea == NULL) ? ($nIdSubLinea = 0) : $nIdSubLinea;
 
         $arrayVendedorCuota = DB::select('exec [usp_AsignaCuotaVendedorSubLinea_GetListVendedoresCuota] ?, ?, ?, ?, ?, ?, ?',
-                                                            [
-                                                                $nIdEmpresa,
+                                                            [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,
                                                                 $nIdProveedor,
@@ -34,7 +33,7 @@ class AsignaVendedorCuotaSublineaController extends Controller
                                                                 $nIdJefeVentas
                                                             ]);
 
-        $arrayVendedorCuota = ParametroController::arrayPaginator($arrayVendedorCuota, $request);
+        //$arrayVendedorCuota = ParametroController::arrayPaginator($arrayVendedorCuota, $request);
         return ['arrayVendedorCuota'=>$arrayVendedorCuota];
     }
 

@@ -130,40 +130,63 @@
                                 <h3 class="h4">DETALLE</h3>
                             </div>
                             <div class="card-body">
-                                <form class="form-horizontal">
-                                    <template v-if="arrayFlagVendedoresByIdJV.length">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Codigo</th>
-                                                        <th>SubLinea</th>
-                                                        <th>Cod Vendedor</th>
-                                                        <th>Vendedor</th>
-                                                        <th>N° Cuota</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="vendedor in arrayFlagVendedoresByIdJV" :key="vendedor.nIdAsignacionVendedorSubLinea">
-                                                        <td v-text="vendedor.nIdSubLinea"></td>
-                                                        <td v-text="vendedor.cNombreSubLinea"></td>
-                                                        <td v-text="vendedor.nIdVendedor"></td>
-                                                        <td v-text="vendedor.cNombreVendedor"></td>
-                                                        <td><vs-input-number min="1" v-model="vendedor.cNroCuota"/></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br>
-                                        <div class="form-group row">
-                                            <div class="col-md-9 offset-md-5">
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarVendedorCuota">
-                                                    <i class="fa fa-save"></i> Registrar
-                                                </button>
+                                <template v-if="arrayFlagVendedoresByIdJV.length">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Codigo</th>
+                                                    <th>SubLinea</th>
+                                                    <th>Cod Vendedor</th>
+                                                    <th>Vendedor</th>
+                                                    <th>N° Cuota</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="vendedor in arrayFlagVendedoresByIdJV" :key="vendedor.nIdAsignacionVendedorSubLinea">
+                                                    <td v-text="vendedor.nIdSubLinea"></td>
+                                                    <td v-text="vendedor.cNombreSubLinea"></td>
+                                                    <td v-text="vendedor.nIdVendedor"></td>
+                                                    <td v-text="vendedor.cNombreVendedor"></td>
+                                                    <td><vs-input-number min="1" v-model="vendedor.cNroCuota"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <nav>
+                                                    <ul class="pagination">
+                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                        </li>
+                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                        :class="[page==isActived?'active':'']">
+                                                            <a class="page-link"
+                                                            href="#" @click.prevent="cambiarPagina(page)"
+                                                            v-text="page"></a>
+                                                        </li>
+                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                             </div>
                                         </div>
-                                    </template>
-                                </form>
+                                    </div>
+                                    <br>
+                                    <div class="form-group row">
+                                        <div class="col-md-9 offset-md-5">
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarVendedorCuota">
+                                                <i class="fa fa-save"></i> Registrar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -300,7 +323,8 @@
 <script>
     export default {
         props:['ruta', 'usuario'],
-        data:()=>({
+        data(){
+            return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillAsigVendedorCuota:{
@@ -323,9 +347,13 @@
                 arraySubLinea: [],
                 arrayVendedoresByIdJV: [],
                 arrayFlagVendedoresByIdJV: [],
+                arrayFlagVendedoresByIdJVRpta: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -349,8 +377,9 @@
                 tituloFormulario: '',
                 error: 0,
                 errors: [],
-                mensajeError: []
-        }),
+                mensajeError: []    
+            }
+        },
         mounted(){
             this.llenarCompraActiva();
             this.informacionUsuario();
@@ -544,12 +573,11 @@
                         'nidlinea'      : 0,
                         'nidsublinea'   : this.fillAsigVendedorCuota.nidsublinea,
                         'nidjefeventas' : this.fillAsigVendedorCuota.nidjefeventa,
-                        'page' : page
+                        'page'          : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayVendedorCuota.data;
-                    //Data
-                    this.arrayFlagVendedoresByIdJV = info;
+                    this.arrayFlagVendedoresByIdJVRpta = response.data.arrayVendedorCuota;
+                    this.paginateVendedoressignadosJV(this.arrayFlagVendedoresByIdJVRpta, page);
                     //this.llenarArrayVendedoresByIdJV();
                 }).catch(error => {
                     console.log(error);
@@ -560,6 +588,19 @@
                         }
                     }
                 });
+            },
+            paginateVendedoressignadosJV(data, page){
+                this.pagination.current_page    =   page;
+                this.pagination.total           =   data.length;
+                this.pagination.per_page        =   this.perPage;
+                this.pagination.last_page       =   Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            =   (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to              =   (this.pagination.current_page * this.pagination.per_page);
+                this.arrayFlagVendedoresByIdJV  =   data.slice(this.pagination.from, this.pagination.to);
+            },
+            cambiarPagina(page){
+                this.pagination.current_page=page;
+                this.paginateVendedoressignadosJV(this.arrayFlagVendedoresByIdJVRpta, page);
             },
             validarBuscarVendedoresByJV(){
                 this.error = 0;
