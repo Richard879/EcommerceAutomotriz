@@ -421,8 +421,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/asignavendedorsublinea/SetAsignaSubLinea','AsignaVendedorSubLineaController@SetAsignaSubLinea');
     Route::post('/asignavendedorsublinea/SetDesasignaSubLinea','AsignaVendedorSubLineaController@SetDesasignaSubLinea');
 
-    Route::get('/asignacuota/GetLstVendedorSubLineaCuota','AsignaVendedorCuotaSubLineaController@GetLstVendedorSubLineaCuota');
-    Route::post('/asignacuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaSubLineaController@SetRegistraAsignacionCuota');
+    Route::get('/asignacuota/GetLstVendedorSubLineaCuota','AsignaVendedorCuotaSublineaController@GetLstVendedorSubLineaCuota');
+    Route::post('/asignacuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaSublineaController@SetRegistraAsignacionCuota');
 
     Route::get('/usuario/GetListUsuarios','GestionUsuariosController@GetListUsuarios');
     Route::get('/usuario/GetListRoles','GestionUsuariosController@GetListRoles');
