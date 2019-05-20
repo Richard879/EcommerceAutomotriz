@@ -41,7 +41,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Año</label>
                                                 <div class="col-sm-8">
-                                                    <label v-text="fillAsigVendedorCuota.canio" class="form-control-label-readonly"></label>
+                                                    <input type="text" v-model="fillAsigVendedorCuota.canio" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +49,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Mes</label>
                                                 <div class="col-sm-8">
-                                                    <label v-text="fillAsigVendedorCuota.cmes" class="form-control-label-readonly"></label>
+                                                    <input type="text" v-model="fillAsigVendedorCuota.cmes" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,11 +59,26 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Jefe de ventas</label>
                                                 <div class="col-sm-8">
-                                                    <label v-text="fillAsigVendedorCuota.cnombrejefeventa" class="form-control-label-readonly"></label>
+                                                    <input type="text" v-model="fillAsigVendedorCuota.cnombrejefeventa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">SubLinea</label>
+                                                <div class="col-md-8">
+                                                    <el-select v-model="fillAsigVendedorCuota.nidsublinea" filterable clearable placeholder="SELECCIONE">
+                                                        <el-option
+                                                        v-for="sublinea in arraySubLinea"
+                                                            :key="sublinea.nIdPar"
+                                                            :label="sublinea.cParNombre"
+                                                            :value="sublinea.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                 <div class="col-sm-8">
@@ -77,9 +92,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
-                                    <div class="form-group row">
+                                    <!--<div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Linea</label>
@@ -97,22 +112,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">SubLinea</label>
-                                                <div class="col-md-8">
-                                                    <el-select v-model="fillAsigVendedorCuota.nidsublinea" filterable clearable placeholder="SELECCIONE">
-                                                        <el-option
-                                                        v-for="sublinea in arraySubLinea"
-                                                            :key="sublinea.nIdSubLinea"
-                                                            :label="sublinea.cSubLineaNombre"
-                                                            :value="sublinea.nIdSubLinea">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVendedoresAsignadosJV(1)">
@@ -133,59 +133,26 @@
                                 <form class="form-horizontal">
                                     <template v-if="arrayFlagVendedoresByIdJV.length">
                                         <div class="table-responsive">
-                                            <vs-table max-items="10" pagination :data="arrayFlagVendedoresByIdJV" notSpacer>
-                                                <template slot="thead">
-                                                    <vs-th>Proveedor</vs-th>
-                                                    <vs-th>Linea</vs-th>
-                                                    <vs-th>SubLinea</vs-th>
-                                                    <vs-th>Vendedor</vs-th>
-                                                    <vs-th>N° Cuota</vs-th>
-                                                </template>
-
-                                                <template slot-scope="{data}">
-                                                    <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                                                        <vs-td :data="data[indextr].cNombreProveedor">
-                                                            {{data[indextr].cNombreProveedor}}
-                                                        </vs-td>
-                                                        <vs-td :data="data[indextr].cNombreLinea">
-                                                            {{data[indextr].cNombreLinea}}
-                                                        </vs-td>
-                                                        <vs-td :data="data[indextr].cNombreSubLinea">
-                                                            {{data[indextr].cNombreSubLinea}}
-                                                        </vs-td>
-                                                        <vs-td :data="data[indextr].cNombreVendedor">
-                                                            {{data[indextr].cNombreVendedor}}
-                                                        </vs-td>
-                                                        <vs-td :data="data[indextr].cNroCuota">
-                                                            <vs-input-number min="1" v-model="data[indextr].cNroCuota"/>
-                                                        </vs-td>
-                                                    </vs-tr>
-                                                </template>
-                                            </vs-table>
-                                            <!--
                                             <table class="table table-striped table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th>Proveedor</th>
-                                                        <th>Linea</th>
-                                                        <th>Marca</th>
-                                                        <th>Modelo</th>
+                                                        <th>Codigo</th>
+                                                        <th>SubLinea</th>
+                                                        <th>Cod Vendedor</th>
                                                         <th>Vendedor</th>
                                                         <th>N° Cuota</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="vendedor in arrayFlagVendedoresByIdJV" :key="vendedor.cParNombre">
-                                                        <td v-text="vendedor.cNombreProveedor"></td>
-                                                        <td v-text="vendedor.cNombreLinea"></td>
+                                                    <tr v-for="vendedor in arrayFlagVendedoresByIdJV" :key="vendedor.nIdAsignacionVendedorSubLinea">
+                                                        <td v-text="vendedor.nIdSubLinea"></td>
                                                         <td v-text="vendedor.cNombreSubLinea"></td>
-                                                        <td v-text="vendedor.cNombreModelo"></td>
+                                                        <td v-text="vendedor.nIdVendedor"></td>
                                                         <td v-text="vendedor.cNombreVendedor"></td>
                                                         <td><vs-input-number min="1" v-model="vendedor.cNroCuota"/></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            -->
                                         </div>
                                         <br>
                                         <div class="form-group row">
@@ -387,6 +354,7 @@
         mounted(){
             this.llenarCompraActiva();
             this.informacionUsuario();
+            this.llenarComboSubLinea();
         },
         computed:{
             isActived: function(){
@@ -480,9 +448,6 @@
             // =======================
             // MODAL PROVEEDOR
             // =======================
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
@@ -521,7 +486,7 @@
                 this.cerrarModal();
                 this.llenarComboLinea();
             },
-            llenarComboLinea(){
+            /*llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
@@ -542,17 +507,17 @@
                         }
                     }
                 });
-            },
+            },*/
             llenarComboSubLinea(){
-                var url = this.ruta + '/versionvehiculo/GetSubLineaByLinea';
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': this.fillAsigVendedorCuota.nidlinea,
-                        'opcion': 1
+                        'ngrupoparid'   : 110101,
+                        'opcion'        : 1
                     }
                 }).then(response => {
-                    this.arraySubLinea = response.data.arraySubLinea;
+                    this.arraySubLinea = response.data.arrayParametro;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -575,8 +540,8 @@
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : this.fillAsigVendedorCuota.nidcronograma,
-                        'nidproveedor'  : this.fillAsigVendedorCuota.nidproveedor,
-                        'nidlinea'      : this.fillAsigVendedorCuota.nidlinea,
+                        'nidproveedor'  : 0,
+                        'nidlinea'      : 0,
                         'nidsublinea'   : this.fillAsigVendedorCuota.nidsublinea,
                         'nidjefeventas' : this.fillAsigVendedorCuota.nidjefeventa,
                         'page' : page
@@ -584,8 +549,8 @@
                 }).then(response => {
                     let info = response.data.arrayVendedorCuota.data;
                     //Data
-                    this.arrayVendedoresByIdJV = info;
-                    this.llenarArrayVendedoresByIdJV();
+                    this.arrayFlagVendedoresByIdJV = info;
+                    //this.llenarArrayVendedoresByIdJV();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -603,34 +568,34 @@
                 if(this.fillAsigVendedorCuota.nidjefeventa == 0){
                     this.mensajeError.push('Debe ser Jefe de Ventas para realizar la busqueda');
                 }
-                if(this.fillAsigVendedorCuota.nidproveedor == 0 && !this.fillAsigVendedorCuota.cproveedornombre){
+                /*if(this.fillAsigVendedorCuota.nidproveedor == 0 && !this.fillAsigVendedorCuota.cproveedornombre){
                     this.mensajeError.push('Debe seleccionar un proveedor');
                 }
                 if(this.fillAsigVendedorCuota.nidlinea == ''){
                     this.mensajeError.push('Debe seleccionar una Línea');
-                }
+                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
-            llenarArrayVendedoresByIdJV(){
+            /*llenarArrayVendedoresByIdJV(){
                 let me = this;
 
                 me.arrayFlagVendedoresByIdJV = [];//Setear Array
 
                 me.arrayVendedoresByIdJV.map(function(value, key){
                     me.arrayFlagVendedoresByIdJV.push({
-                        nIdAsignacionVendedorSubLinea : value.nIdAsignacionVendedorSubLinea,
-                        cNombreProveedor            : value.cNombreProveedor,
-                        cNombreLinea                : value.cNombreLinea,
-                        cNombreSubLinea             : value.cNombreSubLinea,
-                        cNombreVendedor             : value.cNombreVendedor,
-                        cNroCuota                   : (value.cNroCuota == null) ? 0 :  value.cNroCuota
+                        'nIdAsignacionVendedorSubLinea'   : value.nIdAsignacionVendedorSubLinea,
+                        'nIdSubLinea'                : value.cNombreProveedor,
+                        'cNombreLinea'                    : value.cNombreLinea,
+                        'cNombreSubLinea'                 : value.cNombreSubLinea,
+                        'cNombreVendedor'                 : value.cNombreVendedor,
+                        'cNroCuota'                       : (value.cNroCuota == null) ? 0 :  value.cNroCuota
                     });
                 });
-            },
+            },*/
             registrarVendedorCuota(){
                 if(this.validarRegistrarVendedorCuota()){
                     this.accionmodal=1;
