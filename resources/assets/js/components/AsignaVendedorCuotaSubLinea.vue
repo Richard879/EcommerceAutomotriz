@@ -439,11 +439,11 @@
         },
         methods:{
             llenarCompraActiva(){
-                var url = this.ruta + '/objComercial/getCompraActiva';
+                var url = this.ruta + '/objComercial/getVentaActiva';
                 axios.get(url).then(response => {
-                    this.fillAsigVendedorCuota.canio = response.data[0].cAnio;
-                    this.fillAsigVendedorCuota.cmes = response.data[0].cMes;
-                    this.fillAsigVendedorCuota.nidcronograma = response.data[0].nIdCronograma;
+                    this.fillAsigVendedorCuota.canio        = response.data[0].cAnio;
+                    this.fillAsigVendedorCuota.cmes         = response.data[0].cMes;
+                    this.fillAsigVendedorCuota.nidcronograma= response.data[0].nIdCronograma;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
