@@ -218,7 +218,14 @@
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
                                                                                             <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                        </el-tooltip>&nbsp;
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
+                                                                                    <template v-if="cotizacion.nIdEstaCotizacion != 1300354 && cotizacion.nIdEstaCotizacion != 1300133">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Rechazar Cotización {{ cotizacion.cNumeroCotizacion }}</div>
+                                                                                            <i  @click="conformeNoConformeCotizacion(3, cotizacion.nIdCabeceraCotizacion, cotizacion.cNumeroCotizacion)"
+                                                                                                :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
@@ -2611,7 +2618,7 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: [],
+                mensajeError: []
             }
         },
         mounted() {
@@ -2917,6 +2924,43 @@
             },
             limpiarMisCotizaciones(){
                 this.arrayCotizaciones=[];
+            },
+            conformeNoConformeCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+                swal({
+                    title: '¿Esta seguro de' + ((op == 2) ? ' dar Conformidad a' : ' Rechazar ') + ' la cotización N°' + cNumeroCotizacion + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si,' + ((op == 2) ? 'Conforme' : ' Rechazar '),
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                        axios.put(url, {
+                            'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                            'opcion'                : op
+                        }).then(response => {
+                            me.listarMisCotizaciones(1);
+                            swal(
+                                ((op == 2) ? 'Conforme' : ' Rechazar'),
+                                'La Cotización ' + cNumeroCotizacion +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
+                                'success'
+                            )
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
             },
             // =================================================================
             // VER DETALLE COTIZACION

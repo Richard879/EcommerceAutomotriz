@@ -413,34 +413,36 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidempresa     =   $request->nidempresa;
-        $nidsucursal    =   $request->nidsucursal;
-        $nidmarca       =   $request->nidmarca;
-        $nidmodelo      =   $request->nidmodelo;
-        $dfechainicio   =   $request->dfechainicio;
-        $dfechafin      =   $request->dfechafin;
-        $cContacto      =   $request->ccontacto;
-        $ntipopersona   =   $request->ntipopersona;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $dFechaInicio       =   $request->dfechainicio;
+        $dFechaFin          =   $request->dfechafin;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
+        $nTipoPersona       =   $request->ntipopersona;
 
-        $nidmarca       =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
-        $nidmodelo      =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
-        $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
-        $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
-        $cContacto      =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
-        $ntipopersona   =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $nTipoPersona       =   ($nTipoPersona == NULL) ? ($nTipoPersona = 1) : $nTipoPersona;
 
-        $arrayCotizacionesPendientes = DB::select('exec [usp_Cotizacion_GetLstCotizacionPendiente] ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                    [
-                                        $nidempresa,
-                                        $nidsucursal,
-                                        $nidmarca,
-                                        $nidmodelo,
-                                        $dfechainicio,
-                                        $dfechafin,
-                                        $cContacto,
-                                        $ntipopersona,
-                                        Auth::user()->id
-                                    ]);
+        $arrayCotizacionesPendientes = DB::select('exec [usp_Cotizacion_GetLstCotizacionPendiente] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $nIdMarca,
+                                                                            $nIdModelo,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $cContacto,
+                                                                            $cNumeroDocumento,
+                                                                            $nTipoPersona,
+                                                                            Auth::user()->id
+                                                                        ]);
 
         $arrayCotizacionesPendientes = ParametroController::arrayPaginator($arrayCotizacionesPendientes, $request);
         return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];

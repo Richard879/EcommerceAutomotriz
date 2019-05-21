@@ -41,7 +41,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                            <div class="col-sm-6">
+                                                            <!--<div class="col-sm-6">
                                                                 <div class="row">
                                                                     <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                                     <div class="col-sm-8">
@@ -51,12 +51,20 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
+                                                            </div>-->
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" v-model="fillCotizacionesPendiente.ccontacto" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                     <div class="col-sm-8">
-                                                                        <input type="text" v-model="fillCotizacionesPendiente.ccontacto" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
+                                                                        <input type="text" v-model="fillCotizacionesPendiente.cnrodocumento" @keyup.enter="buscarCotizacionesPendientes(1)" class="form-control form-control-sm">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -899,7 +907,8 @@
                     dfechainicio: '',
                     dfechafin: '',
                     ntipopersona: 1,
-                    ccontacto: ''
+                    ccontacto: '',
+                    cnrodocumento: ''
                 },
                 arrayCotizacionesPendientes: [],
                 arrayMisCotizacionesPendientes: [],
@@ -1159,6 +1168,7 @@
                         'dfechainicio'  : this.fillCotizacionesPendiente.dfechainicio,
                         'dfechafin'     : this.fillCotizacionesPendiente.dfechafin,
                         'ccontacto'     : this.fillCotizacionesPendiente.ccontacto,
+                        'cnrodocumento' : this.fillCotizacionesPendiente.cnrodocumento,
                         'ntipopersona'  : this.fillCotizacionesPendiente.ntipopersona,
                         'page' : page
                     }
@@ -1225,8 +1235,8 @@
 
                         var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                         axios.put(url, {
-                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
-                            opcion : op
+                            'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                            'opcion'                : op
                         }).then(response => {
                             me.buscarCotizacionesPendientes(1);
                             swal(
