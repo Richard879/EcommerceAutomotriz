@@ -214,10 +214,12 @@
                                                                                         <div slot="content">Ver Detalle Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
                                                                                         <i @click="abrirModal('cotizacion', 'detalle', cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
-                                                                                        <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                    </el-tooltip>&nbsp;
+                                                                                    <template v-if="cotizacion.nIdEstaCotizacion==1300346 || cotizacion.nIdEstaCotizacion==1300133">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
+                                                                                            <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                        </el-tooltip>&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                 <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo"></td>
@@ -4204,12 +4206,12 @@
                         // GERENCIA cuando existen solo dscto
                         if (response.data.contAprobacionGerencia > 0){
                             this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
-                            this.generarCotizacionPDF(nIdCabeCoti);
+                            //this.generarCotizacionPDF(nIdCabeCoti);
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         } else {
                             if (response.data.contAprobacionADV > 0) {
                                 this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
-                                this.generarCotizacionPDF(nIdCabeCoti)
+                                //this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada exitosamente, pendiente de Aprobación');
                             } else {
                                 this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 1);

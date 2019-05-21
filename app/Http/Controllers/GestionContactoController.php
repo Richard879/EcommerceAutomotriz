@@ -503,27 +503,29 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdCronograma = $request->nidcronograma;
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $nIdCronograma      = $request->nidcronograma;
+        $nTipoPersona       = $request->ntipopersona;
+        $cNroDocumento      = $request->cnrodocumento;
         $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $nIdVendedor = $request->nidvendedor;
+        $nIdVendedor        = $request->nidvendedor;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cNroDocumento      = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+        $nIdVendedor        = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+        $nTipoPersona       = ($nTipoPersona == NULL) ? ($nTipoPersona = 1) : $nTipoPersona;
 
-        $arrayContactosPorVendedor = DB::select('exec usp_Contacto_GetListContactoByVendedor ?, ?, ?, ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
-                                                                                $nIdSucursal,
-                                                                                $nIdCronograma,
-                                                                                $nTipoPersona,
-                                                                                $cNroDocumento,
-                                                                                $cFiltroDescripcion,
-                                                                                $nIdVendedor
-                                                                                ));
+        $arrayContactosPorVendedor = DB::select('exec [usp_Contacto_GetListContactoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $nIdEmpresa,
+                                                                        $nIdSucursal,
+                                                                        $nIdCronograma,
+                                                                        $nTipoPersona,
+                                                                        $cNroDocumento,
+                                                                        $cFiltroDescripcion,
+                                                                        $nIdVendedor,
+                                                                        Auth::user()->id
+                                                                    ]);
 
         $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];

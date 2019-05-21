@@ -14,20 +14,25 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $dFechaInicio = $request->dfechainicio;
-        $dFechaFin = $request->dfechafin;
-        $nIdMarca = $request->nidmarca;
-        $nIdModelo = $request->nidmodelo;
-        $cNumeroCotizacion = $request->cnumerocotizacion;
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $cNumeroCotizacion = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $dFechaInicio       = $request->dfechainicio;
+        $dFechaFin          = $request->dfechafin;
+        $nIdMarca           = $request->nidmarca;
+        $nIdModelo          = $request->nidmodelo;
+        $cNumeroCotizacion  = $request->cnumerocotizacion;
+        $cContacto          = $request->ccontacto;
+        $cNumeroDocumento   = $request->cnrodocumento;
 
-        $arrayPedido = DB::select('exec [usp_Pedido_GetLstCotizacionIngresadas] ?, ?, ?, ?, ?, ?, ?, ?',
+        $dFechaInicio       = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNumeroCotizacion  = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
+        $cContacto          = ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   = ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+
+        $arrayPedido = DB::select('exec [usp_Pedido_GetLstCotizacionIngresadas] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
@@ -35,6 +40,8 @@ class PedidoController extends Controller
                                                                     $nIdMarca,
                                                                     $nIdModelo,
                                                                     $cNumeroCotizacion,
+                                                                    $cContacto,
+                                                                    $cNumeroDocumento,
                                                                     Auth::user()->id
                                                                 ]);
 
@@ -366,6 +373,7 @@ class PedidoController extends Controller
         $nIdModelo          =   $request->nidmodelo;
         $nIdEstadoPedido    =   $request->nidestadopedido;
         $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
         $ntipopersona       =   $request->ntipopersona;
 
         $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
@@ -376,11 +384,11 @@ class PedidoController extends Controller
         $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $nIdEstadoPedido    =   ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
         $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoByTipoEstado] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                                            [
-                                                                                $nIdEmpresa,
+        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoByTipoEstado] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                            [   $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $dFechaInicio,
                                                                                 $dFechaFin,
@@ -390,6 +398,7 @@ class PedidoController extends Controller
                                                                                 $nIdModelo,
                                                                                 $nIdEstadoPedido,
                                                                                 $cContacto,
+                                                                                $cNumeroDocumento,
                                                                                 $ntipopersona,
                                                                                 Auth::user()->id
                                                                             ]);
