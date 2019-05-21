@@ -70,20 +70,20 @@ class TramiteController extends Controller
             // }
 
             $nIdTipoPersona         =   $request->fillConceptosDocumentos['nIdTipoPersona'];
-            $dCostoLegalizacion     =   $request->fillConceptosDocumentos['dCostoLegalizacion'];
-            $dCostoTramiteTarjeta   =   $request->fillConceptosDocumentos['dCostoTramiteTarjeta'];
-            $dCostoPlaca            =   $request->fillConceptosDocumentos['dCostoPlaca'];
-            $dCostoGarantiaI        =   $request->fillConceptosDocumentos['dCostoGarantiaI'];
-            $dCostoNotariales       =   $request->fillConceptosDocumentos['dCostoNotariales'];
-            $dCambioCaracteristicas =   $request->fillConceptosDocumentos['dCambioCaracteristicas'];
+            $fCostoLegalizacion     =   $request->fillConceptosDocumentos['fCostoLegalizacion'];
+            $fCostoTramiteTarjeta   =   $request->fillConceptosDocumentos['fCostoTramiteTarjeta'];
+            $fCostoPlaca            =   $request->fillConceptosDocumentos['fCostoPlaca'];
+            $fCostoGarantiaI        =   $request->fillConceptosDocumentos['fCostoGarantiaI'];
+            $fCostoNotariales       =   $request->fillConceptosDocumentos['fCostoNotariales'];
+            $fCambioCaracteristicas =   $request->fillConceptosDocumentos['fCambioCaracteristicas'];
 
             $nIdTipoPersona         =   ($nIdTipoPersona == NULL) ? ($nIdTipoPersona = 0) : $nIdTipoPersona;
-            $dCostoLegalizacion     =   ($dCostoLegalizacion == NULL) ? ($dCostoLegalizacion = '') : $dCostoLegalizacion;
-            $dCostoTramiteTarjeta   =   ($dCostoTramiteTarjeta == NULL) ? ($dCostoTramiteTarjeta = 0) : $dCostoTramiteTarjeta;
-            $dCostoPlaca            =   ($dCostoPlaca == NULL) ? ($dCostoPlaca = 0) : $dCostoPlaca;
-            $dCostoGarantiaI        =   ($dCostoGarantiaI == NULL) ? ($dCostoGarantiaI = '') : $dCostoGarantiaI;
-            $dCostoNotariales       =   ($dCostoNotariales == NULL) ? ($dCostoNotariales = 0) : $dCostoNotariales;
-            $dCambioCaracteristicas =   ($dCambioCaracteristicas == NULL) ? ($dCambioCaracteristicas = 0) : $dCambioCaracteristicas;
+            $fCostoLegalizacion     =   ($fCostoLegalizacion == NULL) ? ($fCostoLegalizacion = 0) : $fCostoLegalizacion;
+            $fCostoTramiteTarjeta   =   ($fCostoTramiteTarjeta == NULL) ? ($fCostoTramiteTarjeta = 0) : $fCostoTramiteTarjeta;
+            $fCostoPlaca            =   ($fCostoPlaca == NULL) ? ($fCostoPlaca = 0) : $fCostoPlaca;
+            $fCostoGarantiaI        =   ($fCostoGarantiaI == NULL) ? ($fCostoGarantiaI = 0) : $fCostoGarantiaI;
+            $fCostoNotariales       =   ($fCostoNotariales == NULL) ? ($fCostoNotariales = 0) : $fCostoNotariales;
+            $fCambioCaracteristicas =   ($fCambioCaracteristicas == NULL) ? ($fCambioCaracteristicas = 0) : $fCambioCaracteristicas;
 
             // REGISTRAR CABECERA DE TRAMITE Y COSTOS SEGUN SEA EL CASO
             $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
@@ -92,20 +92,17 @@ class TramiteController extends Controller
                                                                         $request->dFechaInicioTramite,
                                                                         $request->dFechaFinTramite,
                                                                         $request->nNroVehiculoTramite,
-                                                                        // $request->fTotalTramiteTarjeta,
-                                                                        // $request->fTotalConTramitePlaca,
-                                                                        // $request->fTotalTramiteAdicional,
                                                                         $request->fTotalTramite,
                                                                         $request->nIdEstadoTramite,
                                                                         $request->cFlagEstadoAprobacion,
                                                                         //
                                                                         $nIdTipoPersona,
-                                                                        $dCostoLegalizacion,
-                                                                        $dCostoTramiteTarjeta,
-                                                                        $dCostoPlaca,
-                                                                        $dCostoGarantiaI,
-                                                                        $dCostoNotariales,
-                                                                        $dCambioCaracteristicas,
+                                                                        $fCostoLegalizacion,
+                                                                        $fCostoTramiteTarjeta,
+                                                                        $fCostoPlaca,
+                                                                        $fCostoGarantiaI,
+                                                                        $fCostoNotariales,
+                                                                        $fCambioCaracteristicas,
                                                                         Auth::user()->id
                                                                     ]);
 
@@ -209,6 +206,31 @@ class TramiteController extends Controller
         return ['arraySolicitudesTramites'=>$arraySolicitudesTramites];
     }
 
+    public function exportSolicitudes(Request $request)
+    {
+        $nIdEstadoTramite       =   $request->nIdEstadoTramite;
+        $cnumvin                =   $request->cnumvin;
+        $fechaInicioTramite     =   $request->fechaInicioTramite;
+        $fechaFinRealTramite    =   $request->fechaFinRealTramite;
+        $nIdTramitador          =   Auth::user()->id;
+
+        $nIdEstadoTramite       =   ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $cnumvin                =   ($cnumvin == NULL) ? ($cnumvin = 0) : $cnumvin;
+        $fechaInicioTramite     =   ($fechaInicioTramite == NULL) ? ($fechaInicioTramite = '') : $fechaInicioTramite;
+        $fechaFinRealTramite    =   ($fechaFinRealTramite == NULL) ? ($fechaFinRealTramite = '') : $fechaFinRealTramite;
+
+        $arraySolicitudesTramites = DB::select('exec usp_Tramite_GetSolicitudesTramitesReporte ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEstadoTramite,
+                                                                $cnumvin,
+                                                                $nIdTramitador,
+                                                                $fechaInicioTramite,
+                                                                $fechaFinRealTramite
+                                                            ]);
+
+        return $arraySolicitudesTramites;
+    }
+
     public function GetDetalleSolicitudTramite(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -258,7 +280,7 @@ class TramiteController extends Controller
         $nIdTramiteTarjeta      =   $request->nIdTramiteTarjeta;
         $dFechaFinRealTramite   =   $request->dFechaFinRealTramite;
         $nIdEstado              =   $request->nIdEstado;
-        $cNroTarjeta            =   $request->cNroTarjeta;
+        $cNroTitulo             =   $request->cNroTitulo;
         $cNroPlaca              =   $request->cNroPlaca;
         $cObservacion           =   $request->cObservacion;
 
@@ -267,7 +289,7 @@ class TramiteController extends Controller
         $nIdTramiteTarjeta      =   ($nIdTramiteTarjeta == NULL) ? ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
         $dFechaFinRealTramite   =   ($dFechaFinRealTramite == NULL) ? ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
         $nIdEstado              =   ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
-        $cNroTarjeta            =   ($cNroTarjeta == NULL) ? ($cNroTarjeta = '') : $cNroTarjeta;
+        $cNroTitulo             =   ($cNroTitulo == NULL) ? ($cNroTitulo = '') : $cNroTitulo;
         $cNroPlaca              =   ($cNroPlaca == NULL) ? ($cNroPlaca = '') : $cNroPlaca;
         $cObservacion           =   ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
 
@@ -275,7 +297,7 @@ class TramiteController extends Controller
                                                             [   $nIdTramiteTarjeta,
                                                                 $dFechaFinRealTramite,
                                                                 $nIdEstado,
-                                                                $cNroTarjeta,
+                                                                $cNroTitulo,
                                                                 $cNroPlaca,
                                                                 $cObservacion,
                                                                 $flagRegTramiteByEstado,

@@ -276,7 +276,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Costo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCostoLegalizacion" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCostoLegalizacion" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -307,7 +307,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Costo Tramite</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCostoTramiteTarjeta" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCostoTramiteTarjeta" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -320,7 +320,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Costo Placa</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCostoPlaca" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCostoPlaca" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -333,7 +333,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Costo Garantía</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCostoGarantiaI" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCostoGarantiaI" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -346,7 +346,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Costo Notariales</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCostoNotariales" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCostoNotariales" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -359,7 +359,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Costo Caracteristicas</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.dCambioCaracteristicas" min="0" class="form-control form-control-sm">
+                                                                                            <input type="number" @keyup="verificarMontos" v-model="fillConceptosDocumentos.fCambioCaracteristicas" min="0" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -381,7 +381,7 @@
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
-                                                                        <div v-if="fillConceptosDocumentos.dCostoLegalizacion > 0 && fillConceptosDocumentos.dCostoTramiteTarjeta > 0 && fillConceptosDocumentos.dCostoPlaca > 0" class="form-group row">
+                                                                        <div v-if="fillConceptosDocumentos.fCostoLegalizacion > 0 && fillConceptosDocumentos.fCostoTramiteTarjeta > 0 && fillConceptosDocumentos.fCostoPlaca > 0" class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabRegistrarTramite">
                                                                                     <i class="fa fa-save"></i> Generar Tramite
@@ -507,6 +507,12 @@
                                                                                                 <table class="table table-striped table-sm">
                                                                                                     <thead>
                                                                                                         <tr>
+                                                                                                            <th>Acciones&nbsp;
+                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                    <div slot="content">Exportar Tramites(s) XLS</div>
+                                                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarExcel()"></i>
+                                                                                                                </el-tooltip>
+                                                                                                            </th>
                                                                                                             <th>N° Solicitud T</th>
                                                                                                             <th>N° Pedido</th>
                                                                                                             <th>VIN</th>
@@ -515,19 +521,11 @@
                                                                                                             <th>Total General</th>
                                                                                                             <th>Tarjeta</th>
                                                                                                             <th>Placa</th>
-                                                                                                            <th>Acciones</th>
+
                                                                                                         </tr>
                                                                                                     </thead>
                                                                                                     <tbody>
                                                                                                         <tr v-for="(solicitud, index) in arraySolicitudesTramites" :key="index">
-                                                                                                            <td v-text="solicitud.cNumeroSolicitudTramite"></td>
-                                                                                                            <td v-text="solicitud.cNumeroPedido"></td>
-                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
-                                                                                                            <td v-text="solicitud.cEstadoTramite"></td>
-                                                                                                            <td v-text="solicitud.nNumeroVehiculos"></td>
-                                                                                                            <td v-text="solicitud.fTotalTramite"></td>
-                                                                                                            <td v-text="solicitud.nTotalTarjeta"></td>
-                                                                                                            <td v-text="solicitud.nTotalPlaca"></td>
                                                                                                             <td>
                                                                                                                 <el-tooltip class="item"
                                                                                                                             effect="dark"
@@ -536,6 +534,14 @@
                                                                                                                     <el-button @click="abrirModal('solicitud-tramite', 'detalle', solicitud)"><i class="fa fa-eye"></i></el-button>
                                                                                                                 </el-tooltip>
                                                                                                             </td>
+                                                                                                            <td v-text="solicitud.cNumeroSolicitudTramite"></td>
+                                                                                                            <td v-text="solicitud.cNumeroPedido"></td>
+                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
+                                                                                                            <td v-text="solicitud.cEstadoTramite"></td>
+                                                                                                            <td v-text="solicitud.nNumeroVehiculos"></td>
+                                                                                                            <td v-text="solicitud.fTotalTramite"></td>
+                                                                                                            <td v-text="solicitud.nTotalTarjeta"></td>
+                                                                                                            <td v-text="solicitud.nTotalPlaca"></td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
@@ -825,11 +831,11 @@
                                                     <div class="form-group row">
                                                         <div class="col-sm-6">
                                                             <div class="row">
-                                                                <label class="col-sm-4 form-control-label">N° Tarjeta</label>
+                                                                <label class="col-sm-4 form-control-label">N° Titulo</label>
                                                                 <div class="col-sm-8">
                                                                     <el-input
                                                                         clearable
-                                                                        v-model="fillModalTarjetaPlaca.cNroTarjeta">
+                                                                        v-model="fillModalTarjetaPlaca.cNroTitulo">
                                                                     </el-input>
                                                                 </div>
                                                             </div>
@@ -1144,6 +1150,8 @@
 </template>
 
 <script>
+    import XLSX from 'xlsx'
+
     export default {
         props:['ruta'],
         data(){
@@ -1169,31 +1177,18 @@
                 arrayTipoPersona: [],
                 fillConceptosDocumentos: {
                     //COSTO DE LEGALIZACION DE FIRMAS
-                    dCostoLegalizacion: 0,
+                    fCostoLegalizacion: 0,
                     nIdTipoPersona: '',
                     //COSTO TRAMITE TARJETA
-                    dCostoTramiteTarjeta: 0,
+                    fCostoTramiteTarjeta: 0,
                     //COSTO PLACA
-                    dCostoPlaca: 0,
+                    fCostoPlaca: 0,
                     //COSTO GARANTIA INMOBILIARIA
-                    dCostoGarantiaI: 0,
+                    fCostoGarantiaI: 0,
                     //COSTO NOTARILES
-                    dCostoNotariales: 0,
+                    fCostoNotariales: 0,
                     //CAMBIO DE CARACTERISTICAS
-                    dCambioCaracteristicas: 0,
-
-                    //PN/PJ
-                    nIdFiltro01: '',
-                    cDescripcionFiltro01: '',
-                    cMontoFiltro01: '',
-                    //COOPROPIETARIO
-                    nIdFiltro02: '',
-                    cDescripcionFiltro02: '',
-                    cMontoFiltro02: '',
-                    //CARROCERIA
-                    nIdFiltro03: '',
-                    cDescripcionFiltro03: '',
-                    cMontoFiltro03: ''
+                    fCambioCaracteristicas: 0
                 },
                 // montoSubTotalTramiteTarjeta: 0,
                 // montoSubTotalTramitePlaca: 0,
@@ -1227,7 +1222,7 @@
                 // ================================
                 fillModalTarjetaPlaca: {
                     nIdEstado: '',
-                    cNroTarjeta: '',
+                    cNroTitulo: '',
                     cNroPlaca: '',
                     cObservacion: '',
                     nIdTramiteTarjeta: '',
@@ -1523,31 +1518,31 @@
                 });
             },
             verificarMontos(){
-                if (this.fillConceptosDocumentos.dCostoLegalizacion == '' || this.fillConceptosDocumentos.dCostoLegalizacion < 0) {
-                    this.fillConceptosDocumentos.dCostoLegalizacion = 0;
+                if (this.fillConceptosDocumentos.fCostoLegalizacion == '' || this.fillConceptosDocumentos.fCostoLegalizacion < 0) {
+                    this.fillConceptosDocumentos.fCostoLegalizacion = 0;
                 }
-                if (this.fillConceptosDocumentos.dCostoTramiteTarjeta == '' || this.fillConceptosDocumentos.dCostoTramiteTarjeta < 0) {
-                    this.fillConceptosDocumentos.dCostoTramiteTarjeta = 0;
+                if (this.fillConceptosDocumentos.fCostoTramiteTarjeta == '' || this.fillConceptosDocumentos.fCostoTramiteTarjeta < 0) {
+                    this.fillConceptosDocumentos.fCostoTramiteTarjeta = 0;
                 }
-                if (this.fillConceptosDocumentos.dCostoPlaca == '' || this.fillConceptosDocumentos.dCostoPlaca < 0) {
-                    this.fillConceptosDocumentos.dCostoPlaca = 0;
+                if (this.fillConceptosDocumentos.fCostoPlaca == '' || this.fillConceptosDocumentos.fCostoPlaca < 0) {
+                    this.fillConceptosDocumentos.fCostoPlaca = 0;
                 }
-                if (this.fillConceptosDocumentos.dCostoGarantiaI == '' || this.fillConceptosDocumentos.dCostoGarantiaI < 0) {
-                    this.fillConceptosDocumentos.dCostoGarantiaI = 0;
+                if (this.fillConceptosDocumentos.fCostoGarantiaI == '' || this.fillConceptosDocumentos.fCostoGarantiaI < 0) {
+                    this.fillConceptosDocumentos.fCostoGarantiaI = 0;
                 }
-                if (this.fillConceptosDocumentos.dCostoNotariales == '' || this.fillConceptosDocumentos.dCostoNotariales < 0) {
-                    this.fillConceptosDocumentos.dCostoNotariales = 0;
+                if (this.fillConceptosDocumentos.fCostoNotariales == '' || this.fillConceptosDocumentos.fCostoNotariales < 0) {
+                    this.fillConceptosDocumentos.fCostoNotariales = 0;
                 }
-                if (this.fillConceptosDocumentos.dCambioCaracteristicas == '' || this.fillConceptosDocumentos.dCambioCaracteristicas < 0) {
-                    this.fillConceptosDocumentos.dCambioCaracteristicas = 0;
+                if (this.fillConceptosDocumentos.fCambioCaracteristicas == '' || this.fillConceptosDocumentos.fCambioCaracteristicas < 0) {
+                    this.fillConceptosDocumentos.fCambioCaracteristicas = 0;
                 }
 
-                let fcostolegalizacion       = this.fillConceptosDocumentos.dCostoLegalizacion;
-                let fcostotramitetarjeta     = this.fillConceptosDocumentos.dCostoTramiteTarjeta;
-                let fcostoplaca              = this.fillConceptosDocumentos.dCostoPlaca;
-                let fcostogarantia           = this.fillConceptosDocumentos.dCostoGarantiaI;
-                let fcostonotariles          = this.fillConceptosDocumentos.dCostoNotariales;
-                let fcostocaracteristicas    = this.fillConceptosDocumentos.dCambioCaracteristicas;
+                let fcostolegalizacion       = this.fillConceptosDocumentos.fCostoLegalizacion;
+                let fcostotramitetarjeta     = this.fillConceptosDocumentos.fCostoTramiteTarjeta;
+                let fcostoplaca              = this.fillConceptosDocumentos.fCostoPlaca;
+                let fcostogarantia           = this.fillConceptosDocumentos.fCostoGarantiaI;
+                let fcostonotariles          = this.fillConceptosDocumentos.fCostoNotariales;
+                let fcostocaracteristicas    = this.fillConceptosDocumentos.fCambioCaracteristicas;
 
                 this.montoTotalGeneralTramite = (parseFloat(fcostolegalizacion) + parseFloat(fcostotramitetarjeta) + parseFloat(fcostoplaca) + parseFloat(fcostogarantia) + parseFloat(fcostonotariles) + parseFloat(fcostocaracteristicas))
             },
@@ -1690,14 +1685,14 @@
                 if(!this.fillBusquedaPedidosSeleccionados.nroVehiculos || this.fillBusquedaPedidosSeleccionados.nroVehiculos == 0){
                     this.mensajeError.push('El número de vehículos es un campo obligatorio');
                 }
-                if(this.fillConceptosDocumentos.dCostoLegalizacion <= 0 && this.fillConceptosDocumentos.dCostoTramiteTarjeta <= 0 && this.fillConceptosDocumentos.dCostoPlaca <= 0) {
-                    if(this.fillConceptosDocumentos.dCostoLegalizacion <= 0) {
+                if(this.fillConceptosDocumentos.fCostoLegalizacion <= 0 && this.fillConceptosDocumentos.fCostoTramiteTarjeta <= 0 && this.fillConceptosDocumentos.fCostoPlaca <= 0) {
+                    if(this.fillConceptosDocumentos.fCostoLegalizacion <= 0) {
                         this.mensajeError.push('Los Costos de Legalizacion debe asignarle un monto');
                     }
-                    if(this.fillConceptosDocumentos.dCostoTramiteTarjeta <= 0) {
+                    if(this.fillConceptosDocumentos.fCostoTramiteTarjeta <= 0) {
                         this.mensajeError.push('Los Costos de Tramite Tarjeta debe asignarle un monto');
                     }
-                    if(this.fillConceptosDocumentos.dCostoPlaca <= 0) {
+                    if(this.fillConceptosDocumentos.fCostoPlaca <= 0) {
                         this.mensajeError.push('Los Costos de Placa debe asignarle un monto');
                     }
                 }
@@ -1891,6 +1886,35 @@
                 $('#SubTabBandejaSolicitudes').removeClass('in active show');
                 $('#SubTabDetalleSolcitud').addClass('in active show');
             },
+            exportarExcel(){
+                this.mostrarProgressBar();
+                // this.loading = true;
+                var url = this.ruta + '/tramite/exportSolicitudes';
+                axios.get(url, {
+                    params: {
+                        'nIdEstadoTramite'      :   (this.fillBusquedaSolTramite.nidestadotramite == '') ? '0' : this.fillBusquedaSolTramite.nidestadotramite,
+                        'cnumvin'               :   this.fillBusquedaSolTramite.cnumvin,
+                        'fechaInicioTramite'    :   this.fillBusquedaSolTramite.fechaInicioTramite,
+                        'fechaFinRealTramite'   :   this.fillBusquedaSolTramite.fechaFinRealTramite
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Reporte de Solicitudes Tramite'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    // this.loading = false;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // ==================================
             // MODAL TRAMITE TARJETA
             // ==================================
@@ -1953,7 +1977,7 @@
                     this.vistaEstado = 2;//Si no se selecciono
                     this.fillModalTarjetaPlaca.flagRegTramiteByEstado = '';//NINGUNO
                     this.fillModalTarjetaPlaca.cObservacion = '';
-                    this.fillModalTarjetaPlaca.cNroTarjeta = '';
+                    this.fillModalTarjetaPlaca.cNroTitulo = '';
                     this.fillModalTarjetaPlaca.cNroPlaca = '';
                 }
                 if(this.fillModalTarjetaPlaca.nIdEstado == 1300329) {
@@ -1964,7 +1988,7 @@
                 if(this.fillModalTarjetaPlaca.nIdEstado == 1300330) {
                     this.vistaEstado = 0;//Si es OBSERVADA
                     this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 0;//OBSERVADA
-                    this.fillModalTarjetaPlaca.cNroTarjeta = '';
+                    this.fillModalTarjetaPlaca.cNroTitulo = '';
                     this.fillModalTarjetaPlaca.cNroPlaca = '';
                 }
             },
@@ -1978,7 +2002,7 @@
                     'nIdTramiteTarjeta'     :   this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
                     'dFechaFinRealTramite'  :   moment().format('DD/MM/YYYY'),
                     'nIdEstado'             :   this.fillModalTarjetaPlaca.nIdEstado,
-                    'cNroTarjeta'           :   this.fillModalTarjetaPlaca.cNroTarjeta,
+                    'cNroTitulo'           :   this.fillModalTarjetaPlaca.cNroTitulo,
                     'cNroPlaca'             :   this.fillModalTarjetaPlaca.cNroPlaca,
                     'cObservacion'          :   this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado':   this.fillModalTarjetaPlaca.flagRegTramiteByEstado
@@ -2004,7 +2028,7 @@
                     this.mensajeError.push('Debe seleccionar un estado, es campo obligatorio');
                 }
                 if (this.vistaEstado == 1) {
-                    if(!this.fillModalTarjetaPlaca.cNroTarjeta){
+                    if(!this.fillModalTarjetaPlaca.cNroTitulo){
                         this.mensajeError.push('Debe ingresar un número de Tarjeta, es campo obligatorio');
                     }
                     if(!this.fillModalTarjetaPlaca.cNroPlaca){
@@ -2214,7 +2238,7 @@
                 this.cerrarModalSolicitud();
                 this.fillModalTarjetaPlaca.nIdEstado = '',
                 this.fillModalTarjetaPlaca.cNroPlaca = '',
-                this.fillModalTarjetaPlaca.cNroTarjeta = '',
+                this.fillModalTarjetaPlaca.cNroTitulo = '',
                 this.fillModalTarjetaPlaca.cObservacion = '',
                 this.fillModalTarjetaPlaca.nIdTramiteTarjeta = '',
                 this.fillModalTarjetaPlaca.nIdTramitePlaca = '',
