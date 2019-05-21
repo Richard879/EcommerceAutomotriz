@@ -305,7 +305,7 @@ class CotizacionController extends Controller
         $cNumeroCotizacion      =   $request->cnumerocotizacion;
         $nIdEstadoCotizacion    =   $request->nidestadocotizacion;
         $cContacto              =   $request->ccontacto;
-        $cNumeroDocumento   =   $request->cnrodocumento;
+        $cNumeroDocumento       =   $request->cnrodocumento;
         $ntipopersona           =   $request->ntipopersona;
 
         $dFechaInicio           =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;

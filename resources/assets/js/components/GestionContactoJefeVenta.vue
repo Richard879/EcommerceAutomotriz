@@ -247,7 +247,7 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
-                                                                    <div class="form-group row">
+                                                                    <!--<div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -261,7 +261,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="col-sm-6">
+                                                                       <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                                                 <div class="col-sm-8">
@@ -279,11 +279,11 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div>-->
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                                <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                                 <div class="col-sm-8">
                                                                                     <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
                                                                                 </div>
@@ -291,7 +291,7 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Nro Documento</label>
+                                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                                 <div class="col-sm-8">
                                                                                     <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
                                                                                 </div>
@@ -318,70 +318,35 @@
                                                                 <template v-if="arrayContactosPorVendedor.length">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
-                                                                            <template v-if="fillContactoPorVendedor.ntipopersona == 1">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Apellidos</th>
-                                                                                        <th>Nombres</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Dirección</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Vendedor</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
-                                                                                        <td>{{ c.nIdContacto }}</td>
-                                                                                        <td>{{ c.cPerApellidos }}</td>
-                                                                                        <td>{{ c.cNombre }}</td>
-                                                                                        <td>{{ c.cNumeroDocumento }}</td>
-                                                                                        <td>{{ c.nTelefonoMovil }}</td>
-                                                                                        <td>{{ c.cDireccion }}</td>
-                                                                                        <td>{{ c.cEmail }}</td>
-                                                                                        <td>{{ c.cVendedor }}</td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
-                                                                                            </el-tooltip>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Razon Social</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Persona Contacto</th>
-                                                                                        <th>Vendedor</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
-                                                                                        <td>{{ c.nIdContacto }}</td>
-                                                                                        <td>{{ c.cRazonSocial }}</td>
-                                                                                        <td>{{ c.cNumeroDocumento }}</td>
-                                                                                        <td>{{ c.nTelefonoMovil }}</td>
-                                                                                        <td>{{ c.cEmail }}</td>
-                                                                                        <td>{{ c.cContacto }}</td>
-                                                                                        <td>{{ c.cVendedor }}</td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Reasignar Contacto {{ c.cRazonSocial }}</div>
-                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
-                                                                                            </el-tooltip>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Dirección</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Vendedor</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
+                                                                                    <td>{{ c.nIdContacto }}</td>
+                                                                                    <td>{{ c.cContacto }}</td>
+                                                                                    <td>{{ c.cNumeroDocumento }}</td>
+                                                                                    <td>{{ c.nTelefonoMovil }}</td>
+                                                                                    <td>{{ c.cDireccion }}</td>
+                                                                                    <td>{{ c.cEmail }}</td>
+                                                                                    <td>{{ c.cNombreVendedor }}</td>
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="mostrarVistaContactoPorVendedor(c, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                        </el-tooltip>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
                                                                         </table>
                                                                     </div>
                                                                     <div class="col-sm-12">
@@ -484,7 +449,7 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="mostrarVistaContactoPorVendedor('', '', '', 1)">
+                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="mostrarVistaContactoPorVendedor('', 1)">
                                                                                 <i class="fa fa-close"></i> Regresar
                                                                             </button>
                                                                         </div>
@@ -3418,9 +3383,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formVendedor.nidvendedor == 0){
+                /*if(this.formVendedor.nidvendedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Vendedor');
-                };
+                };*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -3437,14 +3402,14 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillContactoPorVendedor.ntipopersona,
-                        'cnrodocumento' : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillContactoPorVendedor.cfiltrodescripcion.toString(),
-                        'nidvendedor'      : this.formVendedor.nidvendedor,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'     : 220016,
+                        'ntipopersona'      : this.fillContactoPorVendedor.ntipopersona,
+                        'cnrodocumento'     : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
+                        'cfiltrodescripcion': this.fillContactoPorVendedor.cfiltrodescripcion.toString(),
+                        'nidvendedor'       : 0,
+                        'page'              : page
                     }
                 }).then(response => {
                     let info = response.data.arrayContactosPorVendedor;
@@ -3457,10 +3422,9 @@
                     this.pagination.last_page      =   info.last_page;
                     this.pagination.from           =   info.from;
                     this.pagination.to             =   info.to;
+                    $("#myBar").hide();
                     //Limpiar caja busqueda
                     //this.limpiarBuscarContactosCPV();
-                }).then(function (response) {
-                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3474,12 +3438,13 @@
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []
             },
-            mostrarVistaContactoPorVendedor(nIdContacto, cNombre, cVendedor, nVistaValor){
+            mostrarVistaContactoPorVendedor(objContacto, nVistaValor){
                 if(nVistaValor == 0){
                     this.vistaContactoPorVendedor = 0;
-                    this.formReasignarContacto.nidcontacto = parseInt(nIdContacto);
-                    this.formReasignarContacto.ccontacto = cNombre;
-                    this.formReasignarContacto.cvendedornombre = cVendedor;
+                    this.formReasignarContacto.nidcontacto      = parseInt(objContacto.nIdContacto);
+                    this.formReasignarContacto.ccontacto        = objContacto.cContacto;
+                    this.formVendedor.nidvendedor               = objContacto.nIdVendedor;
+                    this.formReasignarContacto.cvendedornombre  = objContacto.cNombreVendedor;
                     this.listarReferenciaVehiculoPorReasignar(1);
                 }
                 else{
