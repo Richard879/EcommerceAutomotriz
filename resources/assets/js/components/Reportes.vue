@@ -174,7 +174,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Stock -->
+            <!-- Modal Show LISTA STOCK VEHICULOS -->
             <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
@@ -246,26 +246,6 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Disponible</label>
-                                                        <div class="col-sm-8">
-                                                            <el-select  v-model="formFiltro.cflagdisponible"
-                                                                        filterable
-                                                                        clearable
-                                                                        placeholder="SELECCIONE">
-                                                                <el-option
-                                                                    v-for="item in arrayFlagDisponible"
-                                                                    :key="item.id"
-                                                                    :label="item.nombre"
-                                                                    :value="item.id">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                         <div class="col-sm-8">
                                                             <el-select  v-model="formFiltro.nidlinea"
@@ -283,6 +263,26 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Disponible</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.cflagdisponible"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE">
+                                                                <el-option
+                                                                    v-for="item in arrayFlagDisponible"
+                                                                    :key="item.id"
+                                                                    :label="item.nombre"
+                                                                    :value="item.id">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
@@ -302,8 +302,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
@@ -342,7 +340,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Stock -->
+            <!-- Modal Show STOCK VEHICULOS GENERAL -->
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
@@ -404,7 +402,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <!-- <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Disponible</label>
                                                         <div class="col-sm-8">
@@ -421,7 +419,7 @@
                                                             </el-select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
@@ -441,8 +439,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
@@ -462,6 +458,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
@@ -692,7 +690,7 @@
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
                         'nidlista'          :   this.formFiltro.nidlista,
-                        'cflagdisponible'   :   this.formFiltro.cflagdisponible,
+                        'cflagdisponible'   :   'S',
                         'nidmarca'          :   this.formFiltro.nidmarca,
                         'nidmodelo'         :   this.formFiltro.nidmodelo
                     }
@@ -727,7 +725,7 @@
                     params: {
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
-                        'cflagdisponible'   :   this.formFiltro.cflagdisponible,
+                        'cflagdisponible'   :   'S',
                         'nidmarca'          :   this.formFiltro.nidmarca,
                         'nidmodelo'         :   this.formFiltro.nidmodelo
                     }
