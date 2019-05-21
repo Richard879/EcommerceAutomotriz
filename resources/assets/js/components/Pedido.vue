@@ -318,6 +318,24 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formPedido.ccontacto" @keyup.enter="listarCotizacionesIngresadas(1)" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formPedido.cnrodocumento" @keyup.enter="listarCotizacionesIngresadas(1)" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                                 <div class="col-sm-8">
                                                                                     <el-date-picker
@@ -1759,7 +1777,9 @@
                     cnumerocotizacion: '',
                     nidcontacto: '',
                     cnombrecontacto: '',
-                    nidcabecerapedido: 0
+                    nidcabecerapedido: 0,
+                    ccontacto: '',
+                    cnrodocumento: ''
                 },
                 arrayMisPedido: [],
                 arrayPedido: [],
@@ -2181,6 +2201,8 @@
                         'nidmarca'          : this.formPedido.nidmarca,
                         'nidmodelo'         : this.formPedido.nidmodelo,
                         'cnumerocotizacion' : this.formPedido.cnumerocotizacion,
+                        'ccontacto'         : this.formPedido.ccontacto,
+                        'cnrodocumento'     : this.formPedido.cnrodocumento,
                         'page': page
                     }
                 }).then(response => {
