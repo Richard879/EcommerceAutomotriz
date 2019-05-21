@@ -57,7 +57,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
+                                                                    <!--<div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                                             <div class="col-sm-8">
@@ -67,12 +67,20 @@
                                                                                 </label>
                                                                             </div>
                                                                         </div>
+                                                                    </div>-->
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -199,14 +207,15 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>#Doc SAP</th>
-                                                                                <th>Vendedor</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Nro Documento</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
+                                                                                <th>Vendedor</th>
                                                                                 <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
@@ -230,14 +239,15 @@
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
-                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -1099,7 +1109,8 @@
                     nidmodelo: '',
                     nidestadopedido: '',
                     ntipopersona: 1,
-                    ccontacto: ''
+                    ccontacto: '',
+                    cnrodocumento: '',
                 },
                 arrayPedido: [],
                 arrayEstadoPedido: [],
@@ -1341,6 +1352,7 @@
                         'nidmodelo'         :   this.fillPedido.nidmodelo,
                         'nidestadopedido'   :   this.fillPedido.nidestadopedido,
                         'ccontacto'         :   this.fillPedido.ccontacto,
+                        'cnrodocumento'     :   this.fillPedido.cnrodocumento,
                         'ntipopersona'      :   this.fillPedido.ntipopersona,
                         'page' : page
                     }

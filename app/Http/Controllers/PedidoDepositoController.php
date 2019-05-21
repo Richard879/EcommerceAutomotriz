@@ -323,6 +323,7 @@ class PedidoDepositoController extends Controller
         $nIdModelo          =   $request->nidmodelo;
         $nIdEstadoPedido    =   $request->nidestadopedido;
         $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
         $ntipopersona       =   $request->ntipopersona;
 
         $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
@@ -333,11 +334,11 @@ class PedidoDepositoController extends Controller
         $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $nIdEstadoPedido    =   ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
         $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayPedido = DB::select('exec [usp_Deposito_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                                        [
-                                                                            $nIdEmpresa,
+        $arrayPedido = DB::select('exec [usp_Deposito_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
                                                                             $nIdSucursal,
                                                                             $dFechaInicio,
                                                                             $dFechaFin,
@@ -347,6 +348,7 @@ class PedidoDepositoController extends Controller
                                                                             $nIdModelo,
                                                                             $nIdEstadoPedido,
                                                                             $cContacto,
+                                                                            $cNumeroDocumento,
                                                                             $ntipopersona,
                                                                             Auth::user()->id
                                                                         ]);
