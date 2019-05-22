@@ -238,7 +238,7 @@
                 </tbody>
             </table>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="justify">
                         El cliente libera a la empresa de cualquier responsabilidad relacionada a plazos de entrega del producto adquirido, en tanto el proceso de importación del producto
@@ -361,7 +361,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 @if ($arrayDetallePedido[0]->cJefeVentas == '------')
                     <tr>
                         <td align="left" style="width: 40%;">
@@ -389,7 +389,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td align="left" style="width: 40%;"></td>
                     <td align="center" style="width: 40%;">

@@ -345,7 +345,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 @if ($arrayDetalleCotizacion[0]->cJefeVentas == '------')
                     <tr>
                         <td align="left" style="width: 40%;">
@@ -373,7 +373,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td align="left" style="width: 40%;"></td>
                     <td align="center" style="width: 40%;">
