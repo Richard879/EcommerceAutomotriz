@@ -2079,7 +2079,8 @@ select.form-control:focus::-ms-value {
 .input-group-sm > .input-group-append > .input-group-text,
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
-  padding: 0.475rem 0.75rem; 
+  /*padding: 0.475rem 0.75rem;*/
+  padding: 0.4rem 0.75rem; 
   font-size: 0.8rem;
   line-height: 1.5;
   border-radius: 0.2rem;
@@ -11650,7 +11651,8 @@ canvas {
 }
 
 header.page-header {
-    padding: 15px 0;
+    /*padding: 15px 0;*/
+    padding: 10px 0;
 }
 
 table {
