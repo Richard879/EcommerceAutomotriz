@@ -394,7 +394,7 @@
             <tr>
                 <td align="left" style="width: 50%;">
                     Esta cotización vencerá en {{ $arrayDetalleCotizacion[0]->cNumeroDiasCotizacion }} días Nro Cotización: {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }}.<br>
-                    &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
+                    &copy; {{ date('Y') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">
                     {{ $arrayDetalleCotizacion[0]->cEmpresa }}

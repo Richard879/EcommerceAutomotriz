@@ -101,7 +101,7 @@
     </div>
 
     <div class="padding">
-        <table width="100%">
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td>Nombre/Razón Social:</td>
                 <td colspan="85"><strong>{{ $arrayDetallePedido[0]->cContacto }}</strong></td>
@@ -138,7 +138,7 @@
             </div>
 
             <div class="center">
-                <table width="100%">
+                <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
                             <h4>PRECIO DE LISTA:</h4>
@@ -409,7 +409,7 @@
         <table width="100%">
             <tr>
                 <td align="left" style="width: 50%;">
-                    &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
+                    &copy; {{ date('Y') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">
                     {{ $arrayDetallePedido[0]->cEmpresa }}
