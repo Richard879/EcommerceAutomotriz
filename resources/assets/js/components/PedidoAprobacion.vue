@@ -210,6 +210,10 @@
                                                                                         <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
@@ -975,6 +979,106 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Ver Detalle Depositos del Pedido -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">PEDIDO: CLIENTE {{ fillDetalleDeposito.cnombrecontacto }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="col-lg-12">
+                                                <template v-if="arrayDetalleDepositosPorPedido.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>BANCO</th>
+                                                                    <th>N° OPERACIÓN</th>
+                                                                    <th>MONEDA</th>
+                                                                    <th>FECHA</th>
+                                                                    <th>TTPO CAMBIO</th>
+                                                                    <th>MONTO s./</th>
+                                                                    <th>MONTO US$</th>
+                                                                    <th>ESTADO</th>
+                                                                    <th>VOUCHER</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido"
+                                                                        :style="{ background : depositos.colorearEstadoDeposito}">
+                                                                    <td v-text="depositos.cNombreBanco"></td>
+                                                                    <td v-text="depositos.nNumeroOperacion"></td>
+                                                                    <td v-text="depositos.cNombreMoneda"></td>
+                                                                    <td v-text="depositos.dFechaDeposito"></td>
+                                                                    <td v-text="depositos.fTipoCambio"></td>
+                                                                    <td v-text="Number((parseFloat(depositos.fMontoSoles)).toFixed(2))"></td>
+                                                                    <td v-text="Number((parseFloat(depositos.fMontoDolares)).toFixed(2))"></td>
+                                                                    <td v-text="depositos.cEstadoDeposito"></td>
+                                                                    <td>
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Voucher del Deposito {{ depositos.nNumeroOperacion }}</div>
+                                                                            <i @click="descargaVoucher(depositos.cRutaDocumento)" class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
+                                                                        </el-tooltip>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6" :offset="12"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            US$. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalDepositos)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6" :offset="12"><div class="grid-content bg-purple"> MONTO PEDIDO</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            US$. {{ Number((parseFloat(fillDetalleDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6" :offset="12"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            USD. {{ Number((parseFloat(fillDetalleDeposito.flagMontoCancelar)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1130,6 +1234,16 @@
                     cwhsname: ''
                 },
                 arrayAlmacen: [],
+                // =============================================================================
+                // ================ VARIABLES MODAL DETALLE DEPOSITOS POR PEDIDO ===============
+                fillDetalleDeposito: {
+                    nidcabecerapedido: 0,
+                    cnombrecontacto: '',
+                    flagMontoTotalCotizacion: 0,
+                    flagMontoTotalDepositos: 0,
+                    flagMontoCancelar: 0
+                },
+                arrayDetalleDepositosPorPedido: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -3711,6 +3825,88 @@
                 this.cerrarModal();
             },
             // =================================================================
+            // VER DETALLE DEPOSITOS
+            // =================================================================
+            limpiarModalDetalleDepositosPorPedido(){
+                this.arrayDetalleDepositosPorPedido = [];
+                this.fillDetalleDeposito.nidcabecerapedido = '';
+                this.fillDetalleDeposito.cnombrecontacto = '';
+                this.fillDetalleDeposito.flagMontoTotalCotizacion = 0;
+                this.fillDetalleDeposito.flagMontoTotalDepositos = 0;
+                this.fillDetalleDeposito.flagMontoCancelar = 0;
+            },
+            cargarDatosDetalleDeposito(pedido){
+                this.limpiarModalDetalleDepositosPorPedido();
+
+                var url = this.ruta + '/deposito/GetMontoTotalDepositos';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCabeceraPedido'     : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion' : 'A'
+                    }
+                }).then(response => {
+                    this.fillDetalleDeposito.nidcabecerapedido          =   pedido.nIdCabeceraPedido;
+                    this.fillDetalleDeposito.cnombrecontacto            =   pedido.cContacto;
+                    this.fillDetalleDeposito.flagMontoTotalCotizacion   =   pedido.fTotalPedido;//Monto del Deposito
+                    this.fillDetalleDeposito.flagMontoTotalDepositos    =   response.data[0].fMontoTotalDepositos;//Monto de lo Depositado
+
+                    // Resto el Total a pagar - El Total Pagado
+                    var flagMontoTotalCotizacion                = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados        = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalDepositos).toFixed(4))
+                    var resultadoMontoCancelar                  = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.fillDetalleDeposito.flagMontoCancelar  = resultadoMontoCancelar;
+                    (this.fillDetalleDeposito.flagMontoCancelar < 0 ) ? this.fillDetalleDeposito.flagMontoCancelar = 0 : this.fillDetalleDeposito.flagMontoCancelar;
+                    this.listarDetalleDepositosPorPedido(pedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarDetalleDepositosPorPedido(pedido){
+                let me = this;
+
+                var url = this.ruta + '/deposito/GetListDepositosPorPedido';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    this.arrayDetalleDepositosPorPedido  = response.data;
+
+                    //Verifica si existen depositos
+                    if(this.arrayDetalleDepositosPorPedido.length > 0) {
+                        //recorre los depositos
+                        this.arrayDetalleDepositosPorPedido.map(function(value, key){
+                            //agrega un atributo de color por cada deposito dependiendo su estado
+                            if(value.cFlagEstadoAprobacion == 'A') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(188, 238, 188)';
+                            }
+                            if(value.cFlagEstadoAprobacion == 'D') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(233, 177, 151)';
+                            }
+                            if(value.cFlagEstadoAprobacion == 'P') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgba(233, 240, 96, 0.795)';
+                            }
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =================================================================
             // MODAL
             // =================================================================
             abrirModal(modelo, accion, data =[]){
@@ -3724,7 +3920,14 @@
                                 this.modal = 1;
                                 this.verPedido(data);
                                 break;
-                            }
+                            }break;
+                            case 'deposito':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                this.cargarDatosDetalleDeposito(data);
+                                break;
+                            }break;
                         }
                     }
                     break;
