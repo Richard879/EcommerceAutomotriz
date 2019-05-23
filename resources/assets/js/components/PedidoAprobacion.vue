@@ -1393,8 +1393,9 @@
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
-                    this.getEVById(objPedido);
-                    this.getObsequiosCampaniasByIdPedido(objPedido);
+                    this.generaSapBusinessPedido(objPedido);
+                    //this.getEVById(objPedido);
+                    //this.getObsequiosCampaniasByIdPedido(objPedido);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1405,7 +1406,7 @@
                     }
                 });
             },
-            getEVById(objPedido){
+            /*getEVById(objPedido){
                 var url = this.ruta + '/pedido/GetPedidoEVById';
                 axios.get(url, {
                     params: {
@@ -1425,8 +1426,8 @@
                         }
                     }
                 });
-            },
-            getObsequiosCampaniasByIdPedido(objPedido){
+            },*/
+            /*getObsequiosCampaniasByIdPedido(objPedido){
                 let me = this;
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
                 axios.get(url, {
@@ -1467,13 +1468,13 @@
                         }
                     }
                 });
-            },
+            },*/
             //REGISTRA PEDIDO EN SAP
             generaSapBusinessPedido(objPedido){
                 let me = this;
 
                  //Verifico Si No existe OrdenVenta del Vehiculo
-                if(objPedido.nDocEntryDetallePedido == 0) {
+                if(objPedido.nDocEntryDetallePedido==0) {
                     //==============================================================
                     //================== REGISTRO PEDIDO EN SAP ====================
                     me.loadingProgressBar("INTEGRANDO EL PEDIDO CON SAP BUSINESS ONE...");
@@ -1688,17 +1689,16 @@
                         'hStartTime'    :   moment().format('HH:mm:ss')
                     });
 
-                    me.arraySapEVPedido.map(function(value, key){
+                    /*me.arraySapEVPedido.map(function(value, key){
                         //Guardo el Codigo SAP de los Elemento Venta
                         me.arrayCodSAPPedidoEV.push({
                             'nDocEntry' :   parseInt(value.nDocEntryDetallePedido),
                             'cItemCode' :   value.cNumeroVin.toString()
                         });
 
-                        /**
-                         * Solo la primera iteración debido que es la misma actividad para todos los EV
-                         * ya que estos pertenecen a una sola OV
-                         */
+                        
+                        //Solo la primera iteración debido que es la misma actividad para todos los EV
+                        //ya que estos pertenecen a una sola OV
                         if(key == 0)
                         {
                             me.arraySapActividadEV.push({
@@ -1721,7 +1721,7 @@
                                 'hStartTime'    :   '08:13:00'
                             });
                         }
-                    })
+                    })*/
                 }
 
                 //Verificar si no existe Actividad registrada
@@ -1801,7 +1801,7 @@
                     //================================================================
                     //=========== REGISTRO SOLUCION SAP ==========
                     setTimeout(function() {
-                        me.registroSapBusinessSolucion(objPedido);
+                        me.generaSapBusinessSolucion(objPedido);
                     }, 800);
                 }
             },
@@ -1827,7 +1827,7 @@
             },
             generaSapBusinessSolucion(objPedido){
                 let me = this;
-                if(objPedido.nSolutionCode == 0) {
+                if(objPedido.nSolutionCode==0) {
                     me.arraySapSolucion.push({
                         'cItemCode' : objPedido.cNumeroVin,
                         'cSubject'  : objPedido.cSubjectSolution
@@ -1883,7 +1883,8 @@
                     //==============================================================
                     //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
                     setTimeout(function() {
-                        me.generaSapBusinessLlamadaServicio(objPedido);
+                        me.obtenerOrdenVentaActividad(objPedido);
+                        me.nSolutionCode = objPedido.nSolutionCode;
                     }, 800);
                 }
             },
@@ -1961,13 +1962,13 @@
                     }
                 });
                 setTimeout(function() {
-                    me.registroSapBusinessLlamadaServicio(objPedido);
+                    me.generaSapBusinessLlamadaServicio(objPedido);
                 }, 800);
             },
             generaSapBusinessLlamadaServicio(objPedido){
                 let me = this;
 
-                me.loading.close();
+                //me.loading.close();
                 me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
@@ -2052,10 +2053,9 @@
                 var url = me.ruta + '/pedido/GetLlamadasServiciosByPedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        //Si es 1 (Desde Form Direcciones) / Si es 2 desde Aprobación Directa
-                        'nidcabecerapedido' : (this.cFlagOpcion == 1) ? this.fillDirecciones.nIdCabeceraPedido : this.formSap.nidcabecerapedido
+                        'nidempresa'        : objPedido.nIdEmpresa,
+                        'nidsucursal'       : objPedido.nIdSucursal,
+                        'nidcabecerapedido' : objPedido.nIdCabeceraPedido
                     }
                 }).then(response => {
                     me.arrayPatchLlamadaServicios = response.data.arrayLlamadaServicios;
@@ -2100,7 +2100,8 @@
                     'data'  : me.arraySapPedido
                 }).then(response => {
                     setTimeout(function() {
-                        me.getSapCostoPromedio(objPedido);
+                        //me.getSapCostoPromedio(objPedido);
+                        me.confirmaMiPedido(objPedido);
                     }, 800);
                 }).catch(error => {
                     console.log(error);
@@ -2112,7 +2113,7 @@
                     }
                 });
             },
-            getSapCostoPromedio(objPedido){
+            /*getSapCostoPromedio(objPedido){
                 let me = this;
                 me.loading.close();
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
@@ -2234,7 +2235,7 @@
                         }
                     }
                 });
-            },
+            },*/
             confirmaMiPedido(objPedido){
                 let me = this;
                 me.limpiarFormulario();
