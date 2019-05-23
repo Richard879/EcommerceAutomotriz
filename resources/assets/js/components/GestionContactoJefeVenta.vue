@@ -112,6 +112,7 @@
                                                                         <template v-if="fillMisContactos.ntipopersona == 1">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>#Codigo SAP</th>
                                                                                     <th>Apellidos</th>
@@ -121,7 +122,6 @@
                                                                                     <th>Dirección</th>
                                                                                     <th>Email</th>
                                                                                     <th>Vendedor</th>
-                                                                                    <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -155,6 +155,7 @@
                                                                         <template v-else>
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>#Codigo SAP</th>
                                                                                     <th>Razon Social</th>
@@ -163,7 +164,6 @@
                                                                                     <th>Email</th>
                                                                                     <th>Persona Contacto</th>
                                                                                     <th>Vendedor</th>
-                                                                                    <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
