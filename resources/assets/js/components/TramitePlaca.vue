@@ -663,23 +663,17 @@
                                                                                                 <table class="table table-striped table-sm">
                                                                                                     <thead>
                                                                                                         <tr>
+                                                                                                            <th>Acciones</th>
                                                                                                             <th>Fecha Inicio Tramite</th>
                                                                                                             <th>Fecha Fin Tramite</th>
                                                                                                             <th>Fecha Fin Real Tramite</th>
                                                                                                             <th>N° VIN</th>
                                                                                                             <th>Estado Tarjeta</th>
                                                                                                             <th>Estado Placa</th>
-                                                                                                            <th>Acciones</th>
                                                                                                         </tr>
                                                                                                     </thead>
                                                                                                     <tbody>
                                                                                                         <tr v-for="(solicitud, index) in arrayDetalleSolicitudTramite" :key="index">
-                                                                                                            <td v-text="solicitud.dFechaInicioTramite"></td>
-                                                                                                            <td v-text="solicitud.dFechaFinTramite"></td>
-                                                                                                            <td v-text="solicitud.dFechaFinRealTramite"></td>
-                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
-                                                                                                            <td v-text="solicitud.cEstadoTarjeta"></td>
-                                                                                                            <td v-text="solicitud.cEstadoPlaca"></td>
                                                                                                             <td>
                                                                                                                 <template v-if="solicitud.cEstadoTarjeta != 'RECIBIDA'">
                                                                                                                     <el-tooltip class="item"
@@ -702,6 +696,12 @@
                                                                                                                     </el-tooltip>
                                                                                                                 </template>
                                                                                                             </td>
+                                                                                                            <td v-text="solicitud.dFechaInicioTramite"></td>
+                                                                                                            <td v-text="solicitud.dFechaFinTramite"></td>
+                                                                                                            <td v-text="solicitud.dFechaFinRealTramite"></td>
+                                                                                                            <td v-text="solicitud.cNumeroVin"></td>
+                                                                                                            <td v-text="solicitud.cEstadoTarjeta"></td>
+                                                                                                            <td v-text="solicitud.cEstadoPlaca"></td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
