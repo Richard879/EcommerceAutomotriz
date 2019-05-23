@@ -126,6 +126,20 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                        </el-tooltip>
+                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                        </el-tooltip>-->
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </td>
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.CardCode"></td>
                                                                                     <td v-text="c.cPerApellidos"></td>
@@ -135,20 +149,6 @@
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cVendedor"></td>
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
@@ -168,6 +168,20 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Seguimiento {{ c.cRazonSocial }}</div>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                        </el-tooltip>-->
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </td>
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.CardCode"></td>
                                                                                     <td v-text="c.cRazonSocial"></td>
@@ -176,20 +190,6 @@
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cContacto"></td>
                                                                                     <td v-text="c.cVendedor"></td>
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cRazonSocial }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
@@ -980,7 +980,7 @@
                                                                                                 <div class="input-group-prepend">
                                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                         <div slot="content">Buscar Proveedor </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar', 1)">
                                                                                                             <i class="fa-lg fa fa-search"></i>
                                                                                                         </button>
                                                                                                     </el-tooltip>
