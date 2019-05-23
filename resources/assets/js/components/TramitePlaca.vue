@@ -1782,17 +1782,14 @@
                 this.fillBusquedaSolTramite.fechaFinRealTramite = '';
                 this.fillBusquedaSolTramite.nidestadotramite = '';
                 this.arrayPedidoDoumento = [];
-                this.arrayPedidoDoumentoNew = [];
-                this.arrayFiltros = [];
-                this.fillConceptosDocumentos.nIdFiltro01 = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro01 = '';
-                this.fillConceptosDocumentos.cMontoFiltro01 = '';
-                this.fillConceptosDocumentos.nIdFiltro02 = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro02 = '';
-                this.fillConceptosDocumentos.cMontoFiltro02 = '';
-                this.fillConceptosDocumentos.nIdFiltro03 = '';
-                this.fillConceptosDocumentos.cDescripcionFiltro03 = '';
-                this.fillConceptosDocumentos.cMontoFiltro03 = '';
+                this.fillConceptosDocumentos.fCostoLegalizacion = '';
+                this.fillConceptosDocumentos.nIdTipoPersona = '';
+                this.fillConceptosDocumentos.fCostoTramiteTarjeta = '';
+                this.fillConceptosDocumentos.fCostoPlaca = '';
+                this.fillConceptosDocumentos.fCostoGarantiaI = '';
+                this.fillConceptosDocumentos.fCostoNotariales = '';
+                this.fillConceptosDocumentos.fCambioCaracteristicas = '';
+                this.montoTotalGeneralTramite = 0;
                 this.fillIntegracionTarjetaEquipo = '';
             },
             buscarMisTramites(page){
