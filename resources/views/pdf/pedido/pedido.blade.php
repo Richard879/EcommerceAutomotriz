@@ -101,7 +101,7 @@
     </div>
 
     <div class="padding">
-        <table width="100%">
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td>Nombre/Razón Social:</td>
                 <td colspan="85"><strong>{{ $arrayDetallePedido[0]->cContacto }}</strong></td>
@@ -138,7 +138,7 @@
             </div>
 
             <div class="center">
-                <table width="100%">
+                <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
                             <h4>PRECIO DE LISTA:</h4>
@@ -238,7 +238,7 @@
                 </tbody>
             </table>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="justify">
                         El cliente libera a la empresa de cualquier responsabilidad relacionada a plazos de entrega del producto adquirido, en tanto el proceso de importación del producto
@@ -361,7 +361,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 @if ($arrayDetallePedido[0]->cJefeVentas == '------')
                     <tr>
                         <td align="left" style="width: 40%;">
@@ -389,7 +389,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td align="left" style="width: 40%;"></td>
                     <td align="center" style="width: 40%;">
@@ -409,7 +409,7 @@
         <table width="100%">
             <tr>
                 <td align="left" style="width: 50%;">
-                    &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
+                    &copy; {{ date('Y') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">
                     {{ $arrayDetallePedido[0]->cEmpresa }}

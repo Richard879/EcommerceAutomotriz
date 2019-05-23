@@ -345,7 +345,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 @if ($arrayDetalleCotizacion[0]->cJefeVentas == '------')
                     <tr>
                         <td align="left" style="width: 40%;">
@@ -373,7 +373,7 @@
 
             <br/>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td align="left" style="width: 40%;"></td>
                     <td align="center" style="width: 40%;">
@@ -394,7 +394,7 @@
             <tr>
                 <td align="left" style="width: 50%;">
                     Esta cotización vencerá en {{ $arrayDetalleCotizacion[0]->cNumeroDiasCotizacion }} días Nro Cotización: {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }}.<br>
-                    &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
+                    &copy; {{ date('Y') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">
                     {{ $arrayDetalleCotizacion[0]->cEmpresa }}
