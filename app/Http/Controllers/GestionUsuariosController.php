@@ -395,4 +395,23 @@ class GestionUsuariosController extends Controller
 
         return response()->json($arrayUsuarios);
     }
+
+    public function GetListUsuariosBySucursal(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+
+        $nIdEmpresa     =   ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
+        $nIdSucursal    =   ($nIdSucursal == NULL) ? ($nIdSucursal = '') : $nIdSucursal;
+
+        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuariosBySucursal ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal
+                                                            ]);
+
+        return response()->json($arrayUsuarios);
+    }
 }

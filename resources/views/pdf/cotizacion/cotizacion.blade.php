@@ -149,8 +149,12 @@
                             <strong><h4> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioLista }} </h4></strong>
                         </td>
                         <td>
-                            <h2>PRECIO ESPECIAL:</h2>
+                            <h2>PRECIO ESPECIAL $:</h2>
                             <strong> <h2> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecial }} </h2></strong>
+                        </td>
+                        <td>
+                            <h2>PRECIO ESPECIAL S/:</h2>
+                            <strong> <h2> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecialSoles }} </h2></strong>
                         </td>
                     </tr>
                 </table>
