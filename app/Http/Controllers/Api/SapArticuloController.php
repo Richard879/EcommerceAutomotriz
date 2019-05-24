@@ -194,7 +194,7 @@ class SapArticuloController extends Controller
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
-        $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
+        $cnombrecolor           =   $request->fillNuevoVehiculo['cnombrecolor'];
         $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
         $nidtranccion           =   $request->fillNuevoVehiculo['nidtranccion'];
         $nidcategoria           =   $request->fillNuevoVehiculo['nidcategoria'];
@@ -227,11 +227,11 @@ class SapArticuloController extends Controller
 
 
         //=================== OBTENER EL COLOR EXT DEL VEHÍCULO ===================
-        $color = DB::select('exec [usp_Par_GetParametroById] ?',
+        /*$color = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
                                                                     $nidcolor
                                                                 ]);
-        $nidcolor = $color[0]->cParNombre;//Setear por el Nombre
+        $nidcolor = $color[0]->cParNombre;//Setear por el Nombre*/
 
 
         //=================== OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO ===================
@@ -268,7 +268,7 @@ class SapArticuloController extends Controller
             'json' => [
                 "ItemCode"          =>  (string)$cnroserie,
                 'U_SYP_MARCA'       =>  (string)$nidmarca,
-                'U_SYP_CEXTERIOR'   =>  (string)$nidcolor,
+                'U_SYP_CEXTERIOR'   =>  (string)$cnombrecolor,
                 'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
                 'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
                 'U_SYP_NROCHASIS'   =>  (string)$cnroserie,//Numero de Chasis

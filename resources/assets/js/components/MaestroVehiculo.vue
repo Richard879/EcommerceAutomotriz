@@ -110,33 +110,17 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillBusquedaVehiculo.nidaniomodelo"
-                                                                                            filterable
-                                                                                            clearable
-                                                                                            placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayAnioModelo"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                                                                <input type="text" v-model="fillBusquedaVehiculo.cnombrecomercial" @keyup.enter="buscarVehiculo(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Venta</label>
+                                                                            <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillBusquedaVehiculo.dfechaventa"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="yyyy/MM/dd"
-                                                                                    type="date"
-                                                                                    placeholder="">
-                                                                                </el-date-picker>
+                                                                                <input type="text" v-model="fillBusquedaVehiculo.cnumerovin" @keyup.enter="buscarVehiculo(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -171,7 +155,8 @@
                                                                                         <th>Acciones</th>
                                                                                         <th>Marca</th>
                                                                                         <th>Modelo</th>
-                                                                                        <th>Serie</th>
+                                                                                        <th>Nombre Comercial</th>
+                                                                                        <th>Nro VIN</th>
                                                                                         <th>Tarjeta</th>
                                                                                         <th>Placa</th>
                                                                                         <th>Año Modelo</th>
@@ -191,7 +176,8 @@
                                                                                         </td>
                                                                                         <td v-text="vehiculo.cMarca"></td>
                                                                                         <td v-text="vehiculo.cModelo"></td>
-                                                                                        <td v-text="vehiculo.cNroSerie"></td>
+                                                                                        <td v-text="vehiculo.cNombreComercial"></td>
+                                                                                        <td v-text="vehiculo.cNumeroVin"></td>
                                                                                         <td v-text="vehiculo.cNroTarjeta"></td>
                                                                                         <td v-text="vehiculo.cPlaca"></td>
                                                                                         <td v-text="vehiculo.nAnioModelo"></td>
@@ -202,29 +188,29 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaVehiculos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarPaginaVehiculos(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaVehiculos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaVehiculos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaVehiculos(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaVehiculos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -363,7 +349,8 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Color</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="fillNuevoVehiculo.nidcolor"
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cnombrecolor" class="form-control form-control-sm">
+                                                                                            <!--<el-select v-model="fillNuevoVehiculo.nidcolor"
                                                                                                         filterable
                                                                                                         clearable
                                                                                                         placeholder="SELECCIONE">
@@ -373,7 +360,7 @@
                                                                                                 :label="item.cParNombre"
                                                                                                 :value="item.nIdPar">
                                                                                                 </el-option>
-                                                                                            </el-select>
+                                                                                            </el-select>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -383,7 +370,8 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="fillNuevoVehiculo.nidaniomodelo"
+                                                                                            <input type="number" v-model="fillNuevoVehiculo.nidaniomodelo" class="form-control form-control-sm">
+                                                                                            <!--<el-select v-model="fillNuevoVehiculo.nidaniomodelo"
                                                                                                         filterable
                                                                                                         clearable
                                                                                                         placeholder="SELECCIONE AÑO MODELO">
@@ -393,7 +381,7 @@
                                                                                                     :label="item.cParNombre"
                                                                                                     :value="item.nIdPar">
                                                                                                 </el-option>
-                                                                                            </el-select>
+                                                                                            </el-select>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -439,17 +427,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Cilindrada</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="fillNuevoVehiculo.nidcilindrada"
-                                                                                                        filterable
-                                                                                                        clearable
-                                                                                                        placeholder="SELECCIONE EL CILINDRADO">
-                                                                                                <el-option
-                                                                                                    v-for="item in arrayCilindrada"
-                                                                                                    :key="item.nIdPar"
-                                                                                                    :label="item.cParNombre"
-                                                                                                    :value="item.nIdPar">
-                                                                                                </el-option>
-                                                                                            </el-select>
+                                                                                            <input type="number" v-model="fillNuevoVehiculo.nidcilindrada" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1630,7 +1608,9 @@
                     nidmarca: '',
                     nidmodelo: '',
                     nidaniomodelo: '',
-                    dfechaventa: ''
+                    dfechaventa: '',
+                    cnombrecomercial: '',
+                    cnumerovin: ''
                 },
                 arrayMarca: [],
                 arrayModelo: [],
@@ -1651,7 +1631,7 @@
                     nidclase: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidcolor: '',
+                    cnombrecolor: '',
                     nidaniomodelo: '',
                     nidtranccion: '',
                     nidcategoria: '',
@@ -1930,13 +1910,15 @@
                 var url = this.ruta + '/maestrovehiculo/GetDetalleMaestroVehiculo';
                 axios.get(url, {
                     params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                         'ntipopersona'          :   this.fillBusquedaVehiculo.ntipopersona,
                         'cnrodocumento'         :   String(this.fillBusquedaVehiculo.cnrodocumento.toString()),
                         'cfiltrodescripcion'    :   this.fillBusquedaVehiculo.cfiltrodescripcion.toString(),
                         'nidmarca'              :   this.fillBusquedaVehiculo.nidmarca,
                         'nidmodelo'             :   this.fillBusquedaVehiculo.nidmodelo,
-                        'nidaniomodelo'         :   this.fillBusquedaVehiculo.nidaniomodelo,
-                        'dfechaventa'           :   this.fillBusquedaVehiculo.dfechaventa,
+                        'cnombrecomercial'      :   this.fillBusquedaVehiculo.cnombrecomercial,
+                        'cnumerovin'            :   this.fillBusquedaVehiculo.cnumerovin,
                         'page' : page
                     }
                 }).then(response => {
@@ -1989,7 +1971,7 @@
                 this.llenarComboAnioModelo();
                 this.llenarComboTraccion();
                 this.llenarComboCategoria();
-                this.llenarComboCilindrada();
+                //this.llenarComboCilindrada();
                 this.llenarComboTransmision();
                 this.llenarComboCombustible();
                 (this.nFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
@@ -2093,7 +2075,7 @@
                     }
                 });
             },
-            llenarComboCilindrada(){
+            /*llenarComboCilindrada(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
@@ -2110,7 +2092,7 @@
                         }
                     }
                 });
-            },
+            },*/
             llenarComboTransmision(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -2801,7 +2783,7 @@
                 this.fillNuevoVehiculo.nidclase = '';
                 this.fillNuevoVehiculo.nidmarca = '';
                 this.fillNuevoVehiculo.nidmodelo = '';
-                this.fillNuevoVehiculo.nidcolor = '';
+                this.fillNuevoVehiculo.cnombrecolor = '';
                 this.fillNuevoVehiculo.nidaniomodelo = '';
                 this.fillNuevoVehiculo.nidtranccion = '';
                 this.fillNuevoVehiculo.nidcategoria = '';
@@ -2874,7 +2856,7 @@
                 this.fillNuevoVehiculo.nidclase             =   (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
                 this.fillNuevoVehiculo.nidmarca             =   (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
                 this.fillNuevoVehiculo.nidmodelo            =   (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
-                this.fillNuevoVehiculo.nidcolor             =   (data['nIdColor'] == 0) ? '' : data['nIdColor'];
+                this.fillNuevoVehiculo.cnombrecolor         =   (data['cNombreColor'] == '') ? '' : data['cNombreColor'];
                 this.fillNuevoVehiculo.nidaniomodelo        =   data['nAnioModelo'];
                 this.fillNuevoVehiculo.nidtranccion         =   (data['nIdTraccion'] == 0) ? '' : data['nIdTraccion'];
                 this.fillNuevoVehiculo.nidcategoria         =   (data['nIdCategoria'] == 0) ? '' : data['nIdCategoria'];
