@@ -154,7 +154,7 @@
                         </td>
                         <td>
                             <h2>PRECIO ESPECIAL S/:</h2>
-                            <strong> <h2> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecialSoles }} </h2></strong>
+                            <strong> <h2> S/. {{ $arrayDetalleCotizacion[0]->fPrecioEspecialSoles }} </h2></strong>
                         </td>
                     </tr>
                 </table>
