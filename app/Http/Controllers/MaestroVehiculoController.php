@@ -19,7 +19,7 @@ class MaestroVehiculoController extends Controller
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
-        $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
+        $cnombrecolor               =   $request->fillNuevoVehiculo['cnombrecolor'];
         $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
         $nidtranccion           =   $request->fillNuevoVehiculo['nidtranccion'];
         $nidcategoria           =   $request->fillNuevoVehiculo['nidcategoria'];
@@ -49,7 +49,7 @@ class MaestroVehiculoController extends Controller
         $nidclase               =   ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
         $nidmarca               =   ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
         $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
-        $nidcolor               =   ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
+        $cnombrecolor           =   ($cnombrecolor == NULL)       ? ($cnombrecolor = ' ')         : $cnombrecolor;
         $nidaniomodelo          =   ($nidaniomodelo == NULL)       ? ($nidaniomodelo = ' ')         : $nidaniomodelo;
         $nidtranccion           =   ($nidtranccion == NULL) ? ($nidtranccion = ' ')   : $nidtranccion;
         $nidcategoria           =   ($nidcategoria == NULL) ? ($nidcategoria = ' ')   : $nidcategoria;
@@ -84,7 +84,7 @@ class MaestroVehiculoController extends Controller
                                         $nidclase,
                                         $nidmarca,
                                         $nidmodelo,
-                                        $nidcolor,
+                                        $cnombrecolor,
                                         $nidaniomodelo,
                                         $nidtranccion,
                                         $nidcategoria,
