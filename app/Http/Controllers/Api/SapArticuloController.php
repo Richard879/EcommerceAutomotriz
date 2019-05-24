@@ -235,11 +235,11 @@ class SapArticuloController extends Controller
 
 
         //=================== OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO ===================
-        $cilindrada = DB::select('exec [usp_Par_GetParametroById] ?',
+        /*$cilindrada = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
                                                                     $nidcilindrada
                                                                 ]);
-        $nidcilindrada = $cilindrada[0]->cParNombre;//Setear por el Nombre
+        $nidcilindrada = $cilindrada[0]->cParNombre;//Setear por el Nombre*/
 
 
         //=================== OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO ===================
