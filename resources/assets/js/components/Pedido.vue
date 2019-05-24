@@ -1995,7 +1995,7 @@
                         'dfechainicio'      :   this.fillPedido.dfechainicio,
                         'dfechafin'         :   this.fillPedido.dfechafin,
                         'cnumeropedido'     :   this.fillPedido.cnumeropedido,
-                        'cnumerovin '       :   this.fillPedido.cnumerovin,
+                        'cnumerovin'       :   this.fillPedido.cnumerovin,
                         'nidmarca'          :   this.formPedido.nidmarca,
                         'nidmodelo'         :   this.formPedido.nidmodelo,
                         'nidestadopedido'   :   this.fillPedido.nidestadopedido,

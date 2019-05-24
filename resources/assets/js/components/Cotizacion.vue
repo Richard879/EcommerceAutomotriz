@@ -214,7 +214,7 @@
                                                                                         <div slot="content">Ver Detalle Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
                                                                                         <i @click="abrirModal('cotizacion', 'detalle', cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <template v-if="cotizacion.nIdEstaCotizacion==1300346 || cotizacion.nIdEstaCotizacion==1300133">
+                                                                                    <template v-if="cotizacion.cFlagVerificaReporte=='S'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
                                                                                             <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>

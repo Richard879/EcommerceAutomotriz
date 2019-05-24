@@ -275,31 +275,34 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
         $nTipoPersona       =   $request->ntipopersona;
         $cNroDocumento      =   $request->cnrodocumento;
         $cFiltroDescripcion =   $request->cfiltrodescripcion;
         $nIdMarca           =   $request->nidmarca;
         $nIdModelo          =   $request->nidmodelo;
-        $nIdAnioModelo      =   $request->nidaniomodelo;
-        $dFechaVenta        =   $request->dfechaventa;
+        $cNombreComercial   =   $request->cnombrecomercial;
+        $cNumeroVin         =   $request->cnumerovin;
         $nIdVendedor        =   Auth::user()->id;
 
         $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = ' ') : $nIdMarca;
-        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = ' ') : $nIdModelo;
-        $nIdAnioModelo      =   ($nIdAnioModelo == NULL) ? ($nIdAnioModelo = ' ') : $nIdAnioModelo;
-        $dFechaVenta        =   ($dFechaVenta == NULL) ? ($dFechaVenta = ' ') : $dFechaVenta;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNombreComercial   =   ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
+        $cNumeroVin         =   ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayVehiculo = DB::select('exec usp_MaestroVehiculo_GetDetalleMaestroVehiculo ?, ?, ?, ?, ?, ?, ?, ?',
-                                                                        [
+        $arrayVehiculo = DB::select('exec [usp_MaestroVehiculo_GetDetalleMaestroVehiculo] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
                                                                             $nTipoPersona,
                                                                             $cNroDocumento,
                                                                             $cFiltroDescripcion,
                                                                             $nIdMarca,
                                                                             $nIdModelo,
-                                                                            $nIdAnioModelo,
-                                                                            $dFechaVenta,
+                                                                            $cNombreComercial,
+                                                                            $cNumeroVin,
                                                                             $nIdVendedor
                                                                         ]);
 

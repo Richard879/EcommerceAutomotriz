@@ -3205,7 +3205,8 @@
                                     'nDocNum'       : parseInt(me.jsonRespuesta.DocNum),
                                     'cDocType'      : me.jsonRespuesta.DocType.toString(),
                                     'cLogRespuesta' : response.data.toString(),
-                                    'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString()
+                                    'cItemCode'     : me.jsonRespuesta.DocumentLines[0].ItemCode.toString(),
+                                    'cWhsCode'      : me.jsonRespuesta.DocumentLines[0].WarehouseCode.toString()
                                 });
 
                                 me.arraySapActividad.push({
