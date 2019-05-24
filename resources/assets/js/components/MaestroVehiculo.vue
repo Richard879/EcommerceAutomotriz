@@ -2774,9 +2774,11 @@
                     // console.log(response.data);
                     $("#myBar").hide();
                     me.loading.close();
+                    swal('El proceso fue registrado existosamente');
                     this.limpiarVehiculo();
                     this.limpiarPropietario();
                     this.reiniciarTabs();
+                    this.buscarVehiculo();
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -3088,7 +3090,6 @@
                         this.registrarSOAT(data);
                     } else {
                         this.actualizarSapSetArticulo();
-                        swal('El proceso fue registrado existosamente');
                     }
                 }).catch(error => {
                     console.log(error);
