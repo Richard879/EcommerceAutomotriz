@@ -439,6 +439,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/usuario/SetCambiarEstadoUsuario','GestionUsuariosController@SetCambiarEstadoUsuario');
     Route::post('/usuario/SetEditarMiUsuario','GestionUsuariosController@SetEditarMiUsuario');
     Route::get('/usuario/GetListUsuariosByRol','GestionUsuariosController@GetListUsuariosByRol');
+    Route::get('/usuario/GetListUsuariosBySucursal','GestionUsuariosController@GetListUsuariosBySucursal');
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
     Route::get('/almacen/GetAlmacenByLocalidad','AlmacenController@GetAlmacenByLocalidad');
