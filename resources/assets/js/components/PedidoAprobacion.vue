@@ -223,6 +223,10 @@
                                                                                             <i @click="validarSapPedido(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
@@ -455,7 +459,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
@@ -3726,7 +3730,7 @@
                                     'Error en la Anulación.',
                                 )
                             }
-                            me.listarPedidos(1);
+                            me.listarPedidosAprobados(1);
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {

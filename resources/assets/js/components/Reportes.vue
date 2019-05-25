@@ -82,12 +82,6 @@
                             </div>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"  @click="abrirModal('stock-general', 'abrir', 'STOCK VEHICULOS GENERAL')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Stock Vehiculos General</span></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet"  @click="abrirModal('meta-venta', 'abrir', 'METAS DE VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Metas de venta de vehículos</span></div>
                                 </div>
@@ -922,12 +916,12 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formFiltro.nidsucursal){
+                /*if(!this.formFiltro.nidsucursal){
                     this.mensajeError.push('Debe seleccionar una Sucursal');
-                }
-                if(!this.formFiltro.nidproveedor){
+                }*/
+                /*if(!this.formFiltro.nidproveedor){
                     this.mensajeError.push('Debe seleccionar un Proveedor');
-                }
+                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;

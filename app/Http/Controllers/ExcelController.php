@@ -398,6 +398,8 @@ class ExcelController extends Controller
         $nidmodelo          =   $request->nidmodelo;
 
         $cflagdisponible    =   ($cflagdisponible == NULL) ? ($cflagdisponible = '') : $cflagdisponible;
+        $nidsucursal        =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidproveedor       =   ($nidproveedor == NULL) ? ($nidproveedor = 0) : $nidproveedor;
         $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
