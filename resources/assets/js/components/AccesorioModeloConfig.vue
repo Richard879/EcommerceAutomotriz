@@ -117,7 +117,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Vehículo</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="formBsqVehiculo.cnombrevehiculo" class="form-control">
+                                                                                    <input type="text" v-model="formBsqVehiculo.cnombrevehiculo" @keyup.enter="listarVehiculos(1)" class="form-control">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
