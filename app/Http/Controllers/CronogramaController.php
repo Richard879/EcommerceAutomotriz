@@ -22,7 +22,7 @@ class CronogramaController extends Controller
                                                         ]);
         return ['arrayCronograma'=>$arrayCronograma];
     }
-    
+
     public function GetCronogramaCompraActivo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -54,17 +54,17 @@ class CronogramaController extends Controller
     public function SetActivarCronograma(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
-        $objCronograma = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ?, ?, ?, ?, ?', 
+
+        $objCronograma = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdTipoCronograma,
-                                                                $request->nIdAnio, 
+                                                                $request->nIdAnio,
                                                                 $request->nIdMes,
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaFin,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($objCronograma);         
+        return response()->json($objCronograma);
     }
 
     public function GetCronogramaFechasByMes(Request $request)
@@ -88,16 +88,31 @@ class CronogramaController extends Controller
     public function SetCronograma(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
-        $objCronograma = DB::select('exec [usp_Cronograma_SetCronograma] ?, ?, ?, ?, ?, ?, ?', 
+
+        $objCronograma = DB::select('exec [usp_Cronograma_SetCronograma] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdTipoCronograma,
-                                                                $request->nIdAnio, 
+                                                                $request->nIdAnio,
                                                                 $request->nIdMes,
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaFin,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($objCronograma);         
+        return response()->json($objCronograma);
+    }
+
+    public function GetCronogramaByTipo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidgrupar  =   $request->nidgrupar;
+        $nidpar     =   $request->nidpar;
+
+        $arrayCronograma = DB::select('exec [usp_Cronog_GetCronogramaByTipo] ?, ?',
+                                                        [
+                                                            $nidgrupar,
+                                                            $nidpar
+                                                        ]);
+        return ['arrayCronograma'=>$arrayCronograma];
     }
 }

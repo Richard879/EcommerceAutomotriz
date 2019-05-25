@@ -396,6 +396,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/cronograma/SetActivarCronograma','CronogramaController@SetActivarCronograma');
     Route::get('/cronograma/GetCronogramaFechasByMes','CronogramaController@GetCronogramaFechasByMes');
     Route::post('/cronograma/SetCronograma','CronogramaController@SetCronograma');
+    Route::get('/cronograma/GetCronogramaByTipo','CronogramaController@GetCronogramaByTipo');
 
     Route::post('/flete/SetFlete', 'FleteController@SetFlete');
     Route::get('/flete/GetListFlete', 'FleteController@GetListFlete');
@@ -440,6 +441,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/usuario/SetEditarMiUsuario','GestionUsuariosController@SetEditarMiUsuario');
     Route::get('/usuario/GetListUsuariosByRol','GestionUsuariosController@GetListUsuariosByRol');
     Route::get('/usuario/GetListUsuariosBySucursal','GestionUsuariosController@GetListUsuariosBySucursal');
+    Route::get('/usuario/GetListSubLineasByUsuario','GestionUsuariosController@GetListSubLineasByUsuario');
 
     Route::get('/cuentabancaria/GetBancosByEmpresa','CuentaBancariaController@GetBancosByEmpresa');
     Route::get('/almacen/GetAlmacenByLocalidad','AlmacenController@GetAlmacenByLocalidad');
@@ -503,6 +505,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/reportes/exportarVentaDiaria', 'ExcelController@exportarVentaDiaria');
     Route::get('/reportes/exportarStock','ExcelController@exportarStock');
     Route::get('/reportes/exportarStockGeneral','ExcelController@exportarStockGeneral');
+    Route::get('/reportes/exportarMetasVenta','ExcelController@exportarMetasVenta');
 
     ///========================================
     /////=================  ROUTES SAP
