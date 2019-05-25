@@ -13,13 +13,14 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidcompra              =   $request->fillNuevoVehiculo['nidcompra'];
         $nidvehiculo            =   $request->fillNuevoVehiculo['nidvehiculo'];
         // $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
         // $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
         $nidmarca               =   $request->fillNuevoVehiculo['nidmarca'];
         $nidmodelo              =   $request->fillNuevoVehiculo['nidmodelo'];
-        $nidcolor               =   $request->fillNuevoVehiculo['nidcolor'];
+        $cnombrecolor           =   $request->fillNuevoVehiculo['cnombrecolor'];
         $nidaniomodelo          =   $request->fillNuevoVehiculo['nidaniomodelo'];
         $nidtranccion           =   $request->fillNuevoVehiculo['nidtranccion'];
         $nidcategoria           =   $request->fillNuevoVehiculo['nidcategoria'];
@@ -43,13 +44,14 @@ class MaestroVehiculoController extends Controller
         $ccargautil             =   $request->fillNuevoVehiculo['fcargautil'];
         $cnacionesunidas        =   $request->fillNuevoVehiculo['cnacionesunidas'];
 
+        $nidcompra              =   ($nidcompra == NULL)   ? ($nidcompra = 0) : $nidcompra;
         $nidvehiculo            =   ($nidvehiculo == NULL)   ? ($nidvehiculo = ' ') : $nidvehiculo;
         // $cnroplaca              =   ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
         // $cnrotarjetapropiedad   =   ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
         $nidclase               =   ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
         $nidmarca               =   ($nidmarca == NULL)       ? ($nidmarca = ' ')         : $nidmarca;
         $nidmodelo              =   ($nidmodelo == NULL)      ? ($nidmodelo = ' ')        : $nidmodelo;
-        $nidcolor               =   ($nidcolor == NULL)       ? ($nidcolor = ' ')         : $nidcolor;
+        $cnombrecolor           =   ($cnombrecolor == NULL)       ? ($cnombrecolor = ' ')         : $cnombrecolor;
         $nidaniomodelo          =   ($nidaniomodelo == NULL)       ? ($nidaniomodelo = ' ')         : $nidaniomodelo;
         $nidtranccion           =   ($nidtranccion == NULL) ? ($nidtranccion = ' ')   : $nidtranccion;
         $nidcategoria           =   ($nidcategoria == NULL) ? ($nidcategoria = ' ')   : $nidcategoria;
@@ -78,13 +80,13 @@ class MaestroVehiculoController extends Controller
         $arrayVehiculoPlaca = DB::select('exec [usp_MaestroVehiculo_SetVehiculoPlaca]
                                                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        NULL,
-                                        NULL,
+                                        $nidcompra,
+                                        0,
                                         $nidvehiculo,
                                         $nidclase,
                                         $nidmarca,
                                         $nidmodelo,
-                                        $nidcolor,
+                                        $cnombrecolor,
                                         $nidaniomodelo,
                                         $nidtranccion,
                                         $nidcategoria,

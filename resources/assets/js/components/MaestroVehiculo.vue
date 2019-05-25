@@ -159,7 +159,6 @@
                                                                                         <th>Nro VIN</th>
                                                                                         <th>Tarjeta</th>
                                                                                         <th>Placa</th>
-                                                                                        <th>Año Modelo</th>
                                                                                         <th>Propietario</th>
                                                                                         <th>D.Identificación</th>
                                                                                         <th>Celular</th>
@@ -167,7 +166,7 @@
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                    <tr v-for="vehiculo in arrayVehiculoBuscar" :key="vehiculo.nIdVehiculoPlaca">
+                                                                                    <tr v-for="vehiculo in arrayVehiculoBuscar" :key="vehiculo.nIdVehiculoPlaca + vehiculo.nIdCompra">
                                                                                         <td>
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Editar</div>
@@ -180,7 +179,6 @@
                                                                                         <td v-text="vehiculo.cNumeroVin"></td>
                                                                                         <td v-text="vehiculo.cNroTarjeta"></td>
                                                                                         <td v-text="vehiculo.cPlaca"></td>
-                                                                                        <td v-text="vehiculo.nAnioModelo"></td>
                                                                                         <td v-text="vehiculo.cPropietario"></td>
                                                                                         <td v-text="vehiculo.cNroIdentificacion"></td>
                                                                                         <td v-text="vehiculo.cNroCelular"></td>
@@ -471,7 +469,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-6">
+                                                                                <!--<div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">*Fecha Venta</label>
                                                                                         <div class="col-sm-8">
@@ -483,12 +481,20 @@
                                                                                             </el-date-picker>
                                                                                         </div>
                                                                                     </div>
+                                                                                </div>-->
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* N° Dúa</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cnumerodua" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* N° Motor</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" v-model="fillNuevoVehiculo.cnromotor" class="form-control form-control-sm">
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cnromotor" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -524,7 +530,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Potencia</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" v-model="fillNuevoVehiculo.cpotencia" class="form-control form-control-sm">
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cpotencia" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -641,16 +647,16 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="form-group row">
+                                                                            <!--<div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Codigo Nacioens Unidas</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" v-model="fillNuevoVehiculo.cnacionesunidas" class="form-control form-control-sm">
+                                                                                            <input type="text" v-model="fillNuevoVehiculo.cnacionesunidas" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-9 offset-md-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="activarTab0202">
@@ -1625,6 +1631,7 @@
                 nFlagEditar: '',
                 cFlagTipoPersona: null,
                 fillNuevoVehiculo: {
+                    nidcompra: 0,
                     nidvehiculo: '',
                     // cnroplaca: '',
                     // cnrotarjetapropiedad: '',
@@ -1653,7 +1660,8 @@
                     flongitud: 0,
                     fcargautil: 0,
                     fancho: 0,
-                    cnacionesunidas: ''
+                    cnacionesunidas: '',
+                    cnumerodua: ''
                 },
                 arrayClase: [],
                 arrayColor: [],
@@ -1978,7 +1986,16 @@
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
                 (this.nFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
-                (this.nFlagEditar == 2) ? (this.checked = true) : (this.checked = false);
+                (this.nFlagEditar == 2) ? (this.checked = false) : (this.checked = true);
+                this.fillPropietario.cnombrecontacto = data.cContacto;
+                this.fillPropietario.cnombrecontacto = data.cContacto;
+                this.fillPropietario.cflagtipopersona = data.cFlagTipoPersona;
+                if(this.fillPropietario.cflagtipopersona == 'N'){
+                    this.fillPropietario.nidpersonanatural = data.nIdPersona;
+                }
+                else{
+                    this.fillPropietario.nidpersonajuridica = data.nIdPersona;
+                }
             },
             // ================================
             // METODOS SUBTAB VEHICULO
@@ -2757,9 +2774,11 @@
                     // console.log(response.data);
                     $("#myBar").hide();
                     me.loading.close();
+                    swal('El proceso fue registrado existosamente');
                     this.limpiarVehiculo();
                     this.limpiarPropietario();
                     this.reiniciarTabs();
+                    this.buscarVehiculo();
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -2865,7 +2884,8 @@
                 this.fillNuevoVehiculo.nidcombustible       =   (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
                 this.fillNuevoVehiculo.dfechaventa          =   data['dFechaVenta'];
                 this.fillNuevoVehiculo.cnromotor            =   (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
-                this.fillNuevoVehiculo.cnroserie            =   (data['cNroSerie'] == 0) ? '' : data['cNroSerie'] ;
+                this.fillNuevoVehiculo.cnumerodua           =   (data['cNumeroDua'] == '') ? '' : data['cNumeroDua'];
+                this.fillNuevoVehiculo.cnroserie            =   (data['cNumeroVin'] == '') ? '' : data['cNumeroVin'] ;
                 this.fillNuevoVehiculo.cnrorueda            =   (data['nNumeroRueda'] == 0) ? '' : data['nNumeroRueda'];
                 this.fillNuevoVehiculo.cnroeje              =   (data['nNumeroEje'] == 0) ? '' : data['nNumeroEje'];
                 this.fillNuevoVehiculo.cpotencia            =   (data['nPotencia'] == 0) ? '' : data['nPotencia'];
@@ -2878,11 +2898,11 @@
                 this.fillNuevoVehiculo.fancho               =   data['fAncho'];
                 this.fillNuevoVehiculo.flongitud            =   data['fLongitud'];
                 this.fillNuevoVehiculo.fcargautil           =   data['fCargaUtil'];
-                this.fillNuevoVehiculo.cnacionesunidas      =   data['cCodigoNaciones'];
+                /*this.fillNuevoVehiculo.cnacionesunidas      =   data['cCodigoNaciones'];/**/
 
                 //CAPTURAR DATOS DE LA PERSONA NATURAL
                 if (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) {
-                    this.fillPropietario.nidpersona             =   (data['nIdPersonaNatural'] == undefined) ? '' : data['nIdPersonaNatural'];
+                    this.fillPropietario.nidpersona             =   (data['nIdPersona'] == undefined) ? '' : data['nIdPersona'];
                     this.fillPropietario.ntipopersona           =   (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '1': '2';
                     this.vistaDatosPersonaNatural               =   (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? 1 : 0;
                     this.fillPropietario.ntpodocumento          =   data['nIdTipoDocumento'];
@@ -2906,7 +2926,7 @@
                     this.fillPropietario.cnrolicencia           =   (data['cNumeroLicenciaConducir'] == 0 || data['cNumeroLicenciaConducir'] == undefined) ? '' : data['cNumeroLicenciaConducir'];
                 } else {
                     ///CAPTURAR DATOS DE LA PERSONA JURIDICA
-                    this.fillPropietario.nidpersona             =   (data['nIdPersonaJuridica'] == undefined) ? '' : data['nIdPersonaJuridica'];
+                    this.fillPropietario.nidpersona             =   (data['nIdPersona'] == undefined) ? '' : data['nIdPersona'];
                     this.fillPropietario.ntipopersona           =   (data['cFlagTipoPersona'] == 'J') ? '2': '1';
                     this.llenarComboTpoDocumento();//cargo el listado de documentos de tipo juridico
                     this.vistaDatosPersonaNatural               =   (data['cFlagTipoPersona'] == 'J') ? 0 : 1;
@@ -2948,6 +2968,7 @@
                     });
                 }
 
+                this.fillNuevoVehiculo.nidcompra  = data.nIdCompra;   
                 this.cargarDataPlantilla(data.nIdCompra);
             },
             setearTipoDocumento(data){
@@ -2964,10 +2985,6 @@
                         'nIdCompra' : nIdCompra
                     }
                 }).then(response => {
-                    // console.log(response.data[0])
-                    // console.log(response.data[0].nIdCarroceria)
-                    // console.log(response.data[0]['nIdCarroceria'])
-
                     if (response.data.length > 0) {
                         //CAPTURAR DATOS DEL VEHICULO
                         this.fillNuevoVehiculo.nidclase             =   (response.data[0]['nIdCarroceria'] == 0) ? '' : response.data[0]['nIdCarroceria'];
@@ -3073,7 +3090,6 @@
                         this.registrarSOAT(data);
                     } else {
                         this.actualizarSapSetArticulo();
-                        swal('El proceso fue registrado existosamente');
                     }
                 }).catch(error => {
                     console.log(error);
@@ -3217,4 +3233,3 @@
         width: 100% !important;
     }
 </style>
-

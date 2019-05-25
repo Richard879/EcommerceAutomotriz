@@ -203,6 +203,7 @@ class SapArticuloController extends Controller
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
+        $cnumerodua             =   $request->fillNuevoVehiculo['cnumerodua'];
         $cnroserie              =   $request->fillNuevoVehiculo['cnroserie'];
         $cnrocilindros          =   $request->fillNuevoVehiculo['cnrocilindros'];
         $cnrorueda              =   $request->fillNuevoVehiculo['cnrorueda'];
@@ -269,8 +270,9 @@ class SapArticuloController extends Controller
                 "ItemCode"          =>  (string)$cnroserie,
                 'U_SYP_MARCA'       =>  (string)$nidmarca,
                 'U_SYP_CEXTERIOR'   =>  (string)$cnombrecolor,
-                'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
+                //'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
                 'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
+                'U_SYP_MDND'        =>  (string)$cnumerodua,//Numero de DUA
                 'U_SYP_NROCHASIS'   =>  (string)$cnroserie,//Numero de Chasis
                 'U_SYP_CILINDRADA'  =>  (string)$nidcilindrada,//Cilindrada
                 'U_SYP_COMBUSTIBLE' =>  (string)$nidcombustible,//Combustible
