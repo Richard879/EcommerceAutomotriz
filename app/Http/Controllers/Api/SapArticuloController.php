@@ -296,7 +296,7 @@ class SapArticuloController extends Controller
                 'U_SYP_CUTIL'       =>  (string)$ccargautil,//Carga Util
                 'U_SYP_CARR'        =>  (string)$nidclase,//Carroceria
                 'U_SYP_PTNC'        =>  (string)$cpotencia,//Nro Potencia
-                'U_SYP_FROD'        =>  (string)$nidtranccion,//Nro Potencia
+                'U_SYP_FROD'        =>  (string)$nidtranccion,//Traccion
                 'U_SYP_NEJE'        =>  (string)$cnroeje,//Nro Eje
                 'U_SYP_CATE'        =>  (string)$nidcategoria,//Categoria
             ]
