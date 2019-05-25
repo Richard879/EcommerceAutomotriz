@@ -402,14 +402,30 @@ class GestionUsuariosController extends Controller
 
         $nIdEmpresa     =   $request->nidempresa;
         $nIdSucursal    =   $request->nidsucursal;
+        $nIdUsuario     =   Auth::user()->id;
 
         $nIdEmpresa     =   ($nIdEmpresa == NULL) ? ($nIdEmpresa = 0) : $nIdEmpresa;
         $nIdSucursal    =   ($nIdSucursal == NULL) ? ($nIdSucursal = '') : $nIdSucursal;
 
-        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuariosBySucursal ?, ?',
+        $arrayUsuarios = DB::select('exec usp_Usuario_GetListUsuariosBySucursal ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
-                                                                $nIdSucursal
+                                                                $nIdSucursal,
+                                                                $nIdUsuario
+                                                            ]);
+
+        return response()->json($arrayUsuarios);
+    }
+
+    public function GetListSubLineasByUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdVendedor     =   $request->nidvendedor;
+
+        $arrayUsuarios = DB::select('exec usp_Usuario_GetListSubLineasByUsuario ?',
+                                                            [
+                                                                $nIdVendedor
                                                             ]);
 
         return response()->json($arrayUsuarios);

@@ -86,12 +86,12 @@
                                     <div class="title"><span><br>Stock Vehiculos General</span></div>
                                 </div>
                             </div>
-                            <!-- <div class="col-xl-4 col-sm-6">
+                            <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet"  @click="abrirModal('meta-venta', 'abrir', 'METAS DE VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Metas de venta de vehículos</span></div>
                                 </div>
-                            </div> -->
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -510,7 +510,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show STOCK VEHICULOS GENERAL -->
+            <!-- Modal Show Metas de Venta de Vehiculos -->
             <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
@@ -539,13 +539,13 @@
                                                             <el-select  v-model="formFiltro.nidsucursal"
                                                                         filterable
                                                                         clearable
-                                                                        placeholder="SUCURSAL">
+                                                                        placeholder="SUCURSAL"
+                                                                        @change="listarAsesoresBySucursal(1)">
                                                                 <el-option
                                                                     v-for="item in arraySucursal"
                                                                     :key="item.nIdPar"
                                                                     :label="item.cParNombre"
-                                                                    :value="item.nIdPar"
-                                                                    @change="listarAsesoresBySucursal">
+                                                                    :value="item.nIdPar">
                                                                 </el-option>
                                                             </el-select>
                                                         </div>
@@ -553,12 +553,13 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <label class="col-md-4 form-control-label">* Asesor Comercial</label>
+                                                        <label class="col-md-4 form-control-label">Asesor Comercial</label>
                                                         <div class="col-md-8">
                                                             <el-select  v-model="formFiltro.nidvendedor"
                                                                         filterable
                                                                         clearable
-                                                                        placeholder="SELECCIONE UN ASESOR COMERCIAL">
+                                                                        placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                        @change="listarSubLineaByVendedor()">
                                                                 <el-option
                                                                     v-for="ele in arrayVendedores"
                                                                     :key="ele.nIdUsuario"
@@ -571,8 +572,46 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">SubLineas</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidsublinea"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SUBLINEA">
+                                                                <el-option
+                                                                    v-for="item in arraySubLineas"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cronograma</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select  v-model="formFiltro.nidcronograma"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="CRONOGRAMA">
+                                                                <el-option
+                                                                    v-for="item in arrayCronogramas"
+                                                                    :key="item.nIdCronograma"
+                                                                    :label="item.cCronograma"
+                                                                    :value="item.nIdCronograma">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarStockGeneral()">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarMetasVenta()">
                                                         <i class="fa fa-save"></i> Generar Reporte
                                                     </button>
                                                 </div>
@@ -618,7 +657,9 @@
                     nidmodelo: '',
                     //modal 4
                     dfechaventadiaria: '',
-                    nidvendedor: ''
+                    nidvendedor: '',
+                    nidsublinea: '',
+                    nidcronograma: ''
                 },
                 arrayFlagDisponible: [
                     {'id': 'S', 'nombre': 'Disponibles'},
@@ -630,6 +671,8 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
+                arraySubLineas: [],
+                arrayCronogramas: [],
                 offset:3,
                 accionmodal: 0,
                 modal:0,
@@ -853,6 +896,8 @@
                 this.formFiltro.nidmodelo           = '';
                 this.formFiltro.dfechaventadiaria   = '';
                 this.formFiltro.nidvendedor         = '';
+                this.formFiltro.nidsublinea         = '';
+                this.formFiltro.nidcronograma       = '';
             },
             validarExportarStock(){
                 this.error = 0;
@@ -882,6 +927,56 @@
                 }
                 if(!this.formFiltro.nidproveedor){
                     this.mensajeError.push('Debe seleccionar un Proveedor');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            exportarMetasVenta(){
+                if(this.validarMetasVenta()){
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarMetasVenta';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'nidsublinea'   :   this.formFiltro.nidsublinea,
+                        'nidcronograma' :   this.formFiltro.nidcronograma
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Metas de venta de vehículos'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                    this.limpiarFiltros();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            validarMetasVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formFiltro.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar una Sucursal');
+                }
+                if(!this.formFiltro.nidcronograma){
+                    this.mensajeError.push('Debe seleccionar un Cronograma');
                 }
 
                 if(this.mensajeError.length){
@@ -1061,7 +1156,43 @@
                     }
                 }).then(response => {
                     this.arrayVendedores = response.data;
-                    this.obtenerListaPrecioActiva();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarSubLineaByVendedor(){
+                var url = this.ruta + '/usuario/GetListSubLineasByUsuario';
+                axios.get(url, {
+                    params: {
+                        'nidvendedor'   :   this.formFiltro.nidvendedor
+                    }
+                }).then(response => {
+                    this.arraySubLineas = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarCronograma(){
+                var url = this.ruta + '/cronograma/GetCronogramaByTipo';
+                axios.get(url, {
+                    params: {
+                        'nidgrupar' :   110039,
+                        'nidpar'    :   1300057
+                    }
+                }).then(response => {
+                    this.arrayCronogramas = response.data.arrayCronograma;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1155,7 +1286,7 @@
                             case 'abrir':
                             {
                                 this.listarSucursalByEmpresa();
-                                this.listarVendedores();
+                                this.listarCronograma();
                                 this.tituloModal = data;
                                 this.accionmodal = 7;
                                 this.modal = 1;

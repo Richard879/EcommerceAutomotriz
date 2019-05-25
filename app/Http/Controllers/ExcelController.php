@@ -410,4 +410,23 @@ class ExcelController extends Controller
                                                 $nidmodelo
                                             ]);
     }
+
+    public function exportarMetasVenta(Request $request)
+    {
+        $nidsucursal    =   $request->nidsucursal;
+        $nidvendedor    =   $request->nidvendedor;
+        $nidsublinea    =   $request->nidsublinea;
+        $nidcronograma  =   $request->nidcronograma;
+
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidsublinea    =   ($nidsublinea == NULL) ? ($nidsublinea = 0) : $nidsublinea;
+
+        return $data = DB::select('exec [usp_Reporte_GetCuotaVendedor] ?, ?, ?, ?',
+                                            [
+                                                $nidsucursal,
+                                                $nidvendedor,
+                                                $nidsublinea,
+                                                $nidcronograma
+                                            ]);
+    }
 }
