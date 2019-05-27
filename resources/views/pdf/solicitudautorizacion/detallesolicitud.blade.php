@@ -113,7 +113,7 @@
                     <td><strong>{{ $objDetalleSolicitudAutorizacion['cNombreModelo'] }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Año/Modelo:</td>
+                    <td>Año Modelo:</td>
                     <td><strong>{{ $objDetalleSolicitudAutorizacion['cAnioModelo'] }}</strong></td>
                 </tr>
                 <tr>
@@ -123,18 +123,6 @@
                 <tr>
                     <td>Nª VIN:</td>
                     <td><strong>{{ $objDetalleSolicitudAutorizacion['cNroVehiculo'] }}</strong></td>
-                </tr>
-                <tr>
-                    <td>Contacto:</td>
-                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cContacto'] }}</strong></td>
-                </tr>
-                <tr>
-                    <td>Nª Documento:</td>
-                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cNumeroDocumento'] }}</strong></td>
-                </tr>
-                <tr>
-                    <td>Asesor Encargado:</td>
-                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cAsesorEncargado'] }}</strong></td>
                 </tr>
                 <tr>
                     <td>Jefe de Ventas:</td>
@@ -156,6 +144,18 @@
                     <td>Hora:</td>
                     <td><strong>{{ $objDetalleSolicitudAutorizacion['cHoraMovimientoVehiculo'] }}</strong></td>
                 </tr>
+                <!--<tr>
+                    <td>Contacto:</td>
+                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cContacto'] }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Nª Documento:</td>
+                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cNumeroDocumento'] }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Asesor Encargado:</td>
+                    <td><strong>{{ $objDetalleSolicitudAutorizacion['cAsesorEncargado'] }}</strong></td>
+                </tr>-->
             </table>
         </div>
     </div>
