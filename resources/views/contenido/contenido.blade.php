@@ -119,6 +119,9 @@
     <template v-if="menu==1300357">
         <pedidodepositoaprobar :ruta="ruta"></pedidodepositoaprobar>
     </template>
+    <template v-if="menu==1300701">
+        <pedidodepositopreliminar :ruta="ruta"></pedidodepositopreliminar>
+    </template>
     <template v-if="menu==1300468">
         <pedidodescuento :ruta="ruta" :usuario="{{ auth()->user() }}"></pedidodescuento>
     </template>

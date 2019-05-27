@@ -339,6 +339,7 @@
                                                                     <tr>
                                                                         <th>ACCIÓN</th>
                                                                         <th>BANCO</th>
+                                                                        <th>CODIGO BANCO</th>
                                                                         <th>N° OPERACIÓN</th>
                                                                         <th>MONEDA</th>
                                                                         <th>FECHA</th>
@@ -353,7 +354,7 @@
                                                                 <tbody>
                                                                     <tr v-for="deposito in arrayDepositosPorPedido" :key="deposito.nIdDepositoPedido">
                                                                         <td>
-                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
+                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'M'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
@@ -363,24 +364,25 @@
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>&nbsp;&nbsp;
-                                                                            <!-- <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
+                                                                            <!-- <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'M'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Tipo Cambio Especial {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
                                                                                 </el-tooltip>
                                                                             </template> -->
-                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P' && (deposito.cFlagEstadoAlerta == 'P' || deposito.cFlagEstadoAlerta == 'E')">
+                                                                            <!-- <template v-if="deposito.cFlagEstadoAlerta == 'M' || deposito.cFlagEstadoAlerta == 'E'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Incidencia del Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="abrirModal('Incidencia','abrir', deposito)" :style="'color:#ffc107'" class="fa fa-exclamation-triangle"></i>
                                                                                 </el-tooltip>
-                                                                            </template>
+                                                                            </template> -->
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Voucher del Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                 <i @click="descargaVoucher(deposito.cRutaDocumento)" class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
                                                                             </el-tooltip>
                                                                         </td>
                                                                         <td v-text="deposito.cNombreBanco"></td>
+                                                                        <td v-text="deposito.cAcctCode"></td>
                                                                         <td v-text="deposito.nNumeroOperacion"></td>
                                                                         <td v-text="deposito.cNombreMoneda"></td>
                                                                         <td v-text="deposito.dFechaDeposito"></td>
@@ -542,7 +544,7 @@
                 </div>
             </div>
 
-            <!-- Modal CONFIGURAR EL TIPO CAMBIO ESPECIAL -->
+            <!-- Modal INCIDENCIAS -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-md" role="document">
                     <div class="modal-content">
@@ -911,16 +913,17 @@
             llenarDepositos(pedido){
                 this.mostrarProgressBar();
 
-                this.formDistribuirDeposito.nidcabecerapedido           = pedido.nIdCabeceraPedido;
-                this.formDistribuirDeposito.cNumeroPedido               = pedido.cNumeroPedido;
-                this.formDistribuirDeposito.cnombrecontacto             = pedido.cContacto;
-                this.formDistribuirDeposito.flagMontoTotalCotizacion    = pedido.fTotalPedido;
-                this.formDistribuirDeposito.cvendedornombre             = pedido.cVendedorNombre;
+                this.formDistribuirDeposito.nidcabecerapedido           =   pedido.nIdCabeceraPedido;
+                this.formDistribuirDeposito.cNumeroPedido               =   pedido.cNumeroPedido;
+                this.formDistribuirDeposito.cnombrecontacto             =   pedido.cContacto;
+                this.formDistribuirDeposito.flagMontoTotalCotizacion    =   pedido.fTotalPedido;
+                this.formDistribuirDeposito.cvendedornombre             =   pedido.cVendedorNombre;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraPedido': pedido.nIdCabeceraPedido
+                        'nIdCabeceraPedido' :   pedido.nIdCabeceraPedido,
+                        // 'cEstadoDeposito'   :   'M'
                     }
                 }).then(response => {
                     this.arrayDepositosPorPedido  = response.data;
@@ -1012,7 +1015,7 @@
             aprobarDeposito(deposito){
                 let me = this;
                 swal({
-                    title: 'Estas seguro de aprobar el Deposito',
+                    title: 'Estas seguro de aprobar de manera preliminar el Deposito',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -1024,35 +1027,15 @@
                         me.mostrarProgressBar();
                         me.loadingProgressBar("GENERANDO DEPOSITO CON SAP BUSINESS ONE...");
 
-                        var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                        var url = this.ruta + '/deposito/SetCambiarEstadoDepositoPreliminar';
                         axios.put(url , {
-                            nIdDepositoPedido   : deposito.nIdDepositoPedido,
                             nIdCabeceraPedido   : deposito.nIdCabeceraPedido,
-                            nIdMonedaOrigen     : deposito.nIdMonedaOrigen,
-                            fTipoCambio         : deposito.fTipoCambio,
-                            cFlagEstadoDeposito : 'A',
-                            //AddON
-                            CardCode            : deposito.CardCode,
-                            CardName            : deposito.cContacto,
-                            Type                : deposito.nIdFormaPago,
-                            // nIdTipoPago         : deposito.nIdTipoPago,
-                            TransRef            : deposito.nNumeroOperacion,
-                            DocDate             : deposito.dFechaDeposito,
-                            DocTotal            : deposito.fMontoSoles,
-                            DocTotalFC          : deposito.fMontoDolares,
-                            // DocNum              : deposito.nDocNum,x
-                            DocCurr             : deposito.cAbreviaturaMoneda,
-                            DocCurrBank         : deposito.cAbreviaturaMoneda,
-                            cAcctCode           : deposito.cAcctCode,
-                            FacturaDocTotal     : deposito.fMontoSoles,
-                            FacturaDocTotalFC   : deposito.fMontoDolares,
-                            DocRate             : deposito.fTipoCambio,
-                            Migrado             : 'N'
+                            nIdDepositoPedido   : deposito.nIdDepositoPedido,
+                            cFlagEstadoDeposito : 'P'
                         }).then(response => {
-                            // console.log(response);
                             swal(
                                 'Aprobado!',
-                                'El deposito fue aprobado exitosamente.'
+                                'El deposito fue aprobado de manera preliminar exitosamente.'
                             );
                             this.tabBuscarPedido();
                             $("#myBar").hide();
@@ -1158,29 +1141,33 @@
             },
             */
             rechazarDeposito(deposito){
+                let me = this;
                 swal({
                     title: 'Estas seguro de rechazar el Deposito',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Rechazar!',
+                    confirmButtonText: 'Si, Desaprobar!',
                     cancelButtonText: 'No, Cerrar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                        me.mostrarProgressBar();
+                        me.loadingProgressBar("RECHAZANDO DEPOSITO EN EL SGC");
+
+                        var url = this.ruta + '/deposito/SetCambiarEstadoDepositoPreliminar';
                         axios.put(url , {
-                            nIdDepositoPedido : deposito.nIdDepositoPedido,
-                            nIdCabeceraPedido : deposito.nIdCabeceraPedido,
-                            nIdMonedaOrigen : deposito.nIdMonedaOrigen,
-                            fTipoCambio : deposito.fTipoCambio,
+                            nIdCabeceraPedido   : deposito.nIdCabeceraPedido,
+                            nIdDepositoPedido   : deposito.nIdDepositoPedido,
                             cFlagEstadoDeposito : 'D'
                         }).then(response => {
                             swal(
-                                'Rechazado!',
+                                'Aprobado!',
                                 'El deposito fue rechazado exitosamente.'
                             );
                             this.tabBuscarPedido();
+                            $("#myBar").hide();
+                            me.loading.close();
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -1371,7 +1358,7 @@
                     'cComentario'       : this.formIncidencia.cComentario,
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        if(response.data[0].cFlagEstadoAlerta == 'P' || response.data[0].cFlagEstadoAlerta == 'E') {
+                        if(response.data[0].cFlagEstadoAlerta == 'M' || response.data[0].cFlagEstadoAlerta == 'E') {
                             swal('Incidencia Generada Exitosamente');
                             this.cerrarModalSinPaginacion();
                             this.tabBuscarPedido();
@@ -1397,35 +1384,16 @@
             },
             aprobarDeposito2(deposito){
                 let me = this;
-                var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                var url = this.ruta + '/deposito/SetCambiarEstadoDepositoPreliminar';
                 axios.put(url , {
-                    nIdDepositoPedido   : this.formIncidencia.deposito.nIdDepositoPedido,
                     nIdCabeceraPedido   : this.formIncidencia.deposito.nIdCabeceraPedido,
-                    nIdMonedaOrigen     : this.formIncidencia.deposito.nIdMonedaOrigen,
-                    fTipoCambio         : this.formIncidencia.deposito.fTipoCambio,
-                    cFlagEstadoDeposito : 'A',
-                    //AddON
-                    CardCode            : this.formIncidencia.deposito.CardCode,
-                    CardName            : this.formIncidencia.deposito.cContacto,
-                    Type                : this.formIncidencia.deposito.nIdFormaPago,
-                    // nIdTipoPago         : this.formIncidencia.deposito.nIdTipoPago,
-                    TransRef            : this.formIncidencia.deposito.nNumeroOperacion,
-                    DocDate             : this.formIncidencia.deposito.dFechaDeposito,
-                    DocTotal            : this.formIncidencia.deposito.fMontoSoles,
-                    DocTotalFC          : this.formIncidencia.deposito.fMontoDolares,
-                    // DocNum              : this.formIncidencia.deposito.nDocNum,x
-                    DocCurr             : this.formIncidencia.deposito.cAbreviaturaMoneda,
-                    DocCurrBank         : this.formIncidencia.deposito.cAbreviaturaMoneda,
-                    cAcctCode           : this.formIncidencia.deposito.cAcctCode,
-                    FacturaDocTotal     : this.formIncidencia.deposito.fMontoSoles,
-                    FacturaDocTotalFC   : this.formIncidencia.deposito.fMontoDolares,
-                    DocRate             : this.formIncidencia.deposito.fTipoCambio,
-                    Migrado             : 'N'
+                    nIdDepositoPedido   : this.formIncidencia.deposito.nIdDepositoPedido,
+                    cFlagEstadoDeposito : 'P'
                 }).then(response => {
                     // console.log(response);
                     swal(
                         'Aprobado!',
-                        'El deposito fue aprobado exitosamente.'
+                        'El deposito fue aprobado de manera preliminar exitosamente.'
                     );
                     this.tabBuscarPedido();
                     this.limpiarIncidencia();

@@ -56,6 +56,7 @@ Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('pedidoaprobar', require('./components/PedidoAprobacion.vue'));
 Vue.component('pedidodeposito', require('./components/PedidoDeposito.vue'));
 Vue.component('pedidodepositoaprobar', require('./components/PedidoDepositoAprobar.vue'));
+Vue.component('pedidodepositopreliminar', require('./components/PedidoDepositoPreliminar.vue'));
 Vue.component('pedidodescuento', require('./components/PedidoDescuento.vue'));
 Vue.component('comision', require('./components/Comision.vue'));
 Vue.component('objcomercial', require('./components/ObjComercial.vue'));
