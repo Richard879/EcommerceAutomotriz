@@ -396,9 +396,10 @@ class PedidoDepositoController extends Controller
         $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?',
                                     [
                                         $nIdCabeceraPedido,
+                                        '',
                                         Auth::user()->id
                                     ]);
 
