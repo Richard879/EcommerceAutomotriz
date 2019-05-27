@@ -147,7 +147,11 @@
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
                                                                 <i @click="generarPDF(pdi.nIdCabeceraInspeccion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                            </el-tooltip>&nbsp;
+                                                            </el-tooltip>&nbsp;&nbsp;
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Ver Detalle Accesorios {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                <i @click="abrirModal('accesorio', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
                                                         </td>
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
                                                         <td v-text="pdi.cNombreTipoInspeccion"></td>
@@ -1350,6 +1354,131 @@
                 </div>
             </div>
 
+            <!-- MODAL DETALLE ACCESORIOS-->
+            <div class="modal fade" v-if="accionmodal==11" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO ACCESORIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <!--<div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillBusqTipoElemento.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayTipoElemento"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Elemento Venta </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-9 offset-md-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayDetalleAccesorio.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Código SAP</th>
+                                                            <th>Tipo</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Moneda</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="elemento in arrayDetalleAccesorio" :key="elemento.nIdContacto">
+                                                            <td v-text="elemento.nIdElemento"></td>
+                                                            <td v-text="elemento.cCodigoERP"></td>
+                                                            <td v-text="elemento.cTipoElemenNombre"></td>
+                                                            <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.cMonedaNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAccesorios(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaAccesorios(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaAccesorios(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2433,6 +2562,38 @@
                         'cAcctCodeSalida'           : !value.cAcctCodeSalida ? '' : value.cAcctCodeSalida
                     });
                 });
+            },
+            //============ LISTAR DETALLE DE ACCESORIOS ==========================
+            listarDetalleAccesorios(page){
+                var url = this.ruta + '/pdi/GetListDetalleAccesorio';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'celementonombre': this.formEle.celementonombre,
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayDetalleAccesorio          = response.data.arrayDetalleAccesorio.data;
+                    this.paginationModal.current_page   = response.data.arrayDetalleAccesorio.current_page;
+                    this.paginationModal.total          = response.data.arrayDetalleAccesorio.total;
+                    this.paginationModal.per_page       = response.data.arrayDetalleAccesorio.per_page;
+                    this.paginationModal.last_page      = response.data.arrayDetalleAccesorio.last_page;
+                    this.paginationModal.from           = response.data.arrayDetalleAccesorio.from;
+                    this.paginationModal.to             = response.data.arrayDetalleAccesorio.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaAccesorios(page){
+                this.paginationModal.current_page=page;
+                this.listarDetalleAccesorios(page);
             },
             //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
@@ -3719,6 +3880,19 @@
                                 this.accionmodal=9;
                                 this.modal = 1;
                                 this.listarAlmacen(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'accesorio':
+                    {
+                        switch(accion){
+                            case 'detalle':
+                            {
+                                this.accionmodal=11;
+                                this.modal = 1;
+                                this.listarDetalleAccesorios(1);
                                 break;
                             }
                         }
