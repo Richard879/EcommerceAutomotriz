@@ -439,7 +439,6 @@
                                                                                 <th>Nro Documento</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
-                                                                                <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
@@ -470,9 +469,8 @@
                                                                                 <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
-                                                                                <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
