@@ -1164,7 +1164,7 @@
                                         <div class="card-header">
                                             <h3 class="h4">{{ fillModalSolicitudAutorizacion.cTipoSolicitud }}</h3>
                                             <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true">X</span>
                                             </button>
                                         </div>
                                         <div class="card-body">
@@ -1272,8 +1272,9 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobadoNoAprobado(1, 1)">APROBADO</button>
-                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobadoNoAprobado(2, 1)">NO APROBADO</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobadoNoAprobado(1, 1)">APROBAR</button>
+                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobadoNoAprobado(2, 1)">DESAPROBAR</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                         </div>
                     </div>
                 </div>
