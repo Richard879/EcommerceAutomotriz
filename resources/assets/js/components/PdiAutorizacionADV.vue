@@ -1208,7 +1208,7 @@
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cNroVehiculo"></strong>
                                                                 </label>
                                                             </div>
-                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                            <!--<label class="col-sm-4 form-control-label">Contacto</label>
                                                             <div class="col-sm-8">
                                                                 <label class="form-control-label-readonly">
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cContacto"></strong>
@@ -1225,7 +1225,7 @@
                                                                 <label class="form-control-label-readonly">
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cNumeroLicenciaConducir"></strong>
                                                                 </label>
-                                                            </div>
+                                                            </div>-->
                                                             <label class="col-sm-4 form-control-label">Asesor Encargado</label>
                                                             <div class="col-sm-8">
                                                                 <label class="form-control-label-readonly">
