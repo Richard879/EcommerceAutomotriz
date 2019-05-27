@@ -120,6 +120,7 @@
                                             <table class="table table-striped table-sm">
                                                 <thead>
                                                     <tr>
+                                                        <th>Acciones</th>
                                                         <th>Código</th>
                                                         <th>Tipo Inspección</th>
                                                         <th>Fecha</th>
@@ -132,23 +133,10 @@
                                                         <th>Año Modelo</th>
                                                         <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
-                                                        <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="pdi in arrayPdi" :key="pdi.nIdCabeceraInspeccion">
-                                                        <td v-text="pdi.nIdCabeceraInspeccion"></td>
-                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
-                                                        <td v-text="pdi.dFechaInspeccion"></td>
-                                                        <td v-text="pdi.cHoraInspeccion"></td>
-                                                        <td v-text="pdi.cNombreSolicitud"></td>
-                                                        <td v-text="pdi.cFlagTipoMovimiento"></td>
-                                                        <td v-text="pdi.cVinPlaca"></td>
-                                                        <td v-text="pdi.cNombreComercial"></td>
-                                                        <td v-text="pdi.nAnioModelo"></td>
-                                                        <td v-if="fillPdi.ncriterio==2" v-text="pdi.cNumeroVin"></td>
-                                                        <td v-text="pdi.cEvaluacion"></td>
-                                                        <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
                                                             <template v-if="pdi.nIdEstadoPdi==1300339">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
@@ -161,6 +149,18 @@
                                                                 <i @click="generarPDF(pdi.nIdCabeceraInspeccion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                             </el-tooltip>&nbsp;
                                                         </td>
+                                                        <td v-text="pdi.nIdCabeceraInspeccion"></td>
+                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
+                                                        <td v-text="pdi.dFechaInspeccion"></td>
+                                                        <td v-text="pdi.cHoraInspeccion"></td>
+                                                        <td v-text="pdi.cNombreSolicitud"></td>
+                                                        <td v-text="pdi.cFlagTipoMovimiento"></td>
+                                                        <td v-text="pdi.cVinPlaca"></td>
+                                                        <td v-text="pdi.cNombreComercial"></td>
+                                                        <td v-text="pdi.nAnioModelo"></td>
+                                                        <td v-if="fillPdi.ncriterio==2" v-text="pdi.cNumeroVin"></td>
+                                                        <td v-text="pdi.cEvaluacion"></td>
+                                                        <td v-text="pdi.cEstadoPdi"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

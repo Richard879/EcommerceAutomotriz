@@ -203,7 +203,7 @@ class SapArticuloController extends Controller
         $nidcombustible         =   $request->fillNuevoVehiculo['nidcombustible'];
         $dfechaventa            =   $request->fillNuevoVehiculo['dfechaventa'];
         $cnromotor              =   $request->fillNuevoVehiculo['cnromotor'];
-        $cnumerodua             =   $request->fillNuevoVehiculo['cnumerodua'];
+        //$cnumerodua             =   $request->fillNuevoVehiculo['cnumerodua'];
         $cnroserie              =   $request->fillNuevoVehiculo['cnroserie'];
         $cnrocilindros          =   $request->fillNuevoVehiculo['cnrocilindros'];
         $cnrorueda              =   $request->fillNuevoVehiculo['cnrorueda'];
@@ -251,6 +251,14 @@ class SapArticuloController extends Controller
         $nidcombustible = $combustible[0]->cParNombre;//Setear por el Nombre
 
 
+         //=================== OBTENER EL NOMBRE DE TRACCIÓN ===================
+         $ctraccion = DB::select('exec [usp_Par_GetParametroById] ?',
+         [
+             $nidtranccion
+         ]);
+         $nidtranccion = $ctraccion[0]->cParNombre;//Setear por el Nombre
+
+
         //=================== OBTENER EL NOMBRE DE LA CARROCERIA ===================
         $carroceria = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
@@ -272,7 +280,7 @@ class SapArticuloController extends Controller
                 'U_SYP_CEXTERIOR'   =>  (string)$cnombrecolor,
                 //'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
                 'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
-                'U_SYP_MDND'        =>  (string)$cnumerodua,//Numero de DUA
+                //'U_SYP_MDND'        =>  (string)$cnumerodua,//Numero de DUA
                 'U_SYP_NROCHASIS'   =>  (string)$cnroserie,//Numero de Chasis
                 'U_SYP_CILINDRADA'  =>  (string)$nidcilindrada,//Cilindrada
                 'U_SYP_COMBUSTIBLE' =>  (string)$nidcombustible,//Combustible
@@ -288,6 +296,7 @@ class SapArticuloController extends Controller
                 'U_SYP_CUTIL'       =>  (string)$ccargautil,//Carga Util
                 'U_SYP_CARR'        =>  (string)$nidclase,//Carroceria
                 'U_SYP_PTNC'        =>  (string)$cpotencia,//Nro Potencia
+                'U_SYP_FROD'        =>  (string)$nidtranccion,//Traccion
                 'U_SYP_NEJE'        =>  (string)$cnroeje,//Nro Eje
                 'U_SYP_CATE'        =>  (string)$nidcategoria,//Categoria
             ]

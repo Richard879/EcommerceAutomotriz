@@ -916,12 +916,12 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formFiltro.nidsucursal){
+                /*if(!this.formFiltro.nidsucursal){
                     this.mensajeError.push('Debe seleccionar una Sucursal');
-                }
-                if(!this.formFiltro.nidproveedor){
+                }*/
+                /*if(!this.formFiltro.nidproveedor){
                     this.mensajeError.push('Debe seleccionar un Proveedor');
-                }
+                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;

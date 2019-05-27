@@ -161,21 +161,17 @@
                                             <table class="table table-striped table-sm">
                                                 <thead>
                                                     <tr>
+                                                        <th>Acciones</th>
                                                         <th>Codigo</th>
                                                         <th>Línea</th>
                                                         <th>Marca</th>
                                                         <th>Modelo</th>
                                                         <th>Nombre Comercial</th>
-                                                        <th>Acciones</th>
+                                                        <th>Proveedor</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdVersionVeh">
-                                                        <td v-text="vehiculo.nIdVersionVeh"></td>
-                                                        <td v-text="vehiculo.cLineaNombre"></td>
-                                                        <td v-text="vehiculo.cMarcaNombre"></td>
-                                                        <td v-text="vehiculo.cModeloNombre"></td>
-                                                        <td v-text="vehiculo.cNombreComercial"></td>
                                                         <td>
                                                             <el-tooltip class="item" :content="'Editar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                 <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
@@ -196,6 +192,12 @@
                                                                 </el-tooltip>
                                                             </template>
                                                         </td>
+                                                        <td v-text="vehiculo.nIdVersionVeh"></td>
+                                                        <td v-text="vehiculo.cLineaNombre"></td>
+                                                        <td v-text="vehiculo.cMarcaNombre"></td>
+                                                        <td v-text="vehiculo.cModeloNombre"></td>
+                                                        <td v-text="vehiculo.cNombreComercial"></td>
+                                                        <td v-text="vehiculo.cProveedorNombre"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1073,9 +1075,9 @@
             validarBusqueda(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
+                /*if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
                     this.mensajeError.push('Debes Seleccionar el Proveedor');
-                };
+                };*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }

@@ -1158,7 +1158,7 @@
                                         <div class="card-header">
                                             <h3 class="h4">{{ fillModalSolicitudAutorizacion.cTipoSolicitud }}</h3>
                                             <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true">X</span>
                                             </button>
                                         </div>
                                         <div class="card-body">
@@ -1202,7 +1202,7 @@
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cNroVehiculo"></strong>
                                                                 </label>
                                                             </div>
-                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                            <!--<label class="col-sm-4 form-control-label">Contacto</label>
                                                             <div class="col-sm-8">
                                                                 <label class="form-control-label-readonly">
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cContacto"></strong>
@@ -1219,7 +1219,7 @@
                                                                 <label class="form-control-label-readonly">
                                                                     <strong v-text="fillModalSolicitudAutorizacion.cNumeroLicenciaConducir"></strong>
                                                                 </label>
-                                                            </div>
+                                                            </div>-->
                                                             <label class="col-sm-4 form-control-label">Asesor Encargado</label>
                                                             <div class="col-sm-8">
                                                                 <label class="form-control-label-readonly">
@@ -1268,6 +1268,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionConformeNoConforme(1, 1)">CONFORME</button>
                             <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionConformeNoConforme(2, 1)">NO CONFORME</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                         </div>
                     </div>
                 </div>
