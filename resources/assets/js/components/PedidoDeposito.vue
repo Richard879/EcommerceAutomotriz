@@ -232,10 +232,12 @@
                                                                                         <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="pedido.nCantidadDepositos > 0">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reporte Depositos {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="sumatoriaDeposito(pedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
@@ -945,6 +947,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>BANCO</th>
+                                                                    <th>CODIGO BANCO</th>
                                                                     <th>N° OPERACIÓN</th>
                                                                     <th>MONEDA</th>
                                                                     <th>FECHA</th>
@@ -959,6 +962,7 @@
                                                                 <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido"
                                                                         :style="{ background : depositos.colorearEstadoDeposito}">
                                                                     <td v-text="depositos.cNombreBanco"></td>
+                                                                    <td v-text="depositos.cAcctCode"></td>
                                                                     <td v-text="depositos.nNumeroOperacion"></td>
                                                                     <td v-text="depositos.cNombreMoneda"></td>
                                                                     <td v-text="depositos.dFechaDeposito"></td>
@@ -1985,10 +1989,10 @@
                     'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        swal('Deposito Registrado Exitosamente');
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
+                        swal('Deposito Registrado Exitosamente');
                     }else{
                         swal('El pedido ha sido Anulado o ya está Cancelado');
                     }

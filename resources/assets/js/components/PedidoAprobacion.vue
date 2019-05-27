@@ -999,6 +999,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>BANCO</th>
+                                                                    <th>CODIGO BANCO</th>
                                                                     <th>N° OPERACIÓN</th>
                                                                     <th>MONEDA</th>
                                                                     <th>FECHA</th>
@@ -1013,6 +1014,7 @@
                                                                 <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido"
                                                                         :style="{ background : depositos.colorearEstadoDeposito}">
                                                                     <td v-text="depositos.cNombreBanco"></td>
+                                                                    <td v-text="depositos.cAcctCode"></td>
                                                                     <td v-text="depositos.nNumeroOperacion"></td>
                                                                     <td v-text="depositos.cNombreMoneda"></td>
                                                                     <td v-text="depositos.dFechaDeposito"></td>
@@ -1696,7 +1698,7 @@
                             'cItemCode' :   value.cNumeroVin.toString()
                         });
 
-                        
+
                         //Solo la primera iteración debido que es la misma actividad para todos los EV
                         //ya que estos pertenecen a una sola OV
                         if(key == 0)

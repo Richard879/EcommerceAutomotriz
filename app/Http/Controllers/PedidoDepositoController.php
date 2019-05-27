@@ -177,11 +177,15 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+        $cEstadoDeposito    =   $request->cEstadoDeposito;
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?',
+        $cEstadoDeposito    =   ($cEstadoDeposito == NULL) ? ($cEstadoDeposito = '') : $cEstadoDeposito;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?',
                                     [
                                         $nIdCabeceraPedido,
+                                        $cEstadoDeposito,
                                         Auth::user()->id
                                     ]);
 
@@ -307,6 +311,23 @@ class PedidoDepositoController extends Controller
                                     ]);
 
         return response()->json($arrayDepositosPorPedido);
+    }
+
+    public function SetCambiarEstadoDepositoPreliminar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraPedido      =   $request->nIdCabeceraPedido;
+        $nIdDepositoPedido      =   $request->nIdDepositoPedido;
+        $cFlagEstadoDeposito    =   $request->cFlagEstadoDeposito;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDepositoPreliminar ?, ?, ?, ?',
+                                    [
+                                        $nIdCabeceraPedido,
+                                        $nIdDepositoPedido,
+                                        $cFlagEstadoDeposito,
+                                        Auth::user()->id
+                                    ]);
     }
 
     public function GetListPedidoAprobados(Request $request)

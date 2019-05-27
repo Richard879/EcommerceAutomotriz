@@ -369,7 +369,7 @@
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
                                                                                 </el-tooltip>
                                                                             </template> -->
-                                                                            <template v-if="deposito.cFlagEstadoAlerta == 'P' || deposito.cFlagEstadoAlerta == 'E'">
+                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P' && (deposito.cFlagEstadoAlerta == 'P' || deposito.cFlagEstadoAlerta == 'E')">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Incidencia del Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="abrirModal('Incidencia','abrir', deposito)" :style="'color:#ffc107'" class="fa fa-exclamation-triangle"></i>
