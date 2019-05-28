@@ -1271,7 +1271,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
-                                                            <template v-if="cFlagTipo=='TR' || cFlagTipo=='VE'">
+                                                            <template v-if="almacen.cFlagTipo=='TR' || almacen.cFlagTipo=='VE'">
                                                                 <td>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
