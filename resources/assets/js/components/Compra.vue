@@ -178,8 +178,10 @@
                                                                                 <th>Disponible</th>
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Forma Pago</th>
+                                                                                <th>Modelo</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
+                                                                                <th>Color</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
@@ -223,8 +225,10 @@
                                                                                 <td v-text="compra.cFlagVehiculoLibre"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
+                                                                                <td v-text="compra.cDescripcionModelo"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
+                                                                                <td v-text="compra.cNombreColor"></td>
                                                                                 <td v-text="compra.cSimboloMoneda"></td>
                                                                                 <td v-text="compra.fTotalCompra"></td>
                                                                                 <td v-text="compra.cNumeroFactura"></td>
@@ -1267,14 +1271,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
-                                                                    <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td>{{almacen.cWhsCode}}</td>
-                                                            <td>{{almacen.cWhsName}}</td>
+                                                            <template v-if="almacen.cFlagTipo=='TR' || almacen.cFlagTipo=='VE'">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
+                                                                        <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td>{{almacen.cWhsCode}}</td>
+                                                                <td>{{almacen.cWhsName}}</td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1844,7 +1850,7 @@
                 axios.get(url, {
                     params: {
                         'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
+                        'cflagtipo'     : 'TR'
                     }
                 }).then(response => {
                     if(response.data.length){

@@ -11651,8 +11651,7 @@ canvas {
 }
 
 header.page-header {
-    /*padding: 15px 0;*/
-    padding: 6px 0;
+    padding: 4px 0;
 }
 
 table {
@@ -12061,7 +12060,7 @@ nav.side-navbar span.heading {
 }
 
 nav.side-navbar ul {
-    padding: 15px 0;
+    padding: 10px 0;
 }
 
 nav.side-navbar ul li {
