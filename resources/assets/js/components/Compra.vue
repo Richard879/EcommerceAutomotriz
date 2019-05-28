@@ -178,8 +178,10 @@
                                                                                 <th>Disponible</th>
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Forma Pago</th>
+                                                                                <th>Modelo</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Modelo</th>
+                                                                                <th>Color</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
@@ -223,8 +225,10 @@
                                                                                 <td v-text="compra.cFlagVehiculoLibre"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
+                                                                                <td v-text="compra.cNombreModelo"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
+                                                                                <td v-text="compra.cNombreColor"></td>
                                                                                 <td v-text="compra.cSimboloMoneda"></td>
                                                                                 <td v-text="compra.fTotalCompra"></td>
                                                                                 <td v-text="compra.cNumeroFactura"></td>
