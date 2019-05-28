@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -400,5 +401,64 @@ class PdiProcesoController extends Controller
 
         $arrayDetalleAccesorio = ParametroController::arrayPaginator($arrayDetalleAccesorio, $request);
         return ['arrayDetalleAccesorio'=>$arrayDetalleAccesorio];
+    }
+
+    public function GetReportePDI(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             =   $request->nIdEmpresa;
+        $nIdSucursal            =   $request->nIdSucursal;
+        $nIdCabeceraInspeccion  =   $request->nIdCabeceraInspeccion;
+        $nCriterio              =   $request->ncriterio;
+        $cDescripcionCiterio    =   $request->cnumerovin;
+
+        $logo                   =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO EMPRESA
+        $hyundai                =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE LOGO HYUNDAI
+
+        $arrayDetalleAccesorio  =   DB::select('exec [usp_Pdi_GetListDetalleAccesorio] ?, ?, ?',
+                                                [
+                                                    $nIdEmpresa,
+                                                    $nIdSucursal,
+                                                    $nIdCabeceraInspeccion
+                                                ]);
+
+        $arrayPdi = DB::select('exec [usp_Pdi_GetListPdiPDF] ?, ?, ?, ?, ?',
+                                                [   $nIdEmpresa,
+                                                    $nIdSucursal,
+                                                    $nIdCabeceraInspeccion,
+                                                    $nCriterio,
+                                                    $cDescripcionCiterio
+                                                ]);
+
+        $pdf = \PDF::loadView('pdf.pdi.generar', [
+                                                'arrayPdi'                  =>  $arrayPdi,
+                                                'arrayDetalleAccesorio'     =>  $arrayDetalleAccesorio,
+                                                'logo'                      =>  $logo,
+                                                'hyundai'                   =>  $hyundai
+                                            ]);
+
+        return $pdf->download('PDI -'.$nIdCabeceraInspeccion.'.pdf');
+    }
+
+    public function subirArchivo(Request $request)
+    {
+        $nidcabecerainspeccion = $request->nidcabecerainspeccion;
+        $file = $request->file;
+
+        $bandera = str_random(10);
+        $nombreArchivoServidor = $bandera .'_'. $file->getClientOriginalName();
+
+        $ruta = Storage::putFileAs('public/PDI', $file, $nombreArchivoServidor);
+
+        $arrayDocumento = DB::select('exec usp_Pdi_SetPdiArchivo ?, ?, ?, ?',
+                                                        [
+                                                            $nidcabecerainspeccion,
+                                                            asset('storage/PDI/' . $nombreArchivoServidor),
+                                                            $file->getClientOriginalName(),
+                                                            Auth::user()->id
+                                                        ]);
+
+        return response()->json($arrayDocumento);
     }
 }

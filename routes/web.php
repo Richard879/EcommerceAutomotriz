@@ -283,6 +283,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/pdi/GetAccesoriosPdiEntregaVehiculo', 'PdiProcesoController@GetAccesoriosPdiEntregaVehiculo');
     Route::get('/pdi/GetLstVehiculoPaca', 'PdiProcesoController@GetLstVehiculoPaca');
     Route::get('/pdi/GetListDetalleAccesorio', 'PdiProcesoController@GetListDetalleAccesorio');
+    Route::post('/pdi/GetReportePDI', 'PdiProcesoController@GetReportePDI');
+    Route::post('/pdi/subirArchivo', 'PdiProcesoController@subirArchivo');
 
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
     Route::post('/documentoadjunto/subirArchivoPDI', 'DocumentoAdjuntoController@subirArchivoPDI');

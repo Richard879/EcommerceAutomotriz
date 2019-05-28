@@ -145,13 +145,23 @@
                                                                 </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
-                                                                <i @click="generarPDF(pdi.nIdCabeceraInspeccion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                <div slot="content">Generar Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                <i @click="generarPDF(pdi)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Detalle Accesorios {{ pdi.nIdCabeceraInspeccion }}</div>
                                                                 <i @click="abrirModal('accesorio', 'detalle', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Subir PDF {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                <i @click="abrirModal('pdi', 'pdf', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
+                                                            <template v-if="pdi.cRutaDocumento">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Ver Reporte PDI {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                    <i @click="verPDF(pdi.cRutaDocumento)" :style="'color:#796AEE'" class="fa-md fa fa-file"></i>
+                                                                </el-tooltip>&nbsp;&nbsp;
+                                                            </template>
                                                         </td>
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
                                                         <td v-text="pdi.cNombreTipoInspeccion"></td>
@@ -348,7 +358,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
@@ -1466,6 +1475,57 @@
                 </div>
             </div>
 
+            <!-- MODAL DETALLE PDF - PDI -->
+            <div class="modal fade" v-if="accionmodal==12" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">Proceso de Inspección</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Archivo PDI</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-9 offset-md-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarPDFI()">
+                                                        <i class="fa fa-save"></i> Subir
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1605,6 +1665,8 @@
                     cacctcodesalida: ''
                 },
                 arrayAlmacen: [],
+                attachment: null,
+                form: new FormData,
                 //===========================================================
                 //=============  VARIABLES SAP ========================
                 arraySapArticulo: [],
@@ -1808,18 +1870,19 @@
                 this.pagination.current_page=page;
                 this.listarPdi(page);
             },
-            generarPDF(nIdCabeceraInspeccion){
+            generarPDF(pdi){
                 var config = {
                     responseType: 'blob'
                 };
-                var url = this.ruta + '/pdi/GetDetallePDI';
+                var url = this.ruta + '/pdi/GetReportePDI';
+
                 axios.post(url, {
                     'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdCabeceraInspeccion' :   parseInt(nIdCabeceraInspeccion),
-                    'ncriterio'             :   this.fillPdi.ncriterio
+                    'nIdCabeceraInspeccion' :   parseInt(pdi.nIdCabeceraInspeccion),
+                    'ncriterio'             :   this.fillPdi.ncriterio,
+                    'cnumerovin'            :   pdi.cNumeroVin
                 }, config).then(response => {
-                    console.log(response.data);
                     //Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],
@@ -1838,6 +1901,9 @@
                         }
                     }
                 });
+            },
+            verPDF(cRutaDocumento){
+                window.open(cRutaDocumento);
             },
             //=============================================================
             //==================== NUEVA INSPECCION =======================
@@ -2562,20 +2628,20 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerainspeccion' : this.fillDetalleAccesorio.nidcabecerainspeccion,
-                        'cnombre'               : this.fillDetalleAccesorio.cnombre,
-                        'page'                  : page
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerainspeccion' :   this.fillDetalleAccesorio.nidcabecerainspeccion,
+                        'cnombre'               :   this.fillDetalleAccesorio.cnombre,
+                        'page'                  :   page
                     }
                 }).then(response => {
-                    this.arrayDetalleAccesorio          = response.data.arrayDetalleAccesorio.data;
-                    this.paginationModal.current_page   = response.data.arrayDetalleAccesorio.current_page;
-                    this.paginationModal.total          = response.data.arrayDetalleAccesorio.total;
-                    this.paginationModal.per_page       = response.data.arrayDetalleAccesorio.per_page;
-                    this.paginationModal.last_page      = response.data.arrayDetalleAccesorio.last_page;
-                    this.paginationModal.from           = response.data.arrayDetalleAccesorio.from;
-                    this.paginationModal.to             = response.data.arrayDetalleAccesorio.to;
+                    this.arrayDetalleAccesorio          =   response.data.arrayDetalleAccesorio.data;
+                    this.paginationModal.current_page   =   response.data.arrayDetalleAccesorio.current_page;
+                    this.paginationModal.total          =   response.data.arrayDetalleAccesorio.total;
+                    this.paginationModal.per_page       =   response.data.arrayDetalleAccesorio.per_page;
+                    this.paginationModal.last_page      =   response.data.arrayDetalleAccesorio.last_page;
+                    this.paginationModal.from           =   response.data.arrayDetalleAccesorio.from;
+                    this.paginationModal.to             =   response.data.arrayDetalleAccesorio.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3347,8 +3413,90 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
+                    me.generarReportePDI();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generarReportePDI() {
+                let me = this;
+                var url = this.ruta + '/pdi/GetReportePDI';
+
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraInspeccion' :   this.formPdi.nidcabecerainspeccion,
+                    'ncriterio'             :   this.formPdi.nidcompra == 0 ? 1 : 2,
+                    'cnumerovin'            :   this.formPdi.cnumerovin
+                }).then(response => {
+                    //Create a Blob from the PDF Stream
+                    // console.log(response.data);
+                    const file = new Blob(
+                        [response.data],
+                        // {type: 'text/html'}
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+
+                    //Cerrar ProgressBar
                     me.loading.close();
                     me.confirmaPdi();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getFile(e){
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+            },
+            registrarPDFI(){
+                if(this.validarPDI()){
+                    return;
+                }
+
+                this.subirArchivos();
+            },
+            validarPDI(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.attachment){
+                    this.mensajeError.push('Debe seleccionar un Documento');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            subirArchivos(){
+                this.mostrarProgressBar();
+
+                this.form.append('file', this.attachment);
+                this.form.append('nidcabecerainspeccion', this.formPdi.nidcabecerainspeccion);
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var url = this.ruta + '/pdi/subirArchivo';
+
+                axios.post(url, this.form, config).then(response=>{
+                    // this.generarSAPActividadPDI(response.data[0].nIdDocumentoAdjunto);//FALTA METODO PARA INTEGRAR RUTA DEL DOCUMENTO EN SAP
+                    this.cerrarModal();
+                    swal('Documento PDI Integrado Correctamente');
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3689,8 +3837,7 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.loading.close();
-                    me.confirmaPdi();
+                    me.generarReportePDI();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3863,6 +4010,13 @@
                                     this.listarAccesoriosPdiEntregaVehiculo();
                                 };
                                 break;
+                            }
+                            case 'pdf':
+                            {
+                                this.accionmodal = 12;
+                                this.modal = 1;
+
+                                this.formPdi.nidcabecerainspeccion = data.nIdCabeceraInspeccion
                             }
                         }
                     }
