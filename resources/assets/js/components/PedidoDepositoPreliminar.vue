@@ -4,7 +4,7 @@
             <header class="page-header">
                 <div class="container-fluid">
                     <h2 class="no-margin-bottom">
-                        <vs-divider color="dark">MODULO APROBACIÓN DE DEPOSITOS</vs-divider>
+                        <vs-divider color="dark">MODULO APROBACIÓN DE DEPOSITOS PRELIMINAR</vs-divider>
                     </h2>
                 </div>
             </header>
