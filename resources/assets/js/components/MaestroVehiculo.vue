@@ -2968,7 +2968,7 @@
                     });
                 }
 
-                this.fillNuevoVehiculo.nidcompra  = data.nIdCompra;   
+                this.fillNuevoVehiculo.nidcompra  = data.nIdCompra;
                 this.cargarDataPlantilla(data.nIdCompra);
             },
             setearTipoDocumento(data){
