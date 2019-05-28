@@ -1419,16 +1419,18 @@
                                                             <th>Código SAP</th>
                                                             <th>Tipo</th>
                                                             <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
                                                             <th>Moneda</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="elemento in arrayDetalleAccesorio" :key="elemento.nIdContacto">
-                                                            <td v-text="elemento.nIdElemento"></td>
-                                                            <td v-text="elemento.cCodigoERP"></td>
-                                                            <td v-text="elemento.cTipoElemenNombre"></td>
-                                                            <td v-text="elemento.cElemenNombre"></td>
-                                                            <td v-text="elemento.cMonedaNombre"></td>
+                                                        <tr v-for="accesorio in arrayDetalleAccesorio" :key="accesorio.nIdElementoVenta">
+                                                            <td v-text="accesorio.nIdElementoVenta"></td>
+                                                            <td v-text="accesorio.cCodigoERP"></td>
+                                                            <td v-text="accesorio.cTipoElemenNombre"></td>
+                                                            <td v-text="accesorio.cNombre"></td>
+                                                            <td v-text="accesorio.nCantidad"></td>
+                                                            <td v-text="accesorio.cMonedaNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1636,6 +1638,12 @@
                     cnumerovin: ''
                 },
                 arrayListaVinSap: [],
+                // ============ MODAL DETALLE ACCESORIO =================
+                fillDetalleAccesorio:{
+                    nidcabecerainspeccion: 0,
+                    cnombre: ''
+                },
+                arrayDetalleAccesorio: [],
                 //==================================================
                 pagination: {
                     'total': 0,
@@ -2569,9 +2577,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'celementonombre': this.formEle.celementonombre,
-                        'page': page
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerainspeccion' : this.fillDetalleAccesorio.nidcabecerainspeccion,
+                        'cnombre'               : this.fillDetalleAccesorio.cnombre,
+                        'page'                  : page
                     }
                 }).then(response => {
                     this.arrayDetalleAccesorio          = response.data.arrayDetalleAccesorio.data;
@@ -3796,7 +3806,7 @@
                 this.mensajeError = '',
                 this.limpiarModal();
             },
-            abrirModal(modelo, accion, data =[]){
+            abrirModal(modelo, accion, data){
                 switch(modelo){
                     case 'pdi':
                     {
@@ -3892,6 +3902,7 @@
                             {
                                 this.accionmodal=11;
                                 this.modal = 1;
+                                this.fillDetalleAccesorio.nidcabecerainspeccion = data.nIdCabeceraInspeccion;
                                 this.listarDetalleAccesorios(1);
                                 break;
                             }
