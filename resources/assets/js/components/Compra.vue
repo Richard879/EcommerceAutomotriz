@@ -225,7 +225,7 @@
                                                                                 <td v-text="compra.cFlagVehiculoLibre"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
-                                                                                <td v-text="compra.cNombreModelo"></td>
+                                                                                <td v-text="compra.cDescripcionModelo"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
                                                                                 <td v-text="compra.cNombreColor"></td>
