@@ -3896,7 +3896,7 @@
                             if(value.cFlagEstadoAprobacion == 'D') {
                                 me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(233, 177, 151)';
                             }
-                            if(value.cFlagEstadoAprobacion == 'P') {
+                            if(value.cFlagEstadoAprobacion == 'P' || value.cFlagEstadoAprobacion == 'M') {
                                 me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgba(233, 240, 96, 0.795)';
                             }
                         })
