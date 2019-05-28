@@ -1848,7 +1848,7 @@
                 axios.get(url, {
                     params: {
                         'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'cflagtipo'     : 'VE'
+                        'cflagtipo'     : 'TR'
                     }
                 }).then(response => {
                     if(response.data.length){
