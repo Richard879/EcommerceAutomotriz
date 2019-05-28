@@ -1271,14 +1271,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="almacen in arrayAlmacen" :key="almacen.cWhsCode">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
-                                                                    <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td>{{almacen.cWhsCode}}</td>
-                                                            <td>{{almacen.cWhsName}}</td>
+                                                            <template v-if="cFlagTipo=='TR' || cFlagTipo=='VE'">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ almacen.cWhsName }}</div>
+                                                                        <i @click="asignarAlmacen(almacen)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td>{{almacen.cWhsCode}}</td>
+                                                                <td>{{almacen.cWhsName}}</td>
+                                                            </template>
                                                         </tr>
                                                     </tbody>
                                                 </table>
