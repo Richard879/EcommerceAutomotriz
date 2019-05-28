@@ -208,9 +208,9 @@
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>#Doc SAP</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Documento</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
-                                                                                <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>DocEntry</th>
                                                                                 <th>Aprobación</th>
@@ -233,9 +233,9 @@
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
-                                                                                <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
@@ -431,6 +431,7 @@
                                                                                     <th>Nro Cotizacion</th>
                                                                                     <th>Contacto</th>
                                                                                     <th>Vehiculo</th>
+                                                                                    <th>Documento</th>
                                                                                     <th>Dirección</th>
                                                                                     <th>Celular</th>
                                                                                     <th>Email</th>
@@ -456,6 +457,7 @@
                                                                                     <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                     <td v-text="cotizacion.cContacto"></td>
                                                                                     <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
+                                                                                    <td v-text="pedido.cPerDocumento"></td>
                                                                                     <td v-text="cotizacion.cDireccion"></td>
                                                                                     <td v-text="cotizacion.nTelefonoMovil"></td>
                                                                                     <td v-text="cotizacion.cEmail"></td>

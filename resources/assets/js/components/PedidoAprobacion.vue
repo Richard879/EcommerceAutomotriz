@@ -192,9 +192,9 @@
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>#Doc SAP</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Documento</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
-                                                                                <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
@@ -231,9 +231,9 @@
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
-                                                                                <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
@@ -1853,7 +1853,7 @@
                                 me.arraySapUpdSgc.push({
                                     'nSolutionCode' : parseInt(me.jsonRespuesta.SolutionCode),
                                     'cItemCode'     : me.jsonRespuesta.ItemCode.toString(),
-                                    'cFlagTipo'     : 'C',
+                                    'cFlagTipo'     : 'V',
                                     'cLogRespuesta' : response.data.toString()
                                 });
 
@@ -3896,7 +3896,7 @@
                             if(value.cFlagEstadoAprobacion == 'D') {
                                 me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(233, 177, 151)';
                             }
-                            if(value.cFlagEstadoAprobacion == 'P') {
+                            if(value.cFlagEstadoAprobacion == 'P' || value.cFlagEstadoAprobacion == 'M') {
                                 me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgba(233, 240, 96, 0.795)';
                             }
                         })

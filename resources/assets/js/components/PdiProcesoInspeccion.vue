@@ -150,7 +150,7 @@
                                                             </el-tooltip>&nbsp;&nbsp;
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Detalle Accesorios {{ pdi.nIdCabeceraInspeccion }}</div>
-                                                                <i @click="abrirModal('accesorio', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                <i @click="abrirModal('accesorio', 'detalle', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                         </td>
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
@@ -1367,31 +1367,16 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <!--<div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Tipo Elemento</label>
-                                                        <div class="col-sm-8">
-                                                            <el-select v-model="fillBusqTipoElemento.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
-                                                                <el-option
-                                                                v-for="item in arrayTipoElemento"
-                                                                :key="item.nIdPar"
-                                                                :label="item.cParNombre"
-                                                                :value="item.nIdPar">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
-                                                                <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillDetalleAccesorio.cnombre" @keyup.enter="listarDetalleAccesorios(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Buscar Elemento Venta </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarDetalleAccesorios(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
                                                                     </el-tooltip>
@@ -1403,7 +1388,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-9 offset-md-5">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleAccesorios(1)">
                                                         <i class="fa fa-search"></i> Buscar
                                                     </button>
                                                 </div>
@@ -1419,16 +1404,18 @@
                                                             <th>Código SAP</th>
                                                             <th>Tipo</th>
                                                             <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
                                                             <th>Moneda</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="elemento in arrayDetalleAccesorio" :key="elemento.nIdContacto">
-                                                            <td v-text="elemento.nIdElemento"></td>
-                                                            <td v-text="elemento.cCodigoERP"></td>
-                                                            <td v-text="elemento.cTipoElemenNombre"></td>
-                                                            <td v-text="elemento.cElemenNombre"></td>
-                                                            <td v-text="elemento.cMonedaNombre"></td>
+                                                        <tr v-for="accesorio in arrayDetalleAccesorio" :key="accesorio.nIdElementoVenta">
+                                                            <td v-text="accesorio.nIdElementoVenta"></td>
+                                                            <td v-text="accesorio.cCodigoERP"></td>
+                                                            <td v-text="accesorio.cTipoElemenNombre"></td>
+                                                            <td v-text="accesorio.cNombre"></td>
+                                                            <td v-text="accesorio.nCantidad"></td>
+                                                            <td v-text="accesorio.cMonedaNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -1636,6 +1623,12 @@
                     cnumerovin: ''
                 },
                 arrayListaVinSap: [],
+                // ============ MODAL DETALLE ACCESORIO =================
+                fillDetalleAccesorio:{
+                    nidcabecerainspeccion: 0,
+                    cnombre: ''
+                },
+                arrayDetalleAccesorio: [],
                 //==================================================
                 pagination: {
                     'total': 0,
@@ -2569,9 +2562,11 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'celementonombre': this.formEle.celementonombre,
-                        'page': page
+                        'nidempresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerainspeccion' : this.fillDetalleAccesorio.nidcabecerainspeccion,
+                        'cnombre'               : this.fillDetalleAccesorio.cnombre,
+                        'page'                  : page
                     }
                 }).then(response => {
                     this.arrayDetalleAccesorio          = response.data.arrayDetalleAccesorio.data;
@@ -3796,7 +3791,7 @@
                 this.mensajeError = '',
                 this.limpiarModal();
             },
-            abrirModal(modelo, accion, data =[]){
+            abrirModal(modelo, accion, data){
                 switch(modelo){
                     case 'pdi':
                     {
@@ -3892,6 +3887,7 @@
                             {
                                 this.accionmodal=11;
                                 this.modal = 1;
+                                this.fillDetalleAccesorio.nidcabecerainspeccion = data.nIdCabeceraInspeccion;
                                 this.listarDetalleAccesorios(1);
                                 break;
                             }

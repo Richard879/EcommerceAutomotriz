@@ -4,7 +4,7 @@
             <header class="page-header">
                 <div class="container-fluid">
                     <h2 class="no-margin-bottom">
-                        <vs-divider color="dark">MODULO APROBACIÓN DE DEPOSITOS</vs-divider>
+                        <vs-divider color="dark">MODULO APROBACIÓN DE DEPOSITOS PRELIMINAR</vs-divider>
                     </h2>
                 </div>
             </header>
@@ -370,12 +370,12 @@
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
                                                                                 </el-tooltip>
                                                                             </template> -->
-                                                                            <!-- <template v-if="deposito.cFlagEstadoAlerta == 'M' || deposito.cFlagEstadoAlerta == 'E'">
+                                                                             <template v-if="deposito.cFlagEstadoAprobacion == 'M' && (deposito.cFlagEstadoAlerta == 'P' || deposito.cFlagEstadoAlerta == 'E')">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Incidencia del Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="abrirModal('Incidencia','abrir', deposito)" :style="'color:#ffc107'" class="fa fa-exclamation-triangle"></i>
                                                                                 </el-tooltip>
-                                                                            </template> -->
+                                                                            </template>
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Voucher del Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                 <i @click="descargaVoucher(deposito.cRutaDocumento)" class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>

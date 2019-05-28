@@ -379,4 +379,26 @@ class PdiProcesoController extends Controller
         //$arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
     }
+
+    public function GetListDetalleAccesorio(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             = $request->nidempresa;
+        $nIdSucursal            = $request->nidsucursal;
+        $nIdCabeceraInspeccion  = $request->nidcabecerainspeccion;
+        $cElemenNombre          = $request->cnombre;
+
+        $cElemenNombre      = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+
+        $arrayDetalleAccesorio = DB::select('exec [usp_Pdi_GetListDetalleAccesorio] ?, ?, ?, ?',
+                                                                [   $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $nIdCabeceraInspeccion,
+                                                                    $cElemenNombre
+                                                                ]);
+
+        $arrayDetalleAccesorio = ParametroController::arrayPaginator($arrayDetalleAccesorio, $request);
+        return ['arrayDetalleAccesorio'=>$arrayDetalleAccesorio];
+    }
 }
