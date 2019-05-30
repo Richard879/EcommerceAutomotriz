@@ -102,6 +102,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/compra/GetListaPrecioByProveedor', 'CompraController@GetListaPrecioByProveedor');
     Route::put('/compra/activar','CompraController@activar');
     Route::get('/compra/exportCompraXLS', 'ExcelController@exportCompraXLS');
+    Route::put('/compra/UpdCompraSucursal', 'CompraController@UpdCompraSucursal');
 
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');

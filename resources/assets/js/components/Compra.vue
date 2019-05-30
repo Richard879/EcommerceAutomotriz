@@ -1417,6 +1417,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <div v-for="e in mensajeError" :key="e" v-text="e">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarCambioSucursal()">
@@ -4375,6 +4381,7 @@
                                 );
                             }
                             this.listarCompras(1);
+                            this.cerrarModal();
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -4394,9 +4401,6 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayExcel == []){
-                    this.mensajeError.push('No hay Datos a Registrar');
-                };
                 if(this.fillSucursal.nidsucursal == 0 || !this.fillSucursal.nidsucursal){
                     this.mensajeError.push('Debes seleccionar una Sucursal');
                 };
