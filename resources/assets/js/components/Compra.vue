@@ -1419,8 +1419,11 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="cambiarSucursal()">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarCambioSucursal()">
                                                         <i class="fa fa-file-o"></i> Registrar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cancelar
                                                     </button>
                                                 </div>
                                             </div>
@@ -1429,9 +1432,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <!--<div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -4333,6 +4336,53 @@
                         }
                     }
                 });
+            },
+            actualizarCambioSucursal(){
+                swal({
+                    title: 'Estas seguro de cambiar la Compra de Sucursal?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Cambiar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/compra/UpdCompraSucursal';
+                        axios.put(url, {
+                            'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdSucursal'   : parseInt(this.fillSucursal.nidsucursal),
+                            'nIdCompra'     : parseInt(this.fillSucursal.nidcompra),
+                            'cNumeroVin'    : this.fillSucursal.cnumerovin,
+                            'cWhsCode'      : this.fillSucursal.cwshcode
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Realizado!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             // =============================================
             // =============  MODAL ========================
