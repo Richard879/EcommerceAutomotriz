@@ -191,6 +191,7 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>#Doc SAP</th>
+                                                                                <th>Código</th>
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
                                                                                 <th>Vehiculo</th>
@@ -230,6 +231,7 @@
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
+                                                                                <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>

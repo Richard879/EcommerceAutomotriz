@@ -321,4 +321,19 @@ class CompraController extends Controller
             DB::rollBack();
         }
     }
+
+    public function UpdCompraSucursal(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayCompra = DB::select('exec [usp_Compra_UpdCompraSucursal] ?, ?, ?, ?, ?, ?',
+                                                [   $request->nIdEmpresa,
+                                                    $request->nIdSucursal,
+                                                    $request->nIdCompra,
+                                                    $request->cNumeroVin,
+                                                    $request->cWhsCode,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayCompra);
+    }
 }

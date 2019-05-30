@@ -49,7 +49,17 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Mes</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillAsigVendedorCuota.cmes" class="form-control form-control-sm" readonly>
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="fillAsigVendedorCuota.cmes" class="form-control form-control-sm" readonly>
+                                                        <div class="input-group-prepend">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Seleccionar Mes </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('cronograma','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -316,6 +326,90 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL MESES -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <template v-if="arrayMes.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Código</th>
+                                                                <th>Mes</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="mes in arrayMes" :key="mes.nParDstCodigo">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ mes.cParDstNombre }}</div>
+                                                                        <i @click="obtenerCronograma(mes)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="mes.nParDstCodigo"></td>
+                                                                <td v-text="mes.cParDstNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMes(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaMes(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMes(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -329,7 +423,9 @@
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillAsigVendedorCuota:{
                     nidcronograma: '',
+                    nidanio: 0,
                     canio: '',
+                    nidmes: 0,
                     cmes: '',
                     nidjefeventa: 0,
                     cnombrejefeventa: 'NO ES JEFE DE VENTAS',
@@ -348,6 +444,7 @@
                 arrayVendedoresByIdJV: [],
                 arrayFlagVendedoresByIdJV: [],
                 arrayFlagVendedoresByIdJVRpta: [],
+                arrayMes: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -441,7 +538,9 @@
             llenarCompraActiva(){
                 var url = this.ruta + '/objComercial/getVentaActiva';
                 axios.get(url).then(response => {
+                    this.fillAsigVendedorCuota.nidanio      = response.data[0].nIdAnio;
                     this.fillAsigVendedorCuota.canio        = response.data[0].cAnio;
+                    this.fillAsigVendedorCuota.nidmes       = response.data[0].nIdMes;
                     this.fillAsigVendedorCuota.cmes         = response.data[0].cMes;
                     this.fillAsigVendedorCuota.nidcronograma= response.data[0].nIdCronograma;
                 }).catch(error => {
@@ -681,6 +780,71 @@
                 }
                 return this.error;
             },
+            listarMesesPorAnio(page){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo'         : this.fillAsigVendedorCuota.nidanio,
+                        'nparsrcgrupoarametro'  : 110040,
+                        'npardstcodigo'         : 0,
+                        'npardstgrupoarametro'  : 110041,
+                        'opcion'                : 0,
+                        'page'                  : page
+                    }
+                }).then(response => {
+                    this.arrayMes                       = response.data.arrayParParametro.data;
+                    this.paginationModal.current_page   = response.data.arrayParParametro.current_page;
+                    this.paginationModal.total          = response.data.arrayParParametro.total;
+                    this.paginationModal.per_page       = response.data.arrayParParametro.per_page;
+                    this.paginationModal.last_page      = response.data.arrayParParametro.last_page;
+                    this.paginationModal.from           = response.data.arrayParParametro.from;
+                    this.paginationModal.to             = response.data.arrayParParametro.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaMes(page){
+                this.paginationModal.current_page=page;
+                this.listarMesesPorAnio(page);
+            },
+            obtenerCronograma(objMes){
+                var url = this.ruta + '/cronograma/GetCronogramaFechasByMes';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipocronograma' : 0,
+                        'nidanio'           : this.fillAsigVendedorCuota.nidanio,
+                        'nidmes'            : objMes.nParDstCodigo
+                    }
+                }).then(response => {
+                    if(response.data.arrayCronograma.length)
+                    {
+                        this.fillAsigVendedorCuota.nidcronograma= response.data.arrayCronograma[0].nIdCronograma;
+                        this.fillAsigVendedorCuota.cmes         = objMes.cParDstNombre;
+                    }
+                    else{
+                        this.fillAsigVendedorCuota.nidcronograma= 0;
+                        this.fillAsigVendedorCuota.cmes          = 'NO HAY CRONOGRAMA';
+                    }
+                    this.cerrarModal();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -697,8 +861,19 @@
                                 break;
                             }
                         }
-                    }
-                    break;
+                    }break;
+                    case "cronograma":
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.listarMesesPorAnio(1);
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             //Limpiar Paginación

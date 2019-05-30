@@ -194,6 +194,12 @@
                                                                             <tr v-for="compra in arrayCompra" :key="compra.nIdCompra"
                                                                                     :style="{ background : compra.cFlagColor }">
                                                                                 <td>
+                                                                                    <!--<template v-if="compra.cSituacionRegistro=='A'">-->
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Cambiar Sucursal {{ compra.cNumeroVin }}</div>
+                                                                                            <i @click="abrirModal('compra','sucursal', compra)" :style="'color:#796AEE'" class="fa-md fa fa-home"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    <!--</template>-->
                                                                                     <template v-if="compra.cSituacionRegistro=='A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Desactivar Compra {{ compra.cNumeroVin }}</div>
@@ -1330,6 +1336,115 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL SUCURSAL Y ALMACEN -->
+            <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">CAMBIAR SUCURSAL</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombre Comecial</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillSucursal.cnombrecomercial" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Vin</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillSucursal.cnumerovin" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillSucursal.nidsucursal" filterable clearable placeholder="SELECCIONE" v-on:change="listarAlmacenCambio()">
+                                                                <el-option
+                                                                    v-for="item in arraySucursal"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Almacén</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillSucursal.cwshcode" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                    v-for="item in arrayAlmacenSap"
+                                                                    :key="item.cWhsCode"
+                                                                    :label="item.cWhsName"
+                                                                    :value="item.cWhsCode">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <div v-for="e in mensajeError" :key="e" v-text="e">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarCambioSucursal()">
+                                                        <i class="fa fa-file-o"></i> Registrar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1442,6 +1557,16 @@
                 arrayTCTipoBeneficio: [],
                 arrayTCCostoVehiculo: [],
                 arraySapCosto: [],
+                // =============  VARIABLES CAMBIAR SUCURSAL ========================
+                fillSucursal:{
+                    cnombrecomercial: '',
+                    cnumerovin: '',
+                    nidcompra: 0,
+                    nidsucursal: '',
+                    cwshcode: ''
+                },
+                arrayAlmacenSap: [],
+                arraySucursal: [],
                 // ============================================================
                 page: 1,
                 perPage: 10,
@@ -4152,13 +4277,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayAlmacen = response.data.arrayAlmacen.data;
-                    this.paginationModal.current_page =  response.data.arrayAlmacen.current_page;
-                    this.paginationModal.total = response.data.arrayAlmacen.total;
-                    this.paginationModal.per_page    = response.data.arrayAlmacen.per_page;
-                    this.paginationModal.last_page   = response.data.arrayAlmacen.last_page;
-                    this.paginationModal.from        = response.data.arrayAlmacen.from;
-                    this.paginationModal.to           = response.data.arrayAlmacen.to;
+                    this.arrayAlmacen                   = response.data.arrayAlmacen.data;
+                    this.paginationModal.current_page   = response.data.arrayAlmacen.current_page;
+                    this.paginationModal.total          = response.data.arrayAlmacen.total;
+                    this.paginationModal.per_page       = response.data.arrayAlmacen.per_page;
+                    this.paginationModal.last_page      = response.data.arrayAlmacen.last_page;
+                    this.paginationModal.from           = response.data.arrayAlmacen.from;
+                    this.paginationModal.to             = response.data.arrayAlmacen.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4177,6 +4302,109 @@
                 this.formAlmacen.cwhscode = objAlmacen.cWhsCode;
                 this.formAlmacen.cwhsname = objAlmacen.cWhsName;
                 this.cerrarModal();
+            },
+            // =============  LISTAR SUCURSALES ======================
+            listarSucursales(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110022
+                    }
+                }).then(response => {
+                    this.arraySucursal = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarAlmacenCambio(){
+                var url = this.ruta + '/almacen/GetAlmacenByLocalidad';
+
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   : this.fillSucursal.nidsucursal,
+                        'opcion'        : 1
+                    }
+                }).then(response => {
+                    this.arrayAlmacenSap    = response.data.arrayAlmacen;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarCambioSucursal(){
+                if(this.validarCambioSucursal()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
+                swal({
+                    title: 'Estas seguro de cambiar la Compra de Sucursal?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Cambiar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/compra/UpdCompraSucursal';
+                        axios.put(url, {
+                            'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdSucursal'   : parseInt(this.fillSucursal.nidsucursal),
+                            'nIdCompra'     : parseInt(this.fillSucursal.nidcompra),
+                            'cNumeroVin'    : this.fillSucursal.cnumerovin,
+                            'cWhsCode'      : this.fillSucursal.cwshcode
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Realizado!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                            this.cerrarModal();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
+            },
+            validarCambioSucursal(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillSucursal.nidsucursal == 0 || !this.fillSucursal.nidsucursal){
+                    this.mensajeError.push('Debes seleccionar una Sucursal');
+                };
+                return this.error;
             },
             // =============================================
             // =============  MODAL ========================
@@ -4225,6 +4453,16 @@
                                 this.accionmodal=5;
                                 this.modal = 1;
                                 this.arrayLineaCredito = [];
+                                break;
+                            }
+                            case 'sucursal':
+                            {
+                                this.accionmodal=8;
+                                this.modal = 1;
+                                this.fillSucursal.nidcompra              =   data['nIdCompra'];
+                                this.fillSucursal.cnombrecomercial       =   data['cNombreComercial'];
+                                this.fillSucursal.cnumerovin             =   data['cNumeroVin'];
+                                this.listarSucursales();
                                 break;
                             }
                         }

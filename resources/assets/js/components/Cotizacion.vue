@@ -196,7 +196,9 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Cotizacion</th>
                                                                                 <th>Vehiculo</th>
+                                                                                <th>Código</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Documento</th>
                                                                                 <th>Dirección</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Email</th>
@@ -230,7 +232,9 @@
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                 <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo"></td>
+                                                                                <td v-text="cotizacion.nIdContacto"></td>
                                                                                 <td v-text="cotizacion.cContacto"></td>
+                                                                                <td v-text="cotizacion.cPerDocumento"></td>
                                                                                 <td v-text="cotizacion.cDireccion"></td>
                                                                                 <td v-text="cotizacion.nTelefonoMovil"></td>
                                                                                 <td v-text="cotizacion.cEmail"></td>
