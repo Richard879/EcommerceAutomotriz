@@ -3413,7 +3413,9 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.generarReportePDI();
+                    // me.generarReportePDI();
+                    me.loading.close();
+                    me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3837,7 +3839,9 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdSgc
                 }).then(response => {
-                    me.generarReportePDI();
+                    // me.generarReportePDI();
+                    me.loading.close();
+                    me.confirmaPdi();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
