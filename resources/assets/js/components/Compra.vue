@@ -4338,6 +4338,12 @@
                 });
             },
             actualizarCambioSucursal(){
+                if(this.validarCambioSucursal()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
                 swal({
                     title: 'Estas seguro de cambiar la Compra de Sucursal?',
                     type: 'warning',
@@ -4383,6 +4389,18 @@
                     {
                     }
                 })
+            },
+            validarCambioSucursal(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayExcel == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.fillSucursal.nidsucursal == 0 || !this.fillSucursal.nidsucursal){
+                    this.mensajeError.push('Debes seleccionar una Sucursal');
+                };
+                return this.error;
             },
             // =============================================
             // =============  MODAL ========================
