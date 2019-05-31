@@ -222,7 +222,25 @@
                                                                 <h3 class="h4">CONFIGURADOR ACCESORIOS DEL VEHÍCULO {{ formConfigVehiculo.cnombrevehiculo }} </h3>
                                                             </div>
                                                             <div class="card-body">
-                                                                <form class="form-horizontal">
+                                                                <form @submit.prevent class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-11">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-2 form-control-label">Buscar Accesorio..</label>
+                                                                                <div class="col-sm-9">
+                                                                                    <el-autocomplete
+                                                                                            class=""
+                                                                                            clearable
+                                                                                            v-model="fillBsqAccesorio.cnombre"
+                                                                                            :fetch-suggestions="querySearch"
+                                                                                            placeholder=""
+                                                                                            :trigger-on-focus="false"
+                                                                                            @select="asignarAccesorio">
+                                                                                    </el-autocomplete>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="col-lg-10"  style="max-height: 515px; overflow-x: auto;">
                                                                         <div id="lsttreegrupo">
                                                                             <div class="table-responsive">
@@ -233,6 +251,7 @@
                                                                                             <th>Accesorios</th>
                                                                                             <th>Costo</th>
                                                                                             <th>Cantidad</th>
+                                                                                            <th>Eliminar</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -246,6 +265,12 @@
                                                                                             <td v-text="elemento.cElementoNombre"></td>
                                                                                             <td v-text="elemento.fElemenValorVenta"></td>
                                                                                             <td><input type="number" v-model="elemento.cantidad" class="form-control form-control-sm"/></td>
+                                                                                             <td>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Eliminar {{ elemento.cElementoNombre }}</div>
+                                                                                                    <i @click="removerAccesorio(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                </el-tooltip>
+                                                                                            </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -431,7 +456,9 @@
                                                             <td v-text="accesorio.cCodigoERP"></td>
                                                             <td v-text="accesorio.cElementoNombre"></td>
                                                             <td v-text="accesorio.nCantidad"></td>
-                                                            <td v-text="accesorio.fElemenValorVenta"></td>
+                                                            <td>
+                                                                {{ Number((parseFloat(accesorio.fElemenValorVenta)).toFixed(2)) }}
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -486,6 +513,9 @@
                 arrayModelo: [],
                 arrayListVehiculos: [],
                 arrayAccesorios: [],
+                fillBsqAccesorio: {
+                    cnombre: ''
+                },
                 // =============================================================
                 // ================ VARIABLES TAB CONFIG VEHICULO ==============
                 // =============================================================
@@ -494,6 +524,7 @@
                     naniomodelo: '',
                     cnombrevehiculo: ''
                 },
+                links: [],
                 arrayElementoVenta: [],
                 arrayElementoVentaFlag: [],
                 arrayTemproralEV: [],
@@ -818,8 +849,11 @@
                         'nAnioModelo'       :   vehiculo.nAnioModelo
                     }
                 }).then(response => {
-                    this.arrayElementoVenta = response.data;
-                    this.llenarInfo();
+                    let me = this;
+                    me.links = [];
+                    me.links = response.data;
+                    $("#myBar").hide();
+                    // this.llenarAccesorios();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -830,14 +864,15 @@
                     }
                 });
             },
-            llenarInfo(){
+            /*
+            llenarAccesorios(){
                 let me = this;
                 me.arrayElementoVentaFlag = [];
                 me.arrayElementoVenta.map(function(value, key){
                     me.arrayElementoVentaFlag.push({
                         nIdElemento         :   value.nIdElemento,
                         cElementoNombre     :   value.cElementoNombre,
-                        fElemenValorVenta   :   value.fElemenValorVenta,
+                        fElemenValorVenta   :   parseFloat(value.fElemenValorVenta),
                         cFlagVerifica       :   value.cFlagVerifica == 0 ? false : true,
                         cantidad            :   value.nCantidad
                     });
@@ -848,12 +883,54 @@
                 });
                 $("#myBar").hide();
             },
+            */
+            querySearch(queryString, cb) {
+                var links = this.links;
+                var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+                // call callback function to return suggestions
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (obj) => {
+                    //Busca coincidencias del string escrito con algun Nombre del Objeto del Arreglo
+                    return (obj.value.indexOf(queryString.toUpperCase()) >= 0);
+                 };
+            },
+            asignarAccesorio(item) {
+                let me = this;
+                if(me.encontrarAccesorio(item.nIdElemento)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El accesorio ya se encuentra agregado!',
+                    })
+                } else {
+                    me.arrayElementoVentaFlag.push({
+                        nIdElemento         :   item.nIdElemento,
+                        cElementoNombre     :   item.cElementoNombre,
+                        fElemenValorVenta   :   parseFloat(item.fElemenValorVenta),
+                        cFlagVerifica       :   item.cFlagVerifica == 0 ? false : true,
+                        cantidad            :   item.nCantidad
+                    });
+
+                    toastr.success('Se agregó el accesorio :' + item.cElementoNombre);
+                }
+            },
+            encontrarAccesorio(nIdElemento){
+                var sw=0;
+                this.arrayElementoVentaFlag.map(function (x) {
+                    if(x.nIdElemento == nIdElemento){
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
             seleccionarEleVenta(){
                 let me = this;
                 me.arrayTemproralEV = [];
 
                 me.arrayElementoVentaFlag.map(function(value, key) {
-                    //Recorre los elementos activos que esten activos
+                    //Recorre los elementos que esten activos
                     // if(me.arrayCheckElementoVenta[key] == true) {
                     if (value.cFlagVerifica == true) {
                         me.arrayTemproralEV.push({
@@ -864,6 +941,9 @@
                     }
                 });
                 this.eliminarEleVenta();
+            },
+            removerAccesorio(index){
+                this.$delete(this.arrayElementoVentaFlag, index);
             },
             eliminarEleVenta(){
                 let me = this;
@@ -877,7 +957,6 @@
                 var url = this.ruta + '/accesoriovehiculo/DeleteElementosByVehiculo';
                 axios.post(url, {
                     'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    // 'cnombrevehiculo'   : this.formConfigVehiculo.cnombrevehiculo
                     'nidversion'    :   this.formConfigVehiculo.nidversion,
                     'naniomodelo'   :   this.formConfigVehiculo.naniomodelo
                 }).then(response => {
