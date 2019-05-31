@@ -385,12 +385,14 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa             = $request->nidempresa;
-        $nIdSucursal            = $request->nidsucursal;
-        $nIdCabeceraInspeccion  = $request->nidcabecerainspeccion;
-        $cElemenNombre          = $request->cnombre;
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdCabeceraInspeccion  =   $request->nidcabecerainspeccion;
+        $cElemenNombre          =   $request->cnombre;
+        $nCriterio              =   $request->ncriterio;
+        $cDescripcionCiterio    =   $request->cnumerovin;
 
-        $cElemenNombre      = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
+        $cElemenNombre          =   ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
 
         $arrayDetalleAccesorio = DB::select('exec [usp_Pdi_GetListDetalleAccesorio] ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -399,8 +401,20 @@ class PdiProcesoController extends Controller
                                                                     $cElemenNombre
                                                                 ]);
 
+        $arrayPdi = DB::select('exec [usp_Pdi_GetListPdiPDF] ?, ?, ?, ?, ?',
+                                                [   $nIdEmpresa,
+                                                    $nIdSucursal,
+                                                    $nIdCabeceraInspeccion,
+                                                    $nCriterio,
+                                                    $cDescripcionCiterio
+                                                ]);
+
         $arrayDetalleAccesorio = ParametroController::arrayPaginator($arrayDetalleAccesorio, $request);
-        return ['arrayDetalleAccesorio'=>$arrayDetalleAccesorio];
+
+        return [
+            'arrayDetalleAccesorio' =>  $arrayDetalleAccesorio,
+            'arrayPdi'              =>  $arrayPdi
+        ];
     }
 
     public function GetReportePDI(Request $request)

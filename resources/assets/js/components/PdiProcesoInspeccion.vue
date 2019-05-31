@@ -1404,6 +1404,42 @@
                                             </div>
                                         </form>
                                         <br/>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <tr>
+                                                    <td>Fecha Inspección:</td>
+                                                    <td colspan="85"><strong>{{ fillDetalleAccesorio.dfechainspeccion }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tipo Inspección:</td>
+                                                    <td colspan="85"><strong>{{ fillDetalleAccesorio.ctipoinspeccion }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tipo Movimiento:</td>
+                                                    <td colspan="85"><strong>{{ fillDetalleAccesorio.ctipomovimiento }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>VIN:</td>
+                                                    <td><strong>{{ fillDetalleAccesorio.cnumvin }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>COD.Compra SAP:</td>
+                                                    <td><strong>{{ fillDetalleAccesorio.codcomprasap }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nombre Comercial - Año:</td>
+                                                    <td><strong>{{ fillDetalleAccesorio.cnombrecomercial }} </strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Almacen Vehiculo - Código:</td>
+                                                    <td><strong>{{ fillDetalleAccesorio.almacenvehiculo }} </strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Almacen Accesorios - Código:</td>
+                                                    <td><strong>{{ fillDetalleAccesorio.almacenaccesorio }} </strong></td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                         <template v-if="arrayDetalleAccesorio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
@@ -1414,6 +1450,7 @@
                                                             <th>Tipo</th>
                                                             <th>Nombre Elemento</th>
                                                             <th>Cantidad</th>
+                                                            <th>Costo</th>
                                                             <th>Moneda</th>
                                                         </tr>
                                                     </thead>
@@ -1424,6 +1461,9 @@
                                                             <td v-text="accesorio.cTipoElemenNombre"></td>
                                                             <td v-text="accesorio.cNombre"></td>
                                                             <td v-text="accesorio.nCantidad"></td>
+                                                            <td>
+                                                                {{ Number((parseFloat(accesorio.fValorVenta)).toFixed(2)) }}
+                                                            </td>
                                                             <td v-text="accesorio.cMonedaNombre"></td>
                                                         </tr>
                                                     </tbody>
@@ -1688,7 +1728,17 @@
                 // ============ MODAL DETALLE ACCESORIO =================
                 fillDetalleAccesorio:{
                     nidcabecerainspeccion: 0,
-                    cnombre: ''
+                    cnumerovin: '',
+                    cnombre: '',
+                    //Data para visualizar
+                    dfechainspeccion: '',
+                    ctipoinspeccion: '',
+                    ctipomovimiento: '',
+                    cnumvin: '',
+                    codcomprasap: '',
+                    cnombrecomercial: '',
+                    almacenvehiculo: '',
+                    almacenaccesorio: ''
                 },
                 arrayDetalleAccesorio: [],
                 //==================================================
@@ -2632,9 +2682,25 @@
                         'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerainspeccion' :   this.fillDetalleAccesorio.nidcabecerainspeccion,
                         'cnombre'               :   this.fillDetalleAccesorio.cnombre,
+                        'ncriterio'             :   this.fillPdi.ncriterio,
+                        'cnumerovin'            :   this.fillDetalleAccesorio.cnumerovin,
                         'page'                  :   page
                     }
                 }).then(response => {
+                    //setear data
+                    this.limpiarModalAccesorios();
+
+                    let detalle = response.data.arrayPdi[0];
+
+                    this.fillDetalleAccesorio.dfechainspeccion      = detalle.dFechaInspeccion + ' ' + detalle.cHoraInspeccion;
+                    this.fillDetalleAccesorio.ctipoinspeccion       = detalle.cNombreTipoInspeccion;
+                    this.fillDetalleAccesorio.ctipomovimiento       = detalle.cFlagTipoMovimiento;
+                    this.fillDetalleAccesorio.cnumvin               = detalle.cNumeroVin;
+                    this.fillDetalleAccesorio.codcomprasap          = detalle.nDocNumCompra;
+                    this.fillDetalleAccesorio.cnombrecomercial      = detalle.cNombreComercial + ' ' + detalle.nAnioModelo;
+                    this.fillDetalleAccesorio.almacenvehiculo       = detalle.cWhsName + ' ' + detalle.cWhsCode;
+                    this.fillDetalleAccesorio.almacenaccesorio      = detalle.cWhsNameAccesorio + ' ' + detalle.cWhsCodeAccesorio;
+
                     this.arrayDetalleAccesorio          =   response.data.arrayDetalleAccesorio.data;
                     this.paginationModal.current_page   =   response.data.arrayDetalleAccesorio.current_page;
                     this.paginationModal.total          =   response.data.arrayDetalleAccesorio.total;
@@ -2651,6 +2717,17 @@
                         }
                     }
                 });
+            },
+            limpiarModalAccesorios(){
+                this.arrayDetalleAccesorio = [];
+                this.fillDetalleAccesorio.dfechainspeccion = '';
+                this.fillDetalleAccesorio.ctipoinspeccion = '';
+                this.fillDetalleAccesorio.ctipomovimiento = '';
+                this.fillDetalleAccesorio.cnumvin = '';
+                this.fillDetalleAccesorio.codcomprasap = '';
+                this.fillDetalleAccesorio.cnombrecomercial = '';
+                this.fillDetalleAccesorio.almacenvehiculo = '';
+                this.fillDetalleAccesorio.almacenaccesorio = '';
             },
             cambiarPaginaAccesorios(page){
                 this.paginationModal.current_page=page;
@@ -4045,7 +4122,8 @@
                             {
                                 this.accionmodal=11;
                                 this.modal = 1;
-                                this.fillDetalleAccesorio.nidcabecerainspeccion = data.nIdCabeceraInspeccion;
+                                this.fillDetalleAccesorio.nidcabecerainspeccion =   data.nIdCabeceraInspeccion;
+                                this.fillDetalleAccesorio.cnumerovin            =   data.cNumeroVin
                                 this.listarDetalleAccesorios(1);
                                 break;
                             }

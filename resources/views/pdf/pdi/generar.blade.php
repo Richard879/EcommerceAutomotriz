@@ -69,7 +69,7 @@
             border: 1px solid;
         }
         .tblBanco {
-            font-size: .5rem;
+            font-size: .75rem;
             border: 1px solid black;
             width: 100% !important;
         }
@@ -109,12 +109,20 @@
                 <td><strong>{{ $arrayPdi[0]->cNumeroVin }}</strong></td>
             </tr>
             <tr>
+                <td>COD.Compra SAP:</td>
+                <td><strong>{{ $arrayPdi[0]->nDocNumCompra }}</strong></td>
+            </tr>
+            <tr>
                 <td>Nombre Comercial - Año:</td>
                 <td><strong>{{ $arrayPdi[0]->cNombreComercial }} - {{ $arrayPdi[0]->nAnioModelo }} </strong></td>
             </tr>
             <tr>
-                <td>Almacen - Código:</td>
+                <td>Almacen Vehiculo - Código:</td>
                 <td><strong>{{ $arrayPdi[0]->cWhsName }} - {{ $arrayPdi[0]->cWhsCode }} </strong></td>
+            </tr>
+            <tr>
+                <td>Almacen Accesorios - Código:</td>
+                <td><strong>{{ $arrayPdi[0]->cWhsNameAccesorio }} - {{ $arrayPdi[0]->cWhsCodeAccesorio }} </strong></td>
             </tr>
         </table>
 
@@ -125,23 +133,27 @@
                 <table class="tblBanco" border="2px">
                     <thead style="background-color: lightgray;">
                         <tr align="center" valign="middle" >
-                            <th colspan="5">LISTA DE ACCESORIOS</th >
+                            <th colspan="7">LISTA DE ACCESORIOS</th >
                         </tr>
                         <tr>
+                            <th>ITEM</th>
                             <th>Tipo Elemento</th>
                             <th>ERP</th>
                             <th>Accesorio</th>
                             <th>Cantidad</th>
+                            <th>Costo</th>
                             <th>Moneda</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($arrayDetalleAccesorio as $accesorio)
+                        @foreach ($arrayDetalleAccesorio as $key => $accesorio)
                             <tr>
+                                <td> {{ ($key+1) }} </td>
                                 <td> {{ $accesorio->cTipoElemenNombre }} </td>
                                 <td> {{ $accesorio->cCodigoERP }} </td>
                                 <td> {{ $accesorio->cNombre }} </td>
                                 <td> {{ $accesorio->nCantidad }} </td>
+                                <td> {{ number_format($accesorio->fValorVenta, 2) }} </td>
                                 <td> {{ $accesorio->cMonedaNombre }} </td>
                             </tr>
                         @endforeach
