@@ -161,6 +161,7 @@
                                                                     <th>Nro Cotizacion</th>
                                                                     <th>Contacto</th>
                                                                     <th>Nro Documento</th>
+                                                                    <th>Vendedor</th>
                                                                     <th>Vehiculo</th>
                                                                     <th>Dirección</th>
                                                                     <th>Celular</th>
@@ -169,7 +170,6 @@
                                                                     <th>Fecha Venc.</th>
                                                                     <th>Aprobación</th>
                                                                     <th>Estado Cotización</th>
-                                                                    <th>Vendedor</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -239,6 +239,7 @@
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
                                                                     <td v-text="cotizacionpendiente.cPerDocumento"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreVendedor"></td>
                                                                     <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioModelo"></td>
                                                                     <td v-text="cotizacionpendiente.cDireccion"></td>
                                                                     <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
@@ -247,7 +248,6 @@
                                                                     <td v-text="cotizacionpendiente.dFechaVencimientoCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cEstadoAprobacion"></td>
                                                                     <td v-text="cotizacionpendiente.cEstadoCotizacion"></td>
-                                                                    <td v-text="cotizacionpendiente.cNombreVendedor"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
