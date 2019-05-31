@@ -194,12 +194,12 @@
                                                                                 <th>Código</th>
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
+                                                                                <th>Vendedor</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
-                                                                                <th>Vendedor</th>
                                                                                 <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
@@ -234,12 +234,12 @@
                                                                                 <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
-                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -439,12 +439,12 @@
                                                                                 <th>Código</th>
                                                                                 <th>Contacto</th>
                                                                                 <th>Nro Documento</th>
+                                                                                <th>Vendedor</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
-                                                                                <th>Vendedor</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -477,12 +477,12 @@
                                                                                 <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
-                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
