@@ -465,7 +465,13 @@
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa fa-file-pdf-o"></i>
-                                                                                    </el-tooltip>&nbsp;
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="cFlagUpdCardCade=='S'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Actualizar CardCode {{ pedido.cContacto }}</div>
+                                                                                            <i @click="updCardCodeContacto(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-user"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nIdContacto"></td>
@@ -3733,6 +3739,53 @@
                                 )
                             }
                             me.listarPedidosAprobados(1);
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            updCardCodeContacto(objPedido){
+                swal({
+                    title: '¿Esta seguro de Actualizar el Contacto' + objPedido.cContacto + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Actualizar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        var url = me.ruta + '/gescontacto/UpdCardCodeContacto';
+                        axios.post(url, {
+                            'nIdContacto'   : objPedido.nIdContacto,
+                            'CardCode'      : 'C' + objPedido.cPerDocumento,
+                            'CardType'      : 'cCustomer',
+                            'LogRespuesta'  : 'SGC'
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal(
+                                    'Actualizado!',
+                                    'El contacto ' + objPedido.cContacto +' ha sido Actualizado con éxito.',
+                                    'success'
+                                )
+                            }
+                            else
+                            {
+                                swal(
+                                    'Error!',
+                                    'Error en la Actualización.',
+                                )
+                            }
+                            me.listarPedidos(1);
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
