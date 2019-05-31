@@ -820,7 +820,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipocronograma' : 0,
+                        'nidtipocronograma' : 1300057,
                         'nidanio'           : this.fillAsigVendedorCuota.nidanio,
                         'nidmes'            : objMes.nParDstCodigo
                     }
