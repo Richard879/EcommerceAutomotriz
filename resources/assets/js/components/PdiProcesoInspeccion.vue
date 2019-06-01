@@ -1374,36 +1374,6 @@
                                         <h3 class="h4">LISTADO ACCESORIOS</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillDetalleAccesorio.cnombre" @keyup.enter="listarDetalleAccesorios(1)" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar Elemento Venta </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarDetalleAccesorios(1)">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-9 offset-md-5">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleAccesorios(1)">
-                                                        <i class="fa fa-search"></i> Buscar
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <br/>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
                                                 <tr>
@@ -1440,6 +1410,28 @@
                                                 </tr>
                                             </table>
                                         </div>
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillDetalleAccesorio.cnombre" @keyup.enter="listarDetalleAccesorios(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Elemento Venta </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarDetalleAccesorios(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <template v-if="arrayDetalleAccesorio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
