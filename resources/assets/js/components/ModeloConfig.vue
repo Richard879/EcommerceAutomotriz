@@ -893,7 +893,9 @@
                     if(response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
                         $("#myBar").hide();
-                        me.limpiarFormulario();
+                        me.listarModelos(1);
+                        me.generarConfiguracion(1);
+                        //me.limpiarFormulario();
                     } else {
                         swal(response.data[0].cMensaje);
                         $("#myBar").hide();
