@@ -269,7 +269,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Ficha Tecnica (XML)</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnica" accept="xml" class="form-control form-control-sm"/>
+                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnica" accept=".xml" class="form-control form-control-sm"/>
                                                                                     </div>
                                                                                     <!-- <div id="preview">
                                                                                         <img v-if="formConfigurador.urlImageFichaTecnica" :src="formConfigurador.urlImageFichaTecnica"/>
@@ -284,7 +284,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Ficha Tecnica (PDF)</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnicaPDF" accept="pdf" class="form-control form-control-sm"/>
+                                                                                        <input type="file" id="file-upload" @change="getFileFichaTecnicaPDF" accept=".pdf" class="form-control form-control-sm"/>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
