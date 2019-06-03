@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -374,11 +376,13 @@ class ExcelController extends Controller
         $nidmarca           =   $request->nidmarca;
         $nidmodelo          =   $request->nidmodelo;
 
+        $opcion             =   $request->opcion;
+
         $cflagdisponible    =   ($cflagdisponible == NULL) ? ($cflagdisponible = '') : $cflagdisponible;
         $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
-        return $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?, ?, ?, ?, ?',
                                             [
                                                 $nidsucursal,
                                                 $nidproveedor,
@@ -387,6 +391,13 @@ class ExcelController extends Controller
                                                 $nidmarca,
                                                 $nidmodelo
                                             ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayStockVehiculos = ParametroController::arrayPaginator($data, $request);
+            return ['arrayStockVehiculos'=>$arrayStockVehiculos];
+        }
     }
 
     public function exportarStockGeneral(Request $request)
@@ -403,7 +414,9 @@ class ExcelController extends Controller
         $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
-        return $data = DB::select('exec [usp_Reporte_GetStockGeneral] ?, ?, ?, ?, ?',
+        $opcion             =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetStockGeneral] ?, ?, ?, ?, ?',
                                             [
                                                 $nidsucursal,
                                                 $nidproveedor,
@@ -411,6 +424,13 @@ class ExcelController extends Controller
                                                 $nidmarca,
                                                 $nidmodelo
                                             ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayStockVehiculosGeneral = ParametroController::arrayPaginator($data, $request);
+            return ['arrayStockVehiculosGeneral'=>$arrayStockVehiculosGeneral];
+        }
     }
 
     public function exportarMetasVenta(Request $request)
