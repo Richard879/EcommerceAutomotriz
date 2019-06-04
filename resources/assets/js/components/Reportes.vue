@@ -10,27 +10,30 @@
             </header>
 
             <!--CONSULTAS/RETAIL || ADV/Gerencia-->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
                         <div class="col-xs-12" style="width: 100%;">
                             <h3>CONSULTAS/RETAIL</h3>
                         </div>
 
-                        <!-- ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                             <div class="col-xl-4 col-sm-6">
+                        <!-- JV/ADV/Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="exportarDetalleVentaRetail()"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Detalle Venta Retail</span></div>
                                 </div>
-                             </div>
-                             <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="exportarVentaHGSI()"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Ventas HGSI</span></div>
+                            </div>
+                            <!-- ADV/Gerencia -->
+                            <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet" @click="exportarVentaHGSI()"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Ventas HGSI</span></div>
+                                    </div>
                                 </div>
-                             </div>
+                            </template>
                         </template>
                     </div>
                 </div>
@@ -51,7 +54,7 @@
                                     <div class="icon bg-violet" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Venta Diaria</span></div>
                                 </div>
-                             </div>
+                            </div>
                         </template>
                     </div>
                 </div>
