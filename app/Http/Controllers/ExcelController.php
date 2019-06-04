@@ -443,12 +443,21 @@ class ExcelController extends Controller
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
         $nidsublinea    =   ($nidsublinea == NULL) ? ($nidsublinea = 0) : $nidsublinea;
 
-        return $data = DB::select('exec [usp_Reporte_GetCuotaVendedor] ?, ?, ?, ?',
+        $opcion             =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetCuotaVendedor] ?, ?, ?, ?',
                                             [
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidsublinea,
                                                 $nidcronograma
                                             ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayMetasVenta = ParametroController::arrayPaginator($data, $request);
+            return ['arrayMetasVenta'=>$arrayMetasVenta];
+        }
     }
 }
