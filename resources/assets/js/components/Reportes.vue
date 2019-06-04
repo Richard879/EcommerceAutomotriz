@@ -368,6 +368,25 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidproveedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="PROVEEDOR"
+                                                                            @change="llenarComboLinea()">
+                                                                    <el-option
+                                                                        v-for="item in arrayProveedor"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                             <div class="col-sm-8">
                                                                 <el-select  v-model="formFiltro.nidlinea"
@@ -385,6 +404,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-md-6">
                                                         <div class="row">
                                                             <label class="col-md-4 form-control-label">Marca</label>
@@ -404,8 +425,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-md-6">
                                                         <div class="row">
                                                             <label class="col-md-4 form-control-label">Modelo</label>
@@ -450,7 +469,7 @@
                                                                                 <th>#PEDIDO&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Exportar Venta(s) HGSI XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i>
                                                                                     </el-tooltip></th>
                                                                                 <th>UNIDAD</th>
                                                                                 <th>VIN</th>
@@ -1573,6 +1592,7 @@
                     params: {
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'nidproveedor'  :   this.formFiltro.nidproveedor,
                         'nidlinea'      :   this.formFiltro.nidlinea,
                         'nidmarca'      :   this.formFiltro.nidmarca,
                         'nidmodelo'     :   this.formFiltro.nidmodelo,
@@ -1999,44 +2019,6 @@
                 });
             },
             //Previsualizar
-            listarVentaHGSI(page){
-                this.mostrarProgressBar();
-
-                var url = this.ruta + '/reportes/exportarVentaHGSI';
-                axios.get(url, {
-                    params: {
-                        'nidsucursal'   :   this.formFiltro.nidsucursal,
-                        'nidvendedor'   :   this.formFiltro.nidvendedor,
-                        'nidlinea'      :   this.formFiltro.nidlinea,
-                        'nidmarca'      :   this.formFiltro.nidmarca,
-                        'nidmodelo'     :   this.formFiltro.nidmodelo,
-                        'opcion'        :   2,
-                        'page'          :   page
-                    }
-                }).then(response => {
-                    this.arrayVentaHGSI             = response.data.arrayVentaHGSI.data;
-                    this.pagination.current_page    = response.data.arrayVentaHGSI.current_page;
-                    this.pagination.total           = response.data.arrayVentaHGSI.total;
-                    this.pagination.per_page        = response.data.arrayVentaHGSI.per_page;
-                    this.pagination.last_page       = response.data.arrayVentaHGSI.last_page;
-                    this.pagination.from            = response.data.arrayVentaHGSI.from;
-                    this.pagination.to              = response.data.arrayVentaHGSI.to;
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                    $("#myBar").hide();
-                });
-            },
-            cambiarPaginaVentaHGSI(page){
-                this.pagination.current_page=page;
-                this.listarVentaHGSI(page);
-            },
             listarVentaRetail(page){
                 this.mostrarProgressBar();
 
@@ -2071,6 +2053,45 @@
             cambiarPaginaVentaRetail(page){
                 this.pagination.current_page=page;
                 this.listarVentaRetail(page);
+            },
+            listarVentaHGSI(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarVentaHGSI';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'nidproveedor'  :   this.formFiltro.nidproveedor,
+                        'nidlinea'      :   this.formFiltro.nidlinea,
+                        'nidmarca'      :   this.formFiltro.nidmarca,
+                        'nidmodelo'     :   this.formFiltro.nidmodelo,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayVentaHGSI             = response.data.arrayVentaHGSI.data;
+                    this.pagination.current_page    = response.data.arrayVentaHGSI.current_page;
+                    this.pagination.total           = response.data.arrayVentaHGSI.total;
+                    this.pagination.per_page        = response.data.arrayVentaHGSI.per_page;
+                    this.pagination.last_page       = response.data.arrayVentaHGSI.last_page;
+                    this.pagination.from            = response.data.arrayVentaHGSI.from;
+                    this.pagination.to              = response.data.arrayVentaHGSI.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaVentaHGSI(page){
+                this.pagination.current_page=page;
+                this.listarVentaHGSI(page);
             },
             listarStockVehiculos(page){
                 if(this.validarExportarStock()){
@@ -2250,6 +2271,7 @@
                             {
                                 this.limpiarFiltros();
                                 this.listarSucursalByEmpresa();
+                                this.listarProveedores();
                                 this.tituloModal = data;
                                 this.accionmodal=3;
                                 this.modal = 1;

@@ -371,6 +371,7 @@ class ExcelController extends Controller
     {
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
+        $nidproveedor   =   $request->nidproveedor;
         $nidlinea       =   $request->nidlinea;
         $nidmarca       =   $request->nidmarca;
         $nidmodelo      =   $request->nidmodelo;
@@ -378,16 +379,18 @@ class ExcelController extends Controller
 
         $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidproveedor   =   ($nidproveedor == NULL) ? ($nidproveedor = 0) : $nidproveedor;
         $nidlinea       =   ($nidlinea == NULL) ? ($nidlinea = 0) : $nidlinea;
         $nidmarca       =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo      =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetVentasHGSI] ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetVentasHGSI] ?, ?, ?, ?, ?, ?, ?',
                                                                 [
                                                                     $nidsucursal,
                                                                     $nidvendedor,
+                                                                    $nidproveedor,
                                                                     $nidlinea,
                                                                     $nidmarca,
                                                                     $nidmodelo,
