@@ -338,18 +338,68 @@ class ExcelController extends Controller
         return response()->json($data);
     }
 
-    public function exportDetalleVentaRetail()
+    public function exportDetalleVentaRetail(Request $request)
     {
-        return $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail]');
+        $nidsucursal    =   $request->nidsucursal;
+        $nidvendedor    =   $request->nidvendedor;
+        $nIdUsuario     =   Auth::user()->id;
 
+        $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+
+        $opcion         =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail] ?, ?, ?',
+                                                            [
+                                                                $nidsucursal,
+                                                                $nidvendedor,
+                                                                $nIdUsuario
+                                                            ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayDetalleVentaRetail = ParametroController::arrayPaginator($data, $request);
+            return ['arrayDetalleVentaRetail'=>$arrayDetalleVentaRetail];
+        }
         // $type = $request->type;
         // return Excel::download(new ExportDetalleVentaRetail, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
         // return Excel::download(new ExportDetalleVentaRetail,'users.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
-    public function exportarVentaHGSI()
+    public function exportarVentaHGSI(Request $request)
     {
-        return $data = DB::select('exec [usp_Reporte_GetVentasHGSI]');
+        $nidsucursal    =   $request->nidsucursal;
+        $nidvendedor    =   $request->nidvendedor;
+        $nidlinea       =   $request->nidlinea;
+        $nidmarca       =   $request->nidmarca;
+        $nidmodelo      =   $request->nidmodelo;
+        $nIdUsuario     =   Auth::user()->id;
+
+        $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidlinea       =   ($nidlinea == NULL) ? ($nidlinea = 0) : $nidlinea;
+        $nidmarca       =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo      =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+
+        $opcion         =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetVentasHGSI] ?, ?, ?, ?, ?, ?',
+                                                                [
+                                                                    $nidsucursal,
+                                                                    $nidvendedor,
+                                                                    $nidlinea,
+                                                                    $nidmarca,
+                                                                    $nidmodelo,
+                                                                    $nIdUsuario
+                                                                ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayVentaHGSI = ParametroController::arrayPaginator($data, $request);
+            return ['arrayVentaHGSI'=>$arrayVentaHGSI];
+        }
     }
 
     public function exportarVentaDiaria(Request $request)

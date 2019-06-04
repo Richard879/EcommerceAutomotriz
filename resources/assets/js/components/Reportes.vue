@@ -21,13 +21,13 @@
                         <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="exportarDetalleVentaRetail()"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('ventaretail', 'abrir', 'VENTA RETAIL')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Detalle Venta Retail</span></div>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="exportarVentaHGSI()"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('ventahgsi', 'abrir', 'VENTA HGSI')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Ventas HGSI</span></div>
                                 </div>
                             </div>
@@ -104,6 +104,452 @@
                         <div class="modal-body">
                             <div class="text-center">
                                 <div v-for="e in mensajeError" :key="e" v-text="e">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Show VENTAS RETAIL -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarVentaRetail(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayDetalleVentaRetail.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>COMPANIA&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>CONCESIONARIO</th>
+                                                                                <th>TIENDA</th>
+                                                                                <th>N° PEDIDO</th>
+                                                                                <th>CLIENTE</th>
+                                                                                <th>VIN</th>
+                                                                                <th># VENDEDOR</th>
+                                                                                <th>ASESOR COMERCIAL</th>
+                                                                                <th>ESTADO PEDIDO</th>
+                                                                                <th>ESTADO DEPOSITO</th>
+                                                                                <th>TIPO VENTA</th>
+                                                                                <th>MARCA</th>
+                                                                                <th>MODELO</th>
+                                                                                <th>AÑO MODELO</th>
+                                                                                <th>ENTIDAD FINAN</th>
+                                                                                <th>IMPORTE SOLES</th>
+                                                                                <th>IMPORTE DOLARES</th>
+                                                                                <th>DESCUENTO</th>
+                                                                                <th>SOBRE PRECIO</th>
+                                                                                <th>PRECIO CIERRE LP</th>
+                                                                                <th>PRECIO CIERRE CLIENTE</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(ventaretail, index) in arrayDetalleVentaRetail" :key="index">
+                                                                                <td v-text="ventaretail.COMPANIA"></td>
+                                                                                <td v-text="ventaretail.CONCESIONARIO"></td>
+                                                                                <td v-text="ventaretail.TIENDA"></td>
+                                                                                <td v-text="ventaretail.NRO_PEDIDO"></td>
+                                                                                <td v-text="ventaretail.DESC_CLIENTE"></td>
+                                                                                <td v-text="ventaretail.VIN"></td>
+                                                                                <td v-text="ventaretail.COD_VENDEDOR"></td>
+                                                                                <td v-text="ventaretail.NOM_VENDEDOR"></td>
+                                                                                <td v-text="ventaretail.STATUS_PEDIDO"></td>
+                                                                                <td v-text="ventaretail.STATUS_DEPOSITO"></td>
+                                                                                <td v-text="ventaretail.TIPO_VENTA"></td>
+                                                                                <td v-text="ventaretail.MARCA"></td>
+                                                                                <td v-text="ventaretail.MODELO"></td>
+                                                                                <td v-text="ventaretail.ANIO_MODEL"></td>
+                                                                                <td v-text="ventaretail.ENTIDAD_FIN"></td>
+                                                                                <td v-text="ventaretail.IMPORTE_VEHICULO_SOLES"></td>
+                                                                                <td v-text="ventaretail.IMPORTE_VEHICULO_DOLARES"></td>
+                                                                                <td v-text="ventaretail.DESCUENTO"></td>
+                                                                                <td v-text="ventaretail.SOBREPRECIO"></td>
+                                                                                <td v-text="ventaretail.PRECIOCIERRELP"></td>
+                                                                                <td v-text="ventaretail.PRECIOCIERREFINALCLIENTE"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaVentaRetail(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Show VENTAS HGSI -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidlinea"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE LINEA"
+                                                                            @change="llenarComboMarca()">
+                                                                    <el-option
+                                                                        v-for="item in arrayLinea"
+                                                                        :key="item.nIdLinea"
+                                                                        :label="item.cLineaNombre"
+                                                                        :value="item.nIdLinea">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Marca</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidmarca"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UNA MARCA"
+                                                                            @change="llenarComboModelo()">
+                                                                    <el-option
+                                                                        v-for="item in arrayMarca"
+                                                                        :key="item.nIdMarca"
+                                                                        :label="item.cMarcaNombre"
+                                                                        :value="item.nIdMarca">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Modelo</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidmodelo"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN MODELO">
+                                                                    <el-option
+                                                                        v-for="item in arrayModelo"
+                                                                        :key="item.nIdModelo"
+                                                                        :label="item.cModeloNombre"
+                                                                        :value="item.nIdModelo">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarVentaHGSI(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayVentaHGSI.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>#PEDIDO&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Venta(s) HGSI XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>UNIDAD</th>
+                                                                                <th>VIN</th>
+                                                                                <th>PLACA</th>
+                                                                                <th>LINEA</th>
+                                                                                <th>MARCA</th>
+                                                                                <th>MODELO</th>
+                                                                                <th>AÑO FAB</th>
+                                                                                <th>AÑO MODELO</th>
+                                                                                <th>CONTACTO</th>
+                                                                                <th># DOC</th>
+                                                                                <th>DIRECCIÓN</th>
+                                                                                <th>DEPARTAMENTO</th>
+                                                                                <th>PROVINCIA</th>
+                                                                                <th>DISTRITO</th>
+                                                                                <th>EMAIL</th>
+                                                                                <th>TELÉFONO</th>
+                                                                                <th>CELULAR</th>
+                                                                                <th>N° COTIZACIÓN</th>
+                                                                                <th>TIPO VENTA</th>
+                                                                                <th>FECHA CANCELACIÓN</th>
+                                                                                <th>FECHA PROGRAMADA</th>
+                                                                                <th>FECHA SALIDA</th>
+                                                                                <th>COD VENDEDOR</th>
+                                                                                <th>VENDEDOR</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(ventahgsi, index) in arrayVentaHGSI" :key="index">
+                                                                                <td v-text="ventahgsi.NRO_PEDIDO"></td>
+                                                                                <td v-text="ventahgsi.UNIDAD"></td>
+                                                                                <td v-text="ventahgsi.VIN"></td>
+                                                                                <td v-text="ventahgsi.PLACA"></td>
+                                                                                <td v-text="ventahgsi.LINEA"></td>
+                                                                                <td v-text="ventahgsi.MARCA"></td>
+                                                                                <td v-text="ventahgsi.MODELO"></td>
+                                                                                <td v-text="ventahgsi.ANIO_FABRI"></td>
+                                                                                <td v-text="ventahgsi.ANIO_MODEL"></td>
+                                                                                <td v-text="ventahgsi.CONTACTO"></td>
+                                                                                <td v-text="ventahgsi.DOCUMENTO"></td>
+                                                                                <td v-text="ventahgsi.DIRECCION"></td>
+                                                                                <td v-text="ventahgsi.DEPARTAMENTO"></td>
+                                                                                <td v-text="ventahgsi.PROVINCIA"></td>
+                                                                                <td v-text="ventahgsi.DISTRITO"></td>
+                                                                                <td v-text="ventahgsi.E_MAIL"></td>
+                                                                                <td v-text="ventahgsi.TELEFONO"></td>
+                                                                                <td v-text="ventahgsi.CELULAR"></td>
+                                                                                <td v-text="ventahgsi.NRO_COTIZACION"></td>
+                                                                                <td v-text="ventahgsi.TIPO_VENTA"></td>
+                                                                                <td v-text="ventahgsi.FECHA_CANCELACION"></td>
+                                                                                <td v-text="ventahgsi.FECHA_PROGRAMADA"></td>
+                                                                                <td v-text="ventahgsi.FECHA_SALIDA"></td>
+                                                                                <td v-text="ventahgsi.COD_VENDEDOR"></td>
+                                                                                <td v-text="ventahgsi.VENDEDOR"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaVentaHGSI(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -947,6 +1393,8 @@
                 arraySubLineas: [],
                 arrayCronogramas: [],
                 //Previsualizar
+                arrayDetalleVentaRetail: [],
+                arrayVentaHGSI: [],
                 arrayStockVehiculos: [],
                 arrayStockVehiculosGeneral: [],
                 arrayMetasVenta: [],
@@ -1093,7 +1541,13 @@
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportDetalleVentaRetail';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'opcion'        :   1
+                    }
+                }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Detalle Venta Retail'
@@ -1115,7 +1569,16 @@
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportarVentaHGSI';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'nidlinea'      :   this.formFiltro.nidlinea,
+                        'nidmarca'      :   this.formFiltro.nidmarca,
+                        'nidmodelo'     :   this.formFiltro.nidmodelo,
+                        'opcion'        :   1
+                    }
+                }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Ventas HGSI'
@@ -1323,9 +1786,9 @@
                 var url = this.ruta + '/usuario/GetListUsuariosByRol';
                 axios.get(url, {
                     params: {
-                        'nidempresa':   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidempresa':   0,
-                        'nidrol'    :   '110026'
+                        'nidempresa' :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal':   0,
+                        'nidrol'     :   '110026'
                     }
                 }).then(response => {
                     this.arrayVendedores = response.data;
@@ -1536,6 +1999,79 @@
                 });
             },
             //Previsualizar
+            listarVentaHGSI(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarVentaHGSI';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'nidlinea'      :   this.formFiltro.nidlinea,
+                        'nidmarca'      :   this.formFiltro.nidmarca,
+                        'nidmodelo'     :   this.formFiltro.nidmodelo,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayVentaHGSI             = response.data.arrayVentaHGSI.data;
+                    this.pagination.current_page    = response.data.arrayVentaHGSI.current_page;
+                    this.pagination.total           = response.data.arrayVentaHGSI.total;
+                    this.pagination.per_page        = response.data.arrayVentaHGSI.per_page;
+                    this.pagination.last_page       = response.data.arrayVentaHGSI.last_page;
+                    this.pagination.from            = response.data.arrayVentaHGSI.from;
+                    this.pagination.to              = response.data.arrayVentaHGSI.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaVentaHGSI(page){
+                this.pagination.current_page=page;
+                this.listarVentaHGSI(page);
+            },
+            listarVentaRetail(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportDetalleVentaRetail';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayDetalleVentaRetail    = response.data.arrayDetalleVentaRetail.data;
+                    this.pagination.current_page    = response.data.arrayDetalleVentaRetail.current_page;
+                    this.pagination.total           = response.data.arrayDetalleVentaRetail.total;
+                    this.pagination.per_page        = response.data.arrayDetalleVentaRetail.per_page;
+                    this.pagination.last_page       = response.data.arrayDetalleVentaRetail.last_page;
+                    this.pagination.from            = response.data.arrayDetalleVentaRetail.from;
+                    this.pagination.to              = response.data.arrayDetalleVentaRetail.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaVentaRetail(page){
+                this.pagination.current_page=page;
+                this.listarVentaRetail(page);
+            },
             listarStockVehiculos(page){
                 if(this.validarExportarStock()){
                     return;
@@ -1682,6 +2218,8 @@
                 this.arrayStockVehiculos            = [];
                 this.arrayStockVehiculosGeneral     = [];
                 this.arrayMetasVenta                = [];
+                this.arrayDetalleVentaRetail        = [];
+                this.arrayVentaHGSI                 = [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -1696,6 +2234,8 @@
                             case 'abrir':
                             {
                                 this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.tituloModal = data;
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 break;
@@ -1709,6 +2249,8 @@
                             case 'abrir':
                             {
                                 this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.tituloModal = data;
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 break;
