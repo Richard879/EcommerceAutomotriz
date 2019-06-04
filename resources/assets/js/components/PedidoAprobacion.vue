@@ -200,6 +200,7 @@
                                                                                 <th>Fecha Pedido</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
+                                                                                <th>Forma Pago</th>
                                                                                 <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
@@ -240,6 +241,7 @@
                                                                                 <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
+                                                                                <td v-text="pedido.cFormaPago"></td>
                                                                                 <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
