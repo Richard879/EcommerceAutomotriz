@@ -86,6 +86,12 @@
                                     <div class="title"><span><br>Metas de venta de vehículos</span></div>
                                 </div>
                             </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"  @click="abrirModal('contacto-libre', 'abrir', 'CONTACTO LIBRE')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Contactos Libres</span></div>
+                                </div>
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -206,7 +212,9 @@
                                                                                 <th>CONCESIONARIO</th>
                                                                                 <th>TIENDA</th>
                                                                                 <th>N° PEDIDO</th>
+                                                                                <th>FECHA PEDIDO</th>
                                                                                 <th>CLIENTE</th>
+                                                                                <th>Nª DOCUMENTO</th>
                                                                                 <th>VIN</th>
                                                                                 <th># VENDEDOR</th>
                                                                                 <th>ASESOR COMERCIAL</th>
@@ -231,7 +239,9 @@
                                                                                 <td v-text="ventaretail.CONCESIONARIO"></td>
                                                                                 <td v-text="ventaretail.TIENDA"></td>
                                                                                 <td v-text="ventaretail.NRO_PEDIDO"></td>
+                                                                                <td v-text="ventaretail.FECHA_PEDIDO"></td>
                                                                                 <td v-text="ventaretail.DESC_CLIENTE"></td>
+                                                                                <td v-text="ventaretail.NDOCUMENTO"></td>
                                                                                 <td v-text="ventaretail.VIN"></td>
                                                                                 <td v-text="ventaretail.COD_VENDEDOR"></td>
                                                                                 <td v-text="ventaretail.NOM_VENDEDOR"></td>
@@ -471,6 +481,7 @@
                                                                                         <div slot="content">Exportar Venta(s) HGSI XLS</div>
                                                                                             <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i>
                                                                                     </el-tooltip></th>
+                                                                                <th>FECHA PEDIDO</th>
                                                                                 <th>UNIDAD</th>
                                                                                 <th>VIN</th>
                                                                                 <th>PLACA</th>
@@ -500,6 +511,7 @@
                                                                         <tbody>
                                                                             <tr v-for="(ventahgsi, index) in arrayVentaHGSI" :key="index">
                                                                                 <td v-text="ventahgsi.NRO_PEDIDO"></td>
+                                                                                <td v-text="ventahgsi.FECHA_PEDIDO"></td>
                                                                                 <td v-text="ventahgsi.UNIDAD"></td>
                                                                                 <td v-text="ventahgsi.VIN"></td>
                                                                                 <td v-text="ventahgsi.PLACA"></td>
@@ -1365,6 +1377,199 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Metas de Venta de Vehiculos -->
+            <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Seleccione una Fecha</label>
+                                                            <div class="col-md-8">
+                                                                <el-date-picker
+                                                                    v-model="formFiltro.dfechaventadiaria"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa"
+                                                                    :picker-options="pickerOptions">
+                                                                </el-date-picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarContactosLibres(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayContactosLibres.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>ID&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarContactoLibre()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>CONTACTO</th>
+                                                                                <th>#DOCUMENTO</th>
+                                                                                <th>DIRECCIÓN</th>
+                                                                                <th>TELÉFONO MOVIL</th>
+                                                                                <th>TELEÉFONO FIJO</th>
+                                                                                <th>PROVEEDOR</th>
+                                                                                <th>LINEA</th>
+                                                                                <th>MARCA</th>
+                                                                                <th>MODELO</th>
+                                                                                <th>AÑO MODELO</th>
+                                                                                <th>FECHA INICIO ASIGNACIÓN</th>
+                                                                                <th>FECHA FIN ASIGNACIÓN</th>
+                                                                                <th>ESTADO</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(contactolibre, index) in arrayContactosLibres" :key="index">
+                                                                                <td v-text="contactolibre.COD_CONTACTO"></td>
+                                                                                <td v-text="contactolibre.CONTACTO"></td>
+                                                                                <td v-text="contactolibre.N_DOCUMENTO"></td>
+                                                                                <td v-text="contactolibre.DIRECCION"></td>
+                                                                                <td v-text="contactolibre.TELEFONO_MOVIL"></td>
+                                                                                <td v-text="contactolibre.TELEFONO_FIJO"></td>
+                                                                                <td v-text="contactolibre.N_COTIZACIONES"></td>
+                                                                                <td v-text="contactolibre.PROVEEDOR"></td>
+                                                                                <td v-text="contactolibre.LINEA"></td>
+                                                                                <td v-text="contactolibre.MARCA"></td>
+                                                                                <td v-text="contactolibre.MODELO"></td>
+                                                                                <td v-text="contactolibre.ANIO_MODELO"></td>
+                                                                                <td v-text="contactolibre.FECHA_INICIO_ASIGNACION"></td>
+                                                                                <td v-text="contactolibre.FECHA_FIN_ASIGNACION"></td>
+                                                                                <td v-text="contactolibre.ESTADO"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaContactoLibre(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1417,6 +1622,7 @@
                 arrayStockVehiculos: [],
                 arrayStockVehiculosGeneral: [],
                 arrayMetasVenta: [],
+                arrayContactosLibres: [],
                 //OPCIONES GENERALES
                 page: 1,
                 perPage: 10,
@@ -1798,6 +2004,35 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            exportarContactoLibre(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarContactosLibres';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'dfecha'        :   this.formFiltro.dfechaventadiaria,
+                        'opcion'        :   1,
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Contactos Libres'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
             },
             //DATA
             listarVendedores(){
@@ -2221,26 +2456,64 @@
                 this.pagination.current_page=page;
                 this.listarMetasVenta(page);
             },
+            listarContactosLibres(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarContactosLibres';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'dfecha'        :   this.formFiltro.dfechaventadiaria,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayContactosLibres       = response.data.arrayContactosLibres.data;
+                    this.pagination.current_page    = response.data.arrayContactosLibres.current_page;
+                    this.pagination.total           = response.data.arrayContactosLibres.total;
+                    this.pagination.per_page        = response.data.arrayContactosLibres.per_page;
+                    this.pagination.last_page       = response.data.arrayContactosLibres.last_page;
+                    this.pagination.from            = response.data.arrayContactosLibres.from;
+                    this.pagination.to              = response.data.arrayContactosLibres.to;
+                    $("#myBar").hide();
+                    // this.limpiarFiltros();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaContactoLibre(page){
+                this.pagination.current_page=page;
+                this.listarContactosLibres(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
-                this.formFiltro.nidsucursal         = '';
-                this.formFiltro.nidproveedor        = '';
-                this.formFiltro.nidlista            = '';
-                this.formFiltro.nrolista            = '';
-                this.formFiltro.cflagdisponible     = '';
-                this.formFiltro.nidlinea            = '';
-                this.formFiltro.nidmarca            = '';
-                this.formFiltro.nidmodelo           = '';
-                this.formFiltro.dfechaventadiaria   = '';
-                this.formFiltro.nidvendedor         = '';
-                this.formFiltro.nidsublinea         = '';
-                this.formFiltro.nidcronograma       = '';
-                this.arrayStockVehiculos            = [];
-                this.arrayStockVehiculosGeneral     = [];
-                this.arrayMetasVenta                = [];
-                this.arrayDetalleVentaRetail        = [];
-                this.arrayVentaHGSI                 = [];
+                this.formFiltro.nidsucursal         =   '';
+                this.formFiltro.nidproveedor        =   '';
+                this.formFiltro.nidlista            =   '';
+                this.formFiltro.nrolista            =   '';
+                this.formFiltro.cflagdisponible     =   '';
+                this.formFiltro.nidlinea            =   '';
+                this.formFiltro.nidmarca            =   '';
+                this.formFiltro.nidmodelo           =   '';
+                this.formFiltro.dfechaventadiaria   =   '';
+                this.formFiltro.nidvendedor         =   '';
+                this.formFiltro.nidsublinea         =   '';
+                this.formFiltro.nidcronograma       =   '';
+                this.arrayDetalleVentaRetail        =   [];
+                this.arrayVentaHGSI                 =   [];
+                this.arrayStockVehiculos            =   [];
+                this.arrayStockVehiculosGeneral     =   [];
+                this.arrayMetasVenta                =   [];
+                this.arrayContactosLibres           =   [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -2337,6 +2610,21 @@
                                 this.listarCronograma();
                                 this.tituloModal = data;
                                 this.accionmodal = 7;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'contacto-libre':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.tituloModal = data;
+                                this.accionmodal = 8;
                                 this.modal = 1;
                                 break;
                             }

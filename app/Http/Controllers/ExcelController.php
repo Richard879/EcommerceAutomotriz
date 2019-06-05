@@ -513,4 +513,30 @@ class ExcelController extends Controller
             return ['arrayMetasVenta'=>$arrayMetasVenta];
         }
     }
+
+    public function exportarContactosLibres(Request $request)
+    {
+        $nidsucursal    =   $request->nidsucursal;
+        $nidvendedor    =   $request->nidvendedor;
+        $dfecha         =   $request->dfecha;
+
+        $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $dfecha         =   ($dfecha == NULL) ? ($dfecha = '') : $dfecha;
+
+        $opcion         =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetContactosLibres] ?, ?',
+                                            [
+                                                $nidvendedor,
+                                                $dfecha
+                                            ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayContactosLibres = ParametroController::arrayPaginator($data, $request);
+            return ['arrayContactosLibres'=>$arrayContactosLibres];
+        }
+    }
 }
