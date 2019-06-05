@@ -864,18 +864,20 @@
                     }
                 });
             },
-            /*
             llenarAccesorios(){
                 let me = this;
                 me.arrayElementoVentaFlag = [];
-                me.arrayElementoVenta.map(function(value, key){
-                    me.arrayElementoVentaFlag.push({
-                        nIdElemento         :   value.nIdElemento,
-                        cElementoNombre     :   value.cElementoNombre,
-                        fElemenValorVenta   :   parseFloat(value.fElemenValorVenta),
-                        cFlagVerifica       :   value.cFlagVerifica == 0 ? false : true,
-                        cantidad            :   value.nCantidad
-                    });
+                me.links.map(function(value, key){
+                    //VERIFICAR QUE EL ELEMENTO VENTA YA HAYA SIDO INGRESADO
+                    if (value.cFlagVerifica == 1) {
+                        me.arrayElementoVentaFlag.push({
+                            nIdElemento         :   value.nIdElemento,
+                            cElementoNombre     :   value.cElementoNombre,
+                            fElemenValorVenta   :   parseFloat(value.fElemenValorVenta),
+                            cFlagVerifica       :   value.cFlagVerifica == 0 ? false : true,
+                            cantidad            :   value.nCantidad
+                        });
+                    }
                 });
 
                 jQuery(function ($) {
@@ -883,7 +885,6 @@
                 });
                 $("#myBar").hide();
             },
-            */
             querySearch(queryString, cb) {
                 var links = this.links;
                 var results = queryString ? links.filter(this.createFilter(queryString)) : links;
