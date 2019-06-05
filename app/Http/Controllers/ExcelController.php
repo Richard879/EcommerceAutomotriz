@@ -338,6 +338,7 @@ class ExcelController extends Controller
         return response()->json($data);
     }
 
+    //========================= REPOTES =========================
     public function exportDetalleVentaRetail(Request $request)
     {
         $nidsucursal    =   $request->nidsucursal;
