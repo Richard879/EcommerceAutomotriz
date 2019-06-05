@@ -853,7 +853,7 @@
                     me.links = [];
                     me.links = response.data;
                     $("#myBar").hide();
-                    // this.llenarAccesorios();
+                    this.llenarAccesorios();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
