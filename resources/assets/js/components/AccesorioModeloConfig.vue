@@ -880,9 +880,6 @@
                     }
                 });
 
-                jQuery(function ($) {
-                    $("#lsttreegrupo").treeview();
-                });
                 $("#myBar").hide();
             },
             querySearch(queryString, cb) {
