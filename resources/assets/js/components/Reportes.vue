@@ -86,12 +86,12 @@
                                     <div class="title"><span><br>Metas de venta de vehículos</span></div>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-sm-6">
+                            <!-- <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet"  @click="abrirModal('contacto-libre', 'abrir', 'CONTACTO LIBRE')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Contactos Libres</span></div>
                                 </div>
-                            </div>
+                            </div> -->
                         </template>
                     </div>
                 </div>
@@ -215,14 +215,15 @@
                                                                                 <th>FECHA PEDIDO</th>
                                                                                 <th>CLIENTE</th>
                                                                                 <th>Nª DOCUMENTO</th>
-                                                                                <th>VIN</th>
-                                                                                <th># VENDEDOR</th>
+                                                                                <th>CODIGO ASESOR</th>
                                                                                 <th>ASESOR COMERCIAL</th>
                                                                                 <th>ESTADO PEDIDO</th>
                                                                                 <th>ESTADO DEPOSITO</th>
                                                                                 <th>TIPO VENTA</th>
                                                                                 <th>MARCA</th>
                                                                                 <th>MODELO</th>
+                                                                                <th>NOMBRE COMERCIAL</th>
+                                                                                <th>VIN</th>
                                                                                 <th>AÑO MODELO</th>
                                                                                 <th>ENTIDAD FINAN</th>
                                                                                 <th>IMPORTE SOLES</th>
@@ -242,7 +243,6 @@
                                                                                 <td v-text="ventaretail.FECHA_PEDIDO"></td>
                                                                                 <td v-text="ventaretail.DESC_CLIENTE"></td>
                                                                                 <td v-text="ventaretail.NDOCUMENTO"></td>
-                                                                                <td v-text="ventaretail.VIN"></td>
                                                                                 <td v-text="ventaretail.COD_VENDEDOR"></td>
                                                                                 <td v-text="ventaretail.NOM_VENDEDOR"></td>
                                                                                 <td v-text="ventaretail.STATUS_PEDIDO"></td>
@@ -250,6 +250,8 @@
                                                                                 <td v-text="ventaretail.TIPO_VENTA"></td>
                                                                                 <td v-text="ventaretail.MARCA"></td>
                                                                                 <td v-text="ventaretail.MODELO"></td>
+                                                                                <td v-text="ventaretail.NOMBRE_COMERCIAL"></td>
+                                                                                <td v-text="ventaretail.VIN"></td>
                                                                                 <td v-text="ventaretail.ANIO_MODEL"></td>
                                                                                 <td v-text="ventaretail.ENTIDAD_FIN"></td>
                                                                                 <td v-text="ventaretail.IMPORTE_VEHICULO_SOLES"></td>
@@ -482,12 +484,12 @@
                                                                                             <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i>
                                                                                     </el-tooltip></th>
                                                                                 <th>FECHA PEDIDO</th>
-                                                                                <th>UNIDAD</th>
-                                                                                <th>VIN</th>
-                                                                                <th>PLACA</th>
                                                                                 <th>LINEA</th>
                                                                                 <th>MARCA</th>
                                                                                 <th>MODELO</th>
+                                                                                <th>NOMBRE COMERCIAL</th>
+                                                                                <th>VIN</th>
+                                                                                <th>PLACA</th>
                                                                                 <th>AÑO FAB</th>
                                                                                 <th>AÑO MODELO</th>
                                                                                 <th>CONTACTO</th>
@@ -512,12 +514,12 @@
                                                                             <tr v-for="(ventahgsi, index) in arrayVentaHGSI" :key="index">
                                                                                 <td v-text="ventahgsi.NRO_PEDIDO"></td>
                                                                                 <td v-text="ventahgsi.FECHA_PEDIDO"></td>
-                                                                                <td v-text="ventahgsi.UNIDAD"></td>
-                                                                                <td v-text="ventahgsi.VIN"></td>
-                                                                                <td v-text="ventahgsi.PLACA"></td>
                                                                                 <td v-text="ventahgsi.LINEA"></td>
                                                                                 <td v-text="ventahgsi.MARCA"></td>
                                                                                 <td v-text="ventahgsi.MODELO"></td>
+                                                                                <td v-text="ventahgsi.NOMBRE_COMERCIAL"></td>
+                                                                                <td v-text="ventahgsi.VIN"></td>
+                                                                                <td v-text="ventahgsi.PLACA"></td>
                                                                                 <td v-text="ventahgsi.ANIO_FABRI"></td>
                                                                                 <td v-text="ventahgsi.ANIO_MODEL"></td>
                                                                                 <td v-text="ventahgsi.CONTACTO"></td>
