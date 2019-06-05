@@ -1507,7 +1507,6 @@
                                                                                 <td v-text="contactolibre.DIRECCION"></td>
                                                                                 <td v-text="contactolibre.TELEFONO_MOVIL"></td>
                                                                                 <td v-text="contactolibre.TELEFONO_FIJO"></td>
-                                                                                <td v-text="contactolibre.N_COTIZACIONES"></td>
                                                                                 <td v-text="contactolibre.PROVEEDOR"></td>
                                                                                 <td v-text="contactolibre.LINEA"></td>
                                                                                 <td v-text="contactolibre.MARCA"></td>
