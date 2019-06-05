@@ -162,6 +162,10 @@
                                                                     <i @click="verPDF(pdi.cRutaDocumento)" :style="'color:#796AEE'" class="fa-md fa fa-file"></i>
                                                                 </el-tooltip>&nbsp;&nbsp;
                                                             </template>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Eliminar {{ pdi.nIdCabeceraInspeccion }}</div>
+                                                                <i @click="anularPdi(pdi)" :style="'color:#796AEE'" class="fa-md fa fa-trash"></i>
+                                                            </el-tooltip>&nbsp;&nbsp;
                                                         </td>
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
                                                         <td v-text="pdi.cNombreTipoInspeccion"></td>
