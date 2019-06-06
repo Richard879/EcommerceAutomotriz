@@ -164,7 +164,7 @@
                                                             </template>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Eliminar {{ pdi.nIdCabeceraInspeccion }}</div>
-                                                                <i @click="anularPdi(pdi)" :style="'color:#796AEE'" class="fa-md fa fa-trash"></i>
+                                                                <i @click="activaInactivaPdi(pdi, 'I')" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                             </el-tooltip>&nbsp;&nbsp;
                                                         </td>
                                                         <td v-text="pdi.nIdCabeceraInspeccion"></td>
@@ -204,7 +204,7 @@
                                                     </nav>
                                                 </div>
                                                 <div class="col-sm-5">
-                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                    <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1595,6 +1595,7 @@
                     { value: '2', text: 'PLACA'}
                 ],
                 arrayPdi: [],
+                arrayPdiRpta: [],
                 arrayBusTipoInspeccion: [],
                 // ============ Variables Flag Tipo Inspeccion =================
                 nflagalmacen: 0,
@@ -1738,6 +1739,9 @@
                 },
                 arrayDetalleAccesorio: [],
                 //==================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1894,13 +1898,14 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    this.arrayPdi               = response.data.arrayPdi.data;
-                    this.pagination.current_page= response.data.arrayPdi.current_page;
+                    this.arrayPdiRpta               = response.data.arrayPdi;
+                    this.paginatePdi(this.arrayPdiRpta, page);
+                    /*this.pagination.current_page= response.data.arrayPdi.current_page;
                     this.pagination.total       = response.data.arrayPdi.total;
                     this.pagination.per_page    = response.data.arrayPdi.per_page;
                     this.pagination.last_page   = response.data.arrayPdi.last_page;
                     this.pagination.from        = response.data.arrayPdi.from;
-                    this.pagination.to          = response.data.arrayPdi.to;
+                    this.pagination.to          = response.data.arrayPdi.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1912,9 +1917,19 @@
                     }
                 });
             },
+            paginatePdi(data, page){
+                this.pagination.current_page    =   page;
+                this.pagination.total           =   data.length;
+                this.pagination.per_page        =   this.perPage;
+                this.pagination.last_page       =   Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            =   (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to              =   (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPdi                   =   data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarPdi(page);
+                this.paginatePdi(this.arrayPdiRpta, page);
+                //this.listarPdi(page);
             },
             generarPDF(pdi){
                 var config = {
@@ -3926,6 +3941,44 @@
                 });
             },
             //=======================================================
+            activaInactivaPdi(objPdi, cSituacionRegistro){
+                swal({
+                    title: 'Estas seguro de Eliminar esta Inspección?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Eliminar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/pdi/activarInactivar';
+                        axios.put(url, {
+                            'nIdEmpresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdSucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nIdCabeceraInspeccion' : parseInt(objPdi.nIdCabeceraInspeccion),
+                            'cSituacionRegistro'    : cSituacionRegistro
+                        }).then(response => {
+                            swal(
+                            'Eliminado!',
+                            'El registro fue eliminado.'
+                            );
+                            this.listarPdi(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
+            },
             subirArchivo(){
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };

@@ -193,7 +193,7 @@ class PdiProcesoController extends Controller
                                                                 $nIdEstadoPdi
                                                             ]);
 
-        $arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
+        //$arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
         return ['arrayPdi'=>$arrayPdi];
     }
 
@@ -475,4 +475,19 @@ class PdiProcesoController extends Controller
 
         return response()->json($arrayDocumento);
     }
+
+    public function activarInactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayPdi = DB::select('exec [usp_Pdi_UpdActivaInactiva] ?, ?, ?, ?, ?',
+                                            [   $request->nIdEmpresa,
+                                                $request->nIdSucursal,
+                                                $request->nIdCabeceraInspeccion,
+                                                $request->cSituacionRegistro,
+                                                Auth::user()->id
+                                            ]);
+        return response()->json($arrayPdi);
+    }
+
 }

@@ -241,8 +241,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-10"  style="max-height: 515px; overflow-x: auto;">
-                                                                        <div id="lsttreegrupo">
+                                                                    <!--<div class="col-lg-10"  style="max-height: 515px; overflow-x: auto;">
+                                                                        <div id="lsttreegrupo">-->
                                                                             <div class="table-responsive">
                                                                                 <table class="table table-striped table-sm">
                                                                                     <thead>
@@ -275,8 +275,8 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
+                                                                        <!--</div>
+                                                                    </div>-->
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="seleccionarEleVenta()">
@@ -825,9 +825,9 @@
                 this.limpiarTabBsqConfigurarAccesorios();
             },
             limpiarTabBsqConfigurarAccesorios(){
-                this.formConfigVehiculo.nidversion       = '';
+                /*this.formConfigVehiculo.nidversion       = '';
                 this.formConfigVehiculo.naniomodelo      = '';
-                this.formConfigVehiculo.cnombrevehiculo  = '';
+                this.formConfigVehiculo.cnombrevehiculo  = '';*/
                 this.arrayElementoVenta = [];
                 this.arrayElementoVentaFlag = [];
                 this.arrayTemproralEV = [];
@@ -853,7 +853,7 @@
                     me.links = [];
                     me.links = response.data;
                     $("#myBar").hide();
-                    // this.llenarAccesorios();
+                    this.llenarAccesorios();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -864,26 +864,22 @@
                     }
                 });
             },
-            /*
             llenarAccesorios(){
                 let me = this;
                 me.arrayElementoVentaFlag = [];
-                me.arrayElementoVenta.map(function(value, key){
-                    me.arrayElementoVentaFlag.push({
-                        nIdElemento         :   value.nIdElemento,
-                        cElementoNombre     :   value.cElementoNombre,
-                        fElemenValorVenta   :   parseFloat(value.fElemenValorVenta),
-                        cFlagVerifica       :   value.cFlagVerifica == 0 ? false : true,
-                        cantidad            :   value.nCantidad
-                    });
-                });
-
-                jQuery(function ($) {
-                    $("#lsttreegrupo").treeview();
+                me.links.map(function(value, key){
+                    if (value.cFlagVerifica == 1) {
+                        me.arrayElementoVentaFlag.push({
+                            'nIdElemento'         :   value.nIdElemento,
+                            'cElementoNombre'     :   value.cElementoNombre,
+                            'fElemenValorVenta'   :   parseFloat(value.fElemenValorVenta),
+                            'cFlagVerifica'       :   value.cFlagVerifica == 0 ? false : true,
+                            'cantidad'            :   value.nCantidad
+                        });
+                    }
                 });
                 $("#myBar").hide();
             },
-            */
             querySearch(queryString, cb) {
                 var links = this.links;
                 var results = queryString ? links.filter(this.createFilter(queryString)) : links;
@@ -934,9 +930,9 @@
                     // if(me.arrayCheckElementoVenta[key] == true) {
                     if (value.cFlagVerifica == true) {
                         me.arrayTemproralEV.push({
-                            nIdElemento     :   value.nIdElemento,
-                            cantidad        :   value.cantidad,
-                            cElementoNombre :   value.cElementoNombre
+                            'nIdElemento'     :   value.nIdElemento,
+                            'cantidad'        :   value.cantidad,
+                            'cElementoNombre' :   value.cElementoNombre
                         });
                     }
                 });
@@ -952,9 +948,9 @@
                     this.modal = 1;
                     return;
                 }
-                me.mostrarProgressBar();
+                me.registrarEleVenta();
 
-                var url = this.ruta + '/accesoriovehiculo/DeleteElementosByVehiculo';
+                /*var url = this.ruta + '/accesoriovehiculo/DeleteElementosByVehiculo';
                 axios.post(url, {
                     'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nidversion'    :   this.formConfigVehiculo.nidversion,
@@ -970,7 +966,7 @@
                             location.reload('0');
                         }
                     }
-                });
+                });*/
             },
             registrarEleVenta(){
                 var url = this.ruta + '/accesoriovehiculo/SetElementosByVehiculo';
@@ -1102,5 +1098,11 @@
     .styleElementos input{
         border-radius: .3rem;
         margin-right: .6rem;
+    }
+    .el-autocomplete{
+        width: 100%;
+    }
+    .el-autocomplete-suggestion li{
+        font-size: 0.8em;
     }
 </style>
