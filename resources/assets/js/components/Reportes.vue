@@ -1578,7 +1578,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Metas de Venta de Vehiculos -->
+            <!-- Modal Show DISTRIBUCION -->
             <div class="modal fade" v-if="accionmodal==9" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -1729,7 +1729,6 @@
                                                                                 <th>ESTADO COT</th>
                                                                                 <th>DESCUENTO</th>
                                                                                 <th>PROVEEDOR</th>
-                                                                                <th>% DESCUENTO</th>
                                                                                 <th>MONTO ASUMIDO</th>
                                                                                 <th>NOMBRE COMERCIAL</th>
                                                                                 <th>VIN</th>
@@ -1758,7 +1757,6 @@
                                                                                 <td v-text="distribucion.ESTADO"></td>
                                                                                 <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
                                                                                 <td v-text="distribucion.PROVEEDOR"></td>
-                                                                                <td>{{ Number((parseFloat(distribucion.PORCENTAJE_ASUMIDO)).toFixed(2)) }}</td>
                                                                                 <td> {{ Number((parseFloat(distribucion.MONTO_ASUMIDO)).toFixed(2)) }} </td>
                                                                                 <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
                                                                                 <td v-text="distribucion.VIN"></td>
