@@ -540,4 +540,37 @@ class ExcelController extends Controller
             return ['arrayContactosLibres'=>$arrayContactosLibres];
         }
     }
+
+    public function exportarDistribucionDesc(Request $request)
+    {
+        $nidsucursal            =   $request->nidsucursal;
+        $nidvendedor            =   $request->nidvendedor;
+        $nidcronograma          =   $request->nidcronograma;
+        $nidestadocotizacion    =   $request->nidestadocotizacion;
+        $fmontodescuento        =   $request->fmontodescuento;
+
+        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidcronograma          =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
+        $nidestadocotizacion    =   ($nidestadocotizacion == NULL) ? ($nidestadocotizacion = 0) : $nidestadocotizacion;
+        $fmontodescuento        =   ($fmontodescuento == NULL) ? ($fmontodescuento = 0) : $fmontodescuento;
+
+        $opcion         =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetDistribucionDesc] ?, ?, ?, ?, ?',
+                                            [
+                                                $nidsucursal,
+                                                $nidvendedor,
+                                                $nidcronograma,
+                                                $nidestadocotizacion,
+                                                $fmontodescuento
+                                            ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayDistribucionDesc = ParametroController::arrayPaginator($data, $request);
+            return ['arrayDistribucionDesc'=>$arrayDistribucionDesc];
+        }
+    }
 }

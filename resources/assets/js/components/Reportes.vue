@@ -52,6 +52,12 @@
                                     <div class="title"><span><br>Venta Diaria</span></div>
                                 </div>
                             </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="abrirModal('descuento-compartido', 'abrir', 'DISTRIBUCACIÓN DE DESCUENTOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Distribución de Descuentos</span></div>
+                                </div>
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -86,12 +92,12 @@
                                     <div class="title"><span><br>Metas de venta de vehículos</span></div>
                                 </div>
                             </div>
-                            <!-- <div class="col-xl-4 col-sm-6">
+                            <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet"  @click="abrirModal('contacto-libre', 'abrir', 'CONTACTO LIBRE')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Contactos Libres</span></div>
                                 </div>
-                            </div> -->
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -99,7 +105,7 @@
 
             <!-- Modal Show Errors -->
             <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Automotores INKA</h4>
@@ -122,7 +128,7 @@
 
             <!-- Modal Show VENTAS RETAIL -->
             <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -317,7 +323,7 @@
 
             <!-- Modal Show VENTAS HGSI -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -595,7 +601,7 @@
 
             <!-- Modal Show Venta Diaria -->
             <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -661,7 +667,7 @@
 
             <!-- Modal Show LISTA STOCK VEHICULOS -->
             <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -927,7 +933,7 @@
 
             <!-- Modal Show STOCK VEHICULOS GENERAL -->
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -1181,7 +1187,7 @@
 
             <!-- Modal Show Metas de Venta de Vehiculos -->
             <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -1380,9 +1386,9 @@
                 </div>
             </div>
 
-            <!-- Modal Show Metas de Venta de Vehiculos -->
+            <!-- Modal Show Contactos Libres -->
             <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -1571,6 +1577,251 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Metas de Venta de Vehiculos -->
+            <div class="modal fade" v-if="accionmodal==9" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidcronograma"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="CRONOGRAMA">
+                                                                    <el-option
+                                                                        v-for="item in arrayCronogramas"
+                                                                        :key="item.nIdCronograma"
+                                                                        :label="item.cCronograma"
+                                                                        :value="item.nIdCronograma">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Estado Coti</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidestadocotizacion"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="ESTADOS">
+                                                                    <el-option
+                                                                        v-for="item in arrayEstadoCotizacion"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Monto Descuento</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="formFiltro.fmontodescuento" @keyup.enter="listarDistribucion(1)" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarDistribucion(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayDistribucionDesc.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>EMPRESA&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>SUCURSAL</th>
+                                                                                <th>COD PEDIDO</th>
+                                                                                <th>NUM PEDIDO</th>
+                                                                                <th>COD COTIZACIÓN</th>
+                                                                                <th>NUM COTIZACIÓN</th>
+                                                                                <th>FECHA COTIZACIÓN</th>
+                                                                                <th>FECHA VENC COTI</th>
+                                                                                <th>TCC</th>
+                                                                                <th>VEHICULO ($)</th>
+                                                                                <th>VEHICULO (S/)</th>
+                                                                                <th>ASUNTO</th>
+                                                                                <th>ESTADO COT</th>
+                                                                                <th>DESCUENTO</th>
+                                                                                <th>PROVEEDOR</th>
+                                                                                <th>% DESCUENTO</th>
+                                                                                <th>MONTO ASUMIDO</th>
+                                                                                <th>NOMBRE COMERCIAL</th>
+                                                                                <th>VIN</th>
+                                                                                <th>ASESOR COMERCIAL</th>
+                                                                                <th>CONTACTO</th>
+                                                                                <th>NUM DOCUMENTO</th>
+                                                                                <th>DIRECCIÓN</th>
+                                                                                <th>TELÉFONO MOVIL</th>
+                                                                                <th>TELÉFONO FIJO</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(distribucion, index) in arrayDistribucionDesc" :key="index">
+                                                                                <td v-text="distribucion.EMPRESA"></td>
+                                                                                <td v-text="distribucion.SUCURSAL"></td>
+                                                                                <td v-text="distribucion.COD_PEDIDO"></td>
+                                                                                <td v-text="distribucion.NUM_PEDIDO"></td>
+                                                                                <td v-text="distribucion.COD_COTIZACION"></td>
+                                                                                <td v-text="distribucion.NUM_COTIZACION"></td>
+                                                                                <td v-text="distribucion.FECHA_COTIZACION"></td>
+                                                                                <td v-text="distribucion.FECHA_VENC_COTIZACION"></td>
+                                                                                <td v-text="distribucion.TCC"></td>
+                                                                                <td v-text="distribucion.COTI_VEHI_DOLAR"></td>
+                                                                                <td v-text="distribucion.COTI_VEHI_SOL"></td>
+                                                                                <td v-text="distribucion.ASUNTO"></td>
+                                                                                <td v-text="distribucion.ESTADO"></td>
+                                                                                <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
+                                                                                <td v-text="distribucion.PROVEEDOR"></td>
+                                                                                <td>{{ Number((parseFloat(distribucion.PORCENTAJE_ASUMIDO)).toFixed(2)) }}</td>
+                                                                                <td> {{ Number((parseFloat(distribucion.MONTO_ASUMIDO)).toFixed(2)) }} </td>
+                                                                                <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
+                                                                                <td v-text="distribucion.VIN"></td>
+                                                                                <td v-text="distribucion.ASESOR_COMERCIAL"></td>
+                                                                                <td v-text="distribucion.CONTACTO"></td>
+                                                                                <td v-text="distribucion.N_DOCUMENTO"></td>
+                                                                                <td v-text="distribucion.DIRECCION"></td>
+                                                                                <td v-text="distribucion.TELEFONO_MOVIL"></td>
+                                                                                <td v-text="distribucion.TELEFONO_FIJO"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaDistribucacion(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1603,7 +1854,9 @@
                     dfechaventadiaria: '',
                     nidvendedor: '',
                     nidsublinea: '',
-                    nidcronograma: ''
+                    nidcronograma: '',
+                    nidestadocotizacion: '',
+                    fmontodescuento: ''
                 },
                 arrayFlagDisponible: [
                     {'id': 'S', 'nombre': 'Disponibles'},
@@ -1617,6 +1870,7 @@
                 arrayModelo: [],
                 arraySubLineas: [],
                 arrayCronogramas: [],
+                arrayEstadoCotizacion: [],
                 //Previsualizar
                 arrayDetalleVentaRetail: [],
                 arrayVentaHGSI: [],
@@ -1624,6 +1878,7 @@
                 arrayStockVehiculosGeneral: [],
                 arrayMetasVenta: [],
                 arrayContactosLibres: [],
+                arrayDistribucionDesc: [],
                 //OPCIONES GENERALES
                 page: 1,
                 perPage: 10,
@@ -2035,6 +2290,37 @@
                     $("#myBar").hide();
                 });
             },
+            exportarDistribucacion(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarDistribucionDesc';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'           :   this.formFiltro.nidsucursal,
+                        'nidvendedor'           :   this.formFiltro.nidvendedor,
+                        'nidcronograma'         :   this.formFiltro.nidcronograma,
+                        'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
+                        'fmontodescuento'       :   this.formFiltro.fmontodescuento,
+                        'opcion'        :   1,
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Distribucion Descuentos'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
             //DATA
             listarVendedores(){
                 this.mostrarProgressBar();
@@ -2244,6 +2530,25 @@
                     }
                 }).then(response => {
                     this.arrayCronogramas = response.data.arrayCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarEstadosCotizacion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110058,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayEstadoCotizacion = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2494,6 +2799,45 @@
                 this.pagination.current_page=page;
                 this.listarContactosLibres(page);
             },
+            listarDistribucion(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarDistribucionDesc';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'           :   this.formFiltro.nidsucursal,
+                        'nidvendedor'           :   this.formFiltro.nidvendedor,
+                        'nidcronograma'         :   this.formFiltro.nidcronograma,
+                        'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
+                        'fmontodescuento'       :   this.formFiltro.fmontodescuento,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayDistribucionDesc      = response.data.arrayDistribucionDesc.data;
+                    this.pagination.current_page    = response.data.arrayDistribucionDesc.current_page;
+                    this.pagination.total           = response.data.arrayDistribucionDesc.total;
+                    this.pagination.per_page        = response.data.arrayDistribucionDesc.per_page;
+                    this.pagination.last_page       = response.data.arrayDistribucionDesc.last_page;
+                    this.pagination.from            = response.data.arrayDistribucionDesc.from;
+                    this.pagination.to              = response.data.arrayDistribucionDesc.to;
+                    $("#myBar").hide();
+                    // this.limpiarFiltros();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaDistribucacion(page){
+                this.pagination.current_page=page;
+                this.listarDistribucion(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
@@ -2509,12 +2853,15 @@
                 this.formFiltro.nidvendedor         =   '';
                 this.formFiltro.nidsublinea         =   '';
                 this.formFiltro.nidcronograma       =   '';
+                this.formFiltro.nidestadocotizacion =   '';
+                this.formFiltro.fmontodescuento     =   '';
                 this.arrayDetalleVentaRetail        =   [];
                 this.arrayVentaHGSI                 =   [];
                 this.arrayStockVehiculos            =   [];
                 this.arrayStockVehiculosGeneral     =   [];
                 this.arrayMetasVenta                =   [];
                 this.arrayContactosLibres           =   [];
+                this.arrayDistribucionDesc          =   [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -2626,6 +2973,23 @@
                                 this.listarSucursalByEmpresa();
                                 this.tituloModal = data;
                                 this.accionmodal = 8;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'descuento-compartido':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.listarCronograma();
+                                this.listarEstadosCotizacion();
+                                this.tituloModal = data;
+                                this.accionmodal = 9;
                                 this.modal = 1;
                                 break;
                             }
