@@ -2226,6 +2226,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Email</label>
