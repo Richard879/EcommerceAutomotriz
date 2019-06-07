@@ -54,8 +54,14 @@
                             </div>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('descuento-compartido', 'abrir', 'DISTRIBUCACIÓN DE DESCUENTOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Distribución de Descuentos</span></div>
+                                    <div class="icon bg-violet" @click="abrirModal('descuento-compartido', 'abrir', 'DESCUENTOS OTORGADOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Descuentos Otorgados</span></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="abrirModal('pedido-deposito', 'abrir', 'ESTADO DE PEDIDOS CON DEPOSITO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Estado de Pedidos con Deposito</span></div>
                                 </div>
                             </div>
                         </template>
@@ -1820,6 +1826,227 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show estado de Depositos por Pedido -->
+            <div class="modal fade" v-if="accionmodal==10" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidcronograma"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="CRONOGRAMA">
+                                                                    <el-option
+                                                                        v-for="item in arrayCronogramas"
+                                                                        :key="item.nIdCronograma"
+                                                                        :label="item.cCronograma"
+                                                                        :value="item.nIdCronograma">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Estado Pedido</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidestadopedido"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="ESTADOS">
+                                                                    <el-option
+                                                                        v-for="item in arrayEstadoPedido"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarPedidoDeposito(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayPedidoDeposito.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>EMPRESA&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarPedidoDeposito()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>SUCURSAL</th>
+                                                                                <th>COD PEDIDO</th>
+                                                                                <th>NUM PEDIDO</th>
+                                                                                <th>FECHA PEDIDO</th>
+                                                                                <th>NOMBRE COMERCIAL</th>
+                                                                                <th>VIN</th>
+                                                                                <th>PEDIDO ($)</th>
+                                                                                <th>PEDIDO (S/)</th>
+                                                                                <th>MONTO DEPOSITADO</th>
+                                                                                <th>% DEPOSITADO</th>
+                                                                                <th>ESTADO PEDIDO</th>
+                                                                                <th>ASESOR COMERCIAL</th>
+                                                                                <th>CONTACTO</th>
+                                                                                <th>NUM DOCUMENTO</th>
+                                                                                <th>DIRECCIÓN</th>
+                                                                                <th>TELÉFONO MOVIL</th>
+                                                                                <th>TELÉFONO FIJO</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(pedido, index) in arrayPedidoDeposito" :key="index">
+                                                                                <td v-text="pedido.EMPRESA"></td>
+                                                                                <td v-text="pedido.SUCURSAL"></td>
+                                                                                <td v-text="pedido.COD_PEDIDO"></td>
+                                                                                <td v-text="pedido.NUM_PEDIDO"></td>
+                                                                                <td v-text="pedido.FECHA_PEDIDO"></td>
+                                                                                <td v-text="pedido.NOMBRE_COMERCIAL"></td>
+                                                                                <td v-text="pedido.VIN"></td>
+                                                                                <td> {{ Number((parseFloat(pedido.PEDIDO_DOLAR)).toFixed(2)) }} </td>
+                                                                                <td> {{ Number((parseFloat(pedido.PEDIDO_SOL)).toFixed(2)) }} </td>
+                                                                                <td> {{ Number((parseFloat(pedido.MONTO_DEPOSITADO)).toFixed(2)) }} </td>
+                                                                                <td> {{ Number((parseFloat(pedido.PORCENTAJE_DEPOSITADO)).toFixed(2)) }} </td>
+                                                                                <td v-text="pedido.ESTADO_PEDIDO"></td>
+                                                                                <td v-text="pedido.ASESOR_COMERCIAL"></td>
+                                                                                <td v-text="pedido.CONTACTO"></td>
+                                                                                <td v-text="pedido.N_DOCUMENTO"></td>
+                                                                                <td v-text="pedido.DIRECCION"></td>
+                                                                                <td v-text="pedido.TELEFONO_MOVIL"></td>
+                                                                                <td v-text="pedido.TELEFONO_FIJO"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaPedidoDeposito(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1854,7 +2081,8 @@
                     nidsublinea: '',
                     nidcronograma: '',
                     nidestadocotizacion: '',
-                    fmontodescuento: ''
+                    fmontodescuento: '',
+                    nidestadopedido: ''
                 },
                 arrayFlagDisponible: [
                     {'id': 'S', 'nombre': 'Disponibles'},
@@ -1869,6 +2097,7 @@
                 arraySubLineas: [],
                 arrayCronogramas: [],
                 arrayEstadoCotizacion: [],
+                arrayEstadoPedido: [],
                 //Previsualizar
                 arrayDetalleVentaRetail: [],
                 arrayVentaHGSI: [],
@@ -1877,6 +2106,7 @@
                 arrayMetasVenta: [],
                 arrayContactosLibres: [],
                 arrayDistribucionDesc: [],
+                arrayPedidoDeposito: [],
                 //OPCIONES GENERALES
                 page: 1,
                 perPage: 10,
@@ -2319,6 +2549,36 @@
                     $("#myBar").hide();
                 });
             },
+            exportarPedidoDeposito(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarPedidoDeposito';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'       :   this.formFiltro.nidsucursal,
+                        'nidvendedor'       :   this.formFiltro.nidvendedor,
+                        'nidcronograma'     :   this.formFiltro.nidcronograma,
+                        'nidestadopedido'   :   this.formFiltro.nidestadopedido,
+                        'opcion'        :   1,
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Pedidos con Deposito'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
             //DATA
             listarVendedores(){
                 this.mostrarProgressBar();
@@ -2547,6 +2807,25 @@
                     }
                 }).then(response => {
                     this.arrayEstadoCotizacion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarEstadosPedido(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110063,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayEstadoPedido = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2836,6 +3115,44 @@
                 this.pagination.current_page=page;
                 this.listarDistribucion(page);
             },
+            listarPedidoDeposito(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarPedidoDeposito';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'       :   this.formFiltro.nidsucursal,
+                        'nidvendedor'       :   this.formFiltro.nidvendedor,
+                        'nidcronograma'     :   this.formFiltro.nidcronograma,
+                        'nidestadopedido'   :   this.formFiltro.nidestadopedido,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayPedidoDeposito        = response.data.arrayPedidoDeposito.data;
+                    this.pagination.current_page    = response.data.arrayPedidoDeposito.current_page;
+                    this.pagination.total           = response.data.arrayPedidoDeposito.total;
+                    this.pagination.per_page        = response.data.arrayPedidoDeposito.per_page;
+                    this.pagination.last_page       = response.data.arrayPedidoDeposito.last_page;
+                    this.pagination.from            = response.data.arrayPedidoDeposito.from;
+                    this.pagination.to              = response.data.arrayPedidoDeposito.to;
+                    $("#myBar").hide();
+                    // this.limpiarFiltros();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaPedidoDeposito(page){
+                this.pagination.current_page=page;
+                this.listarPedidoDeposito(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
@@ -2860,6 +3177,7 @@
                 this.arrayMetasVenta                =   [];
                 this.arrayContactosLibres           =   [];
                 this.arrayDistribucionDesc          =   [];
+                this.arrayPedidoDeposito            =   [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -2988,6 +3306,23 @@
                                 this.listarEstadosCotizacion();
                                 this.tituloModal = data;
                                 this.accionmodal = 9;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'pedido-deposito':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.listarCronograma();
+                                this.listarEstadosPedido();
+                                this.tituloModal = data;
+                                this.accionmodal = 10;
                                 this.modal = 1;
                                 break;
                             }

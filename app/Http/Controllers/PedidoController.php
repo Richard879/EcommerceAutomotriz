@@ -591,6 +591,28 @@ class PedidoController extends Controller
         return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
     }
 
+    public function GetGenerarCartaResponsabilidad(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nIdEmpresa;
+        $nIdSucursal        =   $request->nIdSucursal;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+
+        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetPdfDetallePedido] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
+
+        $pdf = \PDF::loadView('pdf.pedido.cartaresponsabilidad', [
+                                                        'arrayDetallePedido'    =>  $arrayDetallePedido
+                                                    ]);
+
+        return $pdf->download('Carta de Responsabilidad -'.$nIdCabeceraPedido.'.pdf');
+    }
+
     public function GetGenerarRequerimiento(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
