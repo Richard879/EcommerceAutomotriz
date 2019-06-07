@@ -165,7 +165,7 @@
                                 <td align="left" style="width: 40%;"></td>
                                 <td align="center" style="width: 40%;">
                                     <h3>_____________________________</h3>
-                                    <h3>Firma del Cliente</h3>
+                                    <h3>Firma Cliente</h3>
                                     <h3>DNI N°: __________________</h3>
                                 </td>
                                 <td align="right">
