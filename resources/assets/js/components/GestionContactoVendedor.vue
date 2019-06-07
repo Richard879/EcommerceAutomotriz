@@ -2153,17 +2153,6 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                            <div class="col-sm-8">
-                                                                <input  type="text"
-                                                                        v-model="fillEditarContacto.cnrodocumento"
-                                                                        @keyup.enter="actualizarContacto()"
-                                                                        class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
                                                             <div class="col-sm-8">
                                                                 <input  type="text"
@@ -2173,8 +2162,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Apellido Materno</label>
@@ -2186,12 +2173,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Nombres</label>
                                                             <div class="col-sm-8">
                                                                 <input  type="text"
                                                                         v-model="fillEditarContacto.cnombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnrodocumento"
                                                                         @keyup.enter="actualizarContacto()"
                                                                         class="form-control form-control-sm">
                                                             </div>
@@ -2220,12 +2220,29 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.cubigeo" filterable clearable placeholder="SELECCIONE">
+                                                                    <el-option
+                                                                        v-for="item in arrayUbigeos"
+                                                                        :key="item.cCode"
+                                                                        :label="item.cUbigeo"
+                                                                        :value="item.cCode">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Dirección</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Email</label>
@@ -2234,8 +2251,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Celular</label>
@@ -2244,6 +2259,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
@@ -2377,7 +2395,9 @@
                     cdireccion: '',
                     cmailprincipal: '',
                     ncelular: '',
-                    cFlagOp: ''
+                    cFlagOp: '',
+                    cubigeo: '',
+                    cubigeodescripcion: ''
                 },
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
@@ -2503,6 +2523,8 @@
                 arrayEstadoSeguimiento: [],
                 arrayTipoSeguimiento: [],
                 arrayFormaPago: [],
+                // ===============================================
+                arrayUbigeos: [],
                 // =============================================================
                 page: 1,
                 perPage: 10,
@@ -2723,10 +2745,10 @@
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
-                    'nIdAsignacion': parseInt(c.nIdAsignacionContactoVendedor),
-                    'nIdCronograma': 220016,
-                    'nIdContacto': parseInt(c.nIdContacto),
-                    'cFlagCarteraMes': 'S'
+                    'nIdAsignacion'     : parseInt(c.nIdAsignacionContactoVendedor),
+                    'nIdCronograma'     : 220016,
+                    'nIdContacto'       : parseInt(c.nIdContacto),
+                    'cFlagCarteraMes'   : 'S'
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Se asignó a Cartera de Mes');
@@ -2753,7 +2775,7 @@
                     'cFlagOp'           :   this.cFlagOp,
                     'nIdContacto'       :   this.fillEditarContacto.nidcontacto,
                     'nIdPernatural'     :   this.fillEditarContacto.nidpernatural,
-                    'nIdPerjudirica'     :   this.fillEditarContacto.nidperjudirica,
+                    'nIdPerjudirica'    :   this.fillEditarContacto.nidperjudirica,
                     'cNumeroDocumento'  :   String(this.fillEditarContacto.cnrodocumento),
                     'cNombre'           :   this.fillEditarContacto.cnombre.toUpperCase().toString(),
                     'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
@@ -2794,6 +2816,26 @@
                 this.fillEditarContacto.cdireccion          = '';
                 this.fillEditarContacto.cmailprincipal      = '';
                 this.fillEditarContacto.ncelular            = '';
+            },
+            listarUbigeos(){
+                var url = this.ruta + '/ubigeo/GetUbigeo';
+                axios.get(url, {
+                    params: {
+                        'nopcion': 0,
+                        'cfiltro': '',
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayUbigeos = response.data.arrayUbigeo;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // ==========================================================
             // =============  TAB CARTERA DEL MES =======================
@@ -4506,7 +4548,9 @@
                                 //Datos de Contacto
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.listarUbigeos();
+                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
                                 break;
                             }
                             case 'editarJ':
@@ -4522,7 +4566,9 @@
                                 //Datos de Contacto
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.listarUbigeos();
+                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
                                 break;
                             }
                         }
