@@ -1392,6 +1392,9 @@
                 this.pagination.current_page=page;
                 this.listarPedidosAprobados(page);
             },
+            descargaVoucher(cRutaDocumento){
+                window.open(cRutaDocumento);
+            },
             //==========================================================
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapPedido(objPedido){
