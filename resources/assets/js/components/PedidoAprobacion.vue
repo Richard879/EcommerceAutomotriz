@@ -215,9 +215,13 @@
                                                                                         <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp; -->
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="generarCartaResponsabilidadPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <template v-if="pedido.nValidaIntegracion==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
@@ -464,9 +468,13 @@
                                                                                         <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa fa-file-pdf-o"></i>
+                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp; -->
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="generarCartaResponsabilidadPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <template v-if="pedido.cFlagUpdCardCade=='S'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
@@ -2889,6 +2897,36 @@
                     'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
                 }, config).then(response => {
                     console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generarCartaResponsabilidadPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetGenerarCartaResponsabilidad';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
+                    // console.log(response.data);
                     //Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],

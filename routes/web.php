@@ -201,6 +201,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/pedido/SetAnularPedido', 'PedidoController@SetAnularPedido');
     Route::get('/pedido/GetLstDetallePedido', 'PedidoController@GetLstDetallePedido');
     Route::post('/pedido/GetDetallePedido', 'PedidoController@GetDetallePedido');
+    Route::post('/pedido/GetGenerarCartaResponsabilidad', 'PedidoController@GetGenerarCartaResponsabilidad');
     Route::post('/pedido/GetGenerarRequerimiento', 'PedidoController@GetGenerarRequerimiento');
     Route::get('/pedido/GetListPedidoForDscto', 'PedidoController@GetListPedidoForDscto');
     Route::get('/pedido/GetListHistorialPedidoDscto', 'PedidoController@GetListHistorialPedidoDscto');
@@ -514,6 +515,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/reportes/exportarMetasVenta','ExcelController@exportarMetasVenta');
     Route::get('/reportes/exportarContactosLibres','ExcelController@exportarContactosLibres');
     Route::get('/reportes/exportarDistribucionDesc','ExcelController@exportarDistribucionDesc');
+    Route::get('/reportes/exportarPedidoDeposito','ExcelController@exportarPedidoDeposito');
 
     ///========================================
     /////=================  ROUTES SAP

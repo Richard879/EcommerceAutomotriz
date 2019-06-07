@@ -573,4 +573,34 @@ class ExcelController extends Controller
             return ['arrayDistribucionDesc'=>$arrayDistribucionDesc];
         }
     }
+
+    public function exportarPedidoDeposito(Request $request)
+    {
+        $nidsucursal        =   $request->nidsucursal;
+        $nidvendedor        =   $request->nidvendedor;
+        $nidcronograma      =   $request->nidcronograma;
+        $nidestadopedido    =   $request->nidestadopedido;
+
+        $nidsucursal        =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor        =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidcronograma      =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
+        $nidestadopedido    =   ($nidestadopedido == NULL) ? ($nidestadopedido = 0) : $nidestadopedido;
+
+        $opcion             =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetEstadoPedido] ?, ?, ?, ?',
+                                            [
+                                                $nidsucursal,
+                                                $nidvendedor,
+                                                $nidcronograma,
+                                                $nidestadopedido
+                                            ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayPedidoDeposito = ParametroController::arrayPaginator($data, $request);
+            return ['arrayPedidoDeposito'=>$arrayPedidoDeposito];
+        }
+    }
 }
