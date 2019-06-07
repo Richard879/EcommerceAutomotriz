@@ -2153,17 +2153,6 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                            <div class="col-sm-8">
-                                                                <input  type="text"
-                                                                        v-model="fillEditarContacto.cnrodocumento"
-                                                                        @keyup.enter="actualizarContacto()"
-                                                                        class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
                                                             <div class="col-sm-8">
                                                                 <input  type="text"
@@ -2173,8 +2162,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Apellido Materno</label>
@@ -2186,12 +2173,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Nombres</label>
                                                             <div class="col-sm-8">
                                                                 <input  type="text"
                                                                         v-model="fillEditarContacto.cnombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cnrodocumento"
                                                                         @keyup.enter="actualizarContacto()"
                                                                         class="form-control form-control-sm">
                                                             </div>
@@ -2723,10 +2723,10 @@
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
                 axios.post(url, {
-                    'nIdAsignacion': parseInt(c.nIdAsignacionContactoVendedor),
-                    'nIdCronograma': 220016,
-                    'nIdContacto': parseInt(c.nIdContacto),
-                    'cFlagCarteraMes': 'S'
+                    'nIdAsignacion'     : parseInt(c.nIdAsignacionContactoVendedor),
+                    'nIdCronograma'     : 220016,
+                    'nIdContacto'       : parseInt(c.nIdContacto),
+                    'cFlagCarteraMes'   : 'S'
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Se asignó a Cartera de Mes');
@@ -2753,7 +2753,7 @@
                     'cFlagOp'           :   this.cFlagOp,
                     'nIdContacto'       :   this.fillEditarContacto.nidcontacto,
                     'nIdPernatural'     :   this.fillEditarContacto.nidpernatural,
-                    'nIdPerjudirica'     :   this.fillEditarContacto.nidperjudirica,
+                    'nIdPerjudirica'    :   this.fillEditarContacto.nidperjudirica,
                     'cNumeroDocumento'  :   String(this.fillEditarContacto.cnrodocumento),
                     'cNombre'           :   this.fillEditarContacto.cnombre.toUpperCase().toString(),
                     'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
