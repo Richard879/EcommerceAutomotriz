@@ -130,7 +130,7 @@
 
         <div class="invoice">
             @if (sizeof($arrayDetalleAccesorio) > 0)
-                <table class="tblBanco" border="2px">
+                <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                     <thead style="background-color: lightgray;">
                         <tr align="center" valign="middle" >
                             <th colspan="7">LISTA DE ACCESORIOS</th >
@@ -160,7 +160,7 @@
                     </tbody>
                 </table>
             @else
-                <table class="tblBanco" border="2px">
+                <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                     <thead style="background-color: lightgray;">
                         <tr align="center" valign="middle" >
                             <th colspan="5">NO EXISTE LISTA DE ACCESORIOS</th >

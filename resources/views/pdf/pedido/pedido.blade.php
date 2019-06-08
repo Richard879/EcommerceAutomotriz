@@ -69,7 +69,7 @@
             border: 1px solid;
         }
         .tblBanco {
-            font-size: .5rem;
+            font-size: .75rem;
             border: 1px solid black;
             width: 100% !important;
         }
@@ -152,7 +152,7 @@
                 </table>
             </div>
 
-            <table class="tblBanco" border="2px">
+            <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1" border="1">
                 <thead style="background-color: lightgray;">
                     <tr align="center" valign="middle" >
                         <th colspan="2">DOCUMENTOS ASOCIADOS</th >
@@ -178,7 +178,7 @@
                 </tr>
             </table>
 
-            <table class="tblBanco" border="2px">
+            <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1" border="1">
                 <thead style="background-color: lightgray;">
                     <tr align="center" valign="middle" >
                         <th colspan="5">CUENTAS CORRIENTES - CODIGOS DE CUENTA BANCARIA - GPS</th >
@@ -203,7 +203,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tblBanco"  border="2px">
+            <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1" border="1">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
