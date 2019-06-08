@@ -4286,7 +4286,7 @@
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion' :   nIdCabeCoti
                 }, config).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     // Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],

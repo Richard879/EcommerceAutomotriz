@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    {{-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cotización {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }} </title>
     <style type="text/css">
         @page {
@@ -16,7 +16,7 @@
             margin: 0px;
         }
         * {
-            font-family: Verdana, Arial, sans-serif;
+            font-family: verdana, sans-serif;
         }
         .padding{
             padding: 1rem;
@@ -134,6 +134,7 @@
 
         <div class="invoice">
             <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
+            <br><br>
 
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">

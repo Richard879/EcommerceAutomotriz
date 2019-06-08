@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDashboard;
 use App\User;
 
-header('Content-Type: charset=utf-8');
+header("Content-Type: text/html;charset=utf-8");
 
 class CotizacionController extends Controller
 {
@@ -629,25 +629,27 @@ class CotizacionController extends Controller
         //IP Addres del Usuario
         $ip_address = request()->ip();
 
-        // if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
-        //     if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
-        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
-        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        /*
+        if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
+            if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
+                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
+                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
 
-        //         //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
-        //         if($ip_address == '::1') {
-        //             $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
-        //         } else {
-        //             $contents   =   Storage::get('public/'. $cadena);
-        //         }
-        //     } else {
-        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
-        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-        //         $contents   =   Storage::get('public/'. $cadena);
-        //     }
-        // }
+                //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
+                if($ip_address == '::1') {
+                    $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
+                } else {
+                    $contents   =   Storage::get('public/'. $cadena);
+                }
+            } else {
+                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
+                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+                $contents   =   Storage::get('public/'. $cadena);
+            }
+        }
+        */
 
         if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
             $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
@@ -684,19 +686,19 @@ class CotizacionController extends Controller
                                 //echo "<pre>"; print_r($art_detalle[$m]
                                 //unset($art);->Detail[0]); echo "</pre>";
                                 if(strlen($art['@attributes']['textbox3'])==0) break;
-                                $tabla.='<tr><th colspan="2" align="center">'.utf8_decode($art['@attributes']['textbox3']).'</th></tr>';
+                                $tabla.='<tr><th colspan="2" align="center">'.html_entity_decode($art['@attributes']['textbox3']).'</th></tr>';
                                 $fila++;
                                 for($n=0;$n<count($art_detalle[$m]);$n++) {
                                     $art_detalle2=(array)$art_detalle[$m]->Detail[$n];
                                     //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox6']); echo "</pre>";
                                     //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox14']); echo "</pre>";
-                                    $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
+                                    $tabla.='<tr><td align="left">'.html_entity_decode($art_detalle2['@attributes']['textbox6']).'</td>';
 
-
+                                    //Verificar que la propiedad exista
                                     if(isset($art_detalle2['@attributes']['textbox14'])) {
-                                        $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+                                        $tabla.='<td>'.html_entity_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
                                     } else {
-                                        $tabla.='<td>'.utf8_decode('').'</td></tr>';
+                                        $tabla.='<td>'.html_entity_decode('').'</td></tr>';
                                     }
 
                                     $fila++;
@@ -730,11 +732,12 @@ class CotizacionController extends Controller
             $tabla = '';
         }
 
+        // $tabla = mb_convert_encoding($tabla, 'HTML-ENTITIES', 'UTF-8');
         // return $tabla;
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
-                                                                'arrayDetalleDocs'      =>  $arrayDetalleDocs,
+                                                                'arrayDetalleDocs'       => $arrayDetalleDocs,
                                                                 // 'contents'              =>  $contents,
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
