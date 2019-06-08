@@ -1292,7 +1292,7 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
+                                            <!--<div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -1304,7 +1304,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1359,14 +1359,8 @@
                                                         <tr>
                                                             <th>Seleccione</th>
                                                             <th>Código</th>
-                                                            <template v-if="arrayContactosPorVendedor[0].cPerApellidos">
-                                                                <th>Apellidos y Nombres</th>
-                                                                <th>DNI</th>
-                                                            </template>
-                                                            <template v-else>
-                                                                <th>Razón Social</th>
-                                                                <th>RUC</th>
-                                                            </template>
+                                                            <th>Contacto</th>
+                                                            <th>Nro Documento</th>
                                                             <th>Email</th>
                                                         </tr>
                                                     </thead>
@@ -1379,14 +1373,8 @@
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="contactos.nIdContacto"></td>
-                                                            <template v-if="contactos.cPerApellidos">
-                                                                <td v-text="contactos.cContacto"></td>
-                                                                <td v-text="contactos.cNumeroDocumento"></td>
-                                                            </template>
-                                                            <template v-else>
-                                                                <td v-text="contactos.cRazonSocial"></td>
-                                                                <td v-text="contactos.cNumeroDocumento"></td>
-                                                            </template>
+                                                            <td v-text="contactos.cContacto"></td>
+                                                            <td v-text="contactos.cNumeroDocumento"></td>
                                                             <td v-text="contactos.cEmail"></td>
                                                         </tr>
                                                     </tbody>
@@ -4487,14 +4475,14 @@
                             break;
                             case 'asignar':
                             {
-                                (this.fillBusqContacto.ntipopersona) == 1 ?
+                                /*(this.fillBusqContacto.ntipopersona) == 1 ?
                                         this.fillAsignarContacto.ccontacto = data['cContacto'] :
-                                        this.fillAsignarContacto.ccontacto = data['cRazonSocial'];
-                                this.fillAsignarContacto.nidcontacto = data['nIdContacto'];
-                                // this.fillAsignarContacto.ccontacto = data['cContacto'];
-                                this.fillAsignarContacto.cnrodocumento = data['cNumeroDocumento'];
-                                this.fillAsignarContacto.cdireccion = data['cDireccion'];
-                                this.fillAsignarContacto.cemail = data['cEmail'];
+                                        this.fillAsignarContacto.ccontacto = data['cRazonSocial'];*/
+                                this.fillAsignarContacto.nidcontacto    = data['nIdContacto'];
+                                this.fillAsignarContacto.ccontacto      = data['cContacto'];
+                                this.fillAsignarContacto.cnrodocumento  = data['cPerDocumento'];
+                                this.fillAsignarContacto.cdireccion     = data['cDireccion'];
+                                this.fillAsignarContacto.cemail         = data['cEmail'];
                                 this.tabAsignarContacto();
                                 this.cerrarModal();
                                 break;
