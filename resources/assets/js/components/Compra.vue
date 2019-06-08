@@ -3696,7 +3696,7 @@
 
                 //Verifico Si existe Comprobante
                 if(objCompra.nDocEntryComprobante==0){
-
+                    me.loading.close();
                     me.loadingProgressBar("INTEGRANDO FACTURA DE PROVEEDOR CON SAP BUSINESS ONE...");
 
                     //=======================================================================
