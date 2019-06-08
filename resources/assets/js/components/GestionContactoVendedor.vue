@@ -2261,7 +2261,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Estado Civil</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
+                                                                    <el-option
+                                                                    v-for="item in arrayEstadoCivil"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
@@ -2305,12 +2319,29 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.cubigeo" filterable clearable placeholder="SELECCIONE">
+                                                                    <el-option
+                                                                        v-for="item in arrayUbigeos"
+                                                                        :key="item.cCode"
+                                                                        :label="item.cUbigeo"
+                                                                        :value="item.cCode">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Dirección</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Email</label>
@@ -2319,8 +2350,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Celular</label>
@@ -2397,7 +2426,8 @@
                     ncelular: '',
                     cFlagOp: '',
                     cubigeo: '',
-                    cubigeodescripcion: ''
+                    cubigeodescripcion: '',
+                    nestadocivil: ''
                 },
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
@@ -2782,7 +2812,9 @@
                     'cApellidoMaterno'  :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
                     'cDireccion'        :   this.fillEditarContacto.cdireccion,
                     'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
-                    'nTelefonoMovil'    :   this.fillEditarContacto.ncelular
+                    'nTelefonoMovil'    :   this.fillEditarContacto.ncelular,
+                    'cUbigeo'           :   this.fillEditarContacto.cubigeo,
+                    'nIdEstadoCivil'    :   this.fillEditarContacto.nIdEstadoCivil
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Los Datos de la Persona Natural se Actualizaron Correctamente');
@@ -4550,7 +4582,9 @@
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
                                 this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
                                 this.listarUbigeos();
+                                this.llenarComboEstadoCivil();
                                 this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
                                 break;
                             }
                             case 'editarJ':

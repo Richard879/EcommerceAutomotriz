@@ -704,6 +704,8 @@ class GestionContactoController extends Controller
         $cDireccion         =   $request->cDireccion;
         $cEmail             =   $request->cEmail;
         $nTelefonoMovil     =   $request->nTelefonoMovil;
+        $cUbigeo            =   $request->cUbigeo;
+        $nIdEstadoCivil     =   $request->nIdEstadoCivil;
 
         $nIdContacto        =   ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
         $nIdPernatural      =   ($nIdPernatural == NULL) ? ($nIdPernatural = 0) : $nIdPernatural;
@@ -716,10 +718,11 @@ class GestionContactoController extends Controller
         $cDireccion         =   ($cDireccion == NULL) ? ($cDireccion = '') : $cDireccion;
         $cEmail             =   ($cEmail == NULL) ? ($cEmail = '') : $cEmail;
         $nTelefonoMovil     =   ($nTelefonoMovil == NULL) ? ($nTelefonoMovil = '') : $nTelefonoMovil;
+        $cUbigeo            =   ($cUbigeo == NULL) ? ($cUbigeo = '') : $cUbigeo;
+        $nIdEstadoCivil     =   ($nIdEstadoCivil == NULL) ? ($nIdEstadoCivil = 0) : $nIdEstadoCivil;
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [
-                                                                $cFlagOp,
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $cFlagOp,
                                                                 $nIdContacto,
                                                                 $nIdPernatural,
                                                                 $nIdPerjudirica,
@@ -731,6 +734,8 @@ class GestionContactoController extends Controller
                                                                 $cDireccion,
                                                                 $cEmail,
                                                                 $nTelefonoMovil,
+                                                                $cUbigeo,
+                                                                $nIdEstadoCivil,
                                                                 Auth::user()->id
                                                             ]);
 
