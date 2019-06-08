@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDashboard;
 use App\User;
 
-// header("Content-Type: application/pdf");
-// header("Cache-Control: no-cache");
-//header("Accept-Ranges: none");
-//header("Content-Disposition: inline; filename=\"example.pdf\"");
+header('Content-Type: charset=utf-8');
 
 class CotizacionController extends Controller
 {
@@ -660,7 +657,7 @@ class CotizacionController extends Controller
         $feed   =   file_get_contents($arrayDetalleDocs[0]->cFichaImageUrl);
         $xml    =   simplexml_load_string($feed,'SimpleXMLElement', LIBXML_NOWARNING);
         // $xml    =   simplexml_load_file($contents);
-        $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="0" style="paddin-left:.2rem; font-size:10px;width:700px;">';
+        $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="0" style="margin-left:.2rem; font-size:10px;width:700px;">';
         $fila=0;
         $j=0;
 
@@ -723,9 +720,6 @@ class CotizacionController extends Controller
         }
 
         // return $tabla;
-
-        // $pdf->load_html($tabla);
-        // $pdf->render();
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
