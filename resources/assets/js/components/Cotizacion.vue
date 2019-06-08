@@ -1308,13 +1308,13 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label" v-text="fillBusqContacto.lblcontactonombre"></label>
+                                                        <label class="col-sm-4 form-control-label">* Contacto</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
                                                                 <input type="text" v-model="fillBusqContacto.ccontactonombre" @keyup.enter="buscarContactosPorVendedor(1)" class="form-control form-control-sm">
                                                                 <div class="input-group-prepend">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar por {{ fillBusqContacto.lblcontactonombre }} </div>
+                                                                        <div slot="content">Buscar por Contacto </div>
                                                                         <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarContactosPorVendedor(1)">
                                                                             <i class="fa-lg fa fa-search"></i>
                                                                         </button>
@@ -1326,7 +1326,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label" v-text="fillBusqContacto.lblcontactodocumento"></label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                         <div class="col-sm-8">
                                                             <div class="input-group">
                                                                 <input type="text" v-model="fillBusqContacto.ccontactodocumento" @keyup.enter="buscarContactosPorVendedor(1)" class="form-control form-control-sm">
@@ -1374,7 +1374,7 @@
                                                             </td>
                                                             <td v-text="contactos.nIdContacto"></td>
                                                             <td v-text="contactos.cContacto"></td>
-                                                            <td v-text="contactos.cNumeroDocumento"></td>
+                                                            <td v-text="contactos.cPerDocumento"></td>
                                                             <td v-text="contactos.cEmail"></td>
                                                         </tr>
                                                     </tbody>

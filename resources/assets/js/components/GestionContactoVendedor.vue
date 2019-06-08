@@ -2814,7 +2814,7 @@
                     'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
                     'nTelefonoMovil'    :   this.fillEditarContacto.ncelular,
                     'cUbigeo'           :   this.fillEditarContacto.cubigeo,
-                    'nIdEstadoCivil'    :   this.fillEditarContacto.nIdEstadoCivil
+                    'nIdEstadoCivil'    :   this.fillEditarContacto.nestadocivil
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Los Datos de la Persona Natural se Actualizaron Correctamente');

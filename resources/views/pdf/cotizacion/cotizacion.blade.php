@@ -102,7 +102,7 @@
     </div>
 
     <div class="padding">
-        <table width="100%">
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td>Nombre/Razón Social:</td>
                 <td colspan="85"><strong>{{ $arrayDetalleCotizacion[0]->cContacto }}</strong></td>
@@ -229,7 +229,7 @@
                 </tbody>
             </table>
 
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="justify">
                         El cliente libera a la empresa de cualquier responsabilidad relacionada a plazos de entrega del producto adquirido, en tanto el proceso de importación del producto
