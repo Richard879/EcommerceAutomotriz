@@ -2054,7 +2054,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show DISTRIBUCION -->
+            <!-- Modal Show Cotizaciones by filtro -->
             <div class="modal fade" v-if="accionmodal==11" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
