@@ -2263,6 +2263,24 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Teléfono Fijo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ctelefonofijo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Estado Civil</label>
                                                             <div class="col-sm-8">
                                                                 <el-select v-model="fillEditarContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
