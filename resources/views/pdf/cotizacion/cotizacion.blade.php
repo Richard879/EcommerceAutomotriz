@@ -170,7 +170,7 @@
                 </tr>
             </table>
 
-            <table class="tblBanco" border="2px">
+            <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr align="center" valign="middle" >
                         <th colspan="5">CUENTAS CORRIENTES - VENTANILLA</th >
@@ -195,7 +195,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tblBanco"  border="2px">
+            <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>

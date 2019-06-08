@@ -124,7 +124,7 @@
 
     @if (count($arrayDepositosPorPedido) > 0)
         <div class="invoice">
-            <table width="100%">
+            <table width="100%" class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr align="center" align="middle" >
                         <th colspan="8">BANDEJA DE DEPOSITOS</th >
@@ -159,7 +159,7 @@
             </table>
 
             @if ($fMontoPedido > 0)
-                <table width="100%" >
+                <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1">
                     <tr>
                         <td align="right" colspan="1">
                             <span>Monto Depositado</span>

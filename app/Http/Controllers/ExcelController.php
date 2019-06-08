@@ -603,4 +603,34 @@ class ExcelController extends Controller
             return ['arrayPedidoDeposito'=>$arrayPedidoDeposito];
         }
     }
+
+    public function exportarCotizacionesByFitro(Request $request)
+    {
+        $nidsucursal            =   $request->nidsucursal;
+        $nidvendedor            =   $request->nidvendedor;
+        $nidcronograma          =   $request->nidcronograma;
+        $nidestadocotizacion    =   $request->nidestadocotizacion;
+
+        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidcronograma          =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
+        $nidestadocotizacion    =   ($nidestadocotizacion == NULL) ? ($nidestadocotizacion = 0) : $nidestadocotizacion;
+
+        $opcion         =   $request->opcion;
+
+        $data = DB::select('exec [usp_Reporte_GetCotizacionesByFiltro] ?, ?, ?, ?',
+                                            [
+                                                $nidsucursal,
+                                                $nidvendedor,
+                                                $nidcronograma,
+                                                $nidestadocotizacion
+                                            ]);
+
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayCotizaciones = ParametroController::arrayPaginator($data, $request);
+            return ['arrayCotizaciones'=>$arrayCotizaciones];
+        }
+    }
 }

@@ -104,6 +104,12 @@
                                     <div class="title"><span><br>Contactos Libres</span></div>
                                 </div>
                             </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet"  @click="abrirModal('cotizaciones', 'abrir', 'COTIZACIONES POR FILTRO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Cotizaciones</span></div>
+                                </div>
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -2047,6 +2053,235 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show DISTRIBUCION -->
+            <div class="modal fade" v-if="accionmodal==11" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL"
+                                                                            @change="listarSubLineaByVendedor()">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidcronograma"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="CRONOGRAMA">
+                                                                    <el-option
+                                                                        v-for="item in arrayCronogramas"
+                                                                        :key="item.nIdCronograma"
+                                                                        :label="item.cCronograma"
+                                                                        :value="item.nIdCronograma">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Estado</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidestadocotizacion"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="ESTADOS">
+                                                                    <el-option
+                                                                        v-for="item in arrayEstadoCotizacion"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarCotizaciones(1)">
+                                                            <i class="fa fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayCotizaciones.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>EMPRESA&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
+                                                                                    </el-tooltip></th>
+                                                                                <th>SUCURSAL</th>
+                                                                                <th>COD PEDIDO</th>
+                                                                                <th>NUM PEDIDO</th>
+                                                                                <th>COD COTIZACIÓN</th>
+                                                                                <th>NUM COTIZACIÓN</th>
+                                                                                <th>FECHA COTIZACIÓN</th>
+                                                                                <th>FECHA VENC COTI</th>
+                                                                                <th>TCC</th>
+                                                                                <th>VEHICULO ($)</th>
+                                                                                <th>VEHICULO (S/)</th>
+                                                                                <th>ASUNTO</th>
+                                                                                <th>ESTADO COT</th>
+                                                                                <th>DESCUENTO</th>
+                                                                                <th>NOMBRE COMERCIAL</th>
+                                                                                <th>VIN</th>
+                                                                                <th>ASESOR COMERCIAL</th>
+                                                                                <th>CONTACTO</th>
+                                                                                <th>NUM DOCUMENTO</th>
+                                                                                <th>DIRECCIÓN</th>
+                                                                                <th>TELÉFONO MOVIL</th>
+                                                                                <th>TELÉFONO FIJO</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(cotizacion, index) in arrayCotizaciones" :key="index">
+                                                                                <td v-text="cotizacion.EMPRESA"></td>
+                                                                                <td v-text="cotizacion.SUCURSAL"></td>
+                                                                                <td v-text="cotizacion.COD_PEDIDO"></td>
+                                                                                <td v-text="cotizacion.NUM_PEDIDO"></td>
+                                                                                <td v-text="cotizacion.COD_COTIZACION"></td>
+                                                                                <td v-text="cotizacion.NUM_COTIZACION"></td>
+                                                                                <td v-text="cotizacion.FECHA_COTIZACION"></td>
+                                                                                <td v-text="cotizacion.FECHA_VENC_COTIZACION"></td>
+                                                                                <td v-text="cotizacion.TCC"></td>
+                                                                                <td v-text="cotizacion.COTI_VEHI_DOLAR"></td>
+                                                                                <td v-text="cotizacion.COTI_VEHI_SOL"></td>
+                                                                                <td v-text="cotizacion.ASUNTO"></td>
+                                                                                <td v-text="cotizacion.ESTADO"></td>
+                                                                                <td> {{ Number((parseFloat(cotizacion.DESCUENTO)).toFixed(2)) }} </td>
+                                                                                <td v-text="cotizacion.NOMBRE_COMERCIAL"></td>
+                                                                                <td v-text="cotizacion.VIN"></td>
+                                                                                <td v-text="cotizacion.ASESOR_COMERCIAL"></td>
+                                                                                <td v-text="cotizacion.CONTACTO"></td>
+                                                                                <td v-text="cotizacion.N_DOCUMENTO"></td>
+                                                                                <td v-text="cotizacion.DIRECCION"></td>
+                                                                                <td v-text="cotizacion.TELEFONO_MOVIL"></td>
+                                                                                <td v-text="cotizacion.TELEFONO_FIJO"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaCotizaciones(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -2107,6 +2342,7 @@
                 arrayContactosLibres: [],
                 arrayDistribucionDesc: [],
                 arrayPedidoDeposito: [],
+                arrayCotizaciones: [],
                 //OPCIONES GENERALES
                 page: 1,
                 perPage: 10,
@@ -3153,6 +3389,44 @@
                 this.pagination.current_page=page;
                 this.listarPedidoDeposito(page);
             },
+            listarCotizaciones(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarCotizacionesByFitro';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'           :   this.formFiltro.nidsucursal,
+                        'nidvendedor'           :   this.formFiltro.nidvendedor,
+                        'nidcronograma'         :   this.formFiltro.nidcronograma,
+                        'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayCotizaciones          = response.data.arrayCotizaciones.data;
+                    this.pagination.current_page    = response.data.arrayCotizaciones.current_page;
+                    this.pagination.total           = response.data.arrayCotizaciones.total;
+                    this.pagination.per_page        = response.data.arrayCotizaciones.per_page;
+                    this.pagination.last_page       = response.data.arrayCotizaciones.last_page;
+                    this.pagination.from            = response.data.arrayCotizaciones.from;
+                    this.pagination.to              = response.data.arrayCotizaciones.to;
+                    $("#myBar").hide();
+                    // this.limpiarFiltros();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaCotizaciones(page){
+                this.pagination.current_page=page;
+                this.listarCotizaciones(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
@@ -3323,6 +3597,23 @@
                                 this.listarEstadosPedido();
                                 this.tituloModal = data;
                                 this.accionmodal = 10;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'cotizaciones':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.listarCronograma();
+                                this.listarEstadosCotizacion();
+                                this.tituloModal = data;
+                                this.accionmodal = 11;
                                 this.modal = 1;
                                 break;
                             }

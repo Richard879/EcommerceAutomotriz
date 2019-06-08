@@ -69,7 +69,7 @@
             border: 1px solid;
         }
         .tblBanco {
-            font-size: .5rem;
+            font-size: .75rem;
             border: 1px solid black;
             width: 100% !important;
         }
@@ -77,7 +77,7 @@
 </head>
 <body>
     <div class="padding">
-        <table width="100%" border="1px">
+        <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1" border="1">
             <tr>
                 <td colspan="2" class="text-align:'center';" align="center" >REQUERIMIENTO VEHICULAR</td>
             </tr>
