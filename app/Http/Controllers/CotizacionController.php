@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDashboard;
 use App\User;
 
+header('Content-Type: charset=utf-8');
+
 class CotizacionController extends Controller
 {
     public function GetTipoLista(Request $request)
@@ -600,6 +602,7 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+
         $nIdEmpresa             =   $request->nIdEmpresa;
         $nIdSucursal            =   $request->nIdSucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
@@ -623,97 +626,98 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        //IP Addres del Usuario
         $ip_address = request()->ip();
 
-        // if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
-        //     if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
-        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
-        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+        if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
+            if ($arrayDetalleDocs[0]->cFichaTecnicaSubstring == 1) {
+                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 44); // Para Obtener Archivo Http
+                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
 
-        //         //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
-        //         if($ip_address == '::1') {
-        //             $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
-        //         } else {
-        //             $contents   =   Storage::get('public/'. $cadena);
-        //         }
-        //     } else {
-        //         //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
-        //         $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
-        //         //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
-        //         $contents   =   Storage::get('public/'. $cadena);
-        //     }
-        // }
+                //Primero Verificar desde donde se va obtener el Archivo (Si es desde Local o Produc)
+                if($ip_address == '::1') {
+                    $contents   =   DB::unprepared(\File::get($arrayDetalleDocs[0]->cFichaImageUrl));
+                } else {
+                    $contents   =   Storage::get('public/'. $cadena);
+                }
+            } else {
+                //OBTENGO LA RUTA DINAMICA DE LA FICHA TECNICA
+                $cadena     =   substr($arrayDetalleDocs[0]->cFichaImageUrl, 47); // Para Obtener Archivo Local
+                //OBTENGO EL CONTENIDO DE LA FICHA TECNICA => storage/app/public/ . RUTADINAMICA
+                $contents   =   Storage::get('public/'. $cadena);
+            }
+        }
 
-        // $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
+        $data_xml = new \DOMDocument('1.0','UTF-8'); //creo el objeto
         // $data_xml->loadXML($contents); //cargo el xml, en este caso es una cadena codificada
+        // $data_xml->load($arrayDetalleDocs[0]->cFichaImageUrl); //cargo el xml, en este caso desde una ruta
         // $data1 = $data_xml->getElementsByTagNameNS('SGS_FichaTec_Cotizacion' ,'textbox21');//busca el elemento del xml y lo guarda en variable
-        // // $data_xml->load($arrayDetalleDocs[0]->cFichaImageUrl); //cargo el xml, en este caso desde una ruta
-        // // $data2 = $data_xml->getElementsByTagName('textbox21');//busca el elemento del xml y lo guarda en variables
-        // $feed   =   file_get_contents($arrayDetalleDocs[0]->cFichaImageUrl);
-        // $xml    =   simplexml_load_string($feed,'SimpleXMLElement', LIBXML_NOWARNING);
-        // // $xml    =   simplexml_load_file($contents);
-        // $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="0" style="font-size:10px;width:100px;">';
-        // $fila=0;
-        // $j=0;
+        // $data2 = $data_xml->getElementsByTagName('textbox21');//busca el elemento del xml y lo guarda en variables
+        $feed   =   file_get_contents($arrayDetalleDocs[0]->cFichaImageUrl);
+        $xml    =   simplexml_load_string($feed,'SimpleXMLElement', LIBXML_NOWARNING);
+        // $xml    =   simplexml_load_file($contents);
+        $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="0" style="margin-left:.2rem; font-size:10px;width:700px;">';
+        $fila=0;
+        $j=0;
 
-        // foreach($xml as $z => $a){
-        //     if($j==2){
-        //         foreach($a as $x => $b){
-        //             //echo count($b);
-        //             //echo "<pre>"; print_r($b->table1_Group1); echo "</pre>";
-        //             for($l=0;$l<count($b);$l++){
-        //                 //echo "<pre>"; print_r($b->table1_Group1[$l]); echo "</pre>";
-        //                 for($m=0;$m<count($b->table1_Group1[$l]);$m++){
-        //                     //echo "<pre>"; print_r($b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2); echo "</pre>";
-        //                     $art=(array)$b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2;
-        //                     //echo "<pre>"; print_r(utf8_decode($art['@attributes']['textbox3'])); echo "</pre>";
-        //                     //echo var_dump($art);
-        //                     //echo "<pre>"; print_r($art); echo "</pre>";
-        //                     //echo "<pre>"; print_r($art['@attributes']); echo "</pre>";
-        //                     //echo "<pre>"; print_r($art['Detail_Collection']->Detail); echo "</pre>";
-        //                     $art_detalle=$art['Detail_Collection'];
-        //                     //echo "cab: ".$art['@attributes'];
-        //                     //echo "<pre>"; print_r($art_detalle[$m]); echo "</pre>";
-        //                     //echo "cant: ".count($art_detalle[$m])."<br>";
-        //                     //echo "<pre>"; print_r($art_detalle[$m]
-        //                     //unset($art);->Detail[0]); echo "</pre>";
-        //                     if(strlen($art['@attributes']['textbox3'])==0) break;
-        //                     $tabla.='<tr><th colspan="2" align="center">'.utf8_decode($art['@attributes']['textbox3']).'</th></tr>';
-        //                     $fila++;
-        //                     for($n=0;$n<count($art_detalle[$m]);$n++) {
-        //                         $art_detalle2=(array)$art_detalle[$m]->Detail[$n];
-        //                         //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox6']); echo "</pre>";
-        //                         //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox14']); echo "</pre>";
-        //                         $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
-        //                         $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
-        //                         $fila++;
-        //                     }
-        //                     unset($art);
-        //                     unset($art_detalle);
-        //                     unset($art_detalle2);
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     $j++;
-        // }
+        foreach($xml as $z => $a){
+            if($j==2){
+                foreach($a as $x => $b){
+                    //echo count($b);
+                    //echo "<pre>"; print_r($b->table1_Group1); echo "</pre>";
+                    for($l=0;$l<count($b);$l++){
+                        //echo "<pre>"; print_r($b->table1_Group1[$l]); echo "</pre>";
+                        for($m=0;$m<count($b->table1_Group1[$l]);$m++){
+                            //echo "<pre>"; print_r($b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2); echo "</pre>";
+                            $art=(array)$b->table1_Group1[$l][$m]->table1_Group2_Collection->table1_Group2;
+                            //echo "<pre>"; print_r(utf8_decode($art['@attributes']['textbox3'])); echo "</pre>";
+                            //echo var_dump($art);
+                            //echo "<pre>"; print_r($art); echo "</pre>";
+                            //echo "<pre>"; print_r($art['@attributes']); echo "</pre>";
+                            //echo "<pre>"; print_r($art['Detail_Collection']->Detail); echo "</pre>";
+                            $art_detalle=$art['Detail_Collection'];
+                            //echo "cab: ".$art['@attributes'];
+                            //echo "<pre>"; print_r($art_detalle[$m]); echo "</pre>";
+                            //echo "cant: ".count($art_detalle[$m])."<br>";
+                            //echo "<pre>"; print_r($art_detalle[$m]
+                            //unset($art);->Detail[0]); echo "</pre>";
+                            if(strlen($art['@attributes']['textbox3'])==0) break;
+                            $tabla.='<tr><th colspan="2" align="center">'.utf8_decode($art['@attributes']['textbox3']).'</th></tr>';
+                            $fila++;
+                            for($n=0;$n<count($art_detalle[$m]);$n++) {
+                                $art_detalle2=(array)$art_detalle[$m]->Detail[$n];
+                                //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox6']); echo "</pre>";
+                                //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox14']); echo "</pre>";
+                                $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
+                                $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+                                $fila++;
+                            }
+                            unset($art);
+                            unset($art_detalle);
+                            unset($art_detalle2);
+                        }
+                    }
+                }
+            }
+            $j++;
+        }
 
-        // $tabla.='</table>';
-        // //echo "num filas: ".$fila."<br>";
-        // //echo $tabla;
-        // $num_filas  =   ($fila-17);
-        // $num_veces  =   (int)(($fila-17)/17);
-        // $ord        =   $num_filas/$num_veces;
-        // //echo "-- ".$ord."<br>";
-        // $sw=false;
+        $tabla.='</table>';
+        //echo "num filas: ".$fila."<br>";
+        //echo $tabla;
+        $num_filas  =   ($fila-17);
+        $num_veces  =   (int)(($fila-17)/17);
+        $ord        =   $num_filas/$num_veces;
+        //echo "-- ".$ord."<br>";
+        $sw         =   false;
 
-        // if($ord>28) {
-        //     $r= round(($ord/28),2);
-        //     if(($r>=1.01 && $r<=1.3) || ($r>=2.01 && $r<=2.3)) {
-        //         $sw=true;
-        //     }
-        // }
+        if($ord>28) {
+            $r= round(($ord/28),2);
+            if(($r>=1.01 && $r<=1.3) || ($r>=2.01 && $r<=2.3)) {
+                $sw=true;
+            }
+        }
 
         // return $tabla;
 
@@ -723,8 +727,8 @@ class CotizacionController extends Controller
                                                                 // 'contents'              =>  $contents,
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
-                                                                'hyundai'               =>  $hyundai
-                                                                //'tabla'                 =>  $tabla
+                                                                'hyundai'               =>  $hyundai,
+                                                                'tabla'                 =>  $tabla
                                                             ]);
 
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
