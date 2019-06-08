@@ -3663,7 +3663,7 @@
                     //==============================================================
                     //================== REGISTRO TABLA COSTO EN SAP ===============
                     setTimeout(function() {
-                        me.generaSapFacturaProveedor(objCompra);
+                        me.generaSapTblCostoCabecera(objCompra);
                     }, 800);
                 }
             },
@@ -3678,7 +3678,7 @@
                         //==============================================================
                         //================== REGISTRO TABLA COSTO EN SAP ===============
                         setTimeout(function() {
-                            me.generaSapFacturaProveedor(objCompra);
+                            me.generaSapTblCostoCabecera(objCompra);
                         }, 800);
                     }
                 }).catch(error => {
@@ -3691,7 +3691,7 @@
                     }
                 });
             },
-            generaSapFacturaProveedor(objCompra){
+            /*generaSapFacturaProveedor(objCompra){
                 let me = this;
 
                 //Verifico Si existe Comprobante
@@ -3706,6 +3706,8 @@
                         'cCardCode'     : objCompra.cCardCode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'cWarehouseCode': me.formAlmacen.cwhscode,
+                        'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
                         'data'          : me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
@@ -3793,7 +3795,7 @@
                         }
                     }
                 });
-            },
+            },*/
             generaSapTblCostoCabecera(objCompra){
                 let me = this;
 

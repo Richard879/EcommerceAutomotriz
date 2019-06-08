@@ -59,6 +59,7 @@ class SapPedidoController extends Controller
                             "ProjectCode"   =>  (string)$value['cNumeroVin'],
                             "CostingCode2"  =>  "01", //UnidadDeNegocio
                             "CostingCode3"  =>  (string)$request->nIdSapSucursal,
+                            "U_SYP_TPOIMP"  =>   "01",
                             'SerialNumbers' =>  array()
                         ]
                     ]
