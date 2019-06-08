@@ -795,9 +795,10 @@ class CotizacionController extends Controller
         $cFiltroDescripcion = $request->cfiltrodescripcion;
         $nIdVendedor = $request->nidvendedor;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cNroDocumento      = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+        $nTipoPersona       = ($nTipoPersona == NULL) ? ($nTipoPersona = 1) : $nTipoPersona;
+        $nIdVendedor        = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
 
         $arrayContactosPorVendedor = DB::select('exec [usp_Cotizacion_GetListContactoByVendedor] ?, ?, ?, ?, ?, ?, ?',
                                                                         [   $nIdEmpresa,
