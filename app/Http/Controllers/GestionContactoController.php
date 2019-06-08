@@ -701,11 +701,13 @@ class GestionContactoController extends Controller
         $cApellidoMaterno   =   $request->cApellidoMaterno;
         $dFechaNacimiento   =   $request->dFechaNacimiento;
         //Datos de Contacto
-        $cDireccion         =   $request->cDireccion;
-        $cEmail             =   $request->cEmail;
-        $nTelefonoMovil     =   $request->nTelefonoMovil;
-        $cUbigeo            =   $request->cUbigeo;
-        $nIdEstadoCivil     =   $request->nIdEstadoCivil;
+        $cDireccion                 =   $request->cDireccion;
+        $cEmail                     =   $request->cEmail;
+        $nTelefonoMovil             =   $request->nTelefonoMovil;
+        $cUbigeo                    =   $request->cUbigeo;
+        $nIdEstadoCivil             =   $request->nIdEstadoCivil;
+        $nTelefonoMovilAlternativo  =   $request->nTelefonoMovilAlternativo;
+        $cTelefonoFijo              =   $request->cTelefonoFijo;
 
         $nIdContacto        =   ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
         $nIdPernatural      =   ($nIdPernatural == NULL) ? ($nIdPernatural = 0) : $nIdPernatural;
@@ -720,8 +722,10 @@ class GestionContactoController extends Controller
         $nTelefonoMovil     =   ($nTelefonoMovil == NULL) ? ($nTelefonoMovil = '') : $nTelefonoMovil;
         $cUbigeo            =   ($cUbigeo == NULL) ? ($cUbigeo = '') : $cUbigeo;
         $nIdEstadoCivil     =   ($nIdEstadoCivil == NULL) ? ($nIdEstadoCivil = 0) : $nIdEstadoCivil;
+        $nTelefonoMovilAlternativo     =   ($nTelefonoMovilAlternativo == NULL) ? ($nTelefonoMovilAlternativo = 0) : $nTelefonoMovilAlternativo;
+        $cTelefonoFijo      =   ($cTelefonoFijo == NULL) ? ($cTelefonoFijo = '') : $cTelefonoFijo;
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $cFlagOp,
                                                                 $nIdContacto,
                                                                 $nIdPernatural,
@@ -736,6 +740,8 @@ class GestionContactoController extends Controller
                                                                 $nTelefonoMovil,
                                                                 $cUbigeo,
                                                                 $nIdEstadoCivil,
+                                                                $nTelefonoMovilAlternativo,
+                                                                $cTelefonoFijo,
                                                                 Auth::user()->id
                                                             ]);
 
