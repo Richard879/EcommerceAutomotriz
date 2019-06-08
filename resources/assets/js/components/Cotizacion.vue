@@ -1374,7 +1374,7 @@
                                                             </td>
                                                             <td v-text="contactos.nIdContacto"></td>
                                                             <td v-text="contactos.cContacto"></td>
-                                                            <td v-text="contactos.cNumeroDocumento"></td>
+                                                            <td v-text="contactos.cPerDocumento"></td>
                                                             <td v-text="contactos.cEmail"></td>
                                                         </tr>
                                                     </tbody>
