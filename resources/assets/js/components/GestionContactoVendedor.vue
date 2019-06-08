@@ -2263,6 +2263,24 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Teléfono Fijo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ctelefonofijo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Estado Civil</label>
                                                             <div class="col-sm-8">
                                                                 <el-select v-model="fillEditarContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
@@ -2360,6 +2378,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Teléfono Fijo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ctelefonofijo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
                                                             <i class="fa fa-edit"></i> ACTUALIZAR
@@ -2427,7 +2463,9 @@
                     cFlagOp: '',
                     cubigeo: '',
                     cubigeodescripcion: '',
-                    nestadocivil: ''
+                    nestadocivil: '',
+                    ncelularalternativo: '', 
+                    ctelefonofijo: ''
                 },
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
@@ -2814,7 +2852,9 @@
                     'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
                     'nTelefonoMovil'    :   this.fillEditarContacto.ncelular,
                     'cUbigeo'           :   this.fillEditarContacto.cubigeo,
-                    'nIdEstadoCivil'    :   this.fillEditarContacto.nestadocivil
+                    'nIdEstadoCivil'    :   this.fillEditarContacto.nestadocivil,
+                    'nTelefonoMovilAlternativo' : this.fillEditarContacto.ncelularalternativo,
+                    'cTelefonoFijo'             : this.fillEditarContacto.ctelefonofijo
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Los Datos de la Persona Natural se Actualizaron Correctamente');
@@ -4581,6 +4621,8 @@
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
                                 this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
                                 this.listarUbigeos();
                                 this.llenarComboEstadoCivil();
                                 this.fillEditarContacto.cubigeo             =   data.cUbigeo;
@@ -4601,6 +4643,8 @@
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
                                 this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
                                 this.listarUbigeos();
                                 this.fillEditarContacto.cubigeo             =   data.cUbigeo;
                                 break;

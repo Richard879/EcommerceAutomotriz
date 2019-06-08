@@ -103,7 +103,7 @@ const app = new Vue({
         menu: 1300362,
         //ruta: 'http://172.20.0.62/saisacsys/public',
         ruta: 'http://localhost:8080/saisacsys/public',
-        //ruta: 'http://172.20.6.85:8080/saisacsys/public',
+        //ruta: 'http://172.20.6.87:8080/saisacsys/public',
         notifications: []
     },
     mounted() {
