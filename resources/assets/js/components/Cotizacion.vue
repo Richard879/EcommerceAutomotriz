@@ -4297,7 +4297,7 @@
                     const fileURL = URL.createObjectURL(file);
                     //Abre la URL en una nueva Ventana
                     window.open(fileURL);
-                    // this.obtenerFichaPDF(nIdCabeCoti);
+                    this.obtenerFichaPDF(nIdCabeCoti);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
