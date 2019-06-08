@@ -3691,6 +3691,111 @@
                     }
                 });
             },
+            /*generaSapFacturaProveedor(objCompra){
+                let me = this;
+
+                //Verifico Si existe Comprobante
+                if(objCompra.nDocEntryComprobante==0){
+                    me.loading.close();
+                    me.loadingProgressBar("INTEGRANDO FACTURA DE PROVEEDOR CON SAP BUSINESS ONE...");
+
+                    //=======================================================================
+                    //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
+                    var sapUrl = me.ruta + '/compra/SapSetFacturaProveedorCompra';
+                    axios.post(sapUrl, {
+                        'cCardCode'     : objCompra.cCardCode,
+                        'fDocDate'      : moment().format('YYYY-MM-DD'),
+                        'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'cWarehouseCode': me.formAlmacen.cwhscode,
+                        'nIdSapSucursal': parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                        'data'          : me.arraySapCompra
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuesta.DocEntry){
+                                me.arraySapUpdSgc.push({
+                                    'cFlagTipo'         :   "C",
+                                    'cTipoComprobante'  :   "FP",
+                                    'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                    'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta'     :   response.data.toString()
+                                });
+
+                                me.arraySapActividad.push({
+                                    'dActivityDate' :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hActivityTime' :   '08:13:00',
+                                    'cCardCode'     :   objWO.cCustomerCode,
+                                    'cNotes'        :   'WarranOperativo',
+                                    'nDocEntry'     :   me.jsonRespuesta.DocEntry.toString(),
+                                    'nDocNum'       :   me.jsonRespuesta.DocNum.toString(),
+                                    'nDocType'      :   '18',
+                                    'nDuration'     :   '15',
+                                    'cDurationType' :   'du_Minuts',
+                                    'dEndDueDate'   :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hEndTime'      :   '08:28:00',
+                                    'cReminder'     :   'tYES',
+                                    'nReminderPeriod':  '15',
+                                    'cReminderType' :   'du_Minuts',
+                                    'dStartDate'    :   moment().format('YYYY-MM-DD'),//'2019-01-29'
+                                    'hStartTime'    :   '08:13:00'
+                                });
+                                //==============================================================
+                                //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                                setTimeout(function() {
+                                    me.actualizaSgcFacturaProveedor(objWO);
+                                }, 3800);
+                            }
+                        });
+                    }).catch(error => {
+                        me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+                else{
+                    //==============================================================
+                    //================== REGISTRO ACTIVIDAD EN SAP ===============
+                    setTimeout(function() {
+                        me.generaSapTblCostoCabecera(objCompra);
+                    }, 800);
+                }
+            },
+            actualizaSgcFacturaProveedor(objCompra){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        //==============================================================
+                        //================== REGISTRO TABLA COSTO EN SAP ===============
+                        setTimeout(function() {
+                            me.generaSapTblCostoCabecera(objCompra);
+                        }, 800);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },*/
             generaSapTblCostoCabecera(objCompra){
                 let me = this;
 

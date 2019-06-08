@@ -541,6 +541,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/compra/SapSetCompraWO', 'Api\SapCompraController@SapSetCompraWO');
     Route::post('/compra/SapPatchCompra', 'Api\SapCompraController@SapPatchCompra');
+    Route::post('/compra/SapSetFacturaProveedorCompra', 'Api\SapCompraController@SapSetFacturaProveedorCompra');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
     Route::post('/mercancia/SapSetMercanciaEntry', 'Api\SapMercanciaController@SapSetMercanciaEntry');

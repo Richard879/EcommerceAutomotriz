@@ -77,7 +77,8 @@ class SapCompraController extends Controller
                                 "WarehouseCode"     => (string)$request->cWarehouseCode,
                                 "ProjectCode"       => (string)$value['cNumeroVin'],
                                 "CostingCode2"      =>  "01", //UnidadDeNegocio
-                                "CostingCode3"      =>  (string)$request->nIdSapSucursal //Codigo Sap Sucursal
+                                "CostingCode3"      =>  (string)$request->nIdSapSucursal, //Codigo Sap Sucursal
+                                "U_SYP_TPOIMP"      =>   "01"
                             ]
                         ]
                     ]
@@ -167,6 +168,61 @@ class SapCompraController extends Controller
                 ];
 
             $response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+        }
+        return $array_rpta;
+    }
+
+    public function SapSetFacturaProveedorCompra(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10:8020/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        //======= Obtener el EmployeeCode del Usuario Autenticado
+        $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
+        [   Auth::user()->id
+        ]);
+        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
+        //============================================================
+
+
+        $data = $request->data;
+        foreach ($data as $key => $value) {
+            $json = [
+                'json' => [
+                    "CardCode"          =>  $request->cCardCode,
+                    "DocDate"           =>  (string)$request->fDocDate,
+                    "DocDueDate"        =>  (string)$request->fDocDueDate,
+                    "DocCurrency"       =>  "US$",
+                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    "U_SYP_MDMT"        =>  "02",
+                    "U_SYP_MDTD"        =>  "01",
+                    "U_SYP_MDSD"        =>  (string)$value['cSerieComprobante'],
+                    "U_SYP_MDCD"        =>  (string)$value['cNumeroComprobante'],
+                    "DocumentLines"     =>  [
+                        [
+                            "ItemCode"          => (string)$value['cNumeroVin'],
+                            "Quantity"          => "1",
+                            "TaxCode"           => "IGV",
+                            "PriceAfterVAT"     => (string)$value['fTotalCompra'],
+                            "Currency"          => "US$",
+                            "WarehouseCode"     => (string)$request->cWarehouseCode,
+                            "ProjectCode"       => (string)$value['cNumeroVin'],
+                            "CostingCode2"      =>  "01", //UnidadDeNegocio
+                            "CostingCode3"      =>  (string)$request->nIdSapSucursal, //Codigo Sap Sucursal
+                            "U_SYP_TPOIMP"      =>   "01"
+                        ]
+                    ]
+                ]
+            ];
+
+            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
