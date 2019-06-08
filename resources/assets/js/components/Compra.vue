@@ -3699,12 +3699,13 @@
 
                     me.loadingProgressBar("INTEGRANDO FACTURA DE PROVEEDOR CON SAP BUSINESS ONE...");
 
-                    //==============================================================
-                    //================== REGISTRO ARTICULO EN SAP ===============
+                    //=======================================================================
+                    //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
                     var sapUrl = me.ruta + '/compra/SapSetFacturaProveedorCompra';
                     axios.post(sapUrl, {
                         'cCardCode'     : objCompra.cCardCode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
+                        'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
                         'data'          : me.arraySapCompra
                     }).then(response => {
                         me.arraySapRespuesta= [];
