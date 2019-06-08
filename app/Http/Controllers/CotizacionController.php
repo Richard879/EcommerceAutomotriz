@@ -658,7 +658,7 @@ class CotizacionController extends Controller
             $feed   =   file_get_contents($arrayDetalleDocs[0]->cFichaImageUrl);
             $xml    =   simplexml_load_string($feed,'SimpleXMLElement', LIBXML_NOWARNING);
             // $xml    =   simplexml_load_file($contents);
-            $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="0" style="margin-left:.2rem; font-size:10px;width:700px;">';
+            $tabla='<table  border="1" align="center" cellspacing="0" cellpadding="1" style="padding-left:2rem; margin-left:2rem; font-size:10px;width:700px;">';
             $fila=0;
             $j=0;
 
@@ -691,7 +691,14 @@ class CotizacionController extends Controller
                                     //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox6']); echo "</pre>";
                                     //echo "<pre>"; print_r($art_detalle2['@attributes']['textbox14']); echo "</pre>";
                                     $tabla.='<tr><td align="left">'.utf8_decode($art_detalle2['@attributes']['textbox6']).'</td>';
-                                    $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+
+
+                                    if(isset($art_detalle2['@attributes']['textbox14'])) {
+                                        $tabla.='<td>'.utf8_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+                                    } else {
+                                        $tabla.='<td>'.utf8_decode('').'</td></tr>';
+                                    }
+
                                     $fila++;
                                 }
                                 unset($art);
