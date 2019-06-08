@@ -4509,6 +4509,11 @@
                 if(this.fillSucursal.nidsucursal == 0 || !this.fillSucursal.nidsucursal){
                     this.mensajeError.push('Debes seleccionar una Sucursal');
                 };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                
                 return this.error;
             },
             // =============================================
