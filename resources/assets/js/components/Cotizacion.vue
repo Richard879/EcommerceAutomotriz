@@ -4298,8 +4298,8 @@
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion' :   nIdCabeCoti
                 }, config).then(response => {
-                    //Create a Blob from the PDF Stream
-                    // console.log(response.data);
+                    console.log(response.data);
+                    // Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],
                         // {type: 'text/html'}
@@ -4309,7 +4309,7 @@
                     const fileURL = URL.createObjectURL(file);
                     //Abre la URL en una nueva Ventana
                     window.open(fileURL);
-                    this.obtenerFichaPDF(nIdCabeCoti);
+                    // this.obtenerFichaPDF(nIdCabeCoti);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    {{-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
     <title>Cotización {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }} </title>
     <style type="text/css">
         @page {
@@ -129,7 +130,6 @@
             </tr>-->
         </table>
 
-
         <br/>
 
         <div class="invoice">
@@ -159,6 +159,9 @@
                     </tr>
                 </table>
             </div>
+
+            {{-- Ficha Tecnica --}}
+            {!! $tabla !!}
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
