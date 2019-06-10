@@ -3000,7 +3000,7 @@
                         this.fillNuevoVehiculo.cnroasiento          =   (response.data[0]['nNroAsientos'] == 0) ? '' : response.data[0]['nNroAsientos'];
                         this.fillNuevoVehiculo.faltura              =   response.data[0]['fAltura'];
                         this.fillNuevoVehiculo.flongitud            =   response.data[0]['fLongitud'];
-                        this.fillNuevoVehiculo.facncho              =   response.data[0]['fAncho'];
+                        this.fillNuevoVehiculo.fancho               =   response.data[0]['fAncho'];
                     }
 
                 }).catch(error => {

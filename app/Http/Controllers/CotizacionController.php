@@ -696,9 +696,9 @@ class CotizacionController extends Controller
 
                                     //Verificar que la propiedad exista
                                     if(isset($art_detalle2['@attributes']['textbox14'])) {
-                                        $tabla.='<td>'.html_entity_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
+                                        $tabla.='<td align="center">'.html_entity_decode($art_detalle2['@attributes']['textbox14']).'</td></tr>';
                                     } else {
-                                        $tabla.='<td>'.html_entity_decode('').'</td></tr>';
+                                        $tabla.='<td align="center">'.html_entity_decode('').'</td></tr>';
                                     }
 
                                     $fila++;
