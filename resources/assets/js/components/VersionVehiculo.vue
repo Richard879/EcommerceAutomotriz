@@ -47,7 +47,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Clase</label>
@@ -78,7 +78,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
@@ -282,7 +282,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Clase</label>
@@ -313,7 +313,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
@@ -901,7 +901,7 @@
             // ================================
             // METODOS SUBTAB LISTAR VERSIONES
             // ================================
-            llenarComboClase(){
+            /*llenarComboClase(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
                 axios.get(url, {
@@ -938,7 +938,7 @@
                         }
                     }
                 });
-            },
+            },*/
             llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
 
@@ -1602,8 +1602,8 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
-                                this.llenarComboClase();
-                                this.llenarComboSubClase();
+                                //this.llenarComboClase();
+                                //this.llenarComboSubClase();
                                 this.llenarComboLinea();
                                 this.llenarComboMarca();
                                 this.llenarComboModelo();
@@ -1617,8 +1617,8 @@
                                 this.accion = 2;
                                 this.formVersion.nidproveedor = data['nIdProveedor'];
                                 this.formVersion.cproveedornombre = data['cProveedorNombre'];
-                                this.llenarComboClase();
-                                this.llenarComboSubClase();
+                                //this.llenarComboClase();
+                                //this.llenarComboSubClase();
                                 this.llenarComboLinea();
                                 this.formVersion.nidclase = data['nIdClase'];
                                 this.formVersion.nidsubclase = data['nIdSubClase'];
@@ -1660,8 +1660,8 @@
             }
         },
         mounted(){
-            this.llenarComboClase();
-            this.llenarComboSubClase();
+            //this.llenarComboClase();
+            //this.llenarComboSubClase();
             this.llenarComboLinea();
             this.llenarComboMarca();
             this.llenarComboModelo();
