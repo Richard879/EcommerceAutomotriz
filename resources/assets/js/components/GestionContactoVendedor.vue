@@ -3135,19 +3135,19 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcontacto' : this.formNuevoContacto.nidcontacto,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcontacto'   : this.formNuevoContacto.nidcontacto,
                         'page' : page
                     }
                 }).then(response => {
                     this.arraySegReferenciavehiculo = response.data.arraySegReferenciavehiculo.data;
-                    this.pagination.current_page =  response.data.arraySegReferenciavehiculo.current_page;
-                    this.pagination.total = response.data.arraySegReferenciavehiculo.total;
-                    this.pagination.per_page    = response.data.arraySegReferenciavehiculo.per_page;
-                    this.pagination.last_page   = response.data.arraySegReferenciavehiculo.last_page;
-                    this.pagination.from        = response.data.arraySegReferenciavehiculo.from;
-                    this.pagination.to           = response.data.arraySegReferenciavehiculo.to;
+                    this.pagination.current_page    = response.data.arraySegReferenciavehiculo.current_page;
+                    this.pagination.total           = response.data.arraySegReferenciavehiculo.total;
+                    this.pagination.per_page        = response.data.arraySegReferenciavehiculo.per_page;
+                    this.pagination.last_page       = response.data.arraySegReferenciavehiculo.last_page;
+                    this.pagination.from            = response.data.arraySegReferenciavehiculo.from;
+                    this.pagination.to              = response.data.arraySegReferenciavehiculo.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -4061,8 +4061,8 @@
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            this.fillMisContactos.nidcontacto = objReferencia.nIdContacto;
-                            this.listarReferenciasVehiculo(1);
+                            //this.fillMisContactos.nidcontacto = objReferencia.nIdContacto;
+                            this.listarReferenciaVehiculoByContacto(1);
                         })
                         .catch(function (error) {
                             console.log(error);
