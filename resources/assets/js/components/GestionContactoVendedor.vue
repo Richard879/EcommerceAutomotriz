@@ -697,7 +697,7 @@
                                                                                                         <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                                                             <el-tooltip class="item" effect="dark">
                                                                                                                 <div slot="content">Desactivar {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
-                                                                                                                <i @click="desactivar(r.nIdReferenciaVehiculoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                                <i @click="desactivarReferencia(r)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                                                             </el-tooltip>
                                                                                                         </template>
                                                                                                     </td>
@@ -4040,6 +4040,43 @@
             },
             eliminarItemReferenciaVehiculo(index){
                 this.$delete(this.arrayReferenciaVehiculo, index);
+            },
+            desactivarReferencia(objReferencia){
+                swal({
+                    title: 'Estas seguro de desactivar esta referencia?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/gescontacto/desactivaReferencia';
+                        axios.put(url, {
+                            'nIdReferenciaVehiculoContacto' : parseInt(objReferencia.nIdReferenciaVehiculoContacto),
+                            'nIdContacto'                   : parseInt(objReferencia.nIdContacto)
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.fillMisContactos.nidcontacto = objReferencia.nIdContacto;
+                            this.listarReferenciasVehiculo(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             // =============  TAB OTROS INTERESES ======================
             validarTab44(){
