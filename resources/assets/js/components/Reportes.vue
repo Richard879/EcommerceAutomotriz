@@ -2179,11 +2179,9 @@
                                                                                 <th>EMPRESA&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
+                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="expotarCotizaciones()"></i>
                                                                                     </el-tooltip></th>
                                                                                 <th>SUCURSAL</th>
-                                                                                <th>COD PEDIDO</th>
-                                                                                <th>NUM PEDIDO</th>
                                                                                 <th>COD COTIZACIÓN</th>
                                                                                 <th>NUM COTIZACIÓN</th>
                                                                                 <th>FECHA COTIZACIÓN</th>
@@ -2208,8 +2206,6 @@
                                                                             <tr v-for="(cotizacion, index) in arrayCotizaciones" :key="index">
                                                                                 <td v-text="cotizacion.EMPRESA"></td>
                                                                                 <td v-text="cotizacion.SUCURSAL"></td>
-                                                                                <td v-text="cotizacion.COD_PEDIDO"></td>
-                                                                                <td v-text="cotizacion.NUM_PEDIDO"></td>
                                                                                 <td v-text="cotizacion.COD_COTIZACION"></td>
                                                                                 <td v-text="cotizacion.NUM_COTIZACION"></td>
                                                                                 <td v-text="cotizacion.FECHA_COTIZACION"></td>
@@ -2801,6 +2797,36 @@
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Pedidos con Deposito'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            expotarCotizaciones(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarCotizacionesByFitro';
+                axios.get(url, {
+                    params: {
+                        'nidsucursal'           :   this.formFiltro.nidsucursal,
+                        'nidvendedor'           :   this.formFiltro.nidvendedor,
+                        'nidcronograma'         :   this.formFiltro.nidcronograma,
+                        'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
+                        'opcion'        :   1,
+                    }
+                }).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Cotizaciones'
                     XLSX.utils.book_append_sheet(workbook, data, filename)
                     XLSX.writeFile(workbook, `${filename}.xlsx`)
                     $("#myBar").hide();
@@ -3452,6 +3478,7 @@
                 this.arrayContactosLibres           =   [];
                 this.arrayDistribucionDesc          =   [];
                 this.arrayPedidoDeposito            =   [];
+                this.arrayCotizaciones              =   [];
             },
             cerrarModal(){
                 this.modal = 0
