@@ -4061,7 +4061,6 @@
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            //this.fillMisContactos.nidcontacto = objReferencia.nIdContacto;
                             this.listarReferenciaVehiculoByContacto(1);
                         })
                         .catch(function (error) {
