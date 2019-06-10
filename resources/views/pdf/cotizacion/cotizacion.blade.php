@@ -134,7 +134,7 @@
 
         <div class="invoice">
             <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
-            <br><br>
+            <br>
 
             <div class="center">
                 <img src="{{ $arrayDetalleDocs[0]->cFotoImageUrl }}" alt="{{ $arrayDetalleDocs[0]->cNombreComercial }}" width="280" height="175" style="margin-left: 8rem">

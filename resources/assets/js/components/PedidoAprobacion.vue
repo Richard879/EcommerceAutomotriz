@@ -4039,14 +4039,33 @@
                         switch(accion){
                             case 'direcciones':
                             {
+                                if(this.validaAprobacionPedido(data)){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
                                 this.formSap.cnumerovin = data['cNumeroVin'];
                                 this.formSap.ndocentry = data['nDocEntry'];
-                                this.obtenerDireccionesPorContacto(data);
-                                break;
-                            }
+                                this.obtenerDireccionesPorContacto(data);                                
+                            }break;
                         }
                     }
                 }
+            },
+            validaAprobacionPedido(data){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(data.nIdVehiculoPlaca == 0 || !data.nIdVehiculoPlaca){
+                    this.mensajeError.push('Debes completar Datos del Vehículo');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+
+                return this.error;
             },
             cerrarModal(){
                 this.modal = 0;
