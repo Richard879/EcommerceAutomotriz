@@ -747,4 +747,16 @@ class GestionContactoController extends Controller
 
         return response()->json($arrayContacto);
     }
+
+    public function desactivaReferencia(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objSeguimiento = DB::select('exec [usp_Contacto_DesactivaReferencia] ?, ?, ?',
+                                                    [   $request->nIdReferenciaVehiculoContacto,
+                                                        $request->nIdContacto,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($objSeguimiento);
+    }
 }
