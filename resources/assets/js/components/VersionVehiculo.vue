@@ -919,7 +919,7 @@
                         }
                     }
                 });
-            },
+            },*/
             llenarComboSubClase(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -938,7 +938,7 @@
                         }
                     }
                 });
-            },*/
+            },
             llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
 
