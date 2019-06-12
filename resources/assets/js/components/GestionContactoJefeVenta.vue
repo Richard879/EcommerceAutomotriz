@@ -331,7 +331,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdAsignacionContactoVendedor">
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto + ' ' + c.nIdVendedor">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cContacto }}</td>
                                                                                     <td>{{ c.cPerDocumento }}</td>
