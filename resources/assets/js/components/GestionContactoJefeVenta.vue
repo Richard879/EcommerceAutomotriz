@@ -58,7 +58,7 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -70,7 +70,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -109,7 +109,7 @@
                                                             <template v-if="arrayContacto.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
-                                                                        <template v-if="fillMisContactos.ntipopersona == 1">
+                                                                        <!--<template v-if="fillMisContactos.ntipopersona == 1">-->
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
@@ -129,12 +129,8 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <i @click="activarTab3(c, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
@@ -142,17 +138,17 @@
                                                                                     </td>
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cPerApellidos"></td>
+                                                                                    <td v-text="c.cContacto"></td>
                                                                                     <td v-text="c.cNombre"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.cPerDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cVendedor"></td>
                                                                                 </tr>
                                                                             </tbody>
-                                                                        </template>
-                                                                        <template v-else>
+                                                                        <!--</template>-->
+                                                                        <!--template v-else>
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Acciones</th>
@@ -169,14 +165,6 @@
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cRazonSocial }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
@@ -192,7 +180,7 @@
                                                                                     <td v-text="c.cVendedor"></td>
                                                                                 </tr>
                                                                             </tbody>
-                                                                        </template>
+                                                                        </template>-->
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-sm-12">
@@ -3746,15 +3734,15 @@
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
-            activarTab3(nIdContacto, nIdPersona, nTipoPersona){
+            activarTab3(objPersona, nTipoPersona){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab4').removeClass('nav-link disabled');
                 $('#Tab4').addClass("nav-link active");
                 $('#TabMisContactos').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
-                this.formNuevoContacto.nidcontacto = nIdContacto;
-                this.formSegDatosContacto.nidpersona = nIdPersona;
+                this.formNuevoContacto.nidcontacto = objPersona.nIdContacto;
+                this.formSegDatosContacto.nidpersona = objPersona.nIdPersona;
                 this.TabSegDatosContacto();
                 this.cargarTabSegDatosContacto(nTipoPersona);
             },
