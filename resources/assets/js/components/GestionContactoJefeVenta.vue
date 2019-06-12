@@ -128,11 +128,11 @@
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="activarTab3(c, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <div slot="content">Seguimiento {{ c.cContacto }}</div>
+                                                                                            <i @click="activarTab3(c)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </td>
@@ -3734,7 +3734,7 @@
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
-            activarTab3(objPersona, nTipoPersona){
+            activarTab3(objPersona){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab4').removeClass('nav-link disabled');
@@ -3744,7 +3744,7 @@
                 this.formNuevoContacto.nidcontacto = objPersona.nIdContacto;
                 this.formSegDatosContacto.nidpersona = objPersona.nIdPersona;
                 this.TabSegDatosContacto();
-                this.cargarTabSegDatosContacto(nTipoPersona);
+                this.cargarTabSegDatosContacto(objPersona.nTipoPersona);
             },
             cargarTabSegDatosContacto(nTipoPersona){
                 if(nTipoPersona == "1")
@@ -5507,21 +5507,39 @@
                         switch(accion){
                             case 'editar':
                             {
-                                this.fillEditarContacto.cFlagOp = 1;
-                                this.accionmodal=7;
-                                this.modal = 1;
-                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
-                                //Datos Personales
-                                this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
-                                this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
-                                this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
-                                this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
-                                this.fillEditarContacto.cnombre             =   data.cNombre;
-                                this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
-                                //Datos de Contacto
-                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
-                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                if(objPersona.nTipoPersona==1)
+                                {
+                                    this.fillEditarContacto.cFlagOp = 1;
+                                    this.accionmodal=7;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
+                                    this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
+                                    this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
+                                    this.fillEditarContacto.cnombre             =   data.cNombre;
+                                    this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                }
+                                else{
+                                    this.fillEditarContacto.cFlagOp = 2;
+                                    this.accionmodal=7;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
+                                    this.fillEditarContacto.cnombre             =   data.cRazonSocial;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                }
+                                
                                 break;
                             }
                             case 'editarJ':
