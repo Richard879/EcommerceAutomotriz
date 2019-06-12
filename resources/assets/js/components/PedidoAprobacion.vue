@@ -2712,7 +2712,7 @@
                         'nIdContacto'   :   this.fillDirecciones.nIdContacto
                     }
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.arrayContacto = response.data;
                     this.SapRegistrarNuevoContacto();
                 }).catch(error => {
@@ -2731,9 +2731,9 @@
 
                 var url = this.ruta + '/gescontacto/SapSetContacto';
                 axios.post(url, {
-                    'nIdPersona': this.fillDirecciones.nIdPersona,
-                    'cTipoPersona': this.fillDirecciones.cTipoPersona,
-                    'contacto': this.arrayContacto[0]
+                    'nIdPersona'    : this.fillDirecciones.nIdPersona,
+                    'cTipoPersona'  : this.fillDirecciones.cTipoPersona,
+                    'contacto'      : this.arrayContacto[0]
                 }).then(response => {
                     // console.log(response.data);
 
@@ -4047,7 +4047,7 @@
 
                                 this.formSap.cnumerovin = data['cNumeroVin'];
                                 this.formSap.ndocentry = data['nDocEntry'];
-                                this.obtenerDireccionesPorContacto(data);                                
+                                this.obtenerDireccionesPorContacto(data);
                             }break;
                         }
                     }

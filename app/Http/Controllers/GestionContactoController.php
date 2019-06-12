@@ -13,10 +13,15 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPerNaturalContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $request->nIdTipoDocumento,
+        $cSegundoNombre      = ($request->cSegundoNombre == NULL) ? ($request->cSegundoNombre = ' ') : $request->cSegundoNombre;
+
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPerNaturalContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $request->nIdTipoDocumento,
                                                                 $request->cNumeroDocumento,
-                                                                $request->cNombre,
+                                                                $request->cNombreCompleto,
+                                                                $request->cPrimerNombre,
+                                                                $cSegundoNombre,
                                                                 $request->cApellidoPaterno,
                                                                 $request->cApellidoMaterno,
                                                                 $request->cUbigeo,
@@ -74,12 +79,12 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa     = $request->nidempresa;
-        $nIdProveedor   = $request->nidproveedor;
-        $nIdUsuario     = Auth::user()->id;
-        $variable   = $request->opcion;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdProveedor   =   $request->nidproveedor;
+        $nIdUsuario     =   Auth::user()->id;
+        $variable       =   $request->opcion;
 
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $variable       =   ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Contacto_GetLineasByUsuario] ?, ?, ?',
                                             [   $nIdEmpresa,
@@ -97,13 +102,13 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdLinea     = $request->nidlinea;
-        $nIdUsuario   = Auth::user()->id;
-        $variable   = $request->opcion;
+        $nIdLinea   =   $request->nidlinea;
+        $nIdUsuario =   Auth::user()->id;
+        $variable   =   $request->opcion;
 
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $variable   =   ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayMarca = DB::select('exec [usp_Contacto_GetMarcasByLinea] ?, ?',
+        $arrayMarca =   DB::select('exec [usp_Contacto_GetMarcasByLinea] ?, ?',
                                             [   $nIdLinea,
                                                 $nIdUsuario
                                             ]);
@@ -118,14 +123,14 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdLinea = $request->nidlinea;
-        $nIdMarca = $request->nidmarca;
-        $nIdUsuario   = Auth::user()->id;
-        $variable   = $request->opcion;
+        $nIdLinea   =   $request->nidlinea;
+        $nIdMarca   =   $request->nidmarca;
+        $nIdUsuario =   Auth::user()->id;
+        $variable   =   $request->opcion;
 
-        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdLinea   = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca   = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $variable   = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayModelo = DB::select('exec [usp_Contacto_GetModelosByMarca] ?, ?, ?',
                                             [   $nIdLinea,
@@ -279,14 +284,15 @@ class GestionContactoController extends Controller
         $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
         $arrayContactoCarteraMes = DB::select('exec usp_Contacto_GetContactoCarteraMes ?, ?, ?, ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
-                                                                                $nIdSucursal,
-                                                                                $nIdCronograma,
-                                                                                $nTipoPersona,
-                                                                                $cNroDocumento,
-                                                                                $cFiltroDescripcion,
-                                                                                Auth::user()->id
-                                                                                ));
+                                                                        [
+                                                                            $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $nIdCronograma,
+                                                                            $nTipoPersona,
+                                                                            $cNroDocumento,
+                                                                            $cFiltroDescripcion,
+                                                                            Auth::user()->id
+                                                                        ]);
 
         $arrayContactoCarteraMes = ParametroController::arrayPaginator($arrayContactoCarteraMes, $request);
         return ['arrayContactoCarteraMes'=>$arrayContactoCarteraMes];
@@ -296,8 +302,8 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdContacto = $request->nidcontacto;
-        $nIdPersonaNatural = $request->nidpersonanatural;
+        $nIdContacto        =   $request->nidcontacto;
+        $nIdPersonaNatural  =   $request->nidpersonanatural;
 
         $contacto = DB::select('exec usp_Contacto_GetContactoNaturalById ?, ?',
                                                                         array(  $nIdContacto,
@@ -311,8 +317,8 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdContacto = $request->nidcontacto;
-        $nIdPersonaJuridico = $request->nidpersonajuridico;
+        $nIdContacto        =   $request->nidcontacto;
+        $nIdPersonaJuridico =   $request->nidpersonajuridico;
 
         $contacto = DB::select('exec usp_Contacto_GetContactoJuridicoById ?, ?',
                                                                         array(  $nIdContacto,
@@ -326,10 +332,10 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdContacto = $request->nidcontacto;
-        $nIdVendedor = $request->nidvendedor;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdContacto    =   $request->nidcontacto;
+        $nIdVendedor    =   $request->nidvendedor;
 
         $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
 
@@ -383,13 +389,13 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $nTipoContacto = $request->ntipocontacto;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
+        $nTipoContacto      =   $request->ntipocontacto;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
         $arrayContactoLibre = DB::select('exec [usp_Contacto_GetListContactosLibres] ?, ?, ?, ?, ?',
                                                                     [   $nTipoPersona,
@@ -475,15 +481,15 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdCronograma = $request->nidcronograma;
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCronograma      =   $request->nidcronograma;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
 
-        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
         $arrayContacto = DB::select('exec usp_Contacto_GetListContactoByJFV ?, ?, ?, ?, ?, ?, ?',
                                                                     array(  $nIdEmpresa,
@@ -503,18 +509,18 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa         = $request->nidempresa;
-        $nIdSucursal        = $request->nidsucursal;
-        $nIdCronograma      = $request->nidcronograma;
-        $nTipoPersona       = $request->ntipopersona;
-        $cNroDocumento      = $request->cnrodocumento;
-        $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $nIdVendedor        = $request->nidvendedor;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCronograma      =   $request->nidcronograma;
+        $nTipoPersona       =   $request->ntipopersona;
+        $cNroDocumento      =   $request->cnrodocumento;
+        $cFiltroDescripcion =   $request->cfiltrodescripcion;
+        $nIdVendedor        =   $request->nidvendedor;
 
-        $cNroDocumento      = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
-        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
-        $nIdVendedor        = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
-        $nTipoPersona       = ($nTipoPersona == NULL) ? ($nTipoPersona = 1) : $nTipoPersona;
+        $cNroDocumento      =   ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $nIdVendedor        =   ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+        $nTipoPersona       =   ($nTipoPersona == NULL) ? ($nTipoPersona = 1) : $nTipoPersona;
 
         $arrayContactosPorVendedor = DB::select('exec [usp_Contacto_GetListContactoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $nIdEmpresa,
@@ -569,9 +575,9 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdContacto = $request->nidcontacto;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdContacto    =   $request->nidcontacto;
 
         $arraySegReferenciavehiculo = DB::select('exec usp_Contacto_GetRefVehiculoByContacto_JFV ?, ?, ?',
                                                                         array(  $nIdEmpresa,
@@ -625,9 +631,9 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa                     = $request->nidempresa;
-        $nIdSucursal                    = $request->nidsucursal;
-        $nIdAsignacionContactoVendedor  = $request->nidasignacioncontactovendedor;
+        $nIdEmpresa                     =   $request->nidempresa;
+        $nIdSucursal                    =   $request->nidsucursal;
+        $nIdAsignacionContactoVendedor  =   $request->nidasignacioncontactovendedor;
 
         $arrayEstadoSeguimiento = DB::select('exec [usp_Contacto_GetEstadoAsignacionSeguimiento] ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -697,23 +703,27 @@ class GestionContactoController extends Controller
         //Datos Personales
         $cNumeroDocumento   =   $request->cNumeroDocumento;
         $cNombre            =   $request->cNombre;
+        $cPrimerNombre      =   $request->cPrimerNombre;
+        $cSegundoNombre     =   $request->cSegundoNombre;
         $cApellidoPaterno   =   $request->cApellidoPaterno;
         $cApellidoMaterno   =   $request->cApellidoMaterno;
         $dFechaNacimiento   =   $request->dFechaNacimiento;
         //Datos de Contacto
-        $cDireccion                 =   $request->cDireccion;
-        $cEmail                     =   $request->cEmail;
-        $nTelefonoMovil             =   $request->nTelefonoMovil;
-        $cUbigeo                    =   $request->cUbigeo;
-        $nIdEstadoCivil             =   $request->nIdEstadoCivil;
-        $nTelefonoMovilAlternativo  =   $request->nTelefonoMovilAlternativo;
-        $cTelefonoFijo              =   $request->cTelefonoFijo;
+        $cDireccion         =   $request->cDireccion;
+        $cEmail             =   $request->cEmail;
+        $nTelefonoMovil     =   $request->nTelefonoMovil;
+        $cUbigeo            =   $request->cUbigeo;
+        $nIdEstadoCivil     =   $request->nIdEstadoCivil;
+        $nTelfMovilAlter    =   $request->nTelefonoMovilAlternativo;
+        $cTelefonoFijo      =   $request->cTelefonoFijo;
 
         $nIdContacto        =   ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
         $nIdPernatural      =   ($nIdPernatural == NULL) ? ($nIdPernatural = 0) : $nIdPernatural;
         $nIdPerjudirica     =   ($nIdPerjudirica == NULL) ? ($nIdPerjudirica = 0) : $nIdPerjudirica;
         $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $cNombre            =   ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
+        $cPrimerNombre      =   ($cPrimerNombre == NULL) ? ($cPrimerNombre = '') : $cPrimerNombre;
+        $cSegundoNombre     =   ($cSegundoNombre == NULL) ? ($cSegundoNombre = '') : $cSegundoNombre;
         $cApellidoPaterno   =   ($cApellidoPaterno == NULL) ? ($cApellidoPaterno = '') : $cApellidoPaterno;
         $cApellidoMaterno   =   ($cApellidoMaterno == NULL) ? ($cApellidoMaterno = '') : $cApellidoMaterno;
         $dFechaNacimiento   =   ($dFechaNacimiento == NULL) ? ($dFechaNacimiento = '') : $dFechaNacimiento;
@@ -722,16 +732,19 @@ class GestionContactoController extends Controller
         $nTelefonoMovil     =   ($nTelefonoMovil == NULL) ? ($nTelefonoMovil = '') : $nTelefonoMovil;
         $cUbigeo            =   ($cUbigeo == NULL) ? ($cUbigeo = '') : $cUbigeo;
         $nIdEstadoCivil     =   ($nIdEstadoCivil == NULL) ? ($nIdEstadoCivil = 0) : $nIdEstadoCivil;
-        $nTelefonoMovilAlternativo     =   ($nTelefonoMovilAlternativo == NULL) ? ($nTelefonoMovilAlternativo = 0) : $nTelefonoMovilAlternativo;
+        $nTelfMovilAlter    =   ($nTelfMovilAlter == NULL) ? ($nTelfMovilAlter = 0) : $nTelfMovilAlter;
         $cTelefonoFijo      =   ($cTelefonoFijo == NULL) ? ($cTelefonoFijo = '') : $cTelefonoFijo;
 
-        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $cFlagOp,
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPatchContactoPerNatural] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $cFlagOp,
                                                                 $nIdContacto,
                                                                 $nIdPernatural,
                                                                 $nIdPerjudirica,
                                                                 $cNumeroDocumento,
                                                                 $cNombre,
+                                                                $cPrimerNombre,
+                                                                $cSegundoNombre,
                                                                 $cApellidoPaterno,
                                                                 $cApellidoMaterno,
                                                                 $dFechaNacimiento,
@@ -740,7 +753,7 @@ class GestionContactoController extends Controller
                                                                 $nTelefonoMovil,
                                                                 $cUbigeo,
                                                                 $nIdEstadoCivil,
-                                                                $nTelefonoMovilAlternativo,
+                                                                $nTelfMovilAlter,
                                                                 $cTelefonoFijo,
                                                                 Auth::user()->id
                                                             ]);

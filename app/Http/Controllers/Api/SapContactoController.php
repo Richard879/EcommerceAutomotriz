@@ -76,18 +76,20 @@ class SapContactoController extends Controller
         if ($tipoPersona == 'N') {
             $U_SYP_BPAP =   $request->contacto['cApellidoPaterno'];
             $U_SYP_BPAM =   $request->contacto['cApellidoMaterno'];
-            $U_SYP_BPNO =   $request->contacto['cNombre'];
-            //explode — Divide un string en varios string separados por un criterio
-            $arrayNombres = explode(" ", $U_SYP_BPNO);
-            //Determina si existe mas de un nombre
-            $arrayNombresLength = sizeof($arrayNombres);
-            if($arrayNombresLength > 1) {
-                $U_SYP_BPN2 =   $arrayNombres[1];
-            } else {
-                $U_SYP_BPN2 =   " ";
-            }
+            $U_SYP_BPNO =   $request->contacto['cPrimerNombre'];
+            $U_SYP_BPN2 =   $request->contacto['cSegundoNombre'];
             $U_SYP_BPTP =   "TPN";
             $U_SYP_BPTD =   "1";
+
+            //explode — Divide un string en varios string separados por un criterio
+            // $arrayNombres = explode(" ", $U_SYP_BPNO);
+            // //Determina si existe mas de un nombre
+            // $arrayNombresLength = sizeof($arrayNombres);
+            // if($arrayNombresLength > 1) {
+            //     $U_SYP_BPN2 =   $arrayNombres[1];
+            // } else {
+            //     $U_SYP_BPN2 =   " ";
+            // }
 
             $json = [
                 'json' => [

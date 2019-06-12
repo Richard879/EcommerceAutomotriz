@@ -112,31 +112,53 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombresS" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombreS" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <el-date-picker
+                                                                                                    v-model="formNuevoContacto.dfecnacimiento"
+                                                                                                    type="date"
+                                                                                                    value-format="yyyy-MM-dd"
+                                                                                                    format="dd/MM/yyyy"
+                                                                                                    placeholder="dd/mm/aaaa">
+                                                                                                </el-date-picker>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                            <template v-else>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-date-picker
-                                                                                                v-model="formNuevoContacto.dfecnacimiento"
-                                                                                                type="date"
-                                                                                                value-format="yyyy-MM-dd"
-                                                                                                format="dd/MM/yyyy"
-                                                                                                placeholder="dd/mm/aaaa">
-                                                                                            </el-date-picker>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            </template>
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-9 offset-sm-4">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
@@ -1021,8 +1043,10 @@
                     capepaterno: '',
                     capematerno: '',
                     cnombre: '',
+                    cnombreS: '',
                     dfecnacimiento: '',
-                    lblcnombres: '* Nombres',
+                    lblcnombres: '* Primer Nombre',
+                    lblcnombresS: '* Segundo Nombre',
                     //Variables de Datos de contacto
                     /*niddepartamento: 0,
                     nidprovincia: 0,
@@ -1236,15 +1260,22 @@
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').removeClass('in active show');
             },
+            limpiarDatosPersonales(){
+                this.formNuevoContacto.cnrodocumento = '';
+                this.formNuevoContacto.capepaterno = '';
+                this.formNuevoContacto.capematerno = '';
+                this.formNuevoContacto.cnombre = '';
+                this.formNuevoContacto.cnombreS = '';
+                this.formNuevoContacto.dfecnacimiento = '';
+            },
             cambiarTipoPersona(){
+                this.limpiarDatosPersonales();
                 this.llenarComboTpoDocumento();
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    this.formNuevoContacto.lblcnombres = '* Nombres',
+                if(this.formNuevoContacto.ntipopersona == 1) {
+                    this.formNuevoContacto.lblcnombres  = '* Primer Nombre',
+                    this.formNuevoContacto.lblcnombresS = '* Segundo Nombre',
                     this.vistaDatosPersonaNatural = 1
-                }
-                else
-                {
+                } else {
                     this.formNuevoContacto.lblcnombres = '* Razón Social',
                     this.vistaDatosPersonaNatural = 0
                 }

@@ -119,19 +119,19 @@
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
                                                                                             <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
@@ -171,19 +171,19 @@
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
                                                                                             <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
@@ -325,23 +325,23 @@
                                                                                 <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Seguimiento  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Seguimiento  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
                                                                                             <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>-->
                                                                                     </td>
@@ -373,23 +373,23 @@
                                                                                 <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Seguimiento  {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Seguimiento  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
                                                                                             <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>-->
                                                                                     </td>
@@ -1009,12 +1009,15 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                            <el-select  v-model="formNuevoContacto.ntpodocumento"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE" >
                                                                                                 <el-option
-                                                                                                v-for="item in arrayTipoDocumento"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayTipoDocumento"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1048,31 +1051,54 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombresS" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombreS" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <el-date-picker
+                                                                                                    v-model="formNuevoContacto.dfecnacimiento"
+                                                                                                    type="date"
+                                                                                                    value-format="yyyy-MM-dd"
+                                                                                                    format="dd/MM/yyyy"
+                                                                                                    placeholder="dd/mm/aaaa">
+                                                                                                </el-date-picker>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                            <template v-else>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-date-picker
-                                                                                                v-model="formNuevoContacto.dfecnacimiento"
-                                                                                                type="date"
-                                                                                                value-format="yyyy-MM-dd"
-                                                                                                format="dd/MM/yyyy"
-                                                                                                placeholder="dd/mm/aaaa">
-                                                                                            </el-date-picker>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            </template>
+
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-9 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
@@ -2146,7 +2172,16 @@
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
-                                            <template v-if="cFlagOp = 1">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <template v-if="fillEditarContacto.cFlagOp == 1">
                                                 <vs-divider border-style="solid" color="dark">
                                                     Datos Personales
                                                 </vs-divider>
@@ -2177,15 +2212,28 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                            <label class="col-sm-4 form-control-label">* Primer Nombre</label>
                                                             <div class="col-sm-8">
                                                                 <input  type="text"
-                                                                        v-model="fillEditarContacto.cnombre"
+                                                                        v-model="fillEditarContacto.cprimernombre"
                                                                         @keyup.enter="actualizarContacto()"
                                                                         class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Segundo Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.csegundonombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
@@ -2197,8 +2245,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
@@ -2337,7 +2383,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                            <label class="col-sm-4 form-control-label">Ubigeo</label>
                                                             <div class="col-sm-8">
                                                                 <el-select v-model="fillEditarContacto.cubigeo" filterable clearable placeholder="SELECCIONE">
                                                                     <el-option
@@ -2455,6 +2501,8 @@
                     capellidopaterno: '',
                     capellidomaterno: '',
                     cnombre: '',
+                    cprimernombre: '',
+                    csegundonombre: '',
                     dfecnacimiento: '',
                     //Datos Contacto
                     cdireccion: '',
@@ -2482,8 +2530,10 @@
                     capepaterno: '',
                     capematerno: '',
                     cnombre: '',
+                    cnombreS: '',
                     dfecnacimiento: '',
-                    lblcnombres: '* Nombres',
+                    lblcnombres: '* Primer Nombre',
+                    lblcnombresS: '* Segundo Nombre',
                     //Variables de Datos de contacto
                     /*niddepartamento: 0,
                     nidprovincia: 0,
@@ -2722,6 +2772,7 @@
             },
             cambiarTipoPersonaMisContactos(){
                 this.arrayContacto = [];
+                this.limpiarModalEditarPersona();
             },
             cambiarPaginaMisContactos(page){
                 this.pagination.current_page=page;
@@ -2838,31 +2889,39 @@
                 });
             },
             actualizarContacto(){
+                if (this.validarUpdContacto()) {
+                    return;
+                }
                 var url = this.ruta + '/gescontacto/SetPatchContactoPerNatural';
                 axios.post(url, {
-                    'cFlagOp'           :   this.cFlagOp,
-                    'nIdContacto'       :   this.fillEditarContacto.nidcontacto,
-                    'nIdPernatural'     :   this.fillEditarContacto.nidpernatural,
-                    'nIdPerjudirica'    :   this.fillEditarContacto.nidperjudirica,
-                    'cNumeroDocumento'  :   String(this.fillEditarContacto.cnrodocumento),
-                    'cNombre'           :   this.fillEditarContacto.cnombre.toUpperCase().toString(),
-                    'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
-                    'cApellidoMaterno'  :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
-                    'cDireccion'        :   this.fillEditarContacto.cdireccion,
-                    'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
-                    'nTelefonoMovil'    :   this.fillEditarContacto.ncelular,
-                    'cUbigeo'           :   this.fillEditarContacto.cubigeo,
-                    'nIdEstadoCivil'    :   this.fillEditarContacto.nestadocivil,
-                    'nTelefonoMovilAlternativo' : this.fillEditarContacto.ncelularalternativo,
-                    'cTelefonoFijo'             : this.fillEditarContacto.ctelefonofijo
+                    'cFlagOp'                   :   this.fillEditarContacto.cFlagOp,
+                    'nIdContacto'               :   this.fillEditarContacto.nidcontacto,
+                    'nIdPernatural'             :   this.fillEditarContacto.nidpernatural,
+                    'nIdPerjudirica'            :   this.fillEditarContacto.nidperjudirica,
+                    'cNumeroDocumento'          :   String(this.fillEditarContacto.cnrodocumento),
+                    'cNombre'                   :   (this.fillEditarContacto.cFlagOp == 1) ? (this.fillEditarContacto.cprimernombre.toUpperCase().toString() + ' ' + this.fillEditarContacto.csegundonombre.toUpperCase().toString()) : this.fillEditarContacto.cnombre.toUpperCase().toString(),
+                    'cPrimerNombre'             :   (!this.fillEditarContacto.cprimernombre) ? '' : this.fillEditarContacto.cprimernombre.toUpperCase().toString(),
+                    'cSegundoNombre'            :   (!this.fillEditarContacto.csegundonombre) ? '' : this.fillEditarContacto.csegundonombre.toUpperCase().toString(),
+                    'cApellidoPaterno'          :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
+                    'cApellidoMaterno'          :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
+                    'dFechaNacimiento'          :   this.fillEditarContacto.dfecnacimiento,
+                    'cDireccion'                :   this.fillEditarContacto.cdireccion,
+                    'cEmail'                    :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
+                    'nTelefonoMovil'            :   this.fillEditarContacto.ncelular,
+                    'cUbigeo'                   :   this.fillEditarContacto.cubigeo,
+                    'nIdEstadoCivil'            :   this.fillEditarContacto.nestadocivil,
+                    'nTelefonoMovilAlternativo' :   this.fillEditarContacto.ncelularalternativo,
+                    'cTelefonoFijo'             :   this.fillEditarContacto.ctelefonofijo
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
-                        swal('Los Datos de la Persona Natural se Actualizaron Correctamente');
+                        swal(response.data[0].cMensaje);
                         this.tabMisContactos();
                         this.cerrarModal();
                         this.limpiarModalEditarPersona();
+                        this.arrayContacto =   [];
+                        this.arrayContactoCarteraMes = [];
                     }else{
-                        swal('La Persona que quiere actualizar ya Existe');
+                        swal(response.data[0].cMensaje);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2874,20 +2933,69 @@
                     }
                 });
             },
+            validarUpdContacto(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if (this.fillEditarContacto.cFlagOp == 1) {
+                    if(!this.fillEditarContacto.capellidopaterno){
+                        this.mensajeError.push('Debe ingresar un Apellido Paterno');
+                    }
+                    if(!this.fillEditarContacto.capellidomaterno){
+                        this.mensajeError.push('Debe ingresar un Apellido Materno');
+                    }
+                    if(!this.fillEditarContacto.cprimernombre){
+                        this.mensajeError.push('Debe ingresar el Primer Nombre');
+                    }
+                    if(!this.fillEditarContacto.cnrodocumento){
+                        this.mensajeError.push('Debe ingresar el número de documento');
+                    }
+                    if(!this.fillEditarContacto.cubigeo){
+                        this.mensajeError.push('Debe Seleccionar un Ubigeo');
+                    }
+                    if(!this.fillEditarContacto.cdireccion){
+                        this.mensajeError.push('Debe ingresar una dirección');
+                    }
+                    if(!this.fillEditarContacto.ncelular){
+                        this.mensajeError.push('Debe ingresar un telefono celular');
+                    }
+                } else {
+                    if(!this.fillEditarContacto.cnombre){
+                        this.mensajeError.push('Debe ingresar la Razón Social');
+                    }
+                    if(!this.fillEditarContacto.cnrodocumento){
+                        this.mensajeError.push('Debe ingresar el número de documento');
+                    }
+                    if(!this.fillEditarContacto.cdireccion){
+                        this.mensajeError.push('Debe ingresar una dirección');
+                    }
+                    if(!this.fillEditarContacto.ncelular){
+                        this.mensajeError.push('Debe ingresar un telefono celular');
+                    }
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             limpiarModalEditarPersona(){
-                this.arrayContactoCarteraMes                = [];
-                this.fillEditarContacto.cFlagOp             = '';
-                this.fillEditarContacto.nidcontacto         = '';
-                this.fillEditarContacto.nidpernatural       = '';
-                this.fillEditarContacto.nidperjudirica      = '';
-                this.fillEditarContacto.cnrodocumento       = '';
-                this.fillEditarContacto.capellidopaterno    = '';
-                this.fillEditarContacto.capellidomaterno    = '';
-                this.fillEditarContacto.cnombre             = '';
-                this.fillEditarContacto.dfecnacimiento      = '';
-                this.fillEditarContacto.cdireccion          = '';
-                this.fillEditarContacto.cmailprincipal      = '';
-                this.fillEditarContacto.ncelular            = '';
+                this.fillEditarContacto.cFlagOp             =   '';
+                this.fillEditarContacto.nidcontacto         =   '';
+                this.fillEditarContacto.nidpernatural       =   '';
+                this.fillEditarContacto.nidperjudirica      =   '';
+                this.fillEditarContacto.cnrodocumento       =   '';
+                this.fillEditarContacto.capellidopaterno    =   '';
+                this.fillEditarContacto.capellidomaterno    =   '';
+                this.fillEditarContacto.cnombre             =   '';
+                this.fillEditarContacto.cprimernombre       =   '';
+                this.fillEditarContacto.csegundonombre      =   '';
+                this.fillEditarContacto.dfecnacimiento      =   '';
+                this.fillEditarContacto.cdireccion          =   '';
+                this.fillEditarContacto.cmailprincipal      =   '';
+                this.fillEditarContacto.ncelular            =   '';
+                this.fillEditarContacto.cubigeo             =   '';
+                this.fillEditarContacto.nestadocivil        =   '';
             },
             listarUbigeos(){
                 var url = this.ruta + '/ubigeo/GetUbigeo';
@@ -2918,6 +3026,7 @@
             },
             cambiarTipoPersonaCarteraMes(){
                 this.arrayContactoCarteraMes = [];
+                this.limpiarModalEditarPersona();
             },
             cambiarPaginaCarteraMes(page){
                 this.pagination.current_page=page;
@@ -3504,15 +3613,22 @@
                 $('#TabReferenciaVehiculo').removeClass('in active show');
                 $('#TabOtrosIntereses').removeClass('in active show');
             },
+            limpiarDatosPersonales(){
+                this.formNuevoContacto.cnrodocumento = '';
+                this.formNuevoContacto.capepaterno = '';
+                this.formNuevoContacto.capematerno = '';
+                this.formNuevoContacto.cnombre = '';
+                this.formNuevoContacto.cnombreS = '';
+                this.formNuevoContacto.dfecnacimiento = '';
+            },
             cambiarTipoPersona(){
+                this.limpiarDatosPersonales();
                 this.llenarComboTpoDocumento();
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    this.formNuevoContacto.lblcnombres = '* Nombres',
+                if(this.formNuevoContacto.ntipopersona == 1) {
+                    this.formNuevoContacto.lblcnombres  = '* Primer Nombre',
+                    this.formNuevoContacto.lblcnombresS = '* Segundo Nombre',
                     this.vistaDatosPersonaNatural = 1
-                }
-                else
-                {
+                } else {
                     this.formNuevoContacto.lblcnombres = '* Razón Social',
                     this.vistaDatosPersonaNatural = 0
                 }
@@ -3533,12 +3649,11 @@
                 if(this.formNuevoContacto.ntpodocumento == 0){
                     this.mensajeError.push('Debe Seleccionar Tipo Documento');
                 }
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
+                if(this.formNuevoContacto.ntipopersona == 1) {
                     if(!nrodocumento){
                         this.mensajeError.push('Debe Ingresar Nro Documento');
                     }
-                    if(nrodocumento.length < 8 || nrodocumento.length > 8) {
+                    if(nrodocumento.length != 8) {
                         this.mensajeError.push('El Nro Documento debe contener 8 dígitos');
                     }
                     if(this.formNuevoContacto.ncelular.length > 9){
@@ -3551,16 +3666,16 @@
                         this.mensajeError.push('Debe Ingresar Apellido Materno');
                     }
                     if(!this.formNuevoContacto.cnombre){
-                        this.mensajeError.push('Debe Ingresar Nombres');
+                        this.mensajeError.push('Debe Ingresar el Rrimer Nombre');
                     }
                 }
 
-                if(this.formNuevoContacto.ntipopersona == 2){
+                if(this.formNuevoContacto.ntipopersona == 2) {
                     if(!nrodocumento){
                         this.mensajeError.push('Debe Ingresar Nro Documento');
                     }
-                    if(nrodocumento.length < 11 || nrodocumento.length > 11) {
-                        this.mensajeError.push('El Nro Documento debe contener (11) números');
+                    if(nrodocumento.length != 11) {
+                        this.mensajeError.push('El Nro Documento debe contener 11 digitos');
                     }
                     if(!this.formNuevoContacto.cnombre){
                         this.mensajeError.push('Debe Ingresar Razon Social');
@@ -3592,8 +3707,7 @@
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     var url = this.ruta + '/parametro/GetDocumentoJuridica';
                     axios.get(url, {
                         params: {
@@ -4431,11 +4545,23 @@
                 }
             },
             registrarPersonaNatural(){
+                let primernombre    =   this.formNuevoContacto.cnombre;
+                let segundonombre   =   this.formNuevoContacto.cnombreS;
+                let nombrecompleto  =   '';
+
+                if (segundonombre == '') {
+                    nombrecompleto = primernombre;
+                } else {
+                    nombrecompleto = primernombre + ' ' + segundonombre;
+                }
+
                 var url = this.ruta + '/gescontacto/SetContactoPerNatural';
                 axios.post(url, {
                     'nIdTipoDocumento'  : this.formNuevoContacto.ntpodocumento,
                     'cNumeroDocumento'  : String(this.formNuevoContacto.cnrodocumento),
-                    'cNombre'           : this.formNuevoContacto.cnombre.toUpperCase().toString(),
+                    'cNombreCompleto'   : nombrecompleto.toUpperCase().toString(),
+                    'cPrimerNombre'     : primernombre.toUpperCase().toString(),
+                    'cSegundoNombre'    : segundonombre.toUpperCase().toString(),
                     'cApellidoPaterno'  : this.formNuevoContacto.capepaterno.toUpperCase().toString(),
                     'cApellidoMaterno'  : this.formNuevoContacto.capematerno.toUpperCase().toString(),
                     'cUbigeo'           : this.formNuevoContacto.ccode,
@@ -4642,6 +4768,7 @@
                             }
                             case 'editar':
                             {
+                                this.limpiarModalEditarPersona();
                                 this.fillEditarContacto.cFlagOp = 1;
                                 this.accionmodal=6;
                                 this.modal = 1;
@@ -4652,6 +4779,8 @@
                                 this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                 this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
                                 this.fillEditarContacto.cnombre             =   data.cNombre;
+                                this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
+                                this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
                                 this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
                                 //Datos de Contacto
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
@@ -4667,6 +4796,7 @@
                             }
                             case 'editarJ':
                             {
+                                this.limpiarModalEditarPersona();
                                 this.fillEditarContacto.cFlagOp = 2;
                                 this.accionmodal=6;
                                 this.modal = 1;
@@ -4812,15 +4942,17 @@
         display: flex;
         justify-content: center;
     }
-    .text-center{
-        color: red;
-        font-weight: bold;
-        font-size: 0.75rem;
-    }
     .barraLateral{
         height: 45vh;
         max-width:1200px;
         overflow-x: auto;
         overflow-y: auto;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-align: center;
+        margin: auto;
     }
 </style>

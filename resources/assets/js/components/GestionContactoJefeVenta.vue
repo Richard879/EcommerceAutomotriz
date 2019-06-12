@@ -128,15 +128,15 @@
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Seguimiento {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>-->
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </td>
@@ -170,7 +170,7 @@
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Seguimiento {{ c.cRazonSocial }}</div>
+                                                                                            <div slot="content">Seguimiento {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
@@ -178,7 +178,7 @@
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>-->
                                                                                         <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </td>
@@ -331,7 +331,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
+                                                                                <tr v-for="(c, index) in arrayContactosPorVendedor" :key="index">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cContacto }}</td>
                                                                                     <td>{{ c.cNumeroDocumento }}</td>
@@ -341,7 +341,7 @@
                                                                                     <td>{{ c.cNombreVendedor }}</td>
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Reasignar Contacto {{ c.cContacto }}</div>
                                                                                             <i @click="mostrarVistaContactoPorVendedor(c, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
@@ -482,7 +482,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto"
+                                                                                <tr v-for="(referencia, index) in arrayReasignarReferencia" :key="index"
                                                                                         :style="referencia.cAsignacionVehiculoEstado=='I' ? 'color:red' : ''">
                                                                                     <td v-text="referencia.nIdReferenciaVehiculoContacto"></td>
                                                                                     <td v-text="referencia.cProveedorNombre"></td>
@@ -1433,12 +1433,15 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                            <el-select  v-model="formNuevoContacto.ntpodocumento"
+                                                                                                        filterable
+                                                                                                        clearable
+                                                                                                        placeholder="SELECCIONE">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayTipoDocumento"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayTipoDocumento"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1472,31 +1475,53 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombresS" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombreS" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <el-date-picker
+                                                                                                    v-model="formNuevoContacto.dfecnacimiento"
+                                                                                                    type="date"
+                                                                                                    value-format="yyyy-MM-dd"
+                                                                                                    format="dd/MM/yyyy"
+                                                                                                    placeholder="dd/mm/aaaa">
+                                                                                                </el-date-picker>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                            <template v-else>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <el-date-picker
-                                                                                                v-model="formNuevoContacto.dfecnacimiento"
-                                                                                                type="date"
-                                                                                                value-format="yyyy-MM-dd"
-                                                                                                format="dd/MM/yyyy"
-                                                                                                placeholder="dd/mm/aaaa">
-                                                                                            </el-date-picker>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            </template>
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-9 offset-sm-4">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
@@ -2765,10 +2790,58 @@
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
-                                            <template v-if="cFlagOp = 1">
+                                            <template v-if="fillEditarContacto.cFlagOp == 1">
                                                 <vs-divider border-style="solid" color="dark">
                                                     Datos Personales
                                                 </vs-divider>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.capellidopaterno"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.capellidomaterno"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Primer Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.cprimernombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Segundo Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <input  type="text"
+                                                                        v-model="fillEditarContacto.csegundonombre"
+                                                                        @keyup.enter="actualizarContacto()"
+                                                                        class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
@@ -2781,43 +2854,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                            <div class="col-sm-8">
-                                                                <input  type="text"
-                                                                        v-model="fillEditarContacto.capellidopaterno"
-                                                                        @keyup.enter="actualizarContacto()"
-                                                                        class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                            <div class="col-sm-8">
-                                                                <input  type="text"
-                                                                        v-model="fillEditarContacto.capellidomaterno"
-                                                                        @keyup.enter="actualizarContacto()"
-                                                                        class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                            <div class="col-sm-8">
-                                                                <input  type="text"
-                                                                        v-model="fillEditarContacto.cnombre"
-                                                                        @keyup.enter="actualizarContacto()"
-                                                                        class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
@@ -2839,12 +2875,29 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Ubigeo</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.cubigeo" filterable clearable placeholder="SELECCIONE">
+                                                                    <el-option
+                                                                        v-for="item in arrayUbigeos"
+                                                                        :key="item.cCode"
+                                                                        :label="item.cUbigeo"
+                                                                        :value="item.cCode">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Dirección</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Email</label>
@@ -2853,13 +2906,46 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Celular</label>
                                                             <div class="col-sm-8">
                                                                 <input type="number" v-model="fillEditarContacto.ncelular" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Teléfono Fijo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ctelefonofijo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Estado Civil</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
+                                                                    <el-option
+                                                                    v-for="item in arrayEstadoCivil"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2906,12 +2992,29 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Ubigeo</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select v-model="fillEditarContacto.cubigeo" filterable clearable placeholder="SELECCIONE">
+                                                                    <el-option
+                                                                        v-for="item in arrayUbigeos"
+                                                                        :key="item.cCode"
+                                                                        :label="item.cUbigeo"
+                                                                        :value="item.cCode">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Dirección</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" v-model="fillEditarContacto.cdireccion" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Email</label>
@@ -2920,13 +3023,29 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">* Celular</label>
                                                             <div class="col-sm-8">
                                                                 <input type="number" v-model="fillEditarContacto.ncelular" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" v-model="fillEditarContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Teléfono Fijo</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" v-model="fillEditarContacto.ctelefonofijo" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3000,12 +3119,20 @@
                     capellidopaterno: '',
                     capellidomaterno: '',
                     cnombre: '',
+                    cprimernombre: '',
+                    csegundonombre: '',
+                    dfecnacimiento: '',
                     dfecnacimiento: '',
                     //Datos Contacto
                     cdireccion: '',
                     cmailprincipal: '',
                     ncelular: '',
-                    cFlagOp: ''
+                    cFlagOp: '',
+                    cubigeo: '',
+                    cubigeodescripcion: '',
+                    nestadocivil: '',
+                    ncelularalternativo: '',
+                    ctelefonofijo: ''
                 },
                 // =============================================================
                 // =========== VARIABLES TAB CONTACTOS POR VENDEDOR ============
@@ -3067,8 +3194,10 @@
                     capepaterno: '',
                     capematerno: '',
                     cnombre: '',
+                    cnombreS: '',
                     dfecnacimiento: '',
-                    lblcnombres: '* Nombres',
+                    lblcnombres: '* Primer Nombre',
+                    lblcnombresS: '* Segundo Nombre',
                     //Variables de Datos de contacto
                     /*niddepartamento: 0,
                     nidprovincia: 0,
@@ -3175,6 +3304,7 @@
                 arrayEstadoSeguimiento: [],
                 arrayTipoSeguimiento: [],
                 arrayFormaPago: [],
+                arrayUbigeos: [],
                 // =============================================================
                 // ============== VARIABLES TAB LEADS ==============
                 arrayLeads: [],
@@ -3284,22 +3414,22 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByJFV';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillMisContactos.ntipopersona,
-                        'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'     : 220016,
+                        'ntipopersona'      : this.fillMisContactos.ntipopersona,
+                        'cnrodocumento'     : String(this.fillMisContactos.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
-                        'page' : page
+                        'page'              : page
                     }
                 }).then(response => {
-                    this.arrayContacto = response.data.arrayContacto.data;
-                    this.pagination.current_page =  response.data.arrayContacto.current_page;
-                    this.pagination.total = response.data.arrayContacto.total;
-                    this.pagination.per_page    = response.data.arrayContacto.per_page;
-                    this.pagination.last_page   = response.data.arrayContacto.last_page;
-                    this.pagination.from        = response.data.arrayContacto.from;
-                    this.pagination.to           = response.data.arrayContacto.to;
+                    this.arrayContacto              = response.data.arrayContacto.data;
+                    this.pagination.current_page    = response.data.arrayContacto.current_page;
+                    this.pagination.total           = response.data.arrayContacto.total;
+                    this.pagination.per_page        = response.data.arrayContacto.per_page;
+                    this.pagination.last_page       = response.data.arrayContacto.last_page;
+                    this.pagination.from            = response.data.arrayContacto.from;
+                    this.pagination.to              = response.data.arrayContacto.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -3313,19 +3443,30 @@
                 });
             },
             actualizarContacto(){
+                if (this.validarUpdContacto()) {
+                    return;
+                }
+
                 var url = this.ruta + '/gescontacto/SetPatchContactoPerNatural';
                 axios.post(url, {
-                    'cFlagOp'           :   this.cFlagOp,
-                    'nIdContacto'       :   this.fillEditarContacto.nidcontacto,
-                    'nIdPernatural'     :   this.fillEditarContacto.nidpernatural,
-                    'nIdPerjudirica'     :   this.fillEditarContacto.nidperjudirica,
-                    'cNumeroDocumento'  :   String(this.fillEditarContacto.cnrodocumento),
-                    'cNombre'           :   this.fillEditarContacto.cnombre.toUpperCase().toString(),
-                    'cApellidoPaterno'  :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
-                    'cApellidoMaterno'  :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
-                    'cDireccion'        :   this.fillEditarContacto.cdireccion,
-                    'cEmail'            :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
-                    'nTelefonoMovil'    :   this.fillEditarContacto.ncelular
+                    'cFlagOp'                   :   this.fillEditarContacto.cFlagOp,
+                    'nIdContacto'               :   this.fillEditarContacto.nidcontacto,
+                    'nIdPernatural'             :   this.fillEditarContacto.nidpernatural,
+                    'nIdPerjudirica'            :   this.fillEditarContacto.nidperjudirica,
+                    'cNumeroDocumento'          :   String(this.fillEditarContacto.cnrodocumento),
+                    'cNombre'                   :   (this.fillEditarContacto.cFlagOp == 1) ? (this.fillEditarContacto.cprimernombre.toUpperCase().toString() + ' ' + this.fillEditarContacto.csegundonombre.toUpperCase().toString()) : this.fillEditarContacto.cnombre.toUpperCase().toString(),
+                    'cPrimerNombre'             :   (!this.fillEditarContacto.cprimernombre) ? '' : this.fillEditarContacto.cprimernombre.toUpperCase().toString(),
+                    'cSegundoNombre'            :   (!this.fillEditarContacto.csegundonombre) ? '' : this.fillEditarContacto.csegundonombre.toUpperCase().toString(),
+                    'cApellidoPaterno'          :   this.fillEditarContacto.capellidopaterno.toUpperCase().toString(),
+                    'cApellidoMaterno'          :   this.fillEditarContacto.capellidomaterno.toUpperCase().toString(),
+                    'dFechaNacimiento'          :   this.fillEditarContacto.dfecnacimiento,
+                    'cDireccion'                :   this.fillEditarContacto.cdireccion,
+                    'cEmail'                    :   (!this.fillEditarContacto.cmailprincipal) ? '' : this.fillEditarContacto.cmailprincipal.toUpperCase().toString(),
+                    'nTelefonoMovil'            :   this.fillEditarContacto.ncelular,
+                    'cUbigeo'                   :   this.fillEditarContacto.cubigeo,
+                    'nIdEstadoCivil'            :   this.fillEditarContacto.nestadocivil,
+                    'nTelefonoMovilAlternativo' :   this.fillEditarContacto.ncelularalternativo,
+                    'cTelefonoFijo'             :   this.fillEditarContacto.ctelefonofijo
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Los Datos de la Persona se Actualizaron Correctamente');
@@ -3345,20 +3486,89 @@
                     }
                 });
             },
+            validarUpdContacto(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if (this.fillEditarContacto.cFlagOp == 1) {
+                    if(!this.fillEditarContacto.capellidopaterno){
+                        this.mensajeError.push('Debe ingresar un Apellido Paterno');
+                    }
+                    if(!this.fillEditarContacto.capellidomaterno){
+                        this.mensajeError.push('Debe ingresar un Apellido Materno');
+                    }
+                    if(!this.fillEditarContacto.cprimernombre){
+                        this.mensajeError.push('Debe ingresar el Primer Nombre');
+                    }
+                    if(!this.fillEditarContacto.cnrodocumento){
+                        this.mensajeError.push('Debe ingresar el número de documento');
+                    }
+                    if(!this.fillEditarContacto.cubigeo){
+                        this.mensajeError.push('Debe Seleccionar un Ubigeo');
+                    }
+                    if(!this.fillEditarContacto.cdireccion){
+                        this.mensajeError.push('Debe ingresar una dirección');
+                    }
+                    if(!this.fillEditarContacto.ncelular){
+                        this.mensajeError.push('Debe ingresar un telefono celular');
+                    }
+                } else {
+                    if(!this.fillEditarContacto.cnombre){
+                        this.mensajeError.push('Debe ingresar la Razón Social');
+                    }
+                    if(!this.fillEditarContacto.cnrodocumento){
+                        this.mensajeError.push('Debe ingresar el número de documento');
+                    }
+                    if(!this.fillEditarContacto.cdireccion){
+                        this.mensajeError.push('Debe ingresar una dirección');
+                    }
+                    if(!this.fillEditarContacto.ncelular){
+                        this.mensajeError.push('Debe ingresar un telefono celular');
+                    }
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             limpiarModalEditarPersona(){
-                this.arrayContactoLibre                     = [];
-                this.fillEditarContacto.cFlagOp             = '';
-                this.fillEditarContacto.nidcontacto         = '';
-                this.fillEditarContacto.nidpernatural       = '';
-                this.fillEditarContacto.nidperjudirica      = '';
-                this.fillEditarContacto.cnrodocumento       = '';
-                this.fillEditarContacto.capellidopaterno    = '';
-                this.fillEditarContacto.capellidomaterno    = '';
-                this.fillEditarContacto.cnombre             = '';
-                this.fillEditarContacto.dfecnacimiento      = '';
-                this.fillEditarContacto.cdireccion          = '';
-                this.fillEditarContacto.cmailprincipal      = '';
-                this.fillEditarContacto.ncelular            = '';
+                this.fillEditarContacto.cFlagOp             =   '';
+                this.fillEditarContacto.nidcontacto         =   '';
+                this.fillEditarContacto.nidpernatural       =   '';
+                this.fillEditarContacto.nidperjudirica      =   '';
+                this.fillEditarContacto.cnrodocumento       =   '';
+                this.fillEditarContacto.capellidopaterno    =   '';
+                this.fillEditarContacto.capellidomaterno    =   '';
+                this.fillEditarContacto.cnombre             =   '';
+                this.fillEditarContacto.cprimernombre       =   '';
+                this.fillEditarContacto.csegundonombre      =   '';
+                this.fillEditarContacto.dfecnacimiento      =   '';
+                this.fillEditarContacto.cdireccion          =   '';
+                this.fillEditarContacto.cmailprincipal      =   '';
+                this.fillEditarContacto.ncelular            =   '';
+                this.fillEditarContacto.cubigeo             =   '';
+                this.fillEditarContacto.nestadocivil        =   '';
+            },
+            listarUbigeos(){
+                var url = this.ruta + '/ubigeo/GetUbigeo';
+                axios.get(url, {
+                    params: {
+                        'nopcion': 0,
+                        'cfiltro': '',
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayUbigeos = response.data.arrayUbigeo;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =========================================================
             // =============  TAB CONTACTOS POR VENDEDOR ===============
@@ -3500,39 +3710,39 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/gescontacto/UpdReasignarReferenciaVehiculo';
-                            axios.post(url, {
-                                nIdAsignacionContactoVendedor: parseInt(referencia.nIdAsignacionContactoVendedor),
-                                nIdReferenciaVehiculoContacto: parseInt(referencia.nIdReferenciaVehiculoContacto),
-                                nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                                nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                                nIdCronograma: 220016,
-                                nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
-                            }).then(response => {
-                                if(response.data[0].nFlagMsje == 1)
-                                {
-                                    swal('Reasignación Registrada');
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/gescontacto/UpdReasignarReferenciaVehiculo';
+                        axios.post(url, {
+                            nIdAsignacionContactoVendedor: parseInt(referencia.nIdAsignacionContactoVendedor),
+                            nIdReferenciaVehiculoContacto: parseInt(referencia.nIdReferenciaVehiculoContacto),
+                            nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
+                            nIdCronograma: 220016,
+                            nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal('Reasignación Registrada');
+                            }
+                            else{
+                                swal('Referencia de Vehiculo ya se encuentra Activa');
+                            }
+                            this.listarReferenciaVehiculoPorReasignar(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                                else{
-                                    swal('Referencia de Vehiculo ya se encuentra Activa');
-                                }
-                                this.listarReferenciaVehiculoPorReasignar(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
-                                }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             validaReasignarReferenciaVehiculo(){
                 this.error = 0;
@@ -3699,35 +3909,35 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/gescontacto/SetAsignaReferenciaLibre';
-                            axios.post(url, {
-                                'nIdReferenciaVehiculoContacto': parseInt(nIdReferenciaVehiculoContacto),
-                                'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                                'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                                'nIdCronograma' : 220016,
-                                'nIdVendedor'   : parseInt(this.formVendedor.nidvendedor)
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue asignado.'
-                                );
-                                this.listarReferenciasVehiculoLibre(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/gescontacto/SetAsignaReferenciaLibre';
+                        axios.post(url, {
+                            'nIdReferenciaVehiculoContacto': parseInt(nIdReferenciaVehiculoContacto),
+                            'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nIdCronograma' : 220016,
+                            'nIdVendedor'   : parseInt(this.formVendedor.nidvendedor)
+                        }).then(response => {
+                            swal(
+                            'Activado!',
+                            'El registro fue asignado.'
+                            );
+                            this.listarReferenciasVehiculoLibre(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             validaAsignarReferenciLibre(){
                 this.error = 0;
@@ -4165,31 +4375,31 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/gescontacto/desactivarSeguimiento';
-                            axios.put(url, {
-                                nIdSeguimientoContacto: parseInt(nIdSeguimientoContacto)
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarSeguimientoPorIdAsignacion(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                                if (error.response) {
-                                    if (error.response.status == 401) {
-                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                        location.reload('0');
-                                    }
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/gescontacto/desactivarSeguimiento';
+                        axios.put(url, {
+                            nIdSeguimientoContacto: parseInt(nIdSeguimientoContacto)
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.listarSeguimientoPorIdAsignacion(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
                                 }
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             // ========================================================
             // =============  TAB NUEVO CONTACTO ======================
@@ -4210,15 +4420,22 @@
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').removeClass('in active show');
             },
+            limpiarDatosPersonales(){
+                this.formNuevoContacto.cnrodocumento = '';
+                this.formNuevoContacto.capepaterno = '';
+                this.formNuevoContacto.capematerno = '';
+                this.formNuevoContacto.cnombre = '';
+                this.formNuevoContacto.cnombreS = '';
+                this.formNuevoContacto.dfecnacimiento = '';
+            },
             cambiarTipoPersona(){
+                this.limpiarDatosPersonales();
                 this.llenarComboTpoDocumento();
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    this.formNuevoContacto.lblcnombres = '* Nombres',
+                if(this.formNuevoContacto.ntipopersona == 1) {
+                    this.formNuevoContacto.lblcnombres  = '* Primer Nombre',
+                    this.formNuevoContacto.lblcnombresS = '* Segundo Nombre',
                     this.vistaDatosPersonaNatural = 1
-                }
-                else
-                {
+                } else {
                     this.formNuevoContacto.lblcnombres = '* Razón Social',
                     this.vistaDatosPersonaNatural = 0
                 }
@@ -5012,11 +5229,23 @@
                 }
             },
             registrarPersonaNatural(){
+                let primernombre    =   this.formNuevoContacto.cnombre;
+                let segundonombre   =   this.formNuevoContacto.cnombreS;
+                let nombrecompleto  =   '';
+
+                if (segundonombre == '') {
+                    nombrecompleto = primernombre;
+                } else {
+                    nombrecompleto = primernombre + ' ' + segundonombre;
+                }
+
                 var url = this.ruta + '/gescontacto/SetContactoPerNatural';
                 axios.post(url, {
                     'nIdTipoDocumento'  : this.formNuevoContacto.ntpodocumento,
                     'cNumeroDocumento'  : String(this.formNuevoContacto.cnrodocumento),
-                    'cNombre'           : this.formNuevoContacto.cnombre.toUpperCase().toString(),
+                    'cNombreCompleto'   : nombrecompleto.toUpperCase().toString(),
+                    'cPrimerNombre'     : primernombre.toUpperCase().toString(),
+                    'cSegundoNombre'    : segundonombre.toUpperCase().toString(),
                     'cApellidoPaterno'  : this.formNuevoContacto.capepaterno.toUpperCase().toString(),
                     'cApellidoMaterno'  : this.formNuevoContacto.capematerno.toUpperCase().toString(),
                     'cUbigeo'           : this.formNuevoContacto.ccode,
@@ -5519,6 +5748,7 @@
                         switch(accion){
                             case 'editar':
                             {
+                                 this.limpiarModalEditarPersona();
                                 this.fillEditarContacto.cFlagOp = 1;
                                 this.accionmodal=7;
                                 this.modal = 1;
@@ -5529,15 +5759,24 @@
                                 this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                 this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
                                 this.fillEditarContacto.cnombre             =   data.cNombre;
+                                this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
+                                this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
                                 this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
                                 //Datos de Contacto
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                this.listarUbigeos();
+                                this.llenarComboEstadoCivil();
+                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
                                 break;
                             }
                             case 'editarJ':
                             {
+                                this.limpiarModalEditarPersona();
                                 this.fillEditarContacto.cFlagOp = 2;
                                 this.accionmodal=7;
                                 this.modal = 1;
@@ -5549,7 +5788,11 @@
                                 //Datos de Contacto
                                 this.fillEditarContacto.cdireccion          =   data.cDireccion;
                                 this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil;
+                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                this.listarUbigeos();
+                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
                                 break;
                             }
                         }
@@ -5680,5 +5923,12 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-align: center;
+        margin: auto;
     }
 </style>
