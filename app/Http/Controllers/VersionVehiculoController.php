@@ -14,11 +14,17 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdClase           = $request->nIdClase;
+        $nIdSubClase        = $request->nIdSubClase;
+
+        $nIdClase           = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;
+        $nIdSubClase        = ($nIdSubClase == NULL) ? ($nIdSubClase = 0) : $nIdSubClase;
+
         $versionvehiculo = DB::select('exec [usp_VersionVeh_SetVersion] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdEmpresa,
                                                                     $request->nIdProveedor,
-                                                                    $request->nIdClase,
-                                                                    $request->nIdSubClase,
+                                                                    $nIdClase,
+                                                                    $nIdSubClase,
                                                                     $request->nIdLinea,
                                                                     $request->nIdMarca,
                                                                     $request->nIdModelo,
@@ -67,12 +73,18 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdClase           = $request->nIdClase;
+        $nIdSubClase        = $request->nIdSubClase;
+
+        $nIdClase           = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;
+        $nIdSubClase        = ($nIdSubClase == NULL) ? ($nIdSubClase = 0) : $nIdSubClase;
+
         $versionvehiculo = DB::select('exec [usp_VersionVeh_UpdVersionVehById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdVersionVeh,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdProveedor,
-                                                                    $request->nIdClase,
-                                                                    $request->nIdSubClase,
+                                                                    $nIdClase,
+                                                                    $nIdSubClase,
                                                                     $request->nIdLinea,
                                                                     $request->nIdMarca,
                                                                     $request->nIdModelo,
