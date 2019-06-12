@@ -5507,7 +5507,7 @@
                         switch(accion){
                             case 'editar':
                             {
-                                if(objPersona.nTipoPersona==1)
+                                if(data.nTipoPersona==1)
                                 {
                                     this.fillEditarContacto.cFlagOp = 1;
                                     this.accionmodal=7;
