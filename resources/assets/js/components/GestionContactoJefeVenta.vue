@@ -331,7 +331,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdAsignacionContactoVendedor">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cContacto }}</td>
                                                                                     <td>{{ c.cNumeroDocumento }}</td>
@@ -341,7 +341,7 @@
                                                                                     <td>{{ c.cNombreVendedor }}</td>
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content">Reasignar Contacto {{ c.cContacto }}</div>
                                                                                             <i @click="mostrarVistaContactoPorVendedor(c, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
