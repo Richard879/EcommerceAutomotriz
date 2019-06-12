@@ -5514,8 +5514,8 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
-                                    this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersona;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                     this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
                                     this.fillEditarContacto.cnombre             =   data.cNombre;
@@ -5531,8 +5531,8 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
-                                    this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersona;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.cnombre             =   data.cRazonSocial;
                                     //Datos de Contacto
                                     this.fillEditarContacto.cdireccion          =   data.cDireccion;
