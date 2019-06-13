@@ -183,6 +183,7 @@ class SapCompraController extends Controller
 
         $array_rpta = [];
         $rptaSap   = [];
+        $ReceptionDate  = date('Y-m-d');
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
         $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
@@ -194,6 +195,7 @@ class SapCompraController extends Controller
 
         $data = $request->data;
         foreach ($data as $key => $value) {
+
             $json = [
                 'json' => [
                     "CardCode"          =>  $request->cCardCode,
@@ -216,9 +218,32 @@ class SapCompraController extends Controller
                             "ProjectCode"       => (string)$value['cNumeroVin'],
                             "CostingCode2"      =>  "01", //UnidadDeNegocio
                             "CostingCode3"      =>  (string)$request->nIdSapSucursal, //Codigo Sap Sucursal
-                            "U_SYP_TPOIMP"      =>   "01"
+                            "U_SYP_TPOIMP"      =>   "01",
+                            'SerialNumbers'     =>  array()
                         ]
                     ]
+                ]
+            ];
+
+            $json['json']['DocumentLines'][0]['SerialNumbers'] = [
+                [
+                    "ItemCode"              =>  (string)$value['cNumeroVin'],
+                    "DistNumber"            =>  (string)$value['cNumeroVin'],
+                    "SysNumber"             =>  1,
+                    "InDate"                =>  $ReceptionDate/*,
+                    "ExpiryDate"                =>  null,
+                    "ManufactureDate"           =>  null,
+                    "ReceptionDate"             =>  $ReceptionDate,
+                    "WarrantyStart"             =>  null,
+                    "WarrantyEnd"               =>  null,
+                    "Location"                  =>  null,
+                    "Notes"                     =>  null,
+                    "BatchID"                   =>  null,
+                    "SystemSerialNumber"        =>  1,
+                    "BaseLineNumber"            =>  0,
+                    "Quantity"                  =>  1,
+                    "TrackingNote"              =>  null,
+                    "TrackingNoteLine"          =>  null*/
                 ]
             ];
 
