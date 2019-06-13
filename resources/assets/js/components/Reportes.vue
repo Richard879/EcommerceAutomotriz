@@ -1728,19 +1728,30 @@
                                                                                             <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
                                                                                     </el-tooltip></th>
                                                                                 <th>SUCURSAL</th>
-                                                                                <th>COD PEDIDO</th>
                                                                                 <th>NUM PEDIDO</th>
-                                                                                <th>COD COTIZACIÓN</th>
                                                                                 <th>NUM COTIZACIÓN</th>
                                                                                 <th>FECHA COTIZACIÓN</th>
                                                                                 <th>FECHA VENC COTI</th>
+                                                                                <th>FECHA PEDIDO</th>
                                                                                 <th>TCC</th>
+                                                                                <th>PRECIO BASE</th>
+                                                                                <th>PRECIO CIERRE</th>
+                                                                                <th>TYP</th>
+                                                                                <th>PRECIO VENTA</th>
+                                                                                <th>DESCUENTO</th>
+                                                                                <th>SOBRE PRECIO</th>
                                                                                 <th>VEHICULO ($)</th>
                                                                                 <th>VEHICULO (S/)</th>
+                                                                                <th>E.V ($)</th>
+                                                                                <th>E.V (S/)</th>
+                                                                                <th>COTIZACION ($)</th>
+                                                                                <th>COTIZACION (S/)</th>
                                                                                 <th>ASUNTO</th>
                                                                                 <th>ESTADO COT</th>
                                                                                 <th>DESCUENTO</th>
                                                                                 <th>PROVEEDOR</th>
+                                                                                <th>MONTO ASUMIDO</th>
+                                                                                <th>EMPRESA</th>
                                                                                 <th>MONTO ASUMIDO</th>
                                                                                 <th>NOMBRE COMERCIAL</th>
                                                                                 <th>VIN</th>
@@ -1756,20 +1767,31 @@
                                                                             <tr v-for="(distribucion, index) in arrayDistribucionDesc" :key="index">
                                                                                 <td v-text="distribucion.EMPRESA"></td>
                                                                                 <td v-text="distribucion.SUCURSAL"></td>
-                                                                                <td v-text="distribucion.COD_PEDIDO"></td>
                                                                                 <td v-text="distribucion.NUM_PEDIDO"></td>
-                                                                                <td v-text="distribucion.COD_COTIZACION"></td>
                                                                                 <td v-text="distribucion.NUM_COTIZACION"></td>
                                                                                 <td v-text="distribucion.FECHA_COTIZACION"></td>
                                                                                 <td v-text="distribucion.FECHA_VENC_COTIZACION"></td>
+                                                                                <td v-text="distribucion.FECHA_PEDIDO"></td>
                                                                                 <td v-text="distribucion.TCC"></td>
+                                                                                <td v-text="distribucion.PRECIO_BASE_DOLAR"></td>
+                                                                                <td v-text="distribucion.PRECIO_CIERRE_DOLAR"></td>
+                                                                                <td> {{ Number((parseFloat(distribucion.PRECIO_TYP_DOLAR)).toFixed(2)) }} </td>
+                                                                                <td v-text="distribucion.PRECIO_VENTA_CLIENTE"></td>
+                                                                                <td v-text="distribucion.DESCUENTO_VEHI_DOLAR"></td>
+                                                                                <td> {{ Number((parseFloat(distribucion.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }} </td>
                                                                                 <td v-text="distribucion.COTI_VEHI_DOLAR"></td>
                                                                                 <td v-text="distribucion.COTI_VEHI_SOL"></td>
+                                                                                <td> {{ Number((parseFloat(distribucion.COTI_EV_DOLAR)).toFixed(2)) }}</td>
+                                                                                <td> {{ Number((parseFloat(distribucion.COTI_EV_SOL)).toFixed(2)) }} </td>
+                                                                                <td v-text="distribucion.COTI_TOTAL_DOLAR"></td>
+                                                                                <td v-text="distribucion.COTI_TOTAL_SOL"></td>
                                                                                 <td v-text="distribucion.ASUNTO"></td>
                                                                                 <td v-text="distribucion.ESTADO"></td>
                                                                                 <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
                                                                                 <td v-text="distribucion.PROVEEDOR"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.MONTO_ASUMIDO)).toFixed(2)) }} </td>
+                                                                                <td> {{ Number((parseFloat(distribucion.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} </td>
+                                                                                <td v-text="distribucion.EMP"></td>
+                                                                                <td> {{ Number((parseFloat(distribucion.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} </td>
                                                                                 <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
                                                                                 <td v-text="distribucion.VIN"></td>
                                                                                 <td v-text="distribucion.ASESOR_COMERCIAL"></td>
