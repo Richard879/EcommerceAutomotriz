@@ -1340,7 +1340,7 @@
                                                                                 <td v-text="metasventa.ID"></td>
                                                                                 <td v-text="metasventa.ANIO"></td>
                                                                                 <td v-text="metasventa.MES"></td>
-                                                                                <td v-text="metasventa.VENDEDOR"></td>
+                                                                                <td v-text="metasventa.ASESOR"></td>
                                                                                 <td v-text="metasventa.SUBLINEA"></td>
                                                                                 <td v-text="metasventa.OBJETIVO"></td>
                                                                                 <td v-text="metasventa.COTIZACIONES"></td>
