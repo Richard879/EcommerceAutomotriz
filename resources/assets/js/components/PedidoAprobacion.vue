@@ -1907,6 +1907,11 @@
                 } else {
                     //==============================================================
                     //============ REGISTRO LLAMADA DE SERVICIO EN SAP =============
+                    /*me.arrayVINPedidoVehiculo.push({
+                        'nDocEntry' : objPedido.nDocEntryDetallePedido,
+                        'cItemCode' : objPedido.cItemCode
+                    });*/
+                    
                     setTimeout(function() {
                         me.obtenerOrdenVentaActividad(objPedido);
                         me.nSolutionCode = objPedido.nSolutionCode;
