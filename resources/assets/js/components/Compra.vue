@@ -3768,7 +3768,7 @@
                     //==============================================================
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     setTimeout(function() {
-                        me.generaSapTblCostoCabecera(objCompra);
+                        me.generaSapFacturaProveedor(objCompra);
                     }, 800);
                 }
             },
