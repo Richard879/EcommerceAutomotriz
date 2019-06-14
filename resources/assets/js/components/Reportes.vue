@@ -1324,25 +1324,29 @@
                                                                                         <div slot="content">Exportar Metas de Venta(s) XLS</div>
                                                                                             <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarMetasVenta()"></i>
                                                                                     </el-tooltip></th>
-                                                                                <th>VENDEDOR</th>
                                                                                 <th>AÑO</th>
                                                                                 <th>MES</th>
+                                                                                <th>ASESOR</th>
                                                                                 <th>SUBLINEA</th>
-                                                                                <th>CUOTA</th>
-                                                                                <th>Nª COTIZACIONES</th>
-                                                                                <th>Nª PEDIDOS</th>
+                                                                                <th>OBJETIVO</th>
+                                                                                <th>COTIZACIONES</th>
+                                                                                <th>PEDIDOS</th>
+                                                                                <th>FACTURADOS</th>
+                                                                                <th>PENDIENTES</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="(metasventa, index) in arrayMetasVenta" :key="index">
                                                                                 <td v-text="metasventa.ID"></td>
-                                                                                <td v-text="metasventa.VENDEDOR"></td>
                                                                                 <td v-text="metasventa.ANIO"></td>
                                                                                 <td v-text="metasventa.MES"></td>
+                                                                                <td v-text="metasventa.VENDEDOR"></td>
                                                                                 <td v-text="metasventa.SUBLINEA"></td>
-                                                                                <td v-text="metasventa.CUOTA"></td>
-                                                                                <td v-text="metasventa.N_COTIZACIONES"></td>
-                                                                                <td v-text="metasventa.N_PEDIDOS"></td>
+                                                                                <td v-text="metasventa.OBJETIVO"></td>
+                                                                                <td v-text="metasventa.COTIZACIONES"></td>
+                                                                                <td v-text="metasventa.PEDIDOS"></td>
+                                                                                <td v-text="metasventa.FACTURADOS"></td>
+                                                                                <td v-text="metasventa.PENDIENTE"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
