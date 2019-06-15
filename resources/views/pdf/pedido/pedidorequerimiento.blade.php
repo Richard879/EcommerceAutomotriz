@@ -184,7 +184,7 @@
                         <span> LEASING <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
                         <span> CRED VEHICULAR <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
                         <span> CONTADO <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
-                        <span> CRED VEHICULAR <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
+                        <span> CRED AMICAR <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
                         <span> CRED LETRAS <input type="checkbox" style="margin-top: .4rem; margin-right: 1rem;"> </span>
                 </strong></td>
             </tr>

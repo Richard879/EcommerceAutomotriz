@@ -205,7 +205,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="pedido in arrayPedidosAprobados" :key="pedido.nIdCabeceraPedido">
+                                                                            <tr v-for="(pedido, index) in arrayPedidosAprobados" :key="index">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
@@ -689,7 +689,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="(vehiculo, index) in arrayDetallePedido" :key="index">
                                                             <template v-if="vehiculo.cFlagTipoItem=='V'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -720,7 +720,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="(vehiculo, index) in arrayDetallePedido" :key="index">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -750,7 +750,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="(vehiculo, index) in arrayDetallePedido" :key="index">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -780,7 +780,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar">
+                                                        <tr v-for="(vehiculo, index) in arrayDetallePedido" :key="index">
                                                             <template v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                                 <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                                 <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1911,7 +1911,7 @@
                         'nDocEntry' : objPedido.nDocEntryDetallePedido,
                         'cItemCode' : objPedido.cItemCode
                     });*/
-                    
+
                     setTimeout(function() {
                         me.obtenerOrdenVentaActividad(objPedido);
                         me.nSolutionCode = objPedido.nSolutionCode;
@@ -3721,7 +3721,6 @@
                         me.confirmaPedido();
                     }, 800);
                 }
-
             },
             registroSapBusinessTblCostoServicios(){
                 let me = this;

@@ -14,23 +14,23 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa         = $request->nidempresa;
-        $nIdSucursal        = $request->nidsucursal;
-        $dFechaInicio       = $request->dfechainicio;
-        $dFechaFin          = $request->dfechafin;
-        $nIdMarca           = $request->nidmarca;
-        $nIdModelo          = $request->nidmodelo;
-        $cNumeroCotizacion  = $request->cnumerocotizacion;
-        $cContacto          = $request->ccontacto;
-        $cNumeroDocumento   = $request->cnrodocumento;
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $dFechaInicio       =   $request->dfechainicio;
+        $dFechaFin          =   $request->dfechafin;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $cNumeroCotizacion  =   $request->cnumerocotizacion;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
 
-        $dFechaInicio       = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
-        $dFechaFin          = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $nIdMarca           = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo          = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
-        $cNumeroCotizacion  = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
-        $cContacto          = ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
-        $cNumeroDocumento   = ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNumeroCotizacion  =   ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
 
         $arrayPedido = DB::select('exec [usp_Pedido_GetLstCotizacionIngresadas] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
@@ -53,20 +53,21 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdCabeceraCotizacion = $request->nidcabeceracotizacion;
-        $cNumeroVin = $request->cnumerovin;
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdCabeceraCotizacion  =   $request->nidcabeceracotizacion;
+        $cNumeroVin             =   $request->cnumerovin;
 
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
         $arrayCompra = DB::select('exec [usp_Pedido_GetLstCompraByIdModelo] ?, ?, ?, ?, ?',
-                                                            array(  $nIdEmpresa,
-                                                                    $nIdSucursal,
-                                                                    $nIdCabeceraCotizacion,
-                                                                    $cNumeroVin,
-                                                                    Auth::user()->id
-                                                                    ));
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraCotizacion,
+                                                                $cNumeroVin,
+                                                                Auth::user()->id
+                                                            ]);
 
         $arrayCompra = ParametroController::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
@@ -287,7 +288,7 @@ class PedidoController extends Controller
         try{
             DB::beginTransaction();
 
-            $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+            $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -297,6 +298,7 @@ class PedidoController extends Controller
                                         $request->dFechaPedido,
                                         $request->nIdFormaPago,
                                         $request->nIdBanco,
+                                        $request->nIdFormaFinanciamiento,
                                         $request->cGlosa,
                                         Auth::user()->id
                                     ]);
@@ -458,11 +460,11 @@ class PedidoController extends Controller
 
     public function GetDocumentoByFormaPago(Request $request)
     {
-        $nIdFormaPago = $request->nidformapago;
-        $variable   = $request->opcion;
-        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        $nIdFormaPago   =   $request->nidformapago;
+        $variable       =   $request->opcion;
+        $variable       =   ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayDocumento = DB::select('exec [usp_Pedido_GetDocumentoByFormaPago] ?',
+        $arrayDocumento =   DB::select('exec [usp_Pedido_GetDocumentoByFormaPago] ?',
                                                         [   $nIdFormaPago
                                                         ]);
         if($variable == "0"){

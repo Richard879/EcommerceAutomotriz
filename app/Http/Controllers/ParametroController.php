@@ -164,14 +164,14 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdPar         = $request->nidpar;
-        $cTipoParametro = $request->ctipoparametro;
-        $nIdTipoPar     = $request->nidtipopar;
-        $variable       = $request->opcion;
+        $nIdPar         =   $request->nidpar;
+        $cTipoParametro =   $request->ctipoparametro;
+        $nIdTipoPar     =   $request->nidtipopar;
+        $variable       =   $request->opcion;
 
-        $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
-        $nIdTipoPar     = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
-        $variable       = ($variable == NULL) ? ($variable = 0) : $variable;
+        $cTipoParametro =   ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
+        $nIdTipoPar     =   ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
+        $variable       =   ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayTipoParametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   $nIdPar,

@@ -759,7 +759,7 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">Descuento</label>
+                                                                                                    <label class="col-sm-4 form-control-label">Descuento Lista</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <label v-text="formDocRef.fdescuentolista" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
@@ -959,7 +959,11 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Tipo de Cancelación</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <el-select v-model="formDocRef.nidformapago" filterable clearable placeholder="SELECCIONE" @change="changeFormaPago()" >
+                                                                                                        <el-select  v-model="formDocRef.nidformapago"
+                                                                                                                    filterable
+                                                                                                                    clearable
+                                                                                                                    placeholder="SELECCIONE"
+                                                                                                                    @change="changeFormaPago()" >
                                                                                                             <el-option
                                                                                                                 v-for="item in arrayFormaPago"
                                                                                                                 :key="item.nIdPar"
@@ -970,13 +974,36 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="col-sm-6" v-if="this.cvalidabanco=='SI'">
+                                                                                            <div class="col-sm-6" v-if="cvalidabanco == 'SI'">
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <el-select v-model="formDocRef.nidbanco" filterable clearable placeholder="SELECCIONE" >
+                                                                                                        <el-select  v-model="formDocRef.nidbanco"
+                                                                                                                    filterable
+                                                                                                                    clearable
+                                                                                                                    placeholder="SELECCIONE">
                                                                                                             <el-option
                                                                                                                 v-for="item in arrayBanco"
+                                                                                                                :key="item.nIdPar"
+                                                                                                                :label="item.cParNombre"
+                                                                                                                :value="item.nIdPar">
+                                                                                                            </el-option>
+                                                                                                        </el-select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-6" v-if="cvalidabanco == 'SI'">
+                                                                                                <div class="row">
+                                                                                                    <label class="col-sm-4 form-control-label">* Forma Financiamiento</label>
+                                                                                                    <div class="col-sm-8">
+                                                                                                        <el-select  v-model="formDocRef.nidformafinanciamiento"
+                                                                                                                    filterable
+                                                                                                                    clearable
+                                                                                                                    placeholder="SELECCIONE">
+                                                                                                            <el-option
+                                                                                                                v-for="item in arrayFormaFinanciamiento"
                                                                                                                 :key="item.nIdPar"
                                                                                                                 :label="item.cParNombre"
                                                                                                                 :value="item.nIdPar">
@@ -1826,6 +1853,7 @@
                     naniomodelo: '',
                     nidbanco: '',
                     nidformapago: '',
+                    nidformafinanciamiento: '',
                     dfechapedido: '',
                     fpreciolista: 0,
                     fprecioventap: 0,
@@ -1839,6 +1867,7 @@
                 },
                 arrayBanco: [],
                 arrayFormaPago: [],
+                arrayFormaFinanciamiento: [],
                 cvalidabanco: '',
                 // ============== VARIABLES TAB DOCUMENTOS ASOCIADOS =================
                 arrayTablaDocumento: [],
@@ -2444,11 +2473,11 @@
                 var url = this.ruta + '/pedido/GetLstCompraByIdModelo';
                 axios.get(url, {
                     params: {
-                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
-                        'cnumerovin'    : this.formCompra.cnumerovin,
-                        'page'          : page
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion' :   this.formCompra.nidcabeceracotizacion,
+                        'cnumerovin'            :   this.formCompra.cnumerovin,
+                        'page'                  :   page
                     }
                 }).then(response => {
                     this.arrayCompra            = response.data.arrayCompra.data;
@@ -2482,19 +2511,20 @@
                 $('#Tab2').addClass("nav-link active");
                 $('#TabAsignarCompra').removeClass('in active show');
                 $('#TabDocReferencias').addClass('in active show');
-                this.formDocRef.nidcompra = compra.nIdCompra;
-                this.formDocRef.cnrovin = compra.cNumeroVin;
-                this.formDocRef.nordencompra = compra.nOrdenCompra;
-                this.formDocRef.cnombrecomercial = compra.cNombreComercial;
-                this.formDocRef.naniofabricacion = compra.nAnioFabricacion;
-                this.formDocRef.naniomodelo = compra.nAnioVersion;
-                this.formDocRef.ccolor = compra.cNombreColor;
-                this.formDocRef.cmotor = compra.cNombreMotor;
+                this.formDocRef.nidcompra           =   compra.nIdCompra;
+                this.formDocRef.cnrovin             =   compra.cNumeroVin;
+                this.formDocRef.nordencompra        =   compra.nOrdenCompra;
+                this.formDocRef.cnombrecomercial    =   compra.cNombreComercial;
+                this.formDocRef.naniofabricacion    =   compra.nAnioFabricacion;
+                this.formDocRef.naniomodelo         =   compra.nAnioVersion;
+                this.formDocRef.ccolor              =   compra.cNombreColor;
+                this.formDocRef.cmotor              =   compra.cNombreMotor;
                 this.obtenerFechaRegistroPedido();
                 this.listarDatosListaPrecioDetalle();
                 this.listarDetalleCotizacion();
                 this.llenarComboBanco();
                 this.llenarFormaPago();
+                this.llenarFormaFinanciamiento();
             },
             listarDetalleCotizacion(){
                 this.mostrarProgressBar();
@@ -2527,18 +2557,18 @@
                 var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion' :   this.formCompra.nidcabeceracotizacion
                     }
                 }).then(response => {
-                    this.formDocRef.fpreciolista = response.data[0].fPrecioLista;
-                    this.formDocRef.fprecioventap = response.data[0].fPrecioVentaP;
-                    this.formDocRef.fdescuentolista = response.data[0].fDescuento;
-                    this.formDocRef.fbono = response.data[0].fBono;
-                    this.formDocRef.fbonoespecial = response.data[0].fBonoEspecial;
-                    this.formDocRef.fpreciofinal = response.data[0].fSubTotalDolares;
-                    this.formDocRef.fsobreprecio = response.data[0].fSobrePrecio;
+                    this.formDocRef.fpreciolista    =   response.data[0].fPrecioLista;
+                    this.formDocRef.fprecioventap   =   response.data[0].fPrecioVentaP;
+                    this.formDocRef.fdescuentolista =   response.data[0].fDescuento;
+                    this.formDocRef.fbono           =   response.data[0].fBono;
+                    this.formDocRef.fbonoespecial   =   response.data[0].fBonoEspecial;
+                    this.formDocRef.fpreciofinal    =   response.data[0].fSubTotalDolares;
+                    this.formDocRef.fsobreprecio    =   response.data[0].fSobrePrecio;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2586,16 +2616,40 @@
                     }
                 });
             },
+            llenarFormaFinanciamiento(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110121
+                    }
+                }).then(response => {
+                    this.arrayFormaFinanciamiento = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             changeFormaPago(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
-                        'nidpar' : this.formDocRef.nidformapago,
-                        'ctipoparametro' : 'D',
-                        'nidtipopar': 0
+                        'nidpar'            :   this.formDocRef.nidformapago,
+                        'ctipoparametro'    :   'D',
+                        'nidtipopar'        :   0
                     }
                 }).then(response => {
+                    // OBTIENE EL VALOR SI (SI REQUIERE BANCO) O NO (SI NO REQUIERE BANCO)
                     this.cvalidabanco = response.data.arrayTipoParametro.data[0].cDatoParDescripcion;
+
+                    if (this.cvalidabanco == 'NO') {
+                        this.formDocRef.nidbanco = ''
+                        this.formDocRef.nidformafinanciamiento = ''
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2631,6 +2685,9 @@
                 };
                 if(this.cvalidabanco == 'SI' && (!this.formDocRef.nidbanco || this.formDocRef.nidbanco==0)){
                     this.mensajeError.push('Debes Seleccionar Banco');
+                }
+                if(this.cvalidabanco == 'SI' && (!this.formDocRef.nidformafinanciamiento || this.formDocRef.nidformafinanciamiento==0)){
+                    this.mensajeError.push('Debes Seleccionar un Tipo de Financiamiento');
                 }
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -2682,31 +2739,30 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
-                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
-                    'nIdCompra'     : this.formDocRef.nidcompra,
-                    'cNumeroPedido' : 'PEDIDO-001',
-                    'dFechaPedido'  : moment().format('YYYY-MM-DD'),
-                    'nIdFormaPago'  : this.formDocRef.nidformapago,
-                    'nIdBanco'      : this.formDocRef.nidbanco,
-                    'cGlosa'        : 'REGISTRO DE PEDIDO'
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraCotizacion' :   this.formCompra.nidcabeceracotizacion,
+                    'nIdCompra'             :   this.formDocRef.nidcompra,
+                    'cNumeroPedido'         :   'PEDIDO-001',
+                    'dFechaPedido'          :   moment().format('YYYY-MM-DD'),
+                    'nIdFormaPago'          :   this.formDocRef.nidformapago,
+                    'nIdBanco'              :   this.formDocRef.nidbanco,
+                    'nIdFormaFinanciamiento':   this.formDocRef.nidformafinanciamiento,
+                    'cGlosa'                :   'REGISTRO DE PEDIDO'
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
+                    if(response.data[0].nFlagMsje == 1) {
                         this.formPedido.nidcabecerapedido = response.data[0].nIdCabeceraPedido;
                         //this.obtenerPedidoById();
-                        if(this.attachment.length){
+                        if(this.attachment.length) {
                             this.subirArchivos(this.formPedido.nidcabecerapedido);
-                        }else{
+                        } else {
                             this.generarPedidoPDF(this.formPedido.nidcabecerapedido);
                             this.vistaFormularioPedido= 1;
                             this.limpiarFormulario();
                             $("#myBar").hide();
                             swal('Pedido registrado correctamente');
                         }
-                    }
-                    else{
+                    } else {
                         this.vistaFormularioPedido= 1;
                         this.limpiarFormulario();
                         $("#myBar").hide();
