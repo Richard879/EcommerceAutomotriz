@@ -3750,7 +3750,7 @@
                                 //================== ACTUALIZAR DOCENTRY FACTURA ===============
                                 setTimeout(function() {
                                     me.actualizaSgcFacturaProveedor(objWO);
-                                }, 3800);
+                                }, 800);
                             }
                         });
                     }).catch(error => {

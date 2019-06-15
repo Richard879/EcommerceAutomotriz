@@ -3846,6 +3846,83 @@
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
             },
+            /*generaSapFacturaReservaBorrador(){
+                let me = this;
+
+                    me.loading.close();
+                    me.loadingProgressBar("INTEGRANDO FACTURA DE RESERVA BORRADOR CON SAP BUSINESS ONE...");
+
+                    //=======================================================================
+                    //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
+                    var sapUrl = me.ruta + '/comprobante/SapSetFacturaReservaBorrador';
+                    axios.post(sapUrl, {
+                        'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                        'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                        'WarehouseCode'     :   me.formAlmacen.cwhscode,
+                        'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                        'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                        'arraySapPedido'    :   me.arraySapPedido
+                    }).then(response => {
+                        me.arraySapRespuesta= [];
+                        me.arraySapUpdSgc= [];
+
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(x){
+                            me.jsonRespuesta= JSON.parse(x);
+                            //Verifico que devuelva DocEntry
+                            if(me.jsonRespuesta.DocEntry){
+                                me.arraySapUpdSgc.push({
+                                    'cFlagTipo'         :   "V",
+                                    'cTipoComprobante'  :   "FR",
+                                    'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                    'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                    'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                    'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                    'cLogRespuesta'     :   response.data.toString()
+                                });
+
+                                //==============================================================
+                                //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                                setTimeout(function() {
+                                    me.actualizaSgcFacturaReservaBorrador();
+                                }, 800);
+                            }
+                        });
+                    }).catch(error => {
+                        me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+            },
+            actualizaSgcFacturaReservaBorrador(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data'  : me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        //==============================================================
+                        //================== REGISTRO TABLA COSTO EN SAP ===============
+                        setTimeout(function() {
+                            me.registroSapBusinessActividad();
+                        }, 800);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },*/
             // =================================================================
             // VER DETALLE PEDIDO
             // =================================================================

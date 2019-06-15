@@ -198,29 +198,31 @@ class SapComprobanteController extends Controller
         $ReceptionDate  = date('Y-m-d');
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
-        $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
+        /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
         [   Auth::user()->id
         ]);
-        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
+        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;*/
         //============================================================
 
 
-        $data = $request->data;
+        $data = $request->arraySapPedido;
         foreach ($data as $key => $value) {
 
             $json = [
                 'json' => [
-                    "CardCode"          =>  $request->cCardCode,
+                    "CardCode"          =>  (string)$value['cCardCode'],
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
+                    "SalesPersonCode"   =>  (string)$value['nSalesEmployeeCode'],
+                    "DocObjectCode"     =>  13, 
+                    "ReserveInvoice"    =>  "Y",
                     "DocumentLines"     =>  [
                         [
                             "ItemCode"          => (string)$value['cNumeroVin'],
                             "Quantity"          => "1",
                             "TaxCode"           => "IGV",
-                            "PriceAfterVAT"     => (string)$value['fTotalCompra'],
+                            "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
                             "Currency"          => "US$",
                             "WarehouseCode"     => (string)$request->cWarehouseCode,
                             "ProjectCode"       => (string)$value['cNumeroVin'],

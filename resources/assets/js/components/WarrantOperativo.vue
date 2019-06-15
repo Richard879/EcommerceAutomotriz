@@ -1795,8 +1795,8 @@
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
                             me.arraySapUpdSgc.push({
-                                'cTipo'             :   "WO",
-                                'cFlagTipo'         :   "FP",
+                                'cFlagTipo'         :   "WO",
+                                'cTipoComprobante'  :   "FP",
                                 'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                                 'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                                 'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
@@ -2364,8 +2364,8 @@
                             //Verifico que devuelva DocEntry
                             if(me.jsonRespuesta.DocEntry){
                                 me.arraySapUpdSgc.push({
-                                    'cFlagTipo'         :   "FP",
-                                    'cTipo'             :   'WO',
+                                    'cFlagTipo'         :   "WO",
+                                    'cTipoComprobante'  :   'FP',
                                     'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                                     'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                                     'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),

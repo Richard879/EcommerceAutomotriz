@@ -46,9 +46,9 @@ class IntComprobanteController extends Controller
             foreach($detalles as $ep=>$det)
             {
                 $objFactura = DB::select('exec [usp_Integra_SetIntegraComprobanteWarrant] ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cTipo'],
-                                                                $det['cFlagTipo'],
+                                                            [   $det['cFlagTipo'],
                                                                 $det['cItemCode'],
+                                                                $det['cTipoComprobante'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
