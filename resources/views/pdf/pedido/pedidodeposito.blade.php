@@ -107,7 +107,7 @@
             </tr>
             <tr>
                 <td>DNI/RUC:</td>
-                <td><strong>{{ $arrayDepositosPorPedido[0]->cNumeroDocumento }}</strong></td>
+                <td><strong>{{ $arrayDepositosPorPedido[0]->cPerDocumento }}</strong></td>
             </tr>
             <tr>
                 <td>Telf. Fijo:</td>
@@ -115,7 +115,7 @@
             </tr>
             <tr>
                 <td>Telf. Celular:</td>
-                <td><strong>{{ $arrayDepositosPorPedido[0]->cTelefonoMovil }}</strong></td>
+                <td><strong>{{ $arrayDepositosPorPedido[0]->nTelefonoMovil }}</strong></td>
             </tr>
         </table>
     </div>
