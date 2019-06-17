@@ -729,7 +729,7 @@
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Rechazar Credito Vehicular {{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="cambiarEstadoPedidoFinanciado(pedido, 2)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                            <i @click="abrirModal('pedido', 'financiamiento', pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -4213,32 +4213,29 @@
                     'cNumeroVin'        :   pedido.cItemCode,
                     'fSubTotalDolares'  :   pedido.fSubTotalDolares
                 }).then(response => {
-                    console.log(response.data);
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc    = [];
 
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x) {
-                        me.jsonRespuesta= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonRespuesta.DocEntry){
-                            me.arraySapUpdSgc.push({
-                                'cFlagTipo'         :   "V",
-                                'cTipoComprobante'  :   "FR",
-                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
-                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
-                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
-                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
-                                'cLogRespuesta'     :   response.data.toString()
-                            });
+                    me.jsonRespuesta= JSON.parse(me.arraySapRespuesta);
+                    //Verifico que devuelva DocEntry
+                    if(me.jsonRespuesta.DocEntry){
+                        me.arraySapUpdSgc.push({
+                            'cFlagTipo'         :   "V",
+                            'cTipoComprobante'  :   "FR",
+                            'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                            'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                            'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                            'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                            'cLogRespuesta'     :   response.data.toString()
+                        });
 
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                            setTimeout(function() {
-                                me.actualizaSgcFacturaReservaBorrador(mensaje);
-                            }, 800);
-                        }
-                    });
+                        //==============================================================
+                        //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                        setTimeout(function() {
+                            me.actualizaSgcFacturaReservaBorrador(mensaje);
+                        }, 800);
+                    }
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración de Factura Reserva Borrador SapB1");
                     console.log(error);
@@ -4454,14 +4451,21 @@
                                 this.modal = 1;
                                 this.verPedido(data);
                                 break;
-                            }break;
+                            }
+                            break;
                             case 'deposito':
                             {
                                 this.accionmodal=5;
                                 this.modal = 1;
                                 this.cargarDatosDetalleDeposito(data);
                                 break;
-                            }break;
+                            }
+                            break;
+                            case 'financiamiento':
+                            {
+                                this.accionmodal=6;
+                                this.modal = 1;
+                            }
                         }
                     }
                     break;

@@ -208,10 +208,10 @@ class SapComprobanteController extends Controller
                 "CardCode"          =>  (string)$request->cCardCode,
                 "DocDate"           =>  (string)$request->fDocDate,
                 "DocDueDate"        =>  (string)$request->fDocDueDate,
-                "DocCurrency"       =>  "US$",
+                "DocCurrency"       =>  "US$",//S/
                 "SalesPersonCode"   =>  (string)$request->nSalesEmployeeCode,
-                "DocObjectCode"     =>  13,
-                "ReserveInvoice"    =>  "Y",
+                "DocObjectCode"     =>  (string)13,
+                "ReserveInvoice"    =>  "tYES",//tYES,
                 "DocumentLines"     =>  [
                     [
                         "ItemCode"          => (string)$request->cNumeroVin,
