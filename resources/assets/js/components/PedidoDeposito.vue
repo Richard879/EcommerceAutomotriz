@@ -118,7 +118,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
+                                                                            <label class="col-sm-4 form-control-label">Nº Pedido</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
                                                                             </div>
