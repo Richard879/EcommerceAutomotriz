@@ -133,6 +133,7 @@ const app = new Vue({
         obtenerRolUsuario() {
             var url = this.ruta + '/usuario/GetInformacionUsuario';
             axios.get(url).then(response => {
+                sessionStorage.setItem("nTipoRol", response.data.usuario[0].nIdGrupoPar);
                 //PARA EL ADV
                 if (response.data.flag == 0 && response.data.usuario[0].nIdGrupoPar == '110083') {
                     swal('BUEN DÍA ' + response.data.usuario[0].cNombre + ', DEBE AGREGAR EL TIPO DE CAMBIO DEL DÍA');
