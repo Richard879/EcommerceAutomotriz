@@ -193,9 +193,8 @@ class SapComprobanteController extends Controller
             'base_uri'  => 'http://172.20.0.10:8020/'
         ]);
 
-        $array_rpta = [];
-        $rptaSap   = [];
-        $ReceptionDate  = date('Y-m-d');
+        // $array_rpta = [];
+        // $rptaSap   = [];
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
         /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
@@ -204,38 +203,36 @@ class SapComprobanteController extends Controller
         $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;*/
         //============================================================
 
-
-        $data = $request->arraySapPedido;
-        foreach ($data as $key => $value) {
-            $json = [
-                'json' => [
-                    "CardCode"          =>  (string)$value['cCardCode'],
-                    "DocDate"           =>  (string)$request->fDocDate,
-                    "DocDueDate"        =>  (string)$request->fDocDueDate,
-                    "DocCurrency"       =>  "US$",
-                    "SalesPersonCode"   =>  (string)$value['nSalesEmployeeCode'],
-                    "DocObjectCode"     =>  13,
-                    "ReserveInvoice"    =>  "Y",
-                    "DocumentLines"     =>  [
-                        [
-                            "ItemCode"          => (string)$value['cNumeroVin'],
-                            "Quantity"          => "1",
-                            "TaxCode"           => "IGV",
-                            "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
-                            "Currency"          => "US$",
-                            "WarehouseCode"     => (string)$request->cWarehouseCode,
-                            "ProjectCode"       => (string)$value['cNumeroVin'],
-                            "CostingCode2"      =>  "01", //UnidadDeNegocio
-                            "CostingCode3"      =>  (string)$request->nIdSapSucursal
-                        ]
+        $json = [
+            'json' => [
+                "CardCode"          =>  (string)$request->cCardCode,
+                "DocDate"           =>  (string)$request->fDocDate,
+                "DocDueDate"        =>  (string)$request->fDocDueDate,
+                "DocCurrency"       =>  "US$",
+                "SalesPersonCode"   =>  (string)$request->nSalesEmployeeCode,
+                "DocObjectCode"     =>  13,
+                "ReserveInvoice"    =>  "Y",
+                "DocumentLines"     =>  [
+                    [
+                        "ItemCode"          => (string)$request->cNumeroVin,
+                        "Quantity"          => "1",
+                        "TaxCode"           => "IGV",
+                        "PriceAfterVAT"     => (string)$request->fSubTotalDolares,
+                        "Currency"          => "US$",
+                        "WarehouseCode"     => (string)$request->cWarehouseCode,
+                        "ProjectCode"       => (string)$request->cNumeroVin,
+                        "CostingCode2"      =>  "01", //UnidadDeNegocio
+                        "CostingCode3"      =>  (string)$request->nIdSapSucursal
                     ]
                 ]
-            ];
+            ]
+        ];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaReservaBorrador/", $json);
-            $rptaSap = json_decode($response->getBody());
-            array_push($array_rpta, $rptaSap);
-        }
-        return $array_rpta;
+        $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaReservaBorrador/", $json);
+        return $response->getBody();
+
+        // $rptaSap = json_decode($response->getBody());
+        // array_push($array_rpta, $rptaSap);
+        // return $array_rpta;
     }
 }

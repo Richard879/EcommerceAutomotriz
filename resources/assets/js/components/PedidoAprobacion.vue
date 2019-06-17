@@ -4152,16 +4152,19 @@
             },
             cambiarEstadoPedidoFinanciado(pedido, op){
                 swal({
-                    title: '¿Esta seguro de' + (op == 1) ? 'Aprobar' : 'Rechazar' + 'el Credito Vehicular del Pedido N°' + pedido.nIdCabeceraPedido + '?',
+                    title: '¿Esta seguro de' + ((op == 1) ? ' Aprobar' : 'Rechazar') + ' el Credito Vehicular del Pedido N°' + pedido.nIdCabeceraPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si,' + (op == 1) ? 'Aprobar' : 'Rechazar',
+                    confirmButtonText: 'Si, ' + ((op == 1) ? 'Aprobar' : 'Rechazar'),
                     cancelButtonText: 'No, cerrar!'
                 }).then((result) => {
                     if (result.value) {
+
                         let me = this;
+                        me.mostrarProgressBar();
+
                         var url = me.ruta + '/pedido/SetCambiarEstadoPedidoFinanciado';
                         axios.put(url,{
                             'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -4170,14 +4173,16 @@
                             'cestadofinanciado' :   (op == 1) ? 'A' : 'R'
                         }).then(function (response) {
                             if(response.data[0].nFlagMsje == 1) {
-                                // swal(response.data[0].nFlagMsje, 'success')
+                                // swal(response.data[0].cMensaje, 'success')
+
+                                //Si es aprobaciòn para que integre la FR-Borrador
                                 if(op == 1) {
-                                    this.generaSapFacturaReservaBorrador();
+                                    me.generaSapFacturaReservaBorrador(pedido, response.data[0].cMensaje);
                                 }
                             }else{
                                 swal('Alerta!','Error en la transacción.')
                             }
-                            me.listarPedidosAprobadosCV(1);
+                            $("#myBar").hide();
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -4190,10 +4195,9 @@
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
             },
-            generaSapFacturaReservaBorrador(){
+            generaSapFacturaReservaBorrador(pedido, mensaje){
                 let me = this;
 
-                me.loading.close();
                 me.loadingProgressBar("INTEGRANDO FACTURA DE RESERVA BORRADOR CON SAP BUSINESS ONE...");
 
                 //=======================================================================
@@ -4202,16 +4206,19 @@
                 axios.post(sapUrl, {
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                    'WarehouseCode'     :   me.formAlmacen.cwhscode,
-                    'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'cWarehouseCode'    :   pedido.cWhsCode,
                     'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
-                    'arraySapPedido'    :   me.arraySapPedido
+                    'cCardCode'         :   pedido.cCardCode,
+                    'nSalesEmployeeCode':   pedido.nSalesEmployeeCode,
+                    'cNumeroVin'        :   pedido.cItemCode,
+                    'fSubTotalDolares'  :   pedido.fSubTotalDolares
                 }).then(response => {
-                    me.arraySapRespuesta= [];
-                    me.arraySapUpdSgc= [];
+                    console.log(response.data);
+                    me.arraySapRespuesta = [];
+                    me.arraySapUpdSgc    = [];
 
                     me.arraySapRespuesta = response.data;
-                    me.arraySapRespuesta.map(function(x){
+                    me.arraySapRespuesta.map(function(x) {
                         me.jsonRespuesta= JSON.parse(x);
                         //Verifico que devuelva DocEntry
                         if(me.jsonRespuesta.DocEntry){
@@ -4228,12 +4235,12 @@
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY FACTURA ===============
                             setTimeout(function() {
-                                me.actualizaSgcFacturaReservaBorrador();
+                                me.actualizaSgcFacturaReservaBorrador(mensaje);
                             }, 800);
                         }
                     });
                 }).catch(error => {
-                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                    me.limpiarPorError("Error en la Integración de Factura Reserva Borrador SapB1");
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -4243,7 +4250,7 @@
                     }
                 });
             },
-            actualizaSgcFacturaReservaBorrador(){
+            actualizaSgcFacturaReservaBorrador(mensaje){
                 let me = this;
 
                 var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
@@ -4251,11 +4258,9 @@
                     'data'  : me.arraySapUpdSgc
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        //==============================================================
-                        //================== REGISTRO TABLA COSTO EN SAP ===============
-                        setTimeout(function() {
-                            me.registroSapBusinessActividad();
-                        }, 800);
+                        me.loading.close();
+                        swal(mensaje)
+                        me.listarPedidosAprobadosCV(1);
                     }
                 }).catch(error => {
                     console.log(error);
