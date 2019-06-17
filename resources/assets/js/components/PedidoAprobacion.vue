@@ -576,7 +576,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidosAprobadosFinancia(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -584,7 +584,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidosAprobadosFinancia(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -624,7 +624,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidosAprobadosFinancia(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -632,7 +632,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidosAprobadosFinancia(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -671,7 +671,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidosAprobadosCV(1)">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidosAprobadosFinancia(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -694,16 +694,16 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>#Doc SAP</th>
-                                                                                <th>Código</th>
+                                                                                <!-- <th>Código</th> -->
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
-                                                                                <th>Vendedor</th>
-                                                                                <th>Vehiculo</th>
-                                                                                <th>Número VIN</th>
-                                                                                <th>Fecha Pedido</th>
                                                                                 <th>Forma Pago</th>
                                                                                 <th>Modalidad de Pago</th>
                                                                                 <th>Estado del Credito</th>
+                                                                                <th>Vehiculo</th>
+                                                                                <th>Número VIN</th>
+                                                                                <th>Fecha Pedido</th>
+                                                                                <th>Vendedor</th>
                                                                                 <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
@@ -735,16 +735,16 @@
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
-                                                                                <td v-text="pedido.nIdContacto"></td>
+                                                                                <!-- <td v-text="pedido.nIdContacto"></td> -->
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
-                                                                                <td v-text="pedido.cNombreVendedor"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
-                                                                                <td v-text="pedido.cNumeroVin"></td>
-                                                                                <td v-text="pedido.dFechaPedido"></td>
                                                                                 <td v-text="pedido.cFormaPago"></td>
                                                                                 <td v-text="pedido.cFormaFinanciamiento"></td>
                                                                                 <td v-text="pedido.cEstadoModalidadFinanciamiento"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNumeroVin"></td>
+                                                                                <td v-text="pedido.dFechaPedido"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.nDocEntryDetallePedido"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -1354,6 +1354,63 @@
                 </div>
             </div>
 
+            <!-- MODAL ASIGNACIÓN DIRECCIONES -->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">MOTIVO DEL RECHAZO DEL FINANCIAMIENTO DEL PEDIDO  {{ fillPedidoFinanciamiento.cnumeropedido }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-md-2 form-control-label">*Observación</label>
+                                                        <div class="col-md-10 widthFull">
+                                                            <el-input
+                                                                type="textarea"
+                                                                autosize
+                                                                clearable
+                                                                v-model="fillPedidoFinanciamiento.cglosa">
+                                                            </el-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-9 offset-md-5">
+                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="rechazarFinanciamiento">
+                                                                    <i class="fa fa-save"></i> Guardar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1407,6 +1464,11 @@
                 arrayPedidos: [],
                 //========================  TAB GENERAR PEDIDO CREDITO VEHICULAR====================
                 arrayPedidosCreditoVehicular: [],
+                fillPedidoFinanciamiento: {
+                    nidcabecerapedido: '',
+                    cnumeropedido: '',
+                    cglosa: ''
+                },
                 //=========================== MODAL DETALLE PEDIDO ===================
                 fillDetallePedido:{
                     nidcabecerapedido: 0,
@@ -4107,7 +4169,7 @@
             tabAprobarPedidoCV(){
                 this.limpiarFormulario();
             },
-            listarPedidosAprobadosCV(page){
+            listarPedidosAprobadosFinancia(page){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/pedido/GetListPedidoAprobadosCV';
@@ -4148,7 +4210,7 @@
             },
             cambiarPaginaPedidoAprobadoCV(page){
                 this.pagination.current_page=page;
-                this.listarPedidosAprobadosCV(page);
+                this.listarPedidosAprobadosFinancia(page);
             },
             cambiarEstadoPedidoFinanciado(pedido, op){
                 swal({
@@ -4170,12 +4232,11 @@
                             'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                             'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
                             'nidcabecerapedido' :   parseInt(pedido.nIdCabeceraPedido),
+                            'cglosa'            :   (op == 1) ? 'El Financiamiento ha sido aprobado de manera exitosa' : '',
                             'cestadofinanciado' :   (op == 1) ? 'A' : 'R'
                         }).then(function (response) {
                             if(response.data[0].nFlagMsje == 1) {
-                                // swal(response.data[0].cMensaje, 'success')
-
-                                //Si es aprobaciòn para que integre la FR-Borrador
+                                //Si es aprobaciòn (1) para que integre la FR-Borrador
                                 if(op == 1) {
                                     me.generaSapFacturaReservaBorrador(pedido, response.data[0].cMensaje);
                                 }
@@ -4257,7 +4318,7 @@
                     if(response.data[0].nFlagMsje == 1){
                         me.loading.close();
                         swal(mensaje)
-                        me.listarPedidosAprobadosCV(1);
+                        me.listarPedidosAprobadosFinancia(1);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -4268,6 +4329,53 @@
                         }
                     }
                 });
+            },
+            rechazarFinanciamiento(){
+                if(this.validarRechazoFinanciamiento()){
+                    return;
+                }
+
+                let me = this;
+
+                var url = me.ruta + '/pedido/SetCambiarEstadoPedidoFinanciado';
+                axios.put(url,{
+                    'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nidcabecerapedido' :   parseInt(me.fillPedidoFinanciamiento.nidcabecerapedido),
+                    'cglosa'            :   me.fillPedidoFinanciamiento.cglosa,
+                    'cestadofinanciado' :   'R'
+                }).then(function (response) {
+                    if(response.data[0].nFlagMsje == 1) {
+                        swal(response.data[0].cMensaje)
+                        me.cerrarModal()
+                    }else{
+                        swal('Alerta!','Error en la transacción.')
+                        me.cerrarModal();
+                    }
+                    me.listarPedidosAprobadosFinancia(1);
+                    $("#myBar").hide();
+                }).catch(function (error) {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarRechazoFinanciamiento(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.fillPedidoFinanciamiento.cglosa){
+                    this.mensajeError.push('Debe ingresar el motivo del rechazo');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =================================================================
             // VER DETALLE PEDIDO
@@ -4463,6 +4571,9 @@
                             break;
                             case 'financiamiento':
                             {
+                                this.fillPedidoFinanciamiento.nidcabecerapedido =   data.nIdCabeceraPedido
+                                this.fillPedidoFinanciamiento.cnumeropedido     =   data.cNumeroPedido
+                                this.fillPedidoFinanciamiento.cglosa            =   data.cGlosa
                                 this.accionmodal=6;
                                 this.modal = 1;
                             }

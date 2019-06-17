@@ -580,6 +580,7 @@ class ExcelController extends Controller
         $nidvendedor        =   $request->nidvendedor;
         $nidcronograma      =   $request->nidcronograma;
         $nidestadopedido    =   $request->nidestadopedido;
+        $nIdUsuario         =   Auth::user()->id;
 
         $nidsucursal        =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
         $nidvendedor        =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
@@ -588,12 +589,13 @@ class ExcelController extends Controller
 
         $opcion             =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetEstadoPedido] ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetEstadoPedido] ?, ?, ?, ?, ?',
                                             [
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidcronograma,
-                                                $nidestadopedido
+                                                $nidestadopedido,
+                                                $nIdUsuario
                                             ]);
 
         if ($opcion == 1) {

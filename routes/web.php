@@ -201,6 +201,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
     Route::get('/pedido/GetDocumentoByFormaPago', 'PedidoController@GetDocumentoByFormaPago');
     Route::get('/pedido/GetDocumentosById', 'PedidoController@GetDocumentosById');
+    Route::get('/pedido/GetEstadoPedidoFinanciado', 'PedidoController@GetEstadoPedidoFinanciado');
     Route::put('/pedido/SetAnularPedido', 'PedidoController@SetAnularPedido');
     Route::get('/pedido/GetLstDetallePedido', 'PedidoController@GetLstDetallePedido');
     Route::post('/pedido/GetDetallePedido', 'PedidoController@GetDetallePedido');

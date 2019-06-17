@@ -516,12 +516,16 @@ class PedidoController extends Controller
         $nIdSucursal        =   $request->nidsucursal;
         $nIdCabeceraPedido  =   $request->nidcabecerapedido;
         $cEstadoFinanciado  =   $request->cestadofinanciado;
+        $cglosa             =   $request->cglosa;
 
-        $objPedido = DB::select('exec [usp_Pedido_SetCambiarEstadoPedidoFinanciado] ?, ?, ?, ?, ?',
+        $cglosa             =   ($cglosa == NULL) ? ($cglosa = '') : $cglosa;
+
+        $objPedido = DB::select('exec [usp_Pedido_SetCambiarEstadoPedidoFinanciado] ?, ?, ?, ?, ?, ?',
                                                     [   $nIdEmpresa,
                                                         $nIdSucursal,
                                                         $nIdCabeceraPedido,
                                                         $cEstadoFinanciado,
+                                                        $cglosa,
                                                         Auth::user()->id
                                                     ]);
         return response()->json($objPedido);
@@ -562,6 +566,29 @@ class PedidoController extends Controller
             $arrayPedidoDoumento = ParametroController::arrayPaginator($arrayPedidoDoumento, $request);
         }
         return ['arrayPedidoDoumento'=>$arrayPedidoDoumento];
+    }
+
+    public function GetEstadoPedidoFinanciado(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
+        $variable           =   $request->opcion;
+        $variable           =   ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayPedidoFinanciado = DB::select('exec [usp_Pedido_GetPedidoFinanciado] ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido,
+                                        Auth::user()->id
+                                    ]);
+        if($variable == "0"){
+            $arrayPedidoFinanciado = ParametroController::arrayPaginator($arrayPedidoFinanciado, $request);
+        }
+        return ['arrayPedidoFinanciado'=>$arrayPedidoFinanciado];
     }
 
     public function SetAnularPedido(Request $request)

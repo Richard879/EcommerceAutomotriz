@@ -37,7 +37,7 @@
             </section>
 
             <!--Marketing y Ventas || ADV/Gerencia-->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
                         <div class="col-xs-12" style="width: 100%;">
@@ -58,13 +58,13 @@
                                     <div class="title"><span><br>Descuentos Otorgados</span></div>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('pedido-deposito', 'abrir', 'ESTADO DE PEDIDOS CON DEPOSITO')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Estado de Pedidos con Deposito</span></div>
-                                </div>
-                            </div>
                         </template>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-violet" @click="abrirModal('pedido-deposito', 'abrir', 'ESTADO DE PEDIDOS CON DEPOSITO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                <div class="title"><span><br>Estado de Pedidos con Deposito</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1997,6 +1997,9 @@
                                                                                 <th>MONTO DEPOSITADO</th>
                                                                                 <th>% DEPOSITADO</th>
                                                                                 <th>ESTADO PEDIDO</th>
+                                                                                <th>NUMERO DEPOSITOS</th>
+                                                                                <th>NUMERO ANTICIPOS</th>
+                                                                                <th>ESTADO FACTURACIÓN (SAP)</th>
                                                                                 <th>ASESOR COMERCIAL</th>
                                                                                 <th>CONTACTO</th>
                                                                                 <th>NUM DOCUMENTO</th>
@@ -2019,6 +2022,9 @@
                                                                                 <td> {{ Number((parseFloat(pedido.MONTO_DEPOSITADO)).toFixed(2)) }} </td>
                                                                                 <td> {{ Number((parseFloat(pedido.PORCENTAJE_DEPOSITADO)).toFixed(2)) }} </td>
                                                                                 <td v-text="pedido.ESTADO_PEDIDO"></td>
+                                                                                <td v-text="pedido.NUMERO_DEPOSITOS"></td>
+                                                                                <td v-text="pedido.NUMERO_ANTICIPOS"></td>
+                                                                                <td v-text="pedido.ESTADO_FACTURACION"></td>
                                                                                 <td v-text="pedido.ASESOR_COMERCIAL"></td>
                                                                                 <td v-text="pedido.CONTACTO"></td>
                                                                                 <td v-text="pedido.N_DOCUMENTO"></td>
