@@ -459,7 +459,7 @@ class PedidoController extends Controller
     }
 
     // ====================    CREDITO VEHICULAR ====================
-    public function GetListPedidoAprobadosCV(Request $request)
+    public function GetListPedidoAprobadosFinanciado(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -487,7 +487,7 @@ class PedidoController extends Controller
         $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
         $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
 
-        $arrayPedidoCV = DB::select('exec [usp_Pedido_GetListPedidoAprobadosCV] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedidoCV = DB::select('exec [usp_Pedido_GetListPedidoAprobadosFinanciado] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdEmpresa,
                                                                             $nIdSucursal,

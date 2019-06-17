@@ -1087,6 +1087,28 @@
                                                 </tbody>
                                             </table>
                                         </template>
+                                        <!-- DETALLE PEDIDO FINANCIADO -->
+                                        <template v-if="arrayPedidoFinanciado.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Estado Pedido Financiado
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Estado</th>
+                                                            <th>Observación</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(financiado, index) in arrayPedidoFinanciado" :key="index">
+                                                            <td v-text="financiado.cEstadoModalidadFinanciamiento"></td>
+                                                            <td v-text="financiado.cGlosa"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
                                         <!--<div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="aprobarPedidoModal()">
@@ -1494,6 +1516,7 @@
                 },
                 arrayDetallePedido: [],
                 arrayPedidoDoumento: [],
+                arrayPedidoFinanciado: [],
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
@@ -4172,7 +4195,7 @@
             listarPedidosAprobadosFinancia(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetListPedidoAprobadosCV';
+                var url = this.ruta + '/pedido/GetListPedidoAprobadosFinanciado';
                 axios.get(url, {
                     params: {
                         'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -4396,6 +4419,7 @@
                 this.fillDetallePedido.ftotalpedidodolares = pedido.fTotalPedidoDolares,
                 this.verDetallePedido(pedido);
                 this.verDocumentosPedido(pedido);
+                this.verEstadoPedidoFinanciado(pedido);
             },
             verDetallePedido(pedido){
                 this.mostrarProgressBar();
@@ -4449,6 +4473,27 @@
                     }
                 }).then(response => {
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            verEstadoPedidoFinanciado(pedido){
+                var url = this.ruta + '/pedido/GetEstadoPedidoFinanciado';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido' : pedido.nIdCabeceraPedido,
+                        'opcion'            : 1
+                    }
+                }).then(response => {
+                    this.arrayPedidoFinanciado = response.data.arrayPedidoFinanciado;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
