@@ -458,6 +458,75 @@ class PedidoController extends Controller
         return ['arrayPedido'=>$arrayPedido];
     }
 
+    // ====================    CREDITO VEHICULAR ====================
+    public function GetListPedidoAprobadosCV(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $dFechaInicio       =   $request->dfechainicio;
+        $dFechaFin          =   $request->dfechafin;
+        $cNumeroPedido      =   $request->cnumeropedido;
+        $cNumeroVin         =   $request->cnumerovin;
+        $nIdMarca           =   $request->nidmarca;
+        $nIdModelo          =   $request->nidmodelo;
+        $nIdEstadoPedido    =   $request->nidestadopedido;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
+        $ntipopersona       =   $request->ntipopersona;
+
+        $dFechaInicio       =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin          =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido      =   ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin         =   ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca           =   ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo          =   ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido    =   ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
+
+        $arrayPedidoCV = DB::select('exec [usp_Pedido_GetListPedidoAprobadosCV] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [
+                                                                            $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $cNumeroPedido,
+                                                                            $cNumeroVin,
+                                                                            $nIdMarca,
+                                                                            $nIdModelo,
+                                                                            $nIdEstadoPedido,
+                                                                            $cContacto,
+                                                                            $cNumeroDocumento,
+                                                                            $ntipopersona,
+                                                                            Auth::user()->id
+                                                                        ]);
+
+        $arrayPedidoCV = ParametroController::arrayPaginator($arrayPedidoCV, $request);
+        return ['arrayPedidoCV'=>$arrayPedidoCV];
+    }
+
+    public function SetCambiarEstadoPedidoFinanciado(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nidcabecerapedido;
+        $cEstadoFinanciado  =   $request->cestadofinanciado;
+
+        $objPedido = DB::select('exec [usp_Pedido_SetCambiarEstadoPedidoFinanciado] ?, ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $nIdCabeceraPedido,
+                                                        $cEstadoFinanciado,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($objPedido);
+    }
+
     public function GetDocumentoByFormaPago(Request $request)
     {
         $nIdFormaPago   =   $request->nidformapago;

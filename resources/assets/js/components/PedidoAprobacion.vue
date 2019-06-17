@@ -26,6 +26,11 @@
                                             <i class="fa fa-bus"></i> APROBAR PEDIDOS
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabAprobarPedidoCV" @click="tabAprobarPedidoCV()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bus"></i> APROBAR CREDITO VEHICULAR
+                                        </a>
+                                    </li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -513,6 +518,254 @@
                                                                                     </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="tab-pane fade" id="TabAprobarPedidoCV">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR PEDIDOS APROBADOS PARA GENERAR CREDITO VEHICULAR</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillPedido.dfechainicio"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillPedido.dfechafin"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Pedido</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidosAprobadosCV(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillBusquedaPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                    <el-option
+                                                                                        v-for="item in arrayMarca"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                    <el-option
+                                                                                        v-for="item in arrayModelo"
+                                                                                        :key="item.nIdModelo"
+                                                                                        :label="item.cModeloNombre"
+                                                                                        :value="item.nIdModelo">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidosAprobadosCV(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayPedidosCreditoVehicular.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Nro Pedido</th>
+                                                                                <th>#Doc SAP</th>
+                                                                                <th>Código</th>
+                                                                                <th>Contacto</th>
+                                                                                <th>Documento</th>
+                                                                                <th>Vendedor</th>
+                                                                                <th>Vehiculo</th>
+                                                                                <th>Número VIN</th>
+                                                                                <th>Fecha Pedido</th>
+                                                                                <th>Forma Pago</th>
+                                                                                <th>Modalidad de Pago</th>
+                                                                                <th>Estado del Credito</th>
+                                                                                <th>DocEntry</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(pedido, index) in arrayPedidosCreditoVehicular" :key="index">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="generarCartaResponsabilidadPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="pedido.cFlagEstadoFinanciamiento == 'P'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Aprobar Credito Vehicular {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="cambiarEstadoPedidoFinanciado(pedido, 1)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Rechazar Credito Vehicular {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="cambiarEstadoPedidoFinanciado(pedido, 2)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
+                                                                                </td>
+                                                                                <td v-text="pedido.cNumeroPedido"></td>
+                                                                                <td v-text="pedido.nDocNum"></td>
+                                                                                <td v-text="pedido.nIdContacto"></td>
+                                                                                <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cPerDocumento"></td>
+                                                                                <td v-text="pedido.cNombreVendedor"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cNumeroVin"></td>
+                                                                                <td v-text="pedido.dFechaPedido"></td>
+                                                                                <td v-text="pedido.cFormaPago"></td>
+                                                                                <td v-text="pedido.cFormaFinanciamiento"></td>
+                                                                                <td v-text="pedido.cEstadoModalidadFinanciamiento"></td>
+                                                                                <td v-text="pedido.nDocEntryDetallePedido"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaPedidoAprobadoCV(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaPedidoAprobadoCV(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaPedidoAprobadoCV(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </nav>
@@ -1128,16 +1381,16 @@
                 ],
                 //========================  TAB PEDIDOS APROBADOS ====================
                 fillPedido:{
+                    ccontacto: '',
+                    cnrodocumento: '',
                     dfechainicio: '',
                     dfechafin: '',
                     cnumeropedido: '',
                     cnumerovin: '',
-                    nidestadopedido: '',
-                    ntipopersona: 1,
-                    ccontacto: '',
-                    cnrodocumento: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    nidestadopedido: '',
+                    ntipopersona: 1
                 },
                 arrayPedidosAprobados: [],
                 //========================  TAB APROBAR PEDIDO ====================
@@ -1152,6 +1405,8 @@
                     cnrodocumento: ''
                 },
                 arrayPedidos: [],
+                //========================  TAB GENERAR PEDIDO CREDITO VEHICULAR====================
+                arrayPedidosCreditoVehicular: [],
                 //=========================== MODAL DETALLE PEDIDO ===================
                 fillDetallePedido:{
                     nidcabecerapedido: 0,
@@ -1354,8 +1609,10 @@
             },
         },
         methods: {
+            //================================================================
+            //====================== TAB PEDIDOS APROBADOS=====================
             tabBuscaPedidoAprobado(){
-                this.arrayPedidosAprobados= [];
+                this.limpiarFormulario();
             },
             listarPedidosAprobados(page){
                 this.mostrarProgressBar();
@@ -2281,7 +2538,7 @@
             //================================================================
             //====================== TAB APROBAR PEDIDOS =====================
             tabAprobarPedido(){
-                this.arrayPedidos= [];
+                this.limpiarFormulario();
             },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -3845,58 +4102,146 @@
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
             },
-            /*generaSapFacturaReservaBorrador(){
-                let me = this;
+            //=====================================================================================
+            //====================== TAB APROBAR PEDIDOS CON CREDITO VEHICULAR=====================
+            tabAprobarPedidoCV(){
+                this.limpiarFormulario();
+            },
+            listarPedidosAprobadosCV(page){
+                this.mostrarProgressBar();
 
-                    me.loading.close();
-                    me.loadingProgressBar("INTEGRANDO FACTURA DE RESERVA BORRADOR CON SAP BUSINESS ONE...");
-
-                    //=======================================================================
-                    //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
-                    var sapUrl = me.ruta + '/comprobante/SapSetFacturaReservaBorrador';
-                    axios.post(sapUrl, {
-                        'fDocDate'          :   moment().format('YYYY-MM-DD'),
-                        'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
-                        'WarehouseCode'     :   me.formAlmacen.cwhscode,
-                        'Igv'               :   1 + parseFloat((me.formSap.igv)),
-                        'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
-                        'arraySapPedido'    :   me.arraySapPedido
-                    }).then(response => {
-                        me.arraySapRespuesta= [];
-                        me.arraySapUpdSgc= [];
-
-                        me.arraySapRespuesta = response.data;
-                        me.arraySapRespuesta.map(function(x){
-                            me.jsonRespuesta= JSON.parse(x);
-                            //Verifico que devuelva DocEntry
-                            if(me.jsonRespuesta.DocEntry){
-                                me.arraySapUpdSgc.push({
-                                    'cFlagTipo'         :   "V",
-                                    'cTipoComprobante'  :   "FR",
-                                    'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
-                                    'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
-                                    'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
-                                    'cDocType'          :   me.jsonRespuesta.DocType.toString(),
-                                    'cLogRespuesta'     :   response.data.toString()
-                                });
-
-                                //==============================================================
-                                //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                                setTimeout(function() {
-                                    me.actualizaSgcFacturaReservaBorrador();
-                                }, 800);
+                var url = this.ruta + '/pedido/GetListPedidoAprobadosCV';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio'      :   this.fillPedido.dfechainicio,
+                        'dfechafin'         :   this.fillPedido.dfechafin,
+                        'cnumeropedido'     :   this.fillPedido.cnumeropedido,
+                        'cnumerovin'        :   this.fillPedido.cnumerovin,
+                        'nidmarca'          :   this.fillBusquedaPedido.nidmarca,
+                        'nidmodelo'         :   this.fillBusquedaPedido.nidmodelo,
+                        'nidestadopedido'   :   this.fillPedido.nidestadopedido,
+                        'ccontacto'         :   this.fillPedido.ccontacto,
+                        'cnrodocumento'     :   this.fillPedido.cnrodocumento,
+                        'ntipopersona'      :   this.fillPedido.ntipopersona,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayPedidosCreditoVehicular   =   response.data.arrayPedidoCV.data;
+                    this.pagination.current_page        =   response.data.arrayPedidoCV.current_page;
+                    this.pagination.total               =   response.data.arrayPedidoCV.total;
+                    this.pagination.per_page            =   response.data.arrayPedidoCV.per_page;
+                    this.pagination.last_page           =   response.data.arrayPedidoCV.last_page;
+                    this.pagination.from                =   response.data.arrayPedidoCV.from;
+                    this.pagination.to                  =   response.data.arrayPedidoCV.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaPedidoAprobadoCV(page){
+                this.pagination.current_page=page;
+                this.listarPedidosAprobadosCV(page);
+            },
+            cambiarEstadoPedidoFinanciado(pedido, op){
+                swal({
+                    title: '¿Esta seguro de' + (op == 1) ? 'Aprobar' : 'Rechazar' + 'el Credito Vehicular del Pedido N°' + pedido.nIdCabeceraPedido + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si,' + (op == 1) ? 'Aprobar' : 'Rechazar',
+                    cancelButtonText: 'No, cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        var url = me.ruta + '/pedido/SetCambiarEstadoPedidoFinanciado';
+                        axios.put(url,{
+                            'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nidsucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nidcabecerapedido' :   parseInt(pedido.nIdCabeceraPedido),
+                            'cestadofinanciado' :   (op == 1) ? 'A' : 'R'
+                        }).then(function (response) {
+                            if(response.data[0].nFlagMsje == 1) {
+                                // swal(response.data[0].nFlagMsje, 'success')
+                                if(op == 1) {
+                                    this.generaSapFacturaReservaBorrador();
+                                }
+                            }else{
+                                swal('Alerta!','Error en la transacción.')
+                            }
+                            me.listarPedidosAprobadosCV(1);
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
                             }
                         });
-                    }).catch(error => {
-                        me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            generaSapFacturaReservaBorrador(){
+                let me = this;
+
+                me.loading.close();
+                me.loadingProgressBar("INTEGRANDO FACTURA DE RESERVA BORRADOR CON SAP BUSINESS ONE...");
+
+                //=======================================================================
+                //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
+                var sapUrl = me.ruta + '/comprobante/SapSetFacturaReservaBorrador';
+                axios.post(sapUrl, {
+                    'fDocDate'          :   moment().format('YYYY-MM-DD'),
+                    'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode'     :   me.formAlmacen.cwhscode,
+                    'Igv'               :   1 + parseFloat((me.formSap.igv)),
+                    'nIdSapSucursal'    :   parseInt(sessionStorage.getItem("nIdSapSucursal")),
+                    'arraySapPedido'    :   me.arraySapPedido
+                }).then(response => {
+                    me.arraySapRespuesta= [];
+                    me.arraySapUpdSgc= [];
+
+                    me.arraySapRespuesta = response.data;
+                    me.arraySapRespuesta.map(function(x){
+                        me.jsonRespuesta= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonRespuesta.DocEntry){
+                            me.arraySapUpdSgc.push({
+                                'cFlagTipo'         :   "V",
+                                'cTipoComprobante'  :   "FR",
+                                'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
+                                'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
+                                'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
+                                'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                                'cLogRespuesta'     :   response.data.toString()
+                            });
+
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.actualizaSgcFacturaReservaBorrador();
+                            }, 800);
                         }
                     });
+                }).catch(error => {
+                    me.limpiarPorError("Error en la Integración de Factura Proveedor SapB1");
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             actualizaSgcFacturaReservaBorrador(){
                 let me = this;
@@ -3921,7 +4266,7 @@
                         }
                     }
                 });
-            },*/
+            },
             // =================================================================
             // VER DETALLE PEDIDO
             // =================================================================
@@ -4172,6 +4517,22 @@
                 this.SAPNuevoContactoJson = ''
             },
             limpiarFormulario(){
+                //=====Busqueda de Formularios
+                this.fillPedido.ccontacto       = '';
+                this.fillPedido.cnrodocumento   = '';
+                this.fillPedido.dfechainicio    = '';
+                this.fillPedido.dfechafin       = '';
+                this.fillPedido.cnumeropedido   = '';
+                this.fillPedido.cnumerovin      = '';
+                this.fillPedido.nidmarca        = '';
+                this.fillPedido.nidmodelo       = '';
+                this.fillPedido.nidestadopedido = '';
+                this.fillPedido.ntipopersona    = 1;
+
+                this.arrayPedidosAprobados          = [];
+                this.arrayPedidos                   = [];
+                this.arrayPedidosCreditoVehicular   = [];
+
                 //=====Variables SAP para OrdenVenta Vehiculo
                 this.arraySapRespuestaVehiculo= [],
                 this.arraySapUpdSgcVehiculo= [],

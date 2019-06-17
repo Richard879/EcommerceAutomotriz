@@ -207,7 +207,6 @@ class SapComprobanteController extends Controller
 
         $data = $request->arraySapPedido;
         foreach ($data as $key => $value) {
-
             $json = [
                 'json' => [
                     "CardCode"          =>  (string)$value['cCardCode'],
@@ -215,7 +214,7 @@ class SapComprobanteController extends Controller
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
                     "SalesPersonCode"   =>  (string)$value['nSalesEmployeeCode'],
-                    "DocObjectCode"     =>  13, 
+                    "DocObjectCode"     =>  13,
                     "ReserveInvoice"    =>  "Y",
                     "DocumentLines"     =>  [
                         [
