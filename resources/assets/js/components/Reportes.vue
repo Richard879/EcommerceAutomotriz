@@ -10,31 +10,29 @@
             </header>
 
             <!--CONSULTAS/RETAIL || ADV/Gerencia-->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                <div class="container-fluid">
-                    <div class="row bg-white has-shadow">
-                        <div class="col-xs-12" style="width: 100%;">
-                            <h3>CONSULTAS/RETAIL</h3>
+            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096 || formLogin.nIdRol == 110121">
+                <section class="dashboard-counts no-padding-bottom">
+                    <div class="container-fluid">
+                        <div class="row bg-white has-shadow">
+                            <div class="col-xs-12" style="width: 100%;">
+                                <h3>CONSULTAS/RETAIL</h3>
+                            </div>
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet" @click="abrirModal('ventaretail', 'abrir', 'VENTA RETAIL')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Detalle Venta Retail</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet" @click="abrirModal('ventahgsi', 'abrir', 'VENTA HGSI')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Ventas HGSI</span></div>
+                                    </div>
+                                </div>
                         </div>
-
-                        <!-- JV/ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('ventaretail', 'abrir', 'VENTA RETAIL')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Detalle Venta Retail</span></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('ventahgsi', 'abrir', 'VENTA HGSI')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Ventas HGSI</span></div>
-                                </div>
-                            </div>
-                        </template>
                     </div>
-                </div>
-            </section>
+                </section>
+            </template>
 
             <!--Marketing y Ventas || ADV/Gerencia-->
             <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
