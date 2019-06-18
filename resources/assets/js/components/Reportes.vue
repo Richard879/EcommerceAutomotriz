@@ -1997,8 +1997,12 @@
                                                                                 <th>MONTO DEPOSITADO</th>
                                                                                 <th>% DEPOSITADO</th>
                                                                                 <th>ESTADO PEDIDO</th>
-                                                                                <th>NUMERO DEPOSITOS</th>
-                                                                                <th>NUMERO ANTICIPOS</th>
+                                                                                <th>N° DEPOSITOS</th>
+                                                                                <th>DEPOSITOS APROBADOS</th>
+                                                                                <th>DEPOSITOS PENDIENTES</th>
+                                                                                <th>DEPOSITOS RECHAZADOS</th>
+                                                                                <th>N° ANTICIPOS</th>
+                                                                                <th>ANTICIPOS FACTURADOS</th>
                                                                                 <th>ESTADO FACTURACIÓN (SAP)</th>
                                                                                 <th>ASESOR COMERCIAL</th>
                                                                                 <th>CONTACTO</th>
@@ -2022,8 +2026,12 @@
                                                                                 <td> {{ Number((parseFloat(pedido.MONTO_DEPOSITADO)).toFixed(2)) }} </td>
                                                                                 <td> {{ Number((parseFloat(pedido.PORCENTAJE_DEPOSITADO)).toFixed(2)) }} </td>
                                                                                 <td v-text="pedido.ESTADO_PEDIDO"></td>
-                                                                                <td v-text="pedido.NUMERO_DEPOSITOS"></td>
-                                                                                <td v-text="pedido.NUMERO_ANTICIPOS"></td>
+                                                                                <td v-text="pedido.TOTAL_DEPOSITOS"></td>
+                                                                                <td v-text="pedido.DEPOSITOS_APROBADO"></td>
+                                                                                <td v-text="pedido.DEPOSITOS_PENDIENTE"></td>
+                                                                                <td v-text="pedido.DEPOSITOS_DESAPROBADO"></td>
+                                                                                <td v-text="pedido.TOTAL_ANTICIPOS"></td>
+                                                                                <td v-text="pedido.TOTAL_ANTICIPOS_FACTURADOS"></td>
                                                                                 <td v-text="pedido.ESTADO_FACTURACION"></td>
                                                                                 <td v-text="pedido.ASESOR_COMERCIAL"></td>
                                                                                 <td v-text="pedido.CONTACTO"></td>
@@ -2823,7 +2831,7 @@
                         'nidvendedor'       :   this.formFiltro.nidvendedor,
                         'nidcronograma'     :   this.formFiltro.nidcronograma,
                         'nidestadopedido'   :   this.formFiltro.nidestadopedido,
-                        'opcion'        :   1,
+                        'opcion'            :   1,
                     }
                 }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
