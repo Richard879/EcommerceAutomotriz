@@ -209,113 +209,109 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayDetalleVentaRetail.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>COMPANIA&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Metas de Venta(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>CONCESIONARIO</th>
-                                                                                <th>TIENDA</th>
-                                                                                <th>N° PEDIDO</th>
-                                                                                <th>FECHA PEDIDO</th>
-                                                                                <th>CLIENTE</th>
-                                                                                <th>Nª DOCUMENTO</th>
-                                                                                <th>CODIGO ASESOR</th>
-                                                                                <th>ASESOR COMERCIAL</th>
-                                                                                <th>ESTADO PEDIDO</th>
-                                                                                <th>ESTADO DEPOSITO</th>
-                                                                                <th>TIPO VENTA</th>
-                                                                                <th>MARCA</th>
-                                                                                <th>MODELO</th>
-                                                                                <th>NOMBRE COMERCIAL</th>
-                                                                                <th>VIN</th>
-                                                                                <th>AÑO MODELO</th>
-                                                                                <th>ENTIDAD FINAN</th>
-                                                                                <th>IMPORTE SOLES</th>
-                                                                                <th>IMPORTE DOLARES</th>
-                                                                                <th>DESCUENTO</th>
-                                                                                <th>SOBRE PRECIO</th>
-                                                                                <th>PRECIO CIERRE LP</th>
-                                                                                <th>PRECIO CIERRE CLIENTE</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(ventaretail, index) in arrayDetalleVentaRetail" :key="index">
-                                                                                <td v-text="ventaretail.COMPANIA"></td>
-                                                                                <td v-text="ventaretail.CONCESIONARIO"></td>
-                                                                                <td v-text="ventaretail.TIENDA"></td>
-                                                                                <td v-text="ventaretail.NRO_PEDIDO"></td>
-                                                                                <td v-text="ventaretail.FECHA_PEDIDO"></td>
-                                                                                <td v-text="ventaretail.DESC_CLIENTE"></td>
-                                                                                <td v-text="ventaretail.NDOCUMENTO"></td>
-                                                                                <td v-text="ventaretail.COD_VENDEDOR"></td>
-                                                                                <td v-text="ventaretail.NOM_VENDEDOR"></td>
-                                                                                <td v-text="ventaretail.STATUS_PEDIDO"></td>
-                                                                                <td v-text="ventaretail.STATUS_DEPOSITO"></td>
-                                                                                <td v-text="ventaretail.TIPO_VENTA"></td>
-                                                                                <td v-text="ventaretail.MARCA"></td>
-                                                                                <td v-text="ventaretail.MODELO"></td>
-                                                                                <td v-text="ventaretail.NOMBRE_COMERCIAL"></td>
-                                                                                <td v-text="ventaretail.VIN"></td>
-                                                                                <td v-text="ventaretail.ANIO_MODEL"></td>
-                                                                                <td v-text="ventaretail.ENTIDAD_FIN"></td>
-                                                                                <td v-text="ventaretail.IMPORTE_VEHICULO_SOLES"></td>
-                                                                                <td v-text="ventaretail.IMPORTE_VEHICULO_DOLARES"></td>
-                                                                                <td v-text="ventaretail.DESCUENTO"></td>
-                                                                                <td v-text="ventaretail.SOBREPRECIO"></td>
-                                                                                <td v-text="ventaretail.PRECIOCIERRELP"></td>
-                                                                                <td v-text="ventaretail.PRECIOCIERREFINALCLIENTE"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaVentaRetail(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayDetalleVentaRetail.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>COMPANIA&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>CONCESIONARIO</th>
+                                                                        <th>TIENDA</th>
+                                                                        <th>N° PEDIDO</th>
+                                                                        <th>FECHA PEDIDO</th>
+                                                                        <th>CLIENTE</th>
+                                                                        <th>Nª DOCUMENTO</th>
+                                                                        <th>CODIGO ASESOR</th>
+                                                                        <th>ASESOR COMERCIAL</th>
+                                                                        <th>ESTADO PEDIDO</th>
+                                                                        <th>ESTADO DEPOSITO</th>
+                                                                        <th>TIPO VENTA</th>
+                                                                        <th>MARCA</th>
+                                                                        <th>MODELO</th>
+                                                                        <th>NOMBRE COMERCIAL</th>
+                                                                        <th>VIN</th>
+                                                                        <th>AÑO MODELO</th>
+                                                                        <th>ENTIDAD FINAN</th>
+                                                                        <th>IMPORTE SOLES</th>
+                                                                        <th>IMPORTE DOLARES</th>
+                                                                        <th>DESCUENTO</th>
+                                                                        <th>SOBRE PRECIO</th>
+                                                                        <th>PRECIO CIERRE LP</th>
+                                                                        <th>PRECIO CIERRE CLIENTE</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(ventaretail, index) in arrayDetalleVentaRetail" :key="index">
+                                                                        <td v-text="ventaretail.COMPANIA"></td>
+                                                                        <td v-text="ventaretail.CONCESIONARIO"></td>
+                                                                        <td v-text="ventaretail.TIENDA"></td>
+                                                                        <td v-text="ventaretail.NRO_PEDIDO"></td>
+                                                                        <td v-text="ventaretail.FECHA_PEDIDO"></td>
+                                                                        <td v-text="ventaretail.DESC_CLIENTE"></td>
+                                                                        <td v-text="ventaretail.NDOCUMENTO"></td>
+                                                                        <td v-text="ventaretail.COD_VENDEDOR"></td>
+                                                                        <td v-text="ventaretail.NOM_VENDEDOR"></td>
+                                                                        <td v-text="ventaretail.STATUS_PEDIDO"></td>
+                                                                        <td v-text="ventaretail.STATUS_DEPOSITO"></td>
+                                                                        <td v-text="ventaretail.TIPO_VENTA"></td>
+                                                                        <td v-text="ventaretail.MARCA"></td>
+                                                                        <td v-text="ventaretail.MODELO"></td>
+                                                                        <td v-text="ventaretail.NOMBRE_COMERCIAL"></td>
+                                                                        <td v-text="ventaretail.VIN"></td>
+                                                                        <td v-text="ventaretail.ANIO_MODEL"></td>
+                                                                        <td v-text="ventaretail.ENTIDAD_FIN"></td>
+                                                                        <td v-text="ventaretail.IMPORTE_VEHICULO_SOLES"></td>
+                                                                        <td v-text="ventaretail.IMPORTE_VEHICULO_DOLARES"></td>
+                                                                        <td v-text="ventaretail.DESCUENTO"></td>
+                                                                        <td v-text="ventaretail.SOBREPRECIO"></td>
+                                                                        <td v-text="ventaretail.PRECIOCIERRELP"></td>
+                                                                        <td v-text="ventaretail.PRECIOCIERREFINALCLIENTE"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaVentaRetail(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVentaRetail(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -483,117 +479,113 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayVentaHGSI.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>#PEDIDO&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Venta(s) HGSI XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>FECHA PEDIDO</th>
-                                                                                <th>LINEA</th>
-                                                                                <th>MARCA</th>
-                                                                                <th>MODELO</th>
-                                                                                <th>NOMBRE COMERCIAL</th>
-                                                                                <th>VIN</th>
-                                                                                <th>PLACA</th>
-                                                                                <th>AÑO FAB</th>
-                                                                                <th>AÑO MODELO</th>
-                                                                                <th>CONTACTO</th>
-                                                                                <th># DOC</th>
-                                                                                <th>DIRECCIÓN</th>
-                                                                                <th>DEPARTAMENTO</th>
-                                                                                <th>PROVINCIA</th>
-                                                                                <th>DISTRITO</th>
-                                                                                <th>EMAIL</th>
-                                                                                <th>TELÉFONO</th>
-                                                                                <th>CELULAR</th>
-                                                                                <th>N° COTIZACIÓN</th>
-                                                                                <th>TIPO VENTA</th>
-                                                                                <th>FECHA CANCELACIÓN</th>
-                                                                                <th>FECHA PROGRAMADA</th>
-                                                                                <th>FECHA SALIDA</th>
-                                                                                <th>COD VENDEDOR</th>
-                                                                                <th>VENDEDOR</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(ventahgsi, index) in arrayVentaHGSI" :key="index">
-                                                                                <td v-text="ventahgsi.NRO_PEDIDO"></td>
-                                                                                <td v-text="ventahgsi.FECHA_PEDIDO"></td>
-                                                                                <td v-text="ventahgsi.LINEA"></td>
-                                                                                <td v-text="ventahgsi.MARCA"></td>
-                                                                                <td v-text="ventahgsi.MODELO"></td>
-                                                                                <td v-text="ventahgsi.NOMBRE_COMERCIAL"></td>
-                                                                                <td v-text="ventahgsi.VIN"></td>
-                                                                                <td v-text="ventahgsi.PLACA"></td>
-                                                                                <td v-text="ventahgsi.ANIO_FABRI"></td>
-                                                                                <td v-text="ventahgsi.ANIO_MODEL"></td>
-                                                                                <td v-text="ventahgsi.CONTACTO"></td>
-                                                                                <td v-text="ventahgsi.DOCUMENTO"></td>
-                                                                                <td v-text="ventahgsi.DIRECCION"></td>
-                                                                                <td v-text="ventahgsi.DEPARTAMENTO"></td>
-                                                                                <td v-text="ventahgsi.PROVINCIA"></td>
-                                                                                <td v-text="ventahgsi.DISTRITO"></td>
-                                                                                <td v-text="ventahgsi.E_MAIL"></td>
-                                                                                <td v-text="ventahgsi.TELEFONO"></td>
-                                                                                <td v-text="ventahgsi.CELULAR"></td>
-                                                                                <td v-text="ventahgsi.NRO_COTIZACION"></td>
-                                                                                <td v-text="ventahgsi.TIPO_VENTA"></td>
-                                                                                <td v-text="ventahgsi.FECHA_CANCELACION"></td>
-                                                                                <td v-text="ventahgsi.FECHA_PROGRAMADA"></td>
-                                                                                <td v-text="ventahgsi.FECHA_SALIDA"></td>
-                                                                                <td v-text="ventahgsi.COD_VENDEDOR"></td>
-                                                                                <td v-text="ventahgsi.VENDEDOR"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaVentaHGSI(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayVentaHGSI.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#PEDIDO&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Venta(s) HGSI XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarVentaHGSI()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>FECHA PEDIDO</th>
+                                                                        <th>LINEA</th>
+                                                                        <th>MARCA</th>
+                                                                        <th>MODELO</th>
+                                                                        <th>NOMBRE COMERCIAL</th>
+                                                                        <th>VIN</th>
+                                                                        <th>PLACA</th>
+                                                                        <th>AÑO FAB</th>
+                                                                        <th>AÑO MODELO</th>
+                                                                        <th>CONTACTO</th>
+                                                                        <th># DOC</th>
+                                                                        <th>DIRECCIÓN</th>
+                                                                        <th>DEPARTAMENTO</th>
+                                                                        <th>PROVINCIA</th>
+                                                                        <th>DISTRITO</th>
+                                                                        <th>EMAIL</th>
+                                                                        <th>TELÉFONO</th>
+                                                                        <th>CELULAR</th>
+                                                                        <th>N° COTIZACIÓN</th>
+                                                                        <th>TIPO VENTA</th>
+                                                                        <th>FECHA CANCELACIÓN</th>
+                                                                        <th>FECHA PROGRAMADA</th>
+                                                                        <th>FECHA SALIDA</th>
+                                                                        <th>COD VENDEDOR</th>
+                                                                        <th>VENDEDOR</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(ventahgsi, index) in arrayVentaHGSI" :key="index">
+                                                                        <td v-text="ventahgsi.NRO_PEDIDO"></td>
+                                                                        <td v-text="ventahgsi.FECHA_PEDIDO"></td>
+                                                                        <td v-text="ventahgsi.LINEA"></td>
+                                                                        <td v-text="ventahgsi.MARCA"></td>
+                                                                        <td v-text="ventahgsi.MODELO"></td>
+                                                                        <td v-text="ventahgsi.NOMBRE_COMERCIAL"></td>
+                                                                        <td v-text="ventahgsi.VIN"></td>
+                                                                        <td v-text="ventahgsi.PLACA"></td>
+                                                                        <td v-text="ventahgsi.ANIO_FABRI"></td>
+                                                                        <td v-text="ventahgsi.ANIO_MODEL"></td>
+                                                                        <td v-text="ventahgsi.CONTACTO"></td>
+                                                                        <td v-text="ventahgsi.DOCUMENTO"></td>
+                                                                        <td v-text="ventahgsi.DIRECCION"></td>
+                                                                        <td v-text="ventahgsi.DEPARTAMENTO"></td>
+                                                                        <td v-text="ventahgsi.PROVINCIA"></td>
+                                                                        <td v-text="ventahgsi.DISTRITO"></td>
+                                                                        <td v-text="ventahgsi.E_MAIL"></td>
+                                                                        <td v-text="ventahgsi.TELEFONO"></td>
+                                                                        <td v-text="ventahgsi.CELULAR"></td>
+                                                                        <td v-text="ventahgsi.NRO_COTIZACION"></td>
+                                                                        <td v-text="ventahgsi.TIPO_VENTA"></td>
+                                                                        <td v-text="ventahgsi.FECHA_CANCELACION"></td>
+                                                                        <td v-text="ventahgsi.FECHA_PROGRAMADA"></td>
+                                                                        <td v-text="ventahgsi.FECHA_SALIDA"></td>
+                                                                        <td v-text="ventahgsi.COD_VENDEDOR"></td>
+                                                                        <td v-text="ventahgsi.VENDEDOR"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaVentaHGSI(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVentaHGSI(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -839,93 +831,89 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayStockVehiculos.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>COD ITEM&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Stock Vehiculo(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarStock()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>ITEM</th>
-                                                                                <th>AÑO MODELO</th>
-                                                                                <th>LINEA</th>
-                                                                                <th>MARCA</th>
-                                                                                <th>MODELO</th>
-                                                                                <th>NRO LISTA</th>
-                                                                                <th>MONEDA</th>
-                                                                                <th>PRECIO BASE</th>
-                                                                                <th>PRECIO CIERRE</th>
-                                                                                <th>STOCK</th>
-                                                                                <th>BONO ESPECIAL</th>
-                                                                                <th>COSTO DEALER</th>
-                                                                                <th>ESTADO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(stockvehiculo, index) in arrayStockVehiculos" :key="index">
-                                                                                <td v-text="stockvehiculo.CODIGO_ITEM"></td>
-                                                                                <td v-text="stockvehiculo.DESC_ITEM"></td>
-                                                                                <td v-text="stockvehiculo.ANIO_MODELO"></td>
-                                                                                <td v-text="stockvehiculo.LINEA"></td>
-                                                                                <td v-text="stockvehiculo.MARCA"></td>
-                                                                                <td v-text="stockvehiculo.MODELO"></td>
-                                                                                <td v-text="stockvehiculo.COD_LISTA"></td>
-                                                                                <td v-text="stockvehiculo.MONEDA_LISTA"></td>
-                                                                                <td v-text="stockvehiculo.PRECIO_BASE"></td>
-                                                                                <td v-text="stockvehiculo.PRECIO_CIERRE1"></td>
-                                                                                <td v-text="stockvehiculo.STOCK"></td>
-                                                                                <td v-text="stockvehiculo.BONO_ESPECIAL"></td>
-                                                                                <td v-text="stockvehiculo.MDEALER_MFINAL"></td>
-                                                                                <td v-text="stockvehiculo.ESTADO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaStockVehiculos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaStockVehiculos(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaStockVehiculos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayStockVehiculos.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>COD ITEM&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Stock Vehiculo(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarStock()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>ITEM</th>
+                                                                        <th>AÑO MODELO</th>
+                                                                        <th>LINEA</th>
+                                                                        <th>MARCA</th>
+                                                                        <th>MODELO</th>
+                                                                        <th>NRO LISTA</th>
+                                                                        <th>MONEDA</th>
+                                                                        <th>PRECIO BASE</th>
+                                                                        <th>PRECIO CIERRE</th>
+                                                                        <th>STOCK</th>
+                                                                        <th>BONO ESPECIAL</th>
+                                                                        <th>COSTO DEALER</th>
+                                                                        <th>ESTADO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(stockvehiculo, index) in arrayStockVehiculos" :key="index">
+                                                                        <td v-text="stockvehiculo.CODIGO_ITEM"></td>
+                                                                        <td v-text="stockvehiculo.DESC_ITEM"></td>
+                                                                        <td v-text="stockvehiculo.ANIO_MODELO"></td>
+                                                                        <td v-text="stockvehiculo.LINEA"></td>
+                                                                        <td v-text="stockvehiculo.MARCA"></td>
+                                                                        <td v-text="stockvehiculo.MODELO"></td>
+                                                                        <td v-text="stockvehiculo.COD_LISTA"></td>
+                                                                        <td v-text="stockvehiculo.MONEDA_LISTA"></td>
+                                                                        <td v-text="stockvehiculo.PRECIO_BASE"></td>
+                                                                        <td v-text="stockvehiculo.PRECIO_CIERRE1"></td>
+                                                                        <td v-text="stockvehiculo.STOCK"></td>
+                                                                        <td v-text="stockvehiculo.BONO_ESPECIAL"></td>
+                                                                        <td v-text="stockvehiculo.MDEALER_MFINAL"></td>
+                                                                        <td v-text="stockvehiculo.ESTADO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaStockVehiculos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaStockVehiculos(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaStockVehiculos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -1097,89 +1085,85 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayStockVehiculosGeneral.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>OC&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Stock Vehiculo(s) General XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarStockGeneral()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>ITEM</th>
-                                                                                <th>AÑO MODELO</th>
-                                                                                <th>LINEA</th>
-                                                                                <th>MARCA</th>
-                                                                                <th>MODELO</th>
-                                                                                <th>VIN</th>
-                                                                                <th>COLOR</th>
-                                                                                <th>TIENDA</th>
-                                                                                <th>FECHA FACTURADO</th>
-                                                                                <th>DIAS EN ALMACEN</th>
-                                                                                <th>ESTADO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(stockvehiculo, index) in arrayStockVehiculosGeneral" :key="index">
-                                                                                <td v-text="stockvehiculo.O_C"></td>
-                                                                                <td v-text="stockvehiculo.DESC_ITEM"></td>
-                                                                                <td v-text="stockvehiculo.ANIO_MODELO"></td>
-                                                                                <td v-text="stockvehiculo.LINEA"></td>
-                                                                                <td v-text="stockvehiculo.MARCA"></td>
-                                                                                <td v-text="stockvehiculo.MODELO"></td>
-                                                                                <td v-text="stockvehiculo.VIN"></td>
-                                                                                <td v-text="stockvehiculo.COLOR"></td>
-                                                                                <td v-text="stockvehiculo.TIENDA"></td>
-                                                                                <td> {{ stockvehiculo.FF_DIA }}/{{ stockvehiculo.FF_MES }}/{{ stockvehiculo.FF_ANIO }} </td>
-                                                                                <td v-text="stockvehiculo.DIAS_ALMACEN"></td>
-                                                                                <td v-text="stockvehiculo.ESTADO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaStockVehiculosGeneral(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaStockVehiculosGeneral(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaStockVehiculosGeneral(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayStockVehiculosGeneral.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>OC&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Stock Vehiculo(s) General XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarStockGeneral()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>ITEM</th>
+                                                                        <th>AÑO MODELO</th>
+                                                                        <th>LINEA</th>
+                                                                        <th>MARCA</th>
+                                                                        <th>MODELO</th>
+                                                                        <th>VIN</th>
+                                                                        <th>COLOR</th>
+                                                                        <th>TIENDA</th>
+                                                                        <th>FECHA FACTURADO</th>
+                                                                        <th>DIAS EN ALMACEN</th>
+                                                                        <th>ESTADO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(stockvehiculo, index) in arrayStockVehiculosGeneral" :key="index">
+                                                                        <td v-text="stockvehiculo.O_C"></td>
+                                                                        <td v-text="stockvehiculo.DESC_ITEM"></td>
+                                                                        <td v-text="stockvehiculo.ANIO_MODELO"></td>
+                                                                        <td v-text="stockvehiculo.LINEA"></td>
+                                                                        <td v-text="stockvehiculo.MARCA"></td>
+                                                                        <td v-text="stockvehiculo.MODELO"></td>
+                                                                        <td v-text="stockvehiculo.VIN"></td>
+                                                                        <td v-text="stockvehiculo.COLOR"></td>
+                                                                        <td v-text="stockvehiculo.TIENDA"></td>
+                                                                        <td> {{ stockvehiculo.FF_DIA }}/{{ stockvehiculo.FF_MES }}/{{ stockvehiculo.FF_ANIO }} </td>
+                                                                        <td v-text="stockvehiculo.DIAS_ALMACEN"></td>
+                                                                        <td v-text="stockvehiculo.ESTADO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaStockVehiculosGeneral(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaStockVehiculosGeneral(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaStockVehiculosGeneral(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -1306,85 +1290,81 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayMetasVenta.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>ID&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Metas de Venta(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarMetasVenta()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>AÑO</th>
-                                                                                <th>MES</th>
-                                                                                <th>ASESOR</th>
-                                                                                <th>SUBLINEA</th>
-                                                                                <th>OBJETIVO</th>
-                                                                                <th>COTIZACIONES</th>
-                                                                                <th>PEDIDOS</th>
-                                                                                <th>FACTURADOS</th>
-                                                                                <th>PENDIENTES</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(metasventa, index) in arrayMetasVenta" :key="index">
-                                                                                <td v-text="metasventa.ID"></td>
-                                                                                <td v-text="metasventa.ANIO"></td>
-                                                                                <td v-text="metasventa.MES"></td>
-                                                                                <td v-text="metasventa.ASESOR"></td>
-                                                                                <td v-text="metasventa.SUBLINEA"></td>
-                                                                                <td v-text="metasventa.OBJETIVO"></td>
-                                                                                <td v-text="metasventa.COTIZACIONES"></td>
-                                                                                <td v-text="metasventa.PEDIDOS"></td>
-                                                                                <td v-text="metasventa.FACTURADOS"></td>
-                                                                                <td v-text="metasventa.PENDIENTE"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMetasVenta(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaMetasVenta(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMetasVenta(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayMetasVenta.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>ID&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarMetasVenta()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>AÑO</th>
+                                                                        <th>MES</th>
+                                                                        <th>ASESOR</th>
+                                                                        <th>SUBLINEA</th>
+                                                                        <th>OBJETIVO</th>
+                                                                        <th>COTIZACIONES</th>
+                                                                        <th>PEDIDOS</th>
+                                                                        <th>FACTURADOS</th>
+                                                                        <th>PENDIENTES</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(metasventa, index) in arrayMetasVenta" :key="index">
+                                                                        <td v-text="metasventa.ID"></td>
+                                                                        <td v-text="metasventa.ANIO"></td>
+                                                                        <td v-text="metasventa.MES"></td>
+                                                                        <td v-text="metasventa.ASESOR"></td>
+                                                                        <td v-text="metasventa.SUBLINEA"></td>
+                                                                        <td v-text="metasventa.OBJETIVO"></td>
+                                                                        <td v-text="metasventa.COTIZACIONES"></td>
+                                                                        <td v-text="metasventa.PEDIDOS"></td>
+                                                                        <td v-text="metasventa.FACTURADOS"></td>
+                                                                        <td v-text="metasventa.PENDIENTE"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaMetasVenta(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaMetasVenta(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaMetasVenta(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -1490,93 +1470,89 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayContactosLibres.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>ID&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Metas de Venta(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarContactoLibre()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>CONTACTO</th>
-                                                                                <th>#DOCUMENTO</th>
-                                                                                <th>DIRECCIÓN</th>
-                                                                                <th>TELÉFONO MOVIL</th>
-                                                                                <th>TELEÉFONO FIJO</th>
-                                                                                <th>PROVEEDOR</th>
-                                                                                <th>LINEA</th>
-                                                                                <th>MARCA</th>
-                                                                                <th>MODELO</th>
-                                                                                <th>AÑO MODELO</th>
-                                                                                <th>FECHA INICIO ASIGNACIÓN</th>
-                                                                                <th>FECHA FIN ASIGNACIÓN</th>
-                                                                                <th>ESTADO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(contactolibre, index) in arrayContactosLibres" :key="index">
-                                                                                <td v-text="contactolibre.COD_CONTACTO"></td>
-                                                                                <td v-text="contactolibre.CONTACTO"></td>
-                                                                                <td v-text="contactolibre.N_DOCUMENTO"></td>
-                                                                                <td v-text="contactolibre.DIRECCION"></td>
-                                                                                <td v-text="contactolibre.TELEFONO_MOVIL"></td>
-                                                                                <td v-text="contactolibre.TELEFONO_FIJO"></td>
-                                                                                <td v-text="contactolibre.PROVEEDOR"></td>
-                                                                                <td v-text="contactolibre.LINEA"></td>
-                                                                                <td v-text="contactolibre.MARCA"></td>
-                                                                                <td v-text="contactolibre.MODELO"></td>
-                                                                                <td v-text="contactolibre.ANIO_MODELO"></td>
-                                                                                <td v-text="contactolibre.FECHA_INICIO_ASIGNACION"></td>
-                                                                                <td v-text="contactolibre.FECHA_FIN_ASIGNACION"></td>
-                                                                                <td v-text="contactolibre.ESTADO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaContactoLibre(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayContactosLibres.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>ID&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarContactoLibre()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>CONTACTO</th>
+                                                                        <th>#DOCUMENTO</th>
+                                                                        <th>DIRECCIÓN</th>
+                                                                        <th>TELÉFONO MOVIL</th>
+                                                                        <th>TELEÉFONO FIJO</th>
+                                                                        <th>PROVEEDOR</th>
+                                                                        <th>LINEA</th>
+                                                                        <th>MARCA</th>
+                                                                        <th>MODELO</th>
+                                                                        <th>AÑO MODELO</th>
+                                                                        <th>FECHA INICIO ASIGNACIÓN</th>
+                                                                        <th>FECHA FIN ASIGNACIÓN</th>
+                                                                        <th>ESTADO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(contactolibre, index) in arrayContactosLibres" :key="index">
+                                                                        <td v-text="contactolibre.COD_CONTACTO"></td>
+                                                                        <td v-text="contactolibre.CONTACTO"></td>
+                                                                        <td v-text="contactolibre.N_DOCUMENTO"></td>
+                                                                        <td v-text="contactolibre.DIRECCION"></td>
+                                                                        <td v-text="contactolibre.TELEFONO_MOVIL"></td>
+                                                                        <td v-text="contactolibre.TELEFONO_FIJO"></td>
+                                                                        <td v-text="contactolibre.PROVEEDOR"></td>
+                                                                        <td v-text="contactolibre.LINEA"></td>
+                                                                        <td v-text="contactolibre.MARCA"></td>
+                                                                        <td v-text="contactolibre.MODELO"></td>
+                                                                        <td v-text="contactolibre.ANIO_MODELO"></td>
+                                                                        <td v-text="contactolibre.FECHA_INICIO_ASIGNACION"></td>
+                                                                        <td v-text="contactolibre.FECHA_FIN_ASIGNACION"></td>
+                                                                        <td v-text="contactolibre.ESTADO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaContactoLibre(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -1713,135 +1689,131 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayDistribucionDesc.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>EMPRESA&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>SUCURSAL</th>
-                                                                                <th>NUM PEDIDO</th>
-                                                                                <th>NUM COTIZACIÓN</th>
-                                                                                <th>FECHA COTIZACIÓN</th>
-                                                                                <th>FECHA VENC COTI</th>
-                                                                                <th>FECHA PEDIDO</th>
-                                                                                <th>TCC</th>
-                                                                                <th>PRECIO BASE</th>
-                                                                                <th>PRECIO CIERRE</th>
-                                                                                <th>TYP</th>
-                                                                                <th>PRECIO VENTA</th>
-                                                                                <th>DESCUENTO</th>
-                                                                                <th>SOBRE PRECIO</th>
-                                                                                <th>VEHICULO ($)</th>
-                                                                                <th>VEHICULO (S/)</th>
-                                                                                <th>E.V ($)</th>
-                                                                                <th>E.V (S/)</th>
-                                                                                <th>COTIZACION ($)</th>
-                                                                                <th>COTIZACION (S/)</th>
-                                                                                <th>ASUNTO</th>
-                                                                                <th>ESTADO COT</th>
-                                                                                <th>DESCUENTO</th>
-                                                                                <th>PROVEEDOR</th>
-                                                                                <th>MONTO ASUMIDO</th>
-                                                                                <th>EMPRESA</th>
-                                                                                <th>MONTO ASUMIDO</th>
-                                                                                <th>NOMBRE COMERCIAL</th>
-                                                                                <th>VIN</th>
-                                                                                <th>ASESOR COMERCIAL</th>
-                                                                                <th>CONTACTO</th>
-                                                                                <th>NUM DOCUMENTO</th>
-                                                                                <th>DIRECCIÓN</th>
-                                                                                <th>TELÉFONO MOVIL</th>
-                                                                                <th>TELÉFONO FIJO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(distribucion, index) in arrayDistribucionDesc" :key="index">
-                                                                                <td v-text="distribucion.EMPRESA"></td>
-                                                                                <td v-text="distribucion.SUCURSAL"></td>
-                                                                                <td v-text="distribucion.NUM_PEDIDO"></td>
-                                                                                <td v-text="distribucion.NUM_COTIZACION"></td>
-                                                                                <td v-text="distribucion.FECHA_COTIZACION"></td>
-                                                                                <td v-text="distribucion.FECHA_VENC_COTIZACION"></td>
-                                                                                <td v-text="distribucion.FECHA_PEDIDO"></td>
-                                                                                <td v-text="distribucion.TCC"></td>
-                                                                                <td v-text="distribucion.PRECIO_BASE_DOLAR"></td>
-                                                                                <td v-text="distribucion.PRECIO_CIERRE_DOLAR"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.PRECIO_TYP_DOLAR)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.PRECIO_VENTA_CLIENTE"></td>
-                                                                                <td v-text="distribucion.DESCUENTO_VEHI_DOLAR"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.COTI_VEHI_DOLAR"></td>
-                                                                                <td v-text="distribucion.COTI_VEHI_SOL"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.COTI_EV_DOLAR)).toFixed(2)) }}</td>
-                                                                                <td> {{ Number((parseFloat(distribucion.COTI_EV_SOL)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.COTI_TOTAL_DOLAR"></td>
-                                                                                <td v-text="distribucion.COTI_TOTAL_SOL"></td>
-                                                                                <td v-text="distribucion.ASUNTO"></td>
-                                                                                <td v-text="distribucion.ESTADO"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.PROVEEDOR"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.EMP"></td>
-                                                                                <td> {{ Number((parseFloat(distribucion.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} </td>
-                                                                                <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
-                                                                                <td v-text="distribucion.VIN"></td>
-                                                                                <td v-text="distribucion.ASESOR_COMERCIAL"></td>
-                                                                                <td v-text="distribucion.CONTACTO"></td>
-                                                                                <td v-text="distribucion.N_DOCUMENTO"></td>
-                                                                                <td v-text="distribucion.DIRECCION"></td>
-                                                                                <td v-text="distribucion.TELEFONO_MOVIL"></td>
-                                                                                <td v-text="distribucion.TELEFONO_FIJO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaDistribucacion(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayDistribucionDesc.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>EMPRESA&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDistribucacion()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>SUCURSAL</th>
+                                                                        <th>NUM PEDIDO</th>
+                                                                        <th>NUM COTIZACIÓN</th>
+                                                                        <th>FECHA COTIZACIÓN</th>
+                                                                        <th>FECHA VENC COTI</th>
+                                                                        <th>FECHA PEDIDO</th>
+                                                                        <th>TCC</th>
+                                                                        <th>PRECIO BASE</th>
+                                                                        <th>PRECIO CIERRE</th>
+                                                                        <th>TYP</th>
+                                                                        <th>PRECIO VENTA</th>
+                                                                        <th>DESCUENTO</th>
+                                                                        <th>SOBRE PRECIO</th>
+                                                                        <th>VEHICULO ($)</th>
+                                                                        <th>VEHICULO (S/)</th>
+                                                                        <th>E.V ($)</th>
+                                                                        <th>E.V (S/)</th>
+                                                                        <th>COTIZACION ($)</th>
+                                                                        <th>COTIZACION (S/)</th>
+                                                                        <th>ASUNTO</th>
+                                                                        <th>ESTADO COT</th>
+                                                                        <th>DESCUENTO</th>
+                                                                        <th>PROVEEDOR</th>
+                                                                        <th>MONTO ASUMIDO</th>
+                                                                        <th>EMPRESA</th>
+                                                                        <th>MONTO ASUMIDO</th>
+                                                                        <th>NOMBRE COMERCIAL</th>
+                                                                        <th>VIN</th>
+                                                                        <th>ASESOR COMERCIAL</th>
+                                                                        <th>CONTACTO</th>
+                                                                        <th>NUM DOCUMENTO</th>
+                                                                        <th>DIRECCIÓN</th>
+                                                                        <th>TELÉFONO MOVIL</th>
+                                                                        <th>TELÉFONO FIJO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(distribucion, index) in arrayDistribucionDesc" :key="index">
+                                                                        <td v-text="distribucion.EMPRESA"></td>
+                                                                        <td v-text="distribucion.SUCURSAL"></td>
+                                                                        <td v-text="distribucion.NUM_PEDIDO"></td>
+                                                                        <td v-text="distribucion.NUM_COTIZACION"></td>
+                                                                        <td v-text="distribucion.FECHA_COTIZACION"></td>
+                                                                        <td v-text="distribucion.FECHA_VENC_COTIZACION"></td>
+                                                                        <td v-text="distribucion.FECHA_PEDIDO"></td>
+                                                                        <td v-text="distribucion.TCC"></td>
+                                                                        <td v-text="distribucion.PRECIO_BASE_DOLAR"></td>
+                                                                        <td v-text="distribucion.PRECIO_CIERRE_DOLAR"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.PRECIO_TYP_DOLAR)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.PRECIO_VENTA_CLIENTE"></td>
+                                                                        <td v-text="distribucion.DESCUENTO_VEHI_DOLAR"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.COTI_VEHI_DOLAR"></td>
+                                                                        <td v-text="distribucion.COTI_VEHI_SOL"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.COTI_EV_DOLAR)).toFixed(2)) }}</td>
+                                                                        <td> {{ Number((parseFloat(distribucion.COTI_EV_SOL)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.COTI_TOTAL_DOLAR"></td>
+                                                                        <td v-text="distribucion.COTI_TOTAL_SOL"></td>
+                                                                        <td v-text="distribucion.ASUNTO"></td>
+                                                                        <td v-text="distribucion.ESTADO"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.PROVEEDOR"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.EMP"></td>
+                                                                        <td> {{ Number((parseFloat(distribucion.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} </td>
+                                                                        <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
+                                                                        <td v-text="distribucion.VIN"></td>
+                                                                        <td v-text="distribucion.ASESOR_COMERCIAL"></td>
+                                                                        <td v-text="distribucion.CONTACTO"></td>
+                                                                        <td v-text="distribucion.N_DOCUMENTO"></td>
+                                                                        <td v-text="distribucion.DIRECCION"></td>
+                                                                        <td v-text="distribucion.TELEFONO_MOVIL"></td>
+                                                                        <td v-text="distribucion.TELEFONO_FIJO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaDistribucacion(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDistribucacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -1968,115 +1940,111 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayPedidoDeposito.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>EMPRESA&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarPedidoDeposito()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>SUCURSAL</th>
-                                                                                <th>COD PEDIDO</th>
-                                                                                <th>NUM PEDIDO</th>
-                                                                                <th>FECHA PEDIDO</th>
-                                                                                <th>NOMBRE COMERCIAL</th>
-                                                                                <th>VIN</th>
-                                                                                <th>PEDIDO ($)</th>
-                                                                                <th>PEDIDO (S/)</th>
-                                                                                <th>MONTO DEPOSITADO</th>
-                                                                                <th>% DEPOSITADO</th>
-                                                                                <th>ESTADO PEDIDO</th>
-                                                                                <th>N° DEPOSITOS</th>
-                                                                                <th>DEPOSITOS APROBADOS</th>
-                                                                                <th>DEPOSITOS PENDIENTES</th>
-                                                                                <th>DEPOSITOS RECHAZADOS</th>
-                                                                                <th>N° ANTICIPOS</th>
-                                                                                <th>ANTICIPOS FACTURADOS</th>
-                                                                                <th>ESTADO FACTURACIÓN (SAP)</th>
-                                                                                <th>ASESOR COMERCIAL</th>
-                                                                                <th>CONTACTO</th>
-                                                                                <th>NUM DOCUMENTO</th>
-                                                                                <th>DIRECCIÓN</th>
-                                                                                <th>TELÉFONO MOVIL</th>
-                                                                                <th>TELÉFONO FIJO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(pedido, index) in arrayPedidoDeposito" :key="index">
-                                                                                <td v-text="pedido.EMPRESA"></td>
-                                                                                <td v-text="pedido.SUCURSAL"></td>
-                                                                                <td v-text="pedido.COD_PEDIDO"></td>
-                                                                                <td v-text="pedido.NUM_PEDIDO"></td>
-                                                                                <td v-text="pedido.FECHA_PEDIDO"></td>
-                                                                                <td v-text="pedido.NOMBRE_COMERCIAL"></td>
-                                                                                <td v-text="pedido.VIN"></td>
-                                                                                <td> {{ Number((parseFloat(pedido.PEDIDO_DOLAR)).toFixed(2)) }} </td>
-                                                                                <td> {{ Number((parseFloat(pedido.PEDIDO_SOL)).toFixed(2)) }} </td>
-                                                                                <td> {{ Number((parseFloat(pedido.MONTO_DEPOSITADO)).toFixed(2)) }} </td>
-                                                                                <td> {{ Number((parseFloat(pedido.PORCENTAJE_DEPOSITADO)).toFixed(2)) }} </td>
-                                                                                <td v-text="pedido.ESTADO_PEDIDO"></td>
-                                                                                <td v-text="pedido.TOTAL_DEPOSITOS"></td>
-                                                                                <td v-text="pedido.DEPOSITOS_APROBADO"></td>
-                                                                                <td v-text="pedido.DEPOSITOS_PENDIENTE"></td>
-                                                                                <td v-text="pedido.DEPOSITOS_DESAPROBADO"></td>
-                                                                                <td v-text="pedido.TOTAL_ANTICIPOS"></td>
-                                                                                <td v-text="pedido.TOTAL_ANTICIPOS_FACTURADOS"></td>
-                                                                                <td v-text="pedido.ESTADO_FACTURACION"></td>
-                                                                                <td v-text="pedido.ASESOR_COMERCIAL"></td>
-                                                                                <td v-text="pedido.CONTACTO"></td>
-                                                                                <td v-text="pedido.N_DOCUMENTO"></td>
-                                                                                <td v-text="pedido.DIRECCION"></td>
-                                                                                <td v-text="pedido.TELEFONO_MOVIL"></td>
-                                                                                <td v-text="pedido.TELEFONO_FIJO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaPedidoDeposito(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayPedidoDeposito.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>EMPRESA&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarPedidoDeposito()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>SUCURSAL</th>
+                                                                        <th>COD PEDIDO</th>
+                                                                        <th>NUM PEDIDO</th>
+                                                                        <th>FECHA PEDIDO</th>
+                                                                        <th>NOMBRE COMERCIAL</th>
+                                                                        <th>VIN</th>
+                                                                        <th>PEDIDO ($)</th>
+                                                                        <th>PEDIDO (S/)</th>
+                                                                        <th>MONTO DEPOSITADO</th>
+                                                                        <th>% DEPOSITADO</th>
+                                                                        <th>ESTADO PEDIDO</th>
+                                                                        <th>N° DEPOSITOS</th>
+                                                                        <th>DEPOSITOS APROBADOS</th>
+                                                                        <th>DEPOSITOS PENDIENTES</th>
+                                                                        <th>DEPOSITOS RECHAZADOS</th>
+                                                                        <th>N° ANTICIPOS</th>
+                                                                        <th>ANTICIPOS FACTURADOS</th>
+                                                                        <th>ESTADO FACTURACIÓN (SAP)</th>
+                                                                        <th>ASESOR COMERCIAL</th>
+                                                                        <th>CONTACTO</th>
+                                                                        <th>NUM DOCUMENTO</th>
+                                                                        <th>DIRECCIÓN</th>
+                                                                        <th>TELÉFONO MOVIL</th>
+                                                                        <th>TELÉFONO FIJO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(pedido, index) in arrayPedidoDeposito" :key="index">
+                                                                        <td v-text="pedido.EMPRESA"></td>
+                                                                        <td v-text="pedido.SUCURSAL"></td>
+                                                                        <td v-text="pedido.COD_PEDIDO"></td>
+                                                                        <td v-text="pedido.NUM_PEDIDO"></td>
+                                                                        <td v-text="pedido.FECHA_PEDIDO"></td>
+                                                                        <td v-text="pedido.NOMBRE_COMERCIAL"></td>
+                                                                        <td v-text="pedido.VIN"></td>
+                                                                        <td> {{ Number((parseFloat(pedido.PEDIDO_DOLAR)).toFixed(2)) }} </td>
+                                                                        <td> {{ Number((parseFloat(pedido.PEDIDO_SOL)).toFixed(2)) }} </td>
+                                                                        <td> {{ Number((parseFloat(pedido.MONTO_DEPOSITADO)).toFixed(2)) }} </td>
+                                                                        <td> {{ Number((parseFloat(pedido.PORCENTAJE_DEPOSITADO)).toFixed(2)) }} </td>
+                                                                        <td v-text="pedido.ESTADO_PEDIDO"></td>
+                                                                        <td v-text="pedido.TOTAL_DEPOSITOS"></td>
+                                                                        <td v-text="pedido.DEPOSITOS_APROBADO"></td>
+                                                                        <td v-text="pedido.DEPOSITOS_PENDIENTE"></td>
+                                                                        <td v-text="pedido.DEPOSITOS_DESAPROBADO"></td>
+                                                                        <td v-text="pedido.TOTAL_ANTICIPOS"></td>
+                                                                        <td v-text="pedido.TOTAL_ANTICIPOS_FACTURADOS"></td>
+                                                                        <td v-text="pedido.ESTADO_FACTURACION"></td>
+                                                                        <td v-text="pedido.ASESOR_COMERCIAL"></td>
+                                                                        <td v-text="pedido.CONTACTO"></td>
+                                                                        <td v-text="pedido.N_DOCUMENTO"></td>
+                                                                        <td v-text="pedido.DIRECCION"></td>
+                                                                        <td v-text="pedido.TELEFONO_MOVIL"></td>
+                                                                        <td v-text="pedido.TELEFONO_FIJO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaPedidoDeposito(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaPedidoDeposito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -2203,105 +2171,101 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h3 class="h4">DATA FILTRADA</h3>
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayCotizaciones.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>EMPRESA&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
-                                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="expotarCotizaciones()"></i>
-                                                                                    </el-tooltip></th>
-                                                                                <th>SUCURSAL</th>
-                                                                                <th>COD COTIZACIÓN</th>
-                                                                                <th>NUM COTIZACIÓN</th>
-                                                                                <th>FECHA COTIZACIÓN</th>
-                                                                                <th>FECHA VENC COTI</th>
-                                                                                <th>TCC</th>
-                                                                                <th>VEHICULO ($)</th>
-                                                                                <th>VEHICULO (S/)</th>
-                                                                                <th>ASUNTO</th>
-                                                                                <th>ESTADO COT</th>
-                                                                                <th>DESCUENTO</th>
-                                                                                <th>NOMBRE COMERCIAL</th>
-                                                                                <th>VIN</th>
-                                                                                <th>ASESOR COMERCIAL</th>
-                                                                                <th>CONTACTO</th>
-                                                                                <th>NUM DOCUMENTO</th>
-                                                                                <th>DIRECCIÓN</th>
-                                                                                <th>TELÉFONO MOVIL</th>
-                                                                                <th>TELÉFONO FIJO</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(cotizacion, index) in arrayCotizaciones" :key="index">
-                                                                                <td v-text="cotizacion.EMPRESA"></td>
-                                                                                <td v-text="cotizacion.SUCURSAL"></td>
-                                                                                <td v-text="cotizacion.COD_COTIZACION"></td>
-                                                                                <td v-text="cotizacion.NUM_COTIZACION"></td>
-                                                                                <td v-text="cotizacion.FECHA_COTIZACION"></td>
-                                                                                <td v-text="cotizacion.FECHA_VENC_COTIZACION"></td>
-                                                                                <td v-text="cotizacion.TCC"></td>
-                                                                                <td v-text="cotizacion.COTI_VEHI_DOLAR"></td>
-                                                                                <td v-text="cotizacion.COTI_VEHI_SOL"></td>
-                                                                                <td v-text="cotizacion.ASUNTO"></td>
-                                                                                <td v-text="cotizacion.ESTADO"></td>
-                                                                                <td> {{ Number((parseFloat(cotizacion.DESCUENTO)).toFixed(2)) }} </td>
-                                                                                <td v-text="cotizacion.NOMBRE_COMERCIAL"></td>
-                                                                                <td v-text="cotizacion.VIN"></td>
-                                                                                <td v-text="cotizacion.ASESOR_COMERCIAL"></td>
-                                                                                <td v-text="cotizacion.CONTACTO"></td>
-                                                                                <td v-text="cotizacion.N_DOCUMENTO"></td>
-                                                                                <td v-text="cotizacion.DIRECCION"></td>
-                                                                                <td v-text="cotizacion.TELEFONO_MOVIL"></td>
-                                                                                <td v-text="cotizacion.TELEFONO_FIJO"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaCotizaciones(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                    <template v-if="arrayCotizaciones.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>EMPRESA&nbsp;
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Exportar Distribucion Descuentos(s) XLS</div>
+                                                                                    <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="expotarCotizaciones()"></i>
+                                                                            </el-tooltip></th>
+                                                                        <th>SUCURSAL</th>
+                                                                        <th>COD COTIZACIÓN</th>
+                                                                        <th>NUM COTIZACIÓN</th>
+                                                                        <th>FECHA COTIZACIÓN</th>
+                                                                        <th>FECHA VENC COTI</th>
+                                                                        <th>TCC</th>
+                                                                        <th>VEHICULO ($)</th>
+                                                                        <th>VEHICULO (S/)</th>
+                                                                        <th>ASUNTO</th>
+                                                                        <th>ESTADO COT</th>
+                                                                        <th>DESCUENTO</th>
+                                                                        <th>NOMBRE COMERCIAL</th>
+                                                                        <th>VIN</th>
+                                                                        <th>ASESOR COMERCIAL</th>
+                                                                        <th>CONTACTO</th>
+                                                                        <th>NUM DOCUMENTO</th>
+                                                                        <th>DIRECCIÓN</th>
+                                                                        <th>TELÉFONO MOVIL</th>
+                                                                        <th>TELÉFONO FIJO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(cotizacion, index) in arrayCotizaciones" :key="index">
+                                                                        <td v-text="cotizacion.EMPRESA"></td>
+                                                                        <td v-text="cotizacion.SUCURSAL"></td>
+                                                                        <td v-text="cotizacion.COD_COTIZACION"></td>
+                                                                        <td v-text="cotizacion.NUM_COTIZACION"></td>
+                                                                        <td v-text="cotizacion.FECHA_COTIZACION"></td>
+                                                                        <td v-text="cotizacion.FECHA_VENC_COTIZACION"></td>
+                                                                        <td v-text="cotizacion.TCC"></td>
+                                                                        <td v-text="cotizacion.COTI_VEHI_DOLAR"></td>
+                                                                        <td v-text="cotizacion.COTI_VEHI_SOL"></td>
+                                                                        <td v-text="cotizacion.ASUNTO"></td>
+                                                                        <td v-text="cotizacion.ESTADO"></td>
+                                                                        <td> {{ Number((parseFloat(cotizacion.DESCUENTO)).toFixed(2)) }} </td>
+                                                                        <td v-text="cotizacion.NOMBRE_COMERCIAL"></td>
+                                                                        <td v-text="cotizacion.VIN"></td>
+                                                                        <td v-text="cotizacion.ASESOR_COMERCIAL"></td>
+                                                                        <td v-text="cotizacion.CONTACTO"></td>
+                                                                        <td v-text="cotizacion.N_DOCUMENTO"></td>
+                                                                        <td v-text="cotizacion.DIRECCION"></td>
+                                                                        <td v-text="cotizacion.TELEFONO_MOVIL"></td>
+                                                                        <td v-text="cotizacion.TELEFONO_FIJO"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    </form>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaCotizaciones(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaCotizaciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
