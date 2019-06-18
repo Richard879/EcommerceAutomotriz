@@ -27,7 +27,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabAprobarPedidoCV" @click="tabAprobarPedidoCV()" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabAprobarPedidoFinanciado" @click="tabAprobarPedidoFinanciado()" role="tab" data-toggle="tab">
                                             <i class="fa fa-bus"></i> APROBAR CREDITO VEHICULAR
                                         </a>
                                     </li>
@@ -543,7 +543,7 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div class="tab-pane fade" id="TabAprobarPedidoCV">
+                                    <div class="tab-pane fade" id="TabAprobarPedidoFinanciado">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -693,7 +693,9 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
-                                                                                <th>#Doc SAP</th>
+                                                                                <th>Orden Venta SAP</th>
+                                                                                <th>Factura R. Borrador SAP</th>
+                                                                                <th>Factura R. SAP</th>
                                                                                 <!-- <th>Código</th> -->
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
@@ -732,9 +734,17 @@
                                                                                             <i @click="abrirModal('pedido', 'financiamiento', pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
+                                                                                    <template v-if="pedido.cFlagEstadoFinanciamiento == 'A'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Número Documento Factura Reserva del Pedido {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="abrirModal('pedido', 'facturareserva', pedido)" :style="'color:green'" class="fa-md fa fa-add"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
+                                                                                <td v-text="pedido.nDocNumFacturaBorrador"></td>
+                                                                                <td v-text="pedido.nDocNumFacturaBorrador"></td>
                                                                                 <!-- <td v-text="pedido.nIdContacto"></td> -->
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
@@ -4189,7 +4199,7 @@
             },
             //=====================================================================================
             //====================== TAB APROBAR PEDIDOS CON CREDITO VEHICULAR=====================
-            tabAprobarPedidoCV(){
+            tabAprobarPedidoFinanciado(){
                 this.limpiarFormulario();
             },
             listarPedidosAprobadosFinancia(page){
