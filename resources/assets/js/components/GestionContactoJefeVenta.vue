@@ -17,7 +17,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-users"></i> MIS CONTACTOS
+                                            <i class="fa fa-users"></i> CONTACTOS
                                         </a>
                                     </li>
                                     <li class="nav-item">
