@@ -281,7 +281,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -559,7 +559,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -1145,7 +1145,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -1350,7 +1350,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -1542,7 +1542,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -1807,7 +1807,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -2042,7 +2042,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
