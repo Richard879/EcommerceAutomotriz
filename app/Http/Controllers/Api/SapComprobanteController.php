@@ -235,4 +235,30 @@ class SapComprobanteController extends Controller
         // array_push($array_rpta, $rptaSap);
         // return $array_rpta;
     }
+
+    public function SapGetFacturaReservaByDraftKey(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => 'http://172.20.0.10:8020/'
+        ]);
+
+        $array_rpta = [];
+        $rptaSap   = [];
+
+        $arrayData = $request->data;
+        foreach ($arrayData as $key => $value) {
+
+            $nDocEntry = $value['nDocEntry'];
+            $nDocNum  = $value['nDocNum'];
+
+            $response = $client->request('POST', "/pruebas/Comprobante/SapGetFacturaReservaByDraftKey/", [
+                                                                                        'query' => ['nDocEntry' => $nDocEntry,
+                                                                                                    'nDocNum' => $nDocNum]
+                                                                                    ]);
+            $rptaSap = json_decode($response->getBody());
+        }
+        return $rptaSap;
+    }
+
 }
