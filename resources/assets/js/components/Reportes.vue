@@ -10,15 +10,13 @@
             </header>
 
             <!--CONSULTAS/RETAIL || ADV/Gerencia-->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                <div class="container-fluid">
-                    <div class="row bg-white has-shadow">
-                        <div class="col-xs-12" style="width: 100%;">
-                            <h3>CONSULTAS/RETAIL</h3>
-                        </div>
-
-                        <!-- JV/ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096 || formLogin.nIdRol == 110121">
+                <section class="dashboard-counts no-padding-bottom">
+                    <div class="container-fluid">
+                        <div class="row bg-white has-shadow">
+                            <div class="col-xs-12" style="width: 100%;">
+                                <h3>CONSULTAS/RETAIL</h3>
+                            </div>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="abrirModal('ventaretail', 'abrir', 'VENTA RETAIL')"><i class="fa-md fa fa-file-excel-o"></i></div>
@@ -31,10 +29,10 @@
                                     <div class="title"><span><br>Ventas HGSI</span></div>
                                 </div>
                             </div>
-                        </template>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </template>
 
             <!--Marketing y Ventas || ADV/Gerencia-->
             <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
@@ -70,18 +68,17 @@
             </section>
 
             <!--Reportes Comerciales || JV/ADV/Gerencia ||| formLogin.nIdRol == 110026 <= Vendedores || -->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                <div class="container-fluid">
-                    <div class="row bg-white has-shadow">
-                        <div class="col-xs-12" style="width: 100%;">
-                            <h3>REPORTES COMERCIALES</h3>
-                        </div>
+            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096 || formLogin.nIdRol == 110121">
+                <section class="dashboard-counts no-padding-bottom">
+                    <div class="container-fluid">
+                        <div class="row bg-white has-shadow">
+                            <div class="col-xs-12" style="width: 100%;">
+                                <h3>REPORTES COMERCIALES</h3>
+                            </div>
 
-                        <!-- JV/ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                     <!-- @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')" -->
+                                    <!-- @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')" -->
                                     <div class="icon bg-violet"  @click="abrirModal('stock', 'abrir', 'LISTA STOCK VEHICULOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Stock Vehiculos</span></div>
                                 </div>
@@ -110,10 +107,10 @@
                                     <div class="title"><span><br>Cotizaciones</span></div>
                                 </div>
                             </div>
-                        </template>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </template>
 
             <!-- Modal Show Errors -->
             <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
