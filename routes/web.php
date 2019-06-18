@@ -509,6 +509,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/accesoriovehiculo/GetListAccesoriosByVehiculo','AccesorioVehiculoController@GetListAccesoriosByVehiculo');
 
     Route::post('/comprobante/SetIntegraComprobante', 'IntComprobanteController@SetIntegraComprobante');
+    Route::post('/comprobante/SetIntegraComprobanteFR', 'IntComprobanteController@SetIntegraComprobanteFR');
     Route::post('/comprobante/SetIntegraComprobanteWarrant', 'IntComprobanteController@SetIntegraComprobanteWarrant');
 
     Route::get('/reportes/exportDetalleVentaRetail', 'ExcelController@exportDetalleVentaRetail');

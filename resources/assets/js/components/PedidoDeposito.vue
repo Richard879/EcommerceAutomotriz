@@ -213,6 +213,7 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
+                                                                                <th>Forma de Pago</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
                                                                                 <th>Vendedor</th>
@@ -247,6 +248,7 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
+                                                                                <td v-text="pedido.cFormaPago"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>
@@ -1131,7 +1133,10 @@
                     flagMontoTotalDepositosRechazados: 0,
                     flagMontoTotalDepositosAprobados: 0,
                     flagMontoTotalCotizacion: 0,
-                    flagMontoTotalCancelarPendiente: 0
+                    flagMontoTotalCancelarPendiente: 0,
+                    nIdFormaPago: '',
+                    cFormaPago: '',
+                    nDocNumFacturaReserva: ''
                 },
                 formParametrizacionDeposito: {
                     nidtipopago: '',
@@ -1477,6 +1482,11 @@
                         'cFlagEstadoAprobacion': 'A'
                     }
                 }).then(response => {
+                    //PARA FACTURA DE CREDITO VEHIULAR
+                    this.formDeposito.nIdFormaPago          = pedido.nIdFormaPago;
+                    this.formDeposito.cFormaPago            = pedido.cFormaPago;
+                    this.formDeposito.nDocNumFacturaReserva = pedido.nDocNumFacturaReserva;
+
                     //Cabecera del Formulario Registro Deposito
                     this.formDeposito.cNumeroPedido = pedido.cNumeroPedido;
                     this.formDeposito.cnombrecontacto = pedido.cContacto;
@@ -1986,12 +1996,15 @@
                     'cTipoComprobante'          :   this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
-                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial
+                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial,
+                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156) ? 1: 2,
+                    'nIdFormaPagoFinanciado'    :   this.formDeposito.nIdFormaPago
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
+                        this.limpiarFormularioFinanciamiento();
                         swal('Deposito Registrado Exitosamente');
                     }else{
                         swal('El pedido ha sido Anulado o ya está Cancelado');
@@ -2110,12 +2123,15 @@
                     'cTipoComprobante'          :   this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
-                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial
+                    'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial,
+                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156) ? 1: 2,
+                    'nIdFormaPagoFinanciado'    :   this.formDeposito.nIdFormaPago
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
+                        this.limpiarFormularioFinanciamiento();
                         swal('Deposito Registrado Exitosamente');
                     } else {
                         swal('El pedido ha sido Anulado o ya está Cancelado');
@@ -2300,6 +2316,12 @@
                 this.formNuevoDeposito.cflagtce                 =   false;
                 this.formNuevoDeposito.fmontoTCE                =   '';
                 this.formNuevoDeposito.cglosa                   =   '';
+
+            },
+            limpiarFormularioFinanciamiento(){
+                this.formDeposito.nIdFormaPago                  =   '';
+                this.formDeposito.cFormaPago                    =   '';
+                this.formDeposito.nDocNumFacturaReserva         =   '';
             },
             limpiarBsqGeneracionDeposito(){
                 this.formParametrizacionDeposito.nidtipopago = '',

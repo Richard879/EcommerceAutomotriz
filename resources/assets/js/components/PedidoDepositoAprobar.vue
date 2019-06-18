@@ -201,6 +201,7 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
+                                                                                <th>Forma de Pago</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
                                                                             </tr>
@@ -229,6 +230,7 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
+                                                                                <td v-text="pedido.cFormaPago"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
                                                                             </tr>
@@ -354,10 +356,18 @@
                                                                     <tr v-for="deposito in arrayDepositosPorPedido" :key="deposito.nIdDepositoPedido">
                                                                         <td>
                                                                             <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
-                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
-                                                                                    <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                                <template v-if="deposito.cFlagFormaPagoFinanciado == '2'">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
+                                                                                        <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                </template>
+                                                                                <template v-if="deposito.cFlagFormaPagoFinanciado == '1'">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
+                                                                                        <i  :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                </template>
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Rechazar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
@@ -649,7 +659,11 @@
                     flagMontoTotalDepositosAprobados: 0,
                     flagMontoTotalCotizacion: 0,
                     flagMontoTotalCancelarPendiente: 0,
-                    cvendedornombre: ''
+                    cvendedornombre: '',
+                    nIdFormaPago: '',
+                    cFormaPago: '',
+                    nDocNumFacturaReserva: '',
+                    cFlagTipoFormaPago: ''
                 },
                 arrayDepositosPorPedido: [],
                 // =============================================================
@@ -906,6 +920,10 @@
                 this.formDistribuirDeposito.flagMontoTotalDepositosPendiente = 0;
                 this.formDistribuirDeposito.flagMontoTotalDepositosAprobados = 0;
                 this.formDistribuirDeposito.flagMontoTotalDepositosRechazados = 0;
+                this.formDistribuirDeposito.nIdFormaPago = 0;
+                this.formDistribuirDeposito.cFormaPago = 0;
+                this.formDistribuirDeposito.nDocNumFacturaReserva = 0;
+                this.formDistribuirDeposito.cFlagTipoFormaPago = 0;
                 this.arrayDepositosPorPedido = [];
             },
             llenarDepositos(pedido){
@@ -916,6 +934,11 @@
                 this.formDistribuirDeposito.cnombrecontacto             = pedido.cContacto;
                 this.formDistribuirDeposito.flagMontoTotalCotizacion    = pedido.fTotalPedido;
                 this.formDistribuirDeposito.cvendedornombre             = pedido.cVendedorNombre;
+
+                this.formDistribuirDeposito.nIdFormaPago                = pedido.nIdFormaPago;
+                this.formDistribuirDeposito.cFormaPago                  = pedido.cFormaPago;
+                this.formDistribuirDeposito.nDocNumFacturaReserva       = pedido.nDocNumFacturaReserva;
+                this.formDistribuirDeposito.cFlagTipoFormaPago          = '';
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {

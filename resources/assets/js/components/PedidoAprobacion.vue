@@ -737,14 +737,14 @@
                                                                                     <template v-if="pedido.cFlagEstadoFinanciamiento == 'A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Número Documento Factura Reserva del Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="abrirModal('pedido', 'facturareserva', pedido)" :style="'color:green'" class="fa-md fa fa-add"></i>
+                                                                                            <i @click="abrirModal('pedido', 'facturareserva', pedido)" :style="'color:orange'" class="fa-md fa fa-plus"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nDocNum"></td>
-                                                                                <td v-text="pedido.nDocNumFacturaBorrador"></td>
-                                                                                <td v-text="pedido.nDocNumFacturaBorrador"></td>
+                                                                                <td v-text="pedido.nDocNumFacturaReservaBorrador"></td>
+                                                                                <td v-text="pedido.nDocNumFacturaReserva"></td>
                                                                                 <!-- <td v-text="pedido.nIdContacto"></td> -->
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
@@ -1386,7 +1386,7 @@
                 </div>
             </div>
 
-            <!-- MODAL ASIGNACIÓN DIRECCIONES -->
+            <!-- MODAL MOTIVO DE RECHAZO -->
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -1439,6 +1439,70 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL ASIGNACIÓN DOCNUM FACTURA RESERVA FINAL -->
+            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">INGRESAR NÚMERO DOCUMENTO DE LA FACTURA DE RESERVA DEL PEDIDO  {{ fillPedidoFinanciamiento.cnumeropedido }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-md-2 form-control-label">*DocNum</label>
+                                                        <div class="col-md-10 widthFull">
+                                                            <el-input
+                                                                type="textarea"
+                                                                autosize
+                                                                clearable
+                                                                v-model="fillPedidoFinanciamiento.cglosa">
+                                                            </el-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-9 offset-md-5">
+                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="guardarDocNumFacRe">
+                                                                    <i class="fa fa-save"></i> Guardar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1499,6 +1563,7 @@
                 fillPedidoFinanciamiento: {
                     nidcabecerapedido: '',
                     cnumeropedido: '',
+                    citemcode: '',
                     cglosa: ''
                 },
                 //=========================== MODAL DETALLE PEDIDO ===================
@@ -4316,7 +4381,7 @@
                     if(me.jsonRespuesta.DocEntry){
                         me.arraySapUpdSgc.push({
                             'cFlagTipo'         :   "V",
-                            'cTipoComprobante'  :   "FR",
+                            'cTipoComprobante'  :   "FRB",
                             'cItemCode'         :   me.jsonRespuesta.DocumentLines[0].ProjectCode.toString(),
                             'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                             'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
@@ -4403,6 +4468,58 @@
 
                 if(!this.fillPedidoFinanciamiento.cglosa){
                     this.mensajeError.push('Debe ingresar el motivo del rechazo');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            limpiarModalOVFinanciada(){
+                this.fillPedidoFinanciamiento.nidcabecerapedido =   ''
+                this.fillPedidoFinanciamiento.cnumeropedido     =   ''
+                this.fillPedidoFinanciamiento.citemcode         =   ''
+                this.fillPedidoFinanciamiento.cglosa            =   ''
+            },
+            guardarDocNumFacRe(){
+                if(this.validarFacturaReserva()){
+                    return;
+                }
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteFR';
+                axios.post(sapUrl, {
+                    'cFlagTipo'         :   "V",
+                    'cItemCode'         :   me.fillPedidoFinanciamiento.citemcode.toString(),
+                    'cTipoComprobante'  :   "FR",
+                    'nDocNum'           :   parseInt(me.fillPedidoFinanciamiento.cglosa),
+                    'cDocType'          :   'dDocument_Items'
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        swal(response.data[0].cMensaje)
+                        me.cerrarModal()
+                        me.listarPedidosAprobadosFinancia(1);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarFacturaReserva(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.fillPedidoFinanciamiento.cglosa){
+                    this.mensajeError.push('Debe ingresar el numero de documento de la Factura de Reserva');
+                } else {
+                    if(this.fillPedidoFinanciamiento.cglosa.length != 10){
+                        this.mensajeError.push('El número de documento de la Factura de Reserva es de 10 digitos');
+                    }
                 }
 
                 if(this.mensajeError.length){
@@ -4626,12 +4743,25 @@
                             break;
                             case 'financiamiento':
                             {
+                                this.limpiarModalOVFinanciada();
                                 this.fillPedidoFinanciamiento.nidcabecerapedido =   data.nIdCabeceraPedido
                                 this.fillPedidoFinanciamiento.cnumeropedido     =   data.cNumeroPedido
                                 this.fillPedidoFinanciamiento.cglosa            =   data.cGlosa
                                 this.accionmodal=6;
                                 this.modal = 1;
                             }
+                            break;
+                            case 'facturareserva':
+                            {
+                                this.limpiarModalOVFinanciada();
+                                this.fillPedidoFinanciamiento.nidcabecerapedido =   data.nIdCabeceraPedido
+                                this.fillPedidoFinanciamiento.cnumeropedido     =   data.cNumeroPedido
+                                this.fillPedidoFinanciamiento.citemcode         =   data.cItemCode
+                                this.fillPedidoFinanciamiento.cglosa            =   data.nDocNumFacturaReserva
+                                this.accionmodal=7;
+                                this.modal = 1;
+                            }
+                            break;
                         }
                     }
                     break;
@@ -4707,6 +4837,10 @@
                 this.arrayPedidosAprobados          = [];
                 this.arrayPedidos                   = [];
                 this.arrayPedidosCreditoVehicular   = [];
+
+                this.fillPedidoFinanciamiento.nidcabecerapedido =   ''
+                this.fillPedidoFinanciamiento.cnumeropedido     =   ''
+                this.fillPedidoFinanciamiento.cglosa            =   ''
 
                 //=====Variables SAP para OrdenVenta Vehiculo
                 this.arraySapRespuestaVehiculo= [],
