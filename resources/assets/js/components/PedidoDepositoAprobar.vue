@@ -195,6 +195,7 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
+                                                                                <th>#Doc SAP</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Contacto</th>
                                                                                 <th>Vehiculo</th>
@@ -224,6 +225,7 @@
                                                                                     </template>-->
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
+                                                                                <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
