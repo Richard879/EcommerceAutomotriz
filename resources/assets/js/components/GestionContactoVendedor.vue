@@ -17,10 +17,10 @@
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos();" role="tab" data-toggle="tab">
-                                            <i class="fa fa-users"></i> MIS CONTACTOS
+                                            <i class="fa fa-users"></i> CONTACTOS
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="nidtiporol==110026">
                                         <a class="nav-link" id="Tab2" href="#TabCarteraMes" @click="tabCarteraMes();" role="tab" data-toggle="tab">
                                             <i class="fa fa-suitcase"></i> CARTERA DEL MES
                                         </a>
@@ -2471,6 +2471,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                nidtiporol: sessionStorage.getItem("nTipoRol"),
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -2790,7 +2791,7 @@
             },
             listarContactoSinCarteraMes(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/gescontacto/GetListContactoBySinCarteraMes';
+                var url = this.ruta + '/gescontacto/GetListContactoByRol';
                 axios.get(url, {
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
