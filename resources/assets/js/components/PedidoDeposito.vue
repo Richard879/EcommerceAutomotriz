@@ -1997,7 +1997,7 @@
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                     'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial,
-                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156) ? 1: 2,
+                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156 && this.formDeposito.nDocNumFacturaReserva != 0) ? 1: 2,
                     'nIdFormaPagoFinanciado'    :   this.formDeposito.nIdFormaPago
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
