@@ -2791,7 +2791,7 @@
             },
             listarContactoSinCarteraMes(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/gescontacto/GetListContactoBySinCarteraMes';
+                var url = this.ruta + '/gescontacto/GetListContactoByRol';
                 axios.get(url, {
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),

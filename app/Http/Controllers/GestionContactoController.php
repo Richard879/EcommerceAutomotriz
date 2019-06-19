@@ -240,6 +240,34 @@ class GestionContactoController extends Controller
         return ['arrayContacto'=>$arrayContacto];
     }
 
+    public function GetListContactoByRol(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $nIdCronograma      = $request->nidcronograma;
+        $nTipoPersona       = $request->ntipopersona;
+        $cNroDocumento      = $request->cnrodocumento;
+        $cContacto          = $request->cfiltrodescripcion;
+
+        $cNroDocumento      = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cContacto          = ($cContacto == NULL) ? ($cContacto = ' ') : $cContacto;
+
+        $arrayContacto = DB::select('exec [usp_Contacto_GetListContactoByRol] ?, ?, ?, ?, ?, ?, ?',
+                                                                                [   $nIdEmpresa,
+                                                                                    $nIdSucursal,
+                                                                                    $nIdCronograma,
+                                                                                    $nTipoPersona,
+                                                                                    $cNroDocumento,
+                                                                                    $cContacto,
+                                                                                    Auth::user()->id
+                                                                                ]);
+
+        //$arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
+        return ['arrayContacto'=>$arrayContacto];
+    }
+
     public function SetContactoCarteraMesTodos(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
