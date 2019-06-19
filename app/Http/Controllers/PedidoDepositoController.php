@@ -256,6 +256,67 @@ class PedidoDepositoController extends Controller
         return response()->json($arrayDepositosPorPedido);
     }
 
+    public function SetCambiarEstadoDepositoFinanciamiento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdDepositoPedido      =   $request->nIdDepositoPedido;
+        $nIdCabeceraPedido      =   $request->nIdCabeceraPedido;
+        $cFlagEstadoDeposito    =   $request->cFlagEstadoDeposito;
+        $nIdMonedaOrigen        =   $request->nIdMonedaOrigen;
+        $fTipoCambio            =   $request->fTipoCambio;
+        //ADDON
+        $CardCode               =   $request->CardCode;
+        $CardName               =   $request->CardName;
+        $Type                   =   $request->Type;
+        // $nIdTipoPago        =   $request->nIdTipoPago;//Tipo Financiado
+        $TransRef               =   $request->TransRef;
+        $DocDate                =   $request->DocDate;
+        $DocTotal               =   $request->DocTotal;
+        $DocTotalFC             =   $request->DocTotalFC;
+        $DocCurr                =   $request->DocCurr;
+        $DocCurrBank            =   $request->DocCurrBank;
+        $Account                =   $request->cAcctCode;
+        $FacturaDocTotal        =   $request->FacturaDocTotal;
+        $FacturaDocTotalFC      =   $request->FacturaDocTotalFC;
+        $DocRate                =   $request->DocRate;
+        $DocNum                 =   $request->DocNum;
+        $nIdFormaPago           =   $request->nIdFormaPago;
+        $Migrado                =   $request->Migrado;
+
+        $DocNum                 =   ($DocNum == NULL) ? ($DocNum = '') : $DocNum;
+        $nIdFormaPago           =   ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDepositoAddonFinanciado ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdDepositoPedido,
+                                        $nIdCabeceraPedido,
+                                        $cFlagEstadoDeposito,
+                                        $nIdMonedaOrigen,
+                                        $fTipoCambio,
+                                        //ADDON
+                                        $CardCode,
+                                        $CardName,
+                                        $Type,
+                                        $TransRef,
+                                        $DocDate,
+                                        $DocTotal,
+                                        $DocTotalFC,
+                                        $DocCurr,
+                                        $DocCurrBank,
+                                        $Account,
+                                        $FacturaDocTotal,
+                                        $FacturaDocTotalFC,
+                                        $DocRate,
+                                        $Migrado,
+                                        $DocNum,
+                                        $nIdFormaPago,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDepositosPorPedido);
+    }
+
     public function SetCambiarEstadoPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

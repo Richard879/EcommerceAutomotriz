@@ -342,6 +342,7 @@
                                                                         <th>ACCIÓN</th>
                                                                         <th>BANCO</th>
                                                                         <th>N° OPERACIÓN</th>
+                                                                        <th>CODIGO BANCO</th>
                                                                         <th>MONEDA</th>
                                                                         <th>FECHA</th>
                                                                         <th>TTPO CAMBIO</th>
@@ -356,16 +357,18 @@
                                                                     <tr v-for="deposito in arrayDepositosPorPedido" :key="deposito.nIdDepositoPedido">
                                                                         <td>
                                                                             <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
+                                                                                <!-- Deposito pendiente con forma de pago diferente a credito vehicular -->
                                                                                 <template v-if="deposito.cFlagFormaPagoFinanciado == '2'">
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
                                                                                         <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                 </template>
+                                                                                <!-- Deposito pendiente con forma de pago igual a credito vehicular -->
                                                                                 <template v-if="deposito.cFlagFormaPagoFinanciado == '1'">
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Aprobar Deposito {{ deposito.nNumeroOperacion }}</div>
-                                                                                        <i  :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                        <i  @click="aprobarDepositoFinanciado(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                 </template>
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
@@ -392,6 +395,7 @@
                                                                         </td>
                                                                         <td v-text="deposito.cNombreBanco"></td>
                                                                         <td v-text="deposito.nNumeroOperacion"></td>
+                                                                        <td v-text="deposito.cAcctCode"></td>
                                                                         <td v-text="deposito.cNombreMoneda"></td>
                                                                         <td v-text="deposito.dFechaDeposito"></td>
                                                                         <td v-text="deposito.fTipoCambio"></td>
@@ -662,8 +666,7 @@
                     cvendedornombre: '',
                     nIdFormaPago: '',
                     cFormaPago: '',
-                    nDocNumFacturaReserva: '',
-                    cFlagTipoFormaPago: ''
+                    nDocNumFacturaReserva: ''
                 },
                 arrayDepositosPorPedido: [],
                 // =============================================================
@@ -923,22 +926,20 @@
                 this.formDistribuirDeposito.nIdFormaPago = 0;
                 this.formDistribuirDeposito.cFormaPago = 0;
                 this.formDistribuirDeposito.nDocNumFacturaReserva = 0;
-                this.formDistribuirDeposito.cFlagTipoFormaPago = 0;
                 this.arrayDepositosPorPedido = [];
             },
             llenarDepositos(pedido){
                 this.mostrarProgressBar();
 
-                this.formDistribuirDeposito.nidcabecerapedido           = pedido.nIdCabeceraPedido;
-                this.formDistribuirDeposito.cNumeroPedido               = pedido.cNumeroPedido;
-                this.formDistribuirDeposito.cnombrecontacto             = pedido.cContacto;
-                this.formDistribuirDeposito.flagMontoTotalCotizacion    = pedido.fTotalPedido;
-                this.formDistribuirDeposito.cvendedornombre             = pedido.cVendedorNombre;
+                this.formDistribuirDeposito.nidcabecerapedido           =   pedido.nIdCabeceraPedido;
+                this.formDistribuirDeposito.cNumeroPedido               =   pedido.cNumeroPedido;
+                this.formDistribuirDeposito.cnombrecontacto             =   pedido.cContacto;
+                this.formDistribuirDeposito.flagMontoTotalCotizacion    =   pedido.fTotalPedido;
+                this.formDistribuirDeposito.cvendedornombre             =   pedido.cVendedorNombre;
 
-                this.formDistribuirDeposito.nIdFormaPago                = pedido.nIdFormaPago;
-                this.formDistribuirDeposito.cFormaPago                  = pedido.cFormaPago;
-                this.formDistribuirDeposito.nDocNumFacturaReserva       = pedido.nDocNumFacturaReserva;
-                this.formDistribuirDeposito.cFlagTipoFormaPago          = '';
+                this.formDistribuirDeposito.nIdFormaPago                =   pedido.nIdFormaPago;
+                this.formDistribuirDeposito.cFormaPago                  =   pedido.cFormaPago;
+                this.formDistribuirDeposito.nDocNumFacturaReserva       =   pedido.nDocNumFacturaReserva;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
@@ -1092,6 +1093,67 @@
                     } else if (result.dismiss === swal.DismissReason.cancel)
                     {
                     }
+                })
+            },
+            aprobarDepositoFinanciado(deposito){
+                let me = this;
+                swal({
+                    title: 'Estas seguro de aprobar el Deposito',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Aprobar!',
+                    cancelButtonText: 'No, Cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        me.mostrarProgressBar();
+                        me.loadingProgressBar("GENERANDO DEPOSITO CON SAP BUSINESS ONE...");
+
+                        var url = this.ruta + '/deposito/SetCambiarEstadoDepositoFinanciamiento';
+                        axios.put(url , {
+                            nIdDepositoPedido   :   deposito.nIdDepositoPedido,
+                            nIdCabeceraPedido   :   deposito.nIdCabeceraPedido,
+                            nIdMonedaOrigen     :   deposito.nIdMonedaOrigen,
+                            fTipoCambio         :   deposito.fTipoCambio,
+                            cFlagEstadoDeposito :   'A',
+                            //AddON
+                            CardCode            :   deposito.CardCode,
+                            CardName            :   deposito.cContacto,
+                            Type                :   deposito.nIdFormaPago,
+                            // nIdTipoPago         :    deposito.nIdTipoPago,
+                            TransRef            :   deposito.nNumeroOperacion,
+                            DocDate             :   deposito.dFechaDeposito,
+                            DocTotal            :   deposito.fMontoSoles,
+                            DocTotalFC          :   deposito.fMontoDolares,
+                            // DocNum              :    deposito.nDocNum,x
+                            DocCurr             :   deposito.cAbreviaturaMoneda,
+                            DocCurrBank         :   deposito.cAbreviaturaMoneda,
+                            cAcctCode           :   deposito.cAcctCode,
+                            FacturaDocTotal     :   deposito.fMontoSoles,
+                            FacturaDocTotalFC   :   deposito.fMontoDolares,
+                            DocRate             :   deposito.fTipoCambio,
+                            DocNum              :   this.formDistribuirDeposito.nDocNumFacturaReserva,
+                            nIdFormaPago        :   this.formDistribuirDeposito.nIdFormaPago,
+                            Migrado             :   'N'
+                        }).then(response => {
+                            swal(
+                                'Aprobado!',
+                                'El deposito fue aprobado exitosamente.'
+                            );
+                            this.tabBuscarPedido();
+                            $("#myBar").hide();
+                            me.loading.close();
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
             /*

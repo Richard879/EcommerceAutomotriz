@@ -232,6 +232,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/deposito/GetListPedidoConDeposito', 'PedidoDepositoController@GetListPedidoConDeposito');
     Route::get('/deposito/GetListDepositosPorPedido', 'PedidoDepositoController@GetListDepositosPorPedido');
     Route::put('/deposito/SetCambiarEstadoDeposito', 'PedidoDepositoController@SetCambiarEstadoDeposito');
+    Route::put('/deposito/SetCambiarEstadoDepositoFinanciamiento', 'PedidoDepositoController@SetCambiarEstadoDepositoFinanciamiento');
     Route::put('/deposito/SetCambiarEstadoPedido', 'PedidoDepositoController@SetCambiarEstadoPedido');
     Route::put('/deposito/SetCambiarMontosDepositoByTCE', 'PedidoDepositoController@SetCambiarMontosDepositoByTCE');
     Route::put('/deposito/SetCambiarEstadoIncidencia', 'PedidoDepositoController@SetCambiarEstadoIncidencia');
