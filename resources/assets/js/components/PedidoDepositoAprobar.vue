@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab2" href="#TabDistribucionDeposito" role="tab" data-toggle="tab">
-                                            <i class="fa fa-usd"></i> DISTRIBUCIÓN
+                                            <i class="fa fa-usd"></i> APROBACIÓN DEPÓSITOS
                                         </a>
                                     </li>
                                 </ul>
