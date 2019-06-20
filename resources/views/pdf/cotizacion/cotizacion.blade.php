@@ -320,6 +320,13 @@
                 </tr>
                 <tr>
                     <td class="justify">
+                        Todo pago efectuado por el cliente, en virtud  a la compra del vehículo o durante sus servicios de post venta,
+                        que se realicen a través de tarjetas de crédito, tendrán una comisión adicional del 5% que se debitará automáticamente de su tarjeta.
+                        El cliente declara conocer de esta comisión, liberando a SAISAC de todo reclamo o denuncia por ausencia de información al respecto
+                    </td>
+                </tr>
+                <tr>
+                    <td class="justify">
                         La tramitación de emisión de placas y tarjeta de identificación vehicular es una cortesía que otorgamos a nuestros clientes. Este procedimiento administrativo está
                         sujeto a plazos, condiciones y criterios de la autoridad pública; por lo tanto SAISAC no se hace responsable por los plazos que demore la emisión de los
                         documentos mencionados.

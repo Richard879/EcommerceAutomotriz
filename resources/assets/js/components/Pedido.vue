@@ -2094,7 +2094,7 @@
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
                 }, config).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     //Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],
@@ -2801,7 +2801,7 @@
                         if(this.attachment.length) {
                             this.subirArchivos(this.formPedido.nidcabecerapedido);
                         } else {
-                            this.generarPedidoPDF(this.formPedido.nidcabecerapedido);
+                            // this.generarPedidoPDF(this.formPedido.nidcabecerapedido);
                             this.vistaFormularioPedido= 1;
                             this.limpiarFormulario();
                             $("#myBar").hide();
