@@ -195,7 +195,6 @@ class SapComprobanteController extends Controller
 
         // $array_rpta = [];
         // $rptaSap   = [];
-
         //======= Obtener el EmployeeCode del Usuario Autenticado
         /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
         [   Auth::user()->id

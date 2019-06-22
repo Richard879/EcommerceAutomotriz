@@ -1483,6 +1483,10 @@
                     }
                 }).then(response => {
                     //PARA FACTURA DE CREDITO VEHIULAR
+                    /**
+                     * 1300156 = CREDITO VEHICULAR
+                     * 1300157 = CREDITO AMICAR
+                     *  */
                     this.formDeposito.nIdFormaPago          = pedido.nIdFormaPago;
                     this.formDeposito.cFormaPago            = pedido.cFormaPago;
                     this.formDeposito.nDocNumFacturaReserva = pedido.nDocNumFacturaReserva;
@@ -1997,17 +2001,24 @@
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                     'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial,
-                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156 && this.formDeposito.nDocNumFacturaReserva != 0) ? 1: 2,
+                    'cFlagFormaPagoFinanciado'  :   ((this.formDeposito.nIdFormaPago == 1300156 || this.formDeposito.nIdFormaPago == 1300157) && this.formDeposito.nDocNumFacturaReserva != 0) ? 1: 2,
                     'nIdFormaPagoFinanciado'    :   this.formDeposito.nIdFormaPago
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
+                    if(response.data[0].nFlagMsje == 1) {
                         this.tabBuscarPedido();
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
                         this.limpiarFormularioFinanciamiento();
-                        swal('Deposito Registrado Exitosamente');
-                    }else{
-                        swal('El pedido ha sido Anulado o ya está Cancelado');
+                        swal(response.data[0].cMensaje);
+                    } else {
+                        if (response.data[0].nFlagMsje == 0) {
+                            swal(response.data[0].cMensaje);
+                        } else {
+                            if (response.data[0].nFlagMsje == 2) {
+                                swal(response.data[0].cMensaje);
+                            }
+                        }
+
                     }
                 }).catch(error => {
                     this.errors = error
@@ -2124,7 +2135,7 @@
                     'cGlosa'                    :   this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial'   :   (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                     'fTipoCambio'               :   (this.formNuevoDeposito.cflagtce == true) ? this.formNuevoDeposito.fmontoTCE : this.formNuevoDeposito.ftipocambiocomercial,
-                    'cFlagFormaPagoFinanciado'  :   (this.formDeposito.nIdFormaPago == 1300156 && this.formDeposito.nDocNumFacturaReserva != 0) ? 1: 2,
+                    'cFlagFormaPagoFinanciado'  :   ((this.formDeposito.nIdFormaPago == 1300156 || this.formDeposito.nIdFormaPago == 1300157) && this.formDeposito.nDocNumFacturaReserva != 0) ? 1: 2,
                     'nIdFormaPagoFinanciado'    :   this.formDeposito.nIdFormaPago
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
@@ -2132,9 +2143,16 @@
                         this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
                         this.limpiarFormularioFinanciamiento();
-                        swal('Deposito Registrado Exitosamente');
+                        swal(response.data[0].cMensaje);
                     } else {
-                        swal('El pedido ha sido Anulado o ya está Cancelado');
+                        if (response.data[0].nFlagMsje == 0) {
+                            swal(response.data[0].cMensaje);
+                        } else {
+                            if (response.data[0].nFlagMsje == 2) {
+                                swal(response.data[0].cMensaje);
+                            }
+                        }
+
                     }
                 }).catch(error => {
                     this.errors = error

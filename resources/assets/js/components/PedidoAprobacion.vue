@@ -4370,7 +4370,8 @@
                     'cCardCode'         :   pedido.cCardCode,
                     'nSalesEmployeeCode':   pedido.nSalesEmployeeCode,
                     'cNumeroVin'        :   pedido.cItemCode,
-                    'fSubTotalDolares'  :   pedido.fSubTotalDolares
+                    'fSubTotalDolares'  :   pedido.fSubTotalDolares,
+                    'nDocEntry'         :   pedido.nDocEntryDetallePedido
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc    = [];
