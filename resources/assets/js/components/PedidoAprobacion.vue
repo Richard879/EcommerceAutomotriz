@@ -28,7 +28,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#TabAprobarPedidoFinanciado" @click="tabAprobarPedidoFinanciado()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-bus"></i> APROBAR CREDITO VEHICULAR
+                                            <i class="fa fa-wpforms"></i> APROBAR CREDITO VEHICULAR
                                         </a>
                                     </li>
                                 </ul>
