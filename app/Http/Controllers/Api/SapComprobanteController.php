@@ -222,7 +222,9 @@ class SapComprobanteController extends Controller
                         "WarehouseCode"     => (string)$request->cWarehouseCode,
                         "ProjectCode"       => (string)$request->cNumeroVin,
                         "CostingCode2"      =>  "01", //UnidadDeNegocio
-                        "CostingCode3"      =>  (string)$request->nIdSapSucursal
+                        "CostingCode3"      =>  (string)$request->nIdSapSucursal,
+                        "BaseType"          =>  17,
+                        "BaseEntry"         =>  (string)$request->nDocEntry
                     ]
                 ]
             ]
