@@ -734,7 +734,7 @@
                                                                                             <i @click="abrirModal('pedido', 'financiamiento', pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <template v-if="pedido.nDocEntryFacturaReservaBorrador != 0">
+                                                                                    <template v-if="pedido.nDocEntryFacturaReservaBorrador ==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Número Documento Factura Reserva del Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="integrarDocEntryFacturaReserva(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
