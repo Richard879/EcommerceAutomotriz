@@ -694,8 +694,8 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>Orden Venta SAP</th>
-                                                                                <th>Factura R. Borrador SAP</th>
-                                                                                <th>Factura R. SAP</th>
+                                                                                <th>Nro BORRADOR</th>
+                                                                                <th>Factura Reserva SAP</th>
                                                                                 <!-- <th>Código</th> -->
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
@@ -1661,6 +1661,7 @@
                 arraySapEVServiciosEnvia: [],
                 arraySapSolucion: [],
                 arrayPatchLlamadaServicios: [],
+                arraySapFacturaReserva: [],
                 fAvgPrice: 0,
                 fImporte: 0,
                 //===========================================================
@@ -4512,7 +4513,33 @@
                 });
             },
             integrarDocEntryFacturaReserva(objPedido){
+                let me = this;
 
+                me.loadingProgressBar("OBTENIENDO FACTURA DE RESERVA SAP BUSINESS ONE...");
+
+                var url = me.ruta + '/comprobante/SapGetFacturaReservaByDraftKey';
+
+                me.arraySapFacturaReserva.push({
+                    'nDocEntry' : objPedido.nDocEntry,
+                    'nDocNum'   : objPedido.nDocNum
+                });
+                
+                axios.get(url, {
+                    params: {
+                        'data': me.arraySapFacturaReserva
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             validarFacturaReserva(){
                 this.error = 0;
