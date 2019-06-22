@@ -4520,10 +4520,10 @@
                 var url = me.ruta + '/comprobante/SapGetFacturaReservaByDraftKey';
 
                 me.arraySapFacturaReserva.push({
-                    'nDocEntry' : objPedido.nDocEntry,
-                    'nDocNum'   : objPedido.nDocNum
+                    'nDocEntry' : objPedido.nDocEntryDetallePedido,
+                    'nDocNum'   : objPedido.nDocNumDetallePedido
                 });
-                
+
                 axios.get(url, {
                     params: {
                         'data': me.arraySapFacturaReserva
