@@ -247,19 +247,20 @@ class SapComprobanteController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $arrayData = $request->data;
-        foreach ($arrayData as $key => $value) {
+        //$arrayData = $request->data;
+        //foreach ($arrayData as $key => $value) {
 
-            $nDocEntry = $value['nDocEntry'];
-            $nDocNum  = $value['nDocNum'];
+            $nDocEntry  = $request->nDocEntry;
+            $nDocNum    = $request->nDocNum;
 
             $response = $client->request('POST', "/pruebas/Comprobante/SapGetFacturaReservaByDraftKey/", [
                                                                                         'query' => ['nDocEntry' => $nDocEntry,
                                                                                                     'nDocNum' => $nDocNum]
                                                                                     ]);
-            $rptaSap = json_decode($response->getBody());
-        }
-        return $rptaSap;
+            //$rptaSap = json_decode($response->getBody());
+        //}
+        //return $rptaSap;
+        return $response->getBody();
     }
 
 }
