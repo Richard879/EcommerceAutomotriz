@@ -724,7 +724,7 @@
                                                                                         <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarCartaResponsabilidadPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <template v-if="pedido.cFlagEstadoFinanciamiento == 'P'">
+                                                                                    <template v-if="pedido.cFlagIntegraFacturaBorrador == 'S'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Aprobar Credito Vehicular {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="cambiarEstadoPedidoFinanciado(pedido, 1)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
@@ -734,7 +734,7 @@
                                                                                             <i @click="abrirModal('pedido', 'financiamiento', pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <template v-if="pedido.nDocEntryFacturaReservaBorrador==0 && pedido.cFlagEstadoFinanciamiento == 'A'">
+                                                                                    <template v-if="pedido.cFlagIntegraFacturaReserva=='S'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Número Documento Factura Reserva del Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="integrarDocEntryFacturaReserva(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
