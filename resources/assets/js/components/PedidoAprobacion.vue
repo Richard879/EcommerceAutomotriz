@@ -737,7 +737,7 @@
                                                                                     <template v-if="pedido.cFlagEstadoFinanciamiento == 'A'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Número Documento Factura Reserva del Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                            <i @click="abrirModal('pedido', 'facturareserva', pedido)" :style="'color:orange'" class="fa-md fa fa-plus"></i>
+                                                                                            <i @click="integrarDocEntryFacturaReserva(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -4510,6 +4510,9 @@
                         }
                     }
                 });
+            },
+            integrarDocEntryFacturaReserva(objPedido){
+
             },
             validarFacturaReserva(){
                 this.error = 0;
