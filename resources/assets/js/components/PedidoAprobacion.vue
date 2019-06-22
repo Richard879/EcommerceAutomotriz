@@ -1447,66 +1447,6 @@
                 </div>
             </div>
 
-            <!-- MODAL ASIGNACIÓN DOCNUM FACTURA RESERVA FINAL -->
-            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">INGRESAR NÚMERO DOCUMENTO DE LA FACTURA DE RESERVA DEL PEDIDO  {{ fillPedidoFinanciamiento.cnumeropedido }} </h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <label class="col-md-2 form-control-label">*DocNum</label>
-                                                        <div class="col-md-10 widthFull">
-                                                            <el-input
-                                                                type="textarea"
-                                                                autosize
-                                                                clearable
-                                                                v-model="fillPedidoFinanciamiento.cglosa">
-                                                            </el-input>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-lg-12">
-                                                    <form class="form-horizontal">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-9 offset-md-5">
-                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="guardarDocNumFacRe">
-                                                                    <i class="fa fa-save"></i> Guardar
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </transition>
 </template>
@@ -4483,35 +4423,6 @@
                 this.fillPedidoFinanciamiento.cnumeropedido     =   ''
                 this.fillPedidoFinanciamiento.citemcode         =   ''
                 this.fillPedidoFinanciamiento.cglosa            =   ''
-            },
-            guardarDocNumFacRe(){
-                if(this.validarFacturaReserva()){
-                    return;
-                }
-                let me = this;
-
-                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobanteFR';
-                axios.post(sapUrl, {
-                    'cFlagTipo'         :   "V",
-                    'cItemCode'         :   me.fillPedidoFinanciamiento.citemcode.toString(),
-                    'cTipoComprobante'  :   "FR",
-                    'nDocNum'           :   parseInt(me.fillPedidoFinanciamiento.cglosa),
-                    'cDocType'          :   'dDocument_Items'
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        swal(response.data[0].cMensaje)
-                        me.cerrarModal()
-                        me.listarPedidosAprobadosFinancia(1);
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
             },
             integrarDocEntryFacturaReserva(objPedido){
                 let me = this;
