@@ -4546,6 +4546,12 @@
                                 'cLogRespuesta'     : ''
                             });
                         });
+                        //================================================================
+                        //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                        setTimeout(function() {
+                            me.registroSgcDocEntryFacturaReserva();
+                        }, 800);
+
                     }
                     me.loading.close();
                 }).catch(error => {

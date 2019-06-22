@@ -2592,7 +2592,7 @@
                     //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
                     setTimeout(function() {
                         me.registroSgcSolucion();
-                    }, 1000);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
