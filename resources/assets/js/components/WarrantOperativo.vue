@@ -1652,15 +1652,15 @@
                             //Si la Factura de Reserva se encuentra ABIERTA
                             if(value.cDocStatus == 'O'){
                                 me.arraySapUpdSgc.push({
-                                    'cTipo'        : "WO",
-                                    'cFlagTipo'    : "FR",
-                                    'cItemCode'    : value.cItemCode,
-                                    'nDocEntry'    : value.nDocEntry,
-                                    'nDocNum'      : value.nDocNum,
-                                    'cDocType'     : value.cDocType,
-                                    'fDocRate'     : value.fDocRate,
-                                    'cDocStatus'   : value.cDocStatus,
-                                    'cLogRespuesta': ''
+                                    'cFlagTipo'         : "WO",
+                                    'cTipoComprobante'  : "FR",
+                                    'cItemCode'         : value.cItemCode,
+                                    'nDocEntry'         : value.nDocEntry,
+                                    'nDocNum'           : value.nDocNum,
+                                    'cDocType'          : value.cDocType,
+                                    'fDocRate'          : value.fDocRate,
+                                    'cDocStatus'        : value.cDocStatus,
+                                    'cLogRespuesta'     : ''
                                 });
 
                                 setTimeout(function() {

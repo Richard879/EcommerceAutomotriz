@@ -4388,6 +4388,7 @@
                             'nDocEntry'         :   parseInt(me.jsonRespuesta.DocEntry),
                             'nDocNum'           :   parseInt(me.jsonRespuesta.DocNum),
                             'cDocType'          :   me.jsonRespuesta.DocType.toString(),
+                            'fDocRate'          :   parseFloat(me.jsonRespuesta.DocRate),
                             'cLogRespuesta'     :   response.data.toString()
                         });
 
@@ -4530,8 +4531,43 @@
                         'nDocNum'   : parseInt(objPedido.nDocNumFacturaReservaBorrador)
                     }
                 }).then(response => {
-                    console.log(response.data);
+                    if(response.data.length){
+                        me.arraySapRespuesta = response.data;
+                        me.arraySapRespuesta.map(function(value, key){
+                            me.arraySapUpdSgc.push({
+                                'cFlagTipo'         : "V",
+                                'cTipoComprobante'  : "FR",
+                                'cItemCode'         : value.cItemCode,
+                                'nDocEntry'         : value.nDocEntry,
+                                'nDocNum'           : value.nDocNum,
+                                'cDocType'          : value.cDocType,
+                                'fDocRate'          : value.fDocRate,
+                                'cDocStatus'        : value.cDocStatus,
+                                'cLogRespuesta'     : ''
+                            });
+                        });
+                    }
                     me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSgcDocEntryFacturaReserva(){
+                let me = this;
+                var sapUrl = me.ruta + '/comprobante/SetIntegraComprobante';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdSgc
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        swal(response.data[0].cMensaje)
+                        me.listarPedidosAprobadosFinancia(1);
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
