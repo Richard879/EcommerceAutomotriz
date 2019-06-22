@@ -25,6 +25,7 @@ class IntComprobanteController extends Controller
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
+                                                                $det['fDocRate'],
                                                                 $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);
