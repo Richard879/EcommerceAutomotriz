@@ -700,7 +700,7 @@
                                                                                 <th>Contacto</th>
                                                                                 <th>Documento</th>
                                                                                 <th>Forma Pago</th>
-                                                                                <th>Modalidad de Pago</th>
+                                                                                <th>Tipo Financiamiento</th>
                                                                                 <th>Estado del Credito</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
