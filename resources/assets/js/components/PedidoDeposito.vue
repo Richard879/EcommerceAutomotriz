@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" role="tab" data-toggle="tab">
-                                            <i class="fa fa-usd"></i> REALIZAR DEPÓSITOS
+                                            <i class="fa fa-coins"></i> REALIZAR DEPÓSITOS
                                         </a>
                                     </li>
                                 </ul>
