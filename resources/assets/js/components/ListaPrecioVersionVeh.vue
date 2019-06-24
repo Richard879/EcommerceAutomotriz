@@ -22,12 +22,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab2" href="#TabAsignaDetalle" role="tab" data-toggle="tab">
-                                            <i class="fa fa-usd"></i> AGREGAR DETALLE DE PRECIOS
+                                            <i class="fa fa-list-alt"></i> AGREGAR DETALLE DE PRECIOS
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab3" href="#TabVerDetalle" role="tab" data-toggle="tab">
-                                            <i class="fa fa-file-invoice-dollar"></i> DETALLE LISTA PRECIOS
+                                            <i class="fa fa-search-dollar"></i> DETALLE LISTA PRECIOS
                                         </a>
                                     </li>
                                 </ul>
