@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab02" href="#TabCotizacion" @click="tabCotizacion" role="tab" data-toggle="tab">
-                                            <i class="fa fa-wpforms"></i> COTIZACIÓN
+                                            <i class="fab fa-wpforms"></i> COTIZACIÓN
                                         </a>
                                     </li>
                                     <li class="nav-item">

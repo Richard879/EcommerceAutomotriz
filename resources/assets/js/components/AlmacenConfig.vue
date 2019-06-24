@@ -17,7 +17,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link" :class="{'active': (vistaFormulario == 1)}" id="tab01" href="#TabBandejaAlmacenes" @click="tabBandejaAlmacenes" role="tab" data-toggle="tab">
-                                            <i class="fa fa-wpforms"></i> BANDEJA DE ALMACENES
+                                            <i class="fab fa-wpforms"></i> BANDEJA DE ALMACENES
                                         </a>
                                     </li>
                                     <li class="nav-item">

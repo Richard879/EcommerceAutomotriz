@@ -43,6 +43,7 @@ mix.styles([
         // 'resources/assets/template/js/treeview.js'
     ], 'public/js/plantilla.js')
     .js('resources/assets/js/app.js', 'public/js/app.js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
     /*.copyDirectory([
     	'resources/assets/template/fonts',
     ], 'public/fonts')*/

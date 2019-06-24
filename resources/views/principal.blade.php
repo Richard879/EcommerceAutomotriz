@@ -16,6 +16,7 @@
     <title>Sistema Ventas - SAISAC</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="css/plantilla.css">
+    <link type="text/css" rel="stylesheet" href="css/fontawesome5.css">
     <script src="js/core.js"></script>
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">

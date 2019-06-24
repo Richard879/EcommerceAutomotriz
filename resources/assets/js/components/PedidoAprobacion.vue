@@ -28,7 +28,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#TabAprobarPedidoFinanciado" @click="tabAprobarPedidoFinanciado()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-wpforms"></i> APROBAR CREDITO VEHICULAR
+                                            <i class="fab fa-wpforms"></i> APROBAR CREDITO VEHICULAR
                                         </a>
                                     </li>
                                 </ul>
@@ -218,7 +218,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:#B0B02E'" class="fa-md fa fa-coins"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
@@ -718,7 +718,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                        <i @click="abrirModal('pedido', 'deposito', pedido)" :style="'color:#B0B02E'" class="fa-md fa fa-coins"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>

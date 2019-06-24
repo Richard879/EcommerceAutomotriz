@@ -231,7 +231,7 @@
                                                                                     </template>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
+                                                                                        <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:#B0B02E'" class="fa-md fa fa-coins"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <template v-if="pedido.nCantidadDepositos > 0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
