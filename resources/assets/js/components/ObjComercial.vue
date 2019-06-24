@@ -17,7 +17,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="tab01" href="#TabCompra" @click="tabCompra" role="tab" data-toggle="tab">
-                                            <i class="fa fa-wpforms"></i> OBJETIVO COMPRA
+                                            <i class="fab fa-wpforms"></i> OBJETIVO COMPRA
                                         </a>
                                     </li>
                                     <li class="nav-item">

@@ -27,7 +27,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab3" href="#TabVerDetalle" role="tab" data-toggle="tab">
-                                            <i class="fa fa-file-text-o"></i> DETALLE LISTA PRECIOS
+                                            <i class="fa fa-file-invoice-dollar"></i> DETALLE LISTA PRECIOS
                                         </a>
                                     </li>
                                 </ul>
