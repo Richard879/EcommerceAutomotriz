@@ -2665,7 +2665,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110121
+                        'ngrupoparid': 110122
                     }
                 }).then(response => {
                     this.arrayFormaFinanciamiento = response.data;
