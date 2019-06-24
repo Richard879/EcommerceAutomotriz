@@ -118,7 +118,7 @@
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('listapreciovh','registrarDetalle');">
-                                                                                <i class="fa fa-file-o"></i> Nuevo
+                                                                                <i class="fa fa-file"></i> Nuevo
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -159,7 +159,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Agregar Detalle</div>
-                                                                                            <i @click="activarTab2(lista)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
+                                                                                            <i @click="activarTab2(lista)" :style="'color:#796AEE'" class="fa-md fa fa-list-alt"></i>
                                                                                         </el-tooltip>&nbsp;
                                                                                         <template v-if="lista.cListaEstado=='A'">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
@@ -176,7 +176,7 @@
                                                                                         <template v-if="lista.nListadoDetalleContador > 0">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Ver Detalle</div>
-                                                                                                <i @click="activarTab3(lista)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                                <i @click="activarTab3(lista)" :style="'color:#796AEE'" class="fa-md fa fa-search-dollar"></i>
                                                                                             </el-tooltip>
                                                                                         </template>
                                                                                         <template v-else>
