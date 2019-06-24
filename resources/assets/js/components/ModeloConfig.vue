@@ -162,8 +162,7 @@
                                                                                                         <i class="fa-md fa fa-file-excel-o"></i>
                                                                                                     </a>
                                                                                                 </el-tooltip>
-                                                                                            </template>
-
+                                                                                            </template>&nbsp;
                                                                                             <template v-if="modelo.cFichaImagePDFUrl">
                                                                                                 <el-tooltip class="item" effect="dark">
                                                                                                     <div slot="content">Ver Ficha Tecnica del Modelo (PDF)  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
@@ -171,8 +170,7 @@
                                                                                                         <i class="fa-md fa fa-file-pdf-o" :style="'color:red'"></i>
                                                                                                     </a>
                                                                                                 </el-tooltip>
-                                                                                            </template>
-
+                                                                                            </template>&nbsp;
                                                                                             <template v-if="modelo.cFotoImageUrl">
                                                                                                 <el-tooltip class="item" effect="dark">
                                                                                                     <div slot="content">Ver Fotografia Referencial del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
@@ -180,12 +178,11 @@
                                                                                                         <i class="fa-md fa fa-file"></i>
                                                                                                     </a>
                                                                                                 </el-tooltip>
-                                                                                            </template>
-
+                                                                                            </template>&nbsp;
                                                                                             <el-tooltip class="item" effect="dark">
                                                                                                 <div slot="content">Configuracion del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
                                                                                                 <i @click="generarConfiguracion(0, modelo)" :style="'color:gris'" class="fa-md fa fa-cogs"></i>
-                                                                                            </el-tooltip>
+                                                                                            </el-tooltip>&nbsp;
                                                                                         </td>
                                                                                         <td v-text="modelo.cNombreMarca"></td>
                                                                                         <td v-text="modelo.cNombreModelo"></td>
