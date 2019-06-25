@@ -437,7 +437,7 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormularioDeposito">
-                                                                                <i class="fa fa-list-alt"></i> Nuevo
+                                                                                <i class="fa fa-file"></i> Nuevo
                                                                             </button>
                                                                         </div>
                                                                     </div>

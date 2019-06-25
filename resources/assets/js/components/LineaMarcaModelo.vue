@@ -77,7 +77,7 @@
                                                     <i class="fa fa-search"></i> Buscar
                                                 </button>
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('versionvehiculo','registrar')">
-                                                    <i class="fa fa-file-o"></i> Nuevo
+                                                    <i class="fa fa-file"></i> Nuevo
                                                 </button>
                                             </div>
                                         </div>

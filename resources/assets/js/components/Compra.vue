@@ -1426,7 +1426,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarCambioSucursal()">
-                                                        <i class="fa fa-file-o"></i> Registrar
+                                                        <i class="fa fa-file"></i> Registrar
                                                     </button>
                                                     <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
                                                         <i class="fa fa-close"></i> Cancelar
