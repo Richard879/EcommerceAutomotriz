@@ -277,7 +277,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1486,6 +1486,7 @@
                     ntipopersona: 1
                 },
                 arrayPedidosAprobados: [],
+                arrayPedidosAprobadosRpta: [],
                 //========================  TAB APROBAR PEDIDO ====================
                 fillBusquedaPedido:{
                     dfechainicio: '',
@@ -1625,6 +1626,9 @@
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1736,13 +1740,15 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedidosAprobados      = response.data.arrayPedido.data;
+                    this.arrayPedidosAprobadosRpta  = response.data.arrayPedido;
+                    this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
+                    /*this.arrayPedidosAprobados      = response.data.arrayPedido.data;
                     this.pagination.current_page    = response.data.arrayPedido.current_page;
                     this.pagination.total           = response.data.arrayPedido.total;
                     this.pagination.per_page        = response.data.arrayPedido.per_page;
                     this.pagination.last_page       = response.data.arrayPedido.last_page;
                     this.pagination.from            = response.data.arrayPedido.from;
-                    this.pagination.to              = response.data.arrayPedido.to;
+                    this.pagination.to              = response.data.arrayPedido.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1754,9 +1760,19 @@
                     }
                 });
             },
+            paginateListarPedidosAprobados(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPedidosAprobados  = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarPedidosAprobados(page);
+                this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
+                //this.listarPedidosAprobados(page);
             },
             descargaVoucher(cRutaDocumento){
                 window.open(cRutaDocumento);
