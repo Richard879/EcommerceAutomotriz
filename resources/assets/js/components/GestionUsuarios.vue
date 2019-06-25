@@ -89,7 +89,7 @@
                                                     <i class="fa fa-search"></i> Buscar
                                                 </button>
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="cambiarVistaFormulario(0)">
-                                                    <i class="fa fa-file-o"></i> Nuevo
+                                                    <i class="fa fa-file"></i> Nuevo
                                                 </button>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                                             <!-- @click="cambiarVistaFormulario(0, rol)" -->
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ usuario.cNombreCompleto }}</div>
-                                                                <i  @click="abrirModal('usuario', 'editar', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                <i  @click="abrirModal('usuario', 'editar', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-user-edit"></i>
                                                             </el-tooltip>&nbsp;
                                                             <template v-if="usuario.condicion == 1">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
