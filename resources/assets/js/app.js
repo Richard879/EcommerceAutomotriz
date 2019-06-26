@@ -96,6 +96,7 @@ Vue.component('modeloconfig', require('./components/ModeloConfig.vue'));
 Vue.component('generaproyecto', require('./components/GenerarProyecto.vue'));
 Vue.component('gestionmiusuarios', require('./components/GestionMiUsuario.vue'));
 Vue.component('reportes', require('./components/Reportes.vue'));
+Vue.component('recuperardinero', require('./components/DescuentoOtorgados.vue'));
 
 const app = new Vue({
     el: '#app',
