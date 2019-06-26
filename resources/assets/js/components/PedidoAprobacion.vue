@@ -3994,6 +3994,8 @@
                     }
                 });
             },
+            //==================================================
+            //PARA E.V OBSEQUIOS Y CAMPAÑAS
             obtenerSapCostoPromedio(){
                 let me = this;
                 me.loading.close();
@@ -4066,6 +4068,8 @@
                     }
                 });
             },
+            //===================================================
+            //PARA E.V SERVICIOS
             obtenerSgcCostoServicio(){
                 let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
@@ -4118,6 +4122,7 @@
                     }
                 });
             },
+            //====================================================
             confirmaPedido(){
                 let me = this;
                 me.limpiarFormulario();
