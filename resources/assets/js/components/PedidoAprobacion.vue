@@ -4016,15 +4016,15 @@
                     // ====================== CONCEPTO =========================
                     // ======================== ACCESORIOS ==========================
                     me.arraySapCostoEV.push({
-                        U_SYP_VIN           :   me.formSap.cnumerovin,
-                        DocEntry            :   me.formSap.ndocentry,
-                        U_SYP_CCONCEPTO     :   '06',
-                        U_SYP_DCONCEPTO     :   'Accesorios',
-                        U_SYP_CDOCUMENTO    :   '03',
-                        U_SYP_DDOCUMENTO    :   'Salida de Almacén',
-                        U_SYP_IMPORTE       :   me.fAvgPrice,
-                        U_SYP_COSTO         :   'Si',
-                        U_SYP_ESTADO        :   'Pendiente'
+                        'U_SYP_VIN'           :   me.formSap.cnumerovin,
+                        'DocEntry'            :   me.formSap.ndocentry,
+                        'U_SYP_CCONCEPTO'     :   '06',
+                        'U_SYP_DCONCEPTO'     :   'Accesorios',
+                        'U_SYP_CDOCUMENTO'    :   '03',
+                        'U_SYP_DDOCUMENTO'    :   'Salida de Almacén',
+                        'U_SYP_IMPORTE'       :   me.fAvgPrice,
+                        'U_SYP_COSTO'         :   'Si',
+                        'U_SYP_ESTADO'        :   'Pendiente'
                     });
 
                     //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
