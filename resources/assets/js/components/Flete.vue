@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#tabGeneraFlete" @click="tabGeneraFlete()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-file-text-o"></i> ASIGNAR FLETE
+                                            <i class="fa fa-truck-moving"></i> ASIGNAR FLETE
                                         </a>
                                     </li>
                                 </ul>
