@@ -4163,7 +4163,7 @@
                                     'Error en la Anulación.',
                                 )
                             }
-                            me.listarPedidosAprobados(1);
+                            me.listarPedidos(1);
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
