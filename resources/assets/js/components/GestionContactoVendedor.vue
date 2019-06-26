@@ -4583,6 +4583,7 @@
                     if(response.data[0].nFlagMsje==1){
                         this.registrarReferenciaVehiculo(response.data[0].nIdContacto);
                     }else{
+                        $("#myBar").hide();
                         swal('Ya existe Persona');
                     }
                 }).catch(error => {
@@ -4622,8 +4623,8 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarReferenciaVehiculo(response.data[0].nIdContacto);
-                        console.log(response.data[0]);
                     }else{
+                        $("#myBar").hide();
                         swal('Ya existe Persona');
                     }
                 }).catch(error => {
@@ -4658,7 +4659,6 @@
                     'referencia'    : this.arrayReferenciaVehiculo,
                     'otrosintreses' : this.arrayOtrosIntereses
                 }).then(response => {
-                    //this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
                     $("#myBar").hide();
                     swal("Contacto Registrado Correctamente");
                     this.limpiarNuevoContacto();

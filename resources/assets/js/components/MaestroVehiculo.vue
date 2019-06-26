@@ -2944,7 +2944,7 @@
 
                     setTimeout(function() {
                         me.setearTipoDocumento(data)//Asignar idTipoDocumento cuando es del Rol Juridico despues de 2.5 seg (esperar a que cargue la lista de tipos de documento)
-                    }, 3800);
+                    }, 1200);
                 }
 
                 //CAPTURAR DATOS DEL SOAT

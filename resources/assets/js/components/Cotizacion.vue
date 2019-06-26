@@ -1368,7 +1368,7 @@
                                                         <tr v-for="contactos in arrayContactosPorVendedor" :key="contactos.nIdContacto">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <div slot="content">Seleccionar Contacto {{ contactos.cContacto }}</div>
                                                                     <i @click.prevent="abrirModal('contacto', 'asignar', contactos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
@@ -4246,7 +4246,7 @@
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         } else {
                             if (response.data.contAprobacionADV > 0) {
-                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
+                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 1);
                                 //this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada exitosamente, pendiente de Aprobación');
                             } else {

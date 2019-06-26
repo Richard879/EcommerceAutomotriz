@@ -1211,7 +1211,7 @@
 
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoFlete();
-                    }, 1600);
+                    }, 800);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

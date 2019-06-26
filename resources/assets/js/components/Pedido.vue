@@ -268,7 +268,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1836,6 +1836,7 @@
                     cnrodocumento: ''
                 },
                 arrayMisPedido: [],
+                arrayMisPedidoRpta: [],
                 arrayPedido: [],
                 arrayPedidoRpta: [],
                 arrayMarca: [],
@@ -2061,13 +2062,15 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayMisPedido         = response.data.arrayPedido.data;
+                    this.arrayMisPedidoRpta     = response.data.arrayPedido; 
+                    this.paginateListarPedidos(this.arrayMisPedidoRpta, page);
+                    /*this.arrayMisPedido         = response.data.arrayPedido.data;
                     this.pagination.current_page= response.data.arrayPedido.current_page;
                     this.pagination.total       = response.data.arrayPedido.total;
                     this.pagination.per_page    = response.data.arrayPedido.per_page;
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
-                    this.pagination.to          = response.data.arrayPedido.to;
+                    this.pagination.to          = response.data.arrayPedido.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2079,9 +2082,19 @@
                     }
                 });
             },
+            paginateListarPedidos(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayMisPedido         = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarPedidos(page);
+                this.paginateListarPedidos(this.arrayMisPedidoRpta, page);
+                //this.listarPedidos(page);
             },
             //GENERAR REPORTE PEDIDO
             generarPedidoPDF(nIdCabeceraPedido){

@@ -6,7 +6,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item">
-                <i class="fa fa-user bg-orange"></i> {{ formLogin.cRol }}
+                <i class="fa fa-user-tie bg-orange"></i> {{ formLogin.cRol }}
             </a>
             <a href="#" class="dropdown-item" @click.prevent="logout">
                 <i class="fa fa-lock"></i> Cerrar sesión

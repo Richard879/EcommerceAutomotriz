@@ -702,7 +702,7 @@
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Eliminar {{ lpd.cNombreComercial + ' ' + lpd.nAnioFabricacion + ' ' + lpd.nAnioModelo}}</div>
-                                                                                        <i @click="desactivarDetalle(lpd)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        <i @click="desactivarDetalle(lpd)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                     </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>

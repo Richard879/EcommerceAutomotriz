@@ -277,7 +277,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1486,6 +1486,7 @@
                     ntipopersona: 1
                 },
                 arrayPedidosAprobados: [],
+                arrayPedidosAprobadosRpta: [],
                 //========================  TAB APROBAR PEDIDO ====================
                 fillBusquedaPedido:{
                     dfechainicio: '',
@@ -1603,7 +1604,8 @@
                 arrayPatchLlamadaServicios: [],
                 arraySapFacturaReserva: [],
                 fAvgPrice: 0,
-                fImporte: 0,
+                U_SYP_IMPORTE: 0,
+                U_SYP_IMPORTE_USD: 0,
                 //===========================================================
                 // =============  VARIABLES ALMACEN ========================
                 formAlmacen:{
@@ -1625,6 +1627,9 @@
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1736,13 +1741,15 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedidosAprobados      = response.data.arrayPedido.data;
+                    this.arrayPedidosAprobadosRpta  = response.data.arrayPedido;
+                    this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
+                    /*this.arrayPedidosAprobados      = response.data.arrayPedido.data;
                     this.pagination.current_page    = response.data.arrayPedido.current_page;
                     this.pagination.total           = response.data.arrayPedido.total;
                     this.pagination.per_page        = response.data.arrayPedido.per_page;
                     this.pagination.last_page       = response.data.arrayPedido.last_page;
                     this.pagination.from            = response.data.arrayPedido.from;
-                    this.pagination.to              = response.data.arrayPedido.to;
+                    this.pagination.to              = response.data.arrayPedido.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1754,9 +1761,19 @@
                     }
                 });
             },
+            paginateListarPedidosAprobados(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
+                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPedidosAprobados  = data.slice(this.pagination.from, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarPedidosAprobados(page);
+                this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
+                //this.listarPedidosAprobados(page);
             },
             descargaVoucher(cRutaDocumento){
                 window.open(cRutaDocumento);
@@ -3409,9 +3426,10 @@
                             //Almaceno Servicios para envar el Costo de Sgc
                             else{
                                 me.arraySapEVServiciosEnvia.push({
-                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                    'cItemCode' : value.cCodigoERP,
-                                    'fImporte'  : value.fImporte
+                                    'nWhsCode'          : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode'         : value.cCodigoERP,
+                                    'U_SYP_IMPORTE'     : value.U_SYP_IMPORTE,
+                                    'U_SYP_IMPORTE_USD' : value.U_SYP_IMPORTE_USD
                                 });
                             }
                         });
@@ -3976,6 +3994,8 @@
                     }
                 });
             },
+            //==================================================
+            //PARA E.V OBSEQUIOS Y CAMPAÑAS
             obtenerSapCostoPromedio(){
                 let me = this;
                 me.loading.close();
@@ -3996,15 +4016,15 @@
                     // ====================== CONCEPTO =========================
                     // ======================== ACCESORIOS ==========================
                     me.arraySapCostoEV.push({
-                        U_SYP_VIN           :   me.formSap.cnumerovin,
-                        DocEntry            :   me.formSap.ndocentry,
-                        U_SYP_CCONCEPTO     :   '06',
-                        U_SYP_DCONCEPTO     :   'Accesorios',
-                        U_SYP_CDOCUMENTO    :   '03',
-                        U_SYP_DDOCUMENTO    :   'Salida de Almacén',
-                        U_SYP_IMPORTE       :   me.fAvgPrice,
-                        U_SYP_COSTO         :   'Si',
-                        U_SYP_ESTADO        :   'Pendiente'
+                        'U_SYP_VIN'           :   me.formSap.cnumerovin,
+                        'DocEntry'            :   me.formSap.ndocentry,
+                        'U_SYP_CCONCEPTO'     :   '06',
+                        'U_SYP_DCONCEPTO'     :   'Accesorios',
+                        'U_SYP_CDOCUMENTO'    :   '03',
+                        'U_SYP_DDOCUMENTO'    :   'Salida de Almacén',
+                        'U_SYP_IMPORTE'       :   me.fAvgPrice,
+                        'U_SYP_COSTO'         :   'Si',
+                        'U_SYP_ESTADO'        :   'Pendiente'
                     });
 
                     //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
@@ -4048,29 +4068,33 @@
                     }
                 });
             },
+            //===================================================
+            //PARA E.V SERVICIOS
             obtenerSgcCostoServicio(){
                 let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
-                    me.fImporte = me.fImporte + value.fImporte;
+                    me.U_SYP_IMPORTE        = me.U_SYP_IMPORTE + value.U_SYP_IMPORTE;
+                    me.U_SYP_IMPORTE_USD    = me.U_SYP_IMPORTE_USD + value.U_SYP_IMPORTE_USD;
                 });
 
                 me.arraySapCostoServicio = [];
                 // ====================== CONCEPTO =========================
                 // ======================== SERVICIOS ==========================
                 me.arraySapCostoServicio.push({
-                    U_SYP_VIN           :   me.formSap.cnumerovin,
-                    DocEntry            :   me.formSap.ndocentry,
-                    U_SYP_CCONCEPTO     :   '07',
-                    U_SYP_DCONCEPTO     :   'Servicios',
-                    U_SYP_CDOCUMENTO    :   '02',
-                    U_SYP_DDOCUMENTO    :   'Factura Proveedor',
-                    U_SYP_IMPORTE       :   me.fImporte,
-                    U_SYP_COSTO         :   'Si',
-                    U_SYP_ESTADO        :   'Pendiente'
+                    'U_SYP_VIN'           :   me.formSap.cnumerovin,
+                    'DocEntry'            :   me.formSap.ndocentry,
+                    'U_SYP_CCONCEPTO'     :   '07',
+                    'U_SYP_DCONCEPTO'     :   'Servicios',
+                    'U_SYP_CDOCUMENTO'    :   '02',
+                    'U_SYP_DDOCUMENTO'    :   'Factura Proveedor',
+                    'U_SYP_IMPORTE'       :   me.U_SYP_IMPORTE,
+                    'U_SYP_IMPORTE_USD'   :   me.U_SYP_IMPORTE_USD,
+                    'U_SYP_COSTO'         :   'Si',
+                    'U_SYP_ESTADO'        :   'Pendiente'
                 });
 
                 //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
-                if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                if(me.U_SYP_IMPORTE > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
                     }, 800);
@@ -4098,6 +4122,7 @@
                     }
                 });
             },
+            //====================================================
             confirmaPedido(){
                 let me = this;
                 me.limpiarFormulario();
@@ -4143,7 +4168,7 @@
                                     'Error en la Anulación.',
                                 )
                             }
-                            me.listarPedidosAprobados(1);
+                            me.listarPedidos(1);
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -4869,6 +4894,8 @@
                 this.arraySapSolucion= [];
                 this.arrayPatchLlamadaServicios= [];
                 this.nSolutionCode= 0;
+                this.U_SYP_IMPORTE= 0;
+                this.U_SYP_IMPORTE_USD= 0;
 
                 //Direcciones
                 this.cerrarModal();
