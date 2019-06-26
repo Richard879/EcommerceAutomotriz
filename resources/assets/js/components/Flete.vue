@@ -1131,10 +1131,10 @@
                 me.arrayTempFlete.map(function(value, key){
                     if(me.arrayIndexFleteMonto[key] > 0){
                         me.arrayFlete.push({
-                            'nIdCompra': value.nIdCompra,
-                            'cNumeroVin': value.cNumeroVin,
-                            'nIdMoneda': 1300027,
-                            'fImporteFlete': me.arrayIndexFleteMonto[key]
+                            'nIdCompra'     : value.nIdCompra,
+                            'cNumeroVin'    : value.cNumeroVin,
+                            'nIdMoneda'     : 1300027,
+                            'fImporteFlete' : me.arrayIndexFleteMonto[key]
                         });
                     }
                 });
