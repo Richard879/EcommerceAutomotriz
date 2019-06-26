@@ -1604,7 +1604,8 @@
                 arrayPatchLlamadaServicios: [],
                 arraySapFacturaReserva: [],
                 fAvgPrice: 0,
-                fImporte: 0,
+                U_SYP_IMPORTE: 0,
+                U_SYP_IMPORTE_USD: 0,
                 //===========================================================
                 // =============  VARIABLES ALMACEN ========================
                 formAlmacen:{
@@ -3425,9 +3426,10 @@
                             //Almaceno Servicios para envar el Costo de Sgc
                             else{
                                 me.arraySapEVServiciosEnvia.push({
-                                    'nWhsCode'  : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
-                                    'cItemCode' : value.cCodigoERP,
-                                    'fImporte'  : value.fImporte
+                                    'nWhsCode'          : me.formAlmacen.cwhscode ? parseInt(me.formAlmacen.cwhscode) : parseInt('00'),
+                                    'cItemCode'         : value.cCodigoERP,
+                                    'U_SYP_IMPORTE'     : value.U_SYP_IMPORTE,
+                                    'U_SYP_IMPORTE_USD' : value.U_SYP_IMPORTE_USD
                                 });
                             }
                         });
@@ -4067,26 +4069,28 @@
             obtenerSgcCostoServicio(){
                 let me = this;
                 me.arraySapEVServiciosEnvia.map(function(value, key){
-                    me.fImporte = me.fImporte + value.fImporte;
+                    me.U_SYP_IMPORTE        = me.U_SYP_IMPORTE + value.U_SYP_IMPORTE;
+                    me.U_SYP_IMPORTE_USD    = me.U_SYP_IMPORTE_USD + value.U_SYP_IMPORTE_USD;
                 });
 
                 me.arraySapCostoServicio = [];
                 // ====================== CONCEPTO =========================
                 // ======================== SERVICIOS ==========================
                 me.arraySapCostoServicio.push({
-                    U_SYP_VIN           :   me.formSap.cnumerovin,
-                    DocEntry            :   me.formSap.ndocentry,
-                    U_SYP_CCONCEPTO     :   '07',
-                    U_SYP_DCONCEPTO     :   'Servicios',
-                    U_SYP_CDOCUMENTO    :   '02',
-                    U_SYP_DDOCUMENTO    :   'Factura Proveedor',
-                    U_SYP_IMPORTE       :   me.fImporte,
-                    U_SYP_COSTO         :   'Si',
-                    U_SYP_ESTADO        :   'Pendiente'
+                    'U_SYP_VIN'           :   me.formSap.cnumerovin,
+                    'DocEntry'            :   me.formSap.ndocentry,
+                    'U_SYP_CCONCEPTO'     :   '07',
+                    'U_SYP_DCONCEPTO'     :   'Servicios',
+                    'U_SYP_CDOCUMENTO'    :   '02',
+                    'U_SYP_DDOCUMENTO'    :   'Factura Proveedor',
+                    'U_SYP_IMPORTE'       :   me.U_SYP_IMPORTE,
+                    'U_SYP_IMPORTE_USD'   :   me.U_SYP_IMPORTE_USD,
+                    'U_SYP_COSTO'         :   'Si',
+                    'U_SYP_ESTADO'        :   'Pendiente'
                 });
 
                 //VERIFICAR QUE EL COSTO PROMEDIO > 0 Y EL nDocEntry TblCosto
-                if(me.fImporte > 0 && me.formSap.ndocentry != 0){
+                if(me.U_SYP_IMPORTE > 0 && me.formSap.ndocentry != 0){
                     setTimeout(function() {
                         me.registroSapBusinessTblCostoServicios();
                     }, 800);
@@ -4885,6 +4889,8 @@
                 this.arraySapSolucion= [];
                 this.arrayPatchLlamadaServicios= [];
                 this.nSolutionCode= 0;
+                this.U_SYP_IMPORTE= 0;
+                this.U_SYP_IMPORTE_USD= 0;
 
                 //Direcciones
                 this.cerrarModal();

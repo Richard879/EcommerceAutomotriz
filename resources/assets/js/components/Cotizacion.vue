@@ -4246,7 +4246,7 @@
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         } else {
                             if (response.data.contAprobacionADV > 0) {
-                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
+                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 1);
                                 //this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada exitosamente, pendiente de Aprobación');
                             } else {
