@@ -13,26 +13,29 @@ class DescuentosOtorgadosController extends Controller
 {
     public function GetListDistribucionDesc(Request $request)
     {
-        $nidsucursal            =   $request->nidsucursal;
-        $nidvendedor            =   $request->nidvendedor;
-        $nidcronograma          =   $request->nidcronograma;
-        $nidestadocotizacion    =   $request->nidestadocotizacion;
-        $fmontodescuento        =   $request->fmontodescuento;
+        $nidempresa         =   $request->nidempresa;
+        $nidsucursal        =   $request->nidsucursal;
+        $nidvendedor        =   $request->nidvendedor;
+        $nidcronograma      =   $request->nidcronograma;
+        $nidestadopedido    =   $request->nidestadopedido;
+        $fmontodescuento    =   $request->fmontodescuento;
 
-        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
-        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
-        $nidcronograma          =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
-        $nidestadocotizacion    =   ($nidestadocotizacion == NULL) ? ($nidestadocotizacion = 0) : $nidestadocotizacion;
-        $fmontodescuento        =   ($fmontodescuento == NULL) ? ($fmontodescuento = 0) : $fmontodescuento;
+        $nidempresa         =   ($nidempresa == NULL) ? ($nidempresa = 0) : $nidempresa;
+        $nidsucursal        =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor        =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+        $nidcronograma      =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
+        $nidestadopedido    =   ($nidestadopedido == NULL) ? ($nidestadopedido = 0) : $nidestadopedido;
+        $fmontodescuento    =   ($fmontodescuento == NULL) ? ($fmontodescuento = 0) : $fmontodescuento;
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetDistribucionDesc] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_DescuentosOtorgados_GetDistribucionDesc] ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidcronograma,
-                                                $nidestadocotizacion,
+                                                $nidestadopedido,
                                                 $fmontodescuento
                                             ]);
 
