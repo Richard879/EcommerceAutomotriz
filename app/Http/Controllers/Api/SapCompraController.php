@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\SapCompraController as SapLogin;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
@@ -37,11 +38,13 @@ class SapCompraController extends Controller
     /// METODOS SERVICES LAYER
     /// ============================================================
     ///
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -95,7 +98,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $nDocEntry          = $request->nDocEntry;
@@ -127,7 +130,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -178,7 +181,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];

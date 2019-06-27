@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 class SAPLoginController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+    
     public function login(Request $request)
     {
         $options = [
