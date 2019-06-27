@@ -268,7 +268,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2052,7 +2052,7 @@
                         'dfechainicio'      :   this.fillPedido.dfechainicio,
                         'dfechafin'         :   this.fillPedido.dfechafin,
                         'cnumeropedido'     :   this.fillPedido.cnumeropedido,
-                        'cnumerovin'       :   this.fillPedido.cnumerovin,
+                        'cnumerovin'        :   this.fillPedido.cnumerovin,
                         'nidmarca'          :   this.formPedido.nidmarca,
                         'nidmodelo'         :   this.formPedido.nidmodelo,
                         'nidestadopedido'   :   this.fillPedido.nidestadopedido,
@@ -2087,9 +2087,10 @@
                 this.pagination.total       = data.length;
                 this.pagination.per_page    = this.perPage;
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayMisPedido         = data.slice(this.pagination.from, this.pagination.to);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayMisPedido         = data.slice(this.pagination.from1, this.pagination.to);
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
