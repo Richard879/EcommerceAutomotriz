@@ -48,7 +48,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade" id="TabMisContactos">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabMisContactos">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -236,7 +236,7 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabContactosPorVendedor">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabContactosPorVendedor">
                                         <template v-if="vistaContactoPorVendedor">
                                             <section class="forms">
                                                 <div class="container-fluid">
