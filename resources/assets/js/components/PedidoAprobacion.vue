@@ -277,7 +277,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1604,6 +1604,8 @@
                 arrayPatchLlamadaServicios: [],
                 arraySapFacturaReserva: [],
                 fAvgPrice: 0,
+                fAvgPriceUSD: 0,
+                ftipocambiodefecto: 0,
                 U_SYP_IMPORTE: 0,
                 U_SYP_IMPORTE_USD: 0,
                 //===========================================================
@@ -1766,9 +1768,10 @@
                 this.pagination.total       = data.length;
                 this.pagination.per_page    = this.perPage;
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayPedidosAprobados  = data.slice(this.pagination.from, this.pagination.to);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPedidosAprobados  = data.slice(this.pagination.from1, this.pagination.to);
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
@@ -3368,6 +3371,7 @@
                     //console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
                     this.obtenerEVById();
                     this.obtenerObsequiosCampaniasByIdPedido();
+                    this.obtenerTipoCambioPorDefecto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3434,6 +3438,26 @@
                             }
                         });
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerTipoCambioPorDefecto(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar'            : 1300711,
+                        'ctipoparametro'    : 'N',
+                        'nidtipopar'        : 75
+                    }
+                }).then(response => {
+                    this.ftipocambiodefecto = moment().add(parseInt(response.data.arrayTipoParametro.data[0].nDatoParNumerico), 'days').format('DD/MM/YYYY');
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4012,6 +4036,8 @@
                         me.fAvgPrice = me.fAvgPrice + value.fAvgPrice;
                     });
 
+                    me.fAvgPriceUSD = me.fAvgPrice / me.ftipocambiodefecto;
+
                     me.arraySapCostoEV = [];
                     // ====================== CONCEPTO =========================
                     // ======================== ACCESORIOS ==========================
@@ -4023,6 +4049,7 @@
                         'U_SYP_CDOCUMENTO'    :   '03',
                         'U_SYP_DDOCUMENTO'    :   'Salida de Almacén',
                         'U_SYP_IMPORTE'       :   me.fAvgPrice,
+                        'U_SYP_IMPORTE_USD'   :   me.fAvgPriceUSD,
                         'U_SYP_COSTO'         :   'Si',
                         'U_SYP_ESTADO'        :   'Pendiente'
                     });
