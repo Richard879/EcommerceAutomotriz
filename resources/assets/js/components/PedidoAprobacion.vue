@@ -3404,6 +3404,7 @@
                     }
                 });
             },
+            //=================== PARA CAMPAÑAS Y OBSEQUIOS ==================
             obtenerObsequiosCampaniasByIdPedido(){
                 let me = this;
                 var url = me.ruta + '/pedido/GetCampaniaObsequioByIdPedido';
@@ -3468,6 +3469,7 @@
                     }
                 });
             },
+            //================================================================
             //REGISTRA PEDIDO EN SAP
             registroSapBusinessPedido(){
                 let me = this;
