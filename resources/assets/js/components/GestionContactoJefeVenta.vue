@@ -15,32 +15,32 @@
                         <div class="card">
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
+                                    <li class="nav-item" v-if="nidtiporol==110026">
+                                        <a class="nav-link" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
                                             <i class="fa fa-users"></i> CONTACTOS
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
+                                    <li class="nav-item" v-if="nidtiporol==110025">
+                                        <a class="nav-link active" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
                                             <i class="fa fa-user-circle"></i> CONTACTOS POR VENDEDOR
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="nidtiporol==110025">
                                         <a class="nav-link" id="Tab3" href="#TabContactosLibres" @click="tabContactosLibres()" role="tab" data-toggle="tab">
                                             <i class="fa fa-male"></i> CONTACTOS LIBRES
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="nidtiporol==110026">
                                         <a class="nav-link disabled" id="Tab4" href="#TabSeguimiento" role="tab" data-toggle="tab">
                                             <i class="fa fa-angle-double-right"></i> SEGUIMIENTO
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="nidtiporol==110026">
                                         <a class="nav-link" id="Tab5" href="#TabNuevoContacto" @click="tabNuevoContacto()" role="tab" data-toggle="tab">
                                             <i class="fa fa-user"></i> NUEVO CONTACTO
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="nidtiporol==110025">
                                         <a class="nav-link" id="Tab5" href="#TabLeads" @click="tabLeads()" role="tab" data-toggle="tab">
                                             <i class="fa fa-file-excel-o"></i> LEADS
                                         </a>
@@ -48,7 +48,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabMisContactos">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabMisContactos">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -236,7 +236,7 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabContactosPorVendedor">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabContactosPorVendedor">
                                         <template v-if="vistaContactoPorVendedor">
                                             <section class="forms">
                                                 <div class="container-fluid">
@@ -272,7 +272,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="listarContactosPorVendedor(1)" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -280,14 +280,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
+                                                                                    <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="listarContactosPorVendedor(1)" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosPorVendedor();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactosPorVendedor(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -3067,6 +3067,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                nidtiporol: sessionStorage.getItem("nTipoRol"),
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -3082,7 +3083,7 @@
                 // ============================================================
                 // =========== VARIABLES FORMULARIO VENDEDOR ============
                 formVendedor: {
-                    nidvendedor: '',
+                    nidvendedor: 0,
                     cvendedornombre: ''
                 },
                 // ============================================================
@@ -3129,6 +3130,7 @@
                     cfiltrodescripcion: ''
                 },
                 arrayContactosPorVendedor: [],
+                arrayContactosPorVendedorRpta: [],
                 vistaContactoPorVendedor: 1,
                 arrayListVendedores: [],
                 // =============================================================
@@ -3299,6 +3301,9 @@
                 contadorArrayLeads: 0,
                 arrayTemporalLeads: [],
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -3568,35 +3573,9 @@
                 this.limpiarReasignarContacto();
                 //this.limpiarContactosPorVendedor();
             },
-            buscarContactosPorVendedor(){
-                if(this.validarBusquedaContactosPorVendedor()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.listarContactosPorVendedor(1);
-            },
-            validarBusquedaContactosPorVendedor(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                /*if(this.formVendedor.nidvendedor == 0){
-                    this.mensajeError.push('Debes Seleccionar un Vendedor');
-                };*/
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            cambiarPaginaContactosPorVendedor(page){
-                this.pagination.current_page=page;
-                this.listarContactosPorVendedor(page);
-                this.arrayVendedor = [];
-            },
             listarContactosPorVendedor(page){
                 this.mostrarProgressBar();
+
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
@@ -3610,18 +3589,9 @@
                         'page'              : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContactosPorVendedor;
-                    //Data
-                    this.arrayContactosPorVendedor = info.data;
-                    //Pagination
-                    this.pagination.current_page   =   info.current_page;
-                    this.pagination.total          =   info.total;
-                    this.pagination.per_page       =   info.per_page;
-                    this.pagination.last_page      =   info.last_page;
-                    this.pagination.from           =   info.from;
-                    this.pagination.to             =   info.to;
+                    this.arrayContactosPorVendedorRpta = response.data.arrayContactosPorVendedor;
+                    this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
                     $("#myBar").hide();
-                    //Limpiar caja busqueda
                     //this.limpiarBuscarContactosCPV();
                 }).catch(error => {
                     console.log(error);
@@ -3632,6 +3602,20 @@
                         }
                     }
                 });
+            },
+            paginateContactosPorVendedor(data, page){
+                this.pagination.current_page    = page;
+                this.pagination.total           = data.length;
+                this.pagination.per_page        = this.perPage;
+                this.pagination.last_page       = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1           = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to              = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContactosPorVendedor  = data.slice(this.pagination.from1, this.pagination.to);
+            },
+            cambiarPaginaContactosPorVendedor(page){
+                this.pagination.current_page=page;
+                this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
             },
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []

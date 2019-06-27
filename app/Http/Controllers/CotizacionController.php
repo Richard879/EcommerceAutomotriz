@@ -805,13 +805,13 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdCronograma = $request->nidcronograma;
-        $nTipoPersona = $request->ntipopersona;
-        $cNroDocumento = $request->cnrodocumento;
+        $nIdEmpresa         = $request->nidempresa;
+        $nIdSucursal        = $request->nidsucursal;
+        $nIdCronograma      = $request->nidcronograma;
+        $nTipoPersona       = $request->ntipopersona;
+        $cNroDocumento      = $request->cnrodocumento;
         $cFiltroDescripcion = $request->cfiltrodescripcion;
-        $nIdVendedor = $request->nidvendedor;
+        $nIdVendedor        = $request->nidvendedor;
 
         $cNroDocumento      = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;

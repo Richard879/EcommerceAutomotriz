@@ -560,8 +560,6 @@ class GestionContactoController extends Controller
                                                                         $nIdVendedor,
                                                                         Auth::user()->id
                                                                     ]);
-
-        $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
     }
 

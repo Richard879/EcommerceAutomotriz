@@ -1401,7 +1401,7 @@
                                                         </nav>
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from + 1 }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2883,12 +2883,6 @@
                 }).then(response => {
                     this.arrayCotizacionesRpta      = response.data.arrayCotizaciones;
                     this.paginateCotizacion(this.arrayCotizacionesRpta, page);
-                    /*this.pagination.current_page    = response.data.arrayCotizaciones.current_page;
-                    this.pagination.total           = response.data.arrayCotizaciones.total;
-                    this.pagination.per_page        = response.data.arrayCotizaciones.per_page;
-                    this.pagination.last_page       = response.data.arrayCotizaciones.last_page;
-                    this.pagination.from            = response.data.arrayCotizaciones.from;
-                    this.pagination.to              = response.data.arrayCotizaciones.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -2913,7 +2907,6 @@
             cambiarPaginaCotizacion(page){
                 this.pagination.current_page=page;
                 this.paginateCotizacion(this.arrayCotizacionesRpta, page);
-                //this.listarMisCotizaciones(page);
             },
             limpiarMisCotizaciones(){
                 this.arrayCotizaciones=[];
@@ -3128,12 +3121,6 @@
                 }).then(response => {
                     this.arrayContactosPorVendedorRpta  = response.data.arrayContactosPorVendedor;
                     this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
-                    /*this.paginationModal.current_page   = info.current_page;
-                    this.paginationModal.total          = info.total;
-                    this.paginationModal.per_page       = info.per_page;
-                    this.paginationModal.last_page      = info.last_page;
-                    this.paginationModal.from           = info.from;
-                    this.paginationModal.to             = info.to;*/
                 }).catch(error => {
                     this.errors = error.response.data
                     if (error.response) {
@@ -3145,18 +3132,18 @@
                 });
             },
             paginateContactosPorVendedor(data, page){
-                this.paginationModal.current_page    = page;
-                this.paginationModal.total           = data.length;
-                this.paginationModal.per_page        = this.perPage;
-                this.paginationModal.last_page       = Math.ceil(data.length / this.paginationModal.per_page);
-                this.paginationModal.from            = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page;
-                this.paginationModal.to              = (this.paginationModal.current_page * this.paginationModal.per_page);
-                this.arrayContactosPorVendedor  = data.slice(this.paginationModal.from, this.paginationModal.to);
+                this.paginationModal.current_page   = page;
+                this.paginationModal.total          = data.length;
+                this.paginationModal.per_page       = this.perPage;
+                this.paginationModal.last_page      = Math.ceil(data.length / this.paginationModal.per_page);
+                this.paginationModal.from           = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page + 1; // (1 * 10) - 10 + 1
+                this.paginationModal.from1          = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page ; // (1 * 10) - 10
+                this.paginationModal.to             = (this.paginationModal.last_page == page) ? ( (this.paginationModal.current_page * this.paginationModal.per_page) - ((this.paginationModal.current_page * this.paginationModal.per_page) - data.length)) : (this.paginationModal.current_page * this.paginationModal.per_page);
+                this.arrayContactosPorVendedor      = data.slice(this.paginationModal.from1, this.paginationModal.to);
             },
             cambiarPaginaContactosPorVendedor(page){
                 this.pagination.current_page=page;
                 this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
-                //this.buscarContactosPorVendedor(page);
             },
             cambiarTipoPersona(){
                 if (this.fillBusqContacto.ntipopersona == 1) {
