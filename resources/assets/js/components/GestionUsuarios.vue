@@ -142,15 +142,15 @@
                                                                     <div slot="content">Desactivar Usuario {{ usuario.cNombreCompleto }}</div>
                                                                     <i  @click="cambiarEstado(0, usuario)"
                                                                         :style="'color:red'"
-                                                                        class="fa-md fa fa-trash"></i>
+                                                                        class="fa-md fa fa-user-times"></i>
                                                                 </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                             <template v-else>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Activar Usuario {{ usuario.cNombreCompleto }}</div>
                                                                     <i  @click="cambiarEstado(1, usuario)"
-                                                                        :style="'color:green'"
-                                                                        class="fa-md fa fa-check-circle"></i>
+                                                                        :style="'color:black'"
+                                                                        class="fa-md fa fa-user-check"></i>
                                                                 </el-tooltip>&nbsp;&nbsp;
                                                             </template>
                                                         </td>
