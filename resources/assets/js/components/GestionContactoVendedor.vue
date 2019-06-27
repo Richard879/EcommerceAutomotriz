@@ -128,7 +128,7 @@
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
-                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#3E2525'" class="fa-md fa fa-suitcase"></i>
+                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
