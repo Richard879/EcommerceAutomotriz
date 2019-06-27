@@ -373,17 +373,17 @@
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabECAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-list"></i> ASIGNA DETALLE
+                                                                <i class="fa fa-file-alt"></i> ASIGNA DETALLE
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab2" href="#TabECAsignaElemento" role="tab" data-toggle="tab">
-                                                                <i class="fa fa fa-sign-out"></i> ASIGNA ELEMENTO VENTA
+                                                                <i class="fa fa fa-clipboard-list"></i> ASIGNA ELEMENTO VENTA
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-usd"></i> DISTRIBUCIÓN
+                                                                <i class="fa fa-file-invoice-dollar"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -1155,7 +1155,7 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Modelo</th>
-                                                                    <th>Año Fab.</th>
+                                                                    <!--<th>Año Fab.</th>-->
                                                                     <th>Año Modelo</th>
                                                                 </tr>
                                                             </thead>
@@ -1169,7 +1169,7 @@
                                                                     </td>
                                                                     <td v-text="modelo.cProveedorNombre"></td>
                                                                     <td v-text="modelo.cModeloNombre"></td>
-                                                                    <td>
+                                                                    <!--<td>
                                                                         <el-select v-model="arrayAnioFabricacionEC[index]" filterable clearable placeholder="SELECCIONE" >
                                                                             <el-option
                                                                             v-for="item in arrayAnioFabricacion"
@@ -1178,7 +1178,7 @@
                                                                             :value="item.cParNombre">
                                                                             </el-option>
                                                                         </el-select>
-                                                                    </td>
+                                                                    </td>-->
                                                                     <td>
                                                                         <el-select v-model="arrayAnioModeloEC[index]" filterable clearable placeholder="SELECCIONE" >
                                                                             <el-option
@@ -2240,10 +2240,10 @@
                 else{
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalLinea.push({
-                                nIdLinea: data['nIdLinea'],
-                                cLineaNombre: data['cLineaNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        'nIdLinea'          : data['nIdLinea'],
+                        'cLineaNombre'      : data['cLineaNombre'],
+                        'nIdProveedor'      : data['nIdProveedor'],
+                        'cProveedorNombre'  : data['cProveedorNombre']
                     });
                     this.arrayTemporalMarca = [];
                     this.arrayTemporalModelo = [];
@@ -2306,10 +2306,10 @@
                 else{
                     this.arrayTemporalMarca = [];
                     this.arrayTemporalMarca.push({
-                                nIdMarca: data['nIdMarca'],
-                                cMarcaNombre: data['cMarcaNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        'nIdMarca'          : data['nIdMarca'],
+                        'cMarcaNombre'      : data['cMarcaNombre'],
+                        'nIdProveedor'      : data['nIdProveedor'],
+                        'cProveedorNombre'  : data['cProveedorNombre']
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalModelo = [];
@@ -2334,10 +2334,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
-                        'cmodelonombre': this.fillModal.cmodelonombre.toString(),
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidproveedor'  : parseInt(this.formEventoCamp.nidproveedor),
+                        'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayModelo = response.data.arrayModelo.data;
@@ -2377,12 +2377,12 @@
                     this.arrayTemporalModelo = [];
 
                     this.arrayTemporalModelo.push({
-                        nIdModelo: modelo.nIdModelo,
-                        cModeloNombre: modelo.cModeloNombre,
-                        nIdProveedor: modelo.nIdProveedor,
-                        cProveedorNombre: modelo.cProveedorNombre,
-                        'nAnioFabricacion' : this.arrayAnioFabricacionEC[index],
-                        'nAnioModelo'      : this.arrayAnioModeloEC[index]
+                        'nIdModelo'         : modelo.nIdModelo,
+                        'cModeloNombre'     : modelo.cModeloNombre,
+                        'nIdProveedor'      : modelo.nIdProveedor,
+                        'cProveedorNombre'  : modelo.cProveedorNombre,
+                        'nAnioFabricacion'  : this.arrayAnioFabricacionEC[index],
+                        'nAnioModelo'       : this.arrayAnioModeloEC[index]
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
@@ -2394,9 +2394,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
+                /*if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
                     this.mensajeError.push('Debes seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.arrayAnioModeloEC[index] == 0 || !this.arrayAnioModeloEC[index]){
                     this.mensajeError.push('Debes seleccionar Año Modelo');
                 };
@@ -2466,10 +2466,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipoelemen': this.formEle.ntpoelemen,
-                        'celementonombre': this.formEle.celementonombre,
-                        'page' : page
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidtipoelemen'     : this.formEle.ntpoelemen,
+                        'celementonombre'   : this.formEle.celementonombre,
+                        'page'              : page
                     }
                 }).then(response => {
                     this.arrayElementoVenta = response.data.arrayElementoVenta.data;
@@ -2503,17 +2503,17 @@
                 }
                 else{
                     this.arrayTemporalElemento.push({
-                                nIdElemento         : data['nIdElemento'],
-                                cTipoElemenNombre   : data['cTipoElemenNombre'],
-                                cElemenNombre       : data['cElemenNombre'],
-                                nIdProveedor        : data['nIdProveedor'],
-                                cProveedorNombre    : data['cProveedorNombre'],
-                                nCantidad           : 1,
-                                nTotalEstimado      : 1,
-                                nIdMoneda           : data['nIdMoneda'],
-                                fElemenValorVenta   : data['fElemenValorVenta'],
-                                cMonedaNombre       : data['cMonedaNombre'],
-                                fSubTotal           : 0.00
+                                'nIdElemento'         : data['nIdElemento'],
+                                'cTipoElemenNombre'   : data['cTipoElemenNombre'],
+                                'cElemenNombre'       : data['cElemenNombre'],
+                                'nIdProveedor'        : data['nIdProveedor'],
+                                'cProveedorNombre'    : data['cProveedorNombre'],
+                                'nCantidad'           : 1,
+                                'nTotalEstimado'      : 1,
+                                'nIdMoneda'           : data['nIdMoneda'],
+                                'fElemenValorVenta'   : data['fElemenValorVenta'],
+                                'cMonedaNombre'       : data['cMonedaNombre'],
+                                'fSubTotal'           : 0.00
                     });
                     toastr.success('Se Agregó Elemento ' + data['cElemenNombre']);
                 }
@@ -2543,18 +2543,18 @@
 
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
-                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
-                    cNombreEventoCampania: this.formEventoCamp.descripcion,
-                    nIdTipoEvento: parseInt(this.formEventoCamp.ntipo),
-                    dFechaInicio: this.formEventoCamp.dfechainicio,
-                    dFechaFin: this.formEventoCamp.dfechafin,
-                    nIdTipoCambio: parseInt(this.nIdTipoCambio),
-                    fTipoCambio: this.formEventoCamp.fvalortipocambio,
-                    fMontoPresupuestoDolar: this.montoTotalElementoVentaDolar,
-                    fMontoPresupuestoSol:  this.montoTotalElementoVentaSol,
-                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
+                    'nIdEmpresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           : parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdProveedor'          : parseInt(this.formEventoCamp.nidproveedor),
+                    'cNombreEventoCampania' : this.formEventoCamp.descripcion,
+                    'nIdTipoEvento'         : parseInt(this.formEventoCamp.ntipo),
+                    'dFechaInicio'          : this.formEventoCamp.dfechainicio,
+                    'dFechaFin'             : this.formEventoCamp.dfechafin,
+                    'nIdTipoCambio'         : parseInt(this.nIdTipoCambio),
+                    'fTipoCambio'           : this.formEventoCamp.fvalortipocambio,
+                    'fMontoPresupuestoDolar': this.montoTotalElementoVentaDolar,
+                    'fMontoPresupuestoSol'  :  this.montoTotalElementoVentaSol,
+                    'cFlagDetalleEvento'    : this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -2633,9 +2633,9 @@
                     var url = me.ruta + '/ec/SetDetalleEventoCampania';
 
                     axios.post(url, {
-                        nIdEventoCampania: nIdEventoCampania,
-                        cFlagDetalleEvento: me.formEventoCamp.cflagdetalleevento,
-                        data: me.arrayRegistraDetalle
+                        'nIdEventoCampania' : nIdEventoCampania,
+                        'cFlagDetalleEvento': me.formEventoCamp.cflagdetalleevento,
+                        'data'              : me.arrayRegistraDetalle
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2654,10 +2654,10 @@
                     var url = this.ruta + '/ec/SetEventoElementoVenta';
 
                     axios.post(url, {
-                        nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento,
-                        nIdTipoCambio: this.nIdTipoCambio,
-                        fTipoCambio: this.fValorTipoCambioTransaccion
+                        'nIdEventoCampania' : nIdEventoCampania,
+                        'data'              : this.arrayTemporalElemento,
+                        'nIdTipoCambio'     : this.nIdTipoCambio,
+                        'fTipoCambio'       : this.fValorTipoCambioTransaccion
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
