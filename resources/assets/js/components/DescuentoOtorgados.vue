@@ -148,7 +148,7 @@
                                                                             @selection-change="handleSelectionChange">
                                                                             <el-table-column fixed type="selection" width="55"></el-table-column>
                                                                             <el-table-column property="SUCURSAL" label="SUCURSAL" width="100"></el-table-column>
-                                                                            <el-table-column property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
+                                                                            <el-table-column fixed property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
                                                                             <el-table-column property="NUM_COTIZACION" label="N° COTIZACIÓN" width="110"></el-table-column>
                                                                             <el-table-column property="FECHA_COTIZACION" label="F. COTIZACIÓN" width="110"></el-table-column>
                                                                             <el-table-column property="FECHA_VENC_COTIZACION" label="F. VENC. COTI" width="110"></el-table-column>
@@ -656,8 +656,10 @@
                         'nIdCabeceraCotizacion'     : value.nIdCabeceraCotizacion,
                         'EMP_ID'                    : value.EMP_ID,
                         'EMPRESA_MONTO_ASUMIDO'     : value.EMPRESA_MONTO_ASUMIDO,
+                        'PROVEEDOR_DISTRIBUCION_ID' : value.PROVEEDOR_DISTRIBUCION_ID,
                         'PROVEEDOR_ID'              : value.PROVEEDOR_ID,
                         'PROVEEDOR_MONTO_ASUMIDO'   : value.PROVEEDOR_MONTO_ASUMIDO,
+                        'EMPRESA_DISTRIBUCION_ID'   : value.EMPRESA_DISTRIBUCION_ID
                     });
                 });
 

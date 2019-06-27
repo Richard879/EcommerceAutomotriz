@@ -57,13 +57,15 @@ class DescuentosOtorgadosController extends Controller
             $arrayvehiculos = $request->data;
             foreach($arrayvehiculos as $ep=>$value)
             {
-                $data =  DB::select('exec [usp_Cotizacion_SetDistribucionDesc] ?, ?, ?, ?, ?, ?',
+                $data =  DB::select('exec [usp_Cotizacion_SetDistribucionDesc] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [
                                                                         $value['nIdCabeceraCotizacion'],
                                                                         $value['EMP_ID'],
                                                                         $value['EMPRESA_MONTO_ASUMIDO'],
+                                                                        $value['EMPRESA_DISTRIBUCION_ID'],
                                                                         $value['PROVEEDOR_ID'],
                                                                         $value['PROVEEDOR_MONTO_ASUMIDO'],
+                                                                        $value['PROVEEDOR_DISTRIBUCION_ID'],
                                                                         Auth::user()->id
                                                                     ]);
             }
