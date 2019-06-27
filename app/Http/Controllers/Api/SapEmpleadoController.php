@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class SapEmpleadoController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetEmpleado(Request $request)
     {
         // return $request;
 
         $client = new Client([
             'verify'    => false,
-            // 'base_uri'  => 'http://localhost:49454/'
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $cNombre    =   $request->cNombre;
@@ -40,7 +41,7 @@ class SapEmpleadoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $cNombre    =   $request->cNombre;

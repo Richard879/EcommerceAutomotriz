@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SapAsientoContableController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+    
     public function SapSetAsientoContableWO(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -85,7 +87,7 @@ class SapAsientoContableController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];

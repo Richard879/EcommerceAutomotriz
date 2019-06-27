@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SapLlamadaServicioController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetLlamadaServicioCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -53,7 +55,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         // ======================================================================
@@ -105,7 +107,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -144,7 +146,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -171,7 +173,7 @@ class SapLlamadaServicioController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];

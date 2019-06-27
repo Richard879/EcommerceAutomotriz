@@ -25,11 +25,14 @@ class SapContactoController extends Controller
     /// METODOS SERVICES LAYER
     /// ============================================================
     ///
+
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         // $User       = Auth::user()->id;
@@ -50,7 +53,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -191,8 +194,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            // 'base_uri'  => 'http://localhost:49454/'
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -232,7 +234,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $CardCode       =   "C". $request->nIdContacto;
