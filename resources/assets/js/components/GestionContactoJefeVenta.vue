@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-user-circle-o"></i> CONTACTOS POR VENDEDOR
+                                            <i class="fa fa-user-circle"></i> CONTACTOS POR VENDEDOR
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -171,7 +171,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seguimiento {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-bus-alt"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
@@ -247,19 +247,6 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
-                                                                    <!--<div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                        <input type="radio" class="radio-template" v-model="fillContactoPorVendedor.ntipopersona" :value="tipo.value" @change="cambiarTipoPersonaContactosPorVendedor()">
-                                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                     <div class="form-group row">
                                                                        <div class="col-sm-6">
                                                                             <div class="row">
@@ -279,7 +266,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>-->
+                                                                    </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
@@ -3143,6 +3130,7 @@
                 },
                 arrayContactosPorVendedor: [],
                 vistaContactoPorVendedor: 1,
+                arrayListVendedores: [],
                 // =============================================================
                 // ============== VARIABLES TAB CONTACTOS LIBRES ===============
                 fillContactoLibre: {
@@ -3578,7 +3566,7 @@
                 this.arrayContactosPorVendedor = [];
                 this.limpiarTodoVendedor();
                 this.limpiarReasignarContacto();
-                this.limpiarContactosPorVendedor();
+                //this.limpiarContactosPorVendedor();
             },
             buscarContactosPorVendedor(){
                 if(this.validarBusquedaContactosPorVendedor()){
@@ -3618,7 +3606,7 @@
                         'ntipopersona'      : this.fillContactoPorVendedor.ntipopersona,
                         'cnrodocumento'     : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
                         'cfiltrodescripcion': this.fillContactoPorVendedor.cfiltrodescripcion.toString(),
-                        'nidvendedor'       : 0,
+                        'nidvendedor'       : this.formVendedor.nidvendedor,
                         'page'              : page
                     }
                 }).then(response => {
@@ -5632,13 +5620,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayVendedor = response.data.arrayVendedor.data;
-                    this.paginationModal.current_page =  response.data.arrayVendedor.current_page;
-                    this.paginationModal.total = response.data.arrayVendedor.total;
-                    this.paginationModal.per_page    = response.data.arrayVendedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVendedor.last_page;
-                    this.paginationModal.from        = response.data.arrayVendedor.from;
-                    this.paginationModal.to           = response.data.arrayVendedor.to;
+                    this.arrayVendedor                  = response.data.arrayVendedor.data;
+                    this.paginationModal.current_page   = response.data.arrayVendedor.current_page;
+                    this.paginationModal.total          = response.data.arrayVendedor.total;
+                    this.paginationModal.per_page       = response.data.arrayVendedor.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVendedor.last_page;
+                    this.paginationModal.from           = response.data.arrayVendedor.from;
+                    this.paginationModal.to             = response.data.arrayVendedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
