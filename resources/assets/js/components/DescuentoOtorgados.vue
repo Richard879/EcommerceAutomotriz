@@ -94,14 +94,14 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Estado Cotización</label>
+                                                                                <label class="col-sm-4 form-control-label">Estado Pedido</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select  v-model="formDscOtorgados.nidestadocotizacion"
+                                                                                    <el-select  v-model="formDscOtorgados.nidestadopedido"
                                                                                                 filterable
                                                                                                 clearable
                                                                                                 placeholder="ESTADOS">
                                                                                         <el-option
-                                                                                            v-for="item in arrayEstadoCotizacion"
+                                                                                            v-for="item in arrayEstadoPedido"
                                                                                             :key="item.nIdPar"
                                                                                             :label="item.cParNombre"
                                                                                             :value="item.nIdPar">
@@ -140,159 +140,79 @@
                                                             <div class="card-body">
                                                                 <template v-if="arrayDistribucionDesc.length">
                                                                     <div class="table-responsive">
-                                                                        <!-- <table class="table table-striped table-sm"> -->
-                                                                            <!-- <thead>
-                                                                                <tr>
-                                                                                    <th>EMPRESA</th>
-                                                                                    <th>SUCURSAL</th>
-                                                                                    <th>NUM PEDIDO</th>
-                                                                                    <th>NUM COTIZACIÓN</th>
-                                                                                    <th>FECHA COTIZACIÓN</th>
-                                                                                    <th>FECHA VENC COTI</th>
-                                                                                    <th>FECHA PEDIDO</th>
-                                                                                    <th>TCC</th>
-                                                                                    <th>PRECIO BASE</th>
-                                                                                    <th>PRECIO CIERRE</th>
-                                                                                    <th>TYP</th>
-                                                                                    <th>PRECIO VENTA</th>
-                                                                                    <th>DESCUENTO</th>
-                                                                                    <th>SOBRE PRECIO</th>
-                                                                                    <th>VEHICULO ($)</th>
-                                                                                    <th>VEHICULO (S/)</th>
-                                                                                    <th>E.V ($)</th>
-                                                                                    <th>E.V (S/)</th>
-                                                                                    <th>COTIZACION ($)</th>
-                                                                                    <th>COTIZACION (S/)</th>
-                                                                                    <th>ASUNTO</th>
-                                                                                    <th>ESTADO COT</th>
-                                                                                    <th>DESCUENTO</th>
-                                                                                    <th>PROVEEDOR</th>
-                                                                                    <th>MONTO ASUMIDO</th>
-                                                                                    <th>EMPRESA</th>
-                                                                                    <th>MONTO ASUMIDO</th>
-                                                                                    <th>NOMBRE COMERCIAL</th>
-                                                                                    <th>VIN</th>
-                                                                                    <th>ASESOR COMERCIAL</th>
-                                                                                    <th>CONTACTO</th>
-                                                                                    <th>NUM DOCUMENTO</th>
-                                                                                    <th>DIRECCIÓN</th>
-                                                                                    <th>TELÉFONO MOVIL</th>
-                                                                                    <th>TELÉFONO FIJO</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="(distribucion, index) in arrayDistribucionDesc" :key="index">
-                                                                                    <td v-text="distribucion.EMPRESA"></td>
-                                                                                    <td v-text="distribucion.SUCURSAL"></td>
-                                                                                    <td v-text="distribucion.NUM_PEDIDO"></td>
-                                                                                    <td v-text="distribucion.NUM_COTIZACION"></td>
-                                                                                    <td v-text="distribucion.FECHA_COTIZACION"></td>
-                                                                                    <td v-text="distribucion.FECHA_VENC_COTIZACION"></td>
-                                                                                    <td v-text="distribucion.FECHA_PEDIDO"></td>
-                                                                                    <td v-text="distribucion.TCC"></td>
-                                                                                    <td v-text="distribucion.PRECIO_BASE_DOLAR"></td>
-                                                                                    <td v-text="distribucion.PRECIO_CIERRE_DOLAR"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.PRECIO_TYP_DOLAR)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.PRECIO_VENTA_CLIENTE"></td>
-                                                                                    <td v-text="distribucion.DESCUENTO_VEHI_DOLAR"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.COTI_VEHI_DOLAR"></td>
-                                                                                    <td v-text="distribucion.COTI_VEHI_SOL"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.COTI_EV_DOLAR)).toFixed(2)) }}</td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.COTI_EV_SOL)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.COTI_TOTAL_DOLAR"></td>
-                                                                                    <td v-text="distribucion.COTI_TOTAL_SOL"></td>
-                                                                                    <td v-text="distribucion.ASUNTO"></td>
-                                                                                    <td v-text="distribucion.ESTADO"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.DESCUENTO)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.PROVEEDOR"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.EMP"></td>
-                                                                                    <td> {{ Number((parseFloat(distribucion.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} </td>
-                                                                                    <td v-text="distribucion.NOMBRE_COMERCIAL"></td>
-                                                                                    <td v-text="distribucion.VIN"></td>
-                                                                                    <td v-text="distribucion.ASESOR_COMERCIAL"></td>
-                                                                                    <td v-text="distribucion.CONTACTO"></td>
-                                                                                    <td v-text="distribucion.N_DOCUMENTO"></td>
-                                                                                    <td v-text="distribucion.DIRECCION"></td>
-                                                                                    <td v-text="distribucion.TELEFONO_MOVIL"></td>
-                                                                                    <td v-text="distribucion.TELEFONO_FIJO"></td>
-                                                                                </tr>
-                                                                            </tbody> -->
-                                                                            <el-table
-                                                                                ref="multipleTable"
-                                                                                :data="arrayDistribucionDesc"
-                                                                                stripe
-                                                                                style="width: 100%"
-                                                                                @selection-change="handleSelectionChange">
-                                                                                <el-table-column fixed type="selection" width="55"></el-table-column>
-                                                                                <el-table-column property="SUCURSAL" label="SUCURSAL" width="100"></el-table-column>
-                                                                                <el-table-column property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
-                                                                                <el-table-column property="NUM_COTIZACION" label="N° COTIZACIÓN" width="110"></el-table-column>
-                                                                                <el-table-column property="FECHA_COTIZACION" label="F. COTIZACIÓN" width="110"></el-table-column>
-                                                                                <el-table-column property="FECHA_VENC_COTIZACION" label="F. VENC. COTI" width="110"></el-table-column>
-                                                                                <el-table-column property="FECHA_PEDIDO" label="FECHA PEDIDO" width="110"></el-table-column>
-                                                                                <el-table-column property="TCC" label="TCC"></el-table-column>
-                                                                                <el-table-column property="PRECIO_BASE_DOLAR" label="PRECIO BASE" width="100"></el-table-column>
-                                                                                <el-table-column property="PRECIO_CIERRE_DOLAR" label="PRECIO CIERRE" width="110"></el-table-column>
-                                                                                <el-table-column label="TYP">
-                                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_TYP_DOLAR)).toFixed(2)) }}</template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="PRECIO_VENTA_CLIENTE" label="PRECIO VENTA" width="110"></el-table-column>
-                                                                                <el-table-column property="DESCUENTO_VEHI_DOLAR" label="DESCUENTO" width="100"></el-table-column>
-                                                                                <el-table-column label="SOBRE PRECIO" width="110">
-                                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }}</template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="COTI_VEHI_DOLAR" label="VEHICULO ($)" width="110"></el-table-column>
-                                                                                <el-table-column property="COTI_VEHI_SOL" label="VEHICULO (S/)" width="110"></el-table-column>
-                                                                                <el-table-column label="E.V ($)" width="90">
-                                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_DOLAR)).toFixed(2)) }}</template>
-                                                                                </el-table-column>
-                                                                                <el-table-column label="E.V (S/)" width="90">
-                                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_SOL)).toFixed(2)) }}</template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="COTI_TOTAL_DOLAR" label="COTIZACION ($)" width="120"></el-table-column>
-                                                                                <el-table-column property="COTI_TOTAL_SOL" label="COTIZACION (S/)" width="120"></el-table-column>
-                                                                                <el-table-column property="ASUNTO" label="ASUNTO" width="120"></el-table-column>
-                                                                                <el-table-column property="ESTADO" label="ESTADO COT" width="120"></el-table-column>
-                                                                                <el-table-column label="DESCUENTO" width="110">
-                                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.DESCUENTO)).toFixed(2)) }}</template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="PROVEEDOR" label="PROVEEDOR" width="120"></el-table-column>
-                                                                                <el-table-column label="MONTO ASUMIDO" width="130">
-                                                                                    <template slot-scope="scope">
-                                                                                        <input type="text" v-model="scope.row.PROVEEDOR_MONTO_ASUMIDO" class="form-control">
-                                                                                        <!-- {{ Number((parseFloat(scope.row.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} -->
-                                                                                    </template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="EMP" label="EMPRESA" width="120"></el-table-column>
-                                                                                <el-table-column label="MONTO ASUMIDO" width="130">
-                                                                                    <template slot-scope="scope">
-                                                                                        <input type="text" v-model="scope.row.EMPRESA_MONTO_ASUMIDO" class="form-control">
-                                                                                        <!-- {{ Number((parseFloat(scope.row.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} -->
-                                                                                    </template>
-                                                                                </el-table-column>
-                                                                                <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="148"></el-table-column>
-                                                                                <el-table-column property="VIN" label="VIN" width="120"></el-table-column>
-                                                                                <el-table-column property="ASESOR_COMERCIAL" label="ASESOR COMERCIAL" width="148"></el-table-column>
-                                                                                <el-table-column property="CONTACTO" label="CONTACTO" width="120"></el-table-column>
-                                                                                <el-table-column property="N_DOCUMENTO" label="N° DOCUMENTO" width="120"></el-table-column>
-                                                                                <el-table-column property="DIRECCION" label="DIRECCIÓN" width="120"></el-table-column>
-                                                                                <el-table-column property="TELEFONO_MOVIL" label="TEL MOVIL" width="120"></el-table-column>
-                                                                                <!-- <el-table-column fixed="right" label="Operaciones" width="120">
-                                                                                    <template slot-scope="scope">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Generar Nota Credito {{ scope.row.VIN }}</div>
-                                                                                            <i @click="generarSAPNotaCredito(scope.row)" :style="'color:blue'" class="fas fa-md fa-poll-h"></i>&nbsp;&nbsp;
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Obtener Nota Credito {{ scope.row.VIN }}</div>
-                                                                                            <i @click="generarSAPNotaCredito(scope.row)" :style="'color:green'" class="fas fa-md fa-cube fa-spin"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>
-                                                                                </el-table-column> -->
-                                                                            </el-table>
-                                                                        <!-- </table> -->
+                                                                        <el-table
+                                                                            ref="multipleTable"
+                                                                            :data="arrayDistribucionDesc"
+                                                                            stripe
+                                                                            style="width: 100%"
+                                                                            @selection-change="handleSelectionChange">
+                                                                            <el-table-column fixed type="selection" width="55"></el-table-column>
+                                                                            <el-table-column property="SUCURSAL" label="SUCURSAL" width="100"></el-table-column>
+                                                                            <el-table-column property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
+                                                                            <el-table-column property="NUM_COTIZACION" label="N° COTIZACIÓN" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_COTIZACION" label="F. COTIZACIÓN" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_VENC_COTIZACION" label="F. VENC. COTI" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_PEDIDO" label="FECHA PEDIDO" width="110"></el-table-column>
+                                                                            <el-table-column property="TCC" label="TCC"></el-table-column>
+                                                                            <el-table-column property="PRECIO_BASE_DOLAR" label="PRECIO BASE" width="100"></el-table-column>
+                                                                            <el-table-column property="PRECIO_CIERRE_DOLAR" label="PRECIO CIERRE" width="110"></el-table-column>
+                                                                            <el-table-column label="TYP">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_TYP_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="PRECIO_VENTA_CLIENTE" label="PRECIO VENTA" width="110"></el-table-column>
+                                                                            <el-table-column property="DESCUENTO_VEHI_DOLAR" label="DESCUENTO" width="100"></el-table-column>
+                                                                            <el-table-column label="SOBRE PRECIO" width="110">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="COTI_VEHI_DOLAR" label="VEHICULO ($)" width="110"></el-table-column>
+                                                                            <el-table-column property="COTI_VEHI_SOL" label="VEHICULO (S/)" width="110"></el-table-column>
+                                                                            <el-table-column label="E.V ($)" width="90">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column label="E.V (S/)" width="90">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_SOL)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="COTI_TOTAL_DOLAR" label="COTIZACION ($)" width="120"></el-table-column>
+                                                                            <el-table-column property="COTI_TOTAL_SOL" label="COTIZACION (S/)" width="120"></el-table-column>
+                                                                            <el-table-column property="ASUNTO" label="ASUNTO" width="120"></el-table-column>
+                                                                            <el-table-column property="ESTADO" label="ESTADO COT" width="120"></el-table-column>
+                                                                            <el-table-column label="DESCUENTO" width="110">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.DESCUENTO)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="PROVEEDOR" label="PROVEEDOR" width="120"></el-table-column>
+                                                                            <el-table-column label="MONTO ASUMIDO" width="130">
+                                                                                <template slot-scope="scope">
+                                                                                    <input type="text" v-model="scope.row.PROVEEDOR_MONTO_ASUMIDO" class="form-control inputdsc">
+                                                                                    <!-- {{ Number((parseFloat(scope.row.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} -->
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="EMP" label="EMPRESA" width="120"></el-table-column>
+                                                                            <el-table-column label="MONTO ASUMIDO" width="130">
+                                                                                <template slot-scope="scope">
+                                                                                    <input type="text" v-model="scope.row.EMPRESA_MONTO_ASUMIDO" class="form-control inputdsc">
+                                                                                    <!-- {{ Number((parseFloat(scope.row.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} -->
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="148"></el-table-column>
+                                                                            <el-table-column property="VIN" label="VIN" width="120"></el-table-column>
+                                                                            <el-table-column property="ASESOR_COMERCIAL" label="ASESOR COMERCIAL" width="148"></el-table-column>
+                                                                            <el-table-column property="CONTACTO" label="CONTACTO" width="120"></el-table-column>
+                                                                            <el-table-column property="N_DOCUMENTO" label="N° DOCUMENTO" width="120"></el-table-column>
+                                                                            <el-table-column property="DIRECCION" label="DIRECCIÓN" width="120"></el-table-column>
+                                                                            <el-table-column property="TELEFONO_MOVIL" label="TEL MOVIL" width="120"></el-table-column>
+                                                                            <!-- <el-table-column fixed="right" label="Operaciones" width="120">
+                                                                                <template slot-scope="scope">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Generar Nota Credito {{ scope.row.VIN }}</div>
+                                                                                        <i @click="generarSAPNotaCredito(scope.row)" :style="'color:blue'" class="fas fa-md fa-poll-h"></i>&nbsp;&nbsp;
+                                                                                    </el-tooltip>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Obtener Nota Credito {{ scope.row.VIN }}</div>
+                                                                                        <i @click="generarSAPNotaCredito(scope.row)" :style="'color:green'" class="fas fa-md fa-cube fa-spin"></i>
+                                                                                    </el-tooltip>
+                                                                                </template>
+                                                                            </el-table-column> -->
+                                                                        </el-table>
                                                                     </div>
                                                                     <br>
                                                                     <template v-if="arrayDistribucionMultipleSelection.length > 0">
@@ -393,17 +313,18 @@
                     nidsucursal: '',
                     nidvendedor: '',
                     nidcronograma: '',
-                    nidestadocotizacion: '',
+                    nidestadopedido: '',
                     fmontodescuento: ''
                 },
                 arrayDistribucionDescRpta: [],
                 arrayDistribucionDesc: [],
                 arrayDistribucionMultipleSelection: [],
+                arraySapCostoDscProveedor: [],
 
                 arraySucursal: [],
                 arrayVendedores: [],
                 arrayCronogramas: [],
-                arrayEstadoCotizacion: [],
+                arrayEstadoPedido: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -518,16 +439,19 @@
                 this.listarSucursalByEmpresa();
                 // this.listarVendedores();
                 this.listarCronograma();
-                this.listarEstadosCotizacion();
+                this.listarEstadoPedido();
             },
             limpiarTabBsqDescPedido(){
                 this.formDscOtorgados.nidsucursal           = '';
                 this.formDscOtorgados.nidvendedor           = '';
                 this.formDscOtorgados.nidcronograma         = '';
-                this.formDscOtorgados.nidestadocotizacion   = '';
+                this.formDscOtorgados.nidestadopedido   = '';
                 this.formDscOtorgados.fmontodescuento       = '';
                 this.arrayDistribucionDesc = [];
             },
+            /**
+             * METODOS PARA CARGAR DATA
+             */
             listarSucursalByEmpresa(){
                 var url = this.ruta + '/perrelacion/GetLstSucursalByEmpresa';
                 axios.get(url, {
@@ -590,15 +514,15 @@
                     }
                 });
             },
-            listarEstadosCotizacion(){
+            listarEstadoPedido(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110058,
+                        'ngrupoparid' : 110063,
                         'opcion' : 1
                     }
                 }).then(response => {
-                    this.arrayEstadoCotizacion = response.data;
+                    this.arrayEstadoPedido = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -628,6 +552,9 @@
                     }
                 });
             },
+            /**
+             * FIN METODOS PARA CARGAR DATA
+             */
             validarBsqDescPedido(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -650,13 +577,14 @@
                 var url = this.ruta + '/dsctotorgados/GetListDistribucionDesc';
                 axios.get(url, {
                     params: {
-                        'nidsucursal'           :   this.formDscOtorgados.nidsucursal,
-                        'nidvendedor'           :   this.formDscOtorgados.nidvendedor,
-                        'nidcronograma'         :   this.formDscOtorgados.nidcronograma,
-                        'nidestadocotizacion'   :   this.formDscOtorgados.nidestadocotizacion,
-                        'fmontodescuento'       :   this.formDscOtorgados.fmontodescuento,
-                        'opcion'                :   2,
-                        'page'                  :   page
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       :   this.formDscOtorgados.nidsucursal,
+                        'nidvendedor'       :   this.formDscOtorgados.nidvendedor,
+                        'nidcronograma'     :   this.formDscOtorgados.nidcronograma,
+                        'nidestadopedido'   :   this.formDscOtorgados.nidestadopedido,
+                        'fmontodescuento'   :   this.formDscOtorgados.fmontodescuento,
+                        'opcion'            :   2,
+                        'page'              :   page
                     }
                 }).then(response => {
                     this.arrayDistribucionDescRpta  = response.data.arrayDistribucionDesc;
@@ -686,6 +614,48 @@
             cambiarPaginaDscPedido(page){
                 this.pagination.current_page=page;
                 this.paginateDscOtorgadosPedido(this.arrayDistribucionDescRpta, page);
+            },
+            // ==
+            obtenerSgcCostoProveedor(){
+                me.arraySapCostoDscProveedor = [];
+                // ====================== CONCEPTO =========================
+                // ======================== PROVEEDOR ==========================
+                me.arrayDistribucionMultipleSelection.map(function(value, key){
+                    me.arraySapCostoDscProveedor.push({
+                        'U_SYP_VIN'           : value.VIN,
+                        'DocEntry'            : value.nDocEntryTblCosto,
+                        'U_SYP_CCONCEPTO'     : '08',
+                        'U_SYP_DCONCEPTO'     : 'Descuento de Proveedor',
+                        'U_SYP_CDOCUMENTO'    : '01',
+                        'U_SYP_DDOCUMENTO'    : 'Nota de Crédito',
+                        'U_SYP_IMPORTE'       : value.PROVEEDOR_MONTO_ASUMIDO * value.TCCP,
+                        'U_SYP_IMPORTE_USD'   : value.PROVEEDOR_MONTO_ASUMIDO,
+                        'U_SYP_COSTO'         : 'Si',
+                        'U_SYP_ESTADO'        : 'Pendiente'
+                    });
+                });
+
+                setTimeout(function() {
+                    me.registroSapBusinessTblCostoDscProveedor();
+                }, 800);
+            },
+            registroSapBusinessTblCostoDscProveedor(){
+                let me = this;
+
+                var url = me.ruta + '/tablacosto/SapPachTablaCosto';
+                axios.post(url, {
+                    'data'  : me.arraySapCostoDscProveedor
+                }).then(response => {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =============================================
             // =============  MODAL ========================
@@ -792,6 +762,9 @@
     }
     .el-table td, .el-table th{
         padding: 0 !important;
+    }
+    .inputdsc{
+        border: 1px solid #3b5998 !important;
     }
 </style>
 
