@@ -479,7 +479,7 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Modelo</th>
-                                                                                                    <th>Año Fab.</th>
+                                                                                                    <!--<th>Año Fab.</th>-->
                                                                                                     <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -493,7 +493,7 @@
                                                                                                     </td>
                                                                                                     <td v-text="tempmodelo.cProveedorNombre"></td>
                                                                                                     <td v-text="tempmodelo.cModeloNombre"></td>
-                                                                                                    <td v-text="tempmodelo.nAnioFabricacion"></td>
+                                                                                                    <!--<td v-text="tempmodelo.nAnioFabricacion"></td>-->
                                                                                                     <td v-text="tempmodelo.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
