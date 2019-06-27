@@ -15,32 +15,32 @@
                         <div class="card">
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item" v-if="nidtiporol==110026">
-                                        <a class="nav-link" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
                                             <i class="fa fa-users"></i> CONTACTOS
                                         </a>
                                     </li>
-                                    <li class="nav-item" v-if="nidtiporol==110025">
-                                        <a class="nav-link active" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
                                             <i class="fa fa-user-circle"></i> CONTACTOS POR VENDEDOR
                                         </a>
                                     </li>
-                                    <li class="nav-item" v-if="nidtiporol==110025">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="Tab3" href="#TabContactosLibres" @click="tabContactosLibres()" role="tab" data-toggle="tab">
                                             <i class="fa fa-male"></i> CONTACTOS LIBRES
                                         </a>
                                     </li>
-                                    <li class="nav-item" v-if="nidtiporol==110026">
+                                    <li class="nav-item">
                                         <a class="nav-link disabled" id="Tab4" href="#TabSeguimiento" role="tab" data-toggle="tab">
                                             <i class="fa fa-angle-double-right"></i> SEGUIMIENTO
                                         </a>
                                     </li>
-                                    <li class="nav-item" v-if="nidtiporol==110026">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="Tab5" href="#TabNuevoContacto" @click="tabNuevoContacto()" role="tab" data-toggle="tab">
                                             <i class="fa fa-user"></i> NUEVO CONTACTO
                                         </a>
                                     </li>
-                                    <li class="nav-item" v-if="nidtiporol==110025">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="Tab5" href="#TabLeads" @click="tabLeads()" role="tab" data-toggle="tab">
                                             <i class="fa fa-file-excel-o"></i> LEADS
                                         </a>
