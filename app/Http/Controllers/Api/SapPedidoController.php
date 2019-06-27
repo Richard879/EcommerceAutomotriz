@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SapPedidoController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetPedido(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
@@ -156,8 +158,7 @@ class SapPedidoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            // 'base_uri'  => 'http://localhost:49454/'
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;

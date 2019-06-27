@@ -619,7 +619,7 @@
             obtenerSgcCostoProveedor(){
                 me.arraySapCostoDscProveedor = [];
                 // ====================== CONCEPTO =========================
-                // ======================== PROVEEDOR ==========================
+                // =============== DESCUENTOS DE PROVEEDOR =================
                 me.arrayDistribucionMultipleSelection.map(function(value, key){
                     me.arraySapCostoDscProveedor.push({
                         'U_SYP_VIN'           : value.VIN,

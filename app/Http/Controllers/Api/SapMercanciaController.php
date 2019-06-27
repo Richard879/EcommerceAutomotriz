@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SapMercanciaController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -74,7 +76,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $json = [
@@ -113,7 +115,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];

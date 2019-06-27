@@ -346,17 +346,17 @@
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabObsAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-list"></i> ASIGNA DETALLE
+                                                                <i class="fa fa-file-alt"></i> ASIGNA DETALLE
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab2" href="#TabObsAsignaElemento" role="tab" data-toggle="tab">
-                                                                <i class="fa fa fa-sign-out"></i> ASIGNA ELEMENTO VENTA
+                                                                <i class="fa fa fa-clipboard-list"></i> ASIGNA ELEMENTO VENTA
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab3" href="#TabObsAsignaDistribucion" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-usd"></i> DISTRIBUCIÓN
+                                                                <i class="fa fa-file-invoice-dollar"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -479,7 +479,7 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Modelo</th>
-                                                                                                    <th>Año Fab.</th>
+                                                                                                    <!--<th>Año Fab.</th>-->
                                                                                                     <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -493,7 +493,7 @@
                                                                                                     </td>
                                                                                                     <td v-text="tempmodelo.cProveedorNombre"></td>
                                                                                                     <td v-text="tempmodelo.cModeloNombre"></td>
-                                                                                                    <td v-text="tempmodelo.nAnioFabricacion"></td>
+                                                                                                    <!--<td v-text="tempmodelo.nAnioFabricacion"></td>-->
                                                                                                     <td v-text="tempmodelo.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
@@ -1128,7 +1128,7 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Modelo</th>
-                                                                    <th>Año Fab.</th>
+                                                                    <!--<th>Año Fab.</th>-->
                                                                     <th>Año Modelo</th>
                                                                 </tr>
                                                             </thead>
@@ -1142,7 +1142,7 @@
                                                                     </td>
                                                                     <td v-text="modelo.cProveedorNombre"></td>
                                                                     <td v-text="modelo.cModeloNombre"></td>
-                                                                    <td>
+                                                                    <!--<td>
                                                                         <el-select v-model="arrayAnioFabricacionEC[index]" filterable clearable placeholder="SELECCIONE" >
                                                                             <el-option
                                                                             v-for="item in arrayAnioFabricacion"
@@ -1151,7 +1151,7 @@
                                                                             :value="item.cParNombre">
                                                                             </el-option>
                                                                         </el-select>
-                                                                    </td>
+                                                                    </td>-->
                                                                     <td>
                                                                         <el-select v-model="arrayAnioModeloEC[index]" filterable clearable placeholder="SELECCIONE" >
                                                                             <el-option
@@ -2189,10 +2189,10 @@
                 else{
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalLinea.push({
-                                nIdLinea: data['nIdLinea'],
-                                cLineaNombre: data['cLineaNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        'nIdLinea'          : data['nIdLinea'],
+                        'cLineaNombre'      : data['cLineaNombre'],
+                        'nIdProveedor'      : data['nIdProveedor'],
+                        'cProveedorNombre'  : data['cProveedorNombre']
                     });
                     this.arrayTemporalMarca = [];
                     this.arrayTemporalModelo = [];
@@ -2255,10 +2255,10 @@
                 else{
                     this.arrayTemporalMarca = [];
                     this.arrayTemporalMarca.push({
-                                nIdMarca: data['nIdMarca'],
-                                cMarcaNombre: data['cMarcaNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        'nIdMarca'          : data['nIdMarca'],
+                        'cMarcaNombre'      : data['cMarcaNombre'],
+                        'nIdProveedor'      : data['nIdProveedor'],
+                        'cProveedorNombre'  : data['cProveedorNombre']
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalModelo = [];
@@ -2283,10 +2283,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor': parseInt(this.formObsequio.nidproveedor),
-                        'cmodelonombre': this.fillModal.cmodelonombre.toString(),
-                        'page' : page
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidproveedor'  : parseInt(this.formObsequio.nidproveedor),
+                        'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'page'          : page
                     }
                 }).then(response => {
                     this.arrayModelo = response.data.arrayModelo.data;
@@ -2326,12 +2326,12 @@
                     this.arrayTemporalModelo = [];
 
                     this.arrayTemporalModelo.push({
-                        nIdModelo: modelo.nIdModelo,
-                        cModeloNombre: modelo.cModeloNombre,
-                        nIdProveedor: modelo.nIdProveedor,
-                        cProveedorNombre: modelo.cProveedorNombre,
-                        'nAnioFabricacion' : this.arrayAnioFabricacionEC[index],
-                        'nAnioModelo'      : this.arrayAnioModeloEC[index]
+                        'nIdModelo'         : modelo.nIdModelo,
+                        'cModeloNombre'     : modelo.cModeloNombre,
+                        'nIdProveedor'      : modelo.nIdProveedor,
+                        'cProveedorNombre'  : modelo.cProveedorNombre,
+                        'nAnioFabricacion'  : this.arrayAnioFabricacionEC[index],
+                        'nAnioModelo'       : this.arrayAnioModeloEC[index]
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
@@ -2343,9 +2343,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
+                /*if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
                     this.mensajeError.push('Debes seleccionar Año Fabricación');
-                };
+                };*/
                 if(this.arrayAnioModeloEC[index] == 0 || !this.arrayAnioModeloEC[index]){
                     this.mensajeError.push('Debes seleccionar Año Modelo');
                 };
@@ -2575,9 +2575,9 @@
                     var url = me.ruta + '/obsequio/SetDetalleObsequio';
 
                     axios.post(url, {
-                        nIdObsequio: nIdObsequio,
-                        cFlagDetalleObsequio: me.formObsequio.cflagdetalleobsequio,
-                        data: me.arrayRegistraDetalle
+                        'nIdObsequio'           : nIdObsequio,
+                        'cFlagDetalleObsequio'  : me.formObsequio.cflagdetalleobsequio,
+                        'data'                  : me.arrayRegistraDetalle
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2596,10 +2596,10 @@
                     var url = this.ruta + '/obsequio/SetObsequioElementoVenta';
 
                     axios.post(url, {
-                        nIdObsequio: nIdObsequio,
-                        data: this.arrayTemporalElemento,
-                        nIdTipoCambio: this.nIdTipoCambio,
-                        fTipoCambio: this.fValorTipoCambioTransaccion
+                        'nIdObsequio'   : nIdObsequio,
+                        'data'          : this.arrayTemporalElemento,
+                        'nIdTipoCambio' : this.nIdTipoCambio,
+                        'fTipoCambio'   : this.fValorTipoCambioTransaccion
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {

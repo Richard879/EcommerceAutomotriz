@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SapComprobanteController extends Controller
 {
+    private $cnxIntegration = 'http://172.20.0.10:8020/';
+
     public function SapSetFactura(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -49,7 +51,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -114,7 +116,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -163,7 +165,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];
@@ -190,7 +192,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         // $array_rpta = [];
@@ -241,7 +243,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => 'http://172.20.0.10:8020/'
+            'base_uri'  => $this->cnxIntegration
         ]);
 
         $array_rpta = [];

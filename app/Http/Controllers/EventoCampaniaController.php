@@ -102,7 +102,7 @@ class EventoCampaniaController extends Controller
                                                                 [   $request->nIdEventoCampania,
                                                                     $request->cFlagDetalleEvento,
                                                                     $det['nIdModelo'],
-                                                                    $det['nAnioFabricacion'],
+                                                                    0,
                                                                     $det['nAnioModelo'],
                                                                     Auth::user()->id
                                                                 ]);

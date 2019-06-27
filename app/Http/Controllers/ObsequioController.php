@@ -101,7 +101,7 @@ class ObsequioController extends Controller
                                                                 [   $request->nIdObsequio,
                                                                     $request->cFlagDetalleObsequio,
                                                                     $det['nIdModelo'],
-                                                                    $det['nAnioFabricacion'],
+                                                                    0,
                                                                     $det['nAnioModelo'],
                                                                     Auth::user()->id
                                                                 ]);

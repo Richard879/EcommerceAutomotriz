@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#tabGeneraFlete" @click="tabGeneraFlete()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-file-text-o"></i> ASIGNAR FLETE
+                                            <i class="fa fa-truck-moving"></i> ASIGNAR FLETE
                                         </a>
                                     </li>
                                 </ul>
@@ -1131,10 +1131,10 @@
                 me.arrayTempFlete.map(function(value, key){
                     if(me.arrayIndexFleteMonto[key] > 0){
                         me.arrayFlete.push({
-                            'nIdCompra': value.nIdCompra,
-                            'cNumeroVin': value.cNumeroVin,
-                            'nIdMoneda': 1300027,
-                            'fImporteFlete': me.arrayIndexFleteMonto[key]
+                            'nIdCompra'     : value.nIdCompra,
+                            'cNumeroVin'    : value.cNumeroVin,
+                            'nIdMoneda'     : 1300027,
+                            'fImporteFlete' : me.arrayIndexFleteMonto[key]
                         });
                     }
                 });
