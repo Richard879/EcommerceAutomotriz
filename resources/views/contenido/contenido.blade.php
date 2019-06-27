@@ -80,7 +80,7 @@
         <reportes :ruta="ruta" :usuario="{{ auth()->user() }}"></reportes>
     </template>
     <template v-if="menu==1300710">
-        <recuperardinero :ruta="ruta" :usuario="{{ auth()->user() }}"></recuperardinero>
+        <descotorgados :ruta="ruta" :usuario="{{ auth()->user() }}"></descotorgados>
     </template>
 
 
