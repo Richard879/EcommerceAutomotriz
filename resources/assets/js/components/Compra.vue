@@ -197,7 +197,7 @@
                                                                                     <!--<template v-if="compra.cSituacionRegistro=='A'">-->
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Cambiar Sucursal {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="abrirModal('compra','sucursal', compra)" :style="'color:#796AEE'" class="fa-md fa fa-home"></i>
+                                                                                            <i @click="abrirModal('compra','sucursal', compra)" :style="'color:green'" class="fa-md fa fa-home"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     <!--</template>-->
                                                                                     <template v-if="compra.cSituacionRegistro=='A'">
