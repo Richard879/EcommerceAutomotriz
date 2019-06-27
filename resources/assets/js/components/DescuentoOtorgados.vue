@@ -182,14 +182,14 @@
                                                                             <el-table-column property="PROVEEDOR" label="PROVEEDOR" width="120"></el-table-column>
                                                                             <el-table-column label="MONTO ASUMIDO" width="130">
                                                                                 <template slot-scope="scope">
-                                                                                    <input type="text" v-model="scope.row.PROVEEDOR_MONTO_ASUMIDO" class="form-control inputdsc">
+                                                                                    <input type="text" v-model="scope.row.PROVEEDOR_MONTO_ASUMIDO" @keyup="verificarMonto(scope.row, scope.$index, 1)" class="form-control inputdsc">
                                                                                     <!-- {{ Number((parseFloat(scope.row.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }} -->
                                                                                 </template>
                                                                             </el-table-column>
                                                                             <el-table-column property="EMP" label="EMPRESA" width="120"></el-table-column>
                                                                             <el-table-column label="MONTO ASUMIDO" width="130">
                                                                                 <template slot-scope="scope">
-                                                                                    <input type="text" v-model="scope.row.EMPRESA_MONTO_ASUMIDO" class="form-control inputdsc">
+                                                                                    <input type="text" v-model="scope.row.EMPRESA_MONTO_ASUMIDO" @keyup="verificarMonto(scope.row, scope.$index, 2)" class="form-control inputdsc">
                                                                                     <!-- {{ Number((parseFloat(scope.row.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }} -->
                                                                                 </template>
                                                                             </el-table-column>
@@ -220,7 +220,7 @@
                                                                             <form class="form-horizontal">
                                                                                 <div class="form-group row">
                                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="generarNotaCredito(1)">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="obtenerSgcCostoDscProveedor(1)">
                                                                                             <i class="fas fa-md fa-poll-h fa-spin"></i> Generar Nota de Credito
                                                                                         </button>
                                                                                     </div>
@@ -615,29 +615,55 @@
                 this.pagination.current_page=page;
                 this.paginateDscOtorgadosPedido(this.arrayDistribucionDescRpta, page);
             },
+            verificarMonto(data, index, op){
+                // console.log(data, index);
+                // console.log(this.arrayDistribucionDesc[index]);
+
+                if (op == 1) {
+                    //Monto Total del Descuento - Monto Asumido Proveedor
+                    let montoParaEmp = this.arrayDistribucionDesc[index].DESCUENTO - this.arrayDistribucionDesc[index].PROVEEDOR_MONTO_ASUMIDO;
+                    //Monto Asumido Emp se actualiza.
+                    this.arrayDistribucionDesc[index].EMPRESA_MONTO_ASUMIDO = montoParaEmp
+                } else {
+                    //Monto Total del Descuento - Monto Asumido Proveedor
+                    let montoParaProv = this.arrayDistribucionDesc[index].DESCUENTO - this.arrayDistribucionDesc[index].EMPRESA_MONTO_ASUMIDO;
+                    //Monto Asumido Emp se actualiza.
+                    this.arrayDistribucionDesc[index].PROVEEDOR_MONTO_ASUMIDO = montoParaProv
+                }
+            },
             // ==
-            obtenerSgcCostoProveedor(){
+            obtenerSgcCostoDscProveedor(){
+                let me = this;
+
+                me.mostrarProgressBar();
+                me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
+
                 me.arraySapCostoDscProveedor = [];
                 // ====================== CONCEPTO =========================
                 // =============== DESCUENTOS DE PROVEEDOR =================
                 me.arrayDistribucionMultipleSelection.map(function(value, key){
                     me.arraySapCostoDscProveedor.push({
-                        'U_SYP_VIN'           : value.VIN,
-                        'DocEntry'            : value.nDocEntryTblCosto,
-                        'U_SYP_CCONCEPTO'     : '08',
-                        'U_SYP_DCONCEPTO'     : 'Descuento de Proveedor',
-                        'U_SYP_CDOCUMENTO'    : '01',
-                        'U_SYP_DDOCUMENTO'    : 'Nota de Crédito',
-                        'U_SYP_IMPORTE'       : value.PROVEEDOR_MONTO_ASUMIDO * value.TCCP,
-                        'U_SYP_IMPORTE_USD'   : value.PROVEEDOR_MONTO_ASUMIDO,
-                        'U_SYP_COSTO'         : 'Si',
-                        'U_SYP_ESTADO'        : 'Pendiente'
+                        'U_SYP_VIN'                 : value.VIN,
+                        'DocEntry'                  : value.nDocEntryTblCosto,
+                        'U_SYP_CCONCEPTO'           : '08',
+                        'U_SYP_DCONCEPTO'           : 'Descuento de Proveedor',
+                        'U_SYP_CDOCUMENTO'          : '01',
+                        'U_SYP_DDOCUMENTO'          : 'Nota de Crédito',
+                        'U_SYP_IMPORTE'             : (value.PROVEEDOR_MONTO_ASUMIDO > 0) ? ('-' + (value.PROVEEDOR_MONTO_ASUMIDO * value.TCCP)) : value.PROVEEDOR_MONTO_ASUMIDO * value.TCCP,
+                        'U_SYP_IMPORTE_USD'         : (value.PROVEEDOR_MONTO_ASUMIDO > 0) ? ('-' + value.PROVEEDOR_MONTO_ASUMIDO) : value.PROVEEDOR_MONTO_ASUMIDO,
+                        'U_SYP_COSTO'               : 'Si',
+                        'U_SYP_ESTADO'              : 'Pendiente',
+                        'nIdCabeceraCotizacion'     : value.nIdCabeceraCotizacion,
+                        'EMP_ID'                    : value.EMP_ID,
+                        'EMPRESA_MONTO_ASUMIDO'     : value.EMPRESA_MONTO_ASUMIDO,
+                        'PROVEEDOR_ID'              : value.PROVEEDOR_ID,
+                        'PROVEEDOR_MONTO_ASUMIDO'   : value.PROVEEDOR_MONTO_ASUMIDO,
                     });
                 });
 
                 setTimeout(function() {
                     me.registroSapBusinessTblCostoDscProveedor();
-                }, 800);
+                }, 300);
             },
             registroSapBusinessTblCostoDscProveedor(){
                 let me = this;
@@ -646,7 +672,32 @@
                 axios.post(url, {
                     'data'  : me.arraySapCostoDscProveedor
                 }).then(response => {
-                    console.log(response);
+                    this.registrarNuevaDscOtorgado();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registrarNuevaDscOtorgado(){
+                let me = this;
+
+                var url = me.ruta + '/dsctotorgados/SetDistribucionDesc';
+                axios.post(url, {
+                    'data'  : me.arraySapCostoDscProveedor
+                }).then(response => {
+                    swal(
+                        'Generado!',
+                        'Los Descuentos Otorgados del pedido han sido integrados con éxito.',
+                        'success'
+                    );
+                    $("#myBar").hide();
+                    me.loading.close();
+                    this.listarDescPedido(1);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
