@@ -656,8 +656,10 @@
                         'nIdCabeceraCotizacion'     : value.nIdCabeceraCotizacion,
                         'EMP_ID'                    : value.EMP_ID,
                         'EMPRESA_MONTO_ASUMIDO'     : value.EMPRESA_MONTO_ASUMIDO,
+                        'PROVEEDOR_DISTRIBUCION_ID' : value.PROVEEDOR_DISTRIBUCION_ID,
                         'PROVEEDOR_ID'              : value.PROVEEDOR_ID,
                         'PROVEEDOR_MONTO_ASUMIDO'   : value.PROVEEDOR_MONTO_ASUMIDO,
+                        'EMPRESA_DISTRIBUCION_ID'   : value.EMPRESA_DISTRIBUCION_ID
                     });
                 });
 
