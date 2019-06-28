@@ -168,7 +168,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -3694,9 +3694,10 @@
                 this.pagination.total       = data.length;
                 this.pagination.per_page    = this.perPage;
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayContacto          = data.slice(this.pagination.from, this.pagination.to);
+                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContacto          = data.slice(this.pagination.from1, this.pagination.to);
             },
             listarContactosByRol(page){
                 this.mostrarProgressBar();
@@ -3714,12 +3715,6 @@
                 }).then(response => {
                     this.arrayContactoRpta      = response.data.arrayContacto;
                     this.paginateContactoSinCarteraMes(this.arrayContactoRpta, page);
-                    /*this.pagination.current_page =  response.data.arrayContacto.current_page;
-                    this.pagination.total       = response.data.arrayContacto.total;
-                    this.pagination.per_page    = response.data.arrayContacto.per_page;
-                    this.pagination.last_page   = response.data.arrayContacto.last_page;
-                    this.pagination.from        = response.data.arrayContacto.from;
-                    this.pagination.to          = response.data.arrayContacto.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
