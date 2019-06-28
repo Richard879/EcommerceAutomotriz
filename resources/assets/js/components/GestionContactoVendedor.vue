@@ -120,14 +120,14 @@
                                                                                     </template>
                                                                                     <el-tooltip class="item" effect="dark">
                                                                                         <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
+                                                                                        <i @click="activarTab3(c)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" v-if="nidtiporol==110026">
                                                                                         <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
                                                                                         <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" >
-                                                                                        <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
+                                                                                        <div slot="content">Editar Contacto {{ c.cContacto }}</div>
                                                                                         <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
@@ -914,7 +914,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab22" href="#TabDatosContacto" role="tab" data-toggle="tab">
-                                                                <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
+                                                                <i class="fa fa fa-map-marker-alt"></i> DATOS DE CONTACTO
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -3005,7 +3005,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizarContacto">
                                                             <i class="fa fa-edit"></i> ACTUALIZAR
                                                         </button>
                                                     </div>
@@ -4039,7 +4039,7 @@
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
-            activarTab3(nIdContacto, nIdPersona, nTipoPersona){
+            activarTab3(objContacto){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link active');
@@ -4049,10 +4049,10 @@
                 $('#TabMisContactos').removeClass('in active show');
                 $('#TabCarteraMes').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
-                this.formNuevoContacto.nidcontacto = nIdContacto;
-                this.formSegDatosContacto.nidpersona = nIdPersona;
+                this.formNuevoContacto.nidcontacto = objContacto.nIdContacto;
+                this.formSegDatosContacto.nidpersona = objContacto.nIdPersona;
                 this.TabSegDatosContacto();
-                this.cargarTabSegDatosContacto(nTipoPersona);
+                this.cargarTabSegDatosContacto(objContacto.nTipoPersona);
             },
             cargarTabSegDatosContacto(nTipoPersona){
                 if(nTipoPersona == "1")
@@ -4060,16 +4060,16 @@
                     var url = this.ruta + '/gescontacto/GetContactoNaturalById';
                     axios.get(url, {
                         params: {
-                            'nidcontacto': this.formNuevoContacto.nidcontacto,
+                            'nidcontacto'       : this.formNuevoContacto.nidcontacto,
                             'nidpersonanatural' : this.formSegDatosContacto.nidpersona
                         }
                     }).then(response => {
-                        this.formSegDatosContacto.ctipopersona = response.data[0].cTipoPersona;
-                        this.formSegDatosContacto.ccontacto = response.data[0].cContacto;
+                        this.formSegDatosContacto.ctipopersona  = response.data[0].cTipoPersona;
+                        this.formSegDatosContacto.ccontacto     = response.data[0].cContacto;
                         this.formSegDatosContacto.cnrodocumento = response.data[0].cNumeroDocumento;
-                        this.formSegDatosContacto.ctelefono = response.data[0].nTelefonoMovil;
-                        this.formSegDatosContacto.cemail = response.data[0].cEmail;
-                        this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
+                        this.formSegDatosContacto.ctelefono     = response.data[0].nTelefonoMovil;
+                        this.formSegDatosContacto.cemail        = response.data[0].cEmail;
+                        this.formSegDatosContacto.cdireccion    = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -4085,16 +4085,16 @@
                     var url = this.ruta + '/gescontacto/GetContactoJuridicoById';
                     axios.get(url, {
                         params: {
-                            'nidcontacto': this.formNuevoContacto.nidcontacto,
-                            'nidpersonajuridico' : this.formSegDatosContacto.nidpersona
+                            'nidcontacto'       : this.formNuevoContacto.nidcontacto,
+                            'nidpersonajuridico': this.formSegDatosContacto.nidpersona
                         }
                     }).then(response => {
-                        this.formSegDatosContacto.ctipopersona = response.data[0].cTipoPersona;
-                        this.formSegDatosContacto.ccontacto = response.data[0].cContacto;
+                        this.formSegDatosContacto.ctipopersona  = response.data[0].cTipoPersona;
+                        this.formSegDatosContacto.ccontacto     = response.data[0].cContacto;
                         this.formSegDatosContacto.cnrodocumento = response.data[0].cNumeroDocumento;
-                        this.formSegDatosContacto.ctelefono = response.data[0].nTelefonoMovil;
-                        this.formSegDatosContacto.cemail = response.data[0].cEmail;
-                        this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
+                        this.formSegDatosContacto.ctelefono     = response.data[0].nTelefonoMovil;
+                        this.formSegDatosContacto.cemail        = response.data[0].cEmail;
+                        this.formSegDatosContacto.cdireccion    = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -5586,11 +5586,11 @@
             // =========================================================
             // =============  TAB CONTACTOS POR VENDEDOR ===============
             tabContactosPorVendedor(){
+                $('#Tab3').addClass("nav-link disabled");
                 this.vistaContactoPorVendedor = 1;
                 this.arrayContactosPorVendedor = [];
                 this.limpiarTodoVendedor();
                 this.limpiarReasignarContacto();
-                //this.limpiarContactosPorVendedor();
             },
             listarContactosPorVendedor(page){
                 this.mostrarProgressBar();
@@ -5783,6 +5783,7 @@
             // =========================================================
             // =============  TAB CONTACTOS LIBRES =====================
             tabContactosLibres(){
+                $('#Tab3').addClass("nav-link disabled");
                 this.vistaContactoLibre = 1;
                 this.arrayContactoLibre = [];
                 this.limpiarTodoVendedor();
@@ -6083,51 +6084,50 @@
                             case 'editar':
                             {
                                 this.limpiarModalEditarPersona();
-                                this.fillEditarContacto.cFlagOp = 1;
-                                this.accionmodal=6;
-                                this.modal = 1;
-                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
-                                //Datos Personales
-                                this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
-                                this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
-                                this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
-                                this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
-                                this.fillEditarContacto.cnombre             =   data.cNombre;
-                                this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
-                                this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
-                                this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
-                                //Datos de Contacto
-                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
-                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
-                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
-                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
-                                this.listarUbigeos();
-                                this.llenarComboEstadoCivil();
-                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
-                                this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
-                                break;
-                            }
-                            case 'editarJ':
-                            {
-                                this.limpiarModalEditarPersona();
-                                this.fillEditarContacto.cFlagOp = 2;
-                                this.accionmodal=6;
-                                this.modal = 1;
-                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
-                                //Datos Personales
-                                this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
-                                this.fillEditarContacto.cnrodocumento       =   data.cNumeroDocumento;
-                                this.fillEditarContacto.cnombre             =   data.cRazonSocial;
-                                //Datos de Contacto
-                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
-                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
-                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
-                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
-                                this.listarUbigeos();
-                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
-                                break;
+                                this.fillEditarContacto.cFlagOp = parseInt(data.nTipoPersona);
+
+                                if(this.fillEditarContacto.cFlagOp == 1){
+                                    this.accionmodal=6;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
+                                    this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
+                                    this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
+                                    this.fillEditarContacto.cnombre             =   data.cNombre;
+                                    this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
+                                    this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
+                                    this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                    this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                    this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                    this.listarUbigeos();
+                                    this.llenarComboEstadoCivil();
+                                    this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                    this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
+                                    break;
+                                }else{
+                                    this.accionmodal=6;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
+                                    this.fillEditarContacto.cnombre             =   data.cRazonSocial;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                    this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                    this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                    this.listarUbigeos();
+                                    this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                    break;
+                                }
                             }
                         }
                     }
