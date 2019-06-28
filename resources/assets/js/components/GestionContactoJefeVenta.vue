@@ -2391,7 +2391,7 @@
                 </div>
             </div>
 
-             <!-- Modal Vendedores -->
+            <!-- Modal Vendedores -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
