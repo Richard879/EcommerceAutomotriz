@@ -96,108 +96,55 @@
                                                             <template v-if="arrayContacto.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
-                                                                        <template v-if="fillMisContactos.ntipopersona == 1">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>#Codigo SAP</th>
-                                                                                    <th>Contacto</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Celular</th>
-                                                                                    <th>Telef. Fijo</th>
-                                                                                    <th>Dirección</th>
-                                                                                    <th>Email</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                                    <td>
-                                                                                        <template v-if="nidtiporol==110026">
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
-                                                                                                <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                                        </template>
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" v-if="nidtiporol==110026">
-                                                                                            <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
-                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cContacto"></td>
-                                                                                    <td v-text="c.cPerDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cTelefonoFijo"></td>
-                                                                                    <td v-text="c.cDireccion"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
-                                                                        <template v-else>
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>#Codigo SAP</th>
-                                                                                    <th>Razon Social</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Celular</th>
-                                                                                    <th>Telef. Fijo</th>
-                                                                                    <th>Email</th>
-                                                                                    <th>Persona Contacto</th>
-                                                                                    <!--<th>Vendedor</th>-->
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                                    <td>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Código</th>
+                                                                                <th>#Codigo SAP</th>
+                                                                                <th>Contacto</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Telef. Fijo</th>
+                                                                                <th>Dirección</th>
+                                                                                <th>Email</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="c in arrayContacto" :key="c.nIdContacto">
+                                                                                <td>
+                                                                                    <template v-if="nidtiporol==110026">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-bus"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
-                                                                                            <i @click="asignarCarteraMesTodos(c)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cRazonSocial"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cTelefonoFijo"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cContacto"></td>
-                                                                                    <!--<td v-text="c.cVendedor"></td>-->
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
+                                                                                    </template>
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
+                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" v-if="nidtiporol==110026">
+                                                                                        <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
+                                                                                        <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" >
+                                                                                        <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
+                                                                                        <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                        <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                        <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                    </el-tooltip>-->
+                                                                                </td>
+                                                                                <td v-text="c.nIdContacto"></td>
+                                                                                <td v-text="c.CardCode"></td>
+                                                                                <td v-text="c.cContacto"></td>
+                                                                                <td v-text="c.cPerDocumento"></td>
+                                                                                <td v-text="c.nTelefonoMovil"></td>
+                                                                                <td v-text="c.cTelefonoFijo"></td>
+                                                                                <td v-text="c.cDireccion"></td>
+                                                                                <td v-text="c.cEmail"></td>
+                                                                            </tr>
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-sm-12">
@@ -221,7 +168,7 @@
                                                                             </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from + 1 }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -3747,9 +3694,10 @@
                 this.pagination.total       = data.length;
                 this.pagination.per_page    = this.perPage;
                 this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
-                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page;
-                this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
-                this.arrayContacto          = data.slice(this.pagination.from, this.pagination.to);
+                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContacto          = data.slice(this.pagination.from1, this.pagination.to);
             },
             listarContactosByRol(page){
                 this.mostrarProgressBar();
@@ -3767,12 +3715,6 @@
                 }).then(response => {
                     this.arrayContactoRpta      = response.data.arrayContacto;
                     this.paginateContactoSinCarteraMes(this.arrayContactoRpta, page);
-                    /*this.pagination.current_page =  response.data.arrayContacto.current_page;
-                    this.pagination.total       = response.data.arrayContacto.total;
-                    this.pagination.per_page    = response.data.arrayContacto.per_page;
-                    this.pagination.last_page   = response.data.arrayContacto.last_page;
-                    this.pagination.from        = response.data.arrayContacto.from;
-                    this.pagination.to          = response.data.arrayContacto.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
