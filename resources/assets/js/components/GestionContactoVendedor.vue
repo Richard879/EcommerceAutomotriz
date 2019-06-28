@@ -325,7 +325,7 @@
                                                                                 <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
+                                                                                            <div slot="content">Mi Cartera {{ c.cContacto }}</div>
                                                                                             <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <el-tooltip class="item" effect="dark">
@@ -1975,7 +1975,6 @@
                                                             <th>Linea</th>
                                                             <th>Marca</th>
                                                             <th>Modelo</th>
-                                                            <th>Año Fab</th>
                                                             <th>Año Modelo</th>
                                                             <th>Fecha Inicio</th>
                                                             <th>Fecha Fin</th>
@@ -1988,7 +1987,7 @@
                                                                     <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                         <el-tooltip class="item" effect="dark" >
                                                                             <div slot="content">Anular de Cartera Cod. Asignacion {{ r.nIdAsignacionContactoVendedor }}</div>
-                                                                            <i @click="anularCarteraMesByIdAsignacion(r)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                            <i @click="anularCarteraMesByIdAsignacion(r)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                     </template>
                                                                 </td>
@@ -1996,7 +1995,6 @@
                                                                 <td v-text="r.cLineaNombre"></td>
                                                                 <td v-text="r.cMarcaNombre"></td>
                                                                 <td v-text="r.cModeloNombre"></td>
-                                                                <td v-text="r.nAnioFabricacion"></td>
                                                                 <td v-text="r.nAnioModelo"></td>
                                                                 <td v-text="r.dFechaInicioAsignacionContacto"></td>
                                                                 <td v-text="r.dFechaFinAsignacionContacto"></td>
