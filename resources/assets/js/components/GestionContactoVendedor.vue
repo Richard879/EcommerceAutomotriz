@@ -3766,7 +3766,7 @@
                 this.pagination.to          = (this.pagination.current_page * this.pagination.per_page);
                 this.arrayContacto          = data.slice(this.pagination.from, this.pagination.to);
             },
-            listarContactoSinCarteraMes(page){
+            listarContactosByRol(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetListContactoByRol';
                 axios.get(url, {
@@ -3818,11 +3818,11 @@
                         }).then(response => {
                             if(response.data[0].nFlagMsje==1){
                                 swal('Se asignó a Cartera de Mes');
-                                this.listarContactoSinCarteraMes(1);
+                                this.listarContactosByRol(1);
                             }
                             else{
                                 swal('No se Asignó');
-                                this.listarContactoSinCarteraMes(1);
+                                this.listarContactosByRol(1);
                             }
                         }).catch(error => {
                             console.log(error);
@@ -3849,11 +3849,11 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         swal('Se asignó a Cartera de Mes');
-                        this.listarContactoSinCarteraMes(1);
+                        this.listarContactosByRol(1);
                     }
                     else{
                         swal('No se Asignó');
-                        this.listarContactoSinCarteraMes(1);
+                        this.listarContactosByRol(1);
                     }
                     this.cerrarModal();
                 }).catch(error => {
@@ -5431,7 +5431,6 @@
                     } else {
                         swal(response.data[0].cMensaje);
                     }
-                    //this.listarContactoSinCarteraMes(1);
                     this.arrayContacto = [];
                     this.arrayContactoCarteraMes = [];
                     // this.SAPNuevoContactoJson.CardCode = ''; //Setear el JSON
