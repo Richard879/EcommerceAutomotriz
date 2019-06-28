@@ -6377,9 +6377,6 @@
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
-        },
-        mounted(){
-            //this.tabBuscarEventoCampania();
         }
     }
 </script>
