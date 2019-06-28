@@ -120,7 +120,7 @@
                                                                                     </template>
                                                                                     <el-tooltip class="item" effect="dark">
                                                                                         <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
+                                                                                        <i @click="activarTab3(c)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" v-if="nidtiporol==110026">
                                                                                         <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
@@ -4039,7 +4039,7 @@
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
-            activarTab3(nIdContacto, nIdPersona, nTipoPersona){
+            activarTab3(objContacto){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link active');
@@ -4049,10 +4049,10 @@
                 $('#TabMisContactos').removeClass('in active show');
                 $('#TabCarteraMes').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
-                this.formNuevoContacto.nidcontacto = nIdContacto;
-                this.formSegDatosContacto.nidpersona = nIdPersona;
+                this.formNuevoContacto.nidcontacto = objContacto.nIdContacto;
+                this.formSegDatosContacto.nidpersona = objContacto.nIdPersona;
                 this.TabSegDatosContacto();
-                this.cargarTabSegDatosContacto(nTipoPersona);
+                this.cargarTabSegDatosContacto(objContacto.nTipoPersona);
             },
             cargarTabSegDatosContacto(nTipoPersona){
                 if(nTipoPersona == "1")
@@ -4060,16 +4060,16 @@
                     var url = this.ruta + '/gescontacto/GetContactoNaturalById';
                     axios.get(url, {
                         params: {
-                            'nidcontacto': this.formNuevoContacto.nidcontacto,
+                            'nidcontacto'       : this.formNuevoContacto.nidcontacto,
                             'nidpersonanatural' : this.formSegDatosContacto.nidpersona
                         }
                     }).then(response => {
-                        this.formSegDatosContacto.ctipopersona = response.data[0].cTipoPersona;
-                        this.formSegDatosContacto.ccontacto = response.data[0].cContacto;
+                        this.formSegDatosContacto.ctipopersona  = response.data[0].cTipoPersona;
+                        this.formSegDatosContacto.ccontacto     = response.data[0].cContacto;
                         this.formSegDatosContacto.cnrodocumento = response.data[0].cNumeroDocumento;
-                        this.formSegDatosContacto.ctelefono = response.data[0].nTelefonoMovil;
-                        this.formSegDatosContacto.cemail = response.data[0].cEmail;
-                        this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
+                        this.formSegDatosContacto.ctelefono     = response.data[0].nTelefonoMovil;
+                        this.formSegDatosContacto.cemail        = response.data[0].cEmail;
+                        this.formSegDatosContacto.cdireccion    = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -4085,16 +4085,16 @@
                     var url = this.ruta + '/gescontacto/GetContactoJuridicoById';
                     axios.get(url, {
                         params: {
-                            'nidcontacto': this.formNuevoContacto.nidcontacto,
-                            'nidpersonajuridico' : this.formSegDatosContacto.nidpersona
+                            'nidcontacto'       : this.formNuevoContacto.nidcontacto,
+                            'nidpersonajuridico': this.formSegDatosContacto.nidpersona
                         }
                     }).then(response => {
-                        this.formSegDatosContacto.ctipopersona = response.data[0].cTipoPersona;
-                        this.formSegDatosContacto.ccontacto = response.data[0].cContacto;
+                        this.formSegDatosContacto.ctipopersona  = response.data[0].cTipoPersona;
+                        this.formSegDatosContacto.ccontacto     = response.data[0].cContacto;
                         this.formSegDatosContacto.cnrodocumento = response.data[0].cNumeroDocumento;
-                        this.formSegDatosContacto.ctelefono = response.data[0].nTelefonoMovil;
-                        this.formSegDatosContacto.cemail = response.data[0].cEmail;
-                        this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
+                        this.formSegDatosContacto.ctelefono     = response.data[0].nTelefonoMovil;
+                        this.formSegDatosContacto.cemail        = response.data[0].cEmail;
+                        this.formSegDatosContacto.cdireccion    = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
