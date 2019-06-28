@@ -576,22 +576,34 @@ class ExcelController extends Controller
 
     public function exportarComisiones(Request $request)
     {
-        // $nidsucursal            =   $request->nidsucursal;
-        // $nidvendedor            =   $request->nidvendedor;
+        $nidempresa     =   $request->nidempresa;
+        $nidsucursal    =   $request->nidsucursal;
+        $nidvendedor    =   $request->nidvendedor;
         $dfechainicio   =   $request->dfechainicio;
         $dfechafin      =   $request->dfechafin;
 
+        $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
         $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = 0) : $dfechainicio;
         $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = 0) : $dfechafin;
 
+        $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones] ?, ?',
+        $data = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones] ?, ?, ?, ?, ?',
                                         [
+                                            $nidempresa,
+                                            $nidsucursal,
+                                            $nidvendedor,
                                             $dfechainicio,
                                             $dfechafin
                                         ]);
 
-        return response()->json($data);
+        if ($opcion == 1) {
+            return response()->json($data);
+        } else {
+            $arrayDscOtorgadosComisiones = ParametroController::arrayPaginator($data, $request);
+            return ['arrayDscOtorgadosComisiones'=>$arrayDscOtorgadosComisiones];
+        }
     }
 
     public function exportarPedidoDeposito(Request $request)
