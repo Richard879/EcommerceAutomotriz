@@ -58,19 +58,6 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                            <div class="col-sm-8">
-                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                    <input type="radio" class="radio-template" v-model="fillMisContactos.ntipopersona" :value="tipo.value" @change="cambiarTipoPersonaMisContactos()">
-                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -115,23 +102,23 @@
                                                                                     <th>Acciones</th>
                                                                                     <th>Código</th>
                                                                                     <th>#Codigo SAP</th>
-                                                                                    <th>Apellidos</th>
-                                                                                    <th>Nombres</th>
+                                                                                    <th>Contacto</th>
                                                                                     <th>Nro Documento</th>
                                                                                     <th>Celular</th>
                                                                                     <th>Telef. Fijo</th>
                                                                                     <th>Dirección</th>
                                                                                     <th>Email</th>
-                                                                                    <!--<th>Vendedor</th>-->
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                        <template v-if="nidtiporol==110026">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
+                                                                                                <i @click="abrirModal('contacto', 'detallesincartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                                        </template>
                                                                                         <el-tooltip class="item" effect="dark">
                                                                                             <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
@@ -151,14 +138,12 @@
                                                                                     </td>
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.CardCode"></td>
-                                                                                    <td v-text="c.cPerApellidos"></td>
-                                                                                    <td v-text="c.cNombre"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.cContacto"></td>
+                                                                                    <td v-text="c.cPerDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
                                                                                     <td v-text="c.cTelefonoFijo"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
-                                                                                    <!--<td v-text="c.cVendedor"></td>-->
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
