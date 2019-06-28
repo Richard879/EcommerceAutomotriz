@@ -2297,56 +2297,185 @@
                                         <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row" style="display: flex; align-items: center; justify-content: center;">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">Fecha Inicio</label>
-                                                        <div class="col-md-8">
-                                                            <el-date-picker
-                                                                v-model="formFiltro.dfechainicio"
-                                                                type="date"
-                                                                value-format="yyyy-MM-dd"
-                                                                format="dd/MM/yyyy"
-                                                                placeholder="dd/mm/aaaa"
-                                                                :picker-options="pickerOptions">
-                                                            </el-date-picker>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarAsesoresBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidvendedor"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN ASESOR COMERCIAL">
+                                                                    <el-option
+                                                                        v-for="ele in arrayVendedores"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">Fecha Fin</label>
-                                                        <div class="col-md-8">
-                                                            <el-date-picker
-                                                                v-model="formFiltro.dfechafin"
-                                                                type="date"
-                                                                value-format="yyyy-MM-dd"
-                                                                format="dd/MM/yyyy"
-                                                                placeholder="dd/mm/aaaa"
-                                                                :picker-options="pickerOptions">
-                                                            </el-date-picker>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">* Fecha Inicio</label>
+                                                            <div class="col-md-8">
+                                                                <el-date-picker
+                                                                    v-model="formFiltro.dfechainicio"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa"
+                                                                    :picker-options="pickerOptions">
+                                                                </el-date-picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">* Fecha Fin</label>
+                                                            <div class="col-md-8">
+                                                                <el-date-picker
+                                                                    v-model="formFiltro.dfechafin"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa"
+                                                                    :picker-options="pickerOptions">
+                                                                </el-date-picker>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarComisiones()">
-                                                        <i class="fa fa-save"></i> Generar Reporte
-                                                    </button>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarDscComisiones()">
+                                                            <i class="fa fa-save"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
+                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <div slot="content">Exportar Comisiones de Vendedore(s) XLS</div>
+                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarComisiones()"></i>
+                                                    </el-tooltip>
+                                                </div>
+                                                <div class="card-body">
+                                                    <template v-if="arrayDscComisiones.length">
+                                                        <div class="table-responsive">
+                                                            <el-table
+                                                                :data="arrayDscComisiones"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column property="FECHA" label="FECHA PEDIDO" width="110"></el-table-column>
+                                                                <el-table-column fixed property="PEDIDO" label="N° PEDIDO" width="110"></el-table-column>
+                                                                <el-table-column property="VENDEDOR" label="VENDEDOR" width="210"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="140"></el-table-column>
+                                                                <el-table-column property="CLIENTE" label="CLIENTE" width="200"></el-table-column>
+                                                                <el-table-column property="MARCA" label="MARCA" width="100"></el-table-column>
+                                                                <el-table-column property="MODELO" label="MODELO" width="100"></el-table-column>
+                                                                <el-table-column label="CD_ACT" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.CD_ACT)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PF_AV" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PF_AV)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PC_LP" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PC_LP)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="FLETE" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.FLETE)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PC_LP_FLETE" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PC_LP_FLETE)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="SB" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SB)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESC_PROV" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_PROV == null) ? 0 : (Number((parseFloat(scope.row.DESC_PROV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESC_CONC" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_CONC == null) ? 0 : (Number((parseFloat(scope.row.DESC_CONC)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                            </el-table>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDscComisiones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaDscComisiones(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDscComisiones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2420,6 +2549,7 @@
                 arrayDistribucionDesc: [],
                 arrayPedidoDeposito: [],
                 arrayCotizaciones: [],
+                arrayDscComisiones: [],
                 //OPCIONES GENERALES
                 page: 1,
                 perPage: 10,
@@ -2656,8 +2786,12 @@
                 var url = this.ruta + '/reportes/exportarComisiones';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'dfechainicio'  :   this.formFiltro.dfechainicio,
-                        'dfechafin'     :   this.formFiltro.dfechafin
+                        'dfechafin'     :   this.formFiltro.dfechafin,
+                        'opcion'            :   1
                     }
                 }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
@@ -3581,6 +3715,48 @@
                 this.pagination.current_page=page;
                 this.listarCotizaciones(page);
             },
+            listarDscComisiones(page){
+                if(this.validarExportarComision()){
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarComisiones';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidvendedor'   :   this.formFiltro.nidvendedor,
+                        'dfechainicio'  :   this.formFiltro.dfechainicio,
+                        'dfechafin'     :   this.formFiltro.dfechafin,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayDscComisiones         = response.data.arrayDscOtorgadosComisiones.data;
+                    this.pagination.current_page    = response.data.arrayDscOtorgadosComisiones.current_page;
+                    this.pagination.total           = response.data.arrayDscOtorgadosComisiones.total;
+                    this.pagination.per_page        = response.data.arrayDscOtorgadosComisiones.per_page;
+                    this.pagination.last_page       = response.data.arrayDscOtorgadosComisiones.last_page;
+                    this.pagination.from            = response.data.arrayDscOtorgadosComisiones.from;
+                    this.pagination.to              = response.data.arrayDscOtorgadosComisiones.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaDscComisiones(page){
+                this.pagination.current_page=page;
+                this.listarDscComisiones(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
@@ -3609,6 +3785,7 @@
                 this.arrayDistribucionDesc          =   [];
                 this.arrayPedidoDeposito            =   [];
                 this.arrayCotizaciones              =   [];
+                this.arrayDscComisiones             =   [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -3838,5 +4015,13 @@
     }
     .no-padding-bottom{
         margin: .8rem !important;
+    }
+    .el-table .cell{
+        line-height: 1.1 !important;
+        font-size: 1.21em;
+        color: #666;
+    }
+    .el-table td, .el-table th{
+        padding: 3px !important;
     }
 </style>
