@@ -457,12 +457,12 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab222" href="#TabSegReferenciaVehiculo" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab222" href="#TabSegReferenciaVehiculo" @click="TabSegReferenciaVehiculo()" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-car"></i> REFERENCIA VEHICULO
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab333" href="#TabSegSeguimiento" @click="tabDatosPersonales()" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab333" href="#TabSegSeguimiento" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-angle-double-right"></i> NUEVO SEGUIMIENTO
                                                             </a>
                                                         </li>
@@ -3228,6 +3228,13 @@
                 this.llenarComboLinea();
                 this.llenarComboAnioFabricacion();
                 this.llenarComboAnioModelo();
+                this.listarReferenciaVehiculoByContacto(1);
+            },
+            TabSegReferenciaVehiculo(){
+                $('#Tab333').removeClass('nav-link active');
+                $('#Tab333').addClass("nav-link disabled");
+                $('#TabSegReferenciaVehiculo').addClass('in active show');
+                $('#TabSegSeguimiento').removeClass('in active show');
                 this.listarReferenciaVehiculoByContacto(1);
             },
             validarTab222(){
