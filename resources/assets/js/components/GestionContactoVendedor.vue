@@ -971,7 +971,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm">
+                                                                                            <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm" @keyup.enter="obtenerNumeroDocumento(1)">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -3385,7 +3385,7 @@
                     cnombreS: '',
                     dfecnacimiento: '',
                     lblcnombres: '* Primer Nombre',
-                    lblcnombresS: '* Segundo Nombre',
+                    lblcnombresS: 'Segundo Nombre',
                     //Variables de Datos de contacto
                     /*niddepartamento: 0,
                     nidprovincia: 0,
@@ -3451,6 +3451,7 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
+                cFlagValidaDocumento: '',
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -4716,6 +4717,12 @@
             },
             // =============  TAB DATOS DE CONTACTO ======================
             activarTab22(){
+                if(this.validarNumeroDocumento(0)){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
                 if(this.validarTab22()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -4728,6 +4735,50 @@
                 $('#Tab22').addClass("nav-link active");
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').addClass('in active show');
+            },
+            validarNumeroDocumento(nFlagActivaMensaje){
+                this.obtenerNumeroDocumento(nFlagActivaMensaje);
+
+                this.error = 0;
+                this.mensajeError =[];
+        
+                if(this.cFlagValidaDocumento == 'S'){
+                    this.mensajeError.push('Existen Personas');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+
+            },
+            obtenerNumeroDocumento(nFlagActivaMensaje){
+                var url = this.ruta + '/gescontacto/GetValidaPerDocumentoByTipo';
+                axios.get(url, {
+                    params: {
+                        'ntipopersona'      : this.formNuevoContacto.ntipopersona,
+                        'nidtipodocumento'  : this.formNuevoContacto.ntpodocumento,
+                        'cnumerodocumento'  : this.formNuevoContacto.cnrodocumento
+                    }
+                }).then(response => {
+                    if(response.data[0].nFlagMsje==1){
+                        this.cFlagValidaDocumento = 'S';
+                    } else {
+                        this.cFlagValidaDocumento = 'N';
+                        if(nFlagActivaMensaje == 1)
+                        {
+                            swal(response.data[0].cMensaje);
+                        }
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             validarTab33(){
                 this.error = 0;
@@ -5352,7 +5403,6 @@
                     'CardType'      : dataJSON.CardType.toString(),
                     'LogRespuesta'  : logRpta
                 }).then(response => {
-                    console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {

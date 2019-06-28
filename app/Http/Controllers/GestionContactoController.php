@@ -798,4 +798,22 @@ class GestionContactoController extends Controller
                                                     ]);
         return response()->json($objSeguimiento);
     }
+
+    public function GetValidaPerDocumentoByTipo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nTipoPersona       =   $request->ntipopersona;
+        $nIdTipoDocumento   =   $request->nidtipodocumento;
+        $cNumeroDocumento   =   $request->cnumerodocumento;
+
+        $arrayDocumento = DB::select('exec [usp_Contacto_GetValidaPerDocumentoByTipo] ?, ?, ?, ?',
+                                                                [   $nTipoPersona,
+                                                                    $nIdTipoDocumento,
+                                                                    $cNumeroDocumento,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($arrayDocumento);
+    }
+
 }
