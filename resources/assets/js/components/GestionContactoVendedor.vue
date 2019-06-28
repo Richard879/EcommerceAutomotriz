@@ -3510,9 +3510,6 @@
                 arrayTipoDocumento: [],
                 arrayEstadoCivil: [],
                 arrayProfesion: [],
-                /*arrayDptos:[],
-                arrayProv : [],
-                arrayDist: [],*/
                 arrayUbigeo: [],
                 vistaDatosPersonaNatural: 1,
                 SAPNuevoContactoJson: '',
