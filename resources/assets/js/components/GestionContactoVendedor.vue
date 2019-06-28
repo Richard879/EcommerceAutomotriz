@@ -4050,8 +4050,8 @@
                 $('#TabMisContactos').removeClass('in active show');
                 $('#TabCarteraMes').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
-                this.formNuevoContacto.nidcontacto = objContacto.nIdContacto;
-                this.formSegDatosContacto.nidpersona = objContacto.nIdPersona;
+                this.formNuevoContacto.nidcontacto      = objContacto.nIdContacto;
+                this.formSegDatosContacto.nidpersona    = objContacto.nIdPersona;
                 this.TabSegDatosContacto();
                 this.cargarTabSegDatosContacto(objContacto.nTipoPersona);
             },
@@ -4718,8 +4718,7 @@
             // =============  TAB DATOS DE CONTACTO ======================
             activarTab22(){
                 if(this.validarNumeroDocumento(0)){
-                    this.accionmodal=1;
-                    this.modal = 1;
+                    this.activarReferencia();
                     return;
                 }
                 
@@ -4735,6 +4734,39 @@
                 $('#Tab22').addClass("nav-link active");
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').addClass('in active show');
+            },
+            activarReferencia(){
+                swal({
+                    title: 'El contacto ya se encuentra registrado, desea asignarle Referencia?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+
+                            $('#Tab1').removeClass('nav-link active');
+                            $('#Tab1').addClass("nav-link");
+                            $('#Tab2').removeClass('nav-link active');
+                            $('#Tab2').addClass("nav-link");
+                            $('#Tab3').removeClass('nav-link disabled');
+                            $('#Tab3').addClass("nav-link active");
+                            $('#Tab4').removeClass('nav-link active');
+                            $('#Tab4').addClass("nav-link");
+                            $('#TabMisContactos').removeClass('in active show');
+                            $('#TabCarteraMes').removeClass('in active show');
+                            $('#TabNuevoContacto').removeClass('in active show');
+                            $('#TabSeguimiento').addClass('in active show');
+
+                            this.TabSegDatosContacto();
+                            this.cargarTabSegDatosContacto(this.formNuevoContacto.ntipopersona);
+
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
             },
             validarNumeroDocumento(nFlagActivaMensaje){
                 this.obtenerNumeroDocumento(nFlagActivaMensaje);
@@ -4761,8 +4793,13 @@
                         'cnumerodocumento'  : this.formNuevoContacto.cnrodocumento
                     }
                 }).then(response => {
+                    //SI EXISTE
                     if(response.data[0].nFlagMsje==1){
                         this.cFlagValidaDocumento = 'S';
+                        this.formNuevoContacto.nidcontacto      = response.data[0].nIdContacto;
+                        this.formSegDatosContacto.nidpersona    = response.data[0].nIdPersona;
+                        this.formNuevoContacto.ntipopersona     = response.data[0].nIdTipoPersona;
+                    //NO EXISTE
                     } else {
                         this.cFlagValidaDocumento = 'N';
                         if(nFlagActivaMensaje == 1)
@@ -5859,13 +5896,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayContactoLibre = response.data.arrayContactoLibre.data;
-                    this.pagination.current_page =  response.data.arrayContactoLibre.current_page;
-                    this.pagination.total = response.data.arrayContactoLibre.total;
+                    this.arrayContactoLibre     = response.data.arrayContactoLibre.data;
+                    this.pagination.current_page= response.data.arrayContactoLibre.current_page;
+                    this.pagination.total       = response.data.arrayContactoLibre.total;
                     this.pagination.per_page    = response.data.arrayContactoLibre.per_page;
                     this.pagination.last_page   = response.data.arrayContactoLibre.last_page;
                     this.pagination.from        = response.data.arrayContactoLibre.from;
-                    this.pagination.to           = response.data.arrayContactoLibre.to;
+                    this.pagination.to          = response.data.arrayContactoLibre.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -5914,13 +5951,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayReferenciaLibre = response.data.arrayReferenciaLibre.data;
-                    this.pagination.current_page =  response.data.arrayReferenciaLibre.current_page;
-                    this.pagination.total = response.data.arrayReferenciaLibre.total;
+                    this.arrayReferenciaLibre   = response.data.arrayReferenciaLibre.data;
+                    this.pagination.current_page= response.data.arrayReferenciaLibre.current_page;
+                    this.pagination.total       = response.data.arrayReferenciaLibre.total;
                     this.pagination.per_page    = response.data.arrayReferenciaLibre.per_page;
                     this.pagination.last_page   = response.data.arrayReferenciaLibre.last_page;
                     this.pagination.from        = response.data.arrayReferenciaLibre.from;
-                    this.pagination.to           = response.data.arrayReferenciaLibre.to;
+                    this.pagination.to          = response.data.arrayReferenciaLibre.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -6012,13 +6049,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                    this.arrayProveedor                 = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page   = response.data.arrayProveedor.current_page;
+                    this.paginationModal.total          = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from           = response.data.arrayProveedor.from;
+                    this.paginationModal.to             = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
