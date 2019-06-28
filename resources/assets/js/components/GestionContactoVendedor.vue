@@ -3005,7 +3005,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizarContacto">
                                                             <i class="fa fa-edit"></i> ACTUALIZAR
                                                         </button>
                                                     </div>
