@@ -695,7 +695,7 @@
                                                                                                                 <div slot="content">Nuevo Seguimiento  {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
                                                                                                                 <i @click="activarTab333(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-angle-double-right"></i>
                                                                                                             </el-tooltip>
-                                                                                                        </template>
+                                                                                                        </template>&nbsp;&nbsp;
                                                                                                         <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                                                             <el-tooltip class="item" effect="dark">
                                                                                                                 <div slot="content">Desactivar {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
