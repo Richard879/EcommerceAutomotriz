@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-user-circle-o"></i> CONTACTOS POR VENDEDOR
+                                            <i class="fa fa-user-circle"></i> CONTACTOS POR VENDEDOR
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -129,7 +129,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seguimiento {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
                                                                                         </el-tooltip>
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
@@ -171,7 +171,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seguimiento {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-bus-alt"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
@@ -247,19 +247,6 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
-                                                                    <!--<div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                        <input type="radio" class="radio-template" v-model="fillContactoPorVendedor.ntipopersona" :value="tipo.value" @change="cambiarTipoPersonaContactosPorVendedor()">
-                                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                     <div class="form-group row">
                                                                        <div class="col-sm-6">
                                                                             <div class="row">
@@ -279,13 +266,13 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>-->
+                                                                    </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
+                                                                                    <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="listarContactosPorVendedor(1)" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -293,14 +280,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
+                                                                                    <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="listarContactosPorVendedor(1)" class="form-control form-control-sm">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosPorVendedor();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactosPorVendedor(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -2404,7 +2391,7 @@
                 </div>
             </div>
 
-             <!-- Modal Vendedores -->
+            <!-- Modal Vendedores -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -3080,6 +3067,7 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                nidtiporol: sessionStorage.getItem("nTipoRol"),
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -3095,7 +3083,7 @@
                 // ============================================================
                 // =========== VARIABLES FORMULARIO VENDEDOR ============
                 formVendedor: {
-                    nidvendedor: '',
+                    nidvendedor: 0,
                     cvendedornombre: ''
                 },
                 // ============================================================
@@ -3142,7 +3130,9 @@
                     cfiltrodescripcion: ''
                 },
                 arrayContactosPorVendedor: [],
+                arrayContactosPorVendedorRpta: [],
                 vistaContactoPorVendedor: 1,
+                arrayListVendedores: [],
                 // =============================================================
                 // ============== VARIABLES TAB CONTACTOS LIBRES ===============
                 fillContactoLibre: {
@@ -3311,6 +3301,9 @@
                 contadorArrayLeads: 0,
                 arrayTemporalLeads: [],
                 // =============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -3578,37 +3571,11 @@
                 this.arrayContactosPorVendedor = [];
                 this.limpiarTodoVendedor();
                 this.limpiarReasignarContacto();
-                this.limpiarContactosPorVendedor();
-            },
-            buscarContactosPorVendedor(){
-                if(this.validarBusquedaContactosPorVendedor()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.listarContactosPorVendedor(1);
-            },
-            validarBusquedaContactosPorVendedor(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                /*if(this.formVendedor.nidvendedor == 0){
-                    this.mensajeError.push('Debes Seleccionar un Vendedor');
-                };*/
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            cambiarPaginaContactosPorVendedor(page){
-                this.pagination.current_page=page;
-                this.listarContactosPorVendedor(page);
-                this.arrayVendedor = [];
+                //this.limpiarContactosPorVendedor();
             },
             listarContactosPorVendedor(page){
                 this.mostrarProgressBar();
+
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
@@ -3618,22 +3585,13 @@
                         'ntipopersona'      : this.fillContactoPorVendedor.ntipopersona,
                         'cnrodocumento'     : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
                         'cfiltrodescripcion': this.fillContactoPorVendedor.cfiltrodescripcion.toString(),
-                        'nidvendedor'       : 0,
+                        'nidvendedor'       : this.formVendedor.nidvendedor,
                         'page'              : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContactosPorVendedor;
-                    //Data
-                    this.arrayContactosPorVendedor = info.data;
-                    //Pagination
-                    this.pagination.current_page   =   info.current_page;
-                    this.pagination.total          =   info.total;
-                    this.pagination.per_page       =   info.per_page;
-                    this.pagination.last_page      =   info.last_page;
-                    this.pagination.from           =   info.from;
-                    this.pagination.to             =   info.to;
+                    this.arrayContactosPorVendedorRpta = response.data.arrayContactosPorVendedor;
+                    this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
                     $("#myBar").hide();
-                    //Limpiar caja busqueda
                     //this.limpiarBuscarContactosCPV();
                 }).catch(error => {
                     console.log(error);
@@ -3644,6 +3602,20 @@
                         }
                     }
                 });
+            },
+            paginateContactosPorVendedor(data, page){
+                this.pagination.current_page    = page;
+                this.pagination.total           = data.length;
+                this.pagination.per_page        = this.perPage;
+                this.pagination.last_page       = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from            = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1           = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to              = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContactosPorVendedor  = data.slice(this.pagination.from1, this.pagination.to);
+            },
+            cambiarPaginaContactosPorVendedor(page){
+                this.pagination.current_page=page;
+                this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
             },
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []
@@ -5632,13 +5604,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayVendedor = response.data.arrayVendedor.data;
-                    this.paginationModal.current_page =  response.data.arrayVendedor.current_page;
-                    this.paginationModal.total = response.data.arrayVendedor.total;
-                    this.paginationModal.per_page    = response.data.arrayVendedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVendedor.last_page;
-                    this.paginationModal.from        = response.data.arrayVendedor.from;
-                    this.paginationModal.to           = response.data.arrayVendedor.to;
+                    this.arrayVendedor                  = response.data.arrayVendedor.data;
+                    this.paginationModal.current_page   = response.data.arrayVendedor.current_page;
+                    this.paginationModal.total          = response.data.arrayVendedor.total;
+                    this.paginationModal.per_page       = response.data.arrayVendedor.per_page;
+                    this.paginationModal.last_page      = response.data.arrayVendedor.last_page;
+                    this.paginationModal.from           = response.data.arrayVendedor.from;
+                    this.paginationModal.to             = response.data.arrayVendedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

@@ -4,7 +4,7 @@
             <header class="page-header">
                 <div class="container-fluid">
                     <h2 class="no-margin-bottom">
-                        <vs-divider color="dark">MODULO CONFIGURADOR DE MODELOS POR AÑO</vs-divider>
+                        <vs-divider color="dark">MODULO CONFIGURAR VEHICULOS</vs-divider>
                     </h2>
                 </div>
             </header>
@@ -17,7 +17,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link" :class="{'active': (vistaFormulario == 1)}" id="tab01" href="#TabBandejaModelos" @click="tabBandejaModelos" role="tab" data-toggle="tab">
-                                            <i class="fa fa-wpforms"></i> BANDEJA DE MODELOS
+                                            <i class="fa fa-bus"></i> CONFIGURAR VEHICULOS
                                         </a>
                                     </li>
                                 </ul>
@@ -30,7 +30,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">BANDEJA DE MODELOS</h3>
+                                                                <h3 class="h4">BUSCAR VEHICULOS</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
@@ -136,7 +136,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">LISTADO DE MODELOS</h3>
+                                                                <h3 class="h4">LISTADO</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">

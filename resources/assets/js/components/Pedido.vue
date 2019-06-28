@@ -537,7 +537,7 @@
                                                             </li>
                                                             <li class="nav-item">
                                                                 <a class="nav-link disabled" id="Tab2" href="#TabDocReferencias" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-file-text-o"></i> DOCUMENTOS REFERENCIAS
+                                                                    <i class="fa fa-address-book"></i> DOCUMENTOS REFERENCIAS
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">
@@ -1618,7 +1618,7 @@
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
-                                            <div class="form-group row">
+                                            <!--<div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -1630,7 +1630,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1684,14 +1684,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
-                                                            <template v-if="arrayContactosPorVendedor[0].cPerApellidos">
-                                                                <th>Apellidos y Nombres</th>
-                                                                <th>DNI</th>
-                                                            </template>
-                                                            <template v-else>
-                                                                <th>Razón Social</th>
-                                                                <th>RUC</th>
-                                                            </template>
+                                                            <th>Código</th>
+                                                            <th>Contacto</th>
+                                                            <th>Nro Documento</th>
                                                             <th>Email</th>
                                                         </tr>
                                                     </thead>
@@ -1699,18 +1694,13 @@
                                                         <tr v-for="contactos in arrayContactosPorVendedor" :key="contactos.nIdContacto">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <div slot="content">Seleccionar Contacto {{ contactos.cContacto }}</div>
                                                                     <i @click.prevent="abrirModal('contacto', 'asignar', contactos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
-                                                            <template v-if="contactos.cPerApellidos">
-                                                                <td v-text="contactos.cContacto"></td>
-                                                                <td v-text="contactos.cNumeroDocumento"></td>
-                                                            </template>
-                                                            <template v-else>
-                                                                <td v-text="contactos.cRazonSocial"></td>
-                                                                <td v-text="contactos.cNumeroDocumento"></td>
-                                                            </template>
+                                                            <td v-text="contactos.nIdContacto"></td>
+                                                            <td v-text="contactos.cContacto"></td>
+                                                            <td v-text="contactos.cPerDocumento"></td>
                                                             <td v-text="contactos.cEmail"></td>
                                                         </tr>
                                                     </tbody>
@@ -1853,6 +1843,7 @@
                     ccontactodocumento: ''
                 },
                 arrayContactosPorVendedor: [],
+                arrayContactosPorVendedorRpta: [],
                 fillAsignarContacto:{
                     nidasignarcontacto: 0,
                     nidcontacto: 0,
@@ -2472,20 +2463,11 @@
                         'ntipopersona'          :   this.fillBusqContacto.ntipopersona,
                         'cnrodocumento'         :   String(this.fillBusqContacto.ccontactodocumento.toString()),
                         'cfiltrodescripcion'    :   this.fillBusqContacto.ccontactonombre.toString(),
-                        'page' : page
+                        'page'                  :   page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContactosPorVendedor;
-                    //Data
-                    this.arrayContactosPorVendedor = info.data;
-                    //Pagination
-                    this.paginationModal.current_page   =   info.current_page;
-                    this.paginationModal.total          =   info.total;
-                    this.paginationModal.per_page       =   info.per_page;
-                    this.paginationModal.last_page      =   info.last_page;
-                    this.paginationModal.from           =   info.from;
-                    this.paginationModal.to             =   info.to;
-                    //Limpiar caja busqueda
+                    this.arrayContactosPorVendedorRpta  = response.data.arrayContactosPorVendedor;
+                    this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
                     this.limpiarfillBusqContacto();
                 }).catch(error => {
                     this.errors = error.response.data
@@ -2497,9 +2479,19 @@
                     }
                 });
             },
+            paginateContactosPorVendedor(data, page){
+                this.paginationModal.current_page   = page;
+                this.paginationModal.total          = data.length;
+                this.paginationModal.per_page       = this.perPage;
+                this.paginationModal.last_page      = Math.ceil(data.length / this.paginationModal.per_page);
+                this.paginationModal.from           = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page + 1; // (1 * 10) - 10 + 1
+                this.paginationModal.from1          = (this.paginationModal.current_page * this.paginationModal.per_page) - this.paginationModal.per_page ; // (1 * 10) - 10
+                this.paginationModal.to             = (this.paginationModal.last_page == page) ? ( (this.paginationModal.current_page * this.paginationModal.per_page) - ((this.paginationModal.current_page * this.paginationModal.per_page) - data.length)) : (this.paginationModal.current_page * this.paginationModal.per_page);
+                this.arrayContactosPorVendedor      = data.slice(this.paginationModal.from1, this.paginationModal.to);
+            },
             cambiarPaginaContactosPorVendedor(page){
-                this.pagination.current_page=page;
-                this.buscarContactosPorVendedor(page);
+                this.paginationModal.current_page=page;
+                this.paginateContactosPorVendedor(this.arrayContactosPorVendedorRpta, page);
             },
             cambiarTipoPersona(){
                 this.arrayContactosPorVendedor = [];
@@ -2949,15 +2941,12 @@
                                 this.arrayContactosPorVendedor = [];
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                //this.buscarContactosPorVendedor(1);
                                 break;
                             }
                             break;
                             case 'asignar':
                             {
-                                (this.fillBusqContacto.ntipopersona) == 1 ?
-                                        this.formPedido.cnombrecontacto = data['cContacto'] :
-                                        this.formPedido.cnombrecontacto = data['cRazonSocial'];
+                                this.formPedido.cnombrecontacto = data['cContacto'];
                                 this.formPedido.nidcontacto = data['nIdContacto'];
                                 this.cerrarModal();
                                 break;
