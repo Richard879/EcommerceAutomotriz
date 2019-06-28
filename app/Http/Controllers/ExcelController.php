@@ -574,6 +574,21 @@ class ExcelController extends Controller
         }
     }
 
+    public function exportarComisiones(Request $request)
+    {
+        $nidsucursal            =   $request->nidsucursal;
+        $nidvendedor            =   $request->nidvendedor;
+
+
+        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
+
+
+        $data = DB::select('exec [usp_DescuentosOtorgados_GetComisiones] ');
+
+        return response()->json($data);
+    }
+
     public function exportarPedidoDeposito(Request $request)
     {
         $nidsucursal        =   $request->nidsucursal;

@@ -56,6 +56,12 @@
                                     <div class="title"><span><br>Descuentos Otorgados</span></div>
                                 </div>
                             </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="exportarComisiones"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Comisiones a los AC</span></div>
+                                </div>
+                            </div>
                         </template>
                         <div class="col-xl-4 col-sm-6">
                             <div class="item d-flex align-items-center">
@@ -2279,6 +2285,72 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Venta Diaria -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Seleccione una Fecha</label>
+                                                        <div class="col-md-8">
+                                                            <el-date-picker
+                                                                v-model="formFiltro.dfechaventadiaria"
+                                                                type="date"
+                                                                value-format="yyyy-MM-dd"
+                                                                format="dd/MM/yyyy"
+                                                                placeholder="dd/mm/aaaa"
+                                                                :picker-options="pickerOptions">
+                                                            </el-date-picker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                        <div class="col-md-8">
+                                                            <el-select  v-model="formFiltro.nidvendedor"
+                                                                        filterable
+                                                                        clearable
+                                                                        placeholder="SELECCIONE UN ASESOR COMERCIAL">
+                                                                <el-option
+                                                                    v-for="ele in arrayVendedores"
+                                                                    :key="ele.nIdUsuario"
+                                                                    :label="ele.cNombreCompleto"
+                                                                    :value="ele.nIdUsuario">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="exportarComisiones()">
+                                                        <i class="fa fa-save"></i> Generar Reporte
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -2552,6 +2624,28 @@
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Detalle Venta Diaria'
+                    XLSX.utils.book_append_sheet(workbook, data, filename)
+                    XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            exportarComisiones(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarComisiones';
+                axios.get(url).then(response => {
+                    let data = XLSX.utils.json_to_sheet(response.data)
+                    const workbook = XLSX.utils.book_new()
+                    const filename = 'Reporte de Comisiones'
                     XLSX.utils.book_append_sheet(workbook, data, filename)
                     XLSX.writeFile(workbook, `${filename}.xlsx`)
                     $("#myBar").hide();
@@ -3647,6 +3741,22 @@
                             }
                         }
                     }
+                    break;
+                    case 'comision-vendedores':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.tituloModal = data;
+                                this.accionmodal = 12;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             },
             mostrarProgressBar(){
