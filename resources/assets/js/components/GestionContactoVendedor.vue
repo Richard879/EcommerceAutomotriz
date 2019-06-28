@@ -4799,6 +4799,7 @@
                         this.formNuevoContacto.nidcontacto      = response.data[0].nIdContacto;
                         this.formSegDatosContacto.nidpersona    = response.data[0].nIdPersona;
                         this.formNuevoContacto.ntipopersona     = response.data[0].nIdTipoPersona;
+                        this.activarReferencia();
                     //NO EXISTE
                     } else {
                         this.cFlagValidaDocumento = 'N';
