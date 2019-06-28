@@ -914,7 +914,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="Tab22" href="#TabDatosContacto" role="tab" data-toggle="tab">
-                                                                <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
+                                                                <i class="fa fa fa-map-marker-alt"></i> DATOS DE CONTACTO
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -5586,11 +5586,11 @@
             // =========================================================
             // =============  TAB CONTACTOS POR VENDEDOR ===============
             tabContactosPorVendedor(){
+                $('#Tab3').addClass("nav-link disabled");
                 this.vistaContactoPorVendedor = 1;
                 this.arrayContactosPorVendedor = [];
                 this.limpiarTodoVendedor();
                 this.limpiarReasignarContacto();
-                //this.limpiarContactosPorVendedor();
             },
             listarContactosPorVendedor(page){
                 this.mostrarProgressBar();
@@ -5783,6 +5783,7 @@
             // =========================================================
             // =============  TAB CONTACTOS LIBRES =====================
             tabContactosLibres(){
+                $('#Tab3').addClass("nav-link disabled");
                 this.vistaContactoLibre = 1;
                 this.arrayContactoLibre = [];
                 this.limpiarTodoVendedor();
