@@ -127,7 +127,7 @@
                                                                                         <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" >
-                                                                                        <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
+                                                                                        <div slot="content">Editar Contacto {{ c.cContacto }}</div>
                                                                                         <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
@@ -6083,51 +6083,50 @@
                             case 'editar':
                             {
                                 this.limpiarModalEditarPersona();
-                                this.fillEditarContacto.cFlagOp = 1;
-                                this.accionmodal=6;
-                                this.modal = 1;
-                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
-                                //Datos Personales
-                                this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
-                                this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
-                                this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
-                                this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
-                                this.fillEditarContacto.cnombre             =   data.cNombre;
-                                this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
-                                this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
-                                this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
-                                //Datos de Contacto
-                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
-                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
-                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
-                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
-                                this.listarUbigeos();
-                                this.llenarComboEstadoCivil();
-                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
-                                this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
-                                break;
-                            }
-                            case 'editarJ':
-                            {
-                                this.limpiarModalEditarPersona();
-                                this.fillEditarContacto.cFlagOp = 2;
-                                this.accionmodal=6;
-                                this.modal = 1;
-                                this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
-                                //Datos Personales
-                                this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
-                                this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
-                                this.fillEditarContacto.cnombre             =   data.cRazonSocial;
-                                //Datos de Contacto
-                                this.fillEditarContacto.cdireccion          =   data.cDireccion;
-                                this.fillEditarContacto.cmailprincipal      =   data.cEmail;
-                                this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
-                                this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
-                                this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
-                                this.listarUbigeos();
-                                this.fillEditarContacto.cubigeo             =   data.cUbigeo;
-                                break;
+                                this.fillEditarContacto.cFlagOp = parseInt(data.nTipoPersona);
+
+                                if(this.fillEditarContacto.cFlagOp == 1){
+                                    this.accionmodal=6;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
+                                    this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
+                                    this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
+                                    this.fillEditarContacto.cnombre             =   data.cNombre;
+                                    this.fillEditarContacto.cprimernombre       =   data.cPrimerNombre;
+                                    this.fillEditarContacto.csegundonombre      =   data.cSegundoNombre;
+                                    this.fillEditarContacto.dfecnacimiento      =   data.dFechaNacimiento;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                    this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                    this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                    this.listarUbigeos();
+                                    this.llenarComboEstadoCivil();
+                                    this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                    this.fillEditarContacto.nestadocivil        =   data.nIdEstadoCivil;
+                                    break;
+                                }else{
+                                    this.accionmodal=6;
+                                    this.modal = 1;
+                                    this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
+                                    //Datos Personales
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                    this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
+                                    this.fillEditarContacto.cnombre             =   data.cRazonSocial;
+                                    //Datos de Contacto
+                                    this.fillEditarContacto.cdireccion          =   data.cDireccion;
+                                    this.fillEditarContacto.cmailprincipal      =   data.cEmail;
+                                    this.fillEditarContacto.ncelular            =   data.nTelefonoMovil
+                                    this.fillEditarContacto.ncelularalternativo =   data.nTelefonoMovilAlternativo
+                                    this.fillEditarContacto.ctelefonofijo       =   data.cTelefonoFijo
+                                    this.listarUbigeos();
+                                    this.fillEditarContacto.cubigeo             =   data.cUbigeo;
+                                    break;
+                                }
                             }
                         }
                     }
