@@ -126,7 +126,7 @@
                                                                                             <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
                                                                                             <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                        <el-tooltip class="item" effect="dark" v-if="nidtiporol==110026">
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cContacto }}</div>
                                                                                             <i @click="asignarCarteraMesTodos(c)" :style="'color:#495057'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
@@ -671,10 +671,10 @@
                                                                                                     <th>Línea</th>
                                                                                                     <th>Marca</th>
                                                                                                     <th>Modelo</th>
-                                                                                                    <th>Año Fab</th>
                                                                                                     <th>Año Modelo</th>
                                                                                                     <th>Fecha Inicio</th>
                                                                                                     <th>Fecha Fin</th>
+                                                                                                    <th>Asesor Comercial</th>
                                                                                                     <th>Acciones</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -685,15 +685,17 @@
                                                                                                     <td v-text="r.cLineaNombre"></td>
                                                                                                     <td v-text="r.cMarcaNombre"></td>
                                                                                                     <td v-text="r.cModeloNombre"></td>
-                                                                                                    <td v-text="r.nAnioFabricacion"></td>
                                                                                                     <td v-text="r.nAnioModelo"></td>
                                                                                                     <td v-text="r.dFechaInicioAsignacionContacto"></td>
                                                                                                     <td v-text="r.dFechaFinAsignacionContacto"></td>
+                                                                                                    <td v-text="r.cNombreVendedor"></td>
                                                                                                     <td>
-                                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                                            <div slot="content">Nuevo Seguimiento  {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
-                                                                                                            <i @click="activarTab333(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                                        </el-tooltip>
+                                                                                                        <template v-if="r.cFlagActivaSeguimiento=='S'">
+                                                                                                            <el-tooltip class="item" effect="dark">
+                                                                                                                <div slot="content">Nuevo Seguimiento  {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                                <i @click="activarTab333(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-angle-double-right"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </template>
                                                                                                         <template v-if="r.cAsignacionVehiculoEstado=='A'">
                                                                                                             <el-tooltip class="item" effect="dark">
                                                                                                                 <div slot="content">Desactivar {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
