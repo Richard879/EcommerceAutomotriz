@@ -576,15 +576,20 @@ class ExcelController extends Controller
 
     public function exportarComisiones(Request $request)
     {
-        $nidsucursal            =   $request->nidsucursal;
-        $nidvendedor            =   $request->nidvendedor;
+        // $nidsucursal            =   $request->nidsucursal;
+        // $nidvendedor            =   $request->nidvendedor;
+        $dfechainicio   =   $request->dfechainicio;
+        $dfechafin      =   $request->dfechafin;
+
+        $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = 0) : $dfechainicio;
+        $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = 0) : $dfechafin;
 
 
-        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
-        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
-
-
-        $data = DB::select('exec [usp_DescuentosOtorgados_GetComisiones] ');
+        $data = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones] ?, ?',
+                                        [
+                                            $dfechainicio,
+                                            $dfechafin
+                                        ]);
 
         return response()->json($data);
     }

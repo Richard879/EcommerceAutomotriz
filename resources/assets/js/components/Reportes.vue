@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="exportarComisiones"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Comisiones a los AC</span></div>
                                 </div>
                             </div>
@@ -2286,8 +2286,8 @@
                 </div>
             </div>
 
-            <!-- Modal Show Venta Diaria -->
-            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <!-- Modal Show Comisiones de Vendedores -->
+            <div class="modal fade" v-if="accionmodal==12" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -2299,12 +2299,21 @@
                                     <div class="card-body">
                                         <form class="form-horizontal">
                                             <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <label class="col-md-4 form-control-label">Seleccione una Fecha</label>
+                                                        <label class="col-md-4 form-control-label">Fecha Inicio</label>
                                                         <div class="col-md-8">
                                                             <el-date-picker
-                                                                v-model="formFiltro.dfechaventadiaria"
+                                                                v-model="formFiltro.dfechainicio"
                                                                 type="date"
                                                                 value-format="yyyy-MM-dd"
                                                                 format="dd/MM/yyyy"
@@ -2316,19 +2325,16 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                        <label class="col-md-4 form-control-label">Fecha Fin</label>
                                                         <div class="col-md-8">
-                                                            <el-select  v-model="formFiltro.nidvendedor"
-                                                                        filterable
-                                                                        clearable
-                                                                        placeholder="SELECCIONE UN ASESOR COMERCIAL">
-                                                                <el-option
-                                                                    v-for="ele in arrayVendedores"
-                                                                    :key="ele.nIdUsuario"
-                                                                    :label="ele.cNombreCompleto"
-                                                                    :value="ele.nIdUsuario">
-                                                                </el-option>
-                                                            </el-select>
+                                                            <el-date-picker
+                                                                v-model="formFiltro.dfechafin"
+                                                                type="date"
+                                                                value-format="yyyy-MM-dd"
+                                                                format="dd/MM/yyyy"
+                                                                placeholder="dd/mm/aaaa"
+                                                                :picker-options="pickerOptions">
+                                                            </el-date-picker>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2381,6 +2387,8 @@
                     nidmodelo: '',
                     //modal 4
                     dfechaventadiaria: '',
+                    dfechainicio: '',
+                    dfechafin: '',
                     nidvendedor: '',
                     nidsublinea: '',
                     nidcronograma: '',
@@ -2639,10 +2647,19 @@
                 });
             },
             exportarComisiones(){
+                if(this.validarExportarComision()){
+                    return;
+                }
+
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/reportes/exportarComisiones';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'dfechainicio'  :   this.formFiltro.dfechainicio,
+                        'dfechafin'     :   this.formFiltro.dfechafin
+                    }
+                }).then(response => {
                     let data = XLSX.utils.json_to_sheet(response.data)
                     const workbook = XLSX.utils.book_new()
                     const filename = 'Reporte de Comisiones'
@@ -2799,6 +2816,22 @@
                     }
                     $("#myBar").hide();
                 });
+            },
+            validarExportarComision(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formFiltro.dfechainicio){
+                    this.mensajeError.push('Debe seleccionar una Fecha Inicio');
+                }
+                if(!this.formFiltro.dfechafin){
+                    this.mensajeError.push('Debe seleccionar un Fecha Fin');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             validarMetasVenta(){
                 this.error = 0;
@@ -3560,6 +3593,8 @@
                 this.formFiltro.nidmarca            =   '';
                 this.formFiltro.nidmodelo           =   '';
                 this.formFiltro.dfechaventadiaria   =   '';
+                this.formFiltro.dfechainicio        =   '';
+                this.formFiltro.dfechafin           =   '';
                 this.formFiltro.nidvendedor         =   '';
                 this.formFiltro.nidsublinea         =   '';
                 this.formFiltro.nidcronograma       =   '';
