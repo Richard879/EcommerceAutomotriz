@@ -129,7 +129,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seguimiento {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
                                                                                         </el-tooltip>
                                                                                         <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
                                                                                             <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
