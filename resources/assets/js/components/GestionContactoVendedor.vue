@@ -1981,19 +1981,6 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                        <input type="radio" class="radio-template" v-model="fillContactoLibre.ntipopersona" :value="tipo.value" @change="cambiarTipoPersonaContactoLibre()">
-                                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Contacto</label>
                                                                                 <div class="col-sm-8">
                                                                                     <input type="text" v-model="fillContactoLibre.cfiltrodescripcion" @keyup.enter="buscarContactosLibres()" class="form-control form-control-sm">
@@ -2046,74 +2033,37 @@
                                                                 <template v-if="arrayContactoLibre.length">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
-                                                                            <template v-if="fillContactoLibre.ntipopersona == 1">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Apellidos</th>
-                                                                                        <th>Nombres</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Dirección</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
-                                                                                        <td v-text="c.nIdContacto"></td>
-                                                                                        <td v-text="c.cPerApellidos"></td>
-                                                                                        <td v-text="c.cNombre"></td>
-                                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                                        <td v-text="c.cDireccion"></td>
-                                                                                        <td v-text="c.cEmail"></td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Asignar Contacto {{ c.cPerApellidos + ' ' +  c.cNombre }} a Vendedor</div>
-                                                                                                <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre)" :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                            </el-tooltip>
-                                                                                            <el-tooltip class="item" effect="dark" >
-                                                                                                <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Razon Social</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Persona Contacto</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
-                                                                                        <td v-text="c.nIdContacto"></td>
-                                                                                        <td v-text="c.cRazonSocial"></td>
-                                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                                        <td v-text="c.cEmail"></td>
-                                                                                        <td v-text="c.cContacto"></td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Asignar Contacto {{ c.cRazonSocial }} a Vendedor</div>
-                                                                                                <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cRazonSocial)" :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                            </el-tooltip>
-                                                                                            <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Dirección</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.cContacto"></td>
+                                                                                    <td v-text="c.cPerDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cDireccion"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Asignar Contacto {{ c.cContacto }} a Vendedor</div>
+                                                                                            <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cContacto)" :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto {{ c.cContacto}}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
                                                                         </table>
                                                                     </div>
                                                                     <div class="col-sm-12">
@@ -2905,7 +2855,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizarContacto">
                                                             <i class="fa fa-edit"></i> ACTUALIZAR
                                                         </button>
                                                     </div>
@@ -6179,7 +6129,7 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersona;
                                     this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                     this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
@@ -6203,7 +6153,7 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersona;
                                     this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.cnombre             =   data.cRazonSocial;
                                     //Datos de Contacto
