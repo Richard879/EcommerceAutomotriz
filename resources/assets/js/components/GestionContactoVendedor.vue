@@ -1178,94 +1178,92 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </template>
-                                                                        </form>
-                                                                    </div>
-                                                                    <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
-                                                                        <div class="container-fluid">
-                                                                            <div class="col-lg-12">
-                                                                                <div class="card">
-                                                                                    <div class="card-header">
-                                                                                        <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
-                                                                                    </div>
-                                                                                    <div class="card-body">
-                                                                                        <form class="form-horizontal">
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
-                                                                                                                <el-option
-                                                                                                                v-for="item in arrayTipoDocumentoNaturales"
-                                                                                                                :key="item.nIdPar"
-                                                                                                                :label="item.cParNombre"
-                                                                                                                :value="item.nIdPar">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
+                                                                            <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
+                                                                                <div class="container-fluid">
+                                                                                    <div class="card">
+                                                                                        <div class="card-header">
+                                                                                            <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
+                                                                                        </div>
+                                                                                        <div class="card-body">
+                                                                                            <form class="form-horizontal">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Tipo Documento</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                                    <el-option
+                                                                                                                    v-for="item in arrayTipoDocumentoNaturales"
+                                                                                                                    :key="item.nIdPar"
+                                                                                                                    :label="item.cParNombre"
+                                                                                                                    :value="item.nIdPar">
+                                                                                                                    </el-option>
+                                                                                                                </el-select>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">Email</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Teléfono</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Teléfono</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
+                                                                                            </form>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
+                                                                            </template>
+                                                                        </form>
+                                                                    </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
