@@ -16,7 +16,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos();" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
                                             <i class="fa fa-users"></i> CONTACTOS
                                         </a>
                                     </li>
@@ -31,7 +31,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
+                                        <a class="nav-link" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto()" role="tab" data-toggle="tab">
                                             <i class="fa fa-user"></i> NUEVO CONTACTO
                                         </a>
                                     </li>
