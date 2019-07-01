@@ -79,7 +79,7 @@
     <template v-if="menu==1300698">
         <reportes :ruta="ruta" :usuario="{{ auth()->user() }}"></reportes>
     </template>
-    <template v-if="menu==1300710">
+    <template v-if="menu==1300712">
         <descotorgados :ruta="ruta" :usuario="{{ auth()->user() }}"></descotorgados>
     </template>
 

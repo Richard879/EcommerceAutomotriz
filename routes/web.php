@@ -188,6 +188,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/gescontacto/SetPatchContactoPerNatural', 'GestionContactoController@SetPatchContactoPerNatural');
     Route::put('/gescontacto/desactivaReferencia', 'GestionContactoController@desactivaReferencia');
     Route::get('/gescontacto/GetListContactoByRol', 'GestionContactoController@GetListContactoByRol');
+    Route::get('/gescontacto/GetValidaPerDocumentoByTipo', 'GestionContactoController@GetValidaPerDocumentoByTipo');
 
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');

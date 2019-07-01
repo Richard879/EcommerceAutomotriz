@@ -971,7 +971,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm">
+                                                                                            <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm" @keyup.enter="obtenerNumeroDocumento(1)">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1178,94 +1178,92 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </template>
-                                                                        </form>
-                                                                    </div>
-                                                                    <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
-                                                                        <div class="container-fluid">
-                                                                            <div class="col-lg-12">
-                                                                                <div class="card">
-                                                                                    <div class="card-header">
-                                                                                        <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
-                                                                                    </div>
-                                                                                    <div class="card-body">
-                                                                                        <form class="form-horizontal">
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
-                                                                                                                <el-option
-                                                                                                                v-for="item in arrayTipoDocumentoNaturales"
-                                                                                                                :key="item.nIdPar"
-                                                                                                                :label="item.cParNombre"
-                                                                                                                :value="item.nIdPar">
-                                                                                                                </el-option>
-                                                                                                            </el-select>
+                                                                            <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
+                                                                                <div class="container-fluid">
+                                                                                    <div class="card">
+                                                                                        <div class="card-header">
+                                                                                            <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
+                                                                                        </div>
+                                                                                        <div class="card-body">
+                                                                                            <form class="form-horizontal">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Tipo Documento</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                                    <el-option
+                                                                                                                    v-for="item in arrayTipoDocumentoNaturales"
+                                                                                                                    :key="item.nIdPar"
+                                                                                                                    :label="item.cParNombre"
+                                                                                                                    :value="item.nIdPar">
+                                                                                                                    </el-option>
+                                                                                                                </el-select>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">Email</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
+                                                                                                <div class="form-group row">
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="row">
+                                                                                                            <label class="col-sm-4 form-control-label">* Teléfono</label>
+                                                                                                            <div class="col-sm-8">
+                                                                                                                <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Teléfono</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
+                                                                                            </form>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
+                                                                            </template>
+                                                                        </form>
+                                                                    </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
@@ -1981,19 +1979,6 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                        <input type="radio" class="radio-template" v-model="fillContactoLibre.ntipopersona" :value="tipo.value" @change="cambiarTipoPersonaContactoLibre()">
-                                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Contacto</label>
                                                                                 <div class="col-sm-8">
                                                                                     <input type="text" v-model="fillContactoLibre.cfiltrodescripcion" @keyup.enter="buscarContactosLibres()" class="form-control form-control-sm">
@@ -2046,74 +2031,37 @@
                                                                 <template v-if="arrayContactoLibre.length">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
-                                                                            <template v-if="fillContactoLibre.ntipopersona == 1">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Apellidos</th>
-                                                                                        <th>Nombres</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Dirección</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
-                                                                                        <td v-text="c.nIdContacto"></td>
-                                                                                        <td v-text="c.cPerApellidos"></td>
-                                                                                        <td v-text="c.cNombre"></td>
-                                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                                        <td v-text="c.cDireccion"></td>
-                                                                                        <td v-text="c.cEmail"></td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Asignar Contacto {{ c.cPerApellidos + ' ' +  c.cNombre }} a Vendedor</div>
-                                                                                                <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre)" :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                            </el-tooltip>
-                                                                                            <el-tooltip class="item" effect="dark" >
-                                                                                                <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Código</th>
-                                                                                        <th>Razon Social</th>
-                                                                                        <th>Nro Documento</th>
-                                                                                        <th>Telefono</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Persona Contacto</th>
-                                                                                        <th>Acciones</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
-                                                                                        <td v-text="c.nIdContacto"></td>
-                                                                                        <td v-text="c.cRazonSocial"></td>
-                                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                                        <td v-text="c.cEmail"></td>
-                                                                                        <td v-text="c.cContacto"></td>
-                                                                                        <td>
-                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                <div slot="content">Asignar Contacto {{ c.cRazonSocial }} a Vendedor</div>
-                                                                                                <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cRazonSocial)" :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                            </el-tooltip>
-                                                                                            <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </template>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Dirección</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.cContacto"></td>
+                                                                                    <td v-text="c.cPerDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cDireccion"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Asignar Contacto {{ c.cContacto }} a Vendedor</div>
+                                                                                            <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cContacto)" :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" >
+                                                                                            <div slot="content">Editar Contacto {{ c.cContacto}}</div>
+                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
                                                                         </table>
                                                                     </div>
                                                                     <div class="col-sm-12">
@@ -2905,7 +2853,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarContacto">
+                                                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizarContacto">
                                                             <i class="fa fa-edit"></i> ACTUALIZAR
                                                         </button>
                                                     </div>
@@ -3385,7 +3333,7 @@
                     cnombreS: '',
                     dfecnacimiento: '',
                     lblcnombres: '* Primer Nombre',
-                    lblcnombresS: '* Segundo Nombre',
+                    lblcnombresS: 'Segundo Nombre',
                     //Variables de Datos de contacto
                     /*niddepartamento: 0,
                     nidprovincia: 0,
@@ -3451,6 +3399,7 @@
                     { value: 2, text: 'PROVINCIA'},
                     { value: 3, text: 'DISTRITO'}
                 ],
+                cFlagValidaDocumento: '',
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -4049,8 +3998,8 @@
                 $('#TabMisContactos').removeClass('in active show');
                 $('#TabCarteraMes').removeClass('in active show');
                 $('#TabSeguimiento').addClass('in active show');
-                this.formNuevoContacto.nidcontacto = objContacto.nIdContacto;
-                this.formSegDatosContacto.nidpersona = objContacto.nIdPersona;
+                this.formNuevoContacto.nidcontacto      = objContacto.nIdContacto;
+                this.formSegDatosContacto.nidpersona    = objContacto.nIdPersona;
                 this.TabSegDatosContacto();
                 this.cargarTabSegDatosContacto(objContacto.nTipoPersona);
             },
@@ -4716,6 +4665,11 @@
             },
             // =============  TAB DATOS DE CONTACTO ======================
             activarTab22(){
+                if(this.validarNumeroDocumento(0)){
+                    this.activarReferencia();
+                    return;
+                }
+                
                 if(this.validarTab22()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -4728,6 +4682,89 @@
                 $('#Tab22').addClass("nav-link active");
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').addClass('in active show');
+            },
+            activarReferencia(){
+                swal({
+                    title: 'El contacto ya se encuentra registrado, desea asignarle Referencia?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+
+                            $('#Tab1').removeClass('nav-link active');
+                            $('#Tab1').addClass("nav-link");
+                            $('#Tab2').removeClass('nav-link active');
+                            $('#Tab2').addClass("nav-link");
+                            $('#Tab3').removeClass('nav-link disabled');
+                            $('#Tab3').addClass("nav-link active");
+                            $('#Tab4').removeClass('nav-link active');
+                            $('#Tab4').addClass("nav-link");
+                            $('#TabMisContactos').removeClass('in active show');
+                            $('#TabCarteraMes').removeClass('in active show');
+                            $('#TabNuevoContacto').removeClass('in active show');
+                            $('#TabSeguimiento').addClass('in active show');
+
+                            this.TabSegDatosContacto();
+                            this.cargarTabSegDatosContacto(this.formNuevoContacto.ntipopersona);
+
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
+            },
+            validarNumeroDocumento(nFlagActivaMensaje){
+                this.obtenerNumeroDocumento(nFlagActivaMensaje);
+
+                this.error = 0;
+                this.mensajeError =[];
+        
+                if(this.cFlagValidaDocumento == 'S'){
+                    this.mensajeError.push('Existen Personas');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+
+            },
+            obtenerNumeroDocumento(nFlagActivaMensaje){
+                var url = this.ruta + '/gescontacto/GetValidaPerDocumentoByTipo';
+                axios.get(url, {
+                    params: {
+                        'ntipopersona'      : this.formNuevoContacto.ntipopersona,
+                        'nidtipodocumento'  : this.formNuevoContacto.ntpodocumento,
+                        'cnumerodocumento'  : this.formNuevoContacto.cnrodocumento
+                    }
+                }).then(response => {
+                    //SI EXISTE
+                    if(response.data[0].nFlagMsje==1){
+                        this.cFlagValidaDocumento = 'S';
+                        this.formNuevoContacto.nidcontacto      = response.data[0].nIdContacto;
+                        this.formSegDatosContacto.nidpersona    = response.data[0].nIdPersona;
+                        this.formNuevoContacto.ntipopersona     = response.data[0].nIdTipoPersona;
+                        this.activarReferencia();
+                    //NO EXISTE
+                    } else {
+                        this.cFlagValidaDocumento = 'N';
+                        if(nFlagActivaMensaje == 1)
+                        {
+                            swal(response.data[0].cMensaje);
+                        }
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             validarTab33(){
                 this.error = 0;
@@ -5352,7 +5389,6 @@
                     'CardType'      : dataJSON.CardType.toString(),
                     'LogRespuesta'  : logRpta
                 }).then(response => {
-                    console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {
@@ -5809,13 +5845,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayContactoLibre = response.data.arrayContactoLibre.data;
-                    this.pagination.current_page =  response.data.arrayContactoLibre.current_page;
-                    this.pagination.total = response.data.arrayContactoLibre.total;
+                    this.arrayContactoLibre     = response.data.arrayContactoLibre.data;
+                    this.pagination.current_page= response.data.arrayContactoLibre.current_page;
+                    this.pagination.total       = response.data.arrayContactoLibre.total;
                     this.pagination.per_page    = response.data.arrayContactoLibre.per_page;
                     this.pagination.last_page   = response.data.arrayContactoLibre.last_page;
                     this.pagination.from        = response.data.arrayContactoLibre.from;
-                    this.pagination.to           = response.data.arrayContactoLibre.to;
+                    this.pagination.to          = response.data.arrayContactoLibre.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -5864,13 +5900,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayReferenciaLibre = response.data.arrayReferenciaLibre.data;
-                    this.pagination.current_page =  response.data.arrayReferenciaLibre.current_page;
-                    this.pagination.total = response.data.arrayReferenciaLibre.total;
+                    this.arrayReferenciaLibre   = response.data.arrayReferenciaLibre.data;
+                    this.pagination.current_page= response.data.arrayReferenciaLibre.current_page;
+                    this.pagination.total       = response.data.arrayReferenciaLibre.total;
                     this.pagination.per_page    = response.data.arrayReferenciaLibre.per_page;
                     this.pagination.last_page   = response.data.arrayReferenciaLibre.last_page;
                     this.pagination.from        = response.data.arrayReferenciaLibre.from;
-                    this.pagination.to           = response.data.arrayReferenciaLibre.to;
+                    this.pagination.to          = response.data.arrayReferenciaLibre.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -5962,13 +5998,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                    this.arrayProveedor                 = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page   = response.data.arrayProveedor.current_page;
+                    this.paginationModal.total          = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from           = response.data.arrayProveedor.from;
+                    this.paginationModal.to             = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -6091,7 +6127,7 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersonaNatural;
+                                    this.fillEditarContacto.nidpernatural       =   data.nIdPersona;
                                     this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.capellidopaterno    =   data.cApellidoPaterno;
                                     this.fillEditarContacto.capellidomaterno    =   data.cApellidoMaterno;
@@ -6115,7 +6151,7 @@
                                     this.modal = 1;
                                     this.fillEditarContacto.nidcontacto         =   data.nIdContacto;
                                     //Datos Personales
-                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersonaJuridica;
+                                    this.fillEditarContacto.nidperjudirica      =   data.nIdPersona;
                                     this.fillEditarContacto.cnrodocumento       =   data.cPerDocumento;
                                     this.fillEditarContacto.cnombre             =   data.cRazonSocial;
                                     //Datos de Contacto
