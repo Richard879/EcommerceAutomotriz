@@ -161,6 +161,37 @@
                 </table>
             </div>
 
+            {{-- Mostrar Detalle de los Elementos de Venta Adicionados --}}
+            @if (sizeof($arrayElementoVenta) > 0)
+                <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
+                    <thead style="background-color: lightgray;">
+                        <tr align="center" valign="middle" >
+                            <th colspan="6">Elementos de Venta</th >
+                        </tr>
+                        <tr>
+                            <th>Elemento Venta</th>
+                            <th>Precio</th>
+                            <th>Moneda</th>
+                            <th>Cantidad</th>
+                            <th>SubTotal (S/)</th>
+                            <th>SubTotal (US$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($arrayElementoVenta as $banco)
+                            <tr>
+                                <td> {{ $banco->cNombre }} </td>
+                                <td> {{ $banco->fPrecioFinal }} </td>
+                                <td> {{ $banco->cMoneda }} </td>
+                                <td> {{ $banco->nCantidad }} </td>
+                                <td> {{ $banco->fSubTotalSoles }} </td>
+                                <td> {{ $banco->fSubTotalDolares }} </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+
             {{-- Ficha Tecnica --}}
             {!! $tabla !!}
 

@@ -16,15 +16,20 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link" :class="{'active': (vistaFormulario == 1)}" id="tab01" href="#TabBandejaDescuentos" @click="tabBandejaDsctoPedido" role="tab" data-toggle="tab">
+                                        <a class="nav-link" :class="{'active': (vistaFormulario == 1)}" id="tab01" href="#TabBandejaDescuentosGenerar" @click="tabBandejaDsctoPedido" role="tab" data-toggle="tab">
                                             <i class="fas fa-coins"></i> DESCUENTOS OTORGADOS - PEDIDO
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{'active': (vistaFormulario == 2)}" id="tab02" href="#TabBandejaDescuentosNC" @click="tabBandejaDsctoPedidoNC" role="tab" data-toggle="tab">
+                                            <i class="fas fa-coins"></i> DESCUENTOS OTORGADOS - NC
                                         </a>
                                     </li>
                                 </ul>
 
                                 <div class="tab-content">
                                     <template v-if="vistaFormulario">
-                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 1)}" id="TabBandejaDescuentos">
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 1)}" id="TabBandejaDescuentosGenerar">
                                             <section class="forms">
                                                 <div class="container-fluid">
                                                     <div class="col-lg-12">

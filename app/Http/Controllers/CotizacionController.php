@@ -626,6 +626,13 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementosVenta] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraCotizacion
+                                    ]);
+
         //IP Addres del Usuario
         $ip_address = request()->ip();
 
@@ -738,6 +745,7 @@ class CotizacionController extends Controller
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                                 'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
                                                                 'arrayDetalleDocs'       => $arrayDetalleDocs,
+                                                                'arrayElementoVenta'    =>  $arrayElementoVenta,
                                                                 // 'contents'              =>  $contents,
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
