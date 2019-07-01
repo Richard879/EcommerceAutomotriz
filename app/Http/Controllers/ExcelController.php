@@ -640,24 +640,29 @@ class ExcelController extends Controller
 
     public function exportarCotizacionesByFitro(Request $request)
     {
-        $nidsucursal            =   $request->nidsucursal;
-        $nidvendedor            =   $request->nidvendedor;
-        $nidcronograma          =   $request->nidcronograma;
-        $nidestadocotizacion    =   $request->nidestadocotizacion;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdVendedor            =   $request->nidvendedor;
+        $nIdCronograma          =   $request->nidcronograma;
+        $nIdEstadoCotizacion    =   $request->nidestadocotizacion;
+        $dFechaInicio           =   $request->dfechainicio;
+        $dFechaFin              =   $request->dfechafin;
 
-        $nidsucursal            =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
-        $nidvendedor            =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
-        $nidcronograma          =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
-        $nidestadocotizacion    =   ($nidestadocotizacion == NULL) ? ($nidestadocotizacion = 0) : $nidestadocotizacion;
+        $nIdSucursal            =   ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+        $nIdVendedor            =   ($nIdVendedor == NULL) ? ($nIdVendedor = 0) : $nIdVendedor;
+        $nIdCronograma          =   ($nIdCronograma == NULL) ? ($nIdCronograma = 0) : $nIdCronograma;
+        $nIdEstadoCotizacion    =   ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
+        $dFechaInicio           =   ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin              =   ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetCotizacionesByFiltro] ?, ?, ?, ?',
-                                            [
-                                                $nidsucursal,
-                                                $nidvendedor,
-                                                $nidcronograma,
-                                                $nidestadocotizacion
+        $data = DB::select('exec [usp_Reporte_GetCotizacionesByFiltro] ?, ?, ?, ?, ?, ?',
+                                            [   $nIdSucursal,
+                                                $nIdVendedor,
+                                                $nIdCronograma,
+                                                $nIdEstadoCotizacion,
+                                                $dFechaInicio,
+                                                $dFechaFin
                                             ]);
 
         if ($opcion == 1) {
