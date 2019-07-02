@@ -21,8 +21,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" :class="{'active': (vistaFormulario == 2)}" id="tab02" href="#TabBandejaDescuentosNC" @click="tabBandejaDsctoPedidoNC" role="tab" data-toggle="tab">
-                                            <i class="fas fa-coins"></i> DESCUENTOS OTORGADOS - NC
+                                        <a class="nav-link" :class="{'active': (vistaFormulario == 0)}" id="tab02" href="#TabBandejaDescuentosNC" @click="tabBandejaDsctoPedidoNC" role="tab" data-toggle="tab">
+                                            <i class="fas fa-coins"></i> Nota Crédito
                                         </a>
                                     </li>
                                 </ul>
@@ -150,7 +150,7 @@
                                                                             :data="arrayDistribucionDesc"
                                                                             stripe
                                                                             style="width: 100%"
-                                                                            @selection-change="handleSelectionChange">
+                                                                            @selection-change="itemSelectedDscOtorgados">
                                                                             <el-table-column fixed type="selection" width="55"></el-table-column>
                                                                             <el-table-column property="SUCURSAL" label="SUCURSAL" width="100"></el-table-column>
                                                                             <el-table-column fixed property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
@@ -226,7 +226,7 @@
                                                                                 <div class="form-group row">
                                                                                     <div class="col-sm-9 offset-sm-5">
                                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="obtenerSgcCostoDscProveedor(1)">
-                                                                                            <i class="fas fa-md fa-poll-h fa-spin"></i> Generar Nota de Credito
+                                                                                            <i class="fas fa-md fa-poll-h fa-spin"></i> Integrar Tabla Costo
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>
@@ -250,6 +250,256 @@
                                                                                         </li>
                                                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                             <a @click.prevent="cambiarPaginaDscPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </template>
+
+                                    <template v-else>
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}"  id="TabBandejaDescuentosNC">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BANDEJA DE DESCUENTOS OTORGADOS PARA NOTA CREDITO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select  v-model="formDscOtorgados.nidsucursal"
+                                                                                                filterable
+                                                                                                clearable
+                                                                                                placeholder="SUCURSAL"
+                                                                                                @change="listarAsesoresBySucursal(1)">
+                                                                                        <el-option
+                                                                                            v-for="item in arraySucursal"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="row">
+                                                                                <label class="col-md-4 form-control-label">Asesor Comercial</label>
+                                                                                <div class="col-md-8">
+                                                                                    <el-select  v-model="formDscOtorgados.nidvendedor"
+                                                                                                filterable
+                                                                                                clearable
+                                                                                                placeholder="SELECCIONE UN ASESOR COMERCIAL">
+                                                                                        <el-option
+                                                                                            v-for="ele in arrayVendedores"
+                                                                                            :key="ele.nIdUsuario"
+                                                                                            :label="ele.cNombreCompleto"
+                                                                                            :value="ele.nIdUsuario">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select  v-model="formDscOtorgados.nidcronograma"
+                                                                                                filterable
+                                                                                                clearable
+                                                                                                placeholder="CRONOGRAMA">
+                                                                                        <el-option
+                                                                                            v-for="item in arrayCronogramas"
+                                                                                            :key="item.nIdCronograma"
+                                                                                            :label="item.cCronograma"
+                                                                                            :value="item.nIdCronograma">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Estado Pedido</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select  v-model="formDscOtorgados.nidestadopedido"
+                                                                                                filterable
+                                                                                                clearable
+                                                                                                placeholder="ESTADOS">
+                                                                                        <el-option
+                                                                                            v-for="item in arrayEstadoPedido"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Monto Descuento</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formDscOtorgados.fmontodescuento" @keyup.enter="listarDistribucion(1)" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarPedidoDistribuido(1)">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">PREVISUALIZACIÓN</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayNotaCredito.length">
+                                                                    <div class="table-responsive">
+                                                                        <el-table
+                                                                            ref="multipleTable"
+                                                                            :data="arrayNotaCredito"
+                                                                            stripe
+                                                                            style="width: 100%"
+                                                                            @selection-change="itemSelectedPedidosDistribuidos">
+                                                                            <el-table-column fixed type="selection" width="55"></el-table-column>
+                                                                            <el-table-column property="SUCURSAL" label="SUCURSAL" width="100"></el-table-column>
+                                                                            <el-table-column fixed property="NUM_PEDIDO" label="N° PEDIDO" width="100"></el-table-column>
+                                                                            <el-table-column property="NUM_COTIZACION" label="N° COTIZACIÓN" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_COTIZACION" label="F. COTIZACIÓN" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_VENC_COTIZACION" label="F. VENC. COTI" width="110"></el-table-column>
+                                                                            <el-table-column property="FECHA_PEDIDO" label="FECHA PEDIDO" width="110"></el-table-column>
+                                                                            <el-table-column property="TCC" label="TCC"></el-table-column>
+                                                                            <el-table-column property="PRECIO_BASE_DOLAR" label="PRECIO BASE" width="100"></el-table-column>
+                                                                            <el-table-column property="PRECIO_CIERRE_DOLAR" label="PRECIO CIERRE" width="110"></el-table-column>
+                                                                            <el-table-column label="TYP">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_TYP_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="PRECIO_VENTA_CLIENTE" label="PRECIO VENTA" width="110"></el-table-column>
+                                                                            <el-table-column property="DESCUENTO_VEHI_DOLAR" label="DESCUENTO" width="100"></el-table-column>
+                                                                            <el-table-column label="SOBRE PRECIO" width="110">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SOBREPRECIO_VEHI_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="COTI_VEHI_DOLAR" label="VEHICULO ($)" width="110"></el-table-column>
+                                                                            <el-table-column property="COTI_VEHI_SOL" label="VEHICULO (S/)" width="110"></el-table-column>
+                                                                            <el-table-column label="E.V ($)" width="90">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_DOLAR)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column label="E.V (S/)" width="90">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COTI_EV_SOL)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="COTI_TOTAL_DOLAR" label="COTIZACION ($)" width="120"></el-table-column>
+                                                                            <el-table-column property="COTI_TOTAL_SOL" label="COTIZACION (S/)" width="120"></el-table-column>
+                                                                            <el-table-column property="ASUNTO" label="ASUNTO" width="120"></el-table-column>
+                                                                            <el-table-column property="ESTADO" label="ESTADO COT" width="120"></el-table-column>
+                                                                            <el-table-column label="DESCUENTO" width="110">
+                                                                                <template slot-scope="scope"> {{ Number((parseFloat(scope.row.DESCUENTO)).toFixed(2)) }}</template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="PROVEEDOR" label="PROVEEDOR" width="120"></el-table-column>
+                                                                            <el-table-column label="MONTO ASUMIDO" width="130">
+                                                                                <template slot-scope="scope">
+                                                                                    {{ Number((parseFloat(scope.row.PROVEEDOR_MONTO_ASUMIDO)).toFixed(2)) }}
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="EMP" label="EMPRESA" width="120"></el-table-column>
+                                                                            <el-table-column label="MONTO ASUMIDO" width="130">
+                                                                                <template slot-scope="scope">
+                                                                                    {{ Number((parseFloat(scope.row.EMPRESA_MONTO_ASUMIDO)).toFixed(2)) }}
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                            <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="148"></el-table-column>
+                                                                            <el-table-column property="VIN" label="VIN" width="120"></el-table-column>
+                                                                            <el-table-column property="ASESOR_COMERCIAL" label="ASESOR COMERCIAL" width="148"></el-table-column>
+                                                                            <el-table-column property="CONTACTO" label="CONTACTO" width="120"></el-table-column>
+                                                                            <el-table-column property="N_DOCUMENTO" label="N° DOCUMENTO" width="120"></el-table-column>
+                                                                            <el-table-column property="DIRECCION" label="DIRECCIÓN" width="120"></el-table-column>
+                                                                            <el-table-column property="TELEFONO_MOVIL" label="TEL MOVIL" width="120"></el-table-column>
+                                                                            <el-table-column fixed="right" label="Operaciones" width="120">
+                                                                                <template slot-scope="scope">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Obtener Nota Credito {{ scope.row.VIN }}</div>
+                                                                                        <input type="text" v-model="scope.row.nDocNumNC" class="form-control inputdsc">
+                                                                                    </el-tooltip>
+                                                                                    <!-- Se mostrara la opción para pagar solo si se ha ingresado el DocNum y esta con estado Pendiente la nota de credito-->
+                                                                                    <template v-if="scope.row.nDocNumNC != 0 && scope.row.cFlagEstadoNC == 'P'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Pagar Nota Credito {{ scope.row.VIN }}</div>
+                                                                                            <i @click="aprobarNotaCredito(scope.row)" :style="'color:#B0B02E'" class="fas fa-md fa-coins fa-spin"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                        </el-table>
+                                                                    </div>
+                                                                    <br>
+                                                                    <template v-if="arrayNotaCreditoMultipleSelection.length > 0">
+                                                                        <div class="col-sm-12">
+                                                                            <form class="form-horizontal">
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="actualizarNotasCredito(1)">
+                                                                                            <i class="fas fa-md fa-poll-h fa-spin"></i> Nota de Credito Pagadas
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </template>
+                                                                    <br>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaPedidoDistribuidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                        :class="[page==isActived?'active':'']">
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPaginaPedidoDistribuidos(page)"
+                                                                                            v-text="page"></a>
+                                                                                        </li>
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPaginaPedidoDistribuidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                         </li>
                                                                                     </ul>
                                                                                 </nav>
@@ -314,6 +564,9 @@
         props:['ruta', 'usuario'],
         data(){
             return {
+                // =================================================================
+                // VARAIBLES BANDEJA DE DESCUENTOS OTORGADOS DE LOS PEDIDOS
+                // =================================================================
                 formDscOtorgados: {
                     nidsucursal: '',
                     nidvendedor: '',
@@ -325,6 +578,12 @@
                 arrayDistribucionDesc: [],
                 arrayDistribucionMultipleSelection: [],
                 arraySapCostoDscProveedor: [],
+                // =================================================================
+                // VARAIBLES BANDEJA DE NOTA DE CREDITO DE LOS PEDIDOS
+                // =================================================================
+                arrayNotaCreditoRpta: [],
+                arrayNotaCredito: [],
+                arrayNotaCreditoMultipleSelection: [],
 
                 arraySucursal: [],
                 arrayVendedores: [],
@@ -424,7 +683,7 @@
         },
         methods:{
             // =================================================================
-            // TAB BANDEJA DE DESCUENTOS OTORGADOS
+            // TAB BANDEJA DE DESCUENTOS OTORGADOS DE LOS PEDIDOS
             // =================================================================
             toggleSelection(rows) {
                 if (rows) {
@@ -435,7 +694,7 @@
                     this.$refs.multipleTable.clearSelection();
                 }
             },
-            handleSelectionChange(val) {
+            itemSelectedDscOtorgados(val) {
                 this.arrayDistribucionMultipleSelection = val;
             },
             tabBandejaDsctoPedido(){
@@ -447,12 +706,19 @@
                 this.listarEstadoPedido();
             },
             limpiarTabBsqDescPedido(){
-                this.formDscOtorgados.nidsucursal           = '';
-                this.formDscOtorgados.nidvendedor           = '';
-                this.formDscOtorgados.nidcronograma         = '';
-                this.formDscOtorgados.nidestadopedido   = '';
-                this.formDscOtorgados.fmontodescuento       = '';
-                this.arrayDistribucionDesc = [];
+                this.formDscOtorgados.nidsucursal           =   '';
+                this.formDscOtorgados.nidvendedor           =   '';
+                this.formDscOtorgados.nidcronograma         =   '';
+                this.formDscOtorgados.nidestadopedido       =   '';
+                this.formDscOtorgados.fmontodescuento       =   '';
+                this.arrayDistribucionDescRpta              =   [];
+                this.arrayDistribucionDesc                  =   [];
+                this.arrayDistribucionMultipleSelection     =   [];
+                this.arraySapCostoDscProveedor              =   [];
+
+                this.arrayNotaCreditoRpta                   =   [];
+                this.arrayNotaCredito                       =   [];
+                this.arrayNotaCreditoMultipleSelection      =   [];
             },
             /**
              * METODOS PARA CARGAR DATA
@@ -714,6 +980,117 @@
                         }
                     }
                 });
+            },
+            // =================================================================
+            // TAB BANDEJA DE NOTAS DE CREDITO DE LOS PEDIDOS
+            // =================================================================
+            tabBandejaDsctoPedidoNC(){
+                this.vistaFormulario = 0;
+                this.limpiarTabBsqDescPedido();
+                this.listarSucursalByEmpresa();
+                this.listarCronograma();
+                this.listarEstadoPedido();
+            },
+            listarPedidoDistribuido(page){
+                if(this.validarBsqDescPedido()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/dsctotorgados/GetListPedidoDistribuido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       :   this.formDscOtorgados.nidsucursal,
+                        'nidvendedor'       :   this.formDscOtorgados.nidvendedor,
+                        'nidcronograma'     :   this.formDscOtorgados.nidcronograma,
+                        'nidestadopedido'   :   this.formDscOtorgados.nidestadopedido,
+                        'fmontodescuento'   :   this.formDscOtorgados.fmontodescuento,
+                        'opcion'            :   2,
+                        'page'              :   page
+                    }
+                }).then(response => {
+                    this.arrayNotaCreditoRpta  = response.data.arrayPedidosDistribuido;
+                    this.paginatePedidoDistribuido(this.arrayNotaCreditoRpta, page);
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            paginatePedidoDistribuido(data, page){
+                this.pagination.current_page    =   page; // 1
+                this.pagination.total           =   data.length; // 55
+                this.pagination.per_page        =   this.perPage; // 10
+                this.pagination.last_page       =   Math.ceil(data.length / this.pagination.per_page); // 55 / 10 => 5.5 => 6
+                this.pagination.from            =   (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1           =   (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to              =   (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayNotaCredito           =   data.slice(this.pagination.from1, this.pagination.to); // mostrar desde (0 // 10)
+            },
+            cambiarPaginaPedidoDistribuidos(page){
+                this.pagination.current_page=page;
+                this.paginatePedidoDistribuido(this.arrayNotaCreditoRpta, page);
+            },
+            itemSelectedPedidosDistribuidos(val) {
+                this.arrayNotaCreditoMultipleSelection = val;
+            },
+            actualizarNotasCredito(){
+                if(this.validarNotasCredito()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+
+                var url = me.ruta + '/dsctotorgados/SetUpdDocNumNC';
+                axios.post(url, {
+                    'data'  : me.arrayNotaCreditoMultipleSelection
+                }).then(response => {
+                    swal(
+                        'Generado!',
+                        'Las Notas de Crédito han sido actualizadas correctamente.',
+                        'success'
+                    );
+                    $("#myBar").hide();
+                    me.loading.close();
+                    this.listarDescPedido(1);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarNotasCredito(){
+                let me = this;
+                this.error = 0;
+                this.mensajeError =[];
+
+                me.arrayNotaCreditoMultipleSelection.map(function(value, key){
+                    if (value.nDocNumNC == 0 || value.nDocNumNC == '') {
+                        me.mensajeError.push('Debe ingresar el Código de la NC del Pedido : ' + value.NUM_PEDIDO);
+                    }
+                });
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            aprobarNotaCredito(){
+
             },
             // =============================================
             // =============  MODAL ========================

@@ -34,28 +34,31 @@
                 </section>
             </template>
 
-            <!--Marketing y Ventas || ADV/Gerencia-->
-            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+            <!--Marketing y Ventas || 110124 Administracion//JV/ADV/Gerencia-->
+            <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110124 || formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
                         <div class="col-xs-12" style="width: 100%;">
                             <h3>MARKETING Y VENTAS</h3>
                         </div>
 
-                        <!-- ADV/Gerencia -->
-                        <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Venta Diaria</span></div>
+                        <!-- Administracion//ADV//Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110124 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <!-- Si es ADV // Gerencia -->
+                            <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet" @click="abrirModal('ventadiaria', 'abrir', 'VENTA DIARIA')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Venta Diaria</span></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('descuento-compartido', 'abrir', 'DESCUENTOS OTORGADOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Descuentos Otorgados</span></div>
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet" @click="abrirModal('descuento-compartido', 'abrir', 'DESCUENTOS OTORGADOS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Descuentos Otorgados</span></div>
+                                    </div>
                                 </div>
-                            </div>
+                            </template>
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES')"><i class="fa-md fa fa-file-excel-o"></i></div>
@@ -63,12 +66,15 @@
                                 </div>
                             </div>
                         </template>
-                        <div class="col-xl-4 col-sm-6">
-                            <div class="item d-flex align-items-center">
-                                <div class="icon bg-violet" @click="abrirModal('pedido-deposito', 'abrir', 'ESTADO DE PEDIDOS CON DEPOSITO')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                <div class="title"><span><br>Estado de Pedidos con Deposito</span></div>
+                        <!-- Administracion//ADV//Gerencia -->
+                        <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="abrirModal('pedido-deposito', 'abrir', 'ESTADO DE PEDIDOS CON DEPOSITO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Estado de Pedidos con Deposito</span></div>
+                                </div>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </div>
             </section>
@@ -2394,7 +2400,7 @@
                                                     <h3 class="h4">PREVISUALIZACIÓN</h3>
                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                         <div slot="content">Exportar Comisiones de Vendedore(s) XLS</div>
-                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarComisiones()"></i>
+                                                            <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" @click="exportarComisiones()"></i>
                                                     </el-tooltip>
                                                 </div>
                                                 <div class="card-body">
