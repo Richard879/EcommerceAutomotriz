@@ -2172,6 +2172,36 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                            <div class="col-sm-8">
+                                                                <el-date-picker
+                                                                    v-model="formFiltro.dfechainicio"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa">
+                                                                </el-date-picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                            <div class="col-sm-8">
+                                                                <el-date-picker
+                                                                    v-model="formFiltro.dfechafin"
+                                                                    type="date"
+                                                                    value-format="yyyy-MM-dd"
+                                                                    format="dd/MM/yyyy"
+                                                                    placeholder="dd/mm/aaaa">
+                                                                </el-date-picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarCotizaciones(1)">
                                                             <i class="fa fa-search"></i> Buscar
@@ -3693,6 +3723,8 @@
                         'nidvendedor'           :   this.formFiltro.nidvendedor,
                         'nidcronograma'         :   this.formFiltro.nidcronograma,
                         'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
+                        'dfechainicio'          :   this.formFiltro.dfechainicio,
+                        'dfechafin'             :   this.formFiltro.dfechafin,
                         'opcion'        :   2,
                         'page'          :   page
                     }
