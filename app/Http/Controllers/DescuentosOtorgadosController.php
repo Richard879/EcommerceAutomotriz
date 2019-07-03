@@ -137,4 +137,26 @@ class DescuentosOtorgadosController extends Controller
             DB::rollBack();
         }
     }
+
+    public function SetPagarNC(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $nIdCabeceraCotizacion = $request->data['nIdCabeceraCotizacion'];
+
+            $data =  DB::select('exec [usp_Cotizacion_SetPagarNC] ?, ?',
+                                            [
+                                                $nIdCabeceraCotizacion,
+                                                Auth::user()->id
+                                            ]);
+
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

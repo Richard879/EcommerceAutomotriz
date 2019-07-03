@@ -530,7 +530,8 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/dsctotorgados/GetListDistribucionDesc','DescuentosOtorgadosController@GetListDistribucionDesc');
     Route::post('/dsctotorgados/SetDistribucionDesc','DescuentosOtorgadosController@SetDistribucionDesc');
     Route::get('/dsctotorgados/GetListPedidoDistribuido','DescuentosOtorgadosController@GetListPedidoDistribuido');
-    Route::get('/dsctotorgados/SetUpdDocNumNC','DescuentosOtorgadosController@SetUpdDocNumNC');
+    Route::post('/dsctotorgados/SetUpdDocNumNC','DescuentosOtorgadosController@SetUpdDocNumNC');
+    Route::post('/dsctotorgados/SetPagarNC','DescuentosOtorgadosController@SetPagarNC');
 
     ///========================================
     /////=================  ROUTES SAP

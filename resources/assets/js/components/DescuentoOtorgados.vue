@@ -458,11 +458,12 @@
                                                                                         <div slot="content">Obtener Nota Credito {{ scope.row.VIN }}</div>
                                                                                         <input type="text" v-model="scope.row.nDocNumNC" class="form-control inputdsc">
                                                                                     </el-tooltip>
+                                                                                    &nbsp;&nbsp;
                                                                                     <!-- Se mostrara la opción para pagar solo si se ha ingresado el DocNum y esta con estado Pendiente la nota de credito-->
-                                                                                    <template v-if="scope.row.nDocNumNC != 0 && scope.row.cFlagEstadoNC == 'P'">
+                                                                                    <template v-if="scope.row.nDocNumNC != 0 && scope.row.cFlagEstadoNC == 'P' && scope.row.dFechaModifica != ''">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Pagar Nota Credito {{ scope.row.VIN }}</div>
-                                                                                            <i @click="aprobarNotaCredito(scope.row)" :style="'color:#B0B02E'" class="fas fa-md fa-coins fa-spin"></i>
+                                                                                            <i @click="aprobarNotaCredito(scope.row)" :style="'color:#B0B02E'" class="fas fa-md fa-coins"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
                                                                                 </template>
@@ -1051,6 +1052,9 @@
 
                 let me = this;
 
+                me.mostrarProgressBar();
+                me.loadingProgressBar("GUARDANDO CÓDIGO DE LA NC EN EL SGC...");
+
                 var url = me.ruta + '/dsctotorgados/SetUpdDocNumNC';
                 axios.post(url, {
                     'data'  : me.arrayNotaCreditoMultipleSelection
@@ -1062,7 +1066,7 @@
                     );
                     $("#myBar").hide();
                     me.loading.close();
-                    this.listarDescPedido(1);
+                    this.listarPedidoDistribuido(1);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1089,8 +1093,65 @@
                 }
                 return this.error;
             },
-            aprobarNotaCredito(){
+            aprobarNotaCredito(data){
+                if(this.validarAprobarNotaCredito(data)){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
 
+                swal({
+                    title: '¿Esta seguro Pagar la Nota de Credito del Pedido N°' + data.NUM_PEDIDO + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Conforme',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+
+                        me.mostrarProgressBar();
+
+                        var url = me.ruta + '/dsctotorgados/SetPagarNC';
+                        axios.post(url, {
+                            'data'  : data
+                        }).then(response => {
+                            console.log(response.data);
+                            // console.log(response.data.data.ASESOR_COMERCIAL);
+                            swal(
+                                'Generado!',
+                                'La Nota de Crédito ha sido pagada correctamente.',
+                                'success'
+                            );
+                            $("#myBar").hide();
+                            this.listarPedidoDistribuido(1);
+                        }).catch(error => {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            validarAprobarNotaCredito(data){
+                let me = this;
+                this.error = 0;
+                this.mensajeError =[];
+
+                if (data.nDocNumNC == 0 || data.nDocNumNC == '') {
+                    me.mensajeError.push('Debe ingresar el Código de la NC del Pedido : ' + data.NUM_PEDIDO);
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =============================================
             // =============  MODAL ========================
@@ -1200,6 +1261,11 @@
     }
     .inputdsc{
         border: 1px solid #3b5998 !important;
+    }
+    .el-table .cell{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 </style>
 
