@@ -190,6 +190,65 @@ class SapContactoController extends Controller
         return $response->getBody();
     }
 
+    public function SapPatchNameContacto(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,
+            'base_uri'  => $this->cnxIntegration
+        ]);
+
+        $nIdPersona    =   $request->nIdPersona;
+        $cTipoPersona  =   $request->cTipoPersona;
+
+        $arrayDirecciones = DB::select('exec [usp_Persona_GetDireccionesByPersona] ?, ?',
+                                                    [   $nIdPersona,
+                                                        $cTipoPersona
+                                                    ]);
+
+        //Obtener Tipo Persona
+        $tipoPersona = $request->contacto['cFlagTipoPersona'];
+
+        $CardCode       =   "C". $request->contacto['cNumeroDocumento'];
+        $UserName       =   $request->contacto['cContacto'];
+
+        if ($tipoPersona == 'N') {
+            $U_SYP_BPAP =   $request->contacto['cApellidoPaterno'];
+            $U_SYP_BPAM =   $request->contacto['cApellidoMaterno'];
+            $U_SYP_BPNO =   $request->contacto['cPrimerNombre'];
+            $U_SYP_BPN2 =   $request->contacto['cSegundoNombre'];
+            $U_SYP_BPTP =   "TPN";
+            $U_SYP_BPTD =   "1";
+
+            $json = [
+                'json' => [
+                    "CardCode"      =>  $CardCode,
+                    "CardName"      =>  $UserName,
+                    "U_SYP_BPAP"    =>  $U_SYP_BPAP,
+                    "U_SYP_BPAM"    =>  $U_SYP_BPAM,
+                    "U_SYP_BPNO"    =>  $U_SYP_BPNO,
+                    "U_SYP_BPN2"    =>  $U_SYP_BPN2,
+                    "U_SYP_BPTP"    =>  $U_SYP_BPTP,
+                    "U_SYP_BPTD"    =>  $U_SYP_BPTD
+                ]
+            ];
+        } else {
+            $U_SYP_BPTP = "TPJ";
+            $U_SYP_BPTD = "6";
+
+            $json = [
+                'json' => [
+                    "CardCode"      =>  $CardCode,
+                    "CardName"      =>  $UserName,
+                    "U_SYP_BPTP"    =>  $U_SYP_BPTP,
+                    "U_SYP_BPTD"    =>  $U_SYP_BPTD
+                ]
+            ];
+        }
+
+        $response = $client->request('POST', "/pruebas/Contacto/SapSetContactoUpd/", $json);
+        return $response->getBody();
+    }
+
     public function SapSetUpdDireccionesContacto(Request $request)
     {
         $client = new Client([
