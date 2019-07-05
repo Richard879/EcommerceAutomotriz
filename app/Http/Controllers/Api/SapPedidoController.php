@@ -20,13 +20,6 @@ class SapPedidoController extends Controller
             'base_uri'  => $this->cnxIntegration
         ]);
 
-        /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
-                                                    [
-                                                        Auth::user()->id
-                                                    ]);
-        // Obtener el EmployeeCode del Usuario Autenticado
-        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;*/
-
         // ======================================================================
         // GENERAR ORDEN VENTA PARA VEHÍCULO
         // ======================================================================
@@ -37,16 +30,12 @@ class SapPedidoController extends Controller
 
         $arraySapPedido = $request->arraySapPedido;
         foreach ($arraySapPedido as $key => $value) {
-
-            //$SubTotal = (floatval($value['fSubTotalDolares']) / floatval($request->Igv));
-
             $json = [
                 'json' => [
                     "CardCode"          =>  (string)$value['cCardCode'],
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    //"DocTotal"          =>  (string)$value['fSubTotalDolares'],
                     "SalesPersonCode"   =>  (string)$value['nSalesEmployeeCode'],
                     "U_SYP_MDMT"        =>  "01",
                     "DocumentLines" => [
@@ -55,7 +44,6 @@ class SapPedidoController extends Controller
                             "Quantity"      =>  "1",
                             "TaxCode"       =>  "IGV",
                             "PriceAfterVAT" => (string)$value['fSubTotalDolares'],
-                            //"UnitPrice"     =>  (string)$SubTotal,
                             "Currency"      =>  "US$",
                             "WarehouseCode" =>  (string)$request->WarehouseCode,
                             "ProjectCode"   =>  (string)$value['cNumeroVin'],
@@ -117,7 +105,6 @@ class SapPedidoController extends Controller
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
                     "DocCurrency"       =>  "US$",
-                    //"DocTotal"          =>  '',
                     "SalesPersonCode"   =>  (string)$nSalesEmployeeCode,
                     "U_SYP_MDMT"        =>  "01",
                     "DocumentLines"     =>  array()
@@ -135,7 +122,6 @@ class SapPedidoController extends Controller
                     "Quantity"          =>  $value['nCantidad'],
                     "TaxCode"           =>  "IGV",
                     "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
-                    //"UnitPrice" =>  (string)$SubTotal,
                     "Currency"          =>  "US$",
                     "WarehouseCode"     =>  (string)$value['cWhsCode'],
                     "CostingCode2"      =>  "01", //UnidadDeNegocio
