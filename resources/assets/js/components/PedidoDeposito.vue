@@ -1177,6 +1177,13 @@
                 arrayCuenta_Origen: [],
                 arrayDeposito: [],
                 arrayTipoComprobante: [],
+                fillTipoCambio:{
+                    cflagOp: '',
+                    dFechaTipoCambio: '',
+                    fTipoCambioComercial: 0,
+                    fTipoCambioCompra: 0,
+                    fTipoCambioVenta: 0
+                },
                 // =============================================================================
                 // ================ VARIABLES MODAL DETALLE DEPOSITOS POR PEDIDO ===============
                 fillDetalleDeposito: {
@@ -1948,13 +1955,30 @@
             },
             //=============== REGISTRO DEPOSITO == DEPOSITO BANCARIO EFECTIVO ========================
             registrarDeposito(){
+                let me = this;
+
+                if(this.validarTipoCambio()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
                 if(this.validarNuevoDeposito()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
-                this.subirArchivos();
+                setTimeout(function() {
+                    if(me.fillTipoCambio.fTipoCambioComercial == '' || me.fillTipoCambio.fTipoCambioComercial == 0 || me.fillTipoCambio.fTipoCambioComercial == '.000'){
+                        me.accionmodal = 1;
+                        me.modal = 1;
+                        return;
+                    } else {
+                        me.subirArchivos();
+                    }
+                }, 700);
+
+                // this.subirArchivos();
             },
             subirArchivos(){
                 this.mostrarProgressBar();
@@ -2043,7 +2067,7 @@
                 if(this.formNuevoDeposito.nidnumerocuenta_destino == ''){
                     this.mensajeError.push('Debe seleccionar una Cuenta');
                 };
-                if(this.formNuevoDeposito.dfechadeposito == ''){
+                if(this.formNuevoDeposito.dfechadeposito == '' || this.formNuevoDeposito.dfechadeposito == null){
                     this.mensajeError.push('Debe ingresar Fecha Depósito');
                 };
                 if(this.formNuevoDeposito.nnumerooperacion == ''){
@@ -2077,6 +2101,13 @@
             },
             //=============== REGISTRO OTRO DEPOSITO <> DEPOSITO BANCARIO EFECTIVO ========================
             registrarOtroTipoDeposito(){
+                let me = this;
+
+                if(this.validarTipoCambio()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
                 if(this.validarOtroTipoDeposito()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -2088,7 +2119,15 @@
                     return;
                 }
 
-                this.subirArchivosOtroDeposito();
+                setTimeout(function() {
+                    if(me.fillTipoCambio.fTipoCambioComercial == '' || me.fillTipoCambio.fTipoCambioComercial == 0 || me.fillTipoCambio.fTipoCambioComercial == '.000'){
+                        me.accionmodal=1;
+                        me.modal = 1;
+                        return;
+                    } else {
+                        me.subirArchivosOtroDeposito();
+                    }
+                }, 700);
             },
             subirArchivosOtroDeposito(){
                 this.mostrarProgressBar();
@@ -2185,6 +2224,44 @@
             },
             ocultarFormularioDeposito(){
                 this.arrayTipoMovimientoPermisos = [];
+            },
+            validarTipoCambio(){
+                let me = this;
+                this.error = 0;
+                this.mensajeError =[];
+
+                // ========== OBTENER EL TIPO CAMBIO DE LA FECHA SELECCIONADA ==========
+                var url = this.ruta + '/tipocambio/GetTipoCambioByFecha';
+                axios.get(url, {
+                    params: {
+                        'dfecha': this.formNuevoDeposito.dfechadeposito
+                    }
+                }).then(response => {
+                    //Obtengo Tipo Cambio moment().format('DD/MM/YYYY')
+                    this.fillTipoCambio.dFechaTipoCambio        =   moment().format('YYYY-MM-DD');
+                    this.fillTipoCambio.fTipoCambioComercial    =   response.data[0].fValorTipoCambioComercial;
+                    this.fillTipoCambio.fTipoCambioComercial    =   parseFloat(this.fillTipoCambio.fTipoCambioComercial);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+
+                setTimeout(function() {
+                    // ========== VALIDAR SI EL TIPO CAMBIO COMERCIAL ES = 0 ==========
+                    if(me.fillTipoCambio.fTipoCambioComercial == '' || me.fillTipoCambio.fTipoCambioComercial == 0 || me.fillTipoCambio.fTipoCambioComercial == '.000'){
+                        me.mensajeError.push('No Existe Tipo de Cambio de la Fecha de Deposito seleccionada');
+                    };
+
+                    if(me.mensajeError.length){
+                        me.error = 1;
+                    }
+                    return me.error;
+                }, 400);
             },
             // ==============================================================================
             // =============  MODAL VER DETALLE DEPOSITOS POR PEDIDO ========================
