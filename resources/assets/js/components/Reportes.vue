@@ -9,8 +9,8 @@
                 </div>
             </header>
 
-            <!--CONSULTAS/RETAIL || ADV/Gerencia-->
-            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096 || formLogin.nIdRol == 110121">
+            <!--CONSULTAS/RETAIL || JV//Supervisor//ADV/Gerencia-->
+            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110121 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <section class="dashboard-counts no-padding-bottom">
                     <div class="container-fluid">
                         <div class="row bg-white has-shadow">
@@ -34,7 +34,7 @@
                 </section>
             </template>
 
-            <!--Marketing y Ventas || 110124 Administracion//JV/ADV/Gerencia-->
+            <!--Marketing y Ventas || Adminis//JV/ADV/Gerencia-->
             <section class="dashboard-counts no-padding-bottom" v-if="formLogin.nIdRol == 110124 || formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <div class="container-fluid">
                     <div class="row bg-white has-shadow">
@@ -42,9 +42,9 @@
                             <h3>MARKETING Y VENTAS</h3>
                         </div>
 
-                        <!-- Administracion//ADV//Gerencia -->
+                        <!-- Si es Adminis//ADV//Gerencia -->
                         <template v-if="formLogin.nIdRol == 110124 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
-                            <!-- Si es ADV // Gerencia -->
+                            <!-- Si es ADV//Gerencia -->
                             <template v-if="formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                                 <div class="col-xl-4 col-sm-6">
                                     <div class="item d-flex align-items-center">
@@ -59,6 +59,7 @@
                                     </div>
                                 </div>
                             </template>
+                            <!-- Si es Adminis//ADV//Gerencia -->
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES')"><i class="fa-md fa fa-file-excel-o"></i></div>
@@ -66,7 +67,8 @@
                                 </div>
                             </div>
                         </template>
-                        <!-- Administracion//ADV//Gerencia -->
+
+                        <!-- Si es JV//ADV//Gerencia -->
                         <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
@@ -79,8 +81,8 @@
                 </div>
             </section>
 
-            <!--Reportes Comerciales || JV/ADV/Gerencia ||| formLogin.nIdRol == 110026 <= Vendedores || -->
-            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096 || formLogin.nIdRol == 110121">
+            <!--Reportes Comerciales || AC//JV//Supervisor//ADV//Gerencia -->
+            <template v-if="formLogin.nIdRol == 110026 || formLogin.nIdRol == 110025 || formLogin.nIdRol == 110121 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
                 <section class="dashboard-counts no-padding-bottom">
                     <div class="container-fluid">
                         <div class="row bg-white has-shadow">
@@ -101,24 +103,27 @@
                                     <div class="title"><span><br>Stock Vehiculos General</span></div>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"  @click="abrirModal('meta-venta', 'abrir', 'METAS DE VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Metas de venta de vehículos</span></div>
+
+                            <template v-if="formLogin.nIdRol == 110025 || formLogin.nIdRol == 110121 || formLogin.nIdRol == 110083 || formLogin.nIdRol == 110096">
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet"  @click="abrirModal('meta-venta', 'abrir', 'METAS DE VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Metas de venta de vehículos</span></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"  @click="abrirModal('contacto-libre', 'abrir', 'CONTACTO LIBRE')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Contactos Libres</span></div>
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet"  @click="abrirModal('contacto-libre', 'abrir', 'CONTACTO LIBRE')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Contactos Libres</span></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"  @click="abrirModal('cotizaciones', 'abrir', 'COTIZACIONES POR FILTRO')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Cotizaciones</span></div>
+                                <div class="col-xl-4 col-sm-6">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="icon bg-violet"  @click="abrirModal('cotizaciones', 'abrir', 'COTIZACIONES POR FILTRO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                        <div class="title"><span><br>Cotizaciones</span></div>
+                                    </div>
                                 </div>
-                            </div>
+                            </template>
                         </div>
                     </div>
                 </section>
@@ -2932,6 +2937,19 @@
                     this.mensajeError.push('El nro de lista activa no se ha generado');
                 }
 
+                // SI EL ROL ES ASESOR COMERCIAL
+                if (this.formLogin.nIdRol == 110026) {
+                    if(!this.formFiltro.nidlinea){
+                        this.mensajeError.push('Debe seleccionar una linea');
+                    }
+                    if(!this.formFiltro.nidmarca){
+                        this.mensajeError.push('Debe seleccionar una marca');
+                    }
+                    if(!this.formFiltro.nidmodelo){
+                        this.mensajeError.push('Debe seleccionar un modelo');
+                    }
+                }
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2941,12 +2959,24 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(!this.formFiltro.nidsucursal){
-                    this.mensajeError.push('Debe seleccionar una Sucursal');
-                }*/
-                /*if(!this.formFiltro.nidproveedor){
-                    this.mensajeError.push('Debe seleccionar un Proveedor');
-                }*/
+                // SI EL ROL ES ASESOR COMERCIAL
+                if (this.formLogin.nIdRol == 110026) {
+                    if(!this.formFiltro.nidsucursal){
+                        this.mensajeError.push('Debe seleccionar una Sucursal');
+                    }
+                    if(!this.formFiltro.nidproveedor){
+                        this.mensajeError.push('Debe seleccionar un Proveedor');
+                    }
+                    if(!this.formFiltro.nidlinea){
+                        this.mensajeError.push('Debe seleccionar una linea');
+                    }
+                    if(!this.formFiltro.nidmarca){
+                        this.mensajeError.push('Debe seleccionar una marca');
+                    }
+                    if(!this.formFiltro.nidmodelo){
+                        this.mensajeError.push('Debe seleccionar un modelo');
+                    }
+                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -3229,7 +3259,9 @@
             },
             llenarComboLinea(){
                 var url;
-                url = this.ruta + '/versionvehiculo/GetLineasByProveedor'
+
+                // Si el rol del usuario es Vendedor.
+                (this.formLogin.nIdRol == 110026) ? url = this.ruta + '/gescontacto/GetLineasByUsuario' : url = this.ruta + '/versionvehiculo/GetLineasByProveedor'
 
                 this.obtenerListaPrecioActiva();
 
@@ -3256,7 +3288,9 @@
             },
             llenarComboMarca(){
                 var url;
-                url = this.ruta + '/versionvehiculo/GetMarcaByLinea'
+
+                // Si el rol del usuario es Vendedor.
+                (this.formLogin.nIdRol == 110026) ? url = this.ruta + '/gescontacto/GetMarcaByLinea' : url = this.ruta + '/versionvehiculo/GetMarcaByLinea'
 
                 axios.get(url, {
                     params: {
@@ -3281,7 +3315,9 @@
             },
             llenarComboModelo(){
                 var url;
-                url = this.ruta + '/versionvehiculo/GetModeloByMarca'
+
+                // Si el rol del usuario es Vendedor.
+                (this.formLogin.nIdRol == 110026) ? url = this.ruta + '/gescontacto/GetModeloByMarca' : url = this.ruta + '/versionvehiculo/GetModeloByMarca'
 
                 axios.get(url, {
                     params: {
@@ -3814,6 +3850,10 @@
                 this.formFiltro.nidcronograma       =   '';
                 this.formFiltro.nidestadocotizacion =   '';
                 this.formFiltro.fmontodescuento     =   '';
+                this.arrayLinea                     =   [];
+                this.arrayMarca                     =   [];
+                this.arrayModelo                    =   [];
+
                 this.arrayDetalleVentaRetail        =   [];
                 this.arrayVentaHGSI                 =   [];
                 this.arrayStockVehiculos            =   [];
