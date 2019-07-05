@@ -198,7 +198,7 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -210,7 +210,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -249,102 +249,54 @@
                                                             <template v-if="arrayContactoCarteraMes.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
-                                                                        <template v-if="fillMisContactos.ntipopersona == 1">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>Apellidos</th>
-                                                                                    <th>Nombres</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
-                                                                                    <th>Dirección</th>
-                                                                                    <th>Email</th>
-                                                                                    <th>Vendedor</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Mi Cartera {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
-                                                                                            <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.cPerApellidos"></td>
-                                                                                    <td v-text="c.cNombre"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cDireccion"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
-                                                                        <template v-else>
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>Razon Social</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
-                                                                                    <th>Email</th>
-                                                                                    <th>Persona Contacto</th>
-                                                                                    <th>Vendedor</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Seguimiento  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
-                                                                                            <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.cRazonSocial"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cContacto"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Código</th>
+                                                                                <th>#Codigo SAP</th>
+                                                                                <th>Contacto</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Telef. Fijo</th>
+                                                                                <th>Dirección</th>
+                                                                                <th>Email</th>
+                                                                                <th>Vendedor</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Mi Cartera {{ c.cContacto }}</div>
+                                                                                        <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
+                                                                                        <i @click="activarTab3(c)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
+                                                                                        <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" >
+                                                                                        <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
+                                                                                        <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                        <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
+                                                                                        <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                    </el-tooltip>-->
+                                                                                </td>
+                                                                                <td v-text="c.nIdContacto"></td>
+                                                                                <td v-text="c.CardCode"></td>
+                                                                                <td v-text="c.cContacto"></td>
+                                                                                <td v-text="c.cPerDocumento"></td>
+                                                                                <td v-text="c.nTelefonoMovil"></td>
+                                                                                <td v-text="c.cDireccion"></td>
+                                                                                <td v-text="c.cEmail"></td>
+                                                                                <td v-text="c.cVendedor"></td>
+                                                                            </tr>
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-sm-12">
@@ -3342,6 +3294,7 @@
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
                 arrayContactoCarteraMes: [],
+                arrayContactoCarteraMesRpta: [],
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
@@ -3908,30 +3861,34 @@
             },
             cambiarPaginaCarteraMes(page){
                 this.pagination.current_page=page;
-                this.listarCarteraMesPorVendedor(page);
+                this.paginateContactoConCarteraMes(this.arrayContactoCarteraMesRpta, page);
+            },
+            paginateContactoConCarteraMes(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContactoCarteraMes= data.slice(this.pagination.from1, this.pagination.to);
             },
             listarCarteraMesPorVendedor(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetCarteraMesByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillMisContactos.ntipopersona,
-                        'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'     : 220016,
+                        'ntipopersona'      : this.fillMisContactos.ntipopersona,
+                        'cnrodocumento'     : String(this.fillMisContactos.cnrodocumento.toString()),
+                        'cfiltrodescripcion': this.fillMisContactos.cfiltrodescripcion.toString(),
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayContactoCarteraMes = response.data.arrayContactoCarteraMes.data;
-                    this.pagination.current_page =  response.data.arrayContactoCarteraMes.current_page;
-                    this.pagination.total = response.data.arrayContactoCarteraMes.total;
-                    this.pagination.per_page    = response.data.arrayContactoCarteraMes.per_page;
-                    this.pagination.last_page   = response.data.arrayContactoCarteraMes.last_page;
-                    this.pagination.from        = response.data.arrayContactoCarteraMes.from;
-                    this.pagination.to           = response.data.arrayContactoCarteraMes.to;
-                }).then(function (response) {
+                    this.arrayContactoCarteraMesRpta = response.data.arrayContactoCarteraMes;
+                    this.paginateContactoConCarteraMes(this.arrayContactoCarteraMesRpta, page);
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

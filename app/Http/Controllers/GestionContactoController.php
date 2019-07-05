@@ -312,8 +312,7 @@ class GestionContactoController extends Controller
         $cFiltroDescripcion =   ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
         $arrayContactoCarteraMes = DB::select('exec usp_Contacto_GetContactoCarteraMes ?, ?, ?, ?, ?, ?, ?',
-                                                                        [
-                                                                            $nIdEmpresa,
+                                                                        [   $nIdEmpresa,
                                                                             $nIdSucursal,
                                                                             $nIdCronograma,
                                                                             $nTipoPersona,
@@ -322,7 +321,7 @@ class GestionContactoController extends Controller
                                                                             Auth::user()->id
                                                                         ]);
 
-        $arrayContactoCarteraMes = ParametroController::arrayPaginator($arrayContactoCarteraMes, $request);
+        //$arrayContactoCarteraMes = ParametroController::arrayPaginator($arrayContactoCarteraMes, $request);
         return ['arrayContactoCarteraMes'=>$arrayContactoCarteraMes];
     }
 
