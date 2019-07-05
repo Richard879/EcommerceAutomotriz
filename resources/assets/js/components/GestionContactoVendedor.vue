@@ -863,6 +863,19 @@
                                                                                                             </template>
                                                                                                         </td>
                                                                                                     </template>
+                                                                                                    <template v-if="s.nIdCabeceraPedido != 0">
+                                                                                                        <td :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cTipoSegNombre" colspan="4" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cEstadoSegNombre" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td>
+                                                                                                            <template v-if="s.cFlagVerificaReporte=='S'">
+                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                    <div slot="content">Reporte Pedido {{ s.nIdCabeceraPedido }}</div>
+                                                                                                                    <i @click="generarPedidoPDF(s.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                                                            </template>
+                                                                                                        </td>
+                                                                                                    </template>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -5203,6 +5216,37 @@
             },
             verFichaPDF(cRutaDocumento){
                 window.open(cRutaDocumento);
+            },
+            //GENERAR REPORTE PEDIDO
+            generarPedidoPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetDetallePedido';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
+                    // console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =============  TAB OTROS INTERESES ======================
             validarTab44(){
