@@ -292,6 +292,7 @@
                                                                                 <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cPerDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
+                                                                                <td v-text="c.cTelefonoFijo"></td>
                                                                                 <td v-text="c.cDireccion"></td>
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
