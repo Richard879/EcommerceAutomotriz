@@ -610,6 +610,7 @@ class CotizacionController extends Controller
         $logo                   =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai                =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
+        // OBTENER INFORMACIÓN DE LA COTIZACION
         $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
                                     [
                                         $nIdEmpresa,
@@ -620,17 +621,24 @@ class CotizacionController extends Controller
         $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
 
-        //OBTENGO LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
+        // OBTENER LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
         $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
                                     [
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        // OBTENER LOS ELEMENTOS DE VENTA DE LA COTIZACION
         $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementosVenta] ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,
                                         $nIdCabeceraCotizacion
+                                    ]);
+
+        // OBTENER INFORMACIÓN DEL USUARIO AUTENTICADO
+        $arrayUsuarioAuth = DB::select('exec [usp_Usuario_GetInformacionUsuario]  ?',
+                                    [
+                                        Auth::user()->id
                                     ]);
 
         //IP Addres del Usuario
@@ -750,7 +758,8 @@ class CotizacionController extends Controller
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
                                                                 'logo'                  =>  $logo,
                                                                 'hyundai'               =>  $hyundai,
-                                                                'tabla'                 =>  $tabla
+                                                                'tabla'                 =>  $tabla,
+                                                                'arrayUsuarioAuth'      =>  $arrayUsuarioAuth
                                                             ]);
 
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');

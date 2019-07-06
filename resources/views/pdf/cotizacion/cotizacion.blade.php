@@ -161,6 +161,28 @@
                 </table>
             </div>
 
+            {{-- Costo de TYP --}}
+            @if ($arrayUsuarioAuth[0]->nIdGrupoPar != 110026)
+                @if (sizeof($arrayDetalleCotizacion) > 0)
+                    <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
+                        <thead style="background-color: lightgray;">
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Monto (US$)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($arrayDetalleCotizacion as $typ)
+                                <tr>
+                                    <td> TYP </td>
+                                    <td> {{ $typ->fTYP }} </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            @endif
+
             {{-- Mostrar Detalle de los Elementos de Venta Adicionados --}}
             @if (sizeof($arrayElementoVenta) > 0)
                 <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">

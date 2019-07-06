@@ -4265,6 +4265,8 @@
                 }
             },
             generarCotizacionPDF(nIdCabeCoti){
+                this.mostrarProgressBar();
+
                 var config = {
                     responseType: 'blob'
                 };
@@ -4316,6 +4318,7 @@
             },
             verFichaPDF(cRutaDocumento){
                 window.open(cRutaDocumento);
+                $("#myBar").hide();
             },
             cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
