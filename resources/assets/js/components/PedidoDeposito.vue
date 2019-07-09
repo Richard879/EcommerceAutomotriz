@@ -948,6 +948,7 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>CÓDIGO</th>
                                                                     <th>BANCO</th>
                                                                     <th>CODIGO BANCO</th>
                                                                     <th>N° OPERACIÓN</th>
@@ -963,6 +964,7 @@
                                                             <tbody>
                                                                 <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido"
                                                                         :style="{ background : depositos.colorearEstadoDeposito}">
+                                                                    <td v-text="depositos.nIdDepositoPedido"></td>
                                                                     <td v-text="depositos.cNombreBanco"></td>
                                                                     <td v-text="depositos.cAcctCode"></td>
                                                                     <td v-text="depositos.nNumeroOperacion"></td>
