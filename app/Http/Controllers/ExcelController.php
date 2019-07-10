@@ -341,17 +341,20 @@ class ExcelController extends Controller
     //========================= REPOTES =========================
     public function exportDetalleVentaRetail(Request $request)
     {
+        $nidempresa     =   $request->nidempresa;
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
         $nIdUsuario     =   Auth::user()->id;
 
+        $nidempresa     =   ($nidempresa == NULL) ? ($nidempresa = 0) : $nidempresa;
         $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail] ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetDetalleVentaRetail] ?, ?, ?, ?',
                                                             [
+                                                                $nidempresa,
                                                                 $nidsucursal,
                                                                 $nidvendedor,
                                                                 $nIdUsuario
@@ -370,6 +373,7 @@ class ExcelController extends Controller
 
     public function exportarVentaHGSI(Request $request)
     {
+        $nidempresa     =   $request->nidempresa;
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
         $nidproveedor   =   $request->nidproveedor;
@@ -378,6 +382,7 @@ class ExcelController extends Controller
         $nidmodelo      =   $request->nidmodelo;
         $nIdUsuario     =   Auth::user()->id;
 
+        $nidempresa     =   ($nidempresa == NULL) ? ($nidempresa = 0) : $nidempresa;
         $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
         $nidproveedor   =   ($nidproveedor == NULL) ? ($nidproveedor = 0) : $nidproveedor;
@@ -387,8 +392,9 @@ class ExcelController extends Controller
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetVentasHGSI] ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetVentasHGSI] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [
+                                                                    $nidempresa,
                                                                     $nidsucursal,
                                                                     $nidvendedor,
                                                                     $nidproveedor,
@@ -408,14 +414,16 @@ class ExcelController extends Controller
 
     public function exportarVentaDiaria(Request $request)
     {
+        $nidempresa     =   $request->nidempresa;
         $dfecha         =   $request->dfecha;
         $nidvendedor    =   $request->nidvendedor;
 
         $dfecha         =   ($dfecha == NULL) ? ($dfecha = '') : $dfecha;
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
 
-        return $data = DB::select('exec [usp_Reporte_GetVentaDiaria] ?, ?',
+        return $data = DB::select('exec [usp_Reporte_GetVentaDiaria] ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $dfecha,
                                                 $nidvendedor
                                             ]);
@@ -423,6 +431,7 @@ class ExcelController extends Controller
 
     public function exportarStock(Request $request)
     {
+        $nidempresa         =   $request->nidempresa;
         $nidsucursal        =   $request->nidsucursal;
         $nidproveedor       =   $request->nidproveedor;
         $nidlista           =   $request->nidlista;
@@ -436,8 +445,9 @@ class ExcelController extends Controller
         $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
 
-        $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetStockFiltro] ?, ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidproveedor,
                                                 $nidlista,
@@ -456,6 +466,7 @@ class ExcelController extends Controller
 
     public function exportarStockGeneral(Request $request)
     {
+        $nidempresa         =   $request->nidempresa;
         $nidsucursal        =   $request->nidsucursal;
         $nidproveedor       =   $request->nidproveedor;
         $cflagdisponible    =   $request->cflagdisponible;
@@ -470,8 +481,9 @@ class ExcelController extends Controller
 
         $opcion             =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetStockGeneral] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetStockGeneral] ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidproveedor,
                                                 $cflagdisponible,
@@ -489,6 +501,7 @@ class ExcelController extends Controller
 
     public function exportarMetasVenta(Request $request)
     {
+        $nidempresa     =   $request->nidempresa;
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
         $nidsublinea    =   $request->nidsublinea;
@@ -499,8 +512,9 @@ class ExcelController extends Controller
 
         $opcion             =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetCuotaVendedor] ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetCuotaVendedor] ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidsublinea,
@@ -517,6 +531,7 @@ class ExcelController extends Controller
 
     public function exportarContactosLibres(Request $request)
     {
+        $nidempresa     =   $request->nidempresa;
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
         $dfecha         =   $request->dfecha;
@@ -527,8 +542,9 @@ class ExcelController extends Controller
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetContactosLibres] ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetContactosLibres] ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidvendedor,
                                                 $dfecha
                                             ]);
@@ -543,6 +559,7 @@ class ExcelController extends Controller
 
     public function exportarDistribucionDesc(Request $request)
     {
+        $nidempresa             =   $request->nidempresa;
         $nidsucursal            =   $request->nidsucursal;
         $nidvendedor            =   $request->nidvendedor;
         $nidcronograma          =   $request->nidcronograma;
@@ -557,8 +574,9 @@ class ExcelController extends Controller
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetDistribucionDesc] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetDistribucionDesc] ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidcronograma,
@@ -608,6 +626,7 @@ class ExcelController extends Controller
 
     public function exportarPedidoDeposito(Request $request)
     {
+        $nidempresa         =   $request->nidempresa;
         $nidsucursal        =   $request->nidsucursal;
         $nidvendedor        =   $request->nidvendedor;
         $nidcronograma      =   $request->nidcronograma;
@@ -621,8 +640,9 @@ class ExcelController extends Controller
 
         $opcion             =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetEstadoPedido] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_GetEstadoPedido] ?, ?, ?, ?, ?, ?',
                                             [
+                                                $nidempresa,
                                                 $nidsucursal,
                                                 $nidvendedor,
                                                 $nidcronograma,
@@ -640,6 +660,7 @@ class ExcelController extends Controller
 
     public function exportarCotizacionesByFitro(Request $request)
     {
+        $nidempresa             =   $request->nidempresa;
         $nIdSucursal            =   $request->nidsucursal;
         $nIdVendedor            =   $request->nidvendedor;
         $nIdCronograma          =   $request->nidcronograma;
@@ -656,8 +677,10 @@ class ExcelController extends Controller
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_GetCotizacionesByFiltro] ?, ?, ?, ?, ?, ?',
-                                            [   $nIdSucursal,
+        $data = DB::select('exec [usp_Reporte_GetCotizacionesByFiltro] ?, ?, ?, ?, ?, ?, ?',
+                                            [
+                                                $nidempresa,
+                                                $nIdSucursal,
                                                 $nIdVendedor,
                                                 $nIdCronograma,
                                                 $nIdEstadoCotizacion,

@@ -37,7 +37,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">

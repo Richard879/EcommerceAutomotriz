@@ -82,6 +82,9 @@
     <template v-if="menu==1300712">
         <descotorgados :ruta="ruta" :usuario="{{ auth()->user() }}"></descotorgados>
     </template>
+    <template v-if="menu==1300716">
+        <spmodelo :ruta="ruta" :usuario="{{ auth()->user() }}"></spmodelo>
+    </template>
 
 
     <template v-if="menu==1300284">

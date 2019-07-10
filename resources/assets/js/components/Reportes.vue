@@ -2736,6 +2736,7 @@
                 var url = this.ruta + '/reportes/exportDetalleVentaRetail';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'opcion'        :   1
@@ -2764,6 +2765,7 @@
                 var url = this.ruta + '/reportes/exportarVentaHGSI';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'nidproveedor'  :   this.formFiltro.nidproveedor,
@@ -2796,6 +2798,7 @@
                 var url = this.ruta + '/reportes/exportarVentaDiaria';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   this.formFiltro.dfechaventadiaria,
                         'nidvendedor'   :   this.formFiltro.nidvendedor
                     }
@@ -2862,6 +2865,7 @@
                 var url = this.ruta + '/reportes/exportarStock';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
                         'nidlista'          :   this.formFiltro.nidlista,
@@ -2898,6 +2902,7 @@
                 var url = this.ruta + '/reportes/exportarStockGeneral';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
                         'cflagdisponible'   :   'S',
@@ -2993,6 +2998,7 @@
                 var url = this.ruta + '/reportes/exportarMetasVenta';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'nidsublinea'   :   this.formFiltro.nidsublinea,
@@ -3055,6 +3061,7 @@
                 var url = this.ruta + '/reportes/exportarContactosLibres';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'dfecha'        :   this.formFiltro.dfechaventadiaria,
@@ -3084,6 +3091,7 @@
                 var url = this.ruta + '/reportes/exportarDistribucionDesc';
                 axios.get(url, {
                     params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'           :   this.formFiltro.nidsucursal,
                         'nidvendedor'           :   this.formFiltro.nidvendedor,
                         'nidcronograma'         :   this.formFiltro.nidcronograma,
@@ -3115,6 +3123,7 @@
                 var url = this.ruta + '/reportes/exportarPedidoDeposito';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidvendedor'       :   this.formFiltro.nidvendedor,
                         'nidcronograma'     :   this.formFiltro.nidcronograma,
@@ -3145,6 +3154,7 @@
                 var url = this.ruta + '/reportes/exportarCotizacionesByFitro';
                 axios.get(url, {
                     params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'           :   this.formFiltro.nidsucursal,
                         'nidvendedor'           :   this.formFiltro.nidvendedor,
                         'nidcronograma'         :   this.formFiltro.nidcronograma,
@@ -3439,6 +3449,7 @@
                 var url = this.ruta + '/reportes/exportDetalleVentaRetail';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'opcion'        :   2,
@@ -3474,6 +3485,7 @@
                 var url = this.ruta + '/reportes/exportarVentaHGSI';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'nidproveedor'  :   this.formFiltro.nidproveedor,
@@ -3517,6 +3529,7 @@
                 var url = this.ruta + '/reportes/exportarStock';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
                         'nidlista'          :   this.formFiltro.nidlista,
@@ -3560,6 +3573,7 @@
                 var url = this.ruta + '/reportes/exportarStockGeneral';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidproveedor'      :   this.formFiltro.nidproveedor,
                         'nidlista'          :   this.formFiltro.nidlista,
@@ -3603,6 +3617,7 @@
                 var url = this.ruta + '/reportes/exportarMetasVenta';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'nidsublinea'   :   this.formFiltro.nidsublinea,
@@ -3641,6 +3656,7 @@
                 var url = this.ruta + '/reportes/exportarContactosLibres';
                 axios.get(url, {
                     params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
                         'dfecha'        :   this.formFiltro.dfechaventadiaria,
@@ -3678,13 +3694,14 @@
                 var url = this.ruta + '/reportes/exportarDistribucionDesc';
                 axios.get(url, {
                     params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'           :   this.formFiltro.nidsucursal,
                         'nidvendedor'           :   this.formFiltro.nidvendedor,
                         'nidcronograma'         :   this.formFiltro.nidcronograma,
                         'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
                         'fmontodescuento'       :   this.formFiltro.fmontodescuento,
-                        'opcion'        :   2,
-                        'page'          :   page
+                        'opcion'                :   2,
+                        'page'                  :   page
                     }
                 }).then(response => {
                     this.arrayDistribucionDesc      = response.data.arrayDistribucionDesc.data;
@@ -3717,12 +3734,13 @@
                 var url = this.ruta + '/reportes/exportarPedidoDeposito';
                 axios.get(url, {
                     params: {
+                        'nidempresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'       :   this.formFiltro.nidsucursal,
                         'nidvendedor'       :   this.formFiltro.nidvendedor,
                         'nidcronograma'     :   this.formFiltro.nidcronograma,
                         'nidestadopedido'   :   this.formFiltro.nidestadopedido,
-                        'opcion'        :   2,
-                        'page'          :   page
+                        'opcion'            :   2,
+                        'page'              :   page
                     }
                 }).then(response => {
                     this.arrayPedidoDeposito        = response.data.arrayPedidoDeposito.data;
@@ -3755,14 +3773,15 @@
                 var url = this.ruta + '/reportes/exportarCotizacionesByFitro';
                 axios.get(url, {
                     params: {
+                        'nidempresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'           :   this.formFiltro.nidsucursal,
                         'nidvendedor'           :   this.formFiltro.nidvendedor,
                         'nidcronograma'         :   this.formFiltro.nidcronograma,
                         'nidestadocotizacion'   :   this.formFiltro.nidestadocotizacion,
                         'dfechainicio'          :   this.formFiltro.dfechainicio,
                         'dfechafin'             :   this.formFiltro.dfechafin,
-                        'opcion'        :   2,
-                        'page'          :   page
+                        'opcion'                :   2,
+                        'page'                  :   page
                     }
                 }).then(response => {
                     this.arrayCotizaciones          = response.data.arrayCotizaciones.data;

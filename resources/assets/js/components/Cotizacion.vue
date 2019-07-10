@@ -704,6 +704,7 @@
                                                                                                     <div class="form-group row">
                                                                                                         <div class="col-sm-12">
                                                                                                             <label class="col-sm-4 form-control-label">Sobre Precio </label>
+                                                                                                            <!-- Sobre Precio = (Precio Base - (Bono + Precio Lista)) -->
                                                                                                             <label class="form-control-label"><strong>US$ {{ this.arrayVehiculo[0].sobrePrecio = (parseFloat(this.arrayVehiculo[0].PrecioBase)-(parseFloat(this.arrayVehiculo[0].Bono)+parseFloat(this.arrayVehiculo[0].PrecioLista))) }} </strong></label>
                                                                                                         </div>
                                                                                                     </div>

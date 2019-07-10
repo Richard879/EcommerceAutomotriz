@@ -97,6 +97,7 @@ Vue.component('generaproyecto', require('./components/GenerarProyecto.vue'));
 Vue.component('gestionmiusuarios', require('./components/GestionMiUsuario.vue'));
 Vue.component('reportes', require('./components/Reportes.vue'));
 Vue.component('descotorgados', require('./components/DescuentoOtorgados.vue'));
+Vue.component('spmodelo', require('./components/AsignarSPModelo.vue'));
 
 const app = new Vue({
     el: '#app',

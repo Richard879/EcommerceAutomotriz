@@ -12,22 +12,23 @@ class AsignaVendedorModeloController extends Controller
     public function GetLstVendedorModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->nidsucursal;
-        $nIdProveedor = $request->nidproveedor;
-        $nIdLinea = $request->nidlinea;
-        $nIdMarca = $request->nidmarca;
-        $nIdModelo = $request->nidmodelo;
-        $nIdJefeVentas = $request->nidjefeventas;
 
-        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdSucursal    = $request->nidsucursal;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdLinea       = $request->nidlinea;
+        $nIdMarca       = $request->nidmarca;
+        $nIdModelo      = $request->nidmodelo;
+        $nIdJefeVentas  = $request->nidjefeventas;
+
+        $nIdLinea       = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
         $arrayVendedorModelo = DB::select('exec usp_AsigVendedorModelo_GetListVendedoresAsignados ?, ?, ?, ?, ?, ?, ?',
                                                             array($nIdEmpresa,
                                                                   $nIdSucursal,
-                                                                  $nIdProveedor, 
+                                                                  $nIdProveedor,
                                                                   $nIdLinea,
                                                                   $nIdMarca,
                                                                   $nIdModelo,
@@ -40,7 +41,7 @@ class AsignaVendedorModeloController extends Controller
     public function SetAsignaModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
+
         $vendedorlinea = DB::select('exec [usp_AsignaVendedorModelo_SetAsignaModelo] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdSucursal,

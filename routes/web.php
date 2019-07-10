@@ -533,6 +533,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/dsctotorgados/SetUpdDocNumNC','DescuentosOtorgadosController@SetUpdDocNumNC');
     Route::post('/dsctotorgados/SetPagarNC','DescuentosOtorgadosController@SetPagarNC');
 
+    Route::get('/sobreprecio/GetListModelos','SobrePrecioController@GetListModelos');
+
+
     ///========================================
     /////=================  ROUTES SAP
     //
