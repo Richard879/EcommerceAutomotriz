@@ -61,7 +61,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.ccontacto" @keyup.enter="listarPedidosConDepositos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -69,7 +69,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnrodocumento" @keyup.enter="listarPedidosConDepositos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -109,7 +109,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nº Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidosConDepositos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -117,7 +117,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidosConDepositos" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidosConDepositos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -173,7 +173,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidosConDepositos">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidosConDepositos(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -651,6 +651,7 @@
                     cnrodocumento: ''
                 },
                 arrayPedido: [],
+                arrayPedidoRpta: [],
                 arrayEstadoPedido: [],
                 arrayMarca: [],
                 arrayModelo: [],
@@ -702,6 +703,10 @@
                 // =============================================================
                 loading: false,
                 flagBuscarContacto: 0,
+                // ============================================================
+                page: 1,
+                perPage: 10,
+                pages:[],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -856,9 +861,6 @@
                     }
                 });
             },
-            buscarPedidosConDepositos(){
-                this.listarPedidosConDepositos(1);
-            },
             listarPedidosConDepositos(page){
                 this.mostrarProgressBar();
 
@@ -879,13 +881,8 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedido                = response.data.arrayPedido.data;
-                    this.pagination.current_page    = response.data.arrayPedido.current_page;
-                    this.pagination.total           = response.data.arrayPedido.total;
-                    this.pagination.per_page        = response.data.arrayPedido.per_page;
-                    this.pagination.last_page       = response.data.arrayPedido.last_page;
-                    this.pagination.from            = response.data.arrayPedido.from;
-                    this.pagination.to              = response.data.arrayPedido.to;
+                    this.arrayPedidoRpta            = response.data.arrayPedido;
+                    this.paginatePedidosConDepositos(this.arrayPedidoRpta, page);
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -897,9 +894,19 @@
                     }
                 });
             },
+            paginatePedidosConDepositos(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayPedido            = data.slice(this.pagination.from1, this.pagination.to);
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarPedidosConDepositos(page);
+                this.paginatePedidosConDepositos(this.arrayPedidoRpta, page);
             },
             // =================================================================
             // METODOS TAB DISTRIBUCIÓN DE LOS DEPOSITOS
