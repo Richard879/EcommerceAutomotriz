@@ -3506,13 +3506,13 @@
                         'nidlinea'          : this.fillBusqVehiculo.nidlinea,
                         'nidmarca'          : this.fillBusqVehiculo.nidmarca,
                         'nidmodelo'         : this.fillBusqVehiculo.nidmodelo,
-                        'naniomodelo'       :this.fillBusqVehiculo.naniomodelo,
+                        'naniomodelo'       : this.fillBusqVehiculo.naniomodelo,
                         'cnombrecomercial'  : this.fillBusqVehiculo.cnombrecomercial,
                         'page'              : page
                     }
                 }).then(response => {
                     this.arrayVehiculoModal             = response.data.arrayListaVehiculos.data;
-                    this.paginationModal.current_page   =  response.data.arrayListaVehiculos.current_page;
+                    this.paginationModal.current_page   = response.data.arrayListaVehiculos.current_page;
                     this.paginationModal.total          = response.data.arrayListaVehiculos.total;
                     this.paginationModal.per_page       = response.data.arrayListaVehiculos.per_page;
                     this.paginationModal.last_page      = response.data.arrayListaVehiculos.last_page;

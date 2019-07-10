@@ -198,7 +198,7 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Persona</label>
@@ -210,7 +210,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -249,102 +249,55 @@
                                                             <template v-if="arrayContactoCarteraMes.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
-                                                                        <template v-if="fillMisContactos.ntipopersona == 1">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>Apellidos</th>
-                                                                                    <th>Nombres</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
-                                                                                    <th>Dirección</th>
-                                                                                    <th>Email</th>
-                                                                                    <th>Vendedor</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Mi Cartera {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark">
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
-                                                                                            <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.cPerApellidos"></td>
-                                                                                    <td v-text="c.cNombre"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cDireccion"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
-                                                                        <template v-else>
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Acciones</th>
-                                                                                    <th>Código</th>
-                                                                                    <th>Razon Social</th>
-                                                                                    <th>Nro Documento</th>
-                                                                                    <th>Telefono</th>
-                                                                                    <th>Email</th>
-                                                                                    <th>Persona Contacto</th>
-                                                                                    <th>Vendedor</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
-                                                                                    <td>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Referencias Sin Cartera {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Seguimiento  {{ c.cContacto }}</div>
-                                                                                            <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
-                                                                                            <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                        </el-tooltip>
-                                                                                        <el-tooltip class="item" effect="dark" >
-                                                                                            <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
-                                                                                            <i @click="abrirModal('contacto', 'editarJ', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                        <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
-                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>-->
-                                                                                    </td>
-                                                                                    <td v-text="c.nIdContacto"></td>
-                                                                                    <td v-text="c.cRazonSocial"></td>
-                                                                                    <td v-text="c.cNumeroDocumento"></td>
-                                                                                    <td v-text="c.nTelefonoMovil"></td>
-                                                                                    <td v-text="c.cEmail"></td>
-                                                                                    <td v-text="c.cContacto"></td>
-                                                                                    <td v-text="c.cVendedor"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </template>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Código</th>
+                                                                                <th>#Codigo SAP</th>
+                                                                                <th>Contacto</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Telef. Fijo</th>
+                                                                                <th>Dirección</th>
+                                                                                <th>Email</th>
+                                                                                <th>Vendedor</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Mi Cartera {{ c.cContacto }}</div>
+                                                                                        <i @click="abrirModal('contacto', 'detalleconcartera', c)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content">Asignar Referencia  {{ c.cContacto }}</div>
+                                                                                        <i @click="activarTab3(c)" :style="'color:green'" class="fa-md fa fa-bus-alt"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content">Anular de Cartera Mes  {{ c.cContacto }}</div>
+                                                                                        <i @click="anularCarteraMesTodos(c)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" >
+                                                                                        <div slot="content">Editar Contacto - {{ c.cContacto }}</div>
+                                                                                        <i @click="abrirModal('contacto', 'editar', c)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <!--<el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                        <div slot="content"> Generar Cardcode - SAP : {{ c.cContacto }}</div>
+                                                                                        <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                    </el-tooltip>-->
+                                                                                </td>
+                                                                                <td v-text="c.nIdContacto"></td>
+                                                                                <td v-text="c.CardCode"></td>
+                                                                                <td v-text="c.cContacto"></td>
+                                                                                <td v-text="c.cPerDocumento"></td>
+                                                                                <td v-text="c.nTelefonoMovil"></td>
+                                                                                <td v-text="c.cTelefonoFijo"></td>
+                                                                                <td v-text="c.cDireccion"></td>
+                                                                                <td v-text="c.cEmail"></td>
+                                                                                <td v-text="c.cVendedor"></td>
+                                                                            </tr>
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-sm-12">
@@ -696,7 +649,7 @@
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-6">
+                                                                                <!--<div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Zona</label>
                                                                                         <div class="col-sm-8">
@@ -710,7 +663,7 @@
                                                                                             </el-select>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                </div>-->
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Estado</label>
@@ -719,8 +672,6 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Seguimiento</label>
@@ -736,6 +687,8 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
+                                                                            <!--<div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Forma de Pago</label>
@@ -751,7 +704,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
@@ -824,34 +777,58 @@
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th>Codigo</th>
-                                                                                                    <th>Zona</th>
                                                                                                     <th>Tipo Seguimiento</th>
-                                                                                                    <th>Forma Pago</th>
-                                                                                                    <th>Estado</th>
                                                                                                     <th>Fecha</th>
                                                                                                     <th>Hora</th>
                                                                                                     <th>Asunto</th>
+                                                                                                    <th>Estado</th>
                                                                                                     <th>Acciones</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
                                                                                                 <tr v-for="s in arraySeguimiento" :key="s.nIdSeguimientoContacto">
-                                                                                                    <td v-text="s.nIdSeguimientoContacto"></td>
-                                                                                                    <td v-text="s.cZonaNombre"></td>
-                                                                                                    <td v-text="s.cTipoSegNombre"></td>
-                                                                                                    <td v-text="s.cFormaPago"></td>
-                                                                                                    <td v-text="s.cEstadoSegNombre"></td>
-                                                                                                    <td v-text="s.dFechaSeguimientoVendedor"></td>
-                                                                                                    <td v-text="s.cHoraSeguimiento"></td>
-                                                                                                    <td v-text="s.cAsunto"></td>
-                                                                                                    <td>
-                                                                                                        <template v-if="s.cSeguimientoEstado=='A'">
-                                                                                                            <el-tooltip class="item" effect="dark">
-                                                                                                                <div slot="content">Desactivar  {{ s.nIdSeguimientoContacto }}</div>
-                                                                                                                <i @click="desactivarSeguimiento(s.nIdSeguimientoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                                                            </el-tooltip>
-                                                                                                        </template>
-                                                                                                    </td>
+                                                                                                    <template v-if="s.nIdSeguimientoContacto != 0">
+                                                                                                        <td v-text="s.nIdSeguimientoContacto"></td>
+                                                                                                        <td v-text="s.cTipoSegNombre"></td>
+                                                                                                        <td v-text="s.dFechaSeguimientoVendedor"></td>
+                                                                                                        <td v-text="s.cHoraSeguimiento"></td>
+                                                                                                        <td v-text="s.cAsunto"></td>
+                                                                                                        <td v-text="s.cEstadoSegNombre"></td>
+                                                                                                        <td>
+                                                                                                            <template v-if="s.cSeguimientoEstado=='A'">
+                                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                                    <div slot="content">Desactivar  {{ s.nIdSeguimientoContacto }}</div>
+                                                                                                                    <i @click="desactivarSeguimiento(s.nIdSeguimientoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                                </el-tooltip>
+                                                                                                            </template>
+                                                                                                        </td>
+                                                                                                    </template>
+                                                                                                    <template v-if="s.nIdCabeceraCotizacion != 0">
+                                                                                                        <td :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cTipoSegNombre" colspan="4" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cEstadoSegNombre" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td>
+                                                                                                            <template v-if="s.cFlagVerificaReporte=='S'">
+                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                    <div slot="content">Reporte Cotizacion {{ s.nIdCabeceraCotizacion }}</div>
+                                                                                                                    <i @click="generarCotizacionPDF(s.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                                                            </template>
+                                                                                                        </td>
+                                                                                                    </template>
+                                                                                                    <template v-if="s.nIdCabeceraPedido != 0">
+                                                                                                        <td :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cTipoSegNombre" colspan="4" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td v-text="s.cEstadoSegNombre" :style="{ background : s.colorearSeguimiento}"></td>
+                                                                                                        <td>
+                                                                                                            <template v-if="s.cFlagVerificaReporte=='S'">
+                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                    <div slot="content">Reporte Pedido {{ s.nIdCabeceraPedido }}</div>
+                                                                                                                    <i @click="generarPedidoPDF(s.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
+                                                                                                                </el-tooltip>&nbsp;&nbsp;
+                                                                                                            </template>
+                                                                                                        </td>
+                                                                                                    </template>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -3318,6 +3295,7 @@
                 // ============================================================
                 // =========== VARIABLES CARTERA MES ============
                 arrayContactoCarteraMes: [],
+                arrayContactoCarteraMesRpta: [],
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
@@ -3884,30 +3862,34 @@
             },
             cambiarPaginaCarteraMes(page){
                 this.pagination.current_page=page;
-                this.listarCarteraMesPorVendedor(page);
+                this.paginateContactoConCarteraMes(this.arrayContactoCarteraMesRpta, page);
+            },
+            paginateContactoConCarteraMes(data, page){
+                this.pagination.current_page= page;
+                this.pagination.total       = data.length;
+                this.pagination.per_page    = this.perPage;
+                this.pagination.last_page   = Math.ceil(data.length / this.pagination.per_page);
+                 this.pagination.from        = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page + 1; // (1 * 10) - 10 + 1
+                this.pagination.from1       = (this.pagination.current_page * this.pagination.per_page) - this.pagination.per_page ; // (1 * 10) - 10
+                this.pagination.to          = (this.pagination.last_page == page) ? ( (this.pagination.current_page * this.pagination.per_page) - ((this.pagination.current_page * this.pagination.per_page) - data.length)) : (this.pagination.current_page * this.pagination.per_page);
+                this.arrayContactoCarteraMes= data.slice(this.pagination.from1, this.pagination.to);
             },
             listarCarteraMesPorVendedor(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetCarteraMesByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillMisContactos.ntipopersona,
-                        'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
+                        'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'       : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma'     : 220016,
+                        'ntipopersona'      : this.fillMisContactos.ntipopersona,
+                        'cnrodocumento'     : String(this.fillMisContactos.cnrodocumento.toString()),
+                        'cfiltrodescripcion': this.fillMisContactos.cfiltrodescripcion.toString(),
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayContactoCarteraMes = response.data.arrayContactoCarteraMes.data;
-                    this.pagination.current_page =  response.data.arrayContactoCarteraMes.current_page;
-                    this.pagination.total = response.data.arrayContactoCarteraMes.total;
-                    this.pagination.per_page    = response.data.arrayContactoCarteraMes.per_page;
-                    this.pagination.last_page   = response.data.arrayContactoCarteraMes.last_page;
-                    this.pagination.from        = response.data.arrayContactoCarteraMes.from;
-                    this.pagination.to           = response.data.arrayContactoCarteraMes.to;
-                }).then(function (response) {
+                    this.arrayContactoCarteraMesRpta = response.data.arrayContactoCarteraMes;
+                    this.paginateContactoConCarteraMes(this.arrayContactoCarteraMesRpta, page);
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -4354,9 +4336,9 @@
                 axios.post(url, {
                     'cFlagOrigenSeguimiento'        : 'EC',
                     'nIdAsignacionContactoVendedor' : this.formNuevoSeguimiento.nidasignacioncontactovendedor,
-                    'nIdZona'                       : this.formNuevoSeguimiento.nidzona,
+                    'nIdZona'                       : 0,
                     'nIdTipoSeguimiento'            : this.formNuevoSeguimiento.nidtiposeguimiento,
-                    'nIdFormaPago'                  : this.formNuevoSeguimiento.nidformapago,
+                    'nIdFormaPago'                  : 0,
                     'nIdEstadoSeguimiento'          : this.formNuevoSeguimiento.nidestadoseguimiento,
                     'dFechaSeguimientoVendedor'     : this.formNuevoSeguimiento.dfechaseguimiento,
                     'cHoraSeguimiento'              : this.formNuevoSeguimiento.choraseguimiento,
@@ -4393,9 +4375,9 @@
                 if(this.formNuevoSeguimiento.nidtiposeguimiento == 0){
                     this.mensajeError.push('Debe Seleccionar Tipo Seguimiento');
                 }
-                if(this.formNuevoSeguimiento.nidformapago == 0){
+                /*if(this.formNuevoSeguimiento.nidformapago == 0){
                     this.mensajeError.push('Debe Seleccionar Forma Pago');
-                }
+                }*/
                 if(this.formNuevoSeguimiento.nidestadoseguimiento == 0){
                     this.mensajeError.push('Debe Seleccionar Estado Seguimiento');
                 }
@@ -5139,6 +5121,90 @@
                     {
                     }
                 })
+            },
+            generarCotizacionPDF(nIdCabeCoti){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/getcotizacion/GetDetalleCotizacion';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraCotizacion' :   nIdCabeCoti
+                }, config).then(response => {
+                    // console.log(response.data);
+                    // Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        // {type: 'text/html'}
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                    this.obtenerFichaPDF(nIdCabeCoti);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerFichaPDF(nIdCabeCoti){
+                var url = this.ruta + '/gescotizacion/GetLisDocsModelo';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeCoti
+                    }
+                }).then(response => {
+                    this.verFichaPDF(response.data[0]['cFichaImagePDFUrl']);
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            verFichaPDF(cRutaDocumento){
+                window.open(cRutaDocumento);
+            },
+            //GENERAR REPORTE PEDIDO
+            generarPedidoPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetDetallePedido';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
+                    // console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =============  TAB OTROS INTERESES ======================
             validarTab44(){

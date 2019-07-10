@@ -1369,7 +1369,7 @@
                                                     <el-col :span="6" :offset="12"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD. {{ Number((parseFloat(fillDetalleDeposito.flagMontoCancelar)).toFixed(2)) }}
+                                                            US$. {{ Number((parseFloat(fillDetalleDeposito.flagMontoCancelar)).toFixed(2)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>

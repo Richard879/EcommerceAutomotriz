@@ -171,7 +171,7 @@ class PedidoDepositoController extends Controller
                                                                             Auth::user()->id
                                                                         ]);
 
-        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+        //$arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 

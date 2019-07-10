@@ -458,7 +458,7 @@
                                                                                     </td>
                                                                                     <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                     <td v-text="cotizacion.cContacto"></td>
-                                                                                    <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
+                                                                                    <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioModelo"></td>
                                                                                     <td v-text="cotizacion.cPerDocumento"></td>
                                                                                     <td v-text="cotizacion.cDireccion"></td>
                                                                                     <td v-text="cotizacion.nTelefonoMovil"></td>
