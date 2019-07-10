@@ -534,6 +534,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/dsctotorgados/SetPagarNC','DescuentosOtorgadosController@SetPagarNC');
 
     Route::get('/sobreprecio/GetListModelos','SobrePrecioController@GetListModelos');
+    Route::post('/sobreprecio/SetAsignarSPByModelo','SobrePrecioController@SetAsignarSPByModelo');
 
 
     ///========================================

@@ -39,4 +39,27 @@ class SobrePrecioController extends Controller
         $arrayModelos = ParametroController::arrayPaginator($arrayModelos, $request);
         return ['arrayModelos'=>$arrayModelos];
     }
+
+    public function SetAsignarSPByModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nIdEmpresa;
+        $nIdMarca       = $request->nIdMarca;
+        $nIdModelo      = $request->nIdModelo;
+        $fSobrePrecio   = $request->fSobrePrecio;
+
+        $fSobrePrecio      = ($fSobrePrecio == NULL) ? ($fSobrePrecio = 0) : $fSobrePrecio;
+
+        $data = DB::select('exec usp_AsigSobrePrecioByModelo_SetAsignarSPByModelo ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdMarca,
+                                                                $nIdModelo,
+                                                                $fSobrePrecio,
+                                                                Auth::user()->id
+                                                            ]);
+
+        return response()->json($data);
+    }
 }

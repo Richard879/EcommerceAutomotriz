@@ -92,7 +92,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="modelo in arrayModelos" :key="modelo.nIdLinea">
+                                                    <tr v-for="(modelo, index) in arrayModelos" :key="index">
                                                         <td v-text="modelo.cNombreLinea"></td>
                                                         <td v-text="modelo.cNombreMarca"></td>
                                                         <td v-text="modelo.cNombreModelo"></td>
@@ -453,8 +453,8 @@
                 this.pagination.current_page=page;
                 this.listarModelos(page);
             },
-            actualizarSobrePrecio(){
-                if(this.validarModelo()){
+            actualizarSobrePrecio(modelo){
+                if(this.validarModelo(modelo)){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -462,24 +462,17 @@
 
                 let me = this;
 
-                me.arrayModelos.map({
-
-                });
-
-                var url = this.ruta + '/asignavendedormodelo/SetAsignarModelo';
+                var url = this.ruta + '/sobreprecio/SetAsignarSPByModelo';
                 axios.post(url, {
-                    nIdEmpresa      : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    nIdSucursal     : parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor    : parseInt(this.formAsignaModelo.nidproveedor),
-                    nIdLinea        : parseInt(this.formAsignaModelo.nidlinea),
-                    nIdMarca        : parseInt(this.formAsignaModelo.nidmarca),
-                    nIdModelo       : parseInt(this.formAsignaModelo.nidmodelo),
-                    nIdJefeVentas   : parseInt(this.formAsignaModelo.nidjefeventas),
+                    nIdEmpresa      : modelo.nIdEmpresa,
+                    nIdMarca        : modelo.nIdMarca,
+                    nIdModelo       : modelo.nIdModelo,
+                    fSobrePrecio    : modelo.fSobrePrecio,
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Se actualizó exitosamente el sobre precio del modelo');
-                        this.listarVendedorModelo();
+                        swal(response.data[0].cMensaje + modelo.cNombreModelo);
+                        this.listarModelos();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -490,6 +483,19 @@
                         }
                     }
                 });
+            },
+            validarModelo(modelo){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(modelo.fSobrePrecio == 0 || modelo.fSobrePrecio == '' || modelo.fSobrePrecio == '0.00'){
+                    this.mensajeError.push('El Sobre Precio no puede ser 0 ó vacío');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // ==========================================================
             // =============  MODAL PROVEEDORES ========================
