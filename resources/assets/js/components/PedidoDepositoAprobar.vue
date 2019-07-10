@@ -1114,30 +1114,30 @@
 
                         var url = this.ruta + '/deposito/SetCambiarEstadoDepositoFinanciamiento';
                         axios.put(url , {
-                            nIdDepositoPedido   :   deposito.nIdDepositoPedido,
-                            nIdCabeceraPedido   :   deposito.nIdCabeceraPedido,
-                            nIdMonedaOrigen     :   deposito.nIdMonedaOrigen,
-                            fTipoCambio         :   deposito.fTipoCambio,
-                            cFlagEstadoDeposito :   'A',
+                            'nIdDepositoPedido'   :   deposito.nIdDepositoPedido,
+                            'nIdCabeceraPedido'   :   deposito.nIdCabeceraPedido,
+                            'nIdMonedaOrigen'     :   deposito.nIdMonedaOrigen,
+                            'fTipoCambio'         :   deposito.fTipoCambio,
+                            'cFlagEstadoDeposito' :   'A',
                             //AddON
-                            CardCode            :   deposito.CardCode,
-                            CardName            :   deposito.cContacto,
-                            Type                :   deposito.nIdFormaPago,
+                            'CardCode'            :   deposito.CardCode,
+                            'CardName'            :   deposito.cContacto,
+                            'Type'                :   deposito.nIdFormaPago,
                             // nIdTipoPago         :    deposito.nIdTipoPago,
-                            TransRef            :   deposito.nNumeroOperacion,
-                            DocDate             :   deposito.dFechaDeposito,
-                            DocTotal            :   deposito.fMontoSoles,
-                            DocTotalFC          :   deposito.fMontoDolares,
+                            'TransRef'            :   deposito.nNumeroOperacion,
+                            'DocDate'             :   deposito.dFechaDeposito,
+                            'DocTotal'            :   deposito.fMontoSoles,
+                            'DocTotalFC'          :   deposito.fMontoDolares,
                             // DocNum              :    deposito.nDocNum,x
-                            DocCurr             :   deposito.cAbreviaturaMoneda,
-                            DocCurrBank         :   deposito.cAbreviaturaMoneda,
-                            cAcctCode           :   deposito.cAcctCode,
-                            FacturaDocTotal     :   deposito.fMontoSoles,
-                            FacturaDocTotalFC   :   deposito.fMontoDolares,
-                            DocRate             :   deposito.fTipoCambio,
-                            DocNum              :   this.formDistribuirDeposito.nDocNumFacturaReserva,
-                            nIdFormaPago        :   this.formDistribuirDeposito.nIdFormaPago,
-                            Migrado             :   'N'
+                            'DocCurr'             :   deposito.cAbreviaturaMoneda,
+                            'DocCurrBank'         :   deposito.cAbreviaturaMoneda,
+                            'cAcctCode'           :   deposito.cAcctCode,
+                            'FacturaDocTotal'     :   deposito.fMontoSoles,
+                            'FacturaDocTotalFC'   :   deposito.fMontoDolares,
+                            'DocRate'             :   deposito.fTipoCambio,
+                            'DocNum'              :   this.formDistribuirDeposito.nDocNumFacturaReserva,
+                            'nIdFormaPago'        :   this.formDistribuirDeposito.nIdFormaPago,
+                            'Migrado'             :   'N'
                         }).then(response => {
                             swal(
                                 'Aprobado!',
