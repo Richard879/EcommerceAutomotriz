@@ -197,25 +197,17 @@ class SapContactoController extends Controller
             'base_uri'  => $this->cnxIntegration
         ]);
 
-        $nIdPersona    =   $request->nIdPersona;
-        $cTipoPersona  =   $request->cTipoPersona;
-
-        $arrayDirecciones = DB::select('exec [usp_Persona_GetDireccionesByPersona] ?, ?',
-                                                    [   $nIdPersona,
-                                                        $cTipoPersona
-                                                    ]);
-
         //Obtener Tipo Persona
-        $tipoPersona = $request->contacto['cFlagTipoPersona'];
+        $tipoPersona = $request->cFlagTipoPersona;
 
-        $CardCode       =   "C". $request->contacto['cNumeroDocumento'];
-        $UserName       =   $request->contacto['cContacto'];
+        $CardCode       =   "C". $request->cPerDocumento;
+        $UserName       =   $request->cContacto;
 
         if ($tipoPersona == 'N') {
-            $U_SYP_BPAP =   $request->contacto['cApellidoPaterno'];
-            $U_SYP_BPAM =   $request->contacto['cApellidoMaterno'];
-            $U_SYP_BPNO =   $request->contacto['cPrimerNombre'];
-            $U_SYP_BPN2 =   $request->contacto['cSegundoNombre'];
+            $U_SYP_BPAP =   $request->cApellidoPaterno;
+            $U_SYP_BPAM =   $request->cApellidoMaterno;
+            $U_SYP_BPNO =   $request->cPrimerNombre;
+            $U_SYP_BPN2 =   $request->cSegundoNombre;
             $U_SYP_BPTP =   "TPN";
             $U_SYP_BPTD =   "1";
 

@@ -473,10 +473,6 @@
                                                                                         <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                     </el-tooltip>&nbsp;&nbsp;
-                                                                                    <!-- <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp; -->
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Carta de Responsabilidad {{ pedido.cNumeroPedido }}</div>
                                                                                         <i @click="generarCartaResponsabilidadPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
@@ -485,8 +481,12 @@
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Actualizar CardCode {{ pedido.cContacto }}</div>
                                                                                             <i @click="updCardCodeContacto(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-user"></i>
-                                                                                        </el-tooltip>&nbsp;&nbsp;
-                                                                                    </template>
+                                                                                        </el-tooltip>
+                                                                                    </template>&nbsp;&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                        <div slot="content"> Actualizar Contacto - SAP : {{ pedido.cContacto }}</div>
+                                                                                        <i @click="updNameContactoSap(pedido)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nIdContacto"></td>
@@ -4256,6 +4256,33 @@
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
+            },
+            //===================================================================================
+            updNameContactoSap(objContacto){
+                let me = this;
+                me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
+
+                var url = this.ruta + '/gescontacto/SapPatchNameContacto';
+                axios.post(url, {
+                    'cFlagTipoPersona'  : objContacto.cFlagTipoPersona,
+                    'cPerDocumento'     : objContacto.cPerDocumento,
+                    'cContacto'         : objContacto.cContacto,
+                    'cApellidoPaterno'  : objContacto.cApellidoPaterno,
+                    'cApellidoMaterno'  : objContacto.cApellidoMaterno,
+                    'cPrimerNombre'     : objContacto.cPrimerNombre,
+                    'cSegundoNombre'    : objContacto.cSegundoNombre
+                }).then(response => {
+                    console.log(response.data);
+                    me.loading.close();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             //=====================================================================================
             //====================== TAB APROBAR PEDIDOS CON CREDITO VEHICULAR=====================
