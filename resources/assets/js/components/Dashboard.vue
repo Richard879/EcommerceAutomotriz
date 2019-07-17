@@ -638,7 +638,8 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nidrol': 110026
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidrol'        :   110026
                     }
                 }).then(response => {
                     this.cDashboard01.nCantidadAsesoresComerciales = response.data[0].nCantidaEmpleados;
@@ -656,7 +657,8 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nidrol': 110025
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidrol'        :   110025
                     }
                 }).then(response => {
                     this.cDashboard01.nCantidadJefeVentas = response.data[0].nCantidaEmpleados;
@@ -674,7 +676,8 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nidrol': 110083
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidrol'        :   110083
                     }
                 }).then(response => {
                     this.cDashboard01.nCantidadADV = response.data[0].nCantidaEmpleados;
@@ -692,7 +695,8 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nidrol': 110096
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidrol'        :   110096
                     }
                 }).then(response => {
                     this.cDashboard01.nCantidadGerente = response.data[0].nCantidaEmpleados;
@@ -710,7 +714,8 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nidrol': 110086
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidrol'        :   110086
                     }
                 }).then(response => {
                     this.cDashboard01.nCantidadTramitador = response.data[0].nCantidaEmpleados;
@@ -730,7 +735,8 @@
                 var url = this.ruta + '/dashboard/GetCotizacionMontoByMes';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard02.arrayCotizacionesMontoByMes = response.data;
@@ -787,7 +793,8 @@
                 var url = this.ruta + '/dashboard/GetCotizacionMontoTotal';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard02.fMontoTotalDolaresCotizacion = (response.data[0] == null) ? 0 : response.data[0].fMontoTotalDolares;
@@ -807,7 +814,8 @@
                 var url = this.ruta + '/dashboard/GetCotizacionCantidadTotal';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard02.nCantidadTotalCotizacion = (response.data[0].nCantidadTotalCotizacion == null) ? 0 : response.data[0].nCantidadTotalCotizacion;
@@ -826,8 +834,9 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.formLogin.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.formLogin.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard02.arrayMisCotizaciones = response.data;
@@ -875,8 +884,9 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByRol';
                 axios.get(url, {
                     params: {
-                        'nIdRol': '110026',
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdRol'        :   '110026',
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard02.arrayCotizacionesByAsesorComercial = response.data;
@@ -924,7 +934,8 @@
                 var url = this.ruta + '/dashboard/GetAsesoresByJV';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.formLogin.nIdUsuario
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.formLogin.nIdUsuario
                     }
                 }).then(response => {
                     this.cDashboard03.arrayAsesoresByJV = response.data;
@@ -961,8 +972,9 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.cDashboard03.fillInfoUsuarioFind.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.cDashboard03.fillInfoUsuarioFind.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard03.fillInfoUsuarioFind.cNombreUsuario = '';
@@ -1044,8 +1056,9 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.cDashboard03.fillPedidoInfoUsuarioFind.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.cDashboard03.fillPedidoInfoUsuarioFind.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard03.fillPedidoInfoUsuarioFind.cNombreUsuario  = '';
@@ -1105,7 +1118,11 @@
             // Dashboard 04
             GetAsesoresByAll(){
                 var url = this.ruta + '/dashboard/GetAsesoresByJV';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    }
+                }).then(response => {
                     this.cDashboard04.arrayAsesoresByAll = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -1141,8 +1158,9 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.cDashboard04.fillInfoUsuario.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.cDashboard04.fillInfoUsuario.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard04.fillInfoUsuario.cNombreUsuario = '';
@@ -1223,8 +1241,9 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.cDashboard04.fillPedidoInfoUsuario.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.cDashboard04.fillPedidoInfoUsuario.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard04.fillPedidoInfoUsuario.cNombreUsuario = '';
@@ -1287,7 +1306,8 @@
                 var url = this.ruta + '/dashboard/GetPedidoMontoByMes';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard05.arrayPedidosMontoByMes = response.data;
@@ -1344,7 +1364,8 @@
                 var url = this.ruta + '/dashboard/GetPedidoMontoTotal';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard05.fMontoTotalDolaresPedido = (response.data[0] == null) ? 0 : response.data[0].fMontoTotalDolares;
@@ -1364,7 +1385,8 @@
                 var url = this.ruta + '/dashboard/GetPedidoCantidadTotal';
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard05.nCantidadTotalPedido = (response.data[0].nCantidadTotalPedido == null) ? 0 : response.data[0].nCantidadTotalPedido;
@@ -1383,8 +1405,9 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdUsuario': this.formLogin.nIdUsuario,
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdUsuario'    :   this.formLogin.nIdUsuario,
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard05.arrayMisPedidos = response.data;
@@ -1432,8 +1455,9 @@
                 var url = this.ruta + '/dashboard/GetPedidosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdRol': '110026',
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdRol'        :   '110026',
+                        'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     this.cDashboard05.arrayPedidosByAsesorComercial = response.data;

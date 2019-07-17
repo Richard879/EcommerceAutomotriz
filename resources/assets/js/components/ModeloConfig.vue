@@ -23,7 +23,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <template v-if="vistaFormulario">
+                                    <template v-if="vistaFormulario == 1">
                                         <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 1)}" id="TabBandejaModelos">
                                             <section class="forms">
                                                 <div class="container-fluid">
@@ -181,8 +181,14 @@
                                                                                             </template>&nbsp;
                                                                                             <el-tooltip class="item" effect="dark">
                                                                                                 <div slot="content">Configuracion del Modelo  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
-                                                                                                <i @click="generarConfiguracion(0, modelo)" :style="'color:gris'" class="fa-md fa fa-cogs"></i>
+                                                                                                <i @click="generarConfiguracion(2, modelo)" :style="'color:gris'" class="fa-md fa fa-cogs"></i>
                                                                                             </el-tooltip>&nbsp;
+                                                                                            <template v-if="nIdEmpresa == 1300717">
+                                                                                                <el-tooltip class="item" effect="dark">
+                                                                                                    <div slot="content">XML dinamico  {{ modelo.cNombreModelo }} - {{ modelo.nAnioModelo }}</div>
+                                                                                                    <i @click="generarConfiguracion(3, modelo)" :style="'color:gris'" class="fa fa-align-center"></i>
+                                                                                                </el-tooltip>&nbsp;
+                                                                                            </template>
                                                                                         </td>
                                                                                         <td v-text="modelo.cNombreMarca"></td>
                                                                                         <td v-text="modelo.cNombreModelo"></td>
@@ -236,8 +242,8 @@
                                         </div>
                                     </template>
 
-                                    <template v-else>
-                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 0)}">
+                                    <template v-if="vistaFormulario == 2">
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 2)}">
                                             <section class="forms">
                                                 <div class="container-fluid">
                                                     <div class="col-lg-12">
@@ -302,6 +308,114 @@
                                                                                     <i class="fa fa-close"></i> Cancelar
                                                                                 </button>
                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </template>
+
+                                    <template v-if="vistaFormulario == 3">
+                                        <div role="tabpanel" class="tab-pane fade" :class="{'in active show': (vistaFormulario == 3)}">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">GENERADOR DE XML DE LA VERSIÓN - {{ formConfigModelo.cnombrecomercial }} - {{ formConfigModelo.cnombremodelo }} </h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="col-xs-12">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarFila">
+                                                                            <i class="fa fa-plus"></i> Agregar
+                                                                        </button>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-xs-12">
+                                                                        <form class="form-horizontal">
+                                                                            <template v-if="arrayFichaTecnica.length">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <tbody>
+                                                                                            <tr v-for="(ficha, index) in arrayFichaTecnica" :key="index" :style="ficha.ntipofila == '1' ? 'background: #00000026;' : ''">
+                                                                                                <td>
+                                                                                                    <input type="text" class="form-control" v-model="ficha.cdescripcion">
+                                                                                                </td>
+                                                                                                <!-- Solo si es detalle -->
+                                                                                                <template v-if="ficha.ntipofila == '2' || ficha.ntipofila == '3'">
+                                                                                                    <td>
+                                                                                                        <input type="text" class="form-control" v-model="ficha.cvalor">
+                                                                                                    </td>
+                                                                                                </template>
+                                                                                                <template v-if="ficha.ntipofila == '2'">
+                                                                                                    <td>
+                                                                                                        <!-- @change="ordenarDetalle(index, ficha)" -->
+                                                                                                        <el-select  v-model="ficha.ncabeceraparent"
+                                                                                                                    filterable
+                                                                                                                    clearable
+                                                                                                                    placeholder="SELECCIONE UNA CABECERA"
+                                                                                                                    >
+                                                                                                            <el-option
+                                                                                                                v-for="fila in arrayCabecera"
+                                                                                                                :key="fila.ncabeceraparent"
+                                                                                                                :label="fila.cdescripcion"
+                                                                                                                :value="fila.ncabeceraparent">
+                                                                                                            </el-option>
+                                                                                                        </el-select>
+                                                                                                    </td>
+                                                                                                </template>
+                                                                                                <td>
+                                                                                                    <el-select  v-model="ficha.ntipofila"
+                                                                                                                filterable
+                                                                                                                clearable
+                                                                                                                placeholder="SELECCIONE UN TIPO DE FILA">
+                                                                                                        <el-option
+                                                                                                            v-for="fila in arrayTipoFila"
+                                                                                                            :key="fila.id"
+                                                                                                            :label="fila.nombre"
+                                                                                                            :value="fila.id">
+                                                                                                        </el-option>
+                                                                                                    </el-select>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <!-- Solo si es cabecera -->
+                                                                                                    <template v-if="ficha.ntipofila == '1'">
+                                                                                                        <el-tooltip class="item" effect="dark">
+                                                                                                            <div slot="content">Grabar Cabecera  {{ ficha.cdescripcion }}</div>
+                                                                                                            <i @click="guardarCabecera(ficha, index)" :style="'color:green'" class="fa-md fa fa-check"></i>
+                                                                                                        </el-tooltip>&nbsp;
+                                                                                                    </template>
+                                                                                                    <!-- Solo si es cabecera con valor-->
+                                                                                                    <template v-if="ficha.ntipofila == '3'">
+                                                                                                        <el-tooltip class="item" effect="dark">
+                                                                                                            <div slot="content">Grabar Cabecera  {{ ficha.cdescripcion }}</div>
+                                                                                                            <i @click="guardarCabeceraValor(ficha, index)" :style="'color:green'" class="fa-md fa fa-check"></i>
+                                                                                                        </el-tooltip>&nbsp;
+                                                                                                    </template>
+                                                                                                    <el-tooltip class="item" effect="dark">
+                                                                                                        <div slot="content">Borrar  {{ ficha.cdescripcion }}</div>
+                                                                                                        <i @click="borrarFila(index)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                                    </el-tooltip>&nbsp;
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </template>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-xs-12">
+                                                                        <div class="col-md-7 offset-md-5">
+                                                                            <template v-if="arrayFichaTecnica.length >= 2">
+                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="guardarXML">
+                                                                                    <i class="fa fa-plus"></i> Registrar
+                                                                                </button>
+                                                                            </template>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -453,6 +567,7 @@
         props:['ruta'],
         data(){
             return {
+                nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -493,6 +608,20 @@
                 },
                 cFlagAccion: 1,
                 form: new FormData,// El archivo tendrá que ser enviado como elemento FormData
+                // ============================================================
+                // ================= VARIABLES TAB CONFIG XML =================
+                // ============================================================
+                arrayFichaTecnicaFlag: [],
+                arrayFichaTecnica: [],
+                arrayTipoFila: [
+                    {'id': '1', 'nombre': 'Cabecera'},
+                    {'id': '2', 'nombre': 'Detalle'},
+                    {'id': '3', 'nombre': 'Cabecera con Valor'}
+                ],
+                arrayCabecera: [],
+                // =======================================================
+                // ================= VARIABLES GENERICAS =================
+                // =======================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -789,18 +918,24 @@
                 this.formConfigurador.attachmentFotografia      =   '';
                 this.formConfigurador.attachmentFichaTecnica    =   '';
                 this.formConfigurador.attachmentFichaTecnicaPDF =   '';
+                this.arrayFichaTecnicaFlag = [];
+                this.arrayFichaTecnica = [];
+                this.arrayCabecera = [];
                 this.form = '';//Seteo a vacio
                 this.form = new FormData;//Inicializo el Obj FormData
             },
             generarConfiguracion(op, modelo = null){
                 this.tabConfigurador(op);
-                if(op == 0) {
+                if(op != 1) {
                     this.formConfigModelo.nidmodelo         =   modelo.nIdModelo
                     this.formConfigModelo.naniomodelo       =   modelo.nAnioModelo
                     this.formConfigModelo.cnombremodelo     =   modelo.cNombreModelo + ' - ' + modelo.nAnioModelo;
                     this.formConfigModelo.cnombrecomercial  =   modelo.cNombreComercial;
                     this.formConfigModelo.nidversionveh     =   modelo.nIdVersionVeh;
                     this.verificarDosc(modelo);
+                    if (op == 3) {
+                        this.verificarXML(modelo);
+                    }
                 }
             },
             verificarDosc(modelo){
@@ -961,6 +1096,202 @@
                         swal(response.data[0].cMensaje);
                         $("#myBar").hide();
                     }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // =================================================================
+            // TAB CONFIGURADOR DE XML
+            // =================================================================
+            verificarXML(modelo){
+                var url = this.ruta + '/modeloconfig/GetXMLByVersion';
+
+                axios.get(url, {
+                    params: {
+                        'nIdVersionVeh' : modelo.nIdVersionVeh
+                    }
+                }).then(response => {
+                    this.arrayFichaTecnicaFlag  =   response.data;
+                    this.cargarFichaTecnica()
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarFichaTecnica(){
+                let me = this;
+                me.arrayFichaTecnicaFlag.map(function(data, pos){
+                    if (data.cFlagTipo == 1 || data.cFlagTipo == 3) {
+                        //Alimentar Array Cabecera
+                        me.arrayCabecera.push({
+                            'ncabeceraparent'   :   data.nCabecera,
+                            'cdescripcion'      :   data.cCampo
+                        });
+                    }
+                    //Alimentar Ficha Tecnica
+                    me.arrayFichaTecnica.push({
+                        'nidversionveh'     :   data.nIdVersionVeh,
+                        'cdescripcion'      :   data.cCampo,
+                        'cvalor'            :   data.cValor,
+                        'ntipofila'         :   data.cFlagTipo,
+                        'ncabecera'         :   (data.cFlagTipo == 1 || data.cFlagTipo == 3) ? data.nCabecera : '',
+                        'ncabeceraparent'   :   (data.cFlagTipo == 1 || data.cFlagTipo == 3) ? '' : data.nCabecera
+                    });
+                });
+            },
+            agregarFila(){
+                if(this.validarAgregarFila()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+                me.arrayFichaTecnica.push({
+                    'nidversionveh'     :   me.formConfigModelo.nidversionveh,
+                    'cdescripcion'      :   '',
+                    'cvalor'            :   '',
+                    'ntipofila'         :   '',
+                    'ncabecera'         :   '',
+                    'ncabeceraparent'   :   ''
+                });
+            },
+            validarAgregarFila(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
+
+                //Recorre todas las filas
+                me.arrayFichaTecnica.map(function (data, pos){
+                    //Verificar si esta vacia la descripción
+                    if (data.cdescripcion == '') {
+                        me.mensajeError.push('Debe Agregar una descripción en la fila : ' + (parseInt(pos) + 1));
+                    }
+                    // Verificar si no esta seleccionado el tipo fila
+                    if (data.ntipofila == '') {
+                        me.mensajeError.push('Debe Seleccionar un Tipo Fila : ' + (parseInt(pos) + 1));
+                    }
+                    // Si es detalle validar
+                    if (data.ntipofila == '2') {
+                        // Verificar si esta vacio el valor
+                        if (data.cvalor == '') {
+                            me.mensajeError.push('Debe Agregar un valor en la fila : ' + (parseInt(pos) + 1));
+                        }
+                        // Verificar si no esta seleccionado la cabecera
+                        if (data.ncabeceraparent === '') {
+                            me.mensajeError.push('Debe Seleccionar la cabecera donde pertenece la fila : ' + (parseInt(pos) + 1));
+                        }
+                    }
+                });
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            guardarCabecera(ficha, index){
+                let me = this;
+                let contador = 0;
+
+                //Setear Id Cabecera
+                me.arrayFichaTecnica[index].ncabecera = String(index);
+
+                // Recorrer las Cabeceras
+                if (me.arrayCabecera.length > 0) {
+                    me.arrayCabecera.map(function(data, pos){
+                        // Si la descripción de la cabecera es = a una descripcion del array cabecearas
+                        if (ficha.cdescripcion == data.cdescripcion) {
+                            //Aumentar contador si encuentra coincidencia
+                            contador++;
+                        }
+                    });
+
+                    // Si el contador es mayor a 0
+                    if (contador > 0) {
+                        //Enviar alerta
+                        swal('La Cabecera Ya existe en la Ficha');
+                    } else {
+                        //Alimentar Array Cabecera
+                        me.arrayCabecera.push({
+                            'ncabeceraparent'   :   String(index),
+                            'cdescripcion'      :   ficha.cdescripcion
+                        });
+                        toastr.success('Se agrego la Cabecera');
+                    }
+                } else {
+                    //Alimentar Array Cabecera
+                    me.arrayCabecera.push({
+                        'ncabeceraparent'   :   String(index),
+                        'cdescripcion'      :   ficha.cdescripcion
+                    });
+                    toastr.success('Se agrego la Cabecera');
+                }
+            },
+            guardarCabeceraValor(ficha, index){
+                let me = this;
+
+                //Setear Id Cabecera
+                me.arrayFichaTecnica[index].ncabecera = String(index);
+            },
+            borrarFila(index){
+                this.$delete(this.arrayFichaTecnica, index);
+            },
+            guardarXML(){
+                if(this.validarAgregarFila()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+
+                let url = this.ruta + '/modeloconfig/SetEliminarXMLByVersion';
+                // Mostrar ProgressBar
+                this.mostrarProgressBar();
+
+                axios.post(url, {
+                    'nIdVersionVeh': me.arrayFichaTecnica[0].nidversionveh
+                }).then(response => {
+                    setTimeout(function() {
+                        me.registrarXML();
+                    }, 1900);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registrarXML(){
+                if(this.validarAgregarFila()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let me = this;
+                let url = this.ruta + '/modeloconfig/SetRegistrarXMLByVersion';
+
+                axios.post(url, {
+                    'data': me.arrayFichaTecnica
+                }).then(response => {
+                    this.generarConfiguracion(3, response.data[0]);
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

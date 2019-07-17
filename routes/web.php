@@ -121,6 +121,9 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/modeloconfig/SetRegistrarDocs', 'ModeloConfigController@SetRegistrarDocs');
     Route::get('/modeloconfig/GetInfoDocsModelo', 'ModeloConfigController@GetInfoDocsModelo');
     Route::post('/modeloconfig/SetActualizarDocs', 'ModeloConfigController@SetActualizarDocs');
+    Route::post('/modeloconfig/SetEliminarXMLByVersion', 'ModeloConfigController@SetEliminarXMLByVersion');
+    Route::post('/modeloconfig/SetRegistrarXMLByVersion', 'ModeloConfigController@SetRegistrarXMLByVersion');
+    Route::get('/modeloconfig/GetXMLByVersion', 'ModeloConfigController@GetXMLByVersion');
 
     Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
     Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
@@ -535,7 +538,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
 
     Route::get('/sobreprecio/GetListModelos','SobrePrecioController@GetListModelos');
     Route::post('/sobreprecio/SetAsignarSPByModelo','SobrePrecioController@SetAsignarSPByModelo');
-
+    Route::get('/sobreprecio/GetListSPModelo','SobrePrecioController@GetListSPModelo');
 
     ///========================================
     /////=================  ROUTES SAP

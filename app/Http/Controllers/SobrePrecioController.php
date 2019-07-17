@@ -62,4 +62,25 @@ class SobrePrecioController extends Controller
 
         return response()->json($data);
     }
+
+    public function GetListSPModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdMarca       = $request->nidmarca;
+        $nIdModelo      = $request->nidmodelo;
+
+        $nIdMarca       = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo      = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+        $data = DB::select('exec usp_AsigSobrePrecioByModelo_GetListSPModelo ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                            ]);
+
+        return response()->json($data);
+    }
 }

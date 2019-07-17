@@ -607,8 +607,13 @@ class CotizacionController extends Controller
         $nIdSucursal            =   $request->nIdSucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
 
-        $logo                   =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
-        $hyundai                =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        if ($nIdEmpresa == 1300011) {
+            $img_empresa    =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        } else {
+            $img_empresa    =   public_path('img/inkalider.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/nissan.png');//CAPTURO LA RUTA DE HYUNDAI
+        }
 
         // OBTENER INFORMACIÓN DE LA COTIZACION
         $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
@@ -618,8 +623,10 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
-        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
-
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco] ?',
+                                    [
+                                        $nIdEmpresa
+                                    ]);
 
         // OBTENER LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
         $arrayDetalleDocs = DB::select('exec [usp_Cotizacion_GetDocs]  ?',
@@ -641,8 +648,13 @@ class CotizacionController extends Controller
                                         Auth::user()->id
                                     ]);
 
+        // OBTENER DATA DEL XML DINAMICO
+        $xmlbyversion = DB::select('exec [usp_Version_GetXMLByVersion] ?',
+                                    [   $arrayDetalleCotizacion[0]->nIdVersionVeh
+                                    ]);
+
         //IP Addres del Usuario
-        $ip_address = request()->ip();
+        // $ip_address = request()->ip();
 
         /*
         if ($arrayDetalleDocs[0]->cFichaImageUrl != null) {
@@ -756,10 +768,11 @@ class CotizacionController extends Controller
                                                                 'arrayElementoVenta'    =>  $arrayElementoVenta,
                                                                 // 'contents'              =>  $contents,
                                                                 'arrayDatosBanco'       =>  $arrayDatosBanco,
-                                                                'logo'                  =>  $logo,
-                                                                'hyundai'               =>  $hyundai,
+                                                                'img_empresa'           =>  $img_empresa,
+                                                                'img_marca'             =>  $img_marca,
                                                                 'tabla'                 =>  $tabla,
-                                                                'arrayUsuarioAuth'      =>  $arrayUsuarioAuth
+                                                                'arrayUsuarioAuth'      =>  $arrayUsuarioAuth,
+                                                                'xmlbyversion'          =>  $xmlbyversion
                                                             ]);
 
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');

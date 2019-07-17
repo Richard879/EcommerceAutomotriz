@@ -12,10 +12,12 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetEmpleadosByRol(Request $request)
     {
-        $nidrol = $request->nidrol;
+        $nIdEmpresa = $request->nIdEmpresa;
+        $nidrol     = $request->nidrol;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetEmpleadosByRol ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetEmpleadosByRol ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nidrol
                                                         ]);
 
@@ -27,10 +29,12 @@ class DashboardController extends Controller
     // ======================================================================
     publiC function GetCotizacionMontoByMes(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotalByMes ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotalByMes ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -42,10 +46,12 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetCotizacionMontoTotal(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotal ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionMontoTotal ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -57,10 +63,12 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetCotizacionCantidadTotal(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionCantidadTotal ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionCantidadTotal ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -72,13 +80,15 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetCotizacionesByUsuario(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $nIdUsuario = $request->nIdUsuario;
         $dfecha     = $request->dfecha;
 
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByUsuario ?, ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByUsuario ?, ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nIdUsuario,
                                                             $dfecha
                                                         ]);
@@ -91,11 +101,13 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetCotizacionesByRol(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $nIdRol     = $request->nIdRol;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByRol ?, ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByRol ?, ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nIdRol,
                                                             $dfecha
                                                         ]);
@@ -108,11 +120,13 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetAsesoresByJV(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $nIdUsuario = $request->nIdUsuario;
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetAsesoresByRol ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetAsesoresByRol ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nIdUsuario
                                                         ]);
 
@@ -158,10 +172,12 @@ class DashboardController extends Controller
     // ======================================================================
     publiC function GetPedidoMontoByMes(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotalByMes ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotalByMes ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -173,10 +189,12 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetPedidoMontoTotal(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotal ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosMontoTotal ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -188,10 +206,12 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetPedidoCantidadTotal(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosCantidadTotal ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosCantidadTotal ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $dfecha
                                                         ]);
 
@@ -203,13 +223,15 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetPedidosByUsuario(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $nIdUsuario = $request->nIdUsuario;
         $dfecha     = $request->dfecha;
 
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByUsuario ?, ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByUsuario ?, ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nIdUsuario,
                                                             $dfecha
                                                         ]);
@@ -222,11 +244,13 @@ class DashboardController extends Controller
     // ======================================================================
     public function GetPedidosByRol(Request $request)
     {
+        $nIdEmpresa = $request->nIdEmpresa;
         $nIdRol     = $request->nIdRol;
         $dfecha     = $request->dfecha;
 
-        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByRol ?, ?',
+        $dashboard = DB::select('EXEC usp_Dashboard_GetPedidosByRol ?, ?, ?',
                                                         [
+                                                            $nIdEmpresa,
                                                             $nIdRol,
                                                             $dfecha
                                                         ]);

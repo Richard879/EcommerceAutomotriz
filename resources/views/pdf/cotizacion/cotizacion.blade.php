@@ -81,10 +81,10 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td valign="top">
-                    <img src="{{$logo}}" alt="" width="210" height="75"/>
+                    <img src="{{$img_empresa}}" alt="" width="210" height="75"/>
                 </td>
                 <td align="right">
-                    <img src="{{$hyundai}}" alt="" width="175" height="75"/>
+                    <img src="{{$img_marca}}" alt="" width="175" height="75"/>
                 </td>
             </tr>
             <tr>
@@ -201,14 +201,16 @@
                     </thead>
                     <tbody>
                         @foreach ($arrayElementoVenta as $banco)
-                            <tr>
-                                <td> {{ $banco->cNombre }} </td>
-                                <td> {{ $banco->fPrecioFinal }} </td>
-                                <td> {{ $banco->cMoneda }} </td>
-                                <td> {{ $banco->nCantidad }} </td>
-                                <td> {{ $banco->fSubTotalSoles }} </td>
-                                <td> {{ $banco->fSubTotalDolares }} </td>
-                            </tr>
+                            @if ($banco->cObs == 0)
+                                <tr>
+                                    <td> {{ $banco->cNombre }} </td>
+                                    <td> {{ $banco->fPrecioFinal }} </td>
+                                    <td> {{ $banco->cMoneda }} </td>
+                                    <td> {{ $banco->nCantidad }} </td>
+                                    <td> {{ $banco->fSubTotalSoles }} </td>
+                                    <td> {{ $banco->fSubTotalDolares }} </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -216,6 +218,34 @@
 
             {{-- Ficha Tecnica --}}
             {!! $tabla !!}
+
+            {{-- Ficha Tecnica --}}
+            @if (sizeof($xmlbyversion) > 0)
+                <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1" style="padding-left:2rem; margin-left:2rem; font-size:10px;width:700px;">
+                    @foreach ($xmlbyversion as $xml)
+                        <thead>
+                            {{-- style="background-color: lightgray;" --}}
+                            @if ($xml->cFlagTipo == 1)
+                                <tr>
+                                    <th colspan="2" align="center"> {{$xml->cCampo }} </th>
+                                </tr>
+                            @endif
+                            @if ($xml->cFlagTipo == 3)
+                                <tr>
+                                    <th align="left"> {{$xml->cCampo }} </th>
+                                    <th align="center"> {{$xml->cValor }} </th>
+                                </tr>
+                            @endif
+                            @if ($xml->cFlagTipo == 2)
+                                <tr>
+                                    <th align="left"> {{$xml->cCampo }} </th>
+                                    <th align="center"> {{$xml->cValor }} </th>
+                                </tr>
+                            @endif
+                        </thead>
+                    @endforeach
+                </table>
+            @endif
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -248,7 +278,8 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
+
+            {{-- <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
@@ -281,7 +312,7 @@
                         <td>10301</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -305,14 +336,14 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        El pago de cuota inicial u otro pago a cuenta del precio del producto otorgará a SAISAC la facultad de solicitar al concesionario o distribuidor autorizado la reserva
+                        El pago de cuota inicial u otro pago a cuenta del precio del producto otorgará a {{ $arrayDetalleCotizacion[0]->cEmpresa }} la facultad de solicitar al concesionario o distribuidor autorizado la reserva
                         o cancelar parcial o totalmente el precio del vehículo, sin que sea necesario el consentimiento del cliente
                     </td>
                 </tr>
                 <tr>
                     <td class="justify">
                         El pago de adelantos o cuota inicial, dará derecho al cliente de reservar la unidad en stock o en proceso de importación hasta por un plazo de 15 días .
-                        Transcurrido el plazo SAISAC podrá disponer de la unidad para una venta al contado. El cliente podrá optar por la devolución de su cuota inicial o la separación de
+                        Transcurrido el plazo {{ $arrayDetalleCotizacion[0]->cEmpresa }} podrá disponer de la unidad para una venta al contado. El cliente podrá optar por la devolución de su cuota inicial o la separación de
                         otra unidad a partir del cual se inician a computar los nuevos plazos de entrega.
                     </td>
                 </tr>
@@ -324,7 +355,7 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        El cliente declara conocer y aceptar los costos que SAISAC cobra por cada mantenimiento obligatorio del vehículo adquirido.
+                        El cliente declara conocer y aceptar los costos que {{ $arrayDetalleCotizacion[0]->cEmpresa }} cobra por cada mantenimiento obligatorio del vehículo adquirido.
                     </td>
                 </tr>
                 <tr>
@@ -350,8 +381,7 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        Los pagos realizados por el Cliente se efectuarán a través de cheque NO NEGOCIABLE, expresado en dólares americanos girado a nombre de SOCIEDAD DE
-                        AUTOMOTORES INKA SAC o mediante depósito en cuanta bancaria de propiedad de SOCIEDAD DE AUTOMOTORES INKA SAC.
+                        Los pagos realizados por el Cliente se efectuarán a través de cheque NO NEGOCIABLE, expresado en dólares americanos girado a nombre de {{ $arrayDetalleCotizacion[0]->cNombreEmpresa }} o mediante depósito en cuanta bancaria de propiedad de {{ $arrayDetalleCotizacion[0]->cNombreEmpresa }}.
                     </td>
                 </tr>
                 <tr>
@@ -381,13 +411,13 @@
                 <tr>
                     <td class="justify">
                         La tramitación de emisión de placas y tarjeta de identificación vehicular es una cortesía que otorgamos a nuestros clientes. Este procedimiento administrativo está
-                        sujeto a plazos, condiciones y criterios de la autoridad pública; por lo tanto SAISAC no se hace responsable por los plazos que demore la emisión de los
+                        sujeto a plazos, condiciones y criterios de la autoridad pública; por lo tanto {{ $arrayDetalleCotizacion[0]->cEmpresa }} no se hace responsable por los plazos que demore la emisión de los
                         documentos mencionados.
                     </td>
                 </tr>
                 <tr>
                     <td class="justify">
-                        SAISAC actúa frente al cliente solo y exclusivamente como concesionaria de "AUTOMOTORES GILDEMEISTER PERU S.A." empresa que es la
+                        {{ $arrayDetalleCotizacion[0]->cEmpresa }} actúa frente al cliente solo y exclusivamente como concesionaria de "AUTOMOTORES GILDEMEISTER PERU S.A." empresa que es la
                         REPRESENTANTE autorizada de la marca, la que brinda la garantía de fabrica del producto y con quien el cliente contrata la garantía y con ello todo tipo de
                         responsabilidad por la falta de idoneidad del vehículo.
                     </td>

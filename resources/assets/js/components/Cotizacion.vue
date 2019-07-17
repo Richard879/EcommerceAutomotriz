@@ -2515,6 +2515,7 @@
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
+                fSobrePrecio: 0,
                 // ================= SUBTAB Elemento Venta POR REGALAR=================
                 /*fillBusqTipoElementoPorRegalar: {
                     ntpoelemen: '',
@@ -3584,54 +3585,95 @@
                         'BonoFlag'            : vehiculo.Bono,
                     });
 
+                    // =================================================================
+                    // OBTENER EL SOBRE DEL MODELO SELECCIONADO
+                    // =================================================================
+                    var url = this.ruta + '/sobreprecio/GetListSPModelo';
+                    axios.get(url, {
+                        params: {
+                            'nidempresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                            'nidmarca'          : vehiculo.nIdMarca,
+                            'nidmodelo'         : vehiculo.nIdModelo
+                        }
+                    }).then(response => {
+                        this.fSobrePrecio   = response.data[0].fSobrePrecio;
+                        $("#myBar").hide();
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
+                    });
+
                     toastr.success('Se Agregó vehículo "'+ vehiculo.NombreComercial +'"');
                     this.cerrarModal();
                 }
             },
             //Evalua el Bono
             changeBono(value){
-                //Si el Bono es modificado entonces deshabilitar Dscto
-                if (parseFloat(value) != parseFloat(this.arrayVehiculo[0].BonoFlag)) {
-                    this.checked = true;
-                    this.arrayVehiculo[0].descuento = 0;
+                // Si el SP es = 0, es decir no fue configurado el SP de ese modelo
+                if (parseFloat(this.fSobrePrecio) <= 0) {
+                    this.$message.warning(`El Sobre Precio es 0, debe configurarce.`);
+                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                    this.checked = false;
                 } else {
-                    //Si el bono no se modifico habilitar Dscto
-                    this.checked = false;
-                    this.arrayVehiculo[0].descuento = 0;
-                }
-                // Si el bono es mayor al propio monto del bono, se setea al bono origen
-                if (parseFloat(value) > parseFloat(this.arrayVehiculo[0].BonoFlag)) {
-                    this.$message.error(`El Bono no puede tener un monto mayor al Bono Original`);
-                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
-                    this.checked = false;
-                }
-                //Verificar si el monto del bono es vacio o 0
-                if (value == '' || value < 0) {
-                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
-                    this.checked = false;
-                }
-                //Calcula el porcentaje del Sobre Precio respecto al Precio de Lista
-                let porcentaje = (parseFloat(this.arrayVehiculo[0].sobrePrecio) * 100) / parseFloat(this.arrayVehiculo[0].PrecioLista);
-                console.log(porcentaje);
-                // Si el Porcentaje es > al 10% del Precio Lista
-                if (porcentaje > 10) {
-                    this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
-                    //Si es menor al 10% seteado al Bono Origen
-                    this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
-                    this.checked = false;
+                    //Si el Bono es modificado entonces deshabilitar Dscto y setear a 0
+                    if (parseFloat(value) != parseFloat(this.arrayVehiculo[0].BonoFlag)) {
+                        this.checked = true;
+                        this.arrayVehiculo[0].descuento = 0;
+                    } else {
+                        //Si el bono no se modifico habilitar Dscto
+                        this.checked = false;
+                        this.arrayVehiculo[0].descuento = 0;
+                    }
+                    // Si el bono es mayor al propio monto del bono, se setea al bono origen
+                    if (parseFloat(value) > parseFloat(this.arrayVehiculo[0].BonoFlag)) {
+                        this.$message.error(`El Bono no puede tener un monto mayor al Bono Original`);
+                        this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                        this.checked = false;
+                    }
+                    //Verificar si el monto del bono es vacio o menor a 0
+                    if (value == '' || value < 0) {
+                        this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                        this.checked = false;
+                    }
+
+                    // Si el Sobre Precio es > al Sobre Precio Establecido del Modelo, entonces setear
+                    if (parseFloat(this.arrayVehiculo[0].sobrePrecio) > parseFloat(this.fSobrePrecio)) {
+                        this.$message.error(`El Sobre Precio no puede superar el monto de : ` + parseFloat(this.fSobrePrecio) + ` US$`);
+                        //Si es menor al 10% seteado al Bono Origen
+                        this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                        this.checked = false;
+                    }
                 }
 
-                // let montoLimite = (parseFloat(this.arrayVehiculo[0].PrecioLista) * 10) / 100;
+                /*
+                    //Calcula el porcentaje del Sobre Precio respecto al Precio de Lista
+                    let porcentaje = (parseFloat(this.arrayVehiculo[0].sobrePrecio) * 100) / parseFloat(this.arrayVehiculo[0].PrecioLista);
+                    console.log(porcentaje);
+                    // Si el Porcentaje es > al 10% del Precio Lista
+                    if (porcentaje > 10) {
+                        this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
+                        //Si es menor al 10% seteado al Bono Origen
+                        this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                        this.checked = false;
+                    }
+                */
 
-                // console.log(montoLimite);
-                // //Verificar si el SobrePrecio es > que el 10% del PrecioLista
-                // if (parseFloat(this.arrayVehiculo[0].sobrePrecio) > montoLimite) {
-                //      this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
-                //     //Si es mayor al 10% seteado al Bono Origen
-                //     this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
-                //     this.checked = false;
-                // }
-
+                /*
+                    let montoLimite = (parseFloat(this.arrayVehiculo[0].PrecioLista) * 10) / 100;
+                    console.log(montoLimite);
+                    //Verificar si el SobrePrecio es > que el 10% del PrecioLista
+                    if (parseFloat(this.arrayVehiculo[0].sobrePrecio) > montoLimite) {
+                        this.$message.error(`El Sobre Precio no puede superar el 10% del Precio de Lista`);
+                        //Si es mayor al 10% seteado al Bono Origen
+                        this.arrayVehiculo[0].Bono = this.arrayVehiculo[0].BonoFlag;
+                        this.checked = false;
+                    }
+                */
             },
             //Evalua el cambio de Dscto
             changeDscto(value){
