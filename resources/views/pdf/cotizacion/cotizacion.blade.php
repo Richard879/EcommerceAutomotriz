@@ -417,7 +417,7 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        {{ $arrayDetalleCotizacion[0]->cEmpresa }} actúa frente al cliente solo y exclusivamente como concesionaria de "AUTOMOTORES GILDEMEISTER PERU S.A." empresa que es la
+                        {{ $arrayDetalleCotizacion[0]->cEmpresa }} actúa frente al cliente solo y exclusivamente como concesionaria de "{{ $arrayDetalleCotizacion[0]->cNombreProveedor }}." empresa que es la
                         REPRESENTANTE autorizada de la marca, la que brinda la garantía de fabrica del producto y con quien el cliente contrata la garantía y con ello todo tipo de
                         responsabilidad por la falta de idoneidad del vehículo.
                     </td>
@@ -425,7 +425,7 @@
                 <tr>
                     <td class="justify">
                         El cliente reconoce que el producto ofertado es uno de producción masiva y por tanto puede presentar fallas a pesar de haber sido sometido a rigurosos controles
-                        de calidad. De esta manera es consciente que AUTOMOTORES GILDEMEISTER PERU S.A. garantiza solucionar inmediatamente los desperfectos de fábrica que
+                        de calidad. De esta manera es consciente que {{ $arrayDetalleCotizacion[0]->cNombreProveedor }}. garantiza solucionar inmediatamente los desperfectos de fábrica que
                         se puedan presentar en cumplimiento de la garantía.
                     </td>
                 </tr>
