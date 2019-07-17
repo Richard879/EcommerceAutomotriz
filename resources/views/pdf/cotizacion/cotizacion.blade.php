@@ -283,34 +283,45 @@
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
-                        <th>Agente (CUENTAS RECAUDADORAS)</th>
+                        <th>Agente</th>
                         <th>Banco</th>
                         <th>Moneda</th>
                         <th>Código a indicar  </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE BCP (cta recaudadora, y código vendedor) </td>
-                        <td>Bcp</td>
-                        <td>Soles/dolares</td>
-                        <td>17262</td>
-                    </tr>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
-                        <td>Bbva</td>
-                        <td>Soles</td>
-                        <td>10300</td>
-                    </tr>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
-                        <td>Bbva</td>
-                        <td>Dolares</td>
-                        <td>10301</td>
-                    </tr>
+                    @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300011)
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE BCP (cta recaudadora, y código vendedor) </td>
+                            <td>Bcp</td>
+                            <td>Soles/dolares</td>
+                            <td>17262</td>
+                        </tr>
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
+                            <td>Bbva</td>
+                            <td>Soles</td>
+                            <td>10300</td>
+                        </tr>
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
+                            <td>Bbva</td>
+                            <td>Dolares</td>
+                            <td>10301</td>
+                        </tr>
+                    @endif
+                    @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300717)
+                        <tr>
+                            <td>INKA LIDER AUTOMOTRIZ S.A.C</td>
+                            <td>AGENTE BCP (cta recaudadora, con código DNI vendedor)</td>
+                            <td>Bcp</td>
+                            <td>Soles/dolares</td>
+                            <td>18543</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
