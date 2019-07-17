@@ -1849,7 +1849,8 @@
                 // moment().format('YYYY-MM-DD')
                 axios.get(url, {
                     params: {
-                        'dfecha': moment().format('YYYY-MM-DD')
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        : moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
                     if(response.data.length){

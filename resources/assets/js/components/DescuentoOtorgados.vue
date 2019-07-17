@@ -944,7 +944,8 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapCostoDscProveedor
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapCostoDscProveedor
                 }).then(response => {
                     this.registrarNuevaDscOtorgado();
                 }).catch(error => {

@@ -2194,7 +2194,8 @@
                 me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
-                    'data': me.arraySapArticulo
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapArticulo
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
@@ -2266,7 +2267,8 @@
 
                 var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
                 axios.post(sapUrl, {
-                    'data': me.arraySapProyecto
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapProyecto
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
@@ -2340,7 +2342,8 @@
 
                 var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
                 axios.post(sapUrl, {
-                    'data': me.arraySapTarjetaEquipo
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapTarjetaEquipo
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
@@ -2413,6 +2416,7 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'cCardCode'     : me.formCompra.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
                     'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
@@ -2501,7 +2505,8 @@
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                 axios.post(sapUrl, {
-                    'data': me.arraySapActividad
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapActividad
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2570,7 +2575,8 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2667,7 +2673,8 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                 axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
@@ -2733,7 +2740,8 @@
 
                 var sapUrl = me.ruta + '/tablacosto/SapSetTablaCostoCabecera';
                 axios.post(sapUrl, {
-                    'data': me.arraySapArticulo
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapArticulo
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapItemCode = [];
@@ -2838,8 +2846,9 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
-                    'dataCabecera'  : me.arraySapCosto,
-                    'dataTipoBeneficio'  : me.arrayTCTipoBeneficio
+                    'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'dataCabecera'      : me.arraySapCosto,
+                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio
                 }).then(response => {
                     me.verResultados();
                 }).catch(error => {
@@ -3061,7 +3070,8 @@
 
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
-                    'data': me.arraySapCompra
+                    'nIdEmpresa'    : objCompra.nIdEmpresa,
+                    'data'          : me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -3152,7 +3162,8 @@
 
                     var sapUrl = me.ruta + '/proyecto/SapSetProyecto';
                     axios.post(sapUrl, {
-                        'data': me.arraySapProyecto
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'data'          : me.arraySapProyecto
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -3234,7 +3245,8 @@
 
                     var sapUrl = me.ruta + '/tarjetaequipo/SapSetTarjetaEquipo';
                     axios.post(sapUrl, {
-                        'data': me.arraySapTarjetaEquipo
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'data'          : me.arraySapTarjetaEquipo
                     }).then(response => {
                         me.arraySapRespuesta= [];
                         me.arraySapUpdSgc= [];
@@ -3313,6 +3325,7 @@
 
                     var sapUrl = me.ruta + '/compra/SapSetCompra';
                     axios.post(sapUrl, {
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
                         'cCardCode'     : me.formCompra.ccarcode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'fDocDueDate'   : moment().add(30, 'days').format('YYYY-MM-DD'),
@@ -3438,7 +3451,8 @@
                     //================== REGISTRO ACTIVIDAD EN SAP ===============
                     var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                     axios.post(sapUrl, {
-                        'data': me.arraySapActividad
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'data'          : me.arraySapActividad
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -3520,7 +3534,8 @@
 
                     var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                     axios.post(sapUrl, {
-                        'data': me.arraySapSolucion
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'data'          : me.arraySapSolucion
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -3620,7 +3635,8 @@
                     me.loadingProgressBar("INTEGRANDO LLAMADA DE SERVICIO CON SAP BUSINESS ONE...");
                     var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioCompra';
                     axios.post(sapUrl, {
-                        'data': me.arraySapLlamadaServicio
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'data'          : me.arraySapLlamadaServicio
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -3805,7 +3821,8 @@
 
                 var sapUrl = me.ruta + '/tablacosto/SapSetTablaCostoCabecera';
                 axios.post(sapUrl, {
-                    'data': me.arraySapCompra
+                    'nIdEmpresa'    : objCompra.nIdEmpresa,
+                    'data'          : me.arraySapCompra
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3868,8 +3885,8 @@
 
                 var url = me.ruta + '/tablacosto/GetCompraConceptosTblCosto';
                 axios.post(url, {
-                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nIdSucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdEmpresa'    : objCompra.nIdEmpresa,
+                        'nIdSucursal'   : objCompra.nIdSucursal,
                         'nIdCronograma' : objCompra.nIdCronograma,
                         'data'          : me.arraySapCompra
                 }).then(response => {
@@ -3892,27 +3909,9 @@
                         });
                     }
 
-                    // ====================== CONCEPTO =========================
-                    // ====================  COSTO DEL VEHICULO ================
-                    /*if(response.data.array_infoCostoVehiculo.length){
-                        let arrayCostoVehiculo = response.data.array_infoCostoVehiculo;
-                        arrayCostoVehiculo.map(function (x) {
-                            me.arrayTCCostoVehiculo.push({
-                                'U_SYP_VIN'           :   x.U_SYP_VIN,
-                                'U_SYP_CCONCEPTO'     :   x.U_SYP_CCONCEPTO,
-                                'U_SYP_DCONCEPTO'     :   x.U_SYP_DCONCEPTO,
-                                'U_SYP_CDOCUMENTO'    :   x.U_SYP_CDOCUMENTO,
-                                'U_SYP_DDOCUMENTO'    :   x.U_SYP_DDOCUMENTO,
-                                'U_SYP_IMPORTE'       :   x.U_SYP_IMPORTE,
-                                'U_SYP_COSTO'         :   x.U_SYP_COSTO,
-                                'U_SYP_ESTADO'        :   x.U_SYP_ESTADO
-                            });
-                        });
-                    }*/
-
                     setTimeout(function() {
-                        me.generaSapTblCostoDetallePorVin();
-                    }, 1200);
+                        me.generaSapTblCostoDetallePorVin(objCompra);
+                    }, 800);
                 }).catch(error => {
                     me.limpiarPorError("Error en la Integración Costos Servicio SapB1!");
                     console.log(error);
@@ -3924,14 +3923,14 @@
                     }
                 });
             },
-            generaSapTblCostoDetallePorVin(){
+            generaSapTblCostoDetallePorVin(objCompra){
                 let me = this;
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCostoDetalle';
                 axios.post(url, {
+                    'nIdEmpresa'        : objCompra.nIdEmpresa,
                     'dataCabecera'      : me.arraySapCosto,
-                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio/*,
-                    'dataCostoVehiculo' : me.arrayTCCostoVehiculo*/
+                    'dataTipoBeneficio' : me.arrayTCTipoBeneficio
                 }).then(response => {
                     me.confirmaCompra();
                 }).catch(error => {

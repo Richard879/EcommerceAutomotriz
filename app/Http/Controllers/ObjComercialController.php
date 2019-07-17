@@ -22,7 +22,10 @@ class ObjComercialController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $data = DB::select('exec usp_Cronog_GetVentaActivo');
+        $nIdEmpresa = $request->nidempresa;
+
+        $data = DB::select('exec [usp_Cronog_GetVentaActivo] ?',
+                                                            [$nIdEmpresa]);
 
         return response()->json($data);
     }

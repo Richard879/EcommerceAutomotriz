@@ -216,7 +216,7 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 //==========================================================
                 //===================== LISTAR USUARIOS ====================
                 fillPuga:{
@@ -325,7 +325,7 @@
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;
@@ -350,9 +350,9 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'cdescripcion': this.fillPuga.cdescripcion,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : this.fillPuga.nidsucursal,
+                        'cdescripcion'  : this.fillPuga.cdescripcion,
                         'page' : page
                     }
                 }).then(response => {
@@ -395,10 +395,10 @@
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'nidusuario': this.formPuga.nidusuario,
-                        'nlenjerarquia': nlenjerarquia
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : this.fillPuga.nidsucursal,
+                        'nidusuario'    : this.formPuga.nidusuario,
+                        'nlenjerarquia' : nlenjerarquia
                     }
                 }).then(response => {
                     this.arrayPermisos = response.data;
@@ -417,10 +417,10 @@
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'nidusuario': this.formPuga.nidusuario,
-                        'nlenjerarquia': nlenjerarquia
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : this.fillPuga.nidsucursal,
+                        'nidusuario'    : this.formPuga.nidusuario,
+                        'nlenjerarquia' : nlenjerarquia
                     }
                 }).then(response => {
                     this.arraySubPermisos = response.data;
@@ -476,10 +476,10 @@
             eliminarPermisos(){
                 var url = this.ruta + '/puga/DeletePermisosByUsuario';
                 axios.post(url, {
-                    'nIdEmpresa': this.fillPuga.nidempresa,
-                    'nIdSucursal': this.fillPuga.nidsucursal,
-                    'nIdPerfil' : 0,
-                    'nIdUsuario': this.formPuga.nidusuario
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'   : this.fillPuga.nidsucursal,
+                    'nIdPerfil'     : 0,
+                    'nIdUsuario'    : this.formPuga.nidusuario
                 }).then(response => {
                     this.registrarPermisos();
                 }).catch(error => {
@@ -501,11 +501,11 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
-                    'nIdEmpresa': this.fillPuga.nidempresa,
-                    'nIdSucursal': this.fillPuga.nidsucursal,
-                    'nIdPerfil' : 0,
-                    'nIdUsuario': this.formPuga.nidusuario,
-                    'arrayData':   this.arrayTemproralPermisos
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'   : this.fillPuga.nidsucursal,
+                    'nIdPerfil'     : 0,
+                    'nIdUsuario'    : this.formPuga.nidusuario,
+                    'arrayData'     : this.arrayTemproralPermisos
                 }).then(response => {
                     swal('Permisos Registrados');
                     // Para emitir eventos fuera del Componente primero

@@ -973,7 +973,7 @@
                     // ================== ACTUALIZAR DOCENTRY PEDIDO ================
                     setTimeout(function() {
                         me.registroSgcVendedor();
-                    }, 3800);
+                    }, 800);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -997,8 +997,9 @@
 
                 var url = this.ruta + '/empleado/SapPatchEmpleado';
                 axios.post(url, {
-                    cNombre : usuario.cNombreCompleto,
-                    cRol    : usuario.cNombreRol
+                    'nIdEmpresa'    : this.fillBsqUsuario.nidempresa,
+                    'cNombre'       : usuario.cNombreCompleto,
+                    'cRol'          : usuario.cNombreRol
                 }).then(response => {
                     // console.log(response.data);
                     me.arraySapRespuesta = response.data;
@@ -1016,7 +1017,7 @@
                     // ================== ACTUALIZAR DOCENTRY PEDIDO ================
                     setTimeout(function() {
                         me.registroSgcVendedor();
-                    }, 3800);
+                    }, 800);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
@@ -1043,8 +1044,9 @@
 
                 var url = this.ruta + '/empleado/SapSetEmpleado';
                 axios.post(url, {
-                    cNombre : usuario.cNombreCompleto,
-                    cRol    : usuario.cNombreRol
+                    'nIdEmpresa'    : this.fillBsqUsuario.nidempresa,
+                    'cNombre'       : usuario.cNombreCompleto,
+                    'cRol'          : usuario.cNombreRol
                 }).then(response => {
                     // console.log(response.data);
                     me.arraySapRespuesta = response.data;

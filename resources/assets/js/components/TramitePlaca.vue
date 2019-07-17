@@ -2093,6 +2093,7 @@
 
                 var url = me.ruta + '/tarjetaequipo/SapUpdTarjetaPlaca';
                 axios.post(url, {
+                    'nIdEmpresa'            : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'EquipmentCardNum'      : me.fillIntegracionTarjetaEquipo.nEquipmentCardNum,
                     'ManufacturerSerialNum' : me.fillIntegracionTarjetaEquipo.cPlaca
                 }).then(response => {

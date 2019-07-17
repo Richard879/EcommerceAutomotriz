@@ -537,7 +537,11 @@
         methods:{
             llenarCompraActiva(){
                 var url = this.ruta + '/objComercial/getVentaActiva';
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
+                    }
+                }).then(response => {
                     this.fillAsigVendedorCuota.nidanio      = response.data[0].nIdAnio;
                     this.fillAsigVendedorCuota.canio        = response.data[0].cAnio;
                     this.fillAsigVendedorCuota.nidmes       = response.data[0].nIdMes;

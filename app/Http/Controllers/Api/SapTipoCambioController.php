@@ -20,10 +20,12 @@ class SapTipoCambioController extends Controller
             'base_uri'  => $this->cnxIntegration
         ]);
         
+        $nIdEmpresa = $request->nIdEmpresa;
         $dFecha     = $request->dfecha;
 
         $response = $client->request('GET', "/pruebas/TipoCambio/GetTipoCambio/", [
-                                                                                'query' => ['fecha' => $dFecha]
+                                                                                'query' => ['nIdEmpresa'=> $nIdEmpresa,
+                                                                                            'fecha'     => $dFecha]
                                                                             ]);
         return $response->getBody();
     }

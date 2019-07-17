@@ -449,6 +449,7 @@
                                                                                 <th>Nro Pedido</th>
                                                                                 <th>Código</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Tipo Documento</th>
                                                                                 <th>Nro Documento</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Vehiculo</th>
@@ -491,6 +492,7 @@
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.nIdContacto"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cTpoDocumento"></td>
                                                                                 <td v-text="pedido.cPerDocumento"></td>
                                                                                 <td v-text="pedido.cNombreVendedor"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioModelo"></td>
@@ -1745,13 +1747,6 @@
                 }).then(response => {
                     this.arrayPedidosAprobadosRpta  = response.data.arrayPedido;
                     this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
-                    /*this.arrayPedidosAprobados      = response.data.arrayPedido.data;
-                    this.pagination.current_page    = response.data.arrayPedido.current_page;
-                    this.pagination.total           = response.data.arrayPedido.total;
-                    this.pagination.per_page        = response.data.arrayPedido.per_page;
-                    this.pagination.last_page       = response.data.arrayPedido.last_page;
-                    this.pagination.from            = response.data.arrayPedido.from;
-                    this.pagination.to              = response.data.arrayPedido.to;*/
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1776,7 +1771,6 @@
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.paginateListarPedidosAprobados(this.arrayPedidosAprobadosRpta, page);
-                //this.listarPedidosAprobados(page);
             },
             descargaVoucher(cRutaDocumento){
                 window.open(cRutaDocumento);
@@ -1884,6 +1878,7 @@
 
                     var sapUrl = me.ruta + '/pedido/SapSetPedido';
                     axios.post(sapUrl, {
+                        'nIdEmpresa'        :   objPedido.nIdEmpresa,
                         'fDocDate'          :   moment().format('YYYY-MM-DD'),
                         'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
                         'WarehouseCode'     :   me.formAlmacen.cwhscode,
@@ -2131,6 +2126,7 @@
                 if(objPedido.nActivityCode == 0){
                     var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
                     axios.post(sapUrl, {
+                        'nIdEmpresa'                : objPedido.nIdEmpresa,
                         'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
                         'arraySapActividadEV'       : me.arraySapActividadEV
                     }).then(response => {
@@ -2238,7 +2234,8 @@
 
                     var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                     axios.post(sapUrl, {
-                        'data': me.arraySapSolucion
+                        'nIdEmpresa'    : objPedido.nIdEmpresa,
+                        'data'          : me.arraySapSolucion
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -2381,6 +2378,7 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'                : objPedido.nIdEmpresa,
                     'arraySapLlamadaServicio'   : me.arraySapLlamadaServicio,
                     'cCustomerCode'             : me.fillLlamadaServicio.cCustomerCode,
                     'cInternalSerialNum'        : me.fillLlamadaServicio.cInternalSerialNum,
@@ -2485,7 +2483,8 @@
 
                 var url = me.ruta + '/llamadaservicio/SapCloseLlamadaServicio';
                 axios.post(url, {
-                    'data'  : me.arrayPatchLlamadaServicios
+                    'nIdEmpresa'    : objPedido.nIdEmpresa,
+                    'data'          : me.arrayPatchLlamadaServicios
                 }).then(response => {
                     setTimeout(function() {
                         me.updTarjetaEquipo(objPedido);
@@ -2505,7 +2504,8 @@
 
                 var url = me.ruta + '/tarjetaequipo/SapUpdSocioNegocio';
                 axios.post(url, {
-                    'data'  : me.arraySapPedido
+                    'nIdEmpresa'    : objPedido.nIdEmpresa,
+                    'data'          : me.arraySapPedido
                 }).then(response => {
                     setTimeout(function() {
                         //me.getSapCostoPromedio(objPedido);
@@ -3114,6 +3114,7 @@
 
                 var url = this.ruta + '/gescontacto/SapSetContacto';
                 axios.post(url, {
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdPersona'    : this.fillDirecciones.nIdPersona,
                     'cTipoPersona'  : this.fillDirecciones.cTipoPersona,
                     'contacto'      : this.arrayContacto[0]
@@ -3477,6 +3478,7 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode'     :   me.formAlmacen.cwhscode,
@@ -3655,6 +3657,7 @@
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadVenta';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'                :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'arraySapActividadVehiculo' : me.arraySapActividadVehiculo,
                     'arraySapActividadEV'       : me.arraySapActividadEV
                 }).then(response => {
@@ -3758,7 +3761,8 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3880,6 +3884,7 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicioVenta';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'                : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'arraySapLlamadaServicio'   : me.arraySapLlamadaServicio,
                     'cCustomerCode'             : me.fillLlamadaServicio.cCustomerCode,
                     'cInternalSerialNum'        : me.fillLlamadaServicio.cInternalSerialNum,
@@ -3985,7 +3990,8 @@
 
                 var url = me.ruta + '/llamadaservicio/SapCloseLlamadaServicio';
                 axios.post(url, {
-                    'data'  : me.arrayPatchLlamadaServicios
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arrayPatchLlamadaServicios
                 }).then(response => {
                     setTimeout(function() {
                         me.actualizarTarjetaEquipo();
@@ -4028,7 +4034,8 @@
                 me.loadingProgressBar("INTEGRANDO COSTOS CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapGetCostoPromedio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapEVArticulosEnvia
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapEVArticulosEnvia
                 }).then(response => {
                     me.arraySapRespuestaVehiculo = [];
                     me.arraySapUpdSgcVehiculo = [];
@@ -4082,7 +4089,8 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapCostoEV
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapCostoEV
                 }).then(response => {
                     setTimeout(function() {
                         me.obtenerSgcCostoServicio();
@@ -4138,7 +4146,8 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapCostoServicio
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapCostoServicio
                 }).then(response => {
                     me.confirmaPedido();
                 }).catch(error => {
@@ -4264,6 +4273,7 @@
 
                 var url = this.ruta + '/gescontacto/SapPatchNameContacto';
                 axios.post(url, {
+                    'nIdEmpresa'        : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'cFlagTipoPersona'  : objContacto.cFlagTipoPersona,
                     'cPerDocumento'     : objContacto.cPerDocumento,
                     'cContacto'         : objContacto.cContacto,
@@ -4385,6 +4395,7 @@
                 //================== REGISTRO FACTURA DE PROVEEDOR EN SAP ===============
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaReservaBorrador';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'        :   pedido.nIdEmpresa,
                     'fDocDate'          :   moment().format('YYYY-MM-DD'),
                     'fDocDueDate'       :   moment().add(30, 'days').format('YYYY-MM-DD'),
                     'cWarehouseCode'    :   pedido.cWhsCode,
@@ -4512,15 +4523,11 @@
 
                 var url = me.ruta + '/comprobante/SapGetFacturaReservaByDraftKey';
 
-                /*me.arraySapFacturaReserva.push({
-                    'nDocEntry' : parseInt(objPedido.nDocEntryDetallePedido),
-                    'nDocNum'   : parseInt(objPedido.nDocNumDetallePedido)
-                });*/
-
                 axios.get(url, {
                     params: {
-                        'nDocEntry' : parseInt(objPedido.nDocEntryFacturaReservaBorrador),
-                        'nDocNum'   : parseInt(objPedido.nDocNumFacturaReservaBorrador)
+                        'nIdEmpresa'    : objPedido.nIdEmpresa,
+                        'nDocEntry'     : parseInt(objPedido.nDocEntryFacturaReservaBorrador),
+                        'nDocNum'       : parseInt(objPedido.nDocNumFacturaReservaBorrador)
                     }
                 }).then(response => {
                     if(response.data.length){

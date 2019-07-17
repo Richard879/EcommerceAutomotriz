@@ -26,7 +26,8 @@ class SapTablaCostoController extends Controller
         foreach ($data as $key => $cabecera) {
             $json = [
                 'json' => [
-                    "U_SYP_VIN" => (string)$cabecera['cNumeroVin']
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
+                    "U_SYP_VIN"     => (string)$cabecera['cNumeroVin']
                 ]
             ];
 
@@ -63,6 +64,7 @@ class SapTablaCostoController extends Controller
                     if ($TblCostoVIN == $beneficio['U_SYP_VIN']) {
                         $json = [
                             'json' => [
+                                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                                 "U_SYP_VIN"         => (string)$beneficio['U_SYP_VIN'],
                                 "DocEntry"          => (string)$TblCostoDocEntry,
                                 "SYP_COSTODETCollection" => [
@@ -88,41 +90,10 @@ class SapTablaCostoController extends Controller
 
                 }
             }
-
-            // ====================================================================================================
-            // ======================  REGISTRAR DETALLE CABECERA TBL COST - COSTO VEHÍCULO =======================
-            /*$dataCostoVeh = $request->dataCostoVehiculo;
-            foreach ($dataCostoVeh as $key => $costovehiculo) {
-                //Verifica que el VIN de ese Costo de Vehículo sea Igual al VIN de la Cabecera Costo, para que se le asigne al detalle como concepto
-                if ($TblCostoVIN == $costovehiculo['U_SYP_VIN']) {
-                    $json = [
-                        'json' => [
-                            "U_SYP_VIN"         => (string)$costovehiculo['U_SYP_VIN'],
-                            "DocEntry"          => (string)$TblCostoDocEntry,
-                            "SYP_COSTODETCollection" => [
-                                [
-                                    "U_SYP_CCONCEPTO"   => (string)$costovehiculo['U_SYP_CCONCEPTO'],
-                                    "U_SYP_DCONCEPTO"   => (string)$costovehiculo['U_SYP_DCONCEPTO'],
-                                    "U_SYP_CDOCUMENTO"  => (string)$costovehiculo['U_SYP_CDOCUMENTO'],
-                                    "U_SYP_DDOCUMENTO"  => (string)$costovehiculo['U_SYP_DDOCUMENTO'],
-                                    "U_SYP_IMPORTE"     => (string)$costovehiculo['U_SYP_IMPORTE'],
-                                    "U_SYP_COSTO"       => (string)$costovehiculo['U_SYP_COSTO'],
-                                    "U_SYP_ESTADO"      => (string)$costovehiculo['U_SYP_ESTADO']
-                                ]
-                            ]
-                        ]
-                    ];
-
-                    $rptaCostoVehiculo = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
-                    $rptaSAPCostoVehiculo = json_decode($rptaCostoVehiculo->getBody());
-                    array_push($array_rptaCostoVehiculo, $rptaSAPCostoVehiculo);
-                }
-            }*/
         }
 
         $rpta = [
-            'array_rptaBeneficio'       =>  $array_rptaBeneficio/*,
-            'array_rptaCostoVehiculo'   =>  $array_rptaCostoVehiculo*/
+            'array_rptaBeneficio'       =>  $array_rptaBeneficio
         ];
 
         return $rpta;
@@ -143,6 +114,7 @@ class SapTablaCostoController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "U_SYP_VIN"         => (string)$value['U_SYP_VIN'],
                     "DocEntry"          => (string)$value['DocEntry'],
                     "SYP_COSTODETCollection" => [
@@ -185,6 +157,7 @@ class SapTablaCostoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "U_SYP_VIN"         => (string)$request->U_SYP_VIN,
                 "DocEntry"          => (string)$request->DocEntry,
                 "SYP_COSTODETCollection" => [
@@ -221,6 +194,7 @@ class SapTablaCostoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "U_SYP_VIN"         => (string)$request->U_SYP_VIN,
                 "DocEntry"          => (string)$request->DocEntry,
                 "SYP_COSTODETCollection" => [

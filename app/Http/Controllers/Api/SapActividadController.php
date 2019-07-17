@@ -27,6 +27,7 @@ class SapActividadController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "ActivityDate"      => (string)$value['dActivityDate'],
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],
@@ -69,6 +70,7 @@ class SapActividadController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "ActivityDate"      =>  (string)$value['dActivityDate'],
                     "ActivityTime"      =>  $value['hActivityTime'],
                     "CardCode"          =>  $value['cCardCode'],
@@ -117,6 +119,7 @@ class SapActividadController extends Controller
             foreach ($arraySapActividadVehiculo as $key => $value) {
                 $json = [
                     'json' => [
+                        "nIdEmpresa"        => (string)$request->nIdEmpresa,
                         "ActivityDate"      => (string)$value['dActivityDate'],
                         "ActivityTime"      => $value['hActivityTime'],
                         "CardCode"          => $value['cCardCode'],
@@ -204,6 +207,7 @@ class SapActividadController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "ActivityDate"      => (string)$value['dActivityDate'],
                     "ActivityTime"      => $value['hActivityTime'],
                     "CardCode"          => $value['cCardCode'],

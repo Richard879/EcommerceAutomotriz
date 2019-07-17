@@ -1640,7 +1640,8 @@
                 me.loadingProgressBar("VERIFICANDO FACTURA DE RESERVA CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/comprobante/SapGetComprobanteByTipo';
                 axios.post(sapUrl, {
-                    'data'  : me.arraySapFacturaRserva
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapFacturaRserva
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -1782,6 +1783,7 @@
 
                 var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                 axios.post(sapUrl, {
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'cCardCode'     : me.formWOperativo.ccarcode,
                     'fDocDate'      : moment().format('YYYY-MM-DD'),
                     'data'          : me.arrayTemporal
@@ -1868,7 +1870,8 @@
 
                 var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                 axios.post(sapUrl, {
-                    'data'       : me.arraySapActividad
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapActividad
                 }).then(response => {
                     // ======================================================================
                     // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
@@ -1943,7 +1946,8 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2035,7 +2039,8 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -2097,7 +2102,8 @@
 
                 var url = me.ruta + '/asiento/SapSetAsientoContableWO';
                 axios.post(url, {
-                    'data' : me.arraySapAsiento
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapAsiento
                 }).then(response => {
                     me.arraySapRespuesta= [];
                     me.arraySapUpdSgc= [];
@@ -2198,7 +2204,8 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arraySapWO
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapWO
                 }).then(response => {
                     me.confirmarWO();
                 }).catch(error => {
@@ -2351,6 +2358,7 @@
                     //================== REGISTRO ARTICULO EN SAP ===============
                     var sapUrl = me.ruta + '/comprobante/SapSetFacturaProveedorWO';
                     axios.post(sapUrl, {
+                        'nIdEmpresa'    : objWO.nIdEmpresa,
                         'cCardCode'     : objWO.cCardCode,
                         'fDocDate'      : moment().format('YYYY-MM-DD'),
                         'data'          : me.arrayTemporal
@@ -2449,7 +2457,8 @@
                 {
                     var sapUrl = me.ruta + '/actividad/SapSetActividadCompra';
                     axios.post(sapUrl, {
-                        'data'  : me.arraySapActividad
+                        'nIdEmpresa'    : objWO.nIdEmpresa,
+                        'data'          : me.arraySapActividad
                     }).then(response => {
                         // ======================================================================
                         // GUARDAR ACTIVIDAD DE LA FACTURA DE PROVEEDORES EN SQL SERVER
@@ -2530,7 +2539,8 @@
 
                     var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                     axios.post(sapUrl, {
-                        'data': me.arraySapSolucion
+                        'nIdEmpresa'    : objWO.nIdEmpresa,
+                        'data'          : me.arraySapSolucion
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -2647,7 +2657,8 @@
                 if(objWO.nServiceCallID==0){
                     var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                     axios.post(sapUrl, {
-                        'data': me.arraySapLlamadaServicio
+                        'nIdEmpresa'    : objWO.nIdEmpresa,
+                        'data'          : me.arraySapLlamadaServicio
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];
@@ -2727,7 +2738,8 @@
 
                     var url = me.ruta + '/asiento/SapSetAsientoContableWO';
                     axios.post(url, {
-                        'data' : me.arraySapAsiento
+                        'nIdEmpresa'    : objWO.nIdEmpresa,
+                        'data'          : me.arraySapAsiento
                     }).then(response => {
                         me.arraySapRespuesta = [];
                         me.arraySapUpdSgc = [];

@@ -27,8 +27,9 @@ class SapProyectoController extends Controller
 
             $json = [
                 'json' => [
-                    "Code"      => $value['cCode'],
-                    "Name"      => $value['cName']
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
+                    "Code"          => $value['cCode'],
+                    "Name"          => $value['cName']
                 ]
             ];
 

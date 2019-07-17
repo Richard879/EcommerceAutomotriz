@@ -212,7 +212,8 @@
                 // moment().format('YYYY-MM-DD')
                 axios.get(url, {
                     params: {
-                        'dfecha': this.fillTipoCambio.dFechaTipoCambio
+                        'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'dfecha'        : this.fillTipoCambio.dFechaTipoCambio
                     }
                 }).then(response => {
                     if(response.data.length){

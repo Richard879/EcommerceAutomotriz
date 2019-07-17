@@ -3256,7 +3256,8 @@
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
                 var sapUrl = me.ruta + '/actividad/SapSetActividadMercancia';
                 axios.post(sapUrl, {
-                    'data': me.arraySapActividad
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapActividad
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3334,7 +3335,8 @@
 
                 var sapUrl = me.ruta + '/tarjetaequipo/SapGetTarjetaEquipo';
                 axios.post(sapUrl, {
-                    'data': me.arraySapTarjetaEquipo
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapTarjetaEquipo
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3374,7 +3376,8 @@
 
                 var sapUrl = me.ruta + '/solucion/SapSetSolucion';
                 axios.post(sapUrl, {
-                    'data': me.arraySapSolucion
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapSolucion
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3457,7 +3460,8 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3812,7 +3816,8 @@
                 //================== REGISTRO ACTIVIDAD EN SAP ===============
                 var sapUrl = me.ruta + '/actividad/SapSetActividad';
                 axios.post(sapUrl, {
-                    'data': me.arraySapActividad
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapActividad
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];
@@ -3883,7 +3888,8 @@
 
                 var sapUrl = me.ruta + '/llamadaservicio/SapSetLlamadaServicio';
                 axios.post(sapUrl, {
-                    'data': me.arraySapLlamadaServicio
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arraySapLlamadaServicio
                 }).then(response => {
                     me.arraySapRespuesta = [];
                     me.arraySapUpdSgc = [];

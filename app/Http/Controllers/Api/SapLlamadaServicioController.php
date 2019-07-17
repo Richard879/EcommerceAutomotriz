@@ -27,6 +27,7 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"           => (string)$request->nIdEmpresa,
                     "CustomerCode"         => $value['cCustomerCode'],
                     "InternalSerialNum"    => $value['cInternalSerialNum'],
                     "ItemCode"             => $value['cItemCode'],
@@ -67,6 +68,7 @@ class SapLlamadaServicioController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"            =>  (string)$request->nIdEmpresa,
                 "CustomerCode"          =>  $request->cCustomerCode,
                 "InternalSerialNum"     =>  $request->cInternalSerialNum,
                 "ItemCode"              =>  $request->cItemCode,
@@ -118,6 +120,7 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"           => (string)$request->nIdEmpresa,
                     "CustomerCode"         => $value['cCustomerCode'],
                     "InternalSerialNum"    => $value['cInternalSerialNum'],
                     "ItemCode"             => $value['cItemCode'],
@@ -157,6 +160,7 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "ServiceCallID"     => $value['nServiceCallID'],
                     "Status"            => $value['nStatusClose']
                 ]
@@ -184,8 +188,9 @@ class SapLlamadaServicioController extends Controller
 
             $json = [
                 'json' => [
-                    "ItemCode"  => $value['cItemCode'],
-                    "Solution"  => $value['cSubject']
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
+                    "ItemCode"      => $value['cItemCode'],
+                    "Solution"      => $value['cSubject']
                 ]
             ];
 

@@ -41,7 +41,8 @@ class SapContactoController extends Controller
 
         $json = [
                     'json' => [
-                        "CardCode" => $CardCode
+                        "nIdEmpresa"    => (string)$request->nIdEmpresa,
+                        "CardCode"      => $CardCode
                     ]
                 ];
 
@@ -96,6 +97,7 @@ class SapContactoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      =>  $CardCode,
                     "CardType"      =>  "cCustomer",
                     "CardName"      =>  $UserName,
@@ -157,6 +159,7 @@ class SapContactoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      =>  $CardCode,
                     "CardType"      =>  "cCustomer",
                     "CardName"      =>  $UserName,
@@ -213,6 +216,7 @@ class SapContactoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      =>  $CardCode,
                     "CardName"      =>  $UserName,
                     "U_SYP_BPAP"    =>  $U_SYP_BPAP,
@@ -229,6 +233,7 @@ class SapContactoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      =>  $CardCode,
                     "CardName"      =>  $UserName,
                     "U_SYP_BPTP"    =>  $U_SYP_BPTP,
@@ -259,6 +264,7 @@ class SapContactoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"    => (string)$request->nIdEmpresa,
                 "CardCode"      =>  $request->CardCode,
                 "BPAddresses"   =>  array()
             ]
@@ -298,6 +304,7 @@ class SapContactoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"    => (string)$request->nIdEmpresa,
                 "CardCode"      => $CardCode,
                 "CardType"      => "cCustomer",
                 "CardName"      => $UserName,
