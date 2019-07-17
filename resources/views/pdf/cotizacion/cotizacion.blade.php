@@ -175,7 +175,7 @@
                             @foreach ($arrayDetalleCotizacion as $typ)
                                 <tr>
                                     <td> TYP </td>
-                                    <td> {{ $typ->fTYP }} </td>
+                                    <td> {{ number_format($typ->fTYP, 2) }} </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -279,7 +279,7 @@
                 </tbody>
             </table>
 
-            {{-- <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
+            <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
@@ -312,7 +312,7 @@
                         <td>10301</td>
                     </tr>
                 </tbody>
-            </table> --}}
+            </table>
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
