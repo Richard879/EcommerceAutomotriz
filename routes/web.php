@@ -559,6 +559,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
     Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
     Route::post('/gescontacto/SapSetUpdDireccionesContacto', 'Api\SapContactoController@SapSetUpdDireccionesContacto');
+    Route::post('/gescontacto/SapPatchNameContacto', 'Api\SapContactoController@SapPatchNameContacto');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/compra/SapSetCompraWO', 'Api\SapCompraController@SapSetCompraWO');

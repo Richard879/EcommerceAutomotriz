@@ -48,6 +48,7 @@ class SapAsientoContableController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"            => (string)$request->nIdEmpresa,
                     "Memo"                  =>  "WO-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
                     "Reference2"            =>  $value['cProjectCode'],
@@ -117,10 +118,11 @@ class SapAsientoContableController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"            => (string)$request->nIdEmpresa,
                     "Memo"                  =>  "WF-".$value['cProjectCode'],
                     "ProjectCode"           =>  $value['cProjectCode'],
                     "Reference2"            =>  $value['cProjectCode'],
-                    "JournalEntryLines"    =>
+                    "JournalEntryLines"     =>
                         [
                             [
                                 "AccountCode"       =>  (string)$cAccountCode1,

@@ -27,6 +27,7 @@ class SapTarjetaEquipoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"            => (string)$request->nIdEmpresa,
                     "CustomerCode"          => $value['cCustomerCode'],
                     "InternalSerialNum"     => $value['cInternalSerialNum'],
                     "ItemCode"              => $value['cItemCode']
@@ -55,6 +56,7 @@ class SapTarjetaEquipoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "EquipmentCardNum"  => $value['nEquipmentCardNum'],
                     "CustomerCode"      => $value['cCardCode']
                 ]
@@ -76,6 +78,7 @@ class SapTarjetaEquipoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"            => (string)$request->nIdEmpresa,
                 "EquipmentCardNum"      => $request->EquipmentCardNum,
                 "ManufacturerSerialNum" => (string)$request->ManufacturerSerialNum
             ]
@@ -101,6 +104,7 @@ class SapTarjetaEquipoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "EquipmentCardNum"  => $value['nEquipmentCardNum']
                 ]
             ];

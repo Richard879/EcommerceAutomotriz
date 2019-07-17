@@ -27,6 +27,7 @@ class SapComprobanteController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
                     "DocumentLines" => [
@@ -80,6 +81,7 @@ class SapComprobanteController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      =>  $request->cCardCode,
                     "DocDate"       =>  (string)$request->fDocDate,
                     "DocDueDate"    =>  (string)$value['dFechaFin'],
@@ -134,6 +136,7 @@ class SapComprobanteController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
                     "DocDueDate"    =>  (string)$request->fDocDueDate,
@@ -174,14 +177,16 @@ class SapComprobanteController extends Controller
         $arrayData = $request->data;
         foreach ($arrayData as $key => $value) {
 
+            $nIdEmpresa = $value['nIdEmpresa'];
             $nBaseEntry = $value['nBaseEntry'];
             $nBaseType  = $value['nBaseType'];
             $cItemCode  = $value['cItemCode'];
 
             $response = $client->request('POST', "/pruebas/Comprobante/SapGetComprobanteByTipo/", [
-                                                                                        'query' => ['nBaseEntry' => $nBaseEntry,
-                                                                                                    'nBaseType' => $nBaseType,
-                                                                                                    'cItemCode' => $cItemCode]
+                                                                                        'query' => ['nIdEmpresa'    => $nIdEmpresa,
+                                                                                                    'nBaseEntry'    => $nBaseEntry,
+                                                                                                    'nBaseType'     => $nBaseType,
+                                                                                                    'cItemCode'     => $cItemCode]
                                                                                     ]);
             $rptaSap = json_decode($response->getBody());
         }
@@ -195,17 +200,9 @@ class SapComprobanteController extends Controller
             'base_uri'  => $this->cnxIntegration
         ]);
 
-        // $array_rpta = [];
-        // $rptaSap   = [];
-        //======= Obtener el EmployeeCode del Usuario Autenticado
-        /*$data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
-        [   Auth::user()->id
-        ]);
-        $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;*/
-        //============================================================
-
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "CardCode"          =>  (string)$request->cCardCode,
                 "DocDate"           =>  (string)$request->fDocDate,
                 "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -233,10 +230,6 @@ class SapComprobanteController extends Controller
 
         $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaReservaBorrador/", $json);
         return $response->getBody();
-
-        // $rptaSap = json_decode($response->getBody());
-        // array_push($array_rpta, $rptaSap);
-        // return $array_rpta;
     }
 
     public function SapGetFacturaReservaByDraftKey(Request $request)
@@ -249,19 +242,15 @@ class SapComprobanteController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        //$arrayData = $request->data;
-        //foreach ($arrayData as $key => $value) {
+        $nIdEmpresa = $request->nIdEmpresa;
+        $nDocEntry  = $request->nDocEntry;
+        $nDocNum    = $request->nDocNum;
 
-            $nDocEntry  = $request->nDocEntry;
-            $nDocNum    = $request->nDocNum;
-
-            $response = $client->request('POST', "/pruebas/Comprobante/SapGetFacturaReservaByDraftKey/", [
-                                                                                        'query' => ['nDocEntry' => $nDocEntry,
-                                                                                                    'nDocNum' => $nDocNum]
-                                                                                    ]);
-            //$rptaSap = json_decode($response->getBody());
-        //}
-        //return $rptaSap;
+        $response = $client->request('POST', "/pruebas/Comprobante/SapGetFacturaReservaByDraftKey/", [
+                                                                                    'query' => ['nIdEmpresa'=> $nIdEmpresa,
+                                                                                                'nDocEntry' => $nDocEntry,
+                                                                                                'nDocNum'   => $nDocNum]
+                                                                                ]);
         return $response->getBody();
     }
 

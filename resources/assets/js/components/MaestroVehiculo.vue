@@ -2769,7 +2769,8 @@
 
                 var url = this.ruta + '/articulo/SapPatchArticuloAll';
                 axios.post(url, {
-                    fillNuevoVehiculo   :   this.fillNuevoVehiculo
+                    'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'fillNuevoVehiculo' :   this.fillNuevoVehiculo
                 }).then(response => {
                     // console.log(response.data);
                     $("#myBar").hide();

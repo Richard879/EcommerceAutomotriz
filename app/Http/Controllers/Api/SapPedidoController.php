@@ -32,6 +32,7 @@ class SapPedidoController extends Controller
         foreach ($arraySapPedido as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "CardCode"          =>  (string)$value['cCardCode'],
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -101,6 +102,7 @@ class SapPedidoController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "CardCode"          =>  '',
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -170,6 +172,7 @@ class SapPedidoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "DocEntryPedido"    => (string)$nDocEntryPedido,
                 "CardCode"          => (string)$cCardCode,
                 "DocTotal"          => (string)$dMontoNuevoDolares,

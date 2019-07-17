@@ -1229,7 +1229,8 @@
 
                 var url = me.ruta + '/tablacosto/SapPachTablaCosto';
                 axios.post(url, {
-                    'data'  : me.arrayTCFlete
+                    'nIdEmpresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'data'          : me.arrayTCFlete
                 }).then(response => {
                     me.loading.close();
                     $("#myBar").hide();

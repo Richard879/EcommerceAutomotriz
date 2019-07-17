@@ -62,6 +62,7 @@ class SapCompraController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "CardCode"          =>  $request->cCardCode,
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -111,6 +112,7 @@ class SapCompraController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "DocEntry"          =>  (string)$nDocEntry,
                 'U_SYP_MDSD'        =>  (string)$cSerieComprobante, //Serie del Documento
                 'U_SYP_MDCD'        =>  (string)$cNumeroComprobante,//Correlativo del Documento
@@ -147,6 +149,7 @@ class SapCompraController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "CardCode"          =>  $request->cCardCode,
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -200,6 +203,7 @@ class SapCompraController extends Controller
 
             $json = [
                 'json' => [
+                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
                     "CardCode"          =>  $request->cCardCode,
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,

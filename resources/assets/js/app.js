@@ -50,7 +50,6 @@ Vue.component('wfinanciero', require('./components/WarrantFinanciero.vue'));
 Vue.component('campania', require('./components/EventoCampania.vue'));
 Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVenta.vue'));
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
-Vue.component('gestioncontactoadv', require('./components/GestionContactoADV.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('pedidoaprobar', require('./components/PedidoAprobacion.vue'));

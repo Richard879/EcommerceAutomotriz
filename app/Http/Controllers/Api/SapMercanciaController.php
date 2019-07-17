@@ -29,6 +29,7 @@ class SapMercanciaController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
                     "CardCode"      => (string)$value['cCardCode'],
                     "DocDate"       => (string)$request->fDocDate,
                     "DocDueDate"    => (string)$request->fDocDueDate,
@@ -81,6 +82,7 @@ class SapMercanciaController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"    => (string)$request->nIdEmpresa,
                 'DocDate'       =>  (string)$request->fDocDate,
                 'DocDueDate'    =>  (string)$request->fDocDueDate,
                 "U_SYP_MDMT"    =>  "02",
@@ -123,6 +125,7 @@ class SapMercanciaController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"    => (string)$request->nIdEmpresa,
                 'DocDate'       =>  (string)$request->fDocDate,
                 'DocDueDate'    =>  (string)$request->fDocDueDate,
                 "U_SYP_MDMT"    =>  "01",

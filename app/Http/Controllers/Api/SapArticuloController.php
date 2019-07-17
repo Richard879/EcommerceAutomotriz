@@ -22,7 +22,8 @@ class SapArticuloController extends Controller
 
         $json = [
             'json' => [
-                "ItemCode"    => $request->cNumeroVin
+                'nIdEmpresa'    =>  (string)$request->nIdEmpresa,
+                "ItemCode"      => $request->cNumeroVin
             ]
         ];
 
@@ -49,6 +50,7 @@ class SapArticuloController extends Controller
 
             $json = [
                 'json' => [
+                    'nIdEmpresa'            =>  (string)$request->nIdEmpresa,
                     'U_SYP_FAMILIA'         =>  (string)$value['cNombreLinea'],
                     'U_SYP_SUBFAMILIA'      =>  "TP",
                     'U_SYP_MODELO'          =>  (string)$value['cNombreModelo'],
@@ -92,11 +94,13 @@ class SapArticuloController extends Controller
         $arraySapElemento = $request->data;
         foreach ($arraySapElemento as $key => $value) {
 
-            $nWhsCode     = $value['nWhsCode'];
-            $cItemCode    = $value['cItemCode'];
+            $nWhsCode       = $value['nWhsCode'];
+            $cItemCode      = $value['cItemCode'];
+            $nIdEmpresa     = $value['nIdEmpresa'];
 
             $response = $client->request('POST', "/pruebas/Articulo/SapGetCostoPromedio/", [
-                                                                                        'query' => ['nWhsCode' => $nWhsCode,
+                                                                                        'query' => ['nIdEmpresa'=>$nIdEmpresa,
+                                                                                                    'nWhsCode'  => $nWhsCode,
                                                                                                     'cItemCode' => $cItemCode]
                                                                                     ]);
             $rptaSap = json_decode($response->getBody());
@@ -149,6 +153,7 @@ class SapArticuloController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"    => (string)$request->nIdEmpresa,
                 "ItemCode"      =>  (string)$cNumeroVin,
                 'U_SYP_UNSPSC'  =>  (string)$cCodigoNaciones//Código Naciones Unidas
             ]
@@ -173,7 +178,8 @@ class SapArticuloController extends Controller
 
             $json = [
                 'json' => [
-                    "ItemCode"  =>  (string)$value['cNumeroVin']
+                    "nIdEmpresa"    => (string)$request->nIdEmpresa,
+                    "ItemCode"      =>  (string)$value['cNumeroVin']
                 ]
             ];
 
@@ -277,6 +283,7 @@ class SapArticuloController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "ItemCode"          =>  (string)$cnroserie,
                 'U_SYP_MARCA'       =>  (string)$nidmarca,
                 'U_SYP_CEXTERIOR'   =>  (string)$cnombrecolor,

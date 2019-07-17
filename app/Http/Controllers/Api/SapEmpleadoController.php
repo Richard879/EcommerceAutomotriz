@@ -27,6 +27,7 @@ class SapEmpleadoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "SalesEmployeeName" =>  (string)$cNombre,
                 "Remarks"           =>  (string)$cRol,
                 "Active"            =>  "tYES"
@@ -49,6 +50,7 @@ class SapEmpleadoController extends Controller
 
         $json = [
             'json' => [
+                "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "SalesEmployeeName" =>  (string)$cNombre,
                 "Remarks"           =>  (string)$cRol,
                 "Active"            =>  "tYES"
