@@ -431,8 +431,8 @@ class PdiProcesoController extends Controller
             $img_empresa    =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
             $img_marca      =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
         } else {
-            $img_empresa    =   public_path('img/inkalider.png');//CAPTURO LA RUTA DEL LOGO
-            $img_marca      =   public_path('img/nissan.png');//CAPTURO LA RUTA DE HYUNDAI
+            $img_empresa    =   public_path('img/inkalider.jpg');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/nissan.jpg');//CAPTURO LA RUTA DE HYUNDAI
         }
 
         $arrayDetalleAccesorio  =   DB::select('exec [usp_Pdi_GetListDetalleAccesorio] ?, ?, ?',
