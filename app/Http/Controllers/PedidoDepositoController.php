@@ -179,13 +179,15 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdEmpresa         =   $request->nIdEmpresa;
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
         $cEstadoDeposito    =   $request->cEstadoDeposito;
 
         $cEstadoDeposito    =   ($cEstadoDeposito == NULL) ? ($cEstadoDeposito = '') : $cEstadoDeposito;
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?, ?',
                                     [
+                                        $nIdEmpresa,
                                         $nIdCabeceraPedido,
                                         $cEstadoDeposito,
                                         Auth::user()->id
@@ -456,19 +458,25 @@ class PedidoDepositoController extends Controller
         $fMontoDepositado   =   ($fMontoDepositado == NULL) ? ($fMontoDepositado = 0) : $fMontoDepositado;
         $fMontoCancelado    =   ($fMontoCancelado == NULL) ? ($fMontoCancelado = 0) : $fMontoCancelado;
 
-        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
-        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        if ($nIdEmpresa == 1300011) {
+            $img_empresa    =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        } else {
+            $img_empresa    =   public_path('img/inkalider.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/nissan.png');//CAPTURO LA RUTA DE HYUNDAI
+        }
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?, ?, ?',
                                     [
+                                        $nIdEmpresa,
                                         $nIdCabeceraPedido,
                                         '',
                                         Auth::user()->id
                                     ]);
 
         $pdf = \PDF::loadView('pdf.pedido.pedidodeposito', [
-                                                        'logo'                      =>  $logo,
-                                                        'hyundai'                   =>  $hyundai,
+                                                        'img_empresa'               =>  $img_empresa,
+                                                        'img_marca'                 =>  $img_marca,
                                                         'arrayDepositosPorPedido'   =>  $arrayDepositosPorPedido,
                                                         'fMontoPedido'              =>  $fMontoPedido,
                                                         'fMontoDepositado'          =>  $fMontoDepositado,

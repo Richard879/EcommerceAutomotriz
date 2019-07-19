@@ -638,8 +638,13 @@ class PedidoController extends Controller
         $nIdSucursal        =   $request->nIdSucursal;
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
 
-        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
-        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        if ($nIdEmpresa == 1300011) {
+            $img_empresa    =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        } else {
+            $img_empresa    =   public_path('img/inkalider.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/nissan.png');//CAPTURO LA RUTA DE HYUNDAI
+        }
 
         $arrayDetallePedido = DB::select('exec [usp_Pedido_GetPdfDetallePedido] ?, ?, ?',
                                     [
@@ -655,9 +660,13 @@ class PedidoController extends Controller
                                         $nIdCabeceraPedido
                                     ]);
 
-        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
+        // OBTENER LOS BANCOS POR EMPRESA
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco] ?',
+                                    [
+                                        $nIdEmpresa
+                                    ]);
 
-        //OBTENGO LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
+        // OBTENER LAS URL DE LOS ARCHIVOS ASOCIADOS AL MODELO/AÑO
         $arrayDetalleDocs = DB::select('exec [usp_Pedido_GetDocs]  ?',
                                     [
                                         $nIdCabeceraPedido
@@ -678,13 +687,13 @@ class PedidoController extends Controller
         // }
 
         $pdf = \PDF::loadView('pdf.pedido.pedido', [
-                                                        'arrayDetallePedido'    =>  $arrayDetallePedido,
-                                                        'arrayDetalleDocs'      =>  $arrayDetalleDocs,
-                                                        'arrayPedidoDoumento'   =>  $arrayPedidoDoumento,
-                                                        'arrayDatosBanco'       =>  $arrayDatosBanco,
-                                                        'logo'                  =>  $logo,
-                                                        'hyundai'               =>  $hyundai
-                                                    ]);
+                                                    'img_empresa'           =>  $img_empresa,
+                                                    'img_marca'             =>  $img_marca,
+                                                    'arrayDetallePedido'    =>  $arrayDetallePedido,
+                                                    'arrayDetalleDocs'      =>  $arrayDetalleDocs,
+                                                    'arrayPedidoDoumento'   =>  $arrayPedidoDoumento,
+                                                    'arrayDatosBanco'       =>  $arrayDatosBanco,
+                                                ]);
 
         return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
     }

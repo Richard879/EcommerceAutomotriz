@@ -638,7 +638,7 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidrol'        :   110026
                     }
                 }).then(response => {
@@ -657,7 +657,7 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidrol'        :   110025
                     }
                 }).then(response => {
@@ -676,7 +676,7 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidrol'        :   110083
                     }
                 }).then(response => {
@@ -695,7 +695,7 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidrol'        :   110096
                     }
                 }).then(response => {
@@ -714,7 +714,7 @@
                 var url = this.ruta + '/dashboard/GetEmpleadosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidrol'        :   110086
                     }
                 }).then(response => {
@@ -735,7 +735,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionMontoByMes';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -793,7 +793,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionMontoTotal';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -814,7 +814,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionCantidadTotal';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -834,7 +834,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.formLogin.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -884,7 +884,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdRol'        :   '110026',
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -934,7 +934,7 @@
                 var url = this.ruta + '/dashboard/GetAsesoresByJV';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.formLogin.nIdUsuario
                     }
                 }).then(response => {
@@ -972,7 +972,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.cDashboard03.fillInfoUsuarioFind.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -1056,7 +1056,7 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.cDashboard03.fillPedidoInfoUsuarioFind.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -1120,7 +1120,7 @@
                 var url = this.ruta + '/dashboard/GetAsesoresByJV';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                     }
                 }).then(response => {
                     this.cDashboard04.arrayAsesoresByAll = response.data;
@@ -1158,7 +1158,7 @@
                 var url = this.ruta + '/dashboard/GetCotizacionesByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.cDashboard04.fillInfoUsuario.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -1241,7 +1241,7 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.cDashboard04.fillPedidoInfoUsuario.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -1306,7 +1306,7 @@
                 var url = this.ruta + '/dashboard/GetPedidoMontoByMes';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -1364,7 +1364,7 @@
                 var url = this.ruta + '/dashboard/GetPedidoMontoTotal';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -1385,7 +1385,7 @@
                 var url = this.ruta + '/dashboard/GetPedidoCantidadTotal';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
                 }).then(response => {
@@ -1405,7 +1405,7 @@
                 var url = this.ruta + '/dashboard/GetPedidosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdUsuario'    :   this.formLogin.nIdUsuario,
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }
@@ -1455,7 +1455,7 @@
                 var url = this.ruta + '/dashboard/GetPedidosByRol';
                 axios.get(url, {
                     params: {
-                        'nIdEmpresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdEmpresa'    :   (parseInt(sessionStorage.getItem("nIdEmpresa")) == '') ? '0' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nIdRol'        :   '110026',
                         'dfecha'        :   moment().format('YYYY-MM-DD')
                     }

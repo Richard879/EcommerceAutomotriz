@@ -15,7 +15,7 @@
             margin: 0px;
         }
         * {
-            font-family: Verdana, Arial, sans-serif;
+            font-family: verdana, sans-serif;
         }
         .padding{
             padding: 1rem;
@@ -74,12 +74,22 @@
     <div class="information">
         <table width="100%">
             <tr>
-                <td align="top">
-                    <img src="{{$logo}}" alt="" width="210" height="75"/>
-                </td>
-                <td align="right">
-                    <img src="{{$hyundai}}" alt="" width="175" height="75"/>
-                </td>
+                @if ($arrayDepositosPorPedido[0]->nIdEmpresa == 1300011)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="180" height="105"/>
+                    </td>
+                @endif
+                @if ($arrayDepositosPorPedido[0]->nIdEmpresa == 1300717)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="190" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="155" height="105"/>
+                    </td>
+                @endif
             </tr>
             <tr>
                 <td valign="top">

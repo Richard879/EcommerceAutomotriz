@@ -15,7 +15,7 @@
             margin: 0px;
         }
         * {
-            font-family: Verdana, Arial, sans-serif;
+            font-family: verdana, sans-serif;
         }
         .padding{
             padding: 1rem;
@@ -79,12 +79,22 @@
     <div class="information">
         <table width="100%">
             <tr>
-                <td valign="top">
-                    <img src="{{$logo}}" alt="" width="210" height="75"/>
-                </td>
-                <td align="right">
-                    <img src="{{$hyundai}}" alt="" width="175" height="75"/>
-                </td>
+                @if ($arrayDetallePedido[0]->nIdEmpresa == 1300011)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="180" height="105"/>
+                    </td>
+                @endif
+                @if ($arrayDetallePedido[0]->nIdEmpresa == 1300717)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="190" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="155" height="105"/>
+                    </td>
+                @endif
             </tr>
             <tr>
                 <td valign="top">
@@ -172,9 +182,9 @@
                 </tbody>
             </table>
 
-            <table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>
+                    <td>Agradeceremos cancelar su vehículo en las cuentas bancarias que a continuación se detallan.</td>
                 </tr>
             </table>
 
@@ -203,38 +213,50 @@
                     @endforeach
                 </tbody>
             </table>
-            <table width="100%" class="tblBanco" align="right" cellspacing="0" cellpadding="1" border="1">
+
+            <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                 <thead style="background-color: lightgray;">
                     <tr>
                         <th>Razon Social</th>
-                        <th>Agente (CUENTAS RECAUDADORAS)</th>
+                        <th>Agente</th>
                         <th>Banco</th>
                         <th>Moneda</th>
                         <th>Código a indicar  </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE BCP (cta recaudadora, y código vendedor) </td>
-                        <td>Bcp</td>
-                        <td>Soles/dolares</td>
-                        <td>17262</td>
-                    </tr>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
-                        <td>Bbva</td>
-                        <td>Soles</td>
-                        <td>10300</td>
-                    </tr>
-                    <tr>
-                        <td>Sociedad de Automotores INKA</td>
-                        <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
-                        <td>Bbva</td>
-                        <td>Dolares</td>
-                        <td>10301</td>
-                    </tr>
+                    @if ($arrayDetallePedido[0]->nIdEmpresa == 1300011)
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE BCP (cta recaudadora, y código vendedor) </td>
+                            <td>Bcp</td>
+                            <td>Soles/dolares</td>
+                            <td>17262</td>
+                        </tr>
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
+                            <td>Bbva</td>
+                            <td>Soles</td>
+                            <td>10300</td>
+                        </tr>
+                        <tr>
+                            <td>Sociedad de Automotores INKA</td>
+                            <td>AGENTE CONTINENTAL (cta recaudadora, y código vendedor) </td>
+                            <td>Bbva</td>
+                            <td>Dolares</td>
+                            <td>10301</td>
+                        </tr>
+                    @endif
+                    @if ($arrayDetallePedido[0]->nIdEmpresa == 1300717)
+                        <tr>
+                            <td>INKA LIDER AUTOMOTRIZ S.A.C</td>
+                            <td>AGENTE BCP (cta recaudadora, con código DNI vendedor)</td>
+                            <td>Bcp</td>
+                            <td>Soles/dolares</td>
+                            <td>18543</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
@@ -260,14 +282,14 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        El pago de cuota inicial u otro pago a cuenta del precio del producto otorgará a SAISAC la facultad de solicitar al concesionario o distribuidor autorizado la reserva
+                        El pago de cuota inicial u otro pago a cuenta del precio del producto otorgará a {{ $arrayDetallePedido[0]->cEmpresa }} la facultad de solicitar al concesionario o distribuidor autorizado la reserva
                         o cancelar parcial o totalmente el precio del vehículo, sin que sea necesario el consentimiento del cliente
                     </td>
                 </tr>
                 <tr>
                     <td class="justify">
                         El pago de adelantos o cuota inicial, dará derecho al cliente de reservar la unidad en stock o en proceso de importación hasta por un plazo de 15 días .
-                        Transcurrido el plazo SAISAC podrá disponer de la unidad para una venta al contado. El cliente podrá optar por la devolución de su cuota inicial o la separación de
+                        Transcurrido el plazo {{ $arrayDetallePedido[0]->cEmpresa }} podrá disponer de la unidad para una venta al contado. El cliente podrá optar por la devolución de su cuota inicial o la separación de
                         otra unidad a partir del cual se inician a computar los nuevos plazos de entrega.
                     </td>
                 </tr>
@@ -279,7 +301,7 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        El cliente declara conocer y aceptar los costos que SAISAC cobra por cada mantenimiento obligatorio del vehículo adquirido.
+                        El cliente declara conocer y aceptar los costos que {{ $arrayDetallePedido[0]->cEmpresa }} cobra por cada mantenimiento obligatorio del vehículo adquirido.
                     </td>
                 </tr>
                 <tr>
@@ -305,8 +327,7 @@
                 </tr>
                 <tr>
                     <td class="justify">
-                        Los pagos realizados por el Cliente se efectuarán a través de cheque NO NEGOCIABLE, expresado en dólares americanos girado a nombre de SOCIEDAD DE
-                        AUTOMOTORES INKA SAC o mediante depósito en cuanta bancaria de propiedad de SOCIEDAD DE AUTOMOTORES INKA SAC.
+                        Los pagos realizados por el Cliente se efectuarán a través de cheque NO NEGOCIABLE, expresado en dólares americanos girado a nombre de {{ $arrayDetallePedido[0]->cNombreEmpresa }} o mediante depósito en cuanta bancaria de propiedad de {{ $arrayDetallePedido[0]->cNombreEmpresa }}.
                     </td>
                 </tr>
                 <tr>
@@ -328,14 +349,21 @@
                 </tr>
                 <tr>
                     <td class="justify">
+                        Todo pago efectuado por el cliente, en virtud  a la compra del vehículo o durante sus servicios de post venta,
+                        que se realicen a través de tarjetas de crédito, tendrán una comisión adicional del 5% que se debitará automáticamente de su tarjeta.
+                        El cliente declara conocer de esta comisión, liberando a SAISAC de todo reclamo o denuncia por ausencia de información al respecto
+                    </td>
+                </tr>
+                <tr>
+                    <td class="justify">
                         La tramitación de emisión de placas y tarjeta de identificación vehicular es una cortesía que otorgamos a nuestros clientes. Este procedimiento administrativo está
-                        sujeto a plazos, condiciones y criterios de la autoridad pública; por lo tanto SAISAC no se hace responsable por los plazos que demore la emisión de los
+                        sujeto a plazos, condiciones y criterios de la autoridad pública; por lo tanto {{ $arrayDetallePedido[0]->cEmpresa }} no se hace responsable por los plazos que demore la emisión de los
                         documentos mencionados.
                     </td>
                 </tr>
                 <tr>
                     <td class="justify">
-                        SAISAC actúa frente al cliente solo y exclusivamente como concesionaria de "AUTOMOTORES GILDEMEISTER PERU S.A." empresa que es la
+                        {{ $arrayDetallePedido[0]->cEmpresa }} actúa frente al cliente solo y exclusivamente como concesionaria de "{{ $arrayDetallePedido[0]->cNombreProveedor }}." empresa que es la
                         REPRESENTANTE autorizada de la marca, la que brinda la garantía de fabrica del producto y con quien el cliente contrata la garantía y con ello todo tipo de
                         responsabilidad por la falta de idoneidad del vehículo.
                     </td>
@@ -343,7 +371,7 @@
                 <tr>
                     <td class="justify">
                         El cliente reconoce que el producto ofertado es uno de producción masiva y por tanto puede presentar fallas a pesar de haber sido sometido a rigurosos controles
-                        de calidad. De esta manera es consciente que AUTOMOTORES GILDEMEISTER PERU S.A. garantiza solucionar inmediatamente los desperfectos de fábrica que
+                        de calidad. De esta manera es consciente que {{ $arrayDetallePedido[0]->cNombreProveedor }}. garantiza solucionar inmediatamente los desperfectos de fábrica que
                         se puedan presentar en cumplimiento de la garantía.
                     </td>
                 </tr>
@@ -358,7 +386,6 @@
                 </tr>
                 <tr></tr>
             </table>
-
             <br/>
 
             <table width="100%" cellpadding="0" cellspacing="0">

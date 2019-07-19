@@ -2316,7 +2316,8 @@
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido
+                        'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nIdCabeceraPedido' :   pedido.nIdCabeceraPedido
                     }
                 }).then(response => {
                     this.arrayDetalleDepositosPorPedido  = response.data;

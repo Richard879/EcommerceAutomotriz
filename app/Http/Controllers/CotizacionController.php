@@ -623,6 +623,7 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
+        // OBTENER LOS BANCOS POR EMPRESA
         $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco] ?',
                                     [
                                         $nIdEmpresa
