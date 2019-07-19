@@ -7,7 +7,7 @@
                         <img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="AUTOMOTORES INKA">
                     </template>
                     <template v-else-if="nIdEmpresa == 1300717">
-                        <strong class="estilos">INKALIDER</strong>
+                        <img class="navbar-brand-full" src="img/logo_inkalider.png" width="220" height="30" alt="INKA LIDER">
                     </template>
                     <template v-else>
                         <span>Cargando...</span>

@@ -82,7 +82,7 @@
             <tr>
                 @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300011)
                     <td valign="top">
-                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                        <img src="{{$img_empresa}}" alt="" width="210" height="90"/>
                     </td>
                     <td align="right">
                         <img src="{{$img_marca}}" alt="" width="180" height="105"/>
@@ -90,10 +90,10 @@
                 @endif
                 @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300717)
                     <td valign="top">
-                        <img src="{{$img_empresa}}" alt="" width="190" height="105"/>
+                        <img src="{{$img_empresa}}" alt="" width="130" height="120"/>
                     </td>
                     <td align="right">
-                        <img src="{{$img_marca}}" alt="" width="155" height="105"/>
+                        <img src="{{$img_marca}}" alt="" width="140" height="105"/>
                     </td>
                 @endif
             </tr>
