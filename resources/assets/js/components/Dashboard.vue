@@ -570,7 +570,7 @@
                     this.formLogin.cUsuario     = response.data[0].cUsuario;
                     this.formLogin.cRol         = response.data[0].cGrupoParNombre;
                     this.formLogin.nIdRol       = response.data[0].nIdGrupoPar;
-                    this.loadAllDashboard();
+                    (parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ? '' : this.loadAllDashboard();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

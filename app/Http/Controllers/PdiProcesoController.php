@@ -427,8 +427,13 @@ class PdiProcesoController extends Controller
         $nCriterio              =   $request->ncriterio;
         $cDescripcionCiterio    =   $request->cnumerovin;
 
-        $logo                   =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO EMPRESA
-        $hyundai                =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE LOGO HYUNDAI
+        if ($nIdEmpresa == 1300011) {
+            $img_empresa    =   public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        } else {
+            $img_empresa    =   public_path('img/inkalider.png');//CAPTURO LA RUTA DEL LOGO
+            $img_marca      =   public_path('img/nissan.png');//CAPTURO LA RUTA DE HYUNDAI
+        }
 
         $arrayDetalleAccesorio  =   DB::select('exec [usp_Pdi_GetListDetalleAccesorio] ?, ?, ?',
                                                 [
@@ -448,8 +453,9 @@ class PdiProcesoController extends Controller
         $pdf = \PDF::loadView('pdf.pdi.generar', [
                                                 'arrayPdi'                  =>  $arrayPdi,
                                                 'arrayDetalleAccesorio'     =>  $arrayDetalleAccesorio,
-                                                'logo'                      =>  $logo,
-                                                'hyundai'                   =>  $hyundai
+                                                'img_empresa'               =>  $img_empresa,
+                                                'img_marca'                 =>  $img_marca,
+                                                'nIdEmpresa'                =>  $nIdEmpresa
                                             ]);
 
         return $pdf->download('PDI -'.$nIdCabeceraInspeccion.'.pdf');
