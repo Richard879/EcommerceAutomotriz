@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapComprobanteController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetFactura(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -31,17 +29,17 @@ class SapComprobanteController extends Controller
                     "CardCode"      => $request->cCardCode,
                     "DocDate"       => (string)$request->fDocDate,
                     "DocumentLines" => [
-                            [
-                                "BaseType"     => "17",
-                                "BaseEntry"    => $value['nDocEntry'],
-                                "BaseLine"     => "0",
-                                "LineTotal"    => $value['nDocEntry']
-                            ]
+                        [
+                            "BaseType"     => "17",
+                            "BaseEntry"    => $value['nDocEntry'],
+                            "BaseLine"     => "0",
+                            "LineTotal"    => $value['nDocEntry']
                         ]
                     ]
-                ];
+                ]
+            ];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFactura/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapSetFactura/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -52,7 +50,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -107,7 +105,7 @@ class SapComprobanteController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -118,7 +116,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -145,19 +143,19 @@ class SapComprobanteController extends Controller
                     "U_SYP_MDMT"    => "01",
                     "U_SYP_MDTD"    => "WF",
                     "DocumentLines" => [
-                            [
-                                "ItemDescription"   => "Servicio WF - ".$value['cNumeroVin'],
-                                "TaxCode"           => "EXE_IGV",
-                                "PriceAfterVAT"     => $value['fTotalCompra'],
-                                "Currency"          => "US$",
-                                "AccountCode"       => (string)$cAccountCode,
-                                "ProjectCode"       => (string)$value['cNumeroVin']
-                            ]
+                        [
+                            "ItemDescription"   => "Servicio WF - ".$value['cNumeroVin'],
+                            "TaxCode"           => "EXE_IGV",
+                            "PriceAfterVAT"     => $value['fTotalCompra'],
+                            "Currency"          => "US$",
+                            "AccountCode"       => (string)$cAccountCode,
+                            "ProjectCode"       => (string)$value['cNumeroVin']
                         ]
                     ]
-                ];
+                ]
+            ];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -168,7 +166,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -182,11 +180,13 @@ class SapComprobanteController extends Controller
             $nBaseType  = $value['nBaseType'];
             $cItemCode  = $value['cItemCode'];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapGetComprobanteByTipo/", [
-                                                                                        'query' => ['nIdEmpresa'    => $nIdEmpresa,
-                                                                                                    'nBaseEntry'    => $nBaseEntry,
-                                                                                                    'nBaseType'     => $nBaseType,
-                                                                                                    'cItemCode'     => $cItemCode]
+            $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapGetComprobanteByTipo/", [
+                                                                                        'query' => [
+                                                                                            'nIdEmpresa'    => $nIdEmpresa,
+                                                                                            'nBaseEntry'    => $nBaseEntry,
+                                                                                            'nBaseType'     => $nBaseType,
+                                                                                            'cItemCode'     => $cItemCode
+                                                                                        ]
                                                                                     ]);
             $rptaSap = json_decode($response->getBody());
         }
@@ -197,7 +197,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $json = [
@@ -228,7 +228,7 @@ class SapComprobanteController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaReservaBorrador/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapSetFacturaReservaBorrador/", $json);
         return $response->getBody();
     }
 
@@ -236,7 +236,7 @@ class SapComprobanteController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -246,12 +246,13 @@ class SapComprobanteController extends Controller
         $nDocEntry  = $request->nDocEntry;
         $nDocNum    = $request->nDocNum;
 
-        $response = $client->request('POST', "/pruebas/Comprobante/SapGetFacturaReservaByDraftKey/", [
-                                                                                    'query' => ['nIdEmpresa'=> $nIdEmpresa,
-                                                                                                'nDocEntry' => $nDocEntry,
-                                                                                                'nDocNum'   => $nDocNum]
+        $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapGetFacturaReservaByDraftKey/", [
+                                                                                    'query' => [
+                                                                                        'nIdEmpresa'=> $nIdEmpresa,
+                                                                                        'nDocEntry' => $nDocEntry,
+                                                                                        'nDocNum'   => $nDocNum
+                                                                                    ]
                                                                                 ]);
         return $response->getBody();
     }
-
 }

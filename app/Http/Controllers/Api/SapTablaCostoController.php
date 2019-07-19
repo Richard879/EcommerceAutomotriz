@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapTablaCostoController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetTablaCostoCabecera(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -31,7 +29,7 @@ class SapTablaCostoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/TblCosto/SapSetTblCosto/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "TblCosto/SapSetTblCosto/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -42,7 +40,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rptaBeneficio = [];
@@ -83,17 +81,16 @@ class SapTablaCostoController extends Controller
                             ]
                         ];
 
-                        $rptaBeneficio = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
+                        $rptaBeneficio = $client->request('POST', config('integracion.ruta') . "TblCosto/SapPachTblCostoDet/", $json);
                         $rptaSapBeneficio = json_decode($rptaBeneficio->getBody());
                         array_push($array_rptaBeneficio, $rptaSapBeneficio);
                     }
-
                 }
             }
         }
 
         $rpta = [
-            'array_rptaBeneficio'       =>  $array_rptaBeneficio
+            'array_rptaBeneficio'   =>  $array_rptaBeneficio
         ];
 
         return $rpta;
@@ -103,7 +100,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -132,7 +129,7 @@ class SapTablaCostoController extends Controller
                 ]
             ];
 
-            $rpta = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
+            $rpta = $client->request('POST', config('integracion.ruta') . "TblCosto/SapPachTblCostoDet/", $json);
             $rptaSap = json_decode($rpta->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -148,7 +145,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // =====================================================================================================
@@ -174,7 +171,7 @@ class SapTablaCostoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "TblCosto/SapPachTblCostoDet/", $json);
         return $response->getBody();
     }
 
@@ -182,7 +179,7 @@ class SapTablaCostoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // =====================================================================================================
@@ -211,7 +208,7 @@ class SapTablaCostoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/TblCosto/SapPachTblCostoDet/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "TblCosto/SapPachTblCostoDet/", $json);
         return $response->getBody();
     }
 }

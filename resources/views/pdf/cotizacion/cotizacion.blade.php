@@ -80,12 +80,22 @@
     <div class="information">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td valign="top">
-                    <img src="{{$img_empresa}}" alt="" width="210" height="75"/>
-                </td>
-                <td align="right">
-                    <img src="{{$img_marca}}" alt="" width="175" height="75"/>
-                </td>
+                @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300011)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="180" height="105"/>
+                    </td>
+                @endif
+                @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300717)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="190" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="155" height="105"/>
+                    </td>
+                @endif
             </tr>
             <tr>
                 <td valign="top">
@@ -166,6 +176,9 @@
                 @if (sizeof($arrayDetalleCotizacion) > 0)
                     <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                         <thead style="background-color: lightgray;">
+                            <tr align="center" valign="middle" >
+                                <th colspan="2">Los conceptos detallados a continuación son cobrados al Cliente</th>
+                            </tr>
                             <tr>
                                 <th>Concepto</th>
                                 <th>Monto (US$)</th>
@@ -174,7 +187,7 @@
                         <tbody>
                             @foreach ($arrayDetalleCotizacion as $typ)
                                 <tr>
-                                    <td> TYP </td>
+                                    <td> Costo de tarjeta de propiedad y placa </td>
                                     <td> {{ number_format($typ->fTYP, 2) }} </td>
                                 </tr>
                             @endforeach
@@ -188,10 +201,10 @@
                 <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1">
                     <thead style="background-color: lightgray;">
                         <tr align="center" valign="middle" >
-                            <th colspan="6">Elementos de Venta</th >
+                            <th colspan="6">Detalle de lo Cotizado</th >
                         </tr>
                         <tr>
-                            <th>Elemento Venta</th>
+                            <th>Concepto</th>
                             <th>Precio</th>
                             <th>Moneda</th>
                             <th>Cantidad</th>
@@ -216,40 +229,44 @@
                 </table>
             @endif
 
-            {{-- Ficha Tecnica --}}
-            {!! $tabla !!}
+            @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300011)
+                {{-- Ficha Tecnica --}}
+                {!! $tabla !!}
+            @endif
 
-            {{-- Ficha Tecnica --}}
-            @if (sizeof($xmlbyversion) > 0)
-                <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1" style="padding-left:2rem; margin-left:2rem; font-size:10px;width:700px;">
-                    @foreach ($xmlbyversion as $xml)
-                        <thead>
-                            {{-- style="background-color: lightgray;" --}}
-                            @if ($xml->cFlagTipo == 1)
-                                <tr>
-                                    <th colspan="2" align="center"> {{$xml->cCampo }} </th>
-                                </tr>
-                            @endif
-                            @if ($xml->cFlagTipo == 3)
-                                <tr>
-                                    <th align="left"> {{$xml->cCampo }} </th>
-                                    <th align="center"> {{$xml->cValor }} </th>
-                                </tr>
-                            @endif
-                            @if ($xml->cFlagTipo == 2)
-                                <tr>
-                                    <th align="left"> {{$xml->cCampo }} </th>
-                                    <th align="center"> {{$xml->cValor }} </th>
-                                </tr>
-                            @endif
-                        </thead>
-                    @endforeach
-                </table>
+            @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300717)
+                {{-- Ficha Tecnica --}}
+                @if (sizeof($xmlbyversion) > 0)
+                    <table class="tblBanco" border="1" align="center" cellspacing="0" cellpadding="1" style="padding-left:2rem; margin-left:2rem; font-size:10px;width:700px;">
+                        @foreach ($xmlbyversion as $xml)
+                            <thead>
+                                {{-- style="background-color: lightgray;" --}}
+                                @if ($xml->cFlagTipo == 1)
+                                    <tr>
+                                        <th colspan="2" align="center"> {{$xml->cCampo }} </th>
+                                    </tr>
+                                @endif
+                                @if ($xml->cFlagTipo == 3)
+                                    <tr>
+                                        <th align="left"> {{$xml->cCampo }} </th>
+                                        <th align="center"> {{$xml->cValor }} </th>
+                                    </tr>
+                                @endif
+                                @if ($xml->cFlagTipo == 2)
+                                    <tr>
+                                        <th align="left"> {{$xml->cCampo }} </th>
+                                        <th align="center"> {{$xml->cValor }} </th>
+                                    </tr>
+                                @endif
+                            </thead>
+                        @endforeach
+                    </table>
+                @endif
             @endif
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td>Agradeceremos cancelar su vehiculo en las cuentas bancarias que a continuacion se detallan.</td>
+                    <td>Agradeceremos cancelar su vehículo en las cuentas bancarias que a continuación se detallan.</td>
                 </tr>
             </table>
 

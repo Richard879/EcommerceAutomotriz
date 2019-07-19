@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapPedidoController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetPedido(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // ======================================================================
@@ -81,7 +79,7 @@ class SapPedidoController extends Controller
                 $json['json']['DocumentLines'][0]['SerialNumbers'] = [];
             }
 
-            $response = $client->request('POST', "/pruebas/Pedido/SapSetPedido/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($arrayVehiculo, $rptaSap);
         }
@@ -102,7 +100,7 @@ class SapPedidoController extends Controller
 
             $json = [
                 'json' => [
-                    "nIdEmpresa"        => (string)$request->nIdEmpresa,
+                    "nIdEmpresa"        =>  (string)$request->nIdEmpresa,
                     "CardCode"          =>  '',
                     "DocDate"           =>  (string)$request->fDocDate,
                     "DocDueDate"        =>  (string)$request->fDocDueDate,
@@ -123,7 +121,7 @@ class SapPedidoController extends Controller
                     "ItemCode"          =>  $value['cCodigoERP'],
                     "Quantity"          =>  $value['nCantidad'],
                     "TaxCode"           =>  "IGV",
-                    "PriceAfterVAT"     => (string)$value['fSubTotalDolares'],
+                    "PriceAfterVAT"     =>  (string)$value['fSubTotalDolares'],
                     "Currency"          =>  "US$",
                     "WarehouseCode"     =>  (string)$value['cWhsCode'],
                     "CostingCode2"      =>  "01", //UnidadDeNegocio
@@ -131,7 +129,7 @@ class SapPedidoController extends Controller
                 ];
             }
 
-            $response = $client->request('POST', "/pruebas/Pedido/SapSetPedido/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($arrayEV, $rptaSap);
         }
@@ -146,7 +144,7 @@ class SapPedidoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
@@ -185,7 +183,7 @@ class SapPedidoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Pedido/SapSetPedidoDscto/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Pedido/SapSetPedidoDscto/", $json);
         return $response->getBody();
     }
 }

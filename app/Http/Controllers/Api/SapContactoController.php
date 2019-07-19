@@ -25,14 +25,11 @@ class SapContactoController extends Controller
     /// METODOS SERVICES LAYER
     /// ============================================================
     ///
-
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // $User       = Auth::user()->id;
@@ -40,13 +37,13 @@ class SapContactoController extends Controller
         $CardCode   =   "C". $request->nIdContacto;
 
         $json = [
-                    'json' => [
-                        "nIdEmpresa"    => (string)$request->nIdEmpresa,
-                        "CardCode"      => $CardCode
-                    ]
-                ];
+            'json' => [
+                "nIdEmpresa"    =>  (string)$request->nIdEmpresa,
+                "CardCode"      =>  $CardCode
+            ]
+        ];
 
-        $response = $client->request('POST', "/pruebas/Contacto/SapGetValidarContacto/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Contacto/SapGetValidarContacto/", $json);
         return $response->getBody();
     }
 
@@ -54,7 +51,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -189,7 +186,7 @@ class SapContactoController extends Controller
             }
         }
 
-        $response = $client->request('POST', "/pruebas/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 
@@ -197,7 +194,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         //Obtener Tipo Persona
@@ -242,7 +239,7 @@ class SapContactoController extends Controller
             ];
         }
 
-        $response = $client->request('POST', "/pruebas/Contacto/SapSetContactoUpd/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Contacto/SapSetContactoUpd/", $json);
         return $response->getBody();
     }
 
@@ -250,7 +247,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $nIdPersona    =   $request->nIdPersona;
@@ -283,7 +280,7 @@ class SapContactoController extends Controller
             ];
         }
 
-        $response = $client->request('POST', "/pruebas/Contacto/SapSetContactoUpd/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Contacto/SapSetContactoUpd/", $json);
         return $response->getBody();
     }
 
@@ -291,7 +288,7 @@ class SapContactoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $CardCode       =   "C". $request->nIdContacto;
@@ -314,10 +311,10 @@ class SapContactoController extends Controller
                 "Cellular"      => $Cellular,
                 "City"          => $City,
                 "Currency"      =>	"##"
-               ]
-           ];
+            ]
+        ];
 
-        $response = $client->request('POST', "/pruebas/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 }

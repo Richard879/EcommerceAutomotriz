@@ -40,13 +40,10 @@
                             <!-- Navbar Header-->
                             <div class="navbar-header parteIzq">
                                 <!-- Navbar Brand -->
-                                <a href="http://localhost:8080/saisacsys" class="navbar-brand">
-                                <div class="brand-text brand-big">
-                                    <span>
-                                        <img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="CoreUI Logo">
-                                    </span>
-                                </div>
-                                <div class="brand-text brand-small"><strong>INKA</strong></div></a>
+                                {{-- :ruta="{{ url('/main') }}" --}}
+                                <logo
+                                        :usuario="{{ auth()->user() }}">
+                                </logo>
                                 <!-- Toggle Button-->
                                 <a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                             </div>

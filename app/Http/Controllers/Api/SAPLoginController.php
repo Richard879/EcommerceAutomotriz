@@ -10,16 +10,16 @@ use App\Http\Controllers\Controller;
 class SAPLoginController extends Controller
 {
     private $cnxIntegration = 'http://172.20.0.10:8020/';
-    
+
     public function login(Request $request)
     {
         $options = [
             'json' => [
-                "CompanyDB" => $request->CompanyDB,
-                "UserName" => $request->UserName,
-                "Password" => $request->Password
-               ]
-           ];
+                "CompanyDB" =>  $request->CompanyDB,
+                "UserName"  =>  $request->UserName,
+                "Password"  =>  $request->Password
+            ]
+        ];
 
         $client = new Client([
             'verify'    => false,//SSL certificate

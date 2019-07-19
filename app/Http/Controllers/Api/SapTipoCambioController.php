@@ -11,21 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class SapTipoCambioController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapGetTipoCambioByFecha(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
-        
+
         $nIdEmpresa = $request->nIdEmpresa;
         $dFecha     = $request->dfecha;
 
-        $response = $client->request('GET', "/pruebas/TipoCambio/GetTipoCambio/", [
-                                                                                'query' => ['nIdEmpresa'=> $nIdEmpresa,
-                                                                                            'fecha'     => $dFecha]
+        $response = $client->request('GET', config('integracion.ruta') . "TipoCambio/GetTipoCambio/", [
+                                                                                'query' => [
+                                                                                    'nIdEmpresa'=> $nIdEmpresa,
+                                                                                    'fecha'     => $dFecha
+                                                                                ]
                                                                             ]);
         return $response->getBody();
     }

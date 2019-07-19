@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapArticuloController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapGetValidarArticulo(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $json = [
@@ -27,7 +25,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Articulo/SapGetValidarArticulo/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapGetValidarArticulo/", $json);
         return $response->getBody();
     }
 
@@ -35,7 +33,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -74,7 +72,7 @@ class SapArticuloController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Articulo/SapSetArticulo/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapSetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -85,7 +83,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -98,10 +96,12 @@ class SapArticuloController extends Controller
             $cItemCode      = $value['cItemCode'];
             $nIdEmpresa     = $value['nIdEmpresa'];
 
-            $response = $client->request('POST', "/pruebas/Articulo/SapGetCostoPromedio/", [
-                                                                                        'query' => ['nIdEmpresa'=>$nIdEmpresa,
-                                                                                                    'nWhsCode'  => $nWhsCode,
-                                                                                                    'cItemCode' => $cItemCode]
+            $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapGetCostoPromedio/", [
+                                                                                        'query' => [
+                                                                                            'nIdEmpresa'    =>  $nIdEmpresa,
+                                                                                            'nWhsCode'      =>  $nWhsCode,
+                                                                                            'cItemCode'     =>  $cItemCode
+                                                                                        ]
                                                                                     ]);
             $rptaSap = json_decode($response->getBody());
             //array_push($array_rpta, $rptaSap);
@@ -113,25 +113,27 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
-        /*$cItemCode    = $request->cItemCode;
-
-        $response = $client->request('POST', "/pruebas/Articulo/SapSetSerialNumber/", [
-                                                                        'query' => ['cItemCode' => $cItemCode]
-                                                                      ]);
-        return $response->getBody();*/
+        /*
+            $cItemCode    = $request->cItemCode;
+            $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapSetSerialNumber/", [
+                                                                            'query' => ['cItemCode' => $cItemCode]
+                                                                        ]);
+            return $response->getBody();
+        */
 
         $array_rpta = [];
         $rptaSap   = [];
 
         $data = $request->data;
-        foreach ($data as $key => $value){
+        foreach ($data as $key => $value) {
 
-            $response = $client->request('POST', "/pruebas/Articulo/SapSetSerialNumber/", [
-                                                                    'query' => ['cItemCode' => (string)$value['cNumeroVin'],
-                                                                                'cItemName' => (string)$value['cNombreComercial']
+            $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapSetSerialNumber/", [
+                                                                                'query' => [
+                                                                                    'cItemCode' =>  (string)$value['cNumeroVin'],
+                                                                                    'cItemName' =>  (string)$value['cNombreComercial']
                                                                                 ]
                                                                             ]);
 
@@ -145,7 +147,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $cNumeroVin         = $request->cNumeroVin;
@@ -159,7 +161,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Articulo/SapPatchArticulo/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapPatchArticulo/", $json);
         return $response->getBody();
     }
 
@@ -167,7 +169,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -183,7 +185,7 @@ class SapArticuloController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Articulo/SapGetArticulo/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapGetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -194,7 +196,7 @@ class SapArticuloController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
@@ -234,14 +236,12 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidmarca = $marca[0]->cParNombre;//Setear por el Nombre
 
-
         //=================== OBTENER EL COLOR EXT DEL VEHÍCULO ===================
         /*$color = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
                                                                     $nidcolor
                                                                 ]);
         $nidcolor = $color[0]->cParNombre;//Setear por el Nombre*/
-
 
         //=================== OBTENER EL NOMBRE CILINDRADA DEL VEHÍCULO ===================
         /*$cilindrada = DB::select('exec [usp_Par_GetParametroById] ?',
@@ -250,7 +250,6 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidcilindrada = $cilindrada[0]->cParNombre;//Setear por el Nombre*/
 
-
         //=================== OBTENER EL NOMBRE COMBUSTIBLE DEL VEHÍCULO ===================
         $combustible = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
@@ -258,14 +257,12 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidcombustible = $combustible[0]->cParNombre;//Setear por el Nombre
 
-
          //=================== OBTENER EL NOMBRE DE TRACCIÓN ===================
          $ctraccion = DB::select('exec [usp_Par_GetParametroById] ?',
-         [
-             $nidtranccion
-         ]);
+                                                                [
+                                                                    $nidtranccion
+                                                                ]);
          $nidtranccion = $ctraccion[0]->cParNombre;//Setear por el Nombre
-
 
         //=================== OBTENER EL NOMBRE DE LA CARROCERIA ===================
         $carroceria = DB::select('exec [usp_Par_GetParametroById] ?',
@@ -311,7 +308,7 @@ class SapArticuloController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Articulo/SapPatchArticulo/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Articulo/SapPatchArticulo/", $json);
         return $response->getBody();
     }
 }

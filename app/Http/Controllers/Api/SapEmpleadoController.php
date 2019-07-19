@@ -11,15 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class SapEmpleadoController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetEmpleado(Request $request)
     {
-        // return $request;
-
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $cNombre    =   $request->cNombre;
@@ -34,7 +30,7 @@ class SapEmpleadoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Empleado/SapSetEmpleado/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Empleado/SapSetEmpleado/", $json);
         return $response->getBody();
     }
 
@@ -42,7 +38,7 @@ class SapEmpleadoController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $cNombre    =   $request->cNombre;
@@ -57,7 +53,7 @@ class SapEmpleadoController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Empleado/SapPatchEmpleado/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Empleado/SapPatchEmpleado/", $json);
         return $response->getBody();
     }
 }

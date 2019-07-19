@@ -37,13 +37,11 @@ class SapCompraController extends Controller
     /// METODOS SERVICES LAYER
     /// ============================================================
     ///
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -87,7 +85,7 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -98,7 +96,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $nDocEntry          = $request->nDocEntry;
@@ -123,7 +121,7 @@ class SapCompraController extends Controller
             ]
         ];
 
-        $response = $client->request('POST', "/pruebas/Compra/SapPatchCompra/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Compra/SapPatchCompra/", $json);
         return $response->getBody();
     }
 
@@ -131,7 +129,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
@@ -172,7 +170,7 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/pruebas/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -183,7 +181,7 @@ class SapCompraController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -192,8 +190,8 @@ class SapCompraController extends Controller
 
         //======= Obtener el EmployeeCode del Usuario Autenticado
         $data = DB::select('exec [usp_Usuario_GetEmpleadoByUsuario] ?',
-        [   Auth::user()->id
-        ]);
+                                                            [   Auth::user()->id
+                                                            ]);
         $nSalesEmployeeCode   =   $data[0]->nSalesEmployeeCode;
         //============================================================
 
@@ -253,7 +251,7 @@ class SapCompraController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Comprobante/SapSetFacturaProveedor/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Comprobante/SapSetFacturaProveedor/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

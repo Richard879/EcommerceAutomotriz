@@ -10,20 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class SapMercanciaController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
         $rptaSap   = [];
 
         //DATOS DE PRUEBA
-        $ReceptionDate              =   date('Y-m-d');
+        $ReceptionDate  =   date('Y-m-d');
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -66,7 +64,7 @@ class SapMercanciaController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaByOC/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Mercancia/SapSetMercanciaByOC/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -77,7 +75,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $json = [
@@ -107,7 +105,7 @@ class SapMercanciaController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaEntry/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Mercancia/SapSetMercanciaEntry/", $json);
         $rptaSap = json_decode($response->getBody());
         array_push($array_rpta, $rptaSap);
         return $array_rpta;
@@ -117,7 +115,7 @@ class SapMercanciaController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -151,7 +149,7 @@ class SapMercanciaController extends Controller
             }
         }
 
-        $response = $client->request('POST', "/pruebas/Mercancia/SapSetMercanciaExit/", $json);
+        $response = $client->request('POST', config('integracion.ruta') . "Mercancia/SapSetMercanciaExit/", $json);
         $rptaSap = json_decode($response->getBody());
         array_push($array_rpta, $rptaSap);
         return $array_rpta;

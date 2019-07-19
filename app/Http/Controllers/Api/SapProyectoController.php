@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapProyectoController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetProyecto(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -33,7 +31,7 @@ class SapProyectoController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Proyecto/SapSetProyecto/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Proyecto/SapSetProyecto/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SapActividadController extends Controller
 {
-    private $cnxIntegration = 'http://172.20.0.10:8020/';
-
     public function SapSetActividadCompra(Request $request)
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -48,7 +46,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -59,7 +57,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -91,7 +89,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
@@ -102,7 +100,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         // ======================================================================
@@ -140,7 +138,7 @@ class SapActividadController extends Controller
                     ]
                 ];
 
-                $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
+                $response = $client->request('POST', config('integracion.ruta') . "Actividad/SapSetActividad/", $json);
                 $rptaSap = json_decode($response->getBody());
                 array_push($arrayVehiculo, $rptaSap);
             }
@@ -180,7 +178,7 @@ class SapActividadController extends Controller
                     ]
                 ];
 
-                $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
+                $response = $client->request('POST', config('integracion.ruta') . "Actividad/SapSetActividad/", $json);
                 $rptaSap = json_decode($response->getBody());
                 array_push($arrayEV, $rptaSap);
             }
@@ -196,7 +194,7 @@ class SapActividadController extends Controller
     {
         $client = new Client([
             'verify'    => false,
-            'base_uri'  => $this->cnxIntegration
+            'base_uri'  => config('integracion.webservice')
         ]);
 
         $array_rpta = [];
@@ -228,7 +226,7 @@ class SapActividadController extends Controller
                 ]
             ];
 
-            $response = $client->request('POST', "/pruebas/Actividad/SapSetActividad/", $json);
+            $response = $client->request('POST', config('integracion.ruta') . "Actividad/SapSetActividad/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
