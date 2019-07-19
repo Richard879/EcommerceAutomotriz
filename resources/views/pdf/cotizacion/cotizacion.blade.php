@@ -82,7 +82,7 @@
             <tr>
                 @if ($arrayDetalleCotizacion[0]->nIdEmpresa == 1300011)
                     <td valign="top">
-                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                        <img src="{{$img_empresa}}" alt="" width="210" height="90"/>
                     </td>
                     <td align="right">
                         <img src="{{$img_marca}}" alt="" width="180" height="105"/>
