@@ -80,12 +80,22 @@
     <div class="information">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td valign="top">
-                    <img src="{{$logo}}" alt="" width="210" height="75"/>
-                </td>
-                <td align="right">
-                    <img src="{{$hyundai}}" alt="" width="175" height="75"/>
-                </td>
+                @if ($nIdEmpresa == 1300011)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="210" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="180" height="105"/>
+                    </td>
+                @endif
+                @if ($nIdEmpresa == 1300717)
+                    <td valign="top">
+                        <img src="{{$img_empresa}}" alt="" width="190" height="105"/>
+                    </td>
+                    <td align="right">
+                        <img src="{{$img_marca}}" alt="" width="155" height="105"/>
+                    </td>
+                @endif
             </tr>
         </table>
     </div>
