@@ -236,6 +236,13 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidmarca = $marca[0]->cParNombre;//Setear por el Nombre
 
+        //=================== OBTENER EL MODELO DEL VEHÍCULO ===================
+        $modelo = DB::select('exec [usp_Par_GetParametroById] ?',
+                                                                [
+                                                                    $nidmodelo
+                                                                ]);
+        $nidmodelo = $modelo[0]->cParNombre;//Setear por el Nombre
+
         //=================== OBTENER EL COLOR EXT DEL VEHÍCULO ===================
         /*$color = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
@@ -257,12 +264,12 @@ class SapArticuloController extends Controller
                                                                 ]);
         $nidcombustible = $combustible[0]->cParNombre;//Setear por el Nombre
 
-         //=================== OBTENER EL NOMBRE DE TRACCIÓN ===================
-         $ctraccion = DB::select('exec [usp_Par_GetParametroById] ?',
+        //=================== OBTENER EL NOMBRE DE TRACCIÓN ===================
+        $ctraccion = DB::select('exec [usp_Par_GetParametroById] ?',
                                                                 [
                                                                     $nidtranccion
                                                                 ]);
-         $nidtranccion = $ctraccion[0]->cParNombre;//Setear por el Nombre
+        $nidtranccion = $ctraccion[0]->cParNombre;//Setear por el Nombre
 
         //=================== OBTENER EL NOMBRE DE LA CARROCERIA ===================
         $carroceria = DB::select('exec [usp_Par_GetParametroById] ?',
@@ -283,6 +290,7 @@ class SapArticuloController extends Controller
                 "nIdEmpresa"        => (string)$request->nIdEmpresa,
                 "ItemCode"          =>  (string)$cnroserie,
                 'U_SYP_MARCA'       =>  (string)$nidmarca,
+                'U_SYP_MODELO'      =>  (string)$nidmodelo,
                 'U_SYP_CEXTERIOR'   =>  (string)$cnombrecolor,
                 //'U_SYP_UNSPSC'      =>  (string)$cnacionesunidas,//Codigo Naciones Unidas
                 'U_SYP_NROMOTOR'    =>  (string)$cnromotor,//Numero de Motor
