@@ -386,19 +386,19 @@ class CotizacionController extends Controller
 
         $nIdUsuario = Auth::user()->id;
 
-        if($request->opcion == 1) {
-            $dfecha     = date('Y-m-d');;
+        // if($request->opcion == 1) {
+        //     $dfecha     = date('Y-m-d');;
 
-            $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
+        //     $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
 
-            $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByUsuario ?, ?',
-                                                            [
-                                                                $nIdUsuario,
-                                                                $dfecha
-                                                            ]);
+        //     $dashboard = DB::select('EXEC usp_Dashboard_GetCotizacionesByUsuario ?, ?',
+        //                                                     [
+        //                                                         $nIdUsuario,
+        //                                                         $dfecha
+        //                                                     ]);
 
-            // User::findOrFail($nIdUsuario)->notify(new NotifyDashboard($dashboard));
-        }
+        //     // User::findOrFail($nIdUsuario)->notify(new NotifyDashboard($dashboard));
+        // }
 
         $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?',
                                                                 [   $request->nIdCabeceraCotizacion,

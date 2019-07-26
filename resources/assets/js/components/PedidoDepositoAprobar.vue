@@ -356,7 +356,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="deposito in arrayDepositosPorPedido" :key="deposito.nIdDepositoPedido">
+                                                                    <tr v-for="(deposito, index) in arrayDepositosPorPedido" :key="index">
                                                                         <td>
                                                                             <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <!-- Deposito pendiente con forma de pago diferente a credito vehicular -->

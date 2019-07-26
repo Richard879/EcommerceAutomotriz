@@ -221,7 +221,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
+                                                                            <tr v-for="(pedido, index) in arrayPedido" :key="index">
                                                                                 <td>
                                                                                     <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">

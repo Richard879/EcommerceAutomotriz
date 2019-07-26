@@ -629,6 +629,13 @@
         },
         mounted(){
             this.tabBandejaDsctoPedido();
+            var date = new Date();
+            var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+            var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            // console.log(primerDia.getDate())
+            // console.log(ultimoDia.getDate())
+            console.log(moment(primerDia).format('YYYY-MM-DD'));
+            console.log(moment(ultimoDia).format('YYYY-MM-DD'));
         },
         computed:{
             isActived: function(){

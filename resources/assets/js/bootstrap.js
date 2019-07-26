@@ -48,10 +48,9 @@ import Echo from 'laravel-echo'
 window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
-    // 'http://localhost:8080/saisacsys/public/broadcasting/auth',      //  LOCALMENTE
-    // 'http://172.20.0.62/pruebas/public/broadcasting/auth',           //  PRE PRODUCCIÓN
-    // 'http://172.20.0.62/saisacsys/public/broadcasting/auth',         //  PRODUCCION
-    authEndpoint: 'http://localhost:8080/saisacsys/public/broadcasting/auth',
+    authEndpoint: 'http://localhost:8080/saisacsys/public/broadcasting/auth', //  LOCALMENTE
+    // authEndpoint: 'http://172.20.0.62/pruebas/public/broadcasting/auth', //  PRE PRODUCCIÓN
+    // authEndpoint: 'http://172.20.0.62/saisacsys/public/broadcasting/auth', //  PRODUCCION
     broadcaster: 'pusher',
     key: '6a74a7a6dbeacdf97fd0',
     cluster: 'ap2',

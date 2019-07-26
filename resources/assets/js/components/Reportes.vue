@@ -2388,7 +2388,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
+                                                <!-- <div class="form-group row">
                                                     <div class="col-md-6">
                                                         <div class="row">
                                                             <label class="col-md-4 form-control-label">* Fecha Inicio</label>
@@ -2419,6 +2419,26 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div> -->
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidcronograma"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="CRONOGRAMA">
+                                                                    <el-option
+                                                                        v-for="item in arrayCronogramas"
+                                                                        :key="item.nIdCronograma"
+                                                                        :label="item.cCronograma"
+                                                                        :value="item.nIdCronograma">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-9 offset-sm-5">
@@ -2446,35 +2466,80 @@
                                                                 stripe
                                                                 style="width: 100%">
                                                                 <el-table-column property="FECHA" label="FECHA PEDIDO" width="110"></el-table-column>
-                                                                <el-table-column fixed property="PEDIDO" label="N° PEDIDO" width="110"></el-table-column>
+                                                                <el-table-column fixed property="PEDIDO" label="N° PEDIDO" width="140"></el-table-column>
                                                                 <el-table-column property="VENDEDOR" label="VENDEDOR" width="210"></el-table-column>
-                                                                <el-table-column property="VIN" label="VIN" width="140"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="150"></el-table-column>
                                                                 <el-table-column property="CLIENTE" label="CLIENTE" width="200"></el-table-column>
                                                                 <el-table-column property="MARCA" label="MARCA" width="100"></el-table-column>
                                                                 <el-table-column property="MODELO" label="MODELO" width="100"></el-table-column>
-                                                                <el-table-column label="CD_ACT" width="110">
-                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.CD_ACT)).toFixed(2)) }}</template>
+                                                                <el-table-column label="COSTO_DEALER_COMPRA" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COSTO_DEALER_COMPRA)).toFixed(2)) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="PF_AV" width="110">
-                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PF_AV)).toFixed(2)) }}</template>
+                                                                <el-table-column label="COSTO_DEALER_ACTUAL" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.COSTO_DEALER_ACTUAL)).toFixed(2)) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="PC_LP" width="110">
-                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PC_LP)).toFixed(2)) }}</template>
+                                                                <el-table-column label="PRECIO_CIERRE_FINAL_AV" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_CIERRE_FINAL_AV)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PRECIO_CIERRE_LISTA_DE_PRECIO" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_CIERRE_LISTA_DE_PRECIO)).toFixed(2)) }}</template>
                                                                 </el-table-column>
                                                                 <el-table-column label="FLETE" width="110">
                                                                     <template slot-scope="scope"> {{ Number((parseFloat(scope.row.FLETE)).toFixed(2)) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="PC_LP_FLETE" width="110">
-                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PC_LP_FLETE)).toFixed(2)) }}</template>
+                                                                <el-table-column label="TYP" width="110">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.TYP)).toFixed(2)) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="SB" width="110">
-                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SB)).toFixed(2)) }}</template>
+                                                                <el-table-column label="PRECIO_FINAL" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.PRECIO_FINAL == null) ? 0 : (Number((parseFloat(scope.row.PRECIO_FINAL)).toFixed(2))) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="DESC_PROV" width="110">
-                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_PROV == null) ? 0 : (Number((parseFloat(scope.row.DESC_PROV)).toFixed(2))) }}</template>
+                                                                <el-table-column label="SOBRE_PRECIO" width="130">
+                                                                    <template slot-scope="scope"> {{ (scope.row.SOBRE_PRECIO == null) ? 0 : (Number((parseFloat(scope.row.SOBRE_PRECIO)).toFixed(2))) }}</template>
                                                                 </el-table-column>
-                                                                <el-table-column label="DESC_CONC" width="110">
-                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_CONC == null) ? 0 : (Number((parseFloat(scope.row.DESC_CONC)).toFixed(2))) }}</template>
+                                                                <el-table-column label="UTILIDAD_BRUTA" width="130">
+                                                                    <template slot-scope="scope"> {{ (scope.row.UTILIDAD_BRUTA == null) ? 0 : (Number((parseFloat(scope.row.UTILIDAD_BRUTA)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESC_PROVEEDOR" width="130">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_PROVEEDOR == null) ? 0 : (Number((parseFloat(scope.row.DESC_PROVEEDOR)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESC_CONCESIONARIO" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_CONCESIONARIO == null) ? 0 : (Number((parseFloat(scope.row.DESC_CONCESIONARIO)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="FLETE" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.FLETE == null) ? 0 : (Number((parseFloat(scope.row.FLETE)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="TYP_INF" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.TYP_INF == null) ? 0 : (Number((parseFloat(scope.row.TYP_INF)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="SEGURO_INF" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.SEGURO_INF == null) ? 0 : (Number((parseFloat(scope.row.SEGURO_INF)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="TOTAL_COSTOS" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.TOTAL_COSTOS == null) ? 0 : (Number((parseFloat(scope.row.TOTAL_COSTOS)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="UTILIDAD_NETA" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.UTILIDAD_NETA == null) ? 0 : (Number((parseFloat(scope.row.UTILIDAD_NETA)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COMISION_1_CON_IGV" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COMISION_1_CON_IGV == null) ? 0 : (Number((parseFloat(scope.row.COMISION_1_CON_IGV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COMISION_1_SIN_IGV" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COMISION_1_SIN_IGV == null) ? 0 : (Number((parseFloat(scope.row.COMISION_1_SIN_IGV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COMISION_2_CON_IGV" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COMISION_2_CON_IGV == null) ? 0 : (Number((parseFloat(scope.row.COMISION_2_CON_IGV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COMISION_2_SIN_IGV" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COMISION_2_SIN_IGV == null) ? 0 : (Number((parseFloat(scope.row.COMISION_2_SIN_IGV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="SOBRE_PRECIO_SIN_IGV" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.SOBRE_PRECIO_SIN_IGV == null) ? 0 : (Number((parseFloat(scope.row.SOBRE_PRECIO_SIN_IGV)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COSTO_DEALER" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COSTO_DEALER == null) ? 0 : (Number((parseFloat(scope.row.COSTO_DEALER)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DIF_DEALER" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DIF_DEALER == null) ? 0 : (Number((parseFloat(scope.row.DIF_DEALER)).toFixed(2))) }}</template>
                                                                 </el-table-column>
                                                             </el-table>
                                                         </div>
@@ -2833,8 +2898,9 @@
                         'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
-                        'dfechainicio'  :   this.formFiltro.dfechainicio,
-                        'dfechafin'     :   this.formFiltro.dfechafin,
+                        // 'dfechainicio'  :   this.formFiltro.dfechainicio,
+                        // 'dfechafin'     :   this.formFiltro.dfechafin,
+                        'nidcronograma' :   this.formFiltro.nidcronograma,
                         'opcion'            :   1
                     }
                 }).then(response => {
@@ -3027,11 +3093,14 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formFiltro.dfechainicio){
-                    this.mensajeError.push('Debe seleccionar una Fecha Inicio');
-                }
-                if(!this.formFiltro.dfechafin){
-                    this.mensajeError.push('Debe seleccionar un Fecha Fin');
+                // if(!this.formFiltro.dfechainicio){
+                //     this.mensajeError.push('Debe seleccionar una Fecha Inicio');
+                // }
+                // if(!this.formFiltro.dfechafin){
+                //     this.mensajeError.push('Debe seleccionar un Fecha Fin');
+                // }
+                if(!this.formFiltro.nidcronograma){
+                    this.mensajeError.push('Debe seleccionar un Cronograma de Venta');
                 }
 
                 if(this.mensajeError.length){
@@ -3821,8 +3890,9 @@
                         'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   :   this.formFiltro.nidsucursal,
                         'nidvendedor'   :   this.formFiltro.nidvendedor,
-                        'dfechainicio'  :   this.formFiltro.dfechainicio,
-                        'dfechafin'     :   this.formFiltro.dfechafin,
+                        // 'dfechainicio'  :   this.formFiltro.dfechainicio,
+                        // 'dfechafin'     :   this.formFiltro.dfechafin,
+                        'nidcronograma' :   this.formFiltro.nidcronograma,
                         'opcion'        :   2,
                         'page'          :   page
                     }
@@ -4058,6 +4128,7 @@
                             {
                                 this.limpiarFiltros();
                                 this.listarSucursalByEmpresa();
+                                this.listarCronograma();
                                 this.tituloModal = data;
                                 this.accionmodal = 12;
                                 this.modal = 1;
@@ -4084,7 +4155,7 @@
     }
 </script>
 
-<style>
+<style scopedSlots>
     .mostrar{
         display: list-item !important;
         opacity: 1 !important;
@@ -4120,5 +4191,8 @@
     }
     .el-table td, .el-table th{
         padding: 3px !important;
+    }
+    .card-header{
+        display: flex;
     }
 </style>

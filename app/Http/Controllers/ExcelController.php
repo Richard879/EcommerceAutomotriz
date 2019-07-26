@@ -597,23 +597,26 @@ class ExcelController extends Controller
         $nidempresa     =   $request->nidempresa;
         $nidsucursal    =   $request->nidsucursal;
         $nidvendedor    =   $request->nidvendedor;
-        $dfechainicio   =   $request->dfechainicio;
-        $dfechafin      =   $request->dfechafin;
+        // $dfechainicio   =   $request->dfechainicio;
+        // $dfechafin      =   $request->dfechafin;
+        $nidcronograma  =   $request->nidcronograma;
 
         $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
         $nidvendedor    =   ($nidvendedor == NULL) ? ($nidvendedor = 0) : $nidvendedor;
-        $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = 0) : $dfechainicio;
-        $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = 0) : $dfechafin;
+        // $dfechainicio   =   ($dfechainicio == NULL) ? ($dfechainicio = 0) : $dfechainicio;
+        // $dfechafin      =   ($dfechafin == NULL) ? ($dfechafin = 0) : $dfechafin;
+        $nidcronograma  =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
 
         $opcion         =   $request->opcion;
 
-        $data = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones] ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones] ?, ?, ?, ?',
                                         [
                                             $nidempresa,
                                             $nidsucursal,
                                             $nidvendedor,
-                                            $dfechainicio,
-                                            $dfechafin
+                                            // $dfechainicio,
+                                            // $dfechafin,
+                                            $nidcronograma
                                         ]);
 
         if ($opcion == 1) {
