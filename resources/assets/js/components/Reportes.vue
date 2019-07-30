@@ -231,14 +231,63 @@
                                                 <div class="card-body">
                                                     <template v-if="arrayDetalleVentaRetail.length">
                                                         <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Metas de Venta(s) XLS</div>
+                                                                <el-button @click="exportarDetalleVentaRetail()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
+                                                            <el-table
+                                                                :data="arrayDetalleVentaRetail"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column property="COMPANIA" label="COMPANIA" width="120"></el-table-column>
+                                                                <el-table-column property="CONCESIONARIO" label="CONCESIONARIO" width="170"></el-table-column>
+                                                                <el-table-column property="TIENDA" label="TIENDA" width="150"></el-table-column>
+                                                                <el-table-column fixed property="NRO_PEDIDO" label="N° PEDIDO" width="150"></el-table-column>
+                                                                <el-table-column property="FECHA_PEDIDO" label="FECHA PEDIDO" width="140"></el-table-column>
+                                                                <el-table-column property="DESC_CLIENTE" label="CLIENTE" width="180"></el-table-column>
+                                                                <el-table-column property="NDOCUMENTO" label="Nª DOCUMENTO" width="120"></el-table-column>
+                                                                <el-table-column property="COD_VENDEDOR" label="CODIGO ASESOR" width="130"></el-table-column>
+                                                                <el-table-column property="NOM_VENDEDOR" label="ASESOR COMERCIAL" width="160"></el-table-column>
+                                                                <el-table-column property="STATUS_PEDIDO" label="ESTADO PEDIDO" width="120"></el-table-column>
+                                                                <el-table-column property="TIPO_VENTA" label="TIPO VENTA" width="120"></el-table-column>
+                                                                <el-table-column property="MARCA" label="MARCA" width="100"></el-table-column>
+                                                                <el-table-column property="MODELO" label="MODELO" width="100"></el-table-column>
+                                                                <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="180"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="150"></el-table-column>
+                                                                <el-table-column property="ANIO_MODEL" label="AÑO MODELO" width="120"></el-table-column>
+                                                                <el-table-column property="ENTIDAD_FIN" label="ENTIDAD FINAN" width="120"></el-table-column>
+                                                                <el-table-column label="IMPORTE_VEHICULO_SOLES" width="135">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.IMPORTE_VEHICULO_SOLES)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="IMPORTE_VEHICULO_DOLARES" width="135">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.IMPORTE_VEHICULO_DOLARES)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESCUENTO" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.DESCUENTO)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="SOBRE PRECIO" width="125">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.SOBREPRECIO)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PRECIO CIERRE LP" width="135">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIOCIERRELP)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PRECIO CIERRE FINAL CLIENTE" width="135">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIOCIERREFINALCLIENTE)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                            </el-table>
+                                                            <!--
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>COMPANIA&nbsp;
+                                                                        <th>
+                                                                            COMPANIA&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Exportar Metas de Venta(s) XLS</div>
                                                                                     <i :style="'color:#796AEE'" class="fa-md fa fa-file-excel-o" @click="exportarDetalleVentaRetail()"></i>
-                                                                            </el-tooltip></th>
+                                                                            </el-tooltip>
+                                                                        </th>
                                                                         <th>CONCESIONARIO</th>
                                                                         <th>TIENDA</th>
                                                                         <th>N° PEDIDO</th>
@@ -293,6 +342,7 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            -->
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -501,6 +551,43 @@
                                                 <div class="card-body">
                                                     <template v-if="arrayVentaHGSI.length">
                                                         <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Venta(s) HGSI XLS</div>
+                                                                <el-button @click="exportarVentaHGSI()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
+                                                            <el-table
+                                                                :data="arrayVentaHGSI"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column fixed property="NRO_PEDIDO" label="#PEDIDO" width="130"></el-table-column>
+                                                                <el-table-column property="FECHA_PEDIDO" label="FECHA PEDIDO" width="150"></el-table-column>
+                                                                <el-table-column property="LINEA" label="LINEA" width="170"></el-table-column>
+                                                                <el-table-column property="MARCA" label="MARCA" width="110"></el-table-column>
+                                                                <el-table-column property="MODELO" label="MODELO" width="120"></el-table-column>
+                                                                <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="180"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="130"></el-table-column>
+                                                                <el-table-column property="PLACA" label="PLACA" width="100"></el-table-column>
+                                                                <el-table-column property="ANIO_FABRI" label="AÑO FAB" width="100"></el-table-column>
+                                                                <el-table-column property="ANIO_MODEL" label="AÑO MODELO" width="120"></el-table-column>
+                                                                <el-table-column property="CONTACTO" label="CONTACTO" width="160"></el-table-column>
+                                                                <el-table-column property="DOCUMENTO" label="# DOC" width="100"></el-table-column>
+                                                                <el-table-column property="DIRECCION" label="DIRECCIÓN" width="160"></el-table-column>
+                                                                <el-table-column property="DEPARTAMENTO" label="DEPARTAMENTO" width="120"></el-table-column>
+                                                                <el-table-column property="PROVINCIA" label="PROVINCIA" width="100"></el-table-column>
+                                                                <el-table-column property="DISTRITO" label="DISTRITO" width="100"></el-table-column>
+                                                                <el-table-column property="E_MAIL" label="EMAIL" width="160"></el-table-column>
+                                                                <el-table-column property="TELEFONO" label="TELÉFONO" width="100"></el-table-column>
+                                                                <el-table-column property="CELULAR" label="CELULAR" width="100"></el-table-column>
+                                                                <el-table-column property="NRO_COTIZACION" label="N° COTIZACIÓN" width="120"></el-table-column>
+                                                                <el-table-column property="TIPO_VENTA" label="TIPO VENTA" width="120"></el-table-column>
+                                                                <el-table-column property="ESTADO_FACTURACION" label="ESTADO FACTURACION" width="100"></el-table-column>
+                                                                <el-table-column property="FECHA_FACTURACION" label="FECHA FACTURACION" width="100"></el-table-column>
+                                                                <el-table-column property="COD_VENDEDOR" label="COD VENDEDOR" width="100"></el-table-column>
+                                                                <el-table-column property="VENDEDOR" label="VENDEDOR" width="150"></el-table-column>
+                                                            </el-table>
+                                                            <!--
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
@@ -567,6 +654,7 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            -->
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -832,7 +920,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <div class="col-sm-8 offset-sm-4">
+                                                    <div class="col-sm-7 offset-sm-5">
                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarStockVehiculos()">
                                                             <i class="fa fa-search"></i> Buscar
                                                         </button>
@@ -853,6 +941,42 @@
                                                 <div class="card-body">
                                                     <template v-if="arrayStockVehiculos.length">
                                                         <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Stock Vehiculo(s) XLS</div>
+                                                                <el-button @click="exportarStock()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
+                                                            <el-table
+                                                                :data="arrayStockVehiculos"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column property="CODIGO_ITEM" label="COD ITEM" width="120"></el-table-column>
+                                                                <el-table-column fixed property="DESC_ITEM" label="ITEM" width="220"></el-table-column>
+                                                                <el-table-column property="ANIO_MODELO" label="AÑO MODELO" width="110"></el-table-column>
+                                                                <el-table-column property="LINEA" label="LINEA" width="170"></el-table-column>
+                                                                <el-table-column property="MARCA" label="MARCA" width="100"></el-table-column>
+                                                                <el-table-column property="MODELO" label="MODELO" width="130"></el-table-column>
+                                                                <el-table-column property="COD_LISTA" label="NRO LISTA" width="100"></el-table-column>
+                                                                <el-table-column property="MONEDA_LISTA" label="MONEDA" width="100"></el-table-column>
+                                                                <el-table-column label="PRECIO BASE" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_BASE)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="PRECIO CIERRE" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_CIERRE1)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="STOCK" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.STOCK)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="BONO ESPECIAL" width="125">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.BONO_ESPECIAL)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COSTO DEALER" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.MDEALER_MFINAL)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column property="ESTADO" label="ESTADO" width="100"></el-table-column>
+                                                            </el-table>
+                                                            <!--
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
@@ -895,6 +1019,7 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            -->
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -2453,20 +2578,22 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h3 class="h4">PREVISUALIZACIÓN</h3>
-                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                        <div slot="content">Exportar Comisiones de Vendedore(s) XLS</div>
-                                                            <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" @click="exportarComisiones()"></i>
-                                                    </el-tooltip>
                                                 </div>
                                                 <div class="card-body">
                                                     <template v-if="arrayDscComisiones.length">
                                                         <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Comisiones de Vendedore(s) XLS</div>
+                                                                <el-button @click="exportarComisiones()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
                                                             <el-table
                                                                 :data="arrayDscComisiones"
                                                                 stripe
                                                                 style="width: 100%">
-                                                                <el-table-column property="FECHA" label="FECHA PEDIDO" width="110"></el-table-column>
-                                                                <el-table-column fixed property="PEDIDO" label="N° PEDIDO" width="140"></el-table-column>
+                                                                <el-table-column property="FECHA" label="FECHA PEDIDO" width="130"></el-table-column>
+                                                                <el-table-column fixed property="PEDIDO" label="N° PEDIDO" width="130"></el-table-column>
                                                                 <el-table-column property="VENDEDOR" label="VENDEDOR" width="210"></el-table-column>
                                                                 <el-table-column property="VIN" label="VIN" width="150"></el-table-column>
                                                                 <el-table-column property="CLIENTE" label="CLIENTE" width="200"></el-table-column>
