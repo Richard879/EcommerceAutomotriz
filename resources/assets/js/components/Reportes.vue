@@ -2526,6 +2526,39 @@
                                                 <div class="card-body">
                                                     <template v-if="arrayCotizaciones.length">
                                                         <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Cotizaciones XLS</div>
+                                                                <el-button @click="expotarCotizaciones()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
+                                                            <el-table
+                                                                :data="arrayCotizaciones"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column property="EMPRESA" label="EMPRESA" width="170"></el-table-column>
+                                                                <el-table-column property="SUCURSAL" label="SUCURSAL" width="120"></el-table-column>
+                                                                <el-table-column property="NUM_COTIZACION" label="NUM COTIZACIÓN" width="160"></el-table-column>
+                                                                <el-table-column property="FECHA_COTIZACION" label="FECHA COTIZACIÓN" width="140"></el-table-column>
+                                                                <el-table-column property="FECHA_VENC_COTIZACION" label="FECHA VENC COTI" width="140"></el-table-column>
+                                                                <el-table-column property="TCC" label="TCC" width="120"></el-table-column>
+                                                                <el-table-column property="COTI_VEHI_DOLAR" label="VEHICULO ($)" width="140"></el-table-column>
+                                                                <el-table-column property="COTI_VEHI_SOL" label="VEHICULO (S/)" width="140"></el-table-column>
+                                                                <el-table-column property="ASUNTO" label="ASUNTO" width="150"></el-table-column>
+                                                                <el-table-column property="ESTADO" label="ESTADO COT" width="150"></el-table-column>
+                                                                <el-table-column label="DESCUENTO" width="145">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.DESCUENTO)).toFixed(2)) }} </template>
+                                                                </el-table-column>
+                                                                <el-table-column property="NOMBRE_COMERCIAL" label="NOMBRE COMERCIAL" width="190"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="145"></el-table-column>
+                                                                <el-table-column property="ASESOR_COMERCIAL" label="ASESOR COMERCIAL" width="160"></el-table-column>
+                                                                <el-table-column property="CONTACTO" label="CONTACTO" width="160"></el-table-column>
+                                                                <el-table-column property="N_DOCUMENTO" label="#DOCUMENTO" width="140"></el-table-column>
+                                                                <el-table-column property="DIRECCION" label="DIRECCIÓN" width="170"></el-table-column>
+                                                                <el-table-column property="TELEFONO_MOVIL" label="TEL MOVIL" width="140"></el-table-column>
+                                                                <el-table-column property="TELEFONO_FIJO" label="TEL FIJO" width="140"></el-table-column>
+                                                            </el-table>
+                                                            <!--
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
@@ -2580,6 +2613,7 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            -->
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="row">
