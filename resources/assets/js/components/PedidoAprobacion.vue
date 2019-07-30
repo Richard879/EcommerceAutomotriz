@@ -4545,8 +4545,8 @@
                                 'cLogRespuesta'     : ''
                             });
                         });
-                        //================================================================
-                        //=========== ACTUALIZO TABLA INTEGRACION ACTIVIDAD SGC ==========
+                        //======================================================================
+                        //=========== ACTUALIZO TABLA INTEGRACION FACTURA RESERVA SGC ==========
                         setTimeout(function() {
                             me.registroSgcDocEntryFacturaReserva();
                         }, 800);
