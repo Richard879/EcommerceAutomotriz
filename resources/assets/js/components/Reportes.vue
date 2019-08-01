@@ -62,7 +62,7 @@
                             <!-- Si es Adminis//ADV//Gerencia -->
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES - PERIODO VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Comisiones a los AC - Ventas</span></div>
                                 </div>
                             </div>
@@ -70,8 +70,16 @@
                             <!-- Si es Adminis//ADV//Gerencia -->
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir-adm', 'COMISIONES ADMINISTRATIVO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir-adm', 'COMISIONES - PERIODO ADMINISTRATIVO')"><i class="fa-md fa fa-file-excel-o"></i></div>
                                     <div class="title"><span><br>Comisiones a los AC - Administrativo</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Si es Adminis//ADV//Gerencia -->
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="abrirModal('comision-jefeventas', 'abrir', 'COMISIONES - PERIODO VENTA')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Comisiones a los JV - Ventas</span></div>
                                 </div>
                             </div>
                         </template>
@@ -2940,7 +2948,7 @@
                 </div>
             </div>
 
-            <!-- Modal Show Comisiones de Vendedores - Ventas-->
+            <!-- Modal Show Comisiones de Vendedores - Administrativo-->
             <div class="modal fade" v-if="accionmodal==13" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -3207,6 +3215,190 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Comisiones de Vendedores - Jefe Ventas-->
+            <div class="modal fade" v-if="accionmodal==14" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">FILTROS DE {{ tituloModal }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidsucursal"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SUCURSAL"
+                                                                            @change="listarJefeBySucursal(1)">
+                                                                    <el-option
+                                                                        v-for="item in arraySucursal"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">Jefe Ventas</label>
+                                                            <div class="col-md-8">
+                                                                <el-select  v-model="formFiltro.nidjefeventas"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="SELECCIONE UN JEFE VENTAS">
+                                                                    <el-option
+                                                                        v-for="ele in arrayJefeVentas"
+                                                                        :key="ele.nIdUsuario"
+                                                                        :label="ele.cNombreCompleto"
+                                                                        :value="ele.nIdUsuario">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Cronograma</label>
+                                                            <div class="col-sm-8">
+                                                                <el-select  v-model="formFiltro.nidcronograma"
+                                                                            filterable
+                                                                            clearable
+                                                                            placeholder="CRONOGRAMA">
+                                                                    <el-option
+                                                                        v-for="item in arrayCronogramas"
+                                                                        :key="item.nIdCronograma"
+                                                                        :label="item.cCronograma"
+                                                                        :value="item.nIdCronograma">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="listarDscComisionesJV()">
+                                                            <i class="fa fa-save"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">PREVISUALIZACIÓN</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <template v-if="arrayDscComisionesJV.length">
+                                                        <div class="table-responsive">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Exportar Comisiones - JV / Cronograma Ventas</div>
+                                                                <el-button @click="exportarComisionesJV()">
+                                                                    <i :style="'color:rgb(44, 255, 101)'" class="fa-md fa fa-file-excel-o" ></i>
+                                                                </el-button>
+                                                            </el-tooltip>
+                                                            <el-table
+                                                                :data="arrayDscComisionesJV"
+                                                                stripe
+                                                                style="width: 100%">
+                                                                <el-table-column property="FECHA" label="FECHA" width="130"></el-table-column>
+                                                                <el-table-column property="VIN" label="VIN" width="150"></el-table-column>
+                                                                <el-table-column fixed property="PEDIDO" label="PEDIDO" width="130"></el-table-column>
+                                                                <el-table-column property="VENDEDOR" label="CODV" width="210"></el-table-column>
+                                                                <el-table-column property="CLIENTE" label="CLIENTE" width="200"></el-table-column>
+                                                                <el-table-column property="MODELO" label="MODELO" width="100"></el-table-column>
+                                                                <el-table-column label="PC LP" width="115">
+                                                                    <template slot-scope="scope"> {{ Number((parseFloat(scope.row.PRECIO_CIERRE_LISTA_DE_PRECIO)).toFixed(2)) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="SOBRE PRECIO" width="130">
+                                                                    <template slot-scope="scope"> {{ (scope.row.SOBRE_PRECIO == null) ? 0 : (Number((parseFloat(scope.row.SOBRE_PRECIO)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="DESC CONCESIONARIO" width="140">
+                                                                    <template slot-scope="scope"> {{ (scope.row.DESC_CONCESIONARIO == null) ? 0 : (Number((parseFloat(scope.row.DESC_CONCESIONARIO)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COMP_COM" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COMP_COM == null) ? 0 : (Number((parseFloat(scope.row.COMP_COM)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COM_USD" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COM_USD == null) ? 0 : (Number((parseFloat(scope.row.COM_USD)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                                <el-table-column label="COM_SOLES" width="110">
+                                                                    <template slot-scope="scope"> {{ (scope.row.COM_SOLES == null) ? 0 : (Number((parseFloat(scope.row.COM_SOLES)).toFixed(2))) }}</template>
+                                                                </el-table-column>
+                                                            </el-table>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDscComisionesJV(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaDscComisionesJV(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDscComisionesJV(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -3240,6 +3432,7 @@
                     dfechainicio: '',
                     dfechafin: '',
                     nidvendedor: '',
+                    nidjefeventas: '',
                     nidsublinea: '',
                     nidcronograma: '',
                     nidestadocotizacion: '',
@@ -3252,6 +3445,7 @@
                 ],
                 arraySucursal: [],
                 arrayVendedores: [],
+                arrayJefeVentas: [],
                 arrayProveedor: [],
                 arrayLinea: [],
                 arrayMarca: [],
@@ -3272,6 +3466,7 @@
                 arrayPedidoDeposito: [],
                 arrayCotizaciones: [],
                 arrayDscComisiones: [],
+                arrayDscComisionesJV: [],
                 arrayDscComisionesAdm: [],
                 //OPCIONES GENERALES
                 page: 1,
@@ -3539,7 +3734,7 @@
                 });
             },
             exportarComisionesAdm(){
-                if(this.validarExportarComision()){
+                if(this.validarExportarComisionAdm()){
                     return;
                 }
 
@@ -3562,6 +3757,43 @@
                     const filename = 'Reporte de Comisiones Adm'
                     XLSX.utils.book_append_sheet(workbook, data, filename)
                     XLSX.writeFile(workbook, `${filename}.xlsx`)
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            exportarComisionesJV(){
+                if(this.validarExportarComisionJV()){
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarComisionesJV';
+                axios.get(url, {
+                    responseType: 'arraybuffer',
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidjefeventas' :   this.formFiltro.nidjefeventas,
+                        'nidcronograma' :   this.formFiltro.nidcronograma,
+                        'opcion'        :   1
+                    }
+                }).then(response => {
+                    //RESPUESTA
+                    let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+                    let link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(blob)
+                    link.download = 'comisionjv.xlsx'
+                    link.click()
+
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -3754,6 +3986,39 @@
                 // }
                 if(!this.formFiltro.nidcronograma){
                     this.mensajeError.push('Debe seleccionar un Cronograma de Venta');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validarExportarComisionAdm(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formFiltro.nidcronograma){
+                    this.mensajeError.push('Debe seleccionar un Cronograma Administrativo');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validarExportarComisionJV(){
+                this.error = 0;
+                this.mensajeError =[];
+
+
+                if(!this.formFiltro.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar una Sucursal');
+                }
+                if(!this.formFiltro.nidjefeventas){
+                    this.mensajeError.push('Debe seleccionar un Jefe de Ventas');
+                }
+                if(!this.formFiltro.nidcronograma){
+                    this.mensajeError.push('Debe seleccionar un Cronograma Ventas');
                 }
 
                 if(this.mensajeError.length){
@@ -4089,6 +4354,26 @@
                     }
                 });
             },
+            listarJefeBySucursal(){
+                var url = this.ruta + '/usuario/GetListUsuariosByRol';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidrol'        :   110025
+                    }
+                }).then(response => {
+                    this.arrayJefeVentas = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             listarSubLineaByVendedor(){
                 var url = this.ruta + '/usuario/GetListSubLineasByUsuario';
                 axios.get(url, {
@@ -4111,8 +4396,9 @@
                 var url = this.ruta + '/cronograma/GetCronogramaByTipo';
                 axios.get(url, {
                     params: {
-                        'nidgrupar' :   110039,
-                        'nidpar'    :   1300057
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupar'     :   110039,
+                        'nidpar'        :   1300057
                     }
                 }).then(response => {
                     this.arrayCronogramas = response.data.arrayCronograma;
@@ -4130,8 +4416,9 @@
                 var url = this.ruta + '/cronograma/GetCronogramaByTipo';
                 axios.get(url, {
                     params: {
-                        'nidgrupar' :   110039,
-                        'nidpar'    :   1300058
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupar'     :   110039,
+                        'nidpar'        :   1300058
                     }
                 }).then(response => {
                     this.arrayCronogramasAdm = response.data.arrayCronograma;
@@ -4593,7 +4880,7 @@
                 this.listarDscComisiones(page);
             },
             listarDscComisionesAdm(page){
-                if(this.validarExportarComision()){
+                if(this.validarExportarComisionAdm()){
                     return;
                 }
 
@@ -4635,6 +4922,47 @@
                 this.pagination.current_page=page;
                 this.listarDscComisionesAdm(page);
             },
+            listarDscComisionesJV(page){
+                if(this.validarExportarComisionJV()){
+                    return;
+                }
+
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/reportes/exportarComisionesJV';
+                axios.get(url, {
+                    params: {
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   :   this.formFiltro.nidsucursal,
+                        'nidjefeventas' :   this.formFiltro.nidjefeventas,
+                        'nidcronograma' :   this.formFiltro.nidcronograma,
+                        'opcion'        :   2,
+                        'page'          :   page
+                    }
+                }).then(response => {
+                    this.arrayDscComisionesJV       = response.data.arrayDscOtorgadosComisiones.data;
+                    this.pagination.current_page    = response.data.arrayDscOtorgadosComisiones.current_page;
+                    this.pagination.total           = response.data.arrayDscOtorgadosComisiones.total;
+                    this.pagination.per_page        = response.data.arrayDscOtorgadosComisiones.per_page;
+                    this.pagination.last_page       = response.data.arrayDscOtorgadosComisiones.last_page;
+                    this.pagination.from            = response.data.arrayDscOtorgadosComisiones.from;
+                    this.pagination.to              = response.data.arrayDscOtorgadosComisiones.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                    $("#myBar").hide();
+                });
+            },
+            cambiarPaginaDscComisionesJV(page){
+                this.pagination.current_page=page;
+                this.listarDscComisionesJV(page);
+            },
             // =============================================
             // =============  MODAL ========================
             limpiarFiltros(){
@@ -4650,6 +4978,7 @@
                 this.formFiltro.dfechainicio        =   '';
                 this.formFiltro.dfechafin           =   '';
                 this.formFiltro.nidvendedor         =   '';
+                this.formFiltro.nidjefeventas       =   '';
                 this.formFiltro.nidsublinea         =   '';
                 this.formFiltro.nidcronograma       =   '';
                 this.formFiltro.nidestadocotizacion =   '';
@@ -4669,6 +4998,7 @@
                 this.arrayCotizaciones              =   [];
                 this.arrayDscComisiones             =   [];
                 this.arrayDscComisionesAdm          =   [];
+                this.arrayDscComisionesJV           =   [];
             },
             cerrarModal(){
                 this.modal = 0
@@ -4857,6 +5187,21 @@
                                 this.listarCronogramaAdm();
                                 this.tituloModal = data;
                                 this.accionmodal = 13;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    case 'comision-jefeventas':
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.limpiarFiltros();
+                                this.listarSucursalByEmpresa();
+                                this.listarCronograma();
+                                this.tituloModal = data;
+                                this.accionmodal = 14;
                                 this.modal = 1;
                                 break;
                             }

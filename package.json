@@ -31,6 +31,6 @@
         "vue-event-bus": "^1.0.2",
         "vue-simple-calendar": "^4.0.2",
         "vuesax": "^3.4.7",
-        "xlsx": "^0.14.3"
+        "xlsx": "^0.14.4"
     }
 }

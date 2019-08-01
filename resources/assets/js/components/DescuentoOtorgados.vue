@@ -778,8 +778,9 @@
                 var url = this.ruta + '/cronograma/GetCronogramaByTipo';
                 axios.get(url, {
                     params: {
-                        'nidgrupar' :   110039,
-                        'nidpar'    :   1300057
+                        'nidempresa'    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidgrupar'     :   110039,
+                        'nidpar'        :   1300057
                     }
                 }).then(response => {
                     this.arrayCronogramas = response.data.arrayCronograma;
