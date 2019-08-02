@@ -570,9 +570,14 @@
                     this.formLogin.cUsuario     = response.data[0].cUsuario;
                     this.formLogin.cRol         = response.data[0].cGrupoParNombre;
                     this.formLogin.nIdRol       = response.data[0].nIdGrupoPar;
-                    ((parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ||
-                    (parseInt(sessionStorage.getItem("nIdEmpresa")) == undefined) ||
-                    (parseInt(sessionStorage.getItem("nIdEmpresa")) == '')) ? '' : this.loadAllDashboard();
+                    console.log((parseInt(sessionStorage.getItem("nIdEmpresa"))));
+
+                    (isNaN(parseInt(sessionStorage.getItem("nIdEmpresa")))) ? '' : this.loadAllDashboard()
+
+                    // ((parseInt(sessionStorage.getItem("nIdEmpresa")) == null) ||
+                    // (parseInt(sessionStorage.getItem("nIdEmpresa")) == NaN) ||
+                    // (parseInt(sessionStorage.getItem("nIdEmpresa")) == '')) ? '' : this.loadAllDashboard()
+
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

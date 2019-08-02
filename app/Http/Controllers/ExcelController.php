@@ -685,7 +685,6 @@ class ExcelController extends Controller
                                             $nidcronograma
                                         ]);
 
-
         if ($opcion == 1) {
             return (new ComisionJV)->obtenerData($arrayComision)->download('comision_jv.xlsx');
         } else {

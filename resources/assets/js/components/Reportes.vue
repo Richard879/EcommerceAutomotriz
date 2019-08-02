@@ -63,15 +63,7 @@
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir', 'COMISIONES - PERIODO VENTAS')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Comisiones a los AC - Ventas</span></div>
-                                </div>
-                            </div>
-
-                            <!-- Si es Adminis//ADV//Gerencia -->
-                            <div class="col-xl-4 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir-adm', 'COMISIONES - PERIODO ADMINISTRATIVO')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Comisiones a los AC - Administrativo</span></div>
+                                    <div class="title"><span><br>Comisiones a los AC - Cronograma Ventas</span></div>
                                 </div>
                             </div>
 
@@ -79,7 +71,15 @@
                             <div class="col-xl-4 col-sm-6">
                                 <div class="item d-flex align-items-center">
                                     <div class="icon bg-violet" @click="abrirModal('comision-jefeventas', 'abrir', 'COMISIONES - PERIODO VENTA')"><i class="fa-md fa fa-file-excel-o"></i></div>
-                                    <div class="title"><span><br>Comisiones a los JV - Ventas</span></div>
+                                    <div class="title"><span><br>Comisiones a los JV - Cronograma Ventas</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Si es Adminis//ADV//Gerencia -->
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="item d-flex align-items-center">
+                                    <div class="icon bg-violet" @click="abrirModal('comision-vendedores', 'abrir-adm', 'COMISIONES - PERIODO ADMINISTRATIVO')"><i class="fa-md fa fa-file-excel-o"></i></div>
+                                    <div class="title"><span><br>Comisiones a los AC - Cronograma Administrativo</span></div>
                                 </div>
                             </div>
                         </template>
