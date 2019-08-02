@@ -130,7 +130,7 @@
         <pedidodepositopreliminar :ruta="ruta"></pedidodepositopreliminar>
     </template>
     <template v-if="menu==1300468">
-        <pedidodescuento :ruta="ruta" :usuario="{{ auth()->user() }}"></pedidodescuento>
+        <cotizaciondescuento :ruta="ruta" :usuario="{{ auth()->user() }}"></cotizaciondescuento>
     </template>
     <template v-if="menu==1300282">
         <solccjefeventa :ruta="ruta"></solccjefeventa>

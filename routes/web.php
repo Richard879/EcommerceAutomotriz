@@ -325,6 +325,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/getcotizacion/GetListContactoByVendedor', 'CotizacionController@GetListContactoByVendedor');
     Route::get('/gescotizacion/GetLisDocsModelo', 'CotizacionController@GetLisDocsModelo');
     Route::get('/gescotizacion/GetDetalleCotizacionDistribucion', 'CotizacionController@GetDetalleCotizacionDistribucion');
+    Route::get('/gescotizacion/GetLstCotizacionConDescuento', 'CotizacionController@GetLstCotizacionConDescuento');
 
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');

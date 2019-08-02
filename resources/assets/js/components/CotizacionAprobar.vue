@@ -179,8 +179,9 @@
                                                                                 :style="'color:#796AEE'"
                                                                                 class="fa-md fa fa-eye"></i>
                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                        <!-- Opcion del Jefe de Ventas -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025">
+                                                                        <!-- APROBACION COTIZACION -->
+                                                                        <!-- Opcion del Jefe de Ventas, Gerente de Ventas-->
+                                                                        <template v-if="(cotizacionpendiente.cTipoRol == 110025 && cotizacionpendiente.nIdEstadoCotizacion == 1300132)|| cotizacionpendiente.cTipoRol == 110121">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i  @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
@@ -188,40 +189,32 @@
                                                                                     class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
-                                                                        <!-- Opcion del ADV -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)"
-                                                                                    :style="'color:#796AEE'"
-                                                                                    class="fa-md fa fa-usd"></i>
-                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                        </template>
-                                                                        <!-- Opción de Jefe de Ventas y ADV -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
-                                                                                    :style="'color:red'"
-                                                                                    class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>&nbsp;&nbsp;
-                                                                        </template>
-
-                                                                        <!-- Opción de Gerencia -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110096">
+                                                                        <!-- Opcion del Gerente Comercial -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110125">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i  @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
                                                                                     :style="'color:#796AEE'"
                                                                                     class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
-                                                                                    :style="'color:red'"
-                                                                                    class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
+                                                                        <!-- DISTRIBUCION COTIZACION -->
+                                                                        <!-- 
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025 && cotizacionpendiente.nIdEstadoCotizacion == 1300747">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-usd"></i>
+                                                                            </el-tooltip>&nbsp;&nbsp;
+                                                                        </template>-->
+                                                                        <!-- RECHAZAR COTIZACION-->
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                            <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                :style="'color:red'"
+                                                                                class="fa-md fa fa-trash"></i>
+                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
@@ -613,7 +606,7 @@
                                                     </table>
                                                     <div class="form-group row">
                                                         <div class="col-sm-9 offset-sm-4">
-                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 1)">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 3)">
                                                                 <i class="fa fa-check"></i> APROBAR
                                                             </button>
                                                         </div>
@@ -1270,6 +1263,8 @@
              * MODAL DISTRIBUCIÓN SUPERA DSCTO
              */
             getDetalleCotizacionDistribucion(nIdCabeceraCotizacion){
+                let me = this;
+
                 var url = me.ruta + '/gescotizacion/GetDetalleCotizacionDistribucion';
                 axios.get(url, {
                     params: {
@@ -1629,7 +1624,7 @@
                                 setTimeout(function() {
                                     me.getDetalleCotizacionDistribucion(data);
                                     me.listarDistribucionDescuento(data);
-                                }, 1200);
+                                }, 800);
 
                                 // this.listarDistribucionEVPorRegalar(data);
                                 this.accionmodal=2;

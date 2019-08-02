@@ -535,7 +535,7 @@ class CotizacionController extends Controller
                 {
                     $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdEmpresa,
-                                                                        $det['nIdCabeceraPedido'],
+                                                                        0,
                                                                         $det['nIdCabeceraCotizacion'],
                                                                         $det['nIdDetalleCotizacion'],
                                                                         $det['nIdProveedor'],
@@ -878,5 +878,45 @@ class CotizacionController extends Controller
                                                                                 Auth::user()->id
                                                                             ]);
         return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion];
+    }
+
+    public function GetLstCotizacionConDescuento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa         =   $request->nidempresa;
+        $nidsucursal        =   $request->nidsucursal;
+        $nidmarca           =   $request->nidmarca;
+        $nidmodelo          =   $request->nidmodelo;
+        $dfechainicio       =   $request->dfechainicio;
+        $dfechafin          =   $request->dfechafin;
+        $cContacto          =   $request->ccontacto;
+        $cNumeroDocumento   =   $request->cnrodocumento;
+        $ntipopersona       =   $request->ntipopersona;
+
+        $nidmarca           =   ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo          =   ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $dfechainicio       =   ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin          =   ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+        $cContacto          =   ($cContacto == NULL) ? ($cContacto = '') : $cContacto;
+        $cNumeroDocumento   =   ($cNumeroDocumento == NULL) ? ($cNumeroDocumento = '') : $cNumeroDocumento;
+        $ntipopersona       =   ($ntipopersona == NULL) ? ($ntipopersona = 1) : $ntipopersona;
+
+        $arrayCotizacionesConDescuento = DB::select('exec [usp_Cotizacion_GetLstCotizacionConDescuento] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nidempresa,
+                                        $nidsucursal,
+                                        $nidmarca,
+                                        $nidmodelo,
+                                        $dfechainicio,
+                                        $dfechafin,
+                                        $cContacto,
+                                        $cNumeroDocumento,
+                                        $ntipopersona,
+                                        Auth::user()->id
+                                    ]);
+
+        $arrayCotizacionesConDescuento = ParametroController::arrayPaginator($arrayCotizacionesConDescuento, $request);
+        return ['arrayCotizacionesConDescuento'=>$arrayCotizacionesConDescuento];
     }
 }
