@@ -175,6 +175,12 @@
                                                                 <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraPedido">
                                                                     <td>
                                                                         <!-- Opcion del Jefe de Ventas -->
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Ver Detalle Cotizacion {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                            <i  @click="abrirModal('cotizacion', 'detalle', cotizacionpendiente)"
+                                                                                :style="'color:#796AEE'"
+                                                                                class="fa-md fa fa-eye"></i>
+                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Pedido {{ cotizacionpendiente.cNumeroPedido }}</div>
@@ -195,13 +201,7 @@
                                                                         <!-- Opcion del ADV 
                                                                         conformeNoConformeCotizacion(2, cotizacionpendiente)
                                                                         -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
-                                                                            <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Ver Detalle Cotizacion {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i  @click="abrirModal('cotizacion', 'detalle', cotizacionpendiente)"
-                                                                                    :style="'color:#796AEE'"
-                                                                                    class="fa-md fa fa-eye"></i>
-                                                                            </el-tooltip>&nbsp;&nbsp;-->
+                                                                        <!--<template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Ver Detalle Pedido {{ cotizacionpendiente.cNumeroPedido }}</div>
                                                                                 <i @click="abrirModal('pedido', 'detalle', cotizacionpendiente)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
@@ -212,10 +212,10 @@
                                                                                     :style="'color:#796AEE'"
                                                                                     class="fa-md fa fa-usd"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
-                                                                        </template>
+                                                                        </template>-->
 
                                                                         <!-- Opción de Gerencia -->
-                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110096">
+                                                                        <!--<template v-if="cotizacionpendiente.cTipoRol == 110096">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Ver Detalle Distribución {{ cotizacionpendiente.cNumeroPedido }}</div>
                                                                                 <i  @click="abrirModal('pedido', 'distribucion', cotizacionpendiente)"
@@ -234,7 +234,7 @@
                                                                                     :style="'color:red'"
                                                                                     class="fa-md fa fa-trash"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
-                                                                        </template>
+                                                                        </template>-->
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
                                                                     <td v-text="cotizacionpendiente.cContacto"></td>
