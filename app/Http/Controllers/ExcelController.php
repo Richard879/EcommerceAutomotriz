@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 use App\Exports\CompraExport;
 use App\Exports\ExportDetalleVentaRetail;
+use App\Exports\ComisionJV;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -658,6 +659,36 @@ class ExcelController extends Controller
             return response()->json($data);
         } else {
             $arrayDscOtorgadosComisiones = ParametroController::arrayPaginator($data, $request);
+            return ['arrayDscOtorgadosComisiones'=>$arrayDscOtorgadosComisiones];
+        }
+    }
+
+    public function exportarComisionesJV(Request $request)
+    {
+        $nidempresa     =   $request->nidempresa;
+        $nidsucursal    =   $request->nidsucursal;
+        $nidjefeventas  =   $request->nidjefeventas;
+        $nidcronograma  =   $request->nidcronograma;
+
+        $nidsucursal    =   ($nidsucursal == NULL) ? ($nidsucursal = 0) : $nidsucursal;
+        $nidjefeventas  =   ($nidjefeventas == NULL) ? ($nidjefeventas = 0) : $nidjefeventas;
+        $nidcronograma  =   ($nidcronograma == NULL) ? ($nidcronograma = 0) : $nidcronograma;
+
+        $opcion         =   $request->opcion;
+
+        //=================== OBTENER EL LAS COMISIONES DE LOS AC POR JV ===================
+        $arrayComision = DB::select('exec [usp_Reporte_DescuentosOtorgados_GetComisiones_JV] ?, ?, ?, ?',
+                                        [
+                                            $nidempresa,
+                                            $nidsucursal,
+                                            $nidjefeventas,
+                                            $nidcronograma
+                                        ]);
+
+        if ($opcion == 1) {
+            return (new ComisionJV)->obtenerData($arrayComision)->download('comision_jv.xlsx');
+        } else {
+            $arrayDscOtorgadosComisiones = ParametroController::arrayPaginator($arrayComision, $request);
             return ['arrayDscOtorgadosComisiones'=>$arrayDscOtorgadosComisiones];
         }
     }

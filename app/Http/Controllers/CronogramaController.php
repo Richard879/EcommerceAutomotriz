@@ -105,11 +105,13 @@ class CronogramaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidgrupar  =   $request->nidgrupar;
-        $nidpar     =   $request->nidpar;
+        $nidempresa     =   $request->nidempresa;
+        $nidgrupar      =   $request->nidgrupar;
+        $nidpar         =   $request->nidpar;
 
-        $arrayCronograma = DB::select('exec [usp_Cronog_GetCronogramaByTipo] ?, ?',
+        $arrayCronograma = DB::select('exec [usp_Cronog_GetCronogramaByTipo] ?, ?, ?',
                                                         [
+                                                            $nidempresa,
                                                             $nidgrupar,
                                                             $nidpar
                                                         ]);

@@ -488,8 +488,11 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(modelo.fSobrePrecio == 0 || modelo.fSobrePrecio == '' || modelo.fSobrePrecio == '0.00'){
-                    this.mensajeError.push('El Sobre Precio no puede ser 0 ó vacío');
+                // if(modelo.fSobrePrecio == 0 || modelo.fSobrePrecio == '' || modelo.fSobrePrecio == '0.00'){
+                //     this.mensajeError.push('El Sobre Precio no puede ser 0 ó vacío');
+                // }
+                if(modelo.fSobrePrecio == ''){
+                    this.mensajeError.push('El Sobre Precio no puede estar vacío');
                 }
 
                 if(this.mensajeError.length){

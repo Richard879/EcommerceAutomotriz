@@ -531,6 +531,7 @@ Route::middleware(['auth', 'verificarusuario'])->group(function(){
     Route::get('/reportes/exportarCotizacionesByFitro','ExcelController@exportarCotizacionesByFitro');
     Route::get('/reportes/exportarComisiones','ExcelController@exportarComisiones');
     Route::get('/reportes/exportarComisionesAdm','ExcelController@exportarComisionesAdm');
+    Route::get('/reportes/exportarComisionesJV','ExcelController@exportarComisionesJV');
 
     Route::get('/dsctotorgados/GetListDistribucionDesc','DescuentosOtorgadosController@GetListDistribucionDesc');
     Route::post('/dsctotorgados/SetDistribucionDesc','DescuentosOtorgadosController@SetDistribucionDesc');
