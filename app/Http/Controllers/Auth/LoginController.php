@@ -25,9 +25,9 @@ class LoginController extends Controller
 
         $userdata = Auth::attempt(['usuario' => $request->usuario,'password' => $request->password, 'condicion' => '1']);
 
-        if ($userdata){
+        //if ($userdata){
             return redirect()->route('main');
-        }
+       // }
 
         return back()
             ->withErrors(['usuario' => trans('auth.failed')])
